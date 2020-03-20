@@ -2,6 +2,8 @@ import logging
 from logging.handlers import RotatingFileHandler
 import argparse
 import sys
+import pygame
+from pygame.locals import *
 
 VERSION = "BETA-0.0.1"
 PYTHON_VERSION = "3.7"
@@ -20,6 +22,7 @@ def setup_main_logging():
 
 
 def main():
+    pygame.init()
     args = parser.parse_args()
 
     if args.debug:
