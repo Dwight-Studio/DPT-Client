@@ -5,3 +5,4 @@ Partie client de **Don't Play Together**.
 Pour fonctionner, **Don't Play Together** requière :
 * `Python 3.7.x`
 * `PyGame 1.9.6` ou utltérieur
+* `Un cerveau`
