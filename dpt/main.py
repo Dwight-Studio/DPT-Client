@@ -22,6 +22,9 @@ main_logger = None
 LOGGING_FORMAT = logging.Formatter(fmt="[%(asctime)s][%(levelname)s][%(name)s] %(message)s", datefmt="%H:%M:%S")
 
 ## File handler
+if not os.path.isdir(ROOT_DIRECTORY + "/logs/"):
+    os.mkdir(ROOT_DIRECTORY + "/logs/")
+
 if os.path.isfile(ROOT_DIRECTORY + "/logs/latest.log"):
     file = tarfile.open(ROOT_DIRECTORY + "/logs/" + datetime.datetime.today().strftime("%d-%m-%Y-%H-%M-%S") + ".tar.gz", mode="x:gz", )
     file.add(ROOT_DIRECTORY + "/logs/latest.log", arcname="latest.log")
@@ -37,7 +40,7 @@ stream_handler.setFormatter(LOGGING_FORMAT)
 
 # Args
 parser = argparse.ArgumentParser(description='Start the game.')
-parser.add_argument('--debug', type=bool, help='enable/disable debug log', default=False)
+parser.add_argument('--debug', help='enable debug logging', action="store_true")
 
 
 def get_loggers(debug):
