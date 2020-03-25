@@ -1,6 +1,6 @@
 import pygame
 
-DIRECTORY = "graphics/characters/pictures/"
+DIRECTORY = "engine/graphics/characters/pictures/"
 char = pygame.image.load(DIRECTORY + 'standing.png')
 walkRight = [pygame.image.load(DIRECTORY + 'R1.png'), pygame.image.load(DIRECTORY + 'R2.png'), pygame.image.load(DIRECTORY + 'R3.png'), pygame.image.load(DIRECTORY + 'R4.png'), pygame.image.load(DIRECTORY + 'R5.png'), pygame.image.load(DIRECTORY + 'R6.png'), pygame.image.load(DIRECTORY + 'R7.png'), pygame.image.load(DIRECTORY + 'R8.png'), pygame.image.load(DIRECTORY + 'R9.png')]
 walkLeft = [pygame.image.load(DIRECTORY + 'L1.png'), pygame.image.load(DIRECTORY + 'L2.png'), pygame.image.load(DIRECTORY + 'L3.png'), pygame.image.load(DIRECTORY + 'L4.png'), pygame.image.load(DIRECTORY + 'L5.png'), pygame.image.load(DIRECTORY + 'L6.png'), pygame.image.load(DIRECTORY + 'L7.png'), pygame.image.load(DIRECTORY + 'L8.png'), pygame.image.load(DIRECTORY + 'L9.png')]
