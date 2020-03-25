@@ -6,6 +6,7 @@ pygame.init()
 window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN, pygame.RESIZABLE)
 pygame.display.set_caption("Don't play together")
 clock = pygame.time.Clock()
+screenWidth, screenHeight = window.get_size()
 
 
 class Player(object):
@@ -47,3 +48,6 @@ def redraw_game_window():
 
 # Mainloop
 player = Player()
+run = True
+while run:
+    clock.tick("""IL FAUDRA CHOISIR LE FRAMERATE EN FONCTION DES ANIMATIONS""")
