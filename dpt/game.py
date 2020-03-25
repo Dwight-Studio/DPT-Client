@@ -49,7 +49,7 @@ class Game(object):
 
         try:
             dpt.engine.mainLoop.loop()
-        except Exception as err:
+        except Exception:
             main_logger.critical("Unexpected error has occurred. Following informations has been gathered:")
             exc_type, exc_value, exc_tb = sys.exc_info()
             trace = "".join(traceback.format_exception(exc_type, exc_value, exc_tb))
