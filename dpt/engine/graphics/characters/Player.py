@@ -27,13 +27,13 @@ class Player(object):
             self.walkCount = 0
         if not self.standing:
             if self.left:
-                window.blit(Player.walkLeft[self.walkCount//3], (self.x, self.y))
+                window.blit(self.walkLeft[self.walkCount//3], (self.x, self.y))
                 self.walkCount += 1
             elif self.right:
-                window.blit(Player.walkRight[self.walkCount//3], (self.x, self.y))
+                window.blit(self.walkRight[self.walkCount//3], (self.x, self.y))
                 self.walkCount += 1
         else:
             if self.right:
-                window.blit(Player.walkRight[0], (self.x, self.y))
+                window.blit(self.walkRight[0], (self.x, self.y))
             else:
-                window.blit(Player.walkLeft[0], (self.x, self.y))
+                window.blit(self.walkLeft[0], (self.x, self.y))
