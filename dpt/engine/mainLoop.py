@@ -57,7 +57,10 @@ def loop(game):
             if keys[pygame.K_UP]:
                 player.isJump = True
                 player.left = False
-                player.right = False
+                if player.right:
+                    player.right = True
+                else:
+                    player.right = False
                 player.walkCount = 0
         else:
             if player.jumpCount >= -player.staticJumpCount:
