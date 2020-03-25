@@ -74,5 +74,6 @@ def main():
     main_logger.debug("Pygame version: " + PYGAME_VERSION)
     main_logger.debug("OS: " + PLATFORM)
 
+
 if __name__ == '__main__':
     main()

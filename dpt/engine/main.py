@@ -1,53 +1,74 @@
 import pygame
 import math
+from dpt.engine.graphics.characters.Player import Player
 
 pygame.init()
-
 window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN, pygame.RESIZABLE)
 pygame.display.set_caption("Don't play together")
 clock = pygame.time.Clock()
 screenWidth, screenHeight = window.get_size()
-
-
-class Player(object):
-    def __init__(self, x, y, width, height):
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
-        self.vel = 5
-        self.isJump = False
-        self.jumpCount = 8
-        self.staticJumpCount = self.jumpCount
-        self.left = False
-        self.right = False
-        self.walkcount = 0
-        self.standing = True
-
-    def draw(self, window):
-        if self.walkcount + 1 >= """IL FAUT METTRE LE NOMBRE D'IMAGE DE L'ANIMATION""":
-            self.walkcount = 0
-        if not self.standing:
-            if self.left:
-                window.blit("""IL FAUT LES FICHIERS DE L'ANIMATION QUI VA VERS LA GAUCHE""")
-                self.walkcount += 1
-            elif self.right:
-                window.blit("""IL FAUT LES FICHIERS DE L'ANIMATION QUI VA VERS LA DROITE""")
-                self.walkcount += 1
-        else:
-            if self.right:
-                window.blit("""IL FAUT LA PREMIÈRE IMAGE DE L'ANIMATION QUI VA VERS LA DROITE""")
-            else:
-                window.blit("""IL FAUT LA PREMIÈRE IMAGE DE L'ANIMATION QUI VA VERS LA GAUCHE""")
+bg = pygame.image.load("graphics/backgrounds/backgrounds/background.png")
 
 
 def redraw_game_window():
-    window.blit("""IL FAUT LE FICHIER DU BACKGROUND""")
+    window.blit(bg, (0, 0))
     player.draw(window)
     pygame.display.update()
 
+
 # Mainloop
-player = Player()
+player = Player(300, screenHeight - 100, 64, 64)
 run = True
 while run:
-    clock.tick("""IL FAUDRA CHOISIR LE FRAMERATE EN FONCTION DES ANIMATIONS""")
+    clock.tick(27)
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+            run = False
+
+    keys = pygame.key.get_pressed()
+
+    if keys[pygame.K_LEFT] and player.x > player.vel:
+        player.x -= player.vel
+        player.left = True
+        player.right = False
+        player.standing = False
+    elif keys[pygame.K_LEFT]:
+        player.x = 0
+        player.left = True
+        player.right = False
+        player.standing = False
+    elif keys[pygame.K_RIGHT] and player.x + player.width + player.vel < screenWidth:
+        player.x += player.vel
+        player.left = False
+        player.right = True
+        player.standing = False
+    elif keys[pygame.K_RIGHT]:
+        player.x = screenWidth - player.width
+        player.left = False
+        player.right = True
+        player.standing = False
+    else:
+        player.standing = True
+        player.walkCount = 0
+
+    if not player.isJump:
+        if keys[pygame.K_UP]:
+            player.isJump = True
+            player.left = False
+            player.right = False
+            player.walkCount = 0
+    else:
+        if player.jumpCount >= -player.staticJumpCount:
+            neg = 1
+            if player.jumpCount < 0:
+                neg = -1
+            player.y -= math.floor((player.jumpCount ** 2) * 0.5) * neg
+            player.jumpCount -= 1
+        else:
+            player.isJump = False
+            player.jumpCount = player.staticJumpCount
+
+    redraw_game_window()
+
+pygame.quit()
