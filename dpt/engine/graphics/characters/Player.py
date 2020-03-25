@@ -1,6 +1,6 @@
 import pygame
 
-DIRECTORY = "graphics/characters/pictures/"
+DIRECTORY = "engine/graphics/characters/pictures/"
 
 
 class Player(object):
