@@ -26,6 +26,9 @@ class Game(object):
             os.remove(self.ROOT_DIRECTORY + "/logs/latest.log")
 
         # Initialisation des logs
+        # Logs des autres modules
+        logging.getLogger("urllib3").setLevel(logging.CRITICAL)
+
         # Formatter
         logging_format = logging.Formatter(fmt="[%(asctime)s][%(levelname)s][%(name)s] %(message)s", datefmt="%H:%M:%S")
 
@@ -74,6 +77,9 @@ class Game(object):
             self.ressources = RessourceLoader()
             self.ressources.add_pending("*")
             self.ressources.load()
+            from dpt.engine.webCommunications import Communication
+            com = Communication("localhost")
+            com.create()
 
             from dpt.engine.mainLoop import loop
             loop()
