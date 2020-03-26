@@ -2,8 +2,6 @@ import pygame
 
 from dpt.game import Game
 
-DIRECTORY = "engine/graphics/characters/player/"
-
 
 class Player(object):
     game = Game.get_instance()
@@ -30,10 +28,10 @@ class Player(object):
             self.walkCount = 0
         if not self.standing:
             if self.left:
-                window.blit(self.walkLeft[self.walkCount//3], (self.x, self.y))
+                window.blit(self.walkLeft[self.walkCount // 3], (self.x, self.y))
                 self.walkCount += 1
             elif self.right:
-                window.blit(self.walkRight[self.walkCount//3], (self.x, self.y))
+                window.blit(self.walkRight[self.walkCount // 3], (self.x, self.y))
                 self.walkCount += 1
         else:
             if self.right:

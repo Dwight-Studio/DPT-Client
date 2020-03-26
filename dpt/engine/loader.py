@@ -64,7 +64,6 @@ class RessourceLoader:
         self.logger.info("Initialization done.")
 
     def load(self):
-        game = Game.get_instance()
         self.logger.info("Starting loading ressources")
         for entry in self.pending_ressources:
             if os.path.splitext(self.pending_ressources[entry])[1] == ".png":
