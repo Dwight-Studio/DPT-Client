@@ -1,14 +1,11 @@
 import pygame
 import math
 
-import dpt.game
+from dpt.game import Game
 from dpt.engine.graphics.characters.Player import Player
 
-bg = pygame.image.load("engine/graphics/backgrounds/backgrounds/background.png")
-
-
 def redraw_game_window():
-    game = dpt.game.Game.get_instance()
+    game = Game.get_instance()
     game.window.blit(bg, (0, 0))
     game.player.draw(game.window)
     pygame.display.update()
@@ -16,9 +13,12 @@ def redraw_game_window():
 
 # Mainloop
 def loop():
-    game = dpt.game.Game.get_instance()
+    global bg
+    game = Game.get_instance()
     screen_width, screen_height = game.window.get_size()
+
     game.player = Player(300, screen_height - 100, 64, 64)
+    bg = game.ressources.get("dpt.images.environment.background")
     run = True
     while run:
         game.clock.tick(27)

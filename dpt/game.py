@@ -3,37 +3,59 @@ import logging
 import os
 import sys
 import tarfile
+import time
 import traceback
-import weakref
-
 import pygame
-import dpt.engine.mainLoop
 
 
 class Game(object):
     _instance = None
+    VERSION = "ALPHA-0.0.1"
+    PYTHON_VERSION = str(sys.version_info[0]) + "." + str(sys.version_info[1]) + "." + str(sys.version_info[2]) + "-" + str(sys.version_info[3])
+    PYGAME_VERSION = pygame.version.ver
+    PLATFORM = sys.platform
+    ROOT_DIRECTORY = os.path.abspath("../")
 
     def __init__(self, debug):
-        self.VERSION = "ALPHA-0.0.1"
-        self.PYTHON_VERSION = str(sys.version_info[0]) + "." + str(sys.version_info[1]) + "." + str(sys.version_info[2]) + "-" + str(sys.version_info[3])
-        self.PYGAME_VERSION = pygame.version.ver
-        self.PLATFORM = sys.platform
-        self.ROOT_DIRECTORY = os.path.abspath("../")
         self.DEBUG = debug
 
-        # Undefined for now
-        self.window = None
-        self.clock = None
-        self.player = None
-
+        # Gère les fichiers de logs
         if os.path.isfile(self.ROOT_DIRECTORY + "/logs/latest.log"):
             file = tarfile.open(self.ROOT_DIRECTORY + "/logs/" + datetime.datetime.today().strftime("%d-%m-%Y-%H-%M-%S") + ".tar.gz", mode="x:gz", )
             file.add(self.ROOT_DIRECTORY + "/logs/latest.log", arcname="latest.log")
             file.close()
             os.remove(self.ROOT_DIRECTORY + "/logs/latest.log")
 
+        # Initialisation des logs
+        # Formatter
+        logging_format = logging.Formatter(fmt="[%(asctime)s][%(levelname)s][%(name)s] %(message)s", datefmt="%H:%M:%S")
+
+        # File handler
+        if not os.path.isdir(self.ROOT_DIRECTORY + "/logs/"):
+            os.mkdir(self.ROOT_DIRECTORY + "/logs/")
+
+        self.file_handler = logging.FileHandler(self.ROOT_DIRECTORY + "/logs/latest.log")
+        self.file_handler.setFormatter(logging_format)
+
+        # Stream handler
+        self.stream_handler = logging.StreamHandler(sys.stdout)
+        self.stream_handler.setFormatter(logging_format)
+
+        if self.DEBUG:
+            self.file_handler.setLevel(logging.DEBUG)
+            self.stream_handler.setLevel(logging.DEBUG)
+        else:
+            self.file_handler.setLevel(logging.INFO)
+            self.stream_handler.setLevel(logging.INFO)
+
+        # Undefined for now
+        self.window = None
+        self.clock = None
+        self.player = None
+        self.ressources = None
+
     def play(self):
-        main_logger = self.get_logger(None, self.DEBUG)
+        main_logger = self.get_logger(None)
         main_logger.info("--- Starting Don't Play Together. ---")
         main_logger.debug("Version: " + self.VERSION)
         main_logger.debug("Python version: " + self.PYTHON_VERSION)
@@ -48,7 +70,12 @@ class Game(object):
         self.clock = pygame.time.Clock()
 
         try:
-            dpt.engine.mainLoop.loop()
+            from dpt.engine.loader import RessourceLoader
+            self.ressources = RessourceLoader()
+            self.ressources.load()
+
+            from dpt.engine.mainLoop import loop
+            loop()
         except Exception:
             main_logger.critical("Unexpected error has occurred. Following informations has been gathered:")
             exc_type, exc_value, exc_tb = sys.exc_info()
@@ -56,36 +83,14 @@ class Game(object):
             for ms in trace.split("\n"):
                 main_logger.critical(ms)
 
-    def get_logger(self, name, debug):
+    def get_logger(self, name):
 
         logger = logging.getLogger(name)
         logger.setLevel(logging.DEBUG)
 
-        # Formatter
-        logging_format = logging.Formatter(fmt="[%(asctime)s][%(levelname)s][%(name)s] %(message)s", datefmt="%H:%M:%S")
+        logger.addHandler(self.stream_handler)
+        logger.addHandler(self.file_handler)
 
-        # File handler
-        if not os.path.isdir(self.ROOT_DIRECTORY + "/logs/"):
-            os.mkdir(self.ROOT_DIRECTORY + "/logs/")
-
-        file_handler = logging.FileHandler(self.ROOT_DIRECTORY + "/logs/latest.log")
-        file_handler.setFormatter(logging_format)
-
-        # Stream handler
-        stream_handler = logging.StreamHandler(sys.stdout)
-        stream_handler.setFormatter(logging_format)
-
-        if debug:
-            file_handler.setLevel(logging.DEBUG)
-            stream_handler.setLevel(logging.DEBUG)
-        else:
-            file_handler.setLevel(logging.INFO)
-            stream_handler.setLevel(logging.INFO)
-
-        logger.addHandler(stream_handler)
-        logger.addHandler(file_handler)
-
-        logger.debug("Logger initied.")
         return logger
 
     @classmethod
