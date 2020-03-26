@@ -88,8 +88,9 @@ class Game(object):
         logger = logging.getLogger(name)
         logger.setLevel(logging.DEBUG)
 
-        logger.addHandler(self.stream_handler)
-        logger.addHandler(self.file_handler)
+        if not logger.hasHandlers():
+            logger.addHandler(self.stream_handler)
+            logger.addHandler(self.file_handler)
 
         return logger
 
