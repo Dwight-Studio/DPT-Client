@@ -6,6 +6,7 @@ from dpt.engine.graphics.characters.Player import Player
 
 bg = pygame.image.load("engine/graphics/backgrounds/backgrounds/background.png")
 
+
 def redraw_game_window():
     game = dpt.game.Game.get_instance()
     game.window.blit(bg, (0, 0))
