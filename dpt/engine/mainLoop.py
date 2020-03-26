@@ -4,6 +4,7 @@ import math
 from dpt.game import Game
 from dpt.engine.graphics.characters.Player import Player
 
+
 def redraw_game_window():
     game = Game.get_instance()
     game.window.blit(bg, (0, 0))
