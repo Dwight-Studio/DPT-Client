@@ -69,7 +69,7 @@ class Game(object):
         self.clock = pygame.time.Clock()
 
         try:
-            # /!\ ZONE SECURISEE /!\
+            # /!\ ZONE SECURISÉE /!\
             from dpt.engine.loader import RessourceLoader
             self.ressources = RessourceLoader()
             self.ressources.add_pending("*")
