@@ -17,7 +17,7 @@ class Player(object):
         self.isJump = False
         self.jumpCount = 8
         self.staticJumpCount = self.jumpCount
-        self.left = False
+        self.left = True
         self.right = False
         self.walkCount = 0
         self.standing = True
