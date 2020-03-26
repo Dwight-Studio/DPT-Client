@@ -55,7 +55,7 @@ class RessourceLoader:
             self.pending_ressources[entry[0]] = entry[1]
         self.logger.info("Registered " + str(len(self.pending_ressources)) + " entries")
 
-        self.logger.info("Building loaded_ressources regisrty")
+        self.logger.info("Building loaded_ressources registry")
         self.loaded_ressources = {}
         self.logger.info("Registered " + str(len(self.loaded_ressources)) + " entries")
         if len(self.loaded_ressources) > 0:
@@ -75,5 +75,5 @@ class RessourceLoader:
         try:
             return self.loaded_ressources[entry]
         except KeyError:
-            self.logger.critical("Ressource can't be reached (Is ressources loaded ?)")
+            self.logger.critical("Ressource can't be reached (Are ressources loaded ?)")
             raise UnreachableRessourceError(entry)
