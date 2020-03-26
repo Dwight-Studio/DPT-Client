@@ -64,7 +64,7 @@ def loop():
                     game.player.right = False
                 game.player.walkCount = 0
         else:
-            if game.player.jumpCount >= -game.player.staticJumpCount:
+            if game.player.jumpCount >= -game.player.CONSTJUMPCOUNT:
                 neg = 1
                 if game.player.jumpCount < 0:
                     neg = -1
@@ -72,7 +72,7 @@ def loop():
                 game.player.jumpCount -= 1
             else:
                 game.player.isJump = False
-                game.player.jumpCount = game.player.staticJumpCount
+                game.player.jumpCount = game.player.CONSTJUMPCOUNT
 
         redraw_game_window()
 

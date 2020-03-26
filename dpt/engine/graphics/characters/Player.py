@@ -15,7 +15,7 @@ class Player(object):
         self.vel = 5
         self.isJump = False
         self.jumpCount = 8
-        self.staticJumpCount = self.jumpCount
+        self.CONSTJUMPCOUNT = self.jumpCount
         self.left = True
         self.right = False
         self.walkCount = 0
