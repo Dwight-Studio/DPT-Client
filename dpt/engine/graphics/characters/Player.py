@@ -1,5 +1,3 @@
-import pygame
-
 from dpt.game import Game
 
 

@@ -3,7 +3,6 @@ import logging
 import os
 import sys
 import tarfile
-import time
 import traceback
 import pygame
 
