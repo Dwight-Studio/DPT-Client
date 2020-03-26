@@ -6,8 +6,8 @@ from dpt.game import Game
 class Player(object):
     game = Game.get_instance()
     char = game.ressources.get("dpt.images.characters.player.standing")
-    walkRight = [game.ressources.get("dpt.images.characters.player.R1"), game.ressources.get("dpt.images.characters.player.R2"), game.ressources.get("dpt.images.characters.player.R3"), game.ressources.get("dpt.images.characters.player.R4"), game.ressources.get("dpt.images.characters.player.R5"), game.ressources.get("dpt.images.characters.player.R6"), game.ressources.get("dpt.images.characters.player.R7"), game.ressources.get("dpt.images.characters.player.R8"), game.ressources.get("dpt.images.characters.player.R9")]
-    walkLeft = [game.ressources.get("dpt.images.characters.player.L1"), game.ressources.get("dpt.images.characters.player.L2"), game.ressources.get("dpt.images.characters.player.L3"), game.ressources.get("dpt.images.characters.player.L4"), game.ressources.get("dpt.images.characters.player.L5"), game.ressources.get("dpt.images.characters.player.L6"), game.ressources.get("dpt.images.characters.player.L7"), game.ressources.get("dpt.images.characters.player.L8"), game.ressources.get("dpt.images.characters.player.L9")]
+    walkRight = game.ressources.get_multiple("dpt.images.characters.player.R*")
+    walkLeft = game.ressources.get_multiple("dpt.images.characters.player.L*")
 
     def __init__(self, x, y, width, height):
         self.x = x

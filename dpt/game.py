@@ -48,7 +48,7 @@ class Game(object):
             self.file_handler.setLevel(logging.INFO)
             self.stream_handler.setLevel(logging.INFO)
 
-        # Undefined for now
+        # Variable à définir
         self.window = None
         self.clock = None
         self.player = None
@@ -70,8 +70,10 @@ class Game(object):
         self.clock = pygame.time.Clock()
 
         try:
+            # /!\ ZONE SECURISEE /!\
             from dpt.engine.loader import RessourceLoader
             self.ressources = RessourceLoader()
+            self.ressources.add_pending("*")
             self.ressources.load()
 
             from dpt.engine.mainLoop import loop

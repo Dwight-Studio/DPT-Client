@@ -7,6 +7,34 @@ from dpt.game import Game
 RESSOURCES_DIRECTORY = Game.ROOT_DIRECTORY + "/dpt/ressources/"
 
 
+class UnreachableRessourceError(Exception):
+    def __init__(self, val):
+        if val:
+            self.message = f"'{val}'"
+        else:
+            self.message = None
+
+    def __str__(self):
+        if self.message:
+            return self.message
+        else:
+            return "No specified value"
+
+
+class InvalidRessourcePathError(Exception):
+    def __init__(self, val):
+        if val:
+            self.message = f"'{val}'"
+        else:
+            self.message = None
+
+    def __str__(self):
+        if self.message:
+            return self.message
+        else:
+            return "No specified value"
+
+
 def make_entries(path):
     rlist = []
     for item in os.listdir(path):
@@ -24,20 +52,6 @@ def make_entries(path):
     return rlist
 
 
-class UnreachableRessourceError(Exception):
-    def __init__(self, val):
-        if val:
-            self.message = f"'{val}'"
-        else:
-            self.message = None
-
-    def __str__(self):
-        if self.message:
-            return self.message
-        else:
-            return "No specified value"
-
-
 class RessourceLoader:
     def __init__(self):
         game = Game.get_instance()
@@ -46,13 +60,13 @@ class RessourceLoader:
         self.logger.info("Initializing registries")
 
         self.logger.info("Building RESSOURCES registry")
-        self.RESSOURCES = make_entries(RESSOURCES_DIRECTORY)
+        self.RESSOURCES = {}
+        for entry in make_entries(RESSOURCES_DIRECTORY):
+            self.RESSOURCES[entry[0]] = entry[1]
         self.logger.info("Registered " + str(len(self.RESSOURCES)) + " entries")
 
         self.logger.info("Building pending_ressources registry")
         self.pending_ressources = {}
-        for entry in make_entries(RESSOURCES_DIRECTORY):
-            self.pending_ressources[entry[0]] = entry[1]
         self.logger.info("Registered " + str(len(self.pending_ressources)) + " entries")
 
         self.logger.info("Building loaded_ressources registry")
@@ -69,11 +83,48 @@ class RessourceLoader:
             if os.path.splitext(self.pending_ressources[entry])[1] == ".png":
                 self.loaded_ressources[entry] = pygame.image.load(self.pending_ressources[entry])
                 self.logger.debug("Entry " + entry + " loaded")
+        self.logger.info("Loaded " + str(len(self.pending_ressources)) + " entries")
         self.logger.info("Loading done")
+        self.pending_ressources = []
+
+    def select_entries(self, path):
+        if "*" in path:
+            if path[-1] == "*":
+                path = path[:-1]
+                entries = []
+                for entry in self.RESSOURCES:
+                    if entry[:len(path)] == path:
+                        entries.append(entry)
+                return entries
+            else:
+                raise InvalidRessourcePathError(path)
+        else:
+            return [path]
+
+    def get_multiple(self, entry):
+        try:
+            rlist = []
+            entries = self.select_entries(entry)
+            for entry in entries:
+                rlist.append(self.loaded_ressources[entry])
+            return rlist
+        except KeyError:
+            self.logger.critical("Ressources can't be reached (Are ressources loaded ?)")
+            raise UnreachableRessourceError(entry)
 
     def get(self, entry):
         try:
             return self.loaded_ressources[entry]
         except KeyError:
             self.logger.critical("Ressource can't be reached (Are ressources loaded ?)")
+            raise UnreachableRessourceError(entry)
+
+    def add_pending(self, entry):
+        try:
+            rlist = []
+            entries = self.select_entries(entry)
+            for entry in entries:
+                self.pending_ressources[entry] = self.RESSOURCES[entry]
+        except KeyError:
+            self.logger.critical("Ressource can't be added to pending ressources (path doesn't exist)")
             raise UnreachableRessourceError(entry)
