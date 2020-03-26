@@ -1,6 +1,7 @@
 import pygame
 import math
 
+from dpt.engine.graphics.characters.PlayerSprite import PlayerSprite
 from dpt.game import Game
 from dpt.engine.graphics.characters.Player import Player
 
@@ -9,6 +10,9 @@ def redraw_game_window():
     game = Game.get_instance()
     game.window.blit(bg, (0, 0))
     game.player.draw(game.window)
+    """allsprites = pygame.sprite.RenderPlain(game.playerSprite)
+    allsprites.update()
+    allsprites.draw(game.window)"""
     pygame.display.update()
 
 
@@ -17,7 +21,7 @@ def loop():
     global bg
     game = Game.get_instance()
     screen_width, screen_height = game.window.get_size()
-
+    """game.playerSprite = PlayerSprite(300, screen_height - 100, 64, 64)"""
     game.player = Player(300, screen_height - 100, 64, 64)
     bg = game.ressources.get("dpt.images.environment.background")
     run = True
