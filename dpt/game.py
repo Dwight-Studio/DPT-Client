@@ -5,6 +5,7 @@ import sys
 import tarfile
 import traceback
 import pygame
+import time
 
 
 class Game(object):
@@ -14,6 +15,8 @@ class Game(object):
     PYGAME_VERSION = pygame.version.ver
     PLATFORM = sys.platform
     ROOT_DIRECTORY = os.path.abspath("../")
+    SERVER_ADDRESS = "localhost"
+    VOTE_TIMEOUT = 30
 
     def __init__(self, debug):
         self.DEBUG = debug
@@ -78,8 +81,12 @@ class Game(object):
             self.ressources.add_pending("*")
             self.ressources.load()
             from dpt.engine.webCommunications import Communication
-            com = Communication("localhost")
-            com.create()
+            #com = Communication()
+            #com.create()
+            #time.sleep(60)
+            #com.registerVote(0, 0)
+            #time.sleep(60)
+            #com.close()
 
             from dpt.engine.mainLoop import loop
             loop()
