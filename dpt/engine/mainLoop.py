@@ -7,6 +7,7 @@ from dpt.engine.graphics.characters.PlayerSprite import PlayerSprite
 def redraw_game_window():
     game = Game.get_instance()
     game.sprites.update()
+    game.playerSprite.animation()
     game.surface.blit(bg, (0, 0))
     game.sprites.draw(game.surface)
     game.window.update()

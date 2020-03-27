@@ -75,3 +75,20 @@ class PlayerSprite(pygame.sprite.Sprite):
             else:
                 self.isJump = False
                 self.jumpCount = self.CONSTJUMPCOUNT
+
+    def animation(self):
+        if self.walkCount + 1 >= 27:
+            self.walkCount = 0
+
+        if not self.standing:
+            if self.left:
+                self.image = PlayerSprite.walkLeft[self.walkCount//3]
+                self.walkCount += 1
+            elif self.right:
+                self.image = PlayerSprite.walkRight[self.walkCount // 3]
+                self.walkCount += 1
+        else:
+            if self.right:
+                self.image = PlayerSprite.walkRight[0]
+            else:
+                self.image = PlayerSprite.walkLeft[0]
