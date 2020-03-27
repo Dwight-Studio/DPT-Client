@@ -17,7 +17,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.vel = 5
+        self.vel = 8
         self.left = True
         self.right = False
         self.standing = False
