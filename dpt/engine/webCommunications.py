@@ -6,6 +6,7 @@ import threading
 import time
 import json
 
+
 class Communication(object):
     def __init__(self):
         self.i = 0
@@ -42,7 +43,7 @@ class Communication(object):
 
     def createVoteEvent(self, mod1, mod2):
         self.currentTime = int(round(time.time() * 1000))
-        data = {"endDate": self.currentTime+(Game.VOTE_TIMEOUT*1000)+2000,
+        data = {"endDate": self.currentTime + (Game.VOTE_TIMEOUT * 1000) + 2000,
                 "mod1": mod1,
                 "mod2": mod2}
         requests.get("http://" + Game.SERVER_ADDRESS + "/registerVote.php?session=" + self.sessionName + "&data=" + json.dumps(data))
