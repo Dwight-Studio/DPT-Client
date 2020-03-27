@@ -11,7 +11,7 @@ class PlayerSprite(pygame.sprite.Sprite):
     walkRight = game.ressources.get_multiple("dpt.images.characters.player.R*")
     walkLeft = game.ressources.get_multiple("dpt.images.characters.player.L*")
 
-    def __init__(self, color, x, y, width, height):
+    def __init__(self, x, y, width, height):
         pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
         self.image = PlayerSprite.char
         self.rect = self.image.get_rect()
