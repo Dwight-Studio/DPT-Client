@@ -5,6 +5,7 @@ import sys
 import tarfile
 import traceback
 import pygame
+import time
 
 
 class Game(object):
