@@ -5,6 +5,7 @@ import sys
 import tarfile
 import traceback
 import pygame
+import time
 
 
 class Game(object):
@@ -14,6 +15,8 @@ class Game(object):
     PYGAME_VERSION = pygame.version.ver
     PLATFORM = sys.platform
     ROOT_DIRECTORY = os.path.abspath("../")
+    SERVER_ADDRESS = "joindpt.servegame.com"
+    VOTE_TIMEOUT = 30
 
     def __init__(self, debug):
         self.DEBUG = debug
@@ -26,6 +29,9 @@ class Game(object):
             os.remove(self.ROOT_DIRECTORY + "/logs/latest.log")
 
         # Initialisation des logs
+        # Logs des autres modules
+        logging.getLogger("urllib3").setLevel(logging.CRITICAL)
+
         # Formatter
         logging_format = logging.Formatter(fmt="[%(asctime)s][%(levelname)s][%(name)s] %(message)s", datefmt="%H:%M:%S")
 
@@ -71,11 +77,18 @@ class Game(object):
         self.clock = pygame.time.Clock()
 
         try:
-            # /!\ ZONE SECURISEE /!\
+            # /!\ ZONE SECURISÉE /!\
             from dpt.engine.loader import RessourceLoader
             self.ressources = RessourceLoader()
             self.ressources.add_pending("*")
             self.ressources.load()
+            from dpt.engine.webCommunications import Communication
+            #com = Communication()
+            #com.create()
+            #time.sleep(60)
+            #com.createVoteEvent(0, 0)
+            #time.sleep(60)
+            #com.close()
 
             from dpt.engine.mainLoop import loop
             loop()
