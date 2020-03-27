@@ -17,9 +17,9 @@ class Communication(object):
         self.currentTime = int(round(time.time() * 1000))
 
     def create(self):
-        request = requests.get("http://"+Game.SERVER_ADDRESS+"/init.php?session="+self.sessionName)
+        request = requests.get("http://" + Game.SERVER_ADDRESS + "/init.php?session=" + self.sessionName)
         if request.json() == self.sessionName:
-            self.log.info("Created session : "+self.sessionName)
+            self.log.info("Created session : " + self.sessionName)
             self.log.info("http://" + Game.SERVER_ADDRESS + "/?session=" + self.sessionName)
             self.log.info("Starting keepAlive...")
             self.keep = True
@@ -31,23 +31,24 @@ class Communication(object):
     def keepAlive(self):
         while self.keep:
             time.sleep(3)
-            keepLink = requests.get("http://"+Game.SERVER_ADDRESS+"/keepAlive.php?session="+self.sessionName)
+            keepLink = requests.get("http://" + Game.SERVER_ADDRESS + "/keepAlive.php?session=" + self.sessionName)
             if not keepLink.json():
                 self.i += 1
                 if self.i == 3:
                     self.log.critical("keepAlive failed")
+                    self.keep = False
                 else:
                     continue
 
-    def registerVote(self, mod1, mod2):
+    def createVoteEvent(self, mod1, mod2):
         self.currentTime = int(round(time.time() * 1000))
         data = {"endDate": self.currentTime+(Game.VOTE_TIMEOUT*1000)+2000,
                 "mod1": mod1,
                 "mod2": mod2}
-        requests.get("http://"+Game.SERVER_ADDRESS+"/registerVote.php?session="+self.sessionName+"&data="+json.dumps(data))
+        requests.get("http://" + Game.SERVER_ADDRESS + "/registerVote.php?session=" + self.sessionName + "&data=" + json.dumps(data))
 
     def close(self):
-        requestClose = requests.get("http://"+Game.SERVER_ADDRESS+"/close.php?session="+self.sessionName)
+        requestClose = requests.get("http://" + Game.SERVER_ADDRESS + "/close.php?session=" + self.sessionName)
         self.keep = False
         if not requestClose.json():
             self.log.warning("Close session failed")

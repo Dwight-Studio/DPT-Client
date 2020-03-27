@@ -84,7 +84,7 @@ class Game(object):
             #com = Communication()
             #com.create()
             #time.sleep(60)
-            #com.registerVote(0, 0)
+            #com.createVoteEvent(0, 0)
             #time.sleep(60)
             #com.close()
 
