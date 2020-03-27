@@ -79,6 +79,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.animation()
 
     def animation(self):
+        game = Game.get_instance()
         if self.walkCount + 1 >= 27:
             self.walkCount = 0
 
@@ -94,3 +95,4 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.image = PlayerSprite.walkRight[0]
             else:
                 self.image = PlayerSprite.walkLeft[0]
+        pygame.draw.rect(game.surface, (255, 0, 0), self.rect, 2)
