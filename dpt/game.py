@@ -62,8 +62,10 @@ class Game(object):
         main_logger.debug("OS: " + self.PLATFORM)
 
         pygame.init()
-        self.window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN, pygame.RESIZABLE)
-        w, h = self.window.get_size()
+        self.sprites = pygame.sprite.Group()
+        self.window = pygame.display
+        self.surface = self.window.set_mode((0, 0), pygame.FULLSCREEN, pygame.RESIZABLE)
+        w, h = self.surface.get_size()
         main_logger.debug("Window size: " + str(w) + "x" + str(h))
         pygame.display.set_caption("Don't play together")
         self.clock = pygame.time.Clock()
