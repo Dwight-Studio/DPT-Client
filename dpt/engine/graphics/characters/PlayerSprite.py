@@ -82,7 +82,7 @@ class PlayerSprite(pygame.sprite.Sprite):
 
         if not self.standing:
             if self.left:
-                self.image = PlayerSprite.walkLeft[self.walkCount//3]
+                self.image = PlayerSprite.walkLeft[self.walkCount // 3]
                 self.walkCount += 1
             elif self.right:
                 self.image = PlayerSprite.walkRight[self.walkCount // 3]
