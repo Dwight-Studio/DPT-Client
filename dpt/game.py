@@ -15,7 +15,7 @@ class Game(object):
     PYGAME_VERSION = pygame.version.ver
     PLATFORM = sys.platform
     ROOT_DIRECTORY = os.path.abspath("../")
-    SERVER_ADDRESS = "localhost"
+    SERVER_ADDRESS = "joindpt.servegame.com"
     VOTE_TIMEOUT = 30
 
     def __init__(self, debug):
