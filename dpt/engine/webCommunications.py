@@ -57,9 +57,10 @@ class Communication(object):
         requestVote = requests.get("http://" + Game.SERVER_ADDRESS + "/sessions.json").json()
         if requestVote != None:
             for data in requestVote[self.sessionName].values():
-                if data == 1:
+                self.log.info(data)
+                if data == "1":
                     voteOne += 1
-                elif data == 2:
+                elif data == "2":
                     voteTwo += 1
             if voteOne > voteTwo:
                 self.log.info("Majority of vote 1")
