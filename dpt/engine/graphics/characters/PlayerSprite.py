@@ -76,6 +76,8 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.isJump = False
                 self.jumpCount = self.CONSTJUMPCOUNT
 
+        self.animation()
+
     def animation(self):
         if self.walkCount + 1 >= 27:
             self.walkCount = 0

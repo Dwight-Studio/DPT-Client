@@ -7,7 +7,6 @@ from dpt.engine.graphics.characters.PlayerSprite import PlayerSprite
 def redraw_game_window():
     game = Game.get_instance()
     game.sprites.update()
-    game.playerSprite.animation()
     game.surface.blit(bg, (0, 0))
     game.sprites.draw(game.surface)
     game.window.update()
@@ -18,7 +17,7 @@ def loop():
     global bg
     game = Game.get_instance()
     screen_width, screen_height = game.surface.get_size()
-    game.playerSprite = PlayerSprite(300, screen_height - 200, 64, 64)
+    game.playerSprite = PlayerSprite(300, screen_height - 100, 64, 64)
     game.sprites.add(game.playerSprite)
     bg = game.ressources.get("dpt.images.environment.background")
     run = True
