@@ -82,13 +82,13 @@ class Game(object):
             self.ressources = RessourceLoader()
             self.ressources.add_pending("*")
             self.ressources.load()
-            from dpt.engine.webCommunications import Communication
-            #com = Communication()
-            #com.create()
-            #time.sleep(10)
-            #com.createVoteEvent(0, 0)
-            #time.sleep(40)
-            #com.voteResult()
+            # from dpt.engine.webCommunications import Communication
+            # com = Communication()
+            # com.create()
+            # time.sleep(10)
+            # com.createVoteEvent(0, 0)
+            # time.sleep(40)
+            # com.voteResult()
 
             from dpt.engine.mainLoop import loop
             loop()
