@@ -68,7 +68,8 @@ class Game(object):
         main_logger.debug("OS: " + self.PLATFORM)
 
         pygame.init()
-        self.sprites = pygame.sprite.Group()
+        self.joueur = pygame.sprite.Group()
+        self.platforms = pygame.sprite.Group()
         self.window = pygame.display
         self.surface = self.window.set_mode((0, 0), pygame.FULLSCREEN, pygame.RESIZABLE)
         w, h = self.surface.get_size()
