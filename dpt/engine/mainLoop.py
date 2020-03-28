@@ -46,10 +46,14 @@ def loop():
                     game.playerSprite.rect.x = hits[0].rect.x - (game.playerSprite.width // 2)
                 elif game.playerSprite.rect.x + game.playerSprite.vel > hits[0].rect.x + hits[0].width:  # Pour détecter si le joueur vient de la droite
                     game.playerSprite.rect.x = hits[0].rect.x + hits[0].width
-                    print("C'est pas moi c'est le jeu qui est con!")
             elif game.playerSprite.jumpCount < 0:
-                if game.playerSprite.rect.y + game.playerSprite.height - math.floor(((game.playerSprite.jumpCount + 1) ** 2) * 0.5) < hits[0].rect.y:  # Pour détecter si le joueur vient d'en haut
-                    game.playerSprite.rect.y = hits[0].rect.y - (game.playerSprite.height // 2)
+                print(game.playerSprite.rect.y + (game.playerSprite.height // 2) - math.floor(((game.playerSprite.jumpCount + 1) ** 2) * 0.5))
+                print(hits[0].rect.y)
+                if game.playerSprite.rect.y + (game.playerSprite.height // 2) - math.floor(((game.playerSprite.jumpCount + 1) ** 2) * 0.5) < hits[0].rect.y:  # Pour détecter si le joueur vient d'en haut
+                    print("C'est pas moi, c'est le jeu qui est con.")
+                    game.playerSprite.jumpCount = -game.playerSprite.CONSTJUMPCOUNT
+                    game.playerSprite.isJump = False
+                    game.playerSprite.rect.y = hits[0].rect.y - game.playerSprite.height
 
         redraw_game_window()
 
