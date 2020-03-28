@@ -42,11 +42,34 @@ class Communication(object):
                     continue
 
     def createVoteEvent(self, mod1, mod2):
+        self.log.info("Creating a new vote...")
         self.currentTime = int(round(time.time() * 1000))
         data = {"endDate": self.currentTime + (Game.VOTE_TIMEOUT * 1000) + 2000,
                 "mod1": mod1,
                 "mod2": mod2}
         requests.get("http://" + Game.SERVER_ADDRESS + "/registerVote.php?session=" + self.sessionName + "&data=" + json.dumps(data))
+        self.log.info("Vote created")
+
+    def voteResult(self):
+        voteOne = 0
+        voteTwo = 0
+        self.log.info("Requesting vote output...")
+        requestVote = requests.get("http://" + Game.SERVER_ADDRESS + "/sessions.json").json()
+        if requestVote != None:
+            for data in requestVote[self.sessionName].values():
+                self.log.debug("Vote " + data)
+                if data == "1":
+                    voteOne += 1
+                elif data == "2":
+                    voteTwo += 1
+            if voteOne > voteTwo:
+                self.log.info("Majority of vote 1")
+            elif voteTwo > voteOne:
+                self.log.info("Majority of vote 2")
+            else:
+                self.log.info("Vote equality")
+        else:
+            self.log.critical("Vote request failed")
 
     def close(self):
         requestClose = requests.get("http://" + Game.SERVER_ADDRESS + "/close.php?session=" + self.sessionName)
