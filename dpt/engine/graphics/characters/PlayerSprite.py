@@ -27,28 +27,19 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.isJump = False
         self.jumpCount = 8
         self.CONSTJUMPCOUNT = self.jumpCount
+        self.onPlatform = True
 
     def update(self):
 
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_LEFT] and self.rect.x > self.vel:
+        if keys[pygame.K_LEFT]:
             self.rect.x -= self.vel
             self.left = True
             self.right = False
             self.standing = False
-        elif keys[pygame.K_LEFT]:
-            self.rect.x = 0
-            self.left = True
-            self.right = False
-            self.standing = False
-        elif keys[pygame.K_RIGHT] and self.rect.x + self.width + self.vel < PlayerSprite.screen_width:
-            self.rect.x += self.vel
-            self.left = False
-            self.right = True
-            self.standing = False
         elif keys[pygame.K_RIGHT]:
-            self.rect.x = PlayerSprite.screen_width - self.width
+            self.rect.x += self.vel
             self.left = False
             self.right = True
             self.standing = False
@@ -65,16 +56,18 @@ class PlayerSprite(pygame.sprite.Sprite):
                 else:
                     self.right = False
                 self.walkCount = 0
+                self.onPlatform = False
         else:
-            if self.jumpCount >= -self.CONSTJUMPCOUNT:
-                neg = 1
-                if self.jumpCount < 0:
+            if not self.onPlatform:
+                if self.jumpCount > 0:
+                    neg = 1
+                else:
                     neg = -1
                 self.rect.y -= math.floor((self.jumpCount ** 2) * 0.5) * neg
                 self.jumpCount -= 1
-            else:
-                self.isJump = False
+            elif self.onPlatform:
                 self.jumpCount = self.CONSTJUMPCOUNT
+                self.isJump = False
 
         self.animation()
 

@@ -37,23 +37,9 @@ def loop():
         hits = pygame.sprite.spritecollide(game.playerSprite, game.platforms, False)
 
         if hits:
-            print("Point en haut à gauche :", hits[0].rect.x, hits[0].rect.y)
-            print("Point en bas à droite :", hits[0].rect.x + hits[0].width, hits[0].rect.y + hits[0].height)
-            if game.playerSprite.jumpCount > 0:
-                if game.playerSprite.rect.y + math.floor(((game.playerSprite.jumpCount + 1) ** 2) * 0.5) > hits[0].rect.y + hits[0].height:  # Pour détecter si le joueur vient d'en bas
-                    game.playerSprite.jumpCount = 0
-                elif game.playerSprite.rect.x + game.playerSprite.width - game.playerSprite.vel < hits[0].rect.x:  # Pour détecter si le joueur vient de la gauche
-                    game.playerSprite.rect.x = hits[0].rect.x - (game.playerSprite.width // 2)
-                elif game.playerSprite.rect.x + game.playerSprite.vel > hits[0].rect.x + hits[0].width:  # Pour détecter si le joueur vient de la droite
-                    game.playerSprite.rect.x = hits[0].rect.x + hits[0].width
-            elif game.playerSprite.jumpCount < 0:
-                print(game.playerSprite.rect.y + (game.playerSprite.height // 2) - math.floor(((game.playerSprite.jumpCount + 1) ** 2) * 0.5))
-                print(hits[0].rect.y)
-                if game.playerSprite.rect.y + (game.playerSprite.height // 2) - math.floor(((game.playerSprite.jumpCount + 1) ** 2) * 0.5) < hits[0].rect.y:  # Pour détecter si le joueur vient d'en haut
-                    print("C'est pas moi, c'est le jeu qui est con.")
-                    game.playerSprite.jumpCount = -game.playerSprite.CONSTJUMPCOUNT
-                    game.playerSprite.isJump = False
-                    game.playerSprite.rect.y = hits[0].rect.y - game.playerSprite.height
+            for platformes in hits:
+                print("Point en haut à gauche :", platformes.rect.x, platformes.rect.y)
+                print("Point en bas à droite :", platformes.rect.x + platformes.width, platformes.rect.y + platformes.height)
 
         redraw_game_window()
 
