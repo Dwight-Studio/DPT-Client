@@ -4,12 +4,17 @@ import sys
 from dpt.engine.graphics.platforms.Block import *
 
 #          {"x, y": {"blockClass": Classe}}
-levelTest ={"8, 1": {"blockClass": Block},
-            "8, 2": {"blockClass": Block},
-            "8, 3": {"blockClass": Block},
-            "12, 1":{"blockClass": Block},
-            "12, 2":{"blockClass": Block},
-            "42, 3":{"blockClass": Block},}
+levelTest ={"0, 32": {"blockClass": Block},
+            "1, 32": {"blockClass": Block},
+            "2, 32": {"blockClass": Block},
+            "3, 32":{"blockClass": Block},
+            "4, 32":{"blockClass": Block},
+            "5, 32":{"blockClass": Block},
+            "6, 32":{"blockClass": Block},
+            "7, 32":{"blockClass": Block},
+            "8, 32":{"blockClass": Block},
+            "9, 32":{"blockClass": CeciEstUnBlock},
+            "10, 32":{"blockClass": Block}}
 
 class TileManager():
     def __init__(self):
