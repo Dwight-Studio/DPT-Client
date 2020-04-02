@@ -3,11 +3,14 @@ import pygame
 from dpt.game import Game
 from dpt.engine.graphics.characters.PlayerSprite import PlayerSprite
 from dpt.engine.scenes.level1 import Level1
+from dpt.engine.graphics.tileManager import TileManager
 
 
 def redraw_game_window():
     game = Game.get_instance()
     game.surface.blit(bg, (0, 0))
+    tile = TileManager()
+    tile.enableGrid()
     game.joueur.update()
     game.platforms.update()
     game.platforms.draw(game.surface)
@@ -18,8 +21,6 @@ def redraw_game_window():
 # Mainloop
 def loop():
     global bg
-
-    niveau = Level1()
     
     game = Game.get_instance()
     screen_width, screen_height = game.surface.get_size()

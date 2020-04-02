@@ -15,8 +15,8 @@ class Game(object):
     PYGAME_VERSION = pygame.version.ver
     PLATFORM = sys.platform
     ROOT_DIRECTORY = os.path.abspath("../")
-    SERVER_ADDRESS = "joindpt.servegame.com"
-    VOTE_TIMEOUT = 30
+    SERVER_ADDRESS = "localhost"
+    VOTE_TIMEOUT = 80
 
     def __init__(self, debug):
         self.DEBUG = debug
@@ -83,13 +83,18 @@ class Game(object):
             self.ressources = RessourceLoader()
             self.ressources.add_pending("*")
             self.ressources.load()
-            # from dpt.engine.webCommunications import Communication
-            # com = Communication()
-            # com.create()
-            # time.sleep(10)
-            # com.createVoteEvent(0, 0)
-            # time.sleep(40)
-            # com.voteResult()
+            from dpt.engine.graphics.tileManager import TileManager
+            from dpt.engine.graphics.tileManager import levelTest
+            tile = TileManager()
+            tile.enableGrid()
+            tile.loadLevel(levelTest)
+            #from dpt.engine.webCommunications import Communication
+            #com = Communication()
+            #com.create()
+            #time.sleep(10)
+            #com.createVoteEvent(0, 0)
+            #time.sleep(40)
+            #com.voteResult()
 
             from dpt.engine.mainLoop import loop
             loop()
