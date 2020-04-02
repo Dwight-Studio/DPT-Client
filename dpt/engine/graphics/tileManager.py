@@ -3,9 +3,13 @@ import pygame
 import sys
 from dpt.engine.graphics.platforms.Block import *
 
-#          {x, y: {"blockClass": Classe}}
-levelTest ={"11": {"blockClass": Block},
-            "12": {"blockClass": Block}}
+#          {"x, y": {"blockClass": Classe}}
+levelTest ={"8, 1": {"blockClass": Block},
+            "8, 2": {"blockClass": Block},
+            "8, 3": {"blockClass": Block},
+            "12, 1":{"blockClass": Block},
+            "12, 2":{"blockClass": Block},
+            "42, 3":{"blockClass": Block},}
 
 class TileManager():
     def __init__(self):
@@ -13,7 +17,7 @@ class TileManager():
         self.log = self.game.get_logger("TileManager")
         self.tileSize = 32
         self.userConfirm = True
-        self.levelName = levelTest
+        self.levelName = None
 
     def enableGrid(self):
         if self.userConfirm:
@@ -26,11 +30,16 @@ class TileManager():
         pass
 
     def loadLevel(self, levelName):
-        i = 0
+        if levelName == None:
+            self.log.critical("The level can't be loaded")
         for keys in levelTest:
-            blockx = int(tuple(keys)[0]) * self.tileSize
-            blocky = int(tuple(keys)[1]) * self.tileSize
-            i += 1
+            coords = tuple(map(int, keys.split(", ")))
+            if coords[0] < 0 or coords[1] < 0:
+                self.log.warning("The tile position can't be negative")
+                continue
+            elif coords[0] > self.game.surface.get_size()[0] / self.tileSize or coords[1] > self.game.surface.get_size()[1]:
+                self.log.warning("The tile position can't be greater that the screen size")
+                continue
             for data in levelTest[keys].values():
-                self.game.platforms.add(data((255, 0, 0), blockx, blocky, self.tileSize, self.tileSize))
+                self.game.platforms.add(data((255, 0, 0), coords[0] * self.tileSize, coords[1] * self.tileSize, self.tileSize, self.tileSize))
 
