@@ -64,6 +64,7 @@ levelTest = {"0, 32": {"blockClass": "Block"},
              "56, 32": {"blockClass": "Block"},
              "57, 32": {"blockClass": "Block"},
              "58, 32": {"blockClass": "Block"},
+             "59, 32": {"blockClass": "Block"},
              "60, 32": {"blockClass": "Block"},
              "61, 32": {"blockClass": "Block"},
              "62, 32": {"blockClass": "Block"},
@@ -86,6 +87,7 @@ class TileManager:
         self.maxWidthSize = 0
         self.maxHeightSize = 0
         self.coords = None
+        self.LISTE = []
 
     def enableGrid(self):
         if self.userConfirm:
@@ -116,6 +118,7 @@ class TileManager:
             for data in levelTest[keys].values():
                 try:
                     sprite = eval(data + "((255, 0, 0), coords[0] * self.tileSize, coords[1] * self.tileSize, self.tileSize, self.tileSize)")
+                    self.LISTE.append(sprite)
                     Game.platforms.add(sprite)
                 except:
                     self.log.warning("Invalid class name : " + data + " for tile : " + keys)
@@ -134,5 +137,5 @@ class Camera:
         x = -target.rect.x + int(Game.surface.get_size()[0] / 2)
 
         x = min(0, x)
-        x = max(-self.width, x)
+        x = max(-(self.width), x)
         self.camera = pygame.Rect(x, 0, self.width, self.height)
