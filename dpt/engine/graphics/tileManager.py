@@ -3,9 +3,9 @@ from dpt.game import Game
 import pygame
 
 #          {"x, y": {"blockClass": Classe}}
-levelTest ={"0, 32":{"blockClass": Block},
-            "1, 32":{"blockClass": Block},
-            "2, 32":{"blockClass": Block},
+levelTest ={"0, 32": {"blockClass": Block},
+            "1, 32": {"blockClass": Block},
+            "2, 32": {"blockClass": Block},
             "3, 32":{"blockClass": Block},
             "4, 32":{"blockClass": Block},
             "5, 32":{"blockClass": Block},
@@ -14,6 +14,7 @@ levelTest ={"0, 32":{"blockClass": Block},
             "8, 32":{"blockClass": Block},
             "9, 32":{"blockClass": CeciEstUnBlock},
             "10, 32":{"blockClass": Block}}
+
 
 class TileManager():
     def __init__(self):
@@ -47,6 +48,9 @@ class TileManager():
                 self.maxWidthSize = coords[0]
             elif coords[1] > self.maxHeightSize:
                 self.maxHeightSize = coords[1]
+            if coords[0] < 0 or coords[1] < 0:
+                self.log.warning("The tile position can't be negative")
+                continue
             for data in levelTest[keys].values():
                 self.game.platforms.add(data((255, 0, 0), coords[0] * self.tileSize, coords[1] * self.tileSize, self.tileSize, self.tileSize))
 
