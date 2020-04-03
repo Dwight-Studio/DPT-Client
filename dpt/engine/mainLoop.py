@@ -1,7 +1,7 @@
-import pygame
 from dpt.game import Game
 from dpt.engine.graphics.characters.PlayerSprite import PlayerSprite
 from dpt.engine.graphics.tileManager import *
+from dpt.engine.collisionsDetector import Detector
 
 game = Game.get_instance()
 tile = TileManager()
@@ -35,13 +35,8 @@ def loop():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 run = False
 
-        hits = pygame.sprite.spritecollide(game.playerSprite, game.platforms, False)
+        collisions = Detector()
         camera.update(game.playerSprite)
-
-        if hits:
-            for platformes in hits:
-                print("Point en haut à gauche :", platformes.rect.x, platformes.rect.y)
-                print("Point en bas à droite :", platformes.rect.x + platformes.width, platformes.rect.y + platformes.height)
 
         redraw_game_window()
 
