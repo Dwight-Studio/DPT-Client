@@ -13,7 +13,14 @@ levelTest = {"0, 32": {"blockClass": Block},
              "7, 32": {"blockClass": Block},
              "8, 32": {"blockClass": Block},
              "9, 32": {"blockClass": CeciEstUnBlock},
-             "10, 32": {"blockClass": Block}}
+             "10, 32": {"blockClass": Block},
+             "11, 32": {"blockClass": Block},
+             "12, 32": {"blockClass": Block},
+             "13, 31": {"blockClass": Block},
+             "14, 30": {"blockClass": Block},
+             "15, 30": {"blockClass": Block},
+             "16, 30": {"blockClass": Block},
+             "15, 28": {"blockClass": Block},}
 
 
 class TileManager:
