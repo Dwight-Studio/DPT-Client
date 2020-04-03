@@ -1,4 +1,7 @@
 import os
+import sys
+import traceback
+import json
 import pygame
 
 from dpt.game import Game
@@ -78,22 +81,29 @@ class RessourceLoader:
     def load(self):
         self.logger.info("Starting loading ressources")
         for entry in self.pending_ressources:
-            ext = self.pending_ressources[entry][1].split(".")[-1]
-            if ext == "png":
-                try:
+            ext = self.pending_ressources[entry][1].split(".")[-2:-1]
+            try:
+                if ext[1] == "png":
                     self.loaded_ressources[entry] = pygame.image.load(self.pending_ressources[entry])
                     self.logger.debug("Entry " + entry + " loaded")
-                except Exception as ex:
-                    self.logger.warning("Can't load entry " + entry)
-                    self.logger.warning(ex.)
 
-            if ext == "level.json":
-                table
-                self.loaded_ressources[entry] = table)
-                self.logger.debug("Entry " + entry + " loaded")
-                self.logger.info("Loaded " + str(len(self.pending_ressources)) + " entries")
-                self.logger.info("Loading done")
-                self.pending_ressources = []
+                if ext[0] == "level" and ext[1] == "json":
+                    table = None
+                    file = open(self.pending_ressources[entry], "r")
+                    table = json.loads(file.read())
+                    file.close()
+                    self.loaded_ressources[entry] = table
+                    self.logger.debug("Entry " + entry + " loaded")
+                    self.logger.info("Loaded " + str(len(self.pending_ressources)) + " entries")
+                    self.logger.info("Loading done")
+                    self.pending_ressources = []
+
+            except Exception as ex:
+                self.logger.warning("Can't load entry " + entry)
+                exc_type, exc_value, exc_tb = sys.exc_info()
+                trace = "".join(traceback.format_exception(exc_type, exc_value, exc_tb))
+                for ms in trace.split("\n"):
+                    self.logger.warning(ms)
 
     def select_entries(self, path):
         if "*" in path:
