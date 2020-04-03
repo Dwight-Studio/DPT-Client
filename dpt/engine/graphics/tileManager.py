@@ -16,11 +16,17 @@ class TileManager:
         self.coords = None
 
     def loadLevel(self, levelName):
+        if type(levelName) == str:
+            self.log.info("Loading level " + levelName)
+            level = Game.ressources.get(levelName)
+        else:
+            self.log.info("Loading unknown level")
+            level = levelName
         self.maxWidthSize = 0
         self.maxHeightSize = 0
-        if levelName is None:
+        if level is None:
             self.log.critical("The level can't be loaded")
-        for keys in levelName:
+        for keys in level:
             coords = tuple(map(int, keys.split(", ")))
             if coords[0] > self.maxWidthSize:
                 self.maxWidthSize = coords[0]
@@ -29,7 +35,7 @@ class TileManager:
             if coords[0] < 0 or coords[1] < 0:
                 self.log.warning("The tile position can't be negative : " + keys)
                 continue
-            for data in levelName[keys].values():
+            for data in level[keys].values():
                 try:
                     sprite = eval(data + "((255, 0, 0), coords[0] * Game.TILESIZE, coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE)")
                     self.log.debug("Tile " + data + " placed at " + keys)
@@ -37,11 +43,12 @@ class TileManager:
                     Game.platforms.add(sprite)
                 except:
                     self.log.warning("Invalid class name : " + data + " for tile : " + keys)
+        self.log.info("Done")
 
 
 class Camera:
     def __init__(self, width, height):
-        self.userConfirm = True
+        self.userConfirm = False
         self.camera = pygame.Rect(0, 0, width, height)
         self.width = width
         self.height = height

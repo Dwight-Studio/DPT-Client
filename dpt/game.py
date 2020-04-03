@@ -92,7 +92,7 @@ class Game(object):
             cls.ressources.load()
             from dpt.engine.graphics.tileManager import TileManager, Camera
             cls.tile = TileManager()
-            cls.tile.loadLevel(cls.ressources.get("dpt.levels.leveltest"))
+            cls.tile.loadLevel("dpt.levels.leveltest")
             cls.camera = Camera(cls.tile.maxWidthSize, cls.tile.maxHeightSize)
             # from dpt.engine.webCommunications import Communication
             # com = Communication()
