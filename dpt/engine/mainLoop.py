@@ -8,6 +8,7 @@ def redraw_Game_window():
     Game.camera.update(Game.playerSprite)
     Game.joueur.update()
     Game.platforms.update()
+    Game.display_debug_info()
     Game.window.update()
 
 

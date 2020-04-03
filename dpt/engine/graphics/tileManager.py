@@ -66,19 +66,22 @@ class Camera:
 
     def update(self, target):
         x = None
-        if Game.playerSprite.right and Game.playerSprite.rect.right >= int(Game.surface.get_size()[0] / 4 * 3):
+        Game.add_debug_info("Right : " + str(Game.playerSprite.right))
+        Game.add_debug_info("Left : " + str(Game.playerSprite.left))
+        Game.add_debug_info("LimitR : " + str(int(Game.surface.get_size()[0] / 4 * 3)))
+        Game.add_debug_info("LimitL : " + str(int(Game.surface.get_size()[0] / 4)))
+        Game.add_debug_info("Player X :" + str(target.rect.centerx))
+        Game.add_debug_info("Player Y : " + str(target.rect.centery))
+        if Game.playerSprite.right and Game.playerSprite.rect.centerx >= int(Game.surface.get_size()[0] / 4 * 3):
             x = -target.rect.x + int(Game.surface.get_size()[0] / 4 * 3)
-        elif Game.playerSprite.left and Game.playerSprite.rect.left <= int(Game.surface.get_size()[0] / 4):
-            self.log.debug("surface : " + str(int(Game.surface.get_size()[0] / 4)))
-            self.log.debug("sprite : " + str(Game.playerSprite.rect.centerx))
+        elif Game.playerSprite.left and Game.playerSprite.rect.centerx <= int(Game.surface.get_size()[0] / 4):
             x = -target.rect.x + int(Game.surface.get_size()[0] / 4)
         if x is None:
             Game.surface.blit(Game.playerSprite.image, Game.playerSprite.rect)
             for sprite in Game.platforms:
                 Game.surface.blit(sprite.image, sprite)
-            print("Bonjour, je vient à l'instant de m'éxecuter.")
             return
-        calcul = (self.width * Game.TILESIZE)-Game.surface.get_size()[0]
+        calcul = (self.width * Game.TILESIZE) - Game.surface.get_size()[0]
         x = min(0, x)
         x = max(-calcul, x)
         self.camera = pygame.Rect(x, 0, self.width, self.height)

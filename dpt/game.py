@@ -30,6 +30,8 @@ class Game(object):
     camera = None
     tile = None
 
+    _debug_infos = None
+
     # Logs
     # Gère les fichiers de logs
     if os.path.isfile(ROOT_DIRECTORY + "/logs/latest.log"):
@@ -72,6 +74,7 @@ class Game(object):
         main_logger.debug("OS: " + cls.PLATFORM)
 
         pygame.init()
+        cls._debug_infos = []
         cls.joueur = pygame.sprite.Group()
         cls.platforms = pygame.sprite.Group()
         cls.window = pygame.display
@@ -120,3 +123,20 @@ class Game(object):
             logger.addHandler(cls.file_handler)
 
         return logger
+
+    @classmethod
+    def add_debug_info(cls, str):
+        cls._debug_infos.append(str)
+
+    @classmethod
+    def display_debug_info(cls):
+        font = pygame.font.SysFont("arial", 15)
+        y = 0
+        for text in cls._debug_infos:
+            debug_text = font.render(text, True, (0, 0, 0))
+            rect = debug_text.get_rect()
+            rect.x = 0
+            rect.y = y
+            y += 15
+            cls.surface.blit(debug_text, rect)
+        cls._debug_infos = []
