@@ -10,7 +10,6 @@ class PlayerSprite(pygame.sprite.Sprite):
     char = Game.ressources.get("dpt.images.characters.player.standing")
     walkRight = Game.ressources.get_multiple("dpt.images.characters.player.R*")
     walkLeft = Game.ressources.get_multiple("dpt.images.characters.player.L*")
-    gravity = -5
     gravityCount = 0
 
     def __init__(self, x, y, width, height):
