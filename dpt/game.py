@@ -9,6 +9,7 @@ import time
 
 
 class Game(object):
+    # Constantes
     VERSION = "ALPHA-0.0.1"
     PYTHON_VERSION = str(sys.version_info[0]) + "." + str(sys.version_info[1]) + "." + str(sys.version_info[2]) + "-" + str(sys.version_info[3])
     PYGAME_VERSION = pygame.version.ver
@@ -17,34 +18,40 @@ class Game(object):
     SERVER_ADDRESS = "localhost"
     VOTE_TIMEOUT = 80
 
+    # Variable à définir
+    window = None
+    clock = None
+    joueur = None
+    ressources = None
+    platforms = None
+    surface = None
+
+    # Logs
+    # Gère les fichiers de logs
+    if os.path.isfile(ROOT_DIRECTORY + "/logs/latest.log"):
+        file = tarfile.open(ROOT_DIRECTORY + "/logs/" + datetime.datetime.today().strftime("%d-%m-%Y-%H-%M-%S") + ".tar.gz", mode="x:gz", )
+        file.add(ROOT_DIRECTORY + "/logs/latest.log", arcname="latest.log")
+        file.close()
+        os.remove(ROOT_DIRECTORY + "/logs/latest.log")
+
+    # Initialisation des logs
+    # Logs des autres modules
+    logging.getLogger("urllib3").setLevel(logging.CRITICAL)
+
+    # Formatter
+    logging_format = logging.Formatter(fmt="[%(asctime)s][%(levelname)s][%(name)s] %(message)s", datefmt="%H:%M:%S")
+
+    # File handler
+    file_handler = logging.FileHandler(ROOT_DIRECTORY + "/logs/latest.log")
+    file_handler.setFormatter(logging_format)
+
+    # Stream handler
+    stream_handler = logging.StreamHandler(sys.stdout)
+    stream_handler.setFormatter(logging_format)
+
     @classmethod
     def play(cls, debug):
         cls.DEBUG = debug
-
-        # Gère les fichiers de logs
-        if os.path.isfile(cls.ROOT_DIRECTORY + "/logs/latest.log"):
-            file = tarfile.open(cls.ROOT_DIRECTORY + "/logs/" + datetime.datetime.today().strftime("%d-%m-%Y-%H-%M-%S") + ".tar.gz", mode="x:gz", )
-            file.add(cls.ROOT_DIRECTORY + "/logs/latest.log", arcname="latest.log")
-            file.close()
-            os.remove(cls.ROOT_DIRECTORY + "/logs/latest.log")
-
-        # Initialisation des logs
-        # Logs des autres modules
-        logging.getLogger("urllib3").setLevel(logging.CRITICAL)
-
-        # Formatter
-        logging_format = logging.Formatter(fmt="[%(asctime)s][%(levelname)s][%(name)s] %(message)s", datefmt="%H:%M:%S")
-
-        # File handler
-        if not os.path.isdir(cls.ROOT_DIRECTORY + "/logs/"):
-            os.mkdir(cls.ROOT_DIRECTORY + "/logs/")
-
-        cls.file_handler = logging.FileHandler(cls.ROOT_DIRECTORY + "/logs/latest.log")
-        cls.file_handler.setFormatter(logging_format)
-
-        # Stream handler
-        cls.stream_handler = logging.StreamHandler(sys.stdout)
-        cls.stream_handler.setFormatter(logging_format)
 
         if cls.DEBUG:
             cls.file_handler.setLevel(logging.DEBUG)
@@ -52,12 +59,6 @@ class Game(object):
         else:
             cls.file_handler.setLevel(logging.INFO)
             cls.stream_handler.setLevel(logging.INFO)
-
-        # Variable à définir
-        cls.window = None
-        cls.clock = None
-        cls.player = None
-        cls.ressources = None
 
         main_logger = cls.get_logger(None)
         main_logger.info("--- Starting Don't Play Together. ---")
