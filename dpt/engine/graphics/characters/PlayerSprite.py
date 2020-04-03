@@ -121,8 +121,10 @@ class PlayerSprite(pygame.sprite.Sprite):
             if pygame.sprite.collide_rect(self, i):
                 if xVelDelta > 0:
                     self.rect.right = i.rect.left
+                    self.xvel = 0
                 if xVelDelta < 0:
                     self.rect.left = i.rect.right
+                    self.xvel = 0
                 if yVelDelta < 0:
                     self.rect.bottom = i.rect.top
                     self.onPlatform = True
