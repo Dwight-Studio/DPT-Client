@@ -25,6 +25,7 @@ class Game(object):
     ressources = None
     platforms = None
     surface = None
+    playerSprite = None
 
     # Logs
     # Gère les fichiers de logs
