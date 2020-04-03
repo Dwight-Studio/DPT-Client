@@ -64,7 +64,6 @@ class RessourceLoader:
         self.RESSOURCES = {}
         for entry in make_entries(RESSOURCES_DIRECTORY):
             key = entry[0]
-            print(key)
             if key.split(".")[-1] == "level":
                 key = ".".join(key.split(".")[:-1])
             self.RESSOURCES[key] = entry[1]
