@@ -10,7 +10,6 @@ class PlayerSprite(pygame.sprite.Sprite):
     char = Game.ressources.get("dpt.images.characters.player.standing")
     walkRight = Game.ressources.get_multiple("dpt.images.characters.player.R*")
     walkLeft = Game.ressources.get_multiple("dpt.images.characters.player.L*")
-    platforms = TileManager.LISTE
 
     def __init__(self, x, y, width, height):
         pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
@@ -30,7 +29,6 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.jumpCount = 8
         self.CONSTJUMPCOUNT = self.jumpCount
         self.onPlatform = False
-        self.isFalling = True
 
     def update(self):
 
@@ -66,10 +64,8 @@ class PlayerSprite(pygame.sprite.Sprite):
         else:
             if not self.onPlatform:
                 if self.jumpCount > 0:
-                    self.isFalling = False
                     neg = 1
                 else:
-                    self.isFalling = True
                     neg = -1
                 self.yvel = math.floor((self.jumpCount ** 2) * 0.5) * neg
                 self.jumpCount -= 1
@@ -79,9 +75,9 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.yvel = 0
 
         self.rect.left += self.xvel
-        self.collide(self.xvel, 0, PlayerSprite.platforms)
+        self.collide(self.xvel, 0, TileManager.LISTE)
         self.rect.top -= self.yvel
-        self.collide(0, self.yvel, PlayerSprite.platforms)
+        self.collide(0, self.yvel, TileManager.LISTE)
         self.animation()
 
     def animation(self):
@@ -109,7 +105,9 @@ class PlayerSprite(pygame.sprite.Sprite):
                     self.rect.right = i.rect.left
                 if xVelDelta < 0:
                     self.rect.left = i.rect.right
-                if yVelDelta > 0:
-                    self.rect.bottom = i.rect.bottom
                 if yVelDelta < 0:
+                    self.rect.bottom = i.rect.top
+                    self.onPlatform = True
+                    self.jumpCount = self.CONSTJUMPCOUNT
+                if yVelDelta > 0:
                     self.rect.top = i.rect.bottom
