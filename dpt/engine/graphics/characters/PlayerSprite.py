@@ -5,11 +5,10 @@ from dpt.game import Game
 
 
 class PlayerSprite(pygame.sprite.Sprite):
-    game = Game.get_instance()
-    screen_width, screen_height = game.surface.get_size()
-    char = game.ressources.get("dpt.images.characters.player.standing")
-    walkRight = game.ressources.get_multiple("dpt.images.characters.player.R*")
-    walkLeft = game.ressources.get_multiple("dpt.images.characters.player.L*")
+    screen_width, screen_height = Game.surface.get_size()
+    char = Game.ressources.get("dpt.images.characters.player.standing")
+    walkRight = Game.ressources.get_multiple("dpt.images.characters.player.R*")
+    walkLeft = Game.ressources.get_multiple("dpt.images.characters.player.L*")
 
     def __init__(self, x, y, width, height):
         pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
@@ -75,7 +74,6 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.animation()
 
     def animation(self):
-        game = Game.get_instance()
         if self.walkCount + 1 >= 27:
             self.walkCount = 0
 
@@ -91,4 +89,4 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.image = PlayerSprite.walkRight[0]
             else:
                 self.image = PlayerSprite.walkLeft[0]
-        pygame.draw.rect(game.surface, (255, 0, 0), self.rect, 2)
+        pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
