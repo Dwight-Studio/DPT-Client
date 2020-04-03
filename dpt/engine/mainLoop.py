@@ -1,18 +1,19 @@
 import pygame
-
 from dpt.game import Game
 from dpt.engine.graphics.characters.PlayerSprite import PlayerSprite
-from dpt.engine.graphics.tileManager import TileManager
+from dpt.engine.graphics.tileManager import *
 
+game = Game.get_instance()
+tile = TileManager()
+camera = Camera(tile.maxWidthSize, tile.maxWidthSize)
 
 def redraw_game_window():
-    game = Game.get_instance()
     game.surface.blit(bg, (0, 0))
-    tile = TileManager()
     tile.enableGrid()
     game.joueur.update()
     game.platforms.update()
-    game.platforms.draw(game.surface)
+    for sprite in game.platforms:
+        game.surface.blit(sprite.image, camera.apply(sprite))
     game.joueur.draw(game.surface)
     game.window.update()
 
@@ -35,6 +36,7 @@ def loop():
                 run = False
 
         hits = pygame.sprite.spritecollide(game.playerSprite, game.platforms, False)
+        camera.update(game.playerSprite)
 
         if hits:
             for platformes in hits:
