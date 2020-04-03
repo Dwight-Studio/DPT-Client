@@ -71,6 +71,8 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.jumpCount = self.CONSTJUMPCOUNT
                 self.isJump = False
 
+        self.collide(self.vel, 0, Game.platforms)
+        self.collide(0, self.vel, Game.platforms)
         self.animation()
 
     def animation(self):
@@ -90,3 +92,8 @@ class PlayerSprite(pygame.sprite.Sprite):
             else:
                 self.image = PlayerSprite.walkLeft[0]
         pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
+
+    def collide(self, xVelDelta, yVelDelta, platforms):
+        for i in platforms:
+            if pygame.sprite.collide_rect(self, i):
+                pass
