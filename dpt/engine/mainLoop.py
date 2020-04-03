@@ -13,7 +13,6 @@ def redraw_Game_window():
     Game.surface.blit(Game.playerSprite.image, camera.apply(Game.playerSprite))
     for sprite in Game.platforms:
         Game.surface.blit(sprite.image, camera.apply(sprite))
-    Game.joueur.draw(Game.surface)
     Game.window.update()
 
 

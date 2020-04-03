@@ -85,10 +85,9 @@ class Game(object):
             cls.ressources.add_pending("*")
             cls.ressources.load()
             from dpt.engine.graphics.tileManager import TileManager
-            from dpt.engine.graphics.tileManager import levelTest
             tile = TileManager()
             tile.enableGrid()
-            tile.loadLevel(levelTest)
+            tile.loadLevel(cls.ressources.get("dpt.levels.leveltest.level"))
             # from dpt.engine.webCommunications import Communication
             # com = Communication()
             # com.create()

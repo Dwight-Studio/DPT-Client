@@ -2,7 +2,6 @@ import pygame
 
 
 class Block(pygame.sprite.Sprite):
-
     def __init__(self, color, x, y, width, height):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((width, height))
@@ -15,7 +14,6 @@ class Block(pygame.sprite.Sprite):
 
 
 class CeciEstUnBlock(pygame.sprite.Sprite):
-
     def __init__(self, color, x, y, width, height):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((width, height))
