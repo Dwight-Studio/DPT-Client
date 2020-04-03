@@ -3,20 +3,20 @@ from dpt.game import Game
 import pygame
 
 #          {"x, y": {"blockClass": Classe}}
-levelTest ={"0, 32": {"blockClass": Block},
-            "1, 32": {"blockClass": Block},
-            "2, 32": {"blockClass": Block},
-            "3, 32":{"blockClass": Block},
-            "4, 32":{"blockClass": Block},
-            "5, 32":{"blockClass": Block},
-            "6, 32":{"blockClass": Block},
-            "7, 32":{"blockClass": Block},
-            "8, 32":{"blockClass": Block},
-            "9, 32":{"blockClass": CeciEstUnBlock},
-            "10, 32":{"blockClass": Block}}
+levelTest = {"0, 32": {"blockClass": Block},
+             "1, 32": {"blockClass": Block},
+             "2, 32": {"blockClass": Block},
+             "3, 32": {"blockClass": Block},
+             "4, 32": {"blockClass": Block},
+             "5, 32": {"blockClass": Block},
+             "6, 32": {"blockClass": Block},
+             "7, 32": {"blockClass": Block},
+             "8, 32": {"blockClass": Block},
+             "9, 32": {"blockClass": CeciEstUnBlock},
+             "10, 32": {"blockClass": Block}}
 
 
-class TileManager():
+class TileManager:
     def __init__(self):
         self.game = Game.get_instance()
         self.log = self.game.get_logger("TileManager")
@@ -55,7 +55,7 @@ class TileManager():
                 self.game.platforms.add(data((255, 0, 0), coords[0] * self.tileSize, coords[1] * self.tileSize, self.tileSize, self.tileSize))
 
 
-class Camera():
+class Camera:
     def __init__(self, width, height):
         self.game = Game.get_instance()
         self.camera = pygame.Rect(0, 0, width, height)

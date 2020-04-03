@@ -1,4 +1,3 @@
-from dpt.game import Game
 from dpt.engine.graphics.characters.PlayerSprite import PlayerSprite
 from dpt.engine.graphics.tileManager import *
 from dpt.engine.collisionsDetector import Detector

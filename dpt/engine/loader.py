@@ -53,8 +53,7 @@ def make_entries(path):
 
 class RessourceLoader:
     def __init__(self):
-        game = Game.get_instance()
-        self.logger = game.get_logger("Loader")
+        self.logger = Game.get_logger("Loader")
 
         self.logger.info("Initializing registries")
 
@@ -79,12 +78,22 @@ class RessourceLoader:
     def load(self):
         self.logger.info("Starting loading ressources")
         for entry in self.pending_ressources:
-            if os.path.splitext(self.pending_ressources[entry])[1] == ".png":
-                self.loaded_ressources[entry] = pygame.image.load(self.pending_ressources[entry])
+            ext = self.pending_ressources[entry][1].split(".")[-1]
+            if ext == "png":
+                try:
+                    self.loaded_ressources[entry] = pygame.image.load(self.pending_ressources[entry])
+                    self.logger.debug("Entry " + entry + " loaded")
+                except Exception as ex:
+                    self.logger.warning("Can't load entry " + entry)
+                    self.logger.warning(ex.)
+
+            if ext == "level.json":
+                table
+                self.loaded_ressources[entry] = table)
                 self.logger.debug("Entry " + entry + " loaded")
-        self.logger.info("Loaded " + str(len(self.pending_ressources)) + " entries")
-        self.logger.info("Loading done")
-        self.pending_ressources = []
+                self.logger.info("Loaded " + str(len(self.pending_ressources)) + " entries")
+                self.logger.info("Loading done")
+                self.pending_ressources = []
 
     def select_entries(self, path):
         if "*" in path:
