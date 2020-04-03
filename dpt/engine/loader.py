@@ -63,7 +63,11 @@ class RessourceLoader:
         self.logger.info("Building RESSOURCES registry")
         self.RESSOURCES = {}
         for entry in make_entries(RESSOURCES_DIRECTORY):
-            self.RESSOURCES[entry[0]] = entry[1]
+            key = entry[0]
+            print(key)
+            if key.split(".")[-1] == "level":
+                key = key.replace(".level", "")
+            self.RESSOURCES[key] = entry[1]
         self.logger.info("Registered " + str(len(self.RESSOURCES)) + " entries")
 
         self.logger.info("Building pending_ressources registry")
