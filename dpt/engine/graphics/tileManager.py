@@ -1,4 +1,5 @@
 from dpt.engine.graphics.platforms.Block import *
+from dpt.game import Game
 import pygame
 
 #          {"x, y": {"blockClass": Classe}}
