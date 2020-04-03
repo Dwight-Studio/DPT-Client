@@ -241,5 +241,8 @@
   },
   "79, 32": {
     "blockClass": "Block"
+  },
+  "80, 32": {
+    "blockClass": "Block"
   }
 }
