@@ -2,7 +2,6 @@ import pygame
 
 from dpt.game import Game
 from dpt.engine.graphics.characters.PlayerSprite import PlayerSprite
-from dpt.engine.scenes.level1 import Level1
 from dpt.engine.graphics.tileManager import TileManager
 
 
