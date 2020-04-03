@@ -16,6 +16,7 @@ class Block(pygame.sprite.Sprite):
         self.width = width
         self.height = height
 
+
 class CeciEstUnBlock(pygame.sprite.Sprite):
     def __init__(self, color, x, y, width, height):
         pygame.sprite.Sprite.__init__(self)
