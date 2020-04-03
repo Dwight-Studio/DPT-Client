@@ -3,7 +3,6 @@ from dpt.game import Game
 import pygame
 
 
-#          {"x, y": {"blockClass": Classe}}
 class TileManager:
     LISTE = []
 

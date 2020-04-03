@@ -21,7 +21,7 @@ def loop():
     bg = Game.ressources.get("dpt.images.environment.background")
     run = True
     while run:
-        Game.clock.tick(27)
+        Game.clock.tick(60)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
