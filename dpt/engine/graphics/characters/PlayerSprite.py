@@ -27,7 +27,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.height = height
         self.walkCount = 0
         self.isJump = False
-        self.jumpCount = 6
+        self.jumpCount = 8
         self.CONSTJUMPCOUNT = self.jumpCount
         self.onPlatform = False
         self.allowJump = True
@@ -41,7 +41,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         if keys[pygame.K_LEFT] and self.rect.x - self.xvel - 1 > mur:
             if self.xvel > 0:
                 self.xvel = 0
-            if self.xvel > -5:
+            if self.xvel > -8:
                 self.xvel -= 1
             self.left = True
             self.right = False
@@ -49,7 +49,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         elif keys[pygame.K_RIGHT]:
             if self.xvel < 0:
                 self.xvel = 0
-            if self.xvel < 5:
+            if self.xvel < 8:
                 self.xvel += 1
             self.left = False
             self.right = True
@@ -75,10 +75,12 @@ class PlayerSprite(pygame.sprite.Sprite):
                     self.onPlatform = False
             else:
                 if not self.onPlatform:
-                    neg = 7
-                    self.yvel = neg + 0.8 * self.jumpCount
+                    if self.jumpCount > 0:
+                        neg = 1
+                    else:
+                        neg = -1
+                    self.yvel = math.floor((self.jumpCount ** 2) * 0.5) * neg
                     self.jumpCount -= 1
-                    print(self.jumpCount)
                 elif self.onPlatform:
                     self.jumpCount = self.CONSTJUMPCOUNT
                     self.isJump = False
@@ -98,15 +100,15 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.animation()
 
     def animation(self):
-        if self.walkCount + 1>= 27:
+        if self.walkCount + 1 >= 27:
             self.walkCount = 0
 
         if not self.standing:
             if self.left:
-                self.image = PlayerSprite.walkLeft[self.walkCount // 5]
+                self.image = PlayerSprite.walkLeft[self.walkCount // 3]
                 self.walkCount += 1
             elif self.right:
-                self.image = PlayerSprite.walkRight[self.walkCount // 5]
+                self.image = PlayerSprite.walkRight[self.walkCount // 3]
                 self.walkCount += 1
         else:
             if self.right:
