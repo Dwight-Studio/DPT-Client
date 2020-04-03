@@ -1,6 +1,5 @@
 from dpt.engine.graphics.characters.PlayerSprite import PlayerSprite
 from dpt.engine.graphics.tileManager import *
-from dpt.engine.collisionsDetector import Detector
 
 tile = TileManager()
 camera = Camera(tile.maxWidthSize, tile.maxWidthSize)
@@ -34,7 +33,6 @@ def loop():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 run = False
 
-        collisions = Detector()
         camera.update(Game.playerSprite)
 
         redraw_Game_window()
