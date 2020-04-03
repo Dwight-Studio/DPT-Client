@@ -27,7 +27,8 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.isJump = False
         self.jumpCount = 8
         self.CONSTJUMPCOUNT = self.jumpCount
-        self.onPlatform = True
+        self.onPlatform = False
+        self.isFalling = True
 
     def update(self):
 
@@ -60,8 +61,10 @@ class PlayerSprite(pygame.sprite.Sprite):
         else:
             if not self.onPlatform:
                 if self.jumpCount > 0:
+                    self.isFalling = False
                     neg = 1
                 else:
+                    self.isFalling = True
                     neg = -1
                 self.rect.y -= math.floor((self.jumpCount ** 2) * 0.5) * neg
                 self.jumpCount -= 1

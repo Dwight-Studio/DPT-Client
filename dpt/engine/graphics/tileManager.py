@@ -16,7 +16,7 @@ levelTest = {"0, 32": {"blockClass": Block},
              "10, 32": {"blockClass": Block}}
 
 
-class TileManager():
+class TileManager:
     def __init__(self):
         self.game = Game.get_instance()
         self.log = self.game.get_logger("TileManager")
@@ -55,7 +55,7 @@ class TileManager():
                 self.game.platforms.add(data((255, 0, 0), coords[0] * self.tileSize, coords[1] * self.tileSize, self.tileSize, self.tileSize))
 
 
-class Camera():
+class Camera:
     def __init__(self, width, height):
         self.game = Game.get_instance()
         self.camera = pygame.Rect(0, 0, width, height)
@@ -67,4 +67,6 @@ class Camera():
 
     def update(self, target):
         x = -target.rect.x + int(self.game.surface.get_size()[0] / 2)
+
+        x = min(0, x)
         self.camera = pygame.Rect(x, 0, self.width, self.height)
