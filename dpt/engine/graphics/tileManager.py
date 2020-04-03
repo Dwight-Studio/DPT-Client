@@ -1,31 +1,19 @@
 from dpt.engine.graphics.platforms.Block import *
 from dpt.game import Game
 import pygame
-import json
+
 
 #          {"x, y": {"blockClass": Classe}}
 class TileManager:
-
     LISTE = []
 
     def __init__(self):
 
         self.log = Game.get_logger("TileManager")
-        self.userConfirm = True
         self.levelName = None
         self.maxWidthSize = 0
         self.maxHeightSize = 0
         self.coords = None
-
-    def enableGrid(self):
-        if self.userConfirm:
-            for x in range(0, Game.surface.get_size()[0], Game.TILESIZE):
-                pygame.draw.line(Game.surface, (220, 220, 220), (x, 0), (x, Game.surface.get_size()[1]))
-            for y in range(0, Game.surface.get_size()[1], Game.TILESIZE):
-                pygame.draw.line(Game.surface, (220, 220, 220), (0, y), (Game.surface.get_size()[0], y))
-
-    def disableGrid(self):
-        pass
 
     def loadLevel(self, levelName):
         self.maxWidthSize = 0
@@ -50,41 +38,47 @@ class TileManager:
                 except:
                     self.log.warning("Invalid class name : " + data + " for tile : " + keys)
 
-    def update(self):
-        self.enableGrid()
-
 
 class Camera:
     def __init__(self, width, height):
+        self.userConfirm = True
         self.camera = pygame.Rect(0, 0, width, height)
         self.width = width
         self.height = height
         self.log = Game.get_logger("Camera")
+        self.last_x = 0
 
     def apply(self, entity):
         return entity.rect.move(self.camera.topleft)
 
     def update(self, target):
-        x = None
         Game.add_debug_info("Right : " + str(Game.playerSprite.right))
         Game.add_debug_info("Left : " + str(Game.playerSprite.left))
         Game.add_debug_info("LimitR : " + str(int(Game.surface.get_size()[0] / 4 * 3)))
         Game.add_debug_info("LimitL : " + str(int(Game.surface.get_size()[0] / 4)))
         Game.add_debug_info("Player X :" + str(target.rect.centerx))
         Game.add_debug_info("Player Y : " + str(target.rect.centery))
-        if Game.playerSprite.right and Game.playerSprite.rect.centerx >= int(Game.surface.get_size()[0] / 4 * 3):
-            x = -target.rect.x + int(Game.surface.get_size()[0] / 4 * 3)
-        elif Game.playerSprite.left and Game.playerSprite.rect.centerx <= int(Game.surface.get_size()[0] / 4):
-            x = -target.rect.x + int(Game.surface.get_size()[0] / 4)
-        if x is None:
-            Game.surface.blit(Game.playerSprite.image, Game.playerSprite.rect)
-            for sprite in Game.platforms:
-                Game.surface.blit(sprite.image, sprite)
-            return
+
+        x = -target.rect.x + int(Game.surface.get_size()[0] / 2)
+
         calcul = (self.width * Game.TILESIZE) - Game.surface.get_size()[0]
-        x = min(0, x)
+        x = min(self.last_x, x)
         x = max(-calcul, x)
         self.camera = pygame.Rect(x, 0, self.width, self.height)
         Game.surface.blit(Game.playerSprite.image, self.apply(Game.playerSprite))
         for sprite in Game.platforms:
             Game.surface.blit(sprite.image, self.apply(sprite))
+        self.last_x = x
+
+        self.enableGrid()
+
+    def enableGrid(self):
+        self.modifier = 0
+        if self.userConfirm:
+            for x in range(self.last_x, Game.surface.get_size()[0], Game.TILESIZE):
+                pygame.draw.line(Game.surface, (220, 220, 220), (x, 0), (x, Game.surface.get_size()[1]))
+            for y in range(0, Game.surface.get_size()[1], Game.TILESIZE):
+                pygame.draw.line(Game.surface, (220, 220, 220), (0, y), (Game.surface.get_size()[0], y))
+
+    def disableGrid(self):
+        pass

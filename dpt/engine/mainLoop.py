@@ -4,7 +4,6 @@ import pygame
 
 def redraw_Game_window():
     Game.surface.blit(bg, (0, 0))
-    Game.tile.update()
     Game.camera.update(Game.playerSprite)
     Game.joueur.update()
     Game.platforms.update()
