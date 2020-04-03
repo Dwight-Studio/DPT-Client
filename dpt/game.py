@@ -17,6 +17,7 @@ class Game(object):
     ROOT_DIRECTORY = os.path.abspath("../")
     SERVER_ADDRESS = "localhost"
     VOTE_TIMEOUT = 80
+    TILESIZE = 32
 
     # Variable à définir
     window = None
@@ -26,6 +27,8 @@ class Game(object):
     platforms = None
     surface = None
     playerSprite = None
+    camera = None
+    tile = None
 
     # Logs
     # Gère les fichiers de logs
@@ -84,10 +87,11 @@ class Game(object):
             cls.ressources = RessourceLoader()
             cls.ressources.add_pending("*")
             cls.ressources.load()
-            from dpt.engine.graphics.tileManager import TileManager
-            tile = TileManager()
-            tile.enableGrid()
-            tile.loadLevel(cls.ressources.get("dpt.levels.leveltest"))
+            from dpt.engine.graphics.tileManager import TileManager, Camera
+            cls.tile = TileManager()
+            cls.tile.enableGrid()
+            cls.tile.loadLevel(cls.ressources.get("dpt.levels.leveltest"))
+            cls.camera = Camera(cls.tile.maxWidthSize, cls.tile.maxHeightSize)
             # from dpt.engine.webCommunications import Communication
             # com = Communication()
             # com.create()

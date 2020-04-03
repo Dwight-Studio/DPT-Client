@@ -1,18 +1,13 @@
 from dpt.engine.graphics.characters.PlayerSprite import PlayerSprite
-from dpt.engine.graphics.tileManager import *
-
-tile = TileManager()
-camera = Camera(tile.maxWidthSize, tile.maxWidthSize)
-
+from dpt.game import Game
+import pygame
 
 def redraw_Game_window():
     Game.surface.blit(bg, (0, 0))
-    tile.enableGrid()
+    Game.tile.update()
+    Game.camera.update(Game.playerSprite)
     Game.joueur.update()
     Game.platforms.update()
-    Game.surface.blit(Game.playerSprite.image, camera.apply(Game.playerSprite))
-    for sprite in Game.platforms:
-        Game.surface.blit(sprite.image, camera.apply(sprite))
     Game.window.update()
 
 
@@ -31,8 +26,6 @@ def loop():
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 run = False
-
-        camera.update(Game.playerSprite)
 
         redraw_Game_window()
 
