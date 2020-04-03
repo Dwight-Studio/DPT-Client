@@ -21,7 +21,7 @@ def loop():
     global bg
 
     screen_width, screen_height = Game.surface.get_size()
-    Game.playerSprite = PlayerSprite(300, screen_height - 110, 64, 64)
+    Game.playerSprite = PlayerSprite(300, screen_height - 500, 64, 64)
     Game.joueur.add(Game.playerSprite)
     bg = Game.ressources.get("dpt.images.environment.background")
     run = True

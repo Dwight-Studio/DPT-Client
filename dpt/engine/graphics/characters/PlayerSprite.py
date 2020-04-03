@@ -10,6 +10,8 @@ class PlayerSprite(pygame.sprite.Sprite):
     char = Game.ressources.get("dpt.images.characters.player.standing")
     walkRight = Game.ressources.get_multiple("dpt.images.characters.player.R*")
     walkLeft = Game.ressources.get_multiple("dpt.images.characters.player.L*")
+    gravity = -5
+    gravityCount = 0
 
     def __init__(self, x, y, width, height):
         pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
@@ -35,12 +37,16 @@ class PlayerSprite(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_LEFT]:
+            if self.xvel > 0:
+                self.xvel = 0
             if self.xvel > -8:
                 self.xvel -= 1
             self.left = True
             self.right = False
             self.standing = False
         elif keys[pygame.K_RIGHT]:
+            if self.xvel < 0:
+                self.xvel = 0
             if self.xvel < 8:
                 self.xvel += 1
             self.left = False
@@ -48,6 +54,10 @@ class PlayerSprite(pygame.sprite.Sprite):
             self.standing = False
         else:
             self.xvel = 0
+            #if self.xvel > 0:
+            #    self.xvel -= 1
+            #elif self.xvel < 0:
+            #    self.xvel += 1
             self.standing = True
             self.walkCount = 0
 
@@ -78,6 +88,12 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.collide(self.xvel, 0, TileManager.LISTE)
         self.rect.top -= self.yvel
         self.collide(0, self.yvel, TileManager.LISTE)
+
+        if not self.isJump:
+            PlayerSprite.gravityCount += 1
+            PlayerSprite.gravity = math.floor((PlayerSprite.gravityCount ** 2) * 0.5) * -1
+            self.rect.top -= PlayerSprite.gravity
+            self.collide(0, PlayerSprite.gravity, TileManager.LISTE)
         self.animation()
 
     def animation(self):
@@ -96,7 +112,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.image = PlayerSprite.walkRight[0]
             else:
                 self.image = PlayerSprite.walkLeft[0]
-        pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
+        #pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
 
     def collide(self, xVelDelta, yVelDelta, platforms):
         for i in platforms:
@@ -109,5 +125,6 @@ class PlayerSprite(pygame.sprite.Sprite):
                     self.rect.bottom = i.rect.top
                     self.onPlatform = True
                     self.jumpCount = self.CONSTJUMPCOUNT
+                    PlayerSprite.gravityCount = 0
                 if yVelDelta > 0:
                     self.rect.top = i.rect.bottom
