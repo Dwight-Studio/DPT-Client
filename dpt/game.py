@@ -9,7 +9,6 @@ import time
 
 
 class Game(object):
-    _instance = None
     VERSION = "ALPHA-0.0.1"
     PYTHON_VERSION = str(sys.version_info[0]) + "." + str(sys.version_info[1]) + "." + str(sys.version_info[2]) + "-" + str(sys.version_info[3])
     PYGAME_VERSION = pygame.version.ver
@@ -18,15 +17,16 @@ class Game(object):
     SERVER_ADDRESS = "localhost"
     VOTE_TIMEOUT = 80
 
-    def __init__(self, debug):
-        self.DEBUG = debug
+    @classmethod
+    def play(cls, debug):
+        cls.DEBUG = debug
 
         # Gère les fichiers de logs
-        if os.path.isfile(self.ROOT_DIRECTORY + "/logs/latest.log"):
-            file = tarfile.open(self.ROOT_DIRECTORY + "/logs/" + datetime.datetime.today().strftime("%d-%m-%Y-%H-%M-%S") + ".tar.gz", mode="x:gz", )
-            file.add(self.ROOT_DIRECTORY + "/logs/latest.log", arcname="latest.log")
+        if os.path.isfile(cls.ROOT_DIRECTORY + "/logs/latest.log"):
+            file = tarfile.open(cls.ROOT_DIRECTORY + "/logs/" + datetime.datetime.today().strftime("%d-%m-%Y-%H-%M-%S") + ".tar.gz", mode="x:gz", )
+            file.add(cls.ROOT_DIRECTORY + "/logs/latest.log", arcname="latest.log")
             file.close()
-            os.remove(self.ROOT_DIRECTORY + "/logs/latest.log")
+            os.remove(cls.ROOT_DIRECTORY + "/logs/latest.log")
 
         # Initialisation des logs
         # Logs des autres modules
@@ -36,65 +36,64 @@ class Game(object):
         logging_format = logging.Formatter(fmt="[%(asctime)s][%(levelname)s][%(name)s] %(message)s", datefmt="%H:%M:%S")
 
         # File handler
-        if not os.path.isdir(self.ROOT_DIRECTORY + "/logs/"):
-            os.mkdir(self.ROOT_DIRECTORY + "/logs/")
+        if not os.path.isdir(cls.ROOT_DIRECTORY + "/logs/"):
+            os.mkdir(cls.ROOT_DIRECTORY + "/logs/")
 
-        self.file_handler = logging.FileHandler(self.ROOT_DIRECTORY + "/logs/latest.log")
-        self.file_handler.setFormatter(logging_format)
+        cls.file_handler = logging.FileHandler(cls.ROOT_DIRECTORY + "/logs/latest.log")
+        cls.file_handler.setFormatter(logging_format)
 
         # Stream handler
-        self.stream_handler = logging.StreamHandler(sys.stdout)
-        self.stream_handler.setFormatter(logging_format)
+        cls.stream_handler = logging.StreamHandler(sys.stdout)
+        cls.stream_handler.setFormatter(logging_format)
 
-        if self.DEBUG:
-            self.file_handler.setLevel(logging.DEBUG)
-            self.stream_handler.setLevel(logging.DEBUG)
+        if cls.DEBUG:
+            cls.file_handler.setLevel(logging.DEBUG)
+            cls.stream_handler.setLevel(logging.DEBUG)
         else:
-            self.file_handler.setLevel(logging.INFO)
-            self.stream_handler.setLevel(logging.INFO)
+            cls.file_handler.setLevel(logging.INFO)
+            cls.stream_handler.setLevel(logging.INFO)
 
         # Variable à définir
-        self.window = None
-        self.clock = None
-        self.player = None
-        self.ressources = None
+        cls.window = None
+        cls.clock = None
+        cls.player = None
+        cls.ressources = None
 
-    def play(self):
-        main_logger = self.get_logger(None)
+        main_logger = cls.get_logger(None)
         main_logger.info("--- Starting Don't Play Together. ---")
-        main_logger.debug("Version: " + self.VERSION)
-        main_logger.debug("Python version: " + self.PYTHON_VERSION)
-        main_logger.debug("Pygame version: " + self.PYGAME_VERSION)
-        main_logger.debug("OS: " + self.PLATFORM)
+        main_logger.debug("Version: " + cls.VERSION)
+        main_logger.debug("Python version: " + cls.PYTHON_VERSION)
+        main_logger.debug("Pygame version: " + cls.PYGAME_VERSION)
+        main_logger.debug("OS: " + cls.PLATFORM)
 
         pygame.init()
-        self.joueur = pygame.sprite.Group()
-        self.platforms = pygame.sprite.Group()
-        self.window = pygame.display
-        self.surface = self.window.set_mode((0, 0), pygame.FULLSCREEN, pygame.RESIZABLE)
-        w, h = self.surface.get_size()
+        cls.joueur = pygame.sprite.Group()
+        cls.platforms = pygame.sprite.Group()
+        cls.window = pygame.display
+        cls.surface = cls.window.set_mode((0, 0), pygame.FULLSCREEN, pygame.RESIZABLE)
+        w, h = cls.surface.get_size()
         main_logger.debug("Window size: " + str(w) + "x" + str(h))
         pygame.display.set_caption("Don't play together")
-        self.clock = pygame.time.Clock()
+        cls.clock = pygame.time.Clock()
 
         try:
             # /!\ ZONE SECURISÉE /!\
             from dpt.engine.loader import RessourceLoader
-            self.ressources = RessourceLoader()
-            self.ressources.add_pending("*")
-            self.ressources.load()
+            cls.ressources = RessourceLoader()
+            cls.ressources.add_pending("*")
+            cls.ressources.load()
             from dpt.engine.graphics.tileManager import TileManager
             from dpt.engine.graphics.tileManager import levelTest
             tile = TileManager()
             tile.enableGrid()
             tile.loadLevel(levelTest)
-            #from dpt.engine.webCommunications import Communication
-            #com = Communication()
-            #com.create()
-            #time.sleep(10)
-            #com.createVoteEvent(0, 0)
+            # from dpt.engine.webCommunications import Communication
+            # com = Communication()
+            # com.create()
+            # time.sleep(10)
+            # com.createVoteEvent(0, 0)
             #time.sleep(40)
-            #com.voteResult()
+            # com.voteResult()
 
             from dpt.engine.mainLoop import loop
             loop()
@@ -105,21 +104,14 @@ class Game(object):
             for ms in trace.split("\n"):
                 main_logger.critical(ms)
 
-    def get_logger(self, name):
+    @classmethod
+    def get_logger(cls, name):
 
         logger = logging.getLogger(name)
         logger.setLevel(logging.DEBUG)
 
         if not logger.hasHandlers():
-            logger.addHandler(self.stream_handler)
-            logger.addHandler(self.file_handler)
+            logger.addHandler(cls.stream_handler)
+            logger.addHandler(cls.file_handler)
 
         return logger
-
-    @classmethod
-    def get_instance(cls):
-        return cls._instance
-
-    @classmethod
-    def set_instance(cls, instance):
-        cls._instance = instance

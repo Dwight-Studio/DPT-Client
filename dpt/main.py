@@ -10,11 +10,8 @@ def main():
     print("MAIN: Adding " + os.path.pardir + " to PYTHONPATH")
     sys.path.insert(0, os.path.pardir)
     from dpt.game import Game
-    global game
     args = parser.parse_args()
-    game = Game(args.debug)
-    Game.set_instance(game)
-    game.play()
+    Game.play(args.debug)
 
 
 if __name__ == '__main__':
