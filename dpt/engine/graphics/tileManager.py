@@ -1,4 +1,4 @@
-from dpt.engine.graphics.platforms.Block import *
+from dpt.engine.graphics.blocks import *
 from dpt.game import Game
 import pygame
 
@@ -73,7 +73,6 @@ class Camera:
         self.enableGrid()
 
     def enableGrid(self):
-        self.modifier = 0
         if self.userConfirm:
             for x in range(self.last_x, Game.surface.get_size()[0], Game.TILESIZE):
                 pygame.draw.line(Game.surface, (220, 220, 220), (x, 0), (x, Game.surface.get_size()[1]))
