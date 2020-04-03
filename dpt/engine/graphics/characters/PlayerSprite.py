@@ -31,6 +31,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.jumpCount = 8
         self.CONSTJUMPCOUNT = self.jumpCount
         self.onPlatform = False
+        self.allowJump = True
 
     def update(self):
 
@@ -60,29 +61,29 @@ class PlayerSprite(pygame.sprite.Sprite):
             #    self.xvel += 1
             self.standing = True
             self.walkCount = 0
-
-        if not self.isJump:
-            if keys[pygame.K_UP]:
-                self.isJump = True
-                self.left = False
-                if self.right:
-                    self.right = True
-                else:
-                    self.right = False
-                self.walkCount = 0
-                self.onPlatform = False
-        else:
-            if not self.onPlatform:
-                if self.jumpCount > 0:
-                    neg = 1
-                else:
-                    neg = -1
-                self.yvel = math.floor((self.jumpCount ** 2) * 0.5) * neg
-                self.jumpCount -= 1
-            elif self.onPlatform:
-                self.jumpCount = self.CONSTJUMPCOUNT
-                self.isJump = False
-                self.yvel = 0
+        if self.allowJump:
+            if not self.isJump:
+                if keys[pygame.K_UP]:
+                    self.isJump = True
+                    self.left = False
+                    if self.right:
+                        self.right = True
+                    else:
+                        self.right = False
+                    self.walkCount = 0
+                    self.onPlatform = False
+            else:
+                if not self.onPlatform:
+                    if self.jumpCount > 0:
+                        neg = 1
+                    else:
+                        neg = -1
+                    self.yvel = math.floor((self.jumpCount ** 2) * 0.5) * neg
+                    self.jumpCount -= 1
+                elif self.onPlatform:
+                    self.jumpCount = self.CONSTJUMPCOUNT
+                    self.isJump = False
+                    self.yvel = 0
 
         self.rect.left += self.xvel
         self.collide(self.xvel, 0, TileManager.LISTE)
@@ -90,6 +91,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.collide(0, self.yvel, TileManager.LISTE)
 
         if not self.isJump:
+            self.allowJump = False
             PlayerSprite.gravityCount += 1
             PlayerSprite.gravity = math.floor((PlayerSprite.gravityCount ** 2) * 0.5) * -1
             self.rect.top -= PlayerSprite.gravity
@@ -125,6 +127,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                     self.rect.bottom = i.rect.top
                     self.onPlatform = True
                     self.jumpCount = self.CONSTJUMPCOUNT
+                    self.allowJump = True
                     PlayerSprite.gravityCount = 0
                 if yVelDelta > 0:
                     self.rect.top = i.rect.bottom
