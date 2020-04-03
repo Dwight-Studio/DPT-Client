@@ -18,8 +18,8 @@ levelTest = {"0, 32": {"blockClass": Block},
 
 class TileManager:
     def __init__(self):
-        self.game = Game.get_instance()
-        self.log = self.game.get_logger("TileManager")
+
+        self.log = Game.get_logger("TileManager")
         self.tileSize = 32
         self.userConfirm = True
         self.levelName = None
@@ -29,10 +29,10 @@ class TileManager:
 
     def enableGrid(self):
         if self.userConfirm:
-            for x in range(0, self.game.surface.get_size()[0], self.tileSize):
-                pygame.draw.line(self.game.surface, (220, 220, 220), (x, 0), (x, self.game.surface.get_size()[1]))
-            for y in range(0, self.game.surface.get_size()[1], self.tileSize):
-                pygame.draw.line(self.game.surface, (220, 220, 220), (0, y), (self.game.surface.get_size()[0], y))
+            for x in range(0, Game.surface.get_size()[0], self.tileSize):
+                pygame.draw.line(Game.surface, (220, 220, 220), (x, 0), (x, Game.surface.get_size()[1]))
+            for y in range(0, Game.surface.get_size()[1], self.tileSize):
+                pygame.draw.line(Game.surface, (220, 220, 220), (0, y), (Game.surface.get_size()[0], y))
 
     def disableGrid(self):
         pass
@@ -52,12 +52,11 @@ class TileManager:
                 self.log.warning("The tile position can't be negative")
                 continue
             for data in levelTest[keys].values():
-                self.game.platforms.add(data((255, 0, 0), coords[0] * self.tileSize, coords[1] * self.tileSize, self.tileSize, self.tileSize))
+                Game.platforms.add(data((255, 0, 0), coords[0] * self.tileSize, coords[1] * self.tileSize, self.tileSize, self.tileSize))
 
 
 class Camera:
     def __init__(self, width, height):
-        self.game = Game.get_instance()
         self.camera = pygame.Rect(0, 0, width, height)
         self.width = width
         self.height = height
@@ -66,7 +65,8 @@ class Camera:
         return entity.rect.move(self.camera.topleft)
 
     def update(self, target):
-        x = -target.rect.x + int(self.game.surface.get_size()[0] / 2)
+        x = -target.rect.x + int(Game.surface.get_size()[0] / 2)
 
         x = min(0, x)
+        x = max(-self.width, x)
         self.camera = pygame.Rect(x, 0, self.width, self.height)
