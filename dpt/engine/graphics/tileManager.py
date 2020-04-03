@@ -114,11 +114,8 @@ class TileManager:
                 self.log.warning("The tile position can't be negative : " + keys)
                 continue
             for data in levelTest[keys].values():
-                sprite = None
-                #Game.platforms.add(exec(data + '((255, 0, 0), coords[0] * self.tileSize, coords[1] * self.tileSize, self.tileSize, self.tileSize)'))
-                exec("sprite = " + data + "((255, 0, 0), coords[0] * self.tileSize, coords[1] * self.tileSize, self.tileSize, self.tileSize)")
+                Game.platforms.add(eval(data + "((255, 0, 0), coords[0] * self.tileSize, coords[1] * self.tileSize, self.tileSize, self.tileSize)"))
                 self.log.warning("Invalid class name : " + data + " for tile : " + keys)
-                self.log.debug(sprite)
 
 
 class Camera:
