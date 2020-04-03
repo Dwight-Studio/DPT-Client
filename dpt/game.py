@@ -87,7 +87,7 @@ class Game(object):
             from dpt.engine.graphics.tileManager import TileManager
             tile = TileManager()
             tile.enableGrid()
-            tile.loadLevel(cls.ressources.get("dpt.levels.leveltest.level"))
+            tile.loadLevel(cls.ressources.get("dpt.levels.leveltest"))
             # from dpt.engine.webCommunications import Communication
             # com = Communication()
             # com.create()

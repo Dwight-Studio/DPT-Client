@@ -66,7 +66,7 @@ class RessourceLoader:
             key = entry[0]
             print(key)
             if key.split(".")[-1] == "level":
-                key = key.replace(".level", "")
+                key = ".".join(key.split(".")[:-1])
             self.RESSOURCES[key] = entry[1]
         self.logger.info("Registered " + str(len(self.RESSOURCES)) + " entries")
 
