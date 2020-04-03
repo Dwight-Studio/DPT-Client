@@ -2,6 +2,7 @@ import pygame
 import math
 
 from dpt.game import Game
+from dpt.engine.graphics.tileManager import TileManager
 
 
 class PlayerSprite(pygame.sprite.Sprite):
@@ -9,6 +10,7 @@ class PlayerSprite(pygame.sprite.Sprite):
     char = Game.ressources.get("dpt.images.characters.player.standing")
     walkRight = Game.ressources.get_multiple("dpt.images.characters.player.R*")
     walkLeft = Game.ressources.get_multiple("dpt.images.characters.player.L*")
+    platforms = TileManager.LISTE
 
     def __init__(self, x, y, width, height):
         pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
@@ -16,7 +18,8 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.vel = 8
+        self.xvel = 0
+        self.yvel = 0
         self.left = True
         self.right = False
         self.standing = False
@@ -34,16 +37,19 @@ class PlayerSprite(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_LEFT]:
-            self.rect.x -= self.vel
+            if self.xvel > -8:
+                self.xvel -= 1
             self.left = True
             self.right = False
             self.standing = False
         elif keys[pygame.K_RIGHT]:
-            self.rect.x += self.vel
+            if self.xvel < 8:
+                self.xvel += 1
             self.left = False
             self.right = True
             self.standing = False
         else:
+            self.xvel = 0
             self.standing = True
             self.walkCount = 0
 
@@ -65,14 +71,17 @@ class PlayerSprite(pygame.sprite.Sprite):
                 else:
                     self.isFalling = True
                     neg = -1
-                self.rect.y -= math.floor((self.jumpCount ** 2) * 0.5) * neg
+                self.yvel = math.floor((self.jumpCount ** 2) * 0.5) * neg
                 self.jumpCount -= 1
             elif self.onPlatform:
                 self.jumpCount = self.CONSTJUMPCOUNT
                 self.isJump = False
+                self.yvel = 0
 
-        self.collide(self.vel, 0, Game.platforms)
-        self.collide(0, self.vel, Game.platforms)
+        self.rect.left += self.xvel
+        self.collide(self.xvel, 0, PlayerSprite.platforms)
+        self.rect.top -= self.yvel
+        self.collide(0, self.yvel, PlayerSprite.platforms)
         self.animation()
 
     def animation(self):
@@ -96,4 +105,11 @@ class PlayerSprite(pygame.sprite.Sprite):
     def collide(self, xVelDelta, yVelDelta, platforms):
         for i in platforms:
             if pygame.sprite.collide_rect(self, i):
-                pass
+                if xVelDelta > 0:
+                    self.rect.right = i.rect.left
+                if xVelDelta < 0:
+                    self.rect.left = i.rect.right
+                if yVelDelta > 0:
+                    self.rect.bottom = i.rect.bottom
+                if yVelDelta < 0:
+                    self.rect.top = i.rect.bottom
