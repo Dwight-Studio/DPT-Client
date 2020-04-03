@@ -78,6 +78,9 @@ levelTest = {"0, 32": {"blockClass": "Block"},
 print(json.dumps(levelTest))
 
 class TileManager:
+
+    LISTE = []
+
     def __init__(self):
 
         self.log = Game.get_logger("TileManager")
@@ -87,7 +90,6 @@ class TileManager:
         self.maxWidthSize = 0
         self.maxHeightSize = 0
         self.coords = None
-        self.LISTE = []
 
     def enableGrid(self):
         if self.userConfirm:
