@@ -47,7 +47,7 @@ class TileManager:
     def loadLevel(self, levelName):
         self.maxWidthSize = 0
         self.maxHeightSize = 0
-        if levelName == None:
+        if levelName is None:
             self.log.critical("The level can't be loaded")
         for keys in levelTest:
             coords = tuple(map(int, keys.split(", ")))

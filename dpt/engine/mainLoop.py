@@ -11,8 +11,7 @@ def redraw_Game_window():
     tile.enableGrid()
     Game.joueur.update()
     Game.platforms.update()
-    for sprites in Game.joueur:
-        Game.surface.blit(sprites.image, camera.apply(sprites))
+    Game.surface.blit(Game.playerSprite.image, camera.apply(Game.playerSprite))
     for sprite in Game.platforms:
         Game.surface.blit(sprite.image, camera.apply(sprite))
     Game.joueur.draw(Game.surface)
