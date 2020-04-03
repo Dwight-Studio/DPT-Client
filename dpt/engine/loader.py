@@ -81,13 +81,13 @@ class RessourceLoader:
     def load(self):
         self.logger.info("Starting loading ressources")
         for entry in self.pending_ressources:
-            ext = self.pending_ressources[entry][1].split(".")[-2:-1]
+            ext = self.pending_ressources[entry].split("/")[-1].split(".")
             try:
-                if ext[1] == "png":
+                if ext[-1] == "png":
                     self.loaded_ressources[entry] = pygame.image.load(self.pending_ressources[entry])
                     self.logger.debug("Entry " + entry + " loaded")
 
-                if ext[0] == "level" and ext[1] == "json":
+                if ext[-2] == "level" and ext[-1] == "json":
                     table = None
                     file = open(self.pending_ressources[entry], "r")
                     table = json.loads(file.read())
