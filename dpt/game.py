@@ -129,13 +129,14 @@ class Game(object):
 
     @classmethod
     def display_debug_info(cls):
-        font = pygame.font.SysFont("arial", 15)
-        y = 0
-        for text in cls._debug_infos:
-            debug_text = font.render(text, True, (0, 0, 0))
-            rect = debug_text.get_rect()
-            rect.x = 0
-            rect.y = y
-            y += 15
-            cls.surface.blit(debug_text, rect)
+        if cls.DEBUG:
+            font = pygame.font.SysFont("arial", 15)
+            y = 0
+            for text in cls._debug_infos:
+                debug_text = font.render(text, True, (0, 0, 0))
+                rect = debug_text.get_rect()
+                rect.x = 0
+                rect.y = y
+                y += 15
+                cls.surface.blit(debug_text, rect)
         cls._debug_infos = []
