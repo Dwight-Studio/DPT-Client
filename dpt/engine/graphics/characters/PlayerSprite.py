@@ -35,10 +35,10 @@ class PlayerSprite(pygame.sprite.Sprite):
     def update(self):
 
         keys = pygame.key.get_pressed()
-        mur = Game.camera.last_x
-        Game.add_debug_info(str(mur))
+        mur = -Game.camera.last_x
+        Game.add_debug_info("Scrolling : " + str(mur))
 
-        if keys[pygame.K_LEFT] and self.rect.x - self.xvel - 1 > -mur:
+        if keys[pygame.K_LEFT] and self.rect.x - self.xvel - 1 > mur:
             if self.xvel > 0:
                 self.xvel = 0
             if self.xvel > -5:

@@ -60,8 +60,6 @@ class Camera:
     def update(self, target):
         Game.add_debug_info("Right : " + str(Game.playerSprite.right))
         Game.add_debug_info("Left : " + str(Game.playerSprite.left))
-        Game.add_debug_info("LimitR : " + str(int(Game.surface.get_size()[0] / 4 * 3)))
-        Game.add_debug_info("LimitL : " + str(int(Game.surface.get_size()[0] / 4)))
         Game.add_debug_info("Player X :" + str(target.rect.centerx))
         Game.add_debug_info("Player Y : " + str(target.rect.centery))
 
