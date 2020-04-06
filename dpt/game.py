@@ -29,6 +29,7 @@ class Game(object):
     playerSprite = None
     camera = None
     tile = None
+    editor = None
 
     _debug_infos = None
 
@@ -78,7 +79,7 @@ class Game(object):
         cls.joueur = pygame.sprite.Group()
         cls.platforms = pygame.sprite.Group()
         cls.window = pygame.display
-        cls.surface = cls.window.set_mode((0, 0), pygame.FULLSCREEN, pygame.RESIZABLE)
+        cls.surface = cls.window.set_mode((1920, 1080))#, pygame.FULLSCREEN, pygame.RESIZABLE)
         w, h = cls.surface.get_size()
         main_logger.debug("Window size: " + str(w) + "x" + str(h))
         pygame.display.set_caption("Don't play together")
@@ -94,13 +95,15 @@ class Game(object):
             cls.tile = TileManager()
             cls.tile.loadLevel("dpt.levels.leveltest")
             cls.camera = Camera(cls.tile.maxWidthSize, cls.tile.maxHeightSize)
-            # from dpt.engine.webCommunications import Communication
-            # com = Communication()
-            # com.create()
-            # time.sleep(10)
-            # com.createVoteEvent(0, 0)
+            from dpt.engine.graphics.gui.tileEditor import TileEditor
+            cls.editor = TileEditor()
+            #from dpt.engine.webCommunications import Communication
+            #com = Communication()
+            #com.create()
+            #time.sleep(10)
+            #com.createVoteEvent(0, 0)
             #time.sleep(40)
-            # com.voteResult()
+            #com.voteResult()
 
             from dpt.engine.mainLoop import loop
             loop()

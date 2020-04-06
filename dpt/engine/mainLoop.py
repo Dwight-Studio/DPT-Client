@@ -3,11 +3,12 @@ from dpt.game import Game
 import pygame
 
 def redraw_Game_window():
-    Game.surface.blit(bg, (0, 0))
-    Game.camera.update(Game.playerSprite)
     Game.platforms.update()
+    Game.camera.update(Game.playerSprite)
+    Game.editor.update()
     Game.joueur.update()
     Game.display_debug_info()
+    #Game.surface.blit(bg, (0, 0))
     Game.window.update()
 
 

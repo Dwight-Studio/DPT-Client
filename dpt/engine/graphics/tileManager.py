@@ -48,8 +48,8 @@ class TileManager:
 
 class Camera:
     def __init__(self, width, height):
-        self.userConfirm = False
-        self.camera = pygame.Rect(0, 0, width, height)
+        self.userConfirm = True
+
         self.width = width
         self.height = height
         self.log = Game.get_logger("Camera")
@@ -75,7 +75,6 @@ class Camera:
             Game.surface.blit(sprite.image, self.apply(sprite))
         self.last_x = x
 
-        self.enableGrid()
 
     def enableGrid(self):
         if self.userConfirm:
