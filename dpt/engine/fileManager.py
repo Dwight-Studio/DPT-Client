@@ -1,5 +1,6 @@
 import tkinter as tk
 import json
+import pygame
 from dpt.game import Game
 from tkinter import filedialog
 
@@ -18,9 +19,7 @@ class FileManager:
             with open(self.file) as f:
                 data = json.load(f)
                 print(data)
-                for sprite in Game.platforms:
-                    Game.platforms.remove(sprite)
-                    Game.platforms.update()
+                Game.platforms.empty()
                 #Game.camera.enableGrid()
                 Game.tile.loadLevel(data)
         except:

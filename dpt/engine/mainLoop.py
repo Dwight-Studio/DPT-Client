@@ -3,12 +3,11 @@ from dpt.game import Game
 import pygame
 
 def redraw_Game_window():
-    Game.platforms.update()
+    Game.platforms.draw(Game.surface)
     Game.camera.update(Game.playerSprite)
     Game.editor.update()
     Game.joueur.update()
     Game.display_debug_info()
-    #Game.surface.blit(bg, (0, 0))
     Game.window.update()
 
 
@@ -23,6 +22,7 @@ def loop():
     run = True
     while run:
         Game.clock.tick(27)
+        Game.surface.blit(bg, (0, 0))
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
