@@ -54,6 +54,7 @@ class TileManager:
                         Game.enemyGroup.add(enemy)
                     except:
                         self.log.warning("Invalid class name : " + data + " for tile : " + keys)
+        Game.enemyGroup.draw(Game.surface)
         Game.platforms.draw(Game.surface)
         self.log.info("Done")
 
