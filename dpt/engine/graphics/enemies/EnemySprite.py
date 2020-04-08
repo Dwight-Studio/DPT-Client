@@ -2,6 +2,7 @@ import pygame
 import random
 import math
 
+from opensimplex import OpenSimplex
 from dpt.game import Game
 
 
@@ -29,27 +30,28 @@ class EnemySprite(pygame.sprite.Sprite):
         self.allowJump = True
         self.gravityCount = 0
         self.gravity = 0
+        self.tmp = OpenSimplex()
+        self.x = random.randint(0, 10000)
+        self.y = 0
 
     def update(self):
-        randomValue = random.randint(0, 100)
-        if 0 <= randomValue <= 45:
-            for i in range(150):
-                if self.xvel > 0:
-                    self.xvel = 0
-                if self.xvel > -8:
-                    self.xvel -= 1
-                self.left = True
-                self.right = False
-                self.standing = False
-        elif 46 <= randomValue <= 90:
-            for i in range(150):
-                if self.xvel < 0:
-                    self.xvel = 0
-                if self.xvel < 8:
-                    self.xvel += 1
-                self.left = False
-                self.right = True
-                self.standing = False
+        self.y += 0.02
+        if 0.95 > self.tmp.noise2d(self.x, self.y) > 0:
+            if self.xvel > 0:
+                self.xvel = 0
+            if self.xvel > -8:
+                self.xvel -= 1
+            self.left = True
+            self.right = False
+            self.standing = False
+        elif -0.95 < self.tmp.noise2d(self.x, self.y) < 0:
+            if self.xvel < 0:
+                self.xvel = 0
+            if self.xvel < 8:
+                self.xvel += 1
+            self.left = False
+            self.right = True
+            self.standing = False
         else:
             self.xvel = 0
             self.standing = True
