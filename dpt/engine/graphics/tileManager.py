@@ -1,4 +1,5 @@
 from dpt.engine.graphics.blocks import *
+from dpt.engine.graphics.enemies import *
 from dpt.game import Game
 import pygame
 

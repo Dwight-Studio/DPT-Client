@@ -241,5 +241,8 @@
   },
   "79, 32": {
     "blockClass": "Block"
+  },
+  "10, 30": {
+    "enemyClass": "EnemySprite"
   }
 }
