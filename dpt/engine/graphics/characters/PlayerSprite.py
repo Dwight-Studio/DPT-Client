@@ -87,16 +87,16 @@ class PlayerSprite(pygame.sprite.Sprite):
                     self.yvel = 0
 
         self.rect.left += self.xvel
-        self.collide(self.xvel, 0, TileManager.LISTE)
+        self.collide(self.xvel, 0, Game.platformsList)
         self.rect.top -= self.yvel
-        self.collide(0, self.yvel, TileManager.LISTE)
+        self.collide(0, self.yvel, Game.platformsList)
 
         if not self.isJump:
             self.allowJump = False
             PlayerSprite.gravityCount += 1
             PlayerSprite.gravity = math.floor((PlayerSprite.gravityCount ** 2) * 0.5) * -1
             self.rect.top -= PlayerSprite.gravity
-            self.collide(0, PlayerSprite.gravity, TileManager.LISTE)
+            self.collide(0, PlayerSprite.gravity, Game.platformsList)
         self.animation()
 
     def animation(self):

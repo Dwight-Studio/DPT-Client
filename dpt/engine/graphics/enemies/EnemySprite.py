@@ -1,8 +1,6 @@
 import pygame
-import random
 import math
 
-from opensimplex import OpenSimplex
 from dpt.game import Game
 
 
@@ -30,24 +28,20 @@ class EnemySprite(pygame.sprite.Sprite):
         self.allowJump = True
         self.gravityCount = 0
         self.gravity = 0
-        self.tmp = OpenSimplex()
-        self.x = random.randint(0, 10000)
-        self.y = 0
 
     def update(self):
-        self.y += 0.02
-        if 0.95 > self.tmp.noise2d(self.x, self.y) > 0:
+        if self.left:
             if self.xvel > 0:
                 self.xvel = 0
-            if self.xvel > -8:
+            if self.xvel > -5:
                 self.xvel -= 1
             self.left = True
             self.right = False
             self.standing = False
-        elif -0.95 < self.tmp.noise2d(self.x, self.y) < 0:
+        elif self.right:
             if self.xvel < 0:
                 self.xvel = 0
-            if self.xvel < 8:
+            if self.xvel < 5:
                 self.xvel += 1
             self.left = False
             self.right = True
@@ -57,16 +51,16 @@ class EnemySprite(pygame.sprite.Sprite):
             self.standing = True
 
         self.rect.left += self.xvel
-        self.collide(self.xvel, 0, Game.enemyList)
+        self.collide(self.xvel, 0, Game.platformsList)
         self.rect.top -= self.yvel
-        self.collide(0, self.yvel, Game.enemyList)
+        self.collide(0, self.yvel, Game.platformsList)
 
         if not self.isJump:
             self.allowJump = False
             self.gravityCount += 1
             self.gravity = math.floor((self.gravityCount ** 2) * 0.5) * -1
             self.rect.top -= self.gravity
-            self.collide(0, self.gravity, Game.enemyList)
+            self.collide(0, self.gravity, Game.platformsList)
         self.animation()
 
     def animation(self):
@@ -89,4 +83,3 @@ class EnemySprite(pygame.sprite.Sprite):
                     self.gravityCount = 0
                 if yVelDelta > 0:
                     self.rect.top = i.rect.bottom
-

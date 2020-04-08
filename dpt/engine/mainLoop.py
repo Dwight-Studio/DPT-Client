@@ -1,4 +1,3 @@
-from dpt.engine.graphics.enemies.EnemySprite import EnemySprite
 from dpt.engine.graphics.characters.PlayerSprite import PlayerSprite
 from dpt.game import Game
 import pygame
@@ -21,9 +20,7 @@ def loop():
 
     screen_width, screen_height = Game.surface.get_size()
     Game.playerSprite = PlayerSprite(300, screen_height - 500, 64, 64)
-    Game.enemySprite = EnemySprite(500, screen_height - 500, 64, 64)
     Game.joueur.add(Game.playerSprite)
-    Game.enemyGroup.add(Game.enemySprite)
     bg = Game.ressources.get("dpt.images.environment.background")
     run = True
     while run:
