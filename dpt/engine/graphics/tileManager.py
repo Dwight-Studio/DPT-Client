@@ -37,13 +37,23 @@ class TileManager:
                 continue
             for data in level[keys].values():
                 try:
-                    sprite = eval(data + "((255, 0, 0), coords[0] * Game.TILESIZE, coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE)")
+                    block = eval(data + "((255, 0, 0), coords[0] * Game.TILESIZE, coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
                     self.log.debug("Tile " + data + " placed at " + keys)
-                    self.LISTE.append(sprite)
-                    Game.platforms.add(sprite)
+                    self.LISTE.append(block)
+                    Game.platforms.add(block)
                 except:
                     self.log.warning("Invalid class name : " + data + " for tile : " + keys)
+        Game.platforms.draw(Game.surface)
         self.log.info("Done")
+
+    def ghostBlock(self, xTile, yTile, blockClass):
+        ghostBlock = eval(blockClass + "((255, 0, 0), xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 80)")
+        Game.ghostBlock.add(ghostBlock)
+
+    def placeBlock(self, xTile, yTile, blockClass):
+        block = eval(blockClass + "((255, 0, 0), xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
+        self.log.debug("Tile " + blockClass + " placed at " + str(xTile) + ", " + str(yTile))
+        Game.platforms.add(block)
 
 
 class Camera:

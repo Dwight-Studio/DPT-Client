@@ -25,6 +25,7 @@ class Game(object):
     joueur = None
     ressources = None
     platforms = None
+    ghostBlock = None
     surface = None
     playerSprite = None
     camera = None
@@ -78,6 +79,7 @@ class Game(object):
         cls._debug_infos = []
         cls.joueur = pygame.sprite.Group()
         cls.platforms = pygame.sprite.Group()
+        cls.ghostBlock = pygame.sprite.Group()
         cls.window = pygame.display
         cls.surface = cls.window.set_mode((1920, 1080))#, pygame.FULLSCREEN, pygame.RESIZABLE)
         w, h = cls.surface.get_size()
@@ -97,6 +99,7 @@ class Game(object):
             cls.camera = Camera(cls.tile.maxWidthSize, cls.tile.maxHeightSize)
             from dpt.engine.graphics.gui.tileEditor import TileEditor
             cls.editor = TileEditor()
+            cls.editor.inEditor = True
             #from dpt.engine.webCommunications import Communication
             #com = Communication()
             #com.create()

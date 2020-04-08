@@ -7,20 +7,35 @@ from tkinter import filedialog
 
 class FileManager:
     def __init__(self):
-        self.file = None
-
+        self.log = Game.get_logger("FileManager")
     def openFile(self):
         root = tk.Tk()
         root.withdraw()
-        self.file = filedialog.askopenfilename(parent=root, title="Sélectionner un niveau",
+        file = filedialog.askopenfilename(parent=root, title="Sélectionner un niveau",
                                                filetypes=[("Fichier de niveau DPT", "*.level.json"),
                                                           ("Tous les fichiers", "*")])
         try:
-            with open(self.file) as f:
+            with open(file) as f:
                 data = json.load(f)
-                print(data)
                 Game.platforms.empty()
                 #Game.camera.enableGrid()
                 Game.tile.loadLevel(data)
+                self.log.info("Successfully loaded : " + str(file))
+                root.destroy()
         except:
+            self.log.warning("Unable to load file : " + str(file))
             root.destroy()
+
+    def saveFile(self, level):
+        root = tk.Tk()
+        root.withdraw()
+        file = filedialog.asksaveasfilename(parent=root, title="Sauvegarder un niveau",
+                                                filetypes=[("Fichier de niveau DPT", "*.level.json")])
+        #try:
+        with open(file, "w") as f:
+            json.dump(level, file)
+            self.log.info("Level saved at : " + str(file))
+            root.destroy()
+        #except:
+        #    self.log.warning("Unable to save file : " + str(file))
+        #    root.destroy()

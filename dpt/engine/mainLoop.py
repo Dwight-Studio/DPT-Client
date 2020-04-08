@@ -3,9 +3,10 @@ from dpt.game import Game
 import pygame
 
 def redraw_Game_window():
-    Game.platforms.draw(Game.surface)
+    Game.platforms.update()
     Game.camera.update(Game.playerSprite)
     Game.editor.update()
+    Game.ghostBlock.draw(Game.surface)
     Game.joueur.update()
     Game.display_debug_info()
     Game.window.update()
