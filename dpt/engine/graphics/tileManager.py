@@ -37,19 +37,19 @@ class TileManager:
             if coords[0] < 0 or coords[1] < 0:
                 self.log.warning("The tile position can't be negative : " + keys)
                 continue
-            for data in level[keys]:
-                if data == "blockClass":
+            for key, data in level[keys].items():
+                if key == "blockClass":
                     try:
-                        block = eval(data.values() + "((255, 0, 0), coords[0] * Game.TILESIZE, coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
-                        self.log.debug("Tile " + data.values() + " placed at " + keys)
+                        block = eval(data + "((255, 0, 0), coords[0] * Game.TILESIZE, coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
+                        self.log.debug("Tile " + data + " placed at " + keys)
                         TileManager.LISTE.append(block)
                         Game.platforms.add(block)
                     except:
                         self.log.warning("Invalid class name : " + data + " for tile : " + keys)
-                elif data == "enemyClass":
+                elif key == "enemyClass":
                     try:
-                        enemy = eval(data.values() + "((255, 0, 0), coords[0] * Game.TILESIZE, coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
-                        self.log.debug("Tile " + data.values() + " placed at " + keys)
+                        enemy = eval(data + "(coords[0] * Game.TILESIZE, coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE)")
+                        self.log.debug("Tile " + data + " placed at " + keys)
                         Game.enemyList.append(enemy)
                         Game.enemyGroup.add(enemy)
                     except:
