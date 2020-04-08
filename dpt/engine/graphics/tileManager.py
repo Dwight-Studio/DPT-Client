@@ -6,6 +6,7 @@ import pygame
 #          {"x, y": {"blockClass": Classe}}
 class TileManager:
     LISTE = []
+    ENEMY = []
 
     def __init__(self):
 
@@ -36,14 +37,23 @@ class TileManager:
             if coords[0] < 0 or coords[1] < 0:
                 self.log.warning("The tile position can't be negative : " + keys)
                 continue
-            for data in level[keys].values():
-                try:
-                    block = eval(data + "((255, 0, 0), coords[0] * Game.TILESIZE, coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
-                    self.log.debug("Tile " + data + " placed at " + keys)
-                    TileManager.LISTE.append(block)
-                    Game.platforms.add(block)
-                except:
-                    self.log.warning("Invalid class name : " + data + " for tile : " + keys)
+            for data in level[keys]:
+                if data == "blockClass":
+                    try:
+                        block = eval(data.values() + "((255, 0, 0), coords[0] * Game.TILESIZE, coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
+                        self.log.debug("Tile " + data.values() + " placed at " + keys)
+                        TileManager.LISTE.append(block)
+                        Game.platforms.add(block)
+                    except:
+                        self.log.warning("Invalid class name : " + data + " for tile : " + keys)
+                elif data == "enemyClass":
+                    try:
+                        enemy = eval(data.values() + "((255, 0, 0), coords[0] * Game.TILESIZE, coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
+                        self.log.debug("Tile " + data.values() + " placed at " + keys)
+                        TileManager.ENEMY.append(enemy)
+                        Game.enemyGroup.add(enemy)
+                    except:
+                        self.log.warning("Invalid class name : " + data + " for tile : " + keys)
         Game.platforms.draw(Game.surface)
         self.log.info("Done")
 

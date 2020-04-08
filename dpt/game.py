@@ -27,6 +27,7 @@ class Game(object):
     ressources = None
     platforms = None
     ghostBlock = None
+    enemyGroup = None
     surface = None
     playerSprite = None
     camera = None
