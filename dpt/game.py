@@ -83,7 +83,7 @@ class Game(object):
         cls.ghostBlock = pygame.sprite.Group()
         cls.window = pygame.display
         if Game.LINUX_USER:
-            cls.surface = cls.window.set_mode((1920, 1080), pygame.NOFRAME, pygame.RESIZABLE)
+            cls.surface = cls.window.set_mode((0, 0), pygame.NOFRAME, pygame.RESIZABLE)
         else:
             cls.surface = cls.window.set_mode((0, 0), pygame.FULLSCREEN, pygame.RESIZABLE)
         w, h = cls.surface.get_size()
