@@ -35,8 +35,8 @@ class FileManager:
             with open(file + ".level.json", "w") as f:
                 data = json.dumps(level, indent=4)
                 f.write(data)
-                self.log.info("Level saved at : " + str(file))
+                self.log.info("Level saved at : " + str(file + ".level.json"))
                 root.destroy()
         except:
-            self.log.warning("Unable to save file : " + str(file))
+            self.log.warning("Unable to save file : " + str(file + ".level.json"))
             root.destroy()

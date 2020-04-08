@@ -8,17 +8,21 @@ class TileEditor:
         self.file = FileManager()
         self.opushed = False
         self.spushed = False
+        self.npushed = False
         self.inEditor = False
         self.mousePosX = None
         self.mousePosY = None
         self.lastMousePosX = None
         self.lastMousePosY = None
         self.createdLevel = {}
+        self.blockClass = "Block"
 
     def update(self):
         if self.inEditor:
             Game.camera.enableGrid()
             # Gestion des fichiers (raccourcis)
+            mqkdzq = pygame.MOUSEBUTTONDOWN
+            print(mqkdzq)
             mouseButtons = pygame.mouse.get_pressed()
             keys = pygame.key.get_pressed()
             keysmods = pygame.key.get_mods()
@@ -36,6 +40,12 @@ class TileEditor:
                         self.file.saveFile(self.createdLevel)
                     elif not keys[pygame.K_s] and self.spushed:
                         self.spushed = False
+                    if keys[pygame.K_n] and not self.npushed:
+                        self.npushed = True
+                        Game.platforms.empty()
+                        self.createdLevel = {}
+                    elif not keys[pygame.K_n] and self.npushed:
+                        self.npushed = False
             #Gestion de la position de la souris et du placement de blocks
             mouse = pygame.mouse.get_pos()
             self.mousePosX = math.floor(mouse[0] / Game.TILESIZE)
@@ -45,11 +55,10 @@ class TileEditor:
             if self.mousePosX != self.lastMousePosX and self.mousePosY != self.lastMousePosY:
                 Game.ghostBlock.empty()
                 pushed = False
-                Game.tile.ghostBlock(self.mousePosX, self.mousePosY, "Block")
+                Game.tile.ghostBlock(self.mousePosX, self.mousePosY, self.blockClass)
                 self.lastMousePosX = self.mousePosX
                 self.lastMousePosY = self.mousePosY
                 if mouseButtons[0] == 1 and not pushed:
                     pushed = True
-                    Game.tile.placeBlock(self.mousePosX, self.mousePosY, "Block")
-                    self.createdLevel[str(self.mousePosX) + (", ") + str(self.mousePosY)] = {"blockClass": "Block"}
-
+                    Game.tile.placeBlock(self.mousePosX, self.mousePosY, self.blockClass)
+                    self.createdLevel[str(self.mousePosX) + (", ") + str(self.mousePosY)] = {"blockClass": self.blockClass}
