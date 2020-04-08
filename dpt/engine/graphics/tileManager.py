@@ -57,9 +57,14 @@ class TileManager:
         Game.enemyGroup.draw(Game.surface)
         self.log.info("Done")
 
-    def ghostBlock(self, xTile, yTile, itemClass):
-        ghostBlock = eval(itemClass + "((255, 0, 0), xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 80)")
-        Game.ghostBlock.add(ghostBlock)
+    def ghostBlock(self, xTile, yTile, itemClass, classType):
+        if classType == "blockClass":
+            ghostBlock = eval(itemClass + "((255, 0, 0), xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 80)")
+            Game.ghostBlock.add(ghostBlock)
+        elif classType == "enemyClass":
+            ghostBlock = eval(
+            itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE)")
+            Game.ghostBlock.add(ghostBlock)
 
     def placeBlock(self, xTile, yTile, itemClass, classType):
         if classType == "blockClass":
@@ -67,7 +72,7 @@ class TileManager:
             self.log.debug("Tile " + itemClass + " placed at " + str(xTile) + ", " + str(yTile))
             Game.platforms.add(block)
         elif classType == "enemyClass":
-            enemy = eval(itemClass + "((255, 0, 0), xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
+            enemy = eval(itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE)")
             self.log.debug("Tile " + itemClass + " placed at " + str(xTile) + ", " + str(yTile))
             Game.enemyGroup.add(enemy)
 

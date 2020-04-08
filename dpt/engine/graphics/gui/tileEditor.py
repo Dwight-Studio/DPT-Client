@@ -15,8 +15,8 @@ class TileEditor:
         self.lastMousePosX = None
         self.lastMousePosY = None
         self.createdLevel = {}
-        self.itemClass = "Block"
-        self.classType = "blockClass"
+        self.itemClass = "EnemySprite"
+        self.classType = "enemyClass"
 
     def update(self):
         if self.inEditor:
@@ -54,7 +54,7 @@ class TileEditor:
             if self.mousePosX != self.lastMousePosX and self.mousePosY != self.lastMousePosY:
                 Game.ghostBlock.empty()
                 pushed = False
-                Game.tile.ghostBlock(self.mousePosX, self.mousePosY, self.itemClass)
+                Game.tile.ghostBlock(self.mousePosX, self.mousePosY, self.itemClass, self.classType)
                 self.lastMousePosX = self.mousePosX
                 self.lastMousePosY = self.mousePosY
                 if mouseButtons[0] == 1 and not pushed:
