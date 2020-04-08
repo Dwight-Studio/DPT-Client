@@ -56,9 +56,9 @@ class PlayerSprite(pygame.sprite.Sprite):
             self.standing = False
         else:
             self.xvel = 0
-            #if self.xvel > 0:
+            # if self.xvel > 0:
             #    self.xvel -= 1
-            #elif self.xvel < 0:
+            # elif self.xvel < 0:
             #    self.xvel += 1
             self.standing = True
             self.walkCount = 0
@@ -115,7 +115,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.image = PlayerSprite.walkRight[0]
             else:
                 self.image = PlayerSprite.walkLeft[0]
-        #pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
+        # pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
 
     def collide(self, xVelDelta, yVelDelta, platforms):
         for i in platforms:

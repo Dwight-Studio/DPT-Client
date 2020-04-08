@@ -61,4 +61,4 @@ class TileEditor:
                 if mouseButtons[0] == 1 and not pushed:
                     pushed = True
                     Game.tile.placeBlock(self.mousePosX, self.mousePosY, self.blockClass)
-                    self.createdLevel[str(self.mousePosX) + (", ") + str(self.mousePosY)] = {"blockClass": self.blockClass}
+                    self.createdLevel[str(self.mousePosX) + ", " + str(self.mousePosY)] = {"blockClass": self.blockClass}

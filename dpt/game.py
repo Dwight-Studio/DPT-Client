@@ -79,6 +79,7 @@ class Game(object):
         pygame.init()
         cls._debug_infos = []
         cls.joueur = pygame.sprite.Group()
+        cls.enemyGroup = pygame.sprite.Group()
         cls.platforms = pygame.sprite.Group()
         cls.ghostBlock = pygame.sprite.Group()
         cls.window = pygame.display
