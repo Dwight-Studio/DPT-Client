@@ -15,7 +15,8 @@ class TileEditor:
         self.lastMousePosX = None
         self.lastMousePosY = None
         self.createdLevel = {}
-        self.blockClass = "Block"
+        self.itemClass = "Block"
+        self.classType = "blockClass"
 
     def update(self):
         if self.inEditor:
@@ -53,10 +54,10 @@ class TileEditor:
             if self.mousePosX != self.lastMousePosX and self.mousePosY != self.lastMousePosY:
                 Game.ghostBlock.empty()
                 pushed = False
-                Game.tile.ghostBlock(self.mousePosX, self.mousePosY, self.blockClass)
+                Game.tile.ghostBlock(self.mousePosX, self.mousePosY, self.itemClass)
                 self.lastMousePosX = self.mousePosX
                 self.lastMousePosY = self.mousePosY
                 if mouseButtons[0] == 1 and not pushed:
                     pushed = True
-                    Game.tile.placeBlock(self.mousePosX, self.mousePosY, self.blockClass)
-                    self.createdLevel[str(self.mousePosX) + ", " + str(self.mousePosY)] = {"blockClass": self.blockClass}
+                    Game.tile.placeBlock(self.mousePosX, self.mousePosY, self.itemClass, self.classType)
+                    self.createdLevel[str(self.mousePosX) + ", " + str(self.mousePosY)] = {self.classType: self.itemClass}

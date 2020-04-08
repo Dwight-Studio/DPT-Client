@@ -55,24 +55,29 @@ class TileManager:
                         Game.enemyGroup.add(enemy)
                     except:
                         self.log.warning("Invalid class name : " + data + " for tile : " + keys)
-        Game.enemyGroup.draw(Game.surface)
         Game.platforms.draw(Game.surface)
+        Game.enemyGroup.draw(Game.surface)
         self.log.info("Done")
 
-    def ghostBlock(self, xTile, yTile, blockClass):
-        ghostBlock = eval(blockClass + "((255, 0, 0), xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 80)")
+    def ghostBlock(self, xTile, yTile, itemClass):
+        ghostBlock = eval(itemClass + "((255, 0, 0), xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 80)")
         Game.ghostBlock.add(ghostBlock)
 
-    def placeBlock(self, xTile, yTile, blockClass):
-        block = eval(blockClass + "((255, 0, 0), xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
-        self.log.debug("Tile " + blockClass + " placed at " + str(xTile) + ", " + str(yTile))
-        Game.platforms.add(block)
+    def placeBlock(self, xTile, yTile, itemClass, classType):
+        if classType == "blockClass":
+            block = eval(itemClass + "((255, 0, 0), xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
+            self.log.debug("Tile " + itemClass + " placed at " + str(xTile) + ", " + str(yTile))
+            Game.platforms.add(block)
+        elif classType == "enemyClass":
+            enemy = eval(itemClass + "((255, 0, 0), xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
+            self.log.debug("Tile " + itemClass + " placed at " + str(xTile) + ", " + str(yTile))
+            Game.enemyGroup.add(enemy)
 
 
 class Camera:
     def __init__(self, width, height):
         self.userConfirm = True
-
+        self.camera = None
         self.width = width
         self.height = height
         self.log = Game.get_logger("Camera")
@@ -104,6 +109,3 @@ class Camera:
                 pygame.draw.line(Game.surface, (220, 220, 220), (x, 0), (x, Game.surface.get_size()[1]))
             for y in range(0, Game.surface.get_size()[1], Game.TILESIZE):
                 pygame.draw.line(Game.surface, (220, 220, 220), (0, y), (Game.surface.get_size()[0], y))
-
-    def disableGrid(self):
-        pass

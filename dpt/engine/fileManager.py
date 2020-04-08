@@ -30,13 +30,13 @@ class FileManager:
         root = tk.Tk()
         root.withdraw()
         file = filedialog.asksaveasfilename(parent=root, title="Sauvegarder un niveau",
-                                                filetypes=[("Fichier de niveau DPT", "*.level.json")])
+                                                filetypes=[("Fichier de niveau DPT", "*.level.json")], defaultextension=".level.json")
         try:
-            with open(file + ".level.json", "w") as f:
+            with open(file, "w") as f:
                 data = json.dumps(level, indent=4)
                 f.write(data)
-                self.log.info("Level saved at : " + str(file + ".level.json"))
+                self.log.info("Level saved at : " + str(file))
                 root.destroy()
         except:
-            self.log.warning("Unable to save file : " + str(file + ".level.json"))
+            self.log.warning("Unable to save file : " + str(file))
             root.destroy()
