@@ -25,6 +25,7 @@ class Game(object):
     clock = None
     joueur = None
     ressources = None
+    enemyGroup = None
     platforms = None
     ghostBlock = None
     surface = None
