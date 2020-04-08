@@ -5,6 +5,9 @@
   "1, 32": {
     "blockClass": "Block"
   },
+  "0, 31": {
+    "blockClass": "Block"
+  },
   "2, 32": {
     "blockClass": "Block"
   },
