@@ -31,11 +31,12 @@ class FileManager:
         root.withdraw()
         file = filedialog.asksaveasfilename(parent=root, title="Sauvegarder un niveau",
                                                 filetypes=[("Fichier de niveau DPT", "*.level.json")])
-        #try:
-        with open(file, "w") as f:
-            json.dump(level, file)
-            self.log.info("Level saved at : " + str(file))
+        try:
+            with open(file, "a") as f:
+                data = json.dumps(level, indent=4)
+                f.write(data)
+                self.log.info("Level saved at : " + str(file))
+                root.destroy()
+        except:
+            self.log.warning("Unable to save file : " + str(file))
             root.destroy()
-        #except:
-        #    self.log.warning("Unable to save file : " + str(file))
-        #    root.destroy()

@@ -81,7 +81,7 @@ class Game(object):
         cls.platforms = pygame.sprite.Group()
         cls.ghostBlock = pygame.sprite.Group()
         cls.window = pygame.display
-        cls.surface = cls.window.set_mode((1920, 1080))#, pygame.FULLSCREEN, pygame.RESIZABLE)
+        cls.surface = cls.window.set_mode((1920, 1080), pygame.NOFRAME, pygame.RESIZABLE)
         w, h = cls.surface.get_size()
         main_logger.debug("Window size: " + str(w) + "x" + str(h))
         pygame.display.set_caption("Don't play together")
