@@ -16,8 +16,8 @@ class EnemySprite(pygame.sprite.Sprite):
         self.rect.y = y
         self.xvel = 0
         self.yvel = 0
-        self.left = True
-        self.right = False
+        self.left = False
+        self.right = True
         self.standing = False
         self.width = width
         self.height = height
@@ -28,8 +28,11 @@ class EnemySprite(pygame.sprite.Sprite):
         self.allowJump = True
         self.gravityCount = 0
         self.gravity = 0
+        self.lastx = 0
+        self.lasty = 0
 
     def update(self):
+
         if self.left:
             if self.xvel > 0:
                 self.xvel = 0
@@ -50,10 +53,9 @@ class EnemySprite(pygame.sprite.Sprite):
             self.xvel = 0
             self.standing = True
 
+        self.lastx = self.rect.left
         self.rect.left += self.xvel
         self.collide(self.xvel, 0, Game.platformsList)
-        self.rect.top -= self.yvel
-        self.collide(0, self.yvel, Game.platformsList)
 
         if not self.isJump:
             self.allowJump = False
@@ -62,6 +64,13 @@ class EnemySprite(pygame.sprite.Sprite):
             self.rect.top -= self.gravity
             self.collide(0, self.gravity, Game.platformsList)
         self.animation()
+
+        if self.lastx == self.rect.left:
+            self.left = not self.left
+            self.right = not self.right
+
+        self.rect.top -= self.yvel
+        self.collide(0, self.yvel, Game.platformsList)
 
     def animation(self):
         pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
