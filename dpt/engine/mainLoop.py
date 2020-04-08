@@ -1,4 +1,4 @@
-from dpt.engine.graphics.characters.EnemySprite import EnemySprite
+from dpt.engine.graphics.enemies.EnemySprite import EnemySprite
 from dpt.engine.graphics.characters.PlayerSprite import PlayerSprite
 from dpt.game import Game
 import pygame

@@ -34,7 +34,7 @@ class EnemySprite(pygame.sprite.Sprite):
     def update(self):
         randomValue = random.randint(0, 100)
         if 0 <= randomValue <= 45:
-            for i in range(15):
+            for i in range(150):
                 if self.xvel > 0:
                     self.xvel = 0
                 if self.xvel > -8:
@@ -43,13 +43,14 @@ class EnemySprite(pygame.sprite.Sprite):
                 self.right = False
                 self.standing = False
         elif 46 <= randomValue <= 90:
-            if self.xvel < 0:
-                self.xvel = 0
-            if self.xvel < 8:
-                self.xvel += 1
-            self.left = False
-            self.right = True
-            self.standing = False
+            for i in range(150):
+                if self.xvel < 0:
+                    self.xvel = 0
+                if self.xvel < 8:
+                    self.xvel += 1
+                self.left = False
+                self.right = True
+                self.standing = False
         else:
             self.xvel = 0
             self.standing = True
