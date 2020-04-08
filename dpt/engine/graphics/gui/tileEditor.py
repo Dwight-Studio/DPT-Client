@@ -21,8 +21,6 @@ class TileEditor:
         if self.inEditor:
             Game.camera.enableGrid()
             # Gestion des fichiers (raccourcis)
-            mqkdzq = pygame.MOUSEBUTTONDOWN
-            print(mqkdzq)
             mouseButtons = pygame.mouse.get_pressed()
             keys = pygame.key.get_pressed()
             keysmods = pygame.key.get_mods()
