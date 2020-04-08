@@ -18,6 +18,7 @@ class Game(object):
     SERVER_ADDRESS = "localhost"
     VOTE_TIMEOUT = 80
     TILESIZE = 32
+    LINUX_USER = True
 
     # Variable à définir
     window = None
@@ -81,7 +82,10 @@ class Game(object):
         cls.platforms = pygame.sprite.Group()
         cls.ghostBlock = pygame.sprite.Group()
         cls.window = pygame.display
-        cls.surface = cls.window.set_mode((1920, 1080), pygame.NOFRAME, pygame.RESIZABLE)
+        if Game.LINUX_USER:
+            cls.surface = cls.window.set_mode((1920, 1080), pygame.NOFRAME, pygame.RESIZABLE)
+        else:
+            cls.surface = cls.window.set_mode((0, 0), pygame.FULLSCREEN, pygame.RESIZABLE)
         w, h = cls.surface.get_size()
         main_logger.debug("Window size: " + str(w) + "x" + str(h))
         pygame.display.set_caption("Don't play together")

@@ -32,7 +32,7 @@ class FileManager:
         file = filedialog.asksaveasfilename(parent=root, title="Sauvegarder un niveau",
                                                 filetypes=[("Fichier de niveau DPT", "*.level.json")])
         try:
-            with open(file, "a") as f:
+            with open(file + ".level.json", "w") as f:
                 data = json.dumps(level, indent=4)
                 f.write(data)
                 self.log.info("Level saved at : " + str(file))

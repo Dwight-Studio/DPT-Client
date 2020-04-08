@@ -25,15 +25,14 @@ class TileEditor:
                 # Ouvrir un fichier
                 if keysmods == 4160 or keysmods == 4224:
                     if keys[pygame.K_o] and not self.pushed:
-                        self.file.openFile()
                         self.pushed = True
+                        self.file.openFile()
                     elif not keys[pygame.K_o] and self.pushed:
                         self.pushed = False
                 # Sauvegarder un fichier
                     if keys[pygame.K_s] and not self.pushed:
-                        print("pushed")
-                        self.file.saveFile(self.createdLevel)
                         self.pushed = True
+                        self.file.saveFile(self.createdLevel)
                     elif not keys[pygame.K_s] and self.pushed:
                         self.pushed = False
             #Gestion de la position de la souris et du placement de blocks
