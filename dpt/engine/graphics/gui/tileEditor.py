@@ -6,7 +6,8 @@ from dpt.engine.fileManager import *
 class TileEditor:
     def __init__(self):
         self.file = FileManager()
-        self.pushed = False
+        self.opushed = False
+        self.spushed = False
         self.inEditor = False
         self.mousePosX = None
         self.mousePosY = None
@@ -24,17 +25,17 @@ class TileEditor:
             for key in keys:
                 # Ouvrir un fichier
                 if keysmods == 4160 or keysmods == 4224:
-                    if keys[pygame.K_o] and not self.pushed:
-                        self.pushed = True
+                    if keys[pygame.K_o] and not self.opushed:
+                        self.opushed = True
                         self.file.openFile()
-                    elif not keys[pygame.K_o] and self.pushed:
-                        self.pushed = False
+                    elif not keys[pygame.K_o] and self.opushed:
+                        self.opushed = False
                 # Sauvegarder un fichier
-                    if keys[pygame.K_s] and not self.pushed:
-                        self.pushed = True
+                    if keys[pygame.K_s] and not self.spushed:
+                        self.spushed = True
                         self.file.saveFile(self.createdLevel)
-                    elif not keys[pygame.K_s] and self.pushed:
-                        self.pushed = False
+                    elif not keys[pygame.K_s] and self.spushed:
+                        self.spushed = False
             #Gestion de la position de la souris et du placement de blocks
             mouse = pygame.mouse.get_pos()
             self.mousePosX = math.floor(mouse[0] / Game.TILESIZE)
