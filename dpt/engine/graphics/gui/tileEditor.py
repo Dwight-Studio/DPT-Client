@@ -30,7 +30,7 @@ class TileEditor:
                 if keysmods == 4160 or keysmods == 4224:
                     if keys[pygame.K_o] and not self.opushed:
                         self.opushed = True
-                        self.file.openFile()
+                        self.file.importFile()
                     elif not keys[pygame.K_o] and self.opushed:
                         self.opushed = False
                 # Sauvegarder un fichier
