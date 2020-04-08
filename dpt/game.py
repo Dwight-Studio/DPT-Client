@@ -29,6 +29,7 @@ class Game(object):
     platforms = None
     ghostBlock = None
     enemyGroup = None
+    enemyList = []
     surface = None
     playerSprite = None
     camera = None
