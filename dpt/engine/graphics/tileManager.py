@@ -16,6 +16,7 @@ class TileManager:
         self.coords = None
 
     def loadLevel(self, levelName):
+        TileManager.LISTE = []
         if type(levelName) == str:
             self.log.info("Loading level " + levelName)
             level = Game.ressources.get(levelName)
@@ -39,7 +40,7 @@ class TileManager:
                 try:
                     block = eval(data + "((255, 0, 0), coords[0] * Game.TILESIZE, coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
                     self.log.debug("Tile " + data + " placed at " + keys)
-                    self.LISTE.append(block)
+                    TileManager.LISTE.append(block)
                     Game.platforms.add(block)
                 except:
                     self.log.warning("Invalid class name : " + data + " for tile : " + keys)
@@ -84,7 +85,6 @@ class Camera:
         for sprite in Game.platforms:
             Game.surface.blit(sprite.image, self.apply(sprite))
         self.last_x = x
-
 
     def enableGrid(self):
         if self.userConfirm:
