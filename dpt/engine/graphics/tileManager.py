@@ -6,7 +6,6 @@ import pygame
 
 #          {"x, y": {"blockClass": Classe}}
 class TileManager:
-    LISTE = []
 
     def __init__(self):
 
@@ -42,9 +41,9 @@ class TileManager:
                     try:
                         block = eval(data + "((255, 0, 0), coords[0] * Game.TILESIZE, coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
                         self.log.debug("Tile " + data + " placed at " + keys)
-                        TileManager.LISTE.append(block)
+                        Game.platformsList.append(block)
                         Game.platforms.add(block)
-                    except:
+                    except NameError:
                         self.log.warning("Invalid class name : " + data + " for tile : " + keys)
                 elif key == "enemyClass":
                     try:
@@ -52,7 +51,7 @@ class TileManager:
                         self.log.debug("Tile " + data + " placed at " + keys)
                         Game.enemyList.append(enemy)
                         Game.enemyGroup.add(enemy)
-                    except:
+                    except NameError:
                         self.log.warning("Invalid class name : " + data + " for tile : " + keys)
         Game.platforms.draw(Game.surface)
         Game.enemyGroup.draw(Game.surface)
