@@ -9,6 +9,8 @@ class TileEditor:
         self.opushed = False
         self.spushed = False
         self.npushed = False
+        self.tpushed = False
+        self.panelOpen = False
         self.inEditor = False
         self.mousePosX = None
         self.mousePosY = None
@@ -45,6 +47,16 @@ class TileEditor:
                         self.createdLevel = {}
                     elif not keys[pygame.K_n] and self.npushed:
                         self.npushed = False
+                    if keys[pygame.K_t] and not self.tpushed and not self.panelOpen:
+                        self.tpushed = True
+                        self.panelOpen = True
+                        Game.tile.openTilePanel()
+                    elif keys[pygame.K_t] and not self.tpushed and self.panelOpen:
+                        self.tpushed = True
+                        Game.editorPanel.empty()
+                        self.panelOpen = False
+                    elif not keys[pygame.K_t] and self.tpushed:
+                        self.tpushed = False
             #Gestion de la position de la souris et du placement de blocks
             mouse = pygame.mouse.get_pos()
             self.mousePosX = math.floor(mouse[0] / Game.TILESIZE)
@@ -53,11 +65,11 @@ class TileEditor:
             self.lastMousePosY = None
             if self.mousePosX != self.lastMousePosX and self.mousePosY != self.lastMousePosY:
                 Game.ghostBlock.empty()
-                pushed = False
+                lpushed = False
                 Game.tile.ghostBlock(self.mousePosX, self.mousePosY, self.itemClass, self.classType)
                 self.lastMousePosX = self.mousePosX
                 self.lastMousePosY = self.mousePosY
-                if mouseButtons[0] == 1 and not pushed:
-                    pushed = True
+                if mouseButtons[0] == 1 and not lpushed:
+                    lpushed = True
                     Game.tile.placeBlock(self.mousePosX, self.mousePosY, self.itemClass, self.classType)
                     self.createdLevel[str(self.mousePosX) + ", " + str(self.mousePosY)] = {self.classType: self.itemClass}

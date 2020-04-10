@@ -19,21 +19,18 @@ class FileManager:
         try:
             with open(rfile) as f:
                 data = json.load(f)
-                print(str(os.path.basename(rfile)))
-                wfile = str(self.defaultDir) + "/" + str(os.path.basename(rfile))
-                with open(wfile, "w") as fw:
-                    data2 = json.dumps(data, indent=4)
-                    fw.write(data2)
+                # wfile = str(self.defaultDir) + "/" + str(os.path.basename(rfile))
+                # with open(wfile, "w") as fw:
+                #     data2 = json.dumps(data, indent=4)
+                #     fw.write(data2)
                 Game.platforms.empty()
                 #Game.camera.enableGrid()
                 Game.tile.loadLevel(data)
                 self.log.info("Successfully loaded : " + str(rfile))
                 root.destroy()
-                return True
         except:
             self.log.warning("Unable to load file : " + str(rfile))
             root.destroy()
-            return False
 
     def saveFile(self, level):
         root = tk.Tk()
