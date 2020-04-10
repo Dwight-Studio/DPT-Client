@@ -56,14 +56,14 @@ class EnemySprite(pygame.sprite.Sprite):
 
         self.lastx = self.rect.left
         self.rect.left += self.xvel
-        self.collide(self.xvel, 0, Game.platformsList)
+        self.collide(self.xvel, 0, Game.environment)
 
         if not self.isJump:
             self.allowJump = False
             self.gravityCount += 1
             self.gravity = math.floor((self.gravityCount ** 2) * 0.5) * -1
             self.rect.top -= self.gravity
-            self.collide(0, self.gravity, Game.platformsList)
+            self.collide(0, self.gravity, Game.environment)
         self.animation()
 
         if self.lastx == self.rect.left:
@@ -71,7 +71,7 @@ class EnemySprite(pygame.sprite.Sprite):
             self.right = not self.right
 
         self.rect.top -= self.yvel
-        self.collide(0, self.yvel, Game.platformsList)
+        self.collide(0, self.yvel, Game.environment)
 
     def animation(self):
         pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)

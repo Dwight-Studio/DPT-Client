@@ -90,18 +90,18 @@ class PlayerSprite(pygame.sprite.Sprite):
                         self.yvel = 0
 
             self.rect.left += self.xvel
-            self.collide(self.xvel, 0, Game.platformsList)
+            self.collide(self.xvel, 0, Game.environment)
             self.rect.top -= self.yvel
-            self.collide(0, self.yvel, Game.platformsList)
+            self.collide(0, self.yvel, Game.environment)
 
             if not self.isJump:
                 self.allowJump = False
                 PlayerSprite.gravityCount += 1
                 PlayerSprite.gravity = math.floor((PlayerSprite.gravityCount ** 2) * 0.5) * -1
                 self.rect.top -= PlayerSprite.gravity
-                self.collide(0, PlayerSprite.gravity, Game.platformsList)
+                self.collide(0, PlayerSprite.gravity, Game.environment)
 
-            self.enemiesCollision(self.yvel, Game.enemyList)
+            self.enemiesCollision(self.yvel, Game.enemyGroup)
 
             self.animation()
 
@@ -149,7 +149,6 @@ class PlayerSprite(pygame.sprite.Sprite):
             if pygame.sprite.collide_rect(self, i):
                 if yVelDelta < 0:
                     Game.enemyGroup.remove(i)
-                    Game.enemyList.pop(index)
                 else:
                     self.die()
                     self.yvel = 0

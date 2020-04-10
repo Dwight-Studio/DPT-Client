@@ -32,8 +32,6 @@ class Game(object):
     ghostBlock = None
     editorPanel = None
     availableTiles = None
-    platformsList = []
-    enemyList = []
     surface = None
     playerSprite = None
     camera = None
