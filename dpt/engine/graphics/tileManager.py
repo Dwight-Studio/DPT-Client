@@ -143,6 +143,8 @@ class Camera:
         Game.surface.blit(Game.playerSprite.image, self.apply(Game.playerSprite))
         for sprite in TileManager.environmentGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
+        for sprite in TileManager.enemyGroup:
+            Game.surface.blit(sprite.image, self.apply(sprite))
         self.last_x = x
 
 
