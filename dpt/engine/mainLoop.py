@@ -19,6 +19,7 @@ def redraw_Game_window():
     TileEditor.ghostBlockGroup.draw(Game.surface)
     Game.playerGroup.update()
     TileManager.enemyGroup.update()
+    TileManager.outOfWindow()
     Button.buttonsGroup.update()
     Button.buttonsGroup.draw(Game.surface)
     for i in Button.text_buttonsList:

@@ -108,6 +108,14 @@ class TileManager:
                     starty += Game.TILESIZE
                 EditorPanel.editorPanelGroup.add(sprite)
 
+    @classmethod
+    def outOfWindow(cls):
+        Game.add_debug_info("NB ENEMY : " + str(len(TileManager.enemyGroup)))
+        for enemy in TileManager.enemyGroup:
+            if enemy.rect.centery >= 3000:
+                enemy.kill()
+                del enemy
+
 class Camera:
     def __init__(self, width, height):
         self.userConfirm = True
