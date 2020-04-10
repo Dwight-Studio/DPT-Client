@@ -1,7 +1,5 @@
 from dpt.engine.graphics.gui.editor.editorPanel import EditorPanel
 from dpt.engine.graphics.gui.editor.tileEditor import TileEditor
-from dpt.engine.graphics.blocks import *
-from dpt.engine.graphics.enemies import *
 from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 import pygame

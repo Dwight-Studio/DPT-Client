@@ -3,6 +3,7 @@ import sys
 import traceback
 import json
 import pygame
+import runpy
 
 from dpt.game import Game
 
@@ -94,21 +95,27 @@ class RessourceLoader:
                 if ext[-1] == "png":
                     cls.loaded_ressources[entry] = pygame.image.load(cls.pending_ressources[entry])
                     cls.logger.debug("Entry " + entry + " loaded")
-
-                if ext[-2] == "level" and ext[-1] == "json":
+                elif ext[-2] == "level" and ext[-1] == "json":
                     table = None
                     file = open(cls.pending_ressources[entry], "r")
                     table = json.loads(file.read())
                     file.close()
                     cls.loaded_ressources[entry] = table
                     cls.logger.debug("Entry " + entry + " loaded")
+                elif ext[-2] == "block" and ext[-1] == "py":
+                    module = runpy.run_path(cls.pending_ressources[entry])
+                    cls.loaded_ressources[entry] = module[ext[-3]]
+                    cls.logger.debug("Entry " + entry + " loaded")
+                else:
+                    cls.logger.debug("Entry " + entry + " invalid (invalid filetype)")
+
             except Exception as ex:
                 cls.logger.warning("Can't load entry " + entry)
                 exc_type, exc_value, exc_tb = sys.exc_info()
                 trace = "".join(traceback.format_exception(exc_type, exc_value, exc_tb))
                 for ms in trace.split("\n"):
                     cls.logger.warning(ms)
-        cls.logger.info("Loaded " + str(len(cls.pending_ressources)) + " entries")
+        cls.logger.info("Loaded " + str(len(cls.loaded_ressources)) + " entries")
         cls.logger.info("Loading done")
         cls.pending_ressources = []
 
