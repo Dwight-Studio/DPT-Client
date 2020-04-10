@@ -151,6 +151,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                     Game.enemyGroup.remove(i)
                 else:
                     self.die()
+                    Game.isPlayerDead = True
                     self.yvel = 0
                     self.xvel = 0
                     time.sleep(0.5)
