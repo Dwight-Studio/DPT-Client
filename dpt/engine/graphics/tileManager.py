@@ -88,7 +88,7 @@ class TileManager:
     @classmethod
     def openTilePanel(cls):
         panel = EditorPanel((255, 255, 255), Game.surface.get_size()[0] / 4 * 3, 0, Game.surface.get_size()[0] / 4, Game.surface.get_size()[1], 120)
-        Game.editorPanelGroup.add(panel)
+        EditorPanel.editorPanelGroup.add(panel)
         startx = Game.surface.get_size()[0] / 4 * 3 + Game.TILESIZE
         starty = 0 + 32
         for key, value in Game.availableTiles.items():
@@ -99,7 +99,7 @@ class TileManager:
                 if math.floor(startx) >= Game.surface.get_size()[0] - Game.TILESIZE:
                     startx = Game.surface.get_size()[0] / 4 * 3 + Game.TILESIZE
                     starty += Game.TILESIZE
-                Game.editorPanelGroup.add(sprite)
+                EditorPanel.editorPanelGroup.add(sprite)
 
 class Camera:
     def __init__(self, width, height):
