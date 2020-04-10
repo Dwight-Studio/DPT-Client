@@ -9,7 +9,7 @@ def redraw_Game_window():
     Game.editor.update()
     Game.editorPanel.draw(Game.surface)
     Game.ghostBlock.draw(Game.surface)
-    Game.joueur.update()
+    Game.player.update()
     Game.enemyGroup.update()
     Game.display_debug_info()
     Game.window.update()
@@ -21,7 +21,7 @@ def loop():
 
     screen_width, screen_height = Game.surface.get_size()
     Game.playerSprite = PlayerSprite(300, screen_height - 500, 64, 64)
-    Game.joueur.add(Game.playerSprite)
+    Game.player.add(Game.playerSprite)
     bg = Game.ressources.get("dpt.images.environment.background")
     run = True
     while run:

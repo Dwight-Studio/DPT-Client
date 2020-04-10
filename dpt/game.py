@@ -25,7 +25,7 @@ class Game(object):
     # Variable à définir
     window = None
     clock = None
-    joueur = None
+    player = None
     ressources = None
     enemyGroup = None
     environment = None
@@ -87,7 +87,7 @@ class Game(object):
         cls._debug_infos = []
 
         # Groupes Pygame
-        cls.joueur = pygame.sprite.Group()
+        cls.player = pygame.sprite.Group()
         cls.enemyGroup = pygame.sprite.Group()
         cls.environment = pygame.sprite.Group()
         cls.ghostBlock = pygame.sprite.Group()
