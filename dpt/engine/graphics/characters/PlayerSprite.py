@@ -1,5 +1,6 @@
 import pygame
 import math
+import time
 
 from dpt.game import Game
 
@@ -100,7 +101,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.rect.top -= PlayerSprite.gravity
                 self.collide(0, PlayerSprite.gravity, Game.platformsList)
 
-            self.enemiesCollision(Game.enemyList)
+            self.enemiesCollision(self.yvel, Game.enemyList)
 
             self.animation()
 
@@ -143,10 +144,17 @@ class PlayerSprite(pygame.sprite.Sprite):
                 if yVelDelta > 0:
                     self.rect.top = i.rect.bottom
 
-    def enemiesCollision(self, enemies):
-        for i in enemies:
+    def enemiesCollision(self, yVelDelta, enemies):
+        for index, i in enumerate(enemies):
             if pygame.sprite.collide_rect(self, i):
-                self.die()
+                if yVelDelta < 0:
+                    Game.enemyGroup.remove(i)
+                    Game.enemyList.pop(index)
+                else:
+                    self.die()
+                    self.yvel = 0
+                    self.xvel = 0
+                    time.sleep(0.5)
 
     def die(self):
         self.alive = False

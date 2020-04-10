@@ -8,9 +8,10 @@ class EnemySprite(pygame.sprite.Sprite):
     screen_width, screen_height = Game.surface.get_size()
     char = Game.ressources.get("dpt.images.characters.player.standing")
 
-    def __init__(self, x, y, width, height):
+    def __init__(self, x, y, width, height, alpha):
         pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
         self.image = EnemySprite.char
+        self.image.set_alpha(alpha)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
