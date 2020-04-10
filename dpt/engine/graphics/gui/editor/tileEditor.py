@@ -1,25 +1,26 @@
 import pygame
 import math
 from dpt.engine.fileManager import *
+from dpt.engine.graphics.tileManager import TileManager
 
 
 class TileEditor:
-    def __init__(self):
-        self.file = FileManager()
-        self.opushed = False
-        self.spushed = False
-        self.npushed = False
-        self.tpushed = False
-        self.panelOpen = False
-        self.inEditor = False
-        self.mousePosX = None
-        self.mousePosY = None
-        self.lastMousePosX = None
-        self.lastMousePosY = None
-        self.createdLevel = {}
+    file = FileManager()
+    opushed = False
+    spushed = False
+    npushed = False
+    tpushed = False
+    panelOpen = False
+    inEditor = False
+    mousePosX = None
+    mousePosY = None
+    lastMousePosX = None
+    lastMousePosY = None
+    createdLevel = {}
 
-    def update(self):
-        if self.inEditor:
+    @classmethod
+    def update(cls):
+        if cls.inEditor:
             Game.camera.enableGrid()
             # Gestion des fichiers (raccourcis)
             mouseButtons = pygame.mouse.get_pressed()
@@ -28,47 +29,47 @@ class TileEditor:
             for key in keys:
                 # Ouvrir un fichier
                 if keysmods == 4160 or keysmods == 4224:
-                    if keys[pygame.K_o] and not self.opushed:
-                        self.opushed = True
-                        self.file.importFile()
-                    elif not keys[pygame.K_o] and self.opushed:
-                        self.opushed = False
-                # Sauvegarder un fichier
-                    if keys[pygame.K_s] and not self.spushed:
-                        self.spushed = True
-                        self.file.saveFile(self.createdLevel)
-                    elif not keys[pygame.K_s] and self.spushed:
-                        self.spushed = False
-                    if keys[pygame.K_n] and not self.npushed:
-                        self.npushed = True
+                    if keys[pygame.K_o] and not cls.opushed:
+                        cls.opushed = True
+                        cls.file.importFile()
+                    elif not keys[pygame.K_o] and cls.opushed:
+                        cls.opushed = False
+                    # Sauvegarder un fichier
+                    if keys[pygame.K_s] and not cls.spushed:
+                        cls.spushed = True
+                        cls.file.saveFile(cls.createdLevel)
+                    elif not keys[pygame.K_s] and cls.spushed:
+                        cls.spushed = False
+                    if keys[pygame.K_n] and not cls.npushed:
+                        cls.npushed = True
                         Game.environment.empty()
-                        self.createdLevel = {}
-                    elif not keys[pygame.K_n] and self.npushed:
-                        self.npushed = False
-                    if keys[pygame.K_t] and not self.tpushed and not self.panelOpen:
-                        self.tpushed = True
-                        self.panelOpen = True
-                        Game.tile.openTilePanel()
-                    elif keys[pygame.K_t] and not self.tpushed and self.panelOpen:
-                        self.tpushed = True
-                        Game.editorPanel.empty()
-                        self.panelOpen = False
-                    elif not keys[pygame.K_t] and self.tpushed:
-                        self.tpushed = False
-            #Gestion de la position de la souris et du placement de blocks
+                        cls.createdLevel = {}
+                    elif not keys[pygame.K_n] and cls.npushed:
+                        cls.npushed = False
+                    if keys[pygame.K_t] and not cls.tpushed and not cls.panelOpen:
+                        cls.tpushed = True
+                        cls.panelOpen = True
+                        TileManager.openTilePanel()
+                    elif keys[pygame.K_t] and not cls.tpushed and cls.panelOpen:
+                        cls.tpushed = True
+                        Game.editorPanelGroup.empty()
+                        cls.panelOpen = False
+                    elif not keys[pygame.K_t] and cls.tpushed:
+                        cls.tpushed = False
+            # Gestion de la position de la souris et du placement de blocks
             mouse = pygame.mouse.get_pos()
-            self.mousePosX = math.floor(mouse[0] / Game.TILESIZE)
-            self.mousePosY = math.floor(mouse[1] / Game.TILESIZE)
-            self.lastMousePosX = None
-            self.lastMousePosY = None
-            if self.mousePosX != self.lastMousePosX and self.mousePosY != self.lastMousePosY:
+            cls.mousePosX = math.floor(mouse[0] / Game.TILESIZE)
+            cls.mousePosY = math.floor(mouse[1] / Game.TILESIZE)
+            cls.lastMousePosX = None
+            cls.lastMousePosY = None
+            if cls.mousePosX != cls.lastMousePosX and cls.mousePosY != cls.lastMousePosY:
                 Game.ghostBlock.empty()
                 lpushed = False
-                Game.tile.ghostBlock(self.mousePosX, self.mousePosY, Game.itemClass, Game.classType)
-                self.lastMousePosX = self.mousePosX
-                self.lastMousePosY = self.mousePosY
+                TileManager.ghostBlock(cls.mousePosX, cls.mousePosY, Game.itemClass, Game.classType)
+                cls.lastMousePosX = cls.mousePosX
+                cls.lastMousePosY = cls.mousePosY
                 if mouseButtons[0] == 1 and not lpushed:
                     lpushed = True
-                    if not self.panelOpen or self.mousePosX <= math.floor((Game.surface.get_size()[0] / 4 * 3 - Game.TILESIZE) / Game.TILESIZE):
-                        Game.tile.placeBlock(self.mousePosX, self.mousePosY, Game.itemClass, Game.classType)
-                        self.createdLevel[str(self.mousePosX) + ", " + str(self.mousePosY)] = {Game.classType: Game.itemClass}
+                    if not cls.panelOpen or cls.mousePosX <= math.floor((Game.surface.get_size()[0] / 4 * 3 - Game.TILESIZE) / Game.TILESIZE):
+                        TileManager.placeBlock(cls.mousePosX, cls.mousePosY, Game.itemClass, Game.classType)
+                        cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)] = {Game.classType: Game.itemClass}

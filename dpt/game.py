@@ -30,7 +30,7 @@ class Game(object):
     ghostBlock = None
     buttonsGroup = None
     text_buttonsGroup = []
-    editorPanel = None
+    editorPanelGroup = None
     availableTiles = None
     platformsList = []
     enemyList = []
@@ -40,8 +40,6 @@ class Game(object):
     surface = None
     playerSprite = None
     camera = None
-    tile = None
-    editor = None
 
     # Evenements
     BUTTONEVENT = None
@@ -97,7 +95,7 @@ class Game(object):
         cls.enemyGroup = pygame.sprite.Group()
         cls.environment = pygame.sprite.Group()
         cls.ghostBlock = pygame.sprite.Group()
-        cls.editorPanel = pygame.sprite.Group()
+        cls.editorPanelGroup = pygame.sprite.Group()
         cls.buttonsGroup = pygame.sprite.Group()
         cls.text_buttonsGroup = []
 
@@ -124,12 +122,10 @@ class Game(object):
             cls.ressources.add_pending("*")
             cls.ressources.load()
             from dpt.engine.graphics.tileManager import TileManager, Camera
-            cls.tile = TileManager()
-            cls.tile.loadLevel("dpt.levels.leveltest")
-            cls.camera = Camera(cls.tile.maxWidthSize, cls.tile.maxHeightSize)
+            TileManager.loadLevel("dpt.levels.leveltest")
+            cls.camera = Camera(TileManager.maxWidthSize, TileManager.maxHeightSize)
             from dpt.engine.graphics.gui.editor.tileEditor import TileEditor
-            cls.editor = TileEditor()
-            cls.editor.inEditor = True
+            TileEditor.inEditor = True
             # from dpt.engine.webCommunications import Communication
             # com = Communication()
             # com.create()

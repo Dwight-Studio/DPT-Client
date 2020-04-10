@@ -1,4 +1,5 @@
 from dpt.engine.graphics.characters.PlayerSprite import PlayerSprite
+from dpt.engine.graphics.gui.editor.tileEditor import TileEditor
 from dpt.game import Game
 import pygame
 
@@ -6,9 +7,9 @@ import pygame
 def redraw_Game_window():
     Game.environment.update()
     Game.camera.update(Game.playerSprite)
-    Game.editor.update()
-    Game.editorPanel.draw(Game.surface)
-    Game.editorPanel.update()
+    TileEditor.update()
+    Game.editorPanelGroup.draw(Game.surface)
+    Game.editorPanelGroup.update()
     Game.ghostBlock.draw(Game.surface)
     Game.player.update()
     Game.enemyGroup.update()
