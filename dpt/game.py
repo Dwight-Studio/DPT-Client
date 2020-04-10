@@ -19,9 +19,6 @@ class Game(object):
     TILESIZE = 32
     LINUX_USER = True
 
-    # Evenements persos
-    BUTTONEVENT = pygame.USEREVENT + 1
-
     # Variable à définir
     isPlayerDead = False
     window = None
@@ -38,6 +35,9 @@ class Game(object):
     camera = None
     tile = None
     editor = None
+
+    # Evenements
+    BUTTONEVENT = None
 
     _debug_infos = None
 
@@ -91,6 +91,9 @@ class Game(object):
         cls.environment = pygame.sprite.Group()
         cls.ghostBlock = pygame.sprite.Group()
         cls.editorPanel = pygame.sprite.Group()
+
+        # Evenements persos
+        cls.BUTTONEVENT = pygame.event.custom_type()
 
         cls.window = pygame.display
         if Game.LINUX_USER:
