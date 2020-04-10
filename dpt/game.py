@@ -19,6 +19,9 @@ class Game(object):
     TILESIZE = 32
     LINUX_USER = True
 
+    # Evenements persos
+    BUTTONEVENT = pygame.USEREVENT + 1
+
     # Variable à définir
     window = None
     clock = None
@@ -82,20 +85,26 @@ class Game(object):
 
         pygame.init()
         cls._debug_infos = []
+
+        # Groupes Pygame
         cls.joueur = pygame.sprite.Group()
         cls.enemyGroup = pygame.sprite.Group()
         cls.platforms = pygame.sprite.Group()
         cls.ghostBlock = pygame.sprite.Group()
         cls.editorPanel = pygame.sprite.Group()
+
         cls.window = pygame.display
         if Game.LINUX_USER:
             cls.surface = cls.window.set_mode((0, 0), pygame.NOFRAME, pygame.RESIZABLE)
         else:
             cls.surface = cls.window.set_mode((0, 0), pygame.FULLSCREEN, pygame.RESIZABLE)
+
         w, h = cls.surface.get_size()
         main_logger.debug("Window size: " + str(w) + "x" + str(h))
         pygame.display.set_caption("Don't play together")
         cls.clock = pygame.time.Clock()
+
+        # Déclaration des évènements
 
         try:
             # /!\ ZONE SECURISÉE /!\
@@ -110,13 +119,13 @@ class Game(object):
             from dpt.engine.graphics.gui.editor.tileEditor import TileEditor
             cls.editor = TileEditor()
             cls.editor.inEditor = True
-            #from dpt.engine.webCommunications import Communication
-            #com = Communication()
-            #com.create()
-            #time.sleep(10)
-            #com.createVoteEvent(0, 0)
-            #time.sleep(40)
-            #com.voteResult()
+            # from dpt.engine.webCommunications import Communication
+            # com = Communication()
+            # com.create()
+            # time.sleep(10)
+            # com.createVoteEvent(0, 0)
+            # time.sleep(40)
+            # com.voteResult()
 
             from dpt.engine.mainLoop import loop
             loop()
