@@ -138,7 +138,7 @@ class Game(object):
 
             from dpt.engine.graphics.gui.menu.Button import Button
             im = cls.ressources.get_multiple("dpt.images.gui.menu.button*")
-            cls.button = Button(50, 50, 200, 20, normal_image=im[1], locked_image=im[0], hover_image=im[2], pushed_image=im[3])
+            cls.button = Button(50, 50, 200, 20, im[1], locked_image=im[0], hover_image=im[2], pushed_image=im[3], text="KILL EVERYONE")
             from dpt.engine.mainLoop import loop
             loop()
         except Exception:

@@ -3,16 +3,39 @@ from dpt.game import Game
 
 
 class Button(pygame.sprite.Sprite):
-    def __init__(self, x, y, width, height, **kwargs):
-        pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
-        self.normal_image = kwargs["normal_image"]
-        del kwargs["normal_image"]
-        self.pushed_image = kwargs["pushed_image"] or self.normal_image
-        del kwargs["pushed_image"]
-        self.locked_image = kwargs["locked_image"] or self.normal_image
-        del kwargs["locked_image"]
-        self.hover_image = kwargs["hover_image"] or self.normal_image
-        del kwargs["hover_image"]
+    def __init__(self, x, y, width, height, image, **kwargs):
+        pygame.sprite.Sprite.__init__(self, Game.buttonsGroup)  # Sprite's constructor called
+        self.normal_image = image
+        try:
+            self.pushed_image = kwargs["pushed_image"]
+            del kwargs["pushed_image"]
+        except KeyError:
+            self.pushed_image = self.normal_image
+        try:
+            self.locked_image = kwargs["locked_image"]
+            del kwargs["locked_image"]
+        except KeyError:
+            self.locked_image = self.normal_image
+        try:
+            self.hover_image = kwargs["hover_image"] or self.normal_image
+            del kwargs["hover_image"]
+        except KeyError:
+            self.hover_image = self.normal_image
+        try:
+            self.font = kwargs["font"]
+            del kwargs["font"]
+        except KeyError:
+            self.font = pygame.font.SysFont("arial", 15)
+        try:
+            self.font_color = kwargs["font_color"]
+            del kwargs["font_color"]
+        except KeyError:
+            self.font_color = (0, 0, 0)
+        try:
+            self.text = kwargs["text"]
+            del kwargs["text"]
+        except KeyError:
+            self.text = None
         self.eventargs = kwargs
         self.image = self.normal_image
         self.rect = self.image.get_rect()
@@ -24,7 +47,6 @@ class Button(pygame.sprite.Sprite):
         self.locked = False
         self.previous_state = False
         Game.get_logger("Button").debug("Button created")
-        Game.buttonsGroup.add(self)
 
     def __bool__(self):
         return self.pushed
@@ -58,3 +80,12 @@ class Button(pygame.sprite.Sprite):
 
     def unlock(self):
         self.locked = False
+
+    def draw(self, surface):
+        if self.text is not None:
+            print("oui")
+            text = self.font.render(self.text, True, self.font_color)
+            rect = text.get_rect()
+            rect.centerx = self.rect.centerx
+            rect.centery = self.rect.centery
+            surface.blit(text, rect)
