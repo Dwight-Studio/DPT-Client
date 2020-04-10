@@ -23,6 +23,7 @@ class Game(object):
     BUTTONEVENT = pygame.USEREVENT + 1
 
     # Variable à définir
+    isPlayerDead = False
     window = None
     clock = None
     player = None

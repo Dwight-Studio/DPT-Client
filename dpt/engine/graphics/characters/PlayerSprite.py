@@ -145,7 +145,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                     self.rect.top = i.rect.bottom
 
     def enemiesCollision(self, yVelDelta, enemies):
-        for index, i in enumerate(enemies):
+        for i in enemies:
             if pygame.sprite.collide_rect(self, i):
                 if yVelDelta < 0:
                     Game.enemyGroup.remove(i)
