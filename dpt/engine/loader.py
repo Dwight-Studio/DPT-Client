@@ -89,7 +89,6 @@ class RessourceLoader:
     def load(cls):
         cls.logger.info("Starting loading ressources")
         for entry in cls.pending_ressources:
-            print(entry)
             ext = cls.pending_ressources[entry].split("/")[-1].split(".")
             try:
                 if ext[-1] == "png":
