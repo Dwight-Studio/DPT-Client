@@ -85,14 +85,13 @@ class TileManager:
     @classmethod
     def placeBlock(cls, xTile, yTile, itemClass, classType):
         if classType == "blockClass":
-            block = eval(itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
+            block = eval(itemClass + "(xTile * Game.TILESIZE - TileManager.editorCamera.last_x, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
             cls.log.debug("Tile " + itemClass + " placed at " + str(xTile) + ", " + str(yTile))
             cls.environmentGroup.add(block)
         elif classType == "enemyClass":
-            enemy = eval(itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
+            enemy = eval(itemClass + "(xTile * Game.TILESIZE - TileManager.editorCamera.last_x, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
             cls.log.debug("Tile " + itemClass + " placed at " + str(xTile) + ", " + str(yTile))
             cls.enemyGroup.add(enemy)
-
     @classmethod
     def openTilePanel(cls):
         panel = EditorPanel((255, 255, 255), Game.surface.get_size()[0] / 4 * 3, 0, Game.surface.get_size()[0] / 4, Game.surface.get_size()[1], 120)
