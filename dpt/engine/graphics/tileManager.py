@@ -1,6 +1,6 @@
 from dpt.engine.graphics.gui.editor.editorPanel import EditorPanel
 from dpt.engine.graphics.gui.editor.tileEditor import TileEditor
-from dpt.engine.loader import RessourceLoader
+from dpt.engine.loader import RessourceLoader, UnreachableRessourceError
 from dpt.game import Game
 import pygame
 import math
@@ -19,7 +19,7 @@ class TileManager:
     coords = None
     camera = None
     editorCamera = None
-    Game.availableTiles = {"blockClass": ["Block", "CeciEstUnBlock"], "enemyClass": ["EnemySprite"]}
+    Game.availableTiles = {"blockClass": RessourceLoader.select_entries("dpt.blocks.*"), "enemyClass": RessourceLoader.select_entries("dpt.entities.*")}
 
     @classmethod
     def loadLevel(cls, levelName):
@@ -45,17 +45,17 @@ class TileManager:
             for key, data in level[keys].items():
                 if key == "blockClass":
                     try:
-                        block = eval(data + "(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
+                        block = RessourceLoader.get(data)(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)
                         cls.log.debug("Tile " + data + " placed at " + keys)
                         cls.environmentGroup.add(block)
-                    except NameError:
+                    except UnreachableRessourceError:
                         cls.log.warning("Invalid class name : " + data + " for tile : " + keys)
                 elif key == "enemyClass":
                     try:
-                        enemy = eval(data + "(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
+                        enemy = RessourceLoader.get(data)(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)
                         cls.log.debug("Entity " + data + " placed at " + keys)
                         cls.enemyGroup.add(enemy)
-                    except NameError:
+                    except UnreachableRessourceError:
                         cls.log.warning("Invalid class name : " + data + " for tile : " + keys)
         cls.environmentGroup.draw(Game.surface)
         cls.enemyGroup.draw(Game.surface)
@@ -74,20 +74,20 @@ class TileManager:
     @classmethod
     def ghostBlock(cls, xTile, yTile, itemClass, classType):
         if classType == "blockClass":
-            ghostBlock = eval(itemClass + "(xTile, yTile, Game.TILESIZE, Game.TILESIZE, 80)")
+            ghostBlock = RessourceLoader.get(itemClass)(xTile, yTile, Game.TILESIZE, Game.TILESIZE, 80)
             TileEditor.ghostBlockGroup.add(ghostBlock)
         elif classType == "enemyClass":
-            ghostBlock = eval(itemClass + "(xTile, yTile, Game.TILESIZE, Game.TILESIZE, 80)")
+            ghostBlock = RessourceLoader.get(itemClass)(xTile, yTile, Game.TILESIZE, Game.TILESIZE, 80)
             TileEditor.ghostBlockGroup.add(ghostBlock)
 
     @classmethod
     def placeBlock(cls, xTile, yTile, itemClass, classType):
         if classType == "blockClass":
-            block = eval(itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
+            block = RessourceLoader.get(itemClass)(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)
             cls.log.debug("Tile " + itemClass + " placed at " + str(xTile) + ", " + str(yTile))
             cls.environmentGroup.add(block)
         elif classType == "enemyClass":
-            enemy = eval(itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
+            enemy = RessourceLoader.get(itemClass)(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)
             cls.log.debug("Tile " + itemClass + " placed at " + str(xTile) + ", " + str(yTile))
             cls.enemyGroup.add(enemy)
     @classmethod
@@ -98,7 +98,7 @@ class TileManager:
         starty = 0 + 32
         for key, value in Game.availableTiles.items():
             for element in value:
-                sprite = eval(element + "(startx, starty, Game.TILESIZE, Game.TILESIZE, 255)")
+                sprite = RessourceLoader.get(element)(startx, starty, Game.TILESIZE, Game.TILESIZE, 255)
                 Game.editorTileRegistry[str(math.floor(startx / Game.TILESIZE)) + ", " + str(math.floor(starty / Game.TILESIZE))] = {"itemClass": element, "classType": key}
                 startx += Game.TILESIZE
                 if math.floor(startx) >= Game.surface.get_size()[0] - Game.TILESIZE:

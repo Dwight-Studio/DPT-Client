@@ -30,7 +30,7 @@ class Game(object):
     availableTiles = None
     platformsList = []
     enemyList = []
-    itemClass = "EnemySprite"
+    itemClass = "dpt.entities.EnemySprite"
     classType = "enemyClass"
     editorTileRegistry = {}
     surface = None
@@ -115,7 +115,7 @@ class Game(object):
             RessourceLoader.load()
             from dpt.engine.graphics.tileManager import TileManager
             from dpt.engine.graphics.gui.editor.tileEditor import TileEditor
-            TileEditor.inEditor = False
+            TileEditor.inEditor = True
             TileManager.loadLevel("dpt.levels.leveltest")
             # from dpt.engine.webCommunications import Communication
             # com = Communication()

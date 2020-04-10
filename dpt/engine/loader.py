@@ -24,20 +24,6 @@ class UnreachableRessourceError(Exception):
             return "No specified value"
 
 
-class InvalidRessourcePathError(Exception):
-    def __init__(self, val):
-        if val:
-            self.message = f"'{val}'"
-        else:
-            self.message = None
-
-    def __str__(self):
-        if self.message:
-            return self.message
-        else:
-            return "No specified value"
-
-
 def make_entries(path):
     rlist = []
     for item in os.listdir(path):
@@ -58,6 +44,7 @@ def make_entries(path):
 class RessourceLoader:
     RESSOURCES = {}
     pending_ressources = {}
+    loaded_ressources_entries = {}
     loaded_ressources = {}
     logger = Game.get_logger("Loader")
 
@@ -70,6 +57,10 @@ class RessourceLoader:
         for entry in make_entries(RESSOURCES_DIRECTORY):
             key = entry[0]
             if key.split(".")[-1] == "level":
+                key = ".".join(key.split(".")[:-1])
+            elif key.split(".")[-1] == "block":
+                key = ".".join(key.split(".")[:-1])
+            elif key.split(".")[-1] == "entity":
                 key = ".".join(key.split(".")[:-1])
             cls.RESSOURCES[key] = entry[1]
         cls.logger.info("Registered " + str(len(cls.RESSOURCES)) + " entries")
@@ -85,6 +76,14 @@ class RessourceLoader:
             cls.logger.warning("Bad registration: no ressources must be loaded at startup")
 
         cls.logger.info("Initialization done.")
+
+    @classmethod
+    def reload(cls):
+        cls.logger.info("Reloading ressources")
+        cls.init()
+        cls.pending_ressources = cls.loaded_ressources_entries.copy()
+        cls.loaded_ressources_entries = {}
+        cls.load()
 
     @classmethod
     def load(cls):
@@ -106,8 +105,12 @@ class RessourceLoader:
                     module = runpy.run_path(cls.pending_ressources[entry])
                     cls.loaded_ressources[entry] = module[ext[-3]]
                     cls.logger.debug("Entry " + entry + " loaded")
+                elif ext[-2] == "entity" and ext[-1] == "py":
+                    module = runpy.run_path(cls.pending_ressources[entry])
+                    cls.loaded_ressources[entry] = module[ext[-3]]
+                    cls.logger.debug("Entry " + entry + " loaded")
                 else:
-                    cls.logger.debug("Entry " + entry + " invalid (invalid filetype)")
+                    cls.logger.warning("Entry " + entry + " invalid")
 
             except Exception as ex:
                 cls.logger.warning("Can't load entry " + entry)
@@ -117,22 +120,18 @@ class RessourceLoader:
                     cls.logger.warning(ms)
         cls.logger.info("Loaded " + str(len(cls.loaded_ressources)) + " entries")
         cls.logger.info("Loading done")
-        cls.pending_ressources = []
+        cls.loaded_ressources_entries = cls.pending_ressources.copy()
+        cls.pending_ressources = {}
 
     @classmethod
     def select_entries(cls, path):
-        if "*" in path:
-            if path[-1] == "*":
-                path = path[:-1]
-                entries = []
-                for entry in cls.RESSOURCES:
-                    if entry[:len(path)] == path:
-                        entries.append(entry)
-                return entries
-            else:
-                raise InvalidRessourcePathError(path)
-        else:
-            return [path]
+        if path[-1] == "*":
+            path = path[:-1]
+        entries = []
+        for entry in cls.RESSOURCES:
+            if entry[:len(path)] == path:
+                entries.append(entry)
+        return entries
 
     @classmethod
     def get_multiple(cls, entry):
@@ -143,7 +142,7 @@ class RessourceLoader:
                 rlist.append(cls.loaded_ressources[entry])
             return rlist
         except KeyError:
-            cls.logger.critical("Ressources can't be reached (Are ressources loaded ?)")
+            cls.logger.critical(f"Ressource for entry {entry} can't be reached (Are ressources loaded ?)")
             raise UnreachableRessourceError(entry)
 
     @classmethod
@@ -151,7 +150,7 @@ class RessourceLoader:
         try:
             return cls.loaded_ressources[entry]
         except KeyError:
-            cls.logger.critical("Ressource can't be reached (Are ressources loaded ?)")
+            cls.logger.critical(f"Ressource for entry {entry} can't be reached (Are ressources loaded ?)")
             raise UnreachableRessourceError(entry)
 
     @classmethod

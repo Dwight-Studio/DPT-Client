@@ -1,11 +1,10 @@
 import pygame
 import math
-from dpt.engine.fileManager import *
 from dpt.engine.graphics.gui.editor import EditorPanel
+from dpt.game import Game
 
 
 class TileEditor:
-    file = FileManager()
     opushed = False
     spushed = False
     npushed = False
@@ -33,13 +32,15 @@ class TileEditor:
                 if keysmods == 4160 or keysmods == 4224:
                     if keys[pygame.K_o] and not cls.opushed:
                         cls.opushed = True
-                        cls.file.importFile()
+                        from dpt.engine.fileManager import FileManager
+                        FileManager.importFile()
                     elif not keys[pygame.K_o] and cls.opushed:
                         cls.opushed = False
                     # Sauvegarder un fichier
                     if keys[pygame.K_s] and not cls.spushed:
                         cls.spushed = True
-                        cls.file.saveFile(cls.createdLevel)
+                        from dpt.engine.fileManager import FileManager
+                        FileManager.saveFile(cls.createdLevel)
                     elif not keys[pygame.K_s] and cls.spushed:
                         cls.spushed = False
                     if keys[pygame.K_n] and not cls.npushed:
