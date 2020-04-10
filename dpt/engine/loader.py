@@ -89,6 +89,7 @@ class RessourceLoader:
     def load(cls):
         cls.logger.info("Starting loading ressources")
         for entry in cls.pending_ressources:
+            print(entry)
             ext = cls.pending_ressources[entry].split("/")[-1].split(".")
             try:
                 if ext[-1] == "png":
@@ -102,16 +103,15 @@ class RessourceLoader:
                     file.close()
                     cls.loaded_ressources[entry] = table
                     cls.logger.debug("Entry " + entry + " loaded")
-                    cls.logger.info("Loaded " + str(len(cls.pending_ressources)) + " entries")
-                    cls.logger.info("Loading done")
-                    cls.pending_ressources = []
-
             except Exception as ex:
                 cls.logger.warning("Can't load entry " + entry)
                 exc_type, exc_value, exc_tb = sys.exc_info()
                 trace = "".join(traceback.format_exception(exc_type, exc_value, exc_tb))
                 for ms in trace.split("\n"):
                     cls.logger.warning(ms)
+        cls.logger.info("Loaded " + str(len(cls.pending_ressources)) + " entries")
+        cls.logger.info("Loading done")
+        cls.pending_ressources = []
 
     @classmethod
     def select_entries(cls, path):
