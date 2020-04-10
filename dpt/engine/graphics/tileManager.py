@@ -45,7 +45,6 @@ class TileManager:
                     try:
                         block = eval(data + "(coords[0] * Game.TILESIZE, coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
                         self.log.debug("Tile " + data + " placed at " + keys)
-                        Game.platformsList.append(block)
                         Game.environment.add(block)
                     except NameError:
                         self.log.warning("Invalid class name : " + data + " for tile : " + keys)
@@ -53,7 +52,6 @@ class TileManager:
                     try:
                         enemy = eval(data + "(coords[0] * Game.TILESIZE, coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
                         self.log.debug("Tile " + data + " placed at " + keys)
-                        Game.enemyList.append(enemy)
                         Game.enemyGroup.add(enemy)
                     except NameError:
                         self.log.warning("Invalid class name : " + data + " for tile : " + keys)
@@ -73,12 +71,10 @@ class TileManager:
         if classType == "blockClass":
             block = eval(itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
             self.log.debug("Tile " + itemClass + " placed at " + str(xTile) + ", " + str(yTile))
-            Game.platformsList.append(block)
             Game.environment.add(block)
         elif classType == "enemyClass":
             enemy = eval(itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
             self.log.debug("Tile " + itemClass + " placed at " + str(xTile) + ", " + str(yTile))
-            Game.enemyList.append(enemy)
             Game.enemyGroup.add(enemy)
 
     def openTilePanel(self):

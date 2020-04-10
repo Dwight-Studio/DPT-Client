@@ -33,37 +33,37 @@ class EnemySprite(pygame.sprite.Sprite):
         self.lasty = 0
 
     def update(self):
-
-        if self.left:
-            if self.xvel > 0:
+        if not Game.isPlayerDead:
+            if self.left:
+                if self.xvel > 0:
+                    self.xvel = 0
+                if self.xvel > -5:
+                    self.xvel -= 1
+                self.left = True
+                self.right = False
+                self.standing = False
+            elif self.right:
+                if self.xvel < 0:
+                    self.xvel = 0
+                if self.xvel < 5:
+                    self.xvel += 1
+                self.left = False
+                self.right = True
+                self.standing = False
+            else:
                 self.xvel = 0
-            if self.xvel > -5:
-                self.xvel -= 1
-            self.left = True
-            self.right = False
-            self.standing = False
-        elif self.right:
-            if self.xvel < 0:
-                self.xvel = 0
-            if self.xvel < 5:
-                self.xvel += 1
-            self.left = False
-            self.right = True
-            self.standing = False
-        else:
-            self.xvel = 0
-            self.standing = True
+                self.standing = True
 
-        self.lastx = self.rect.left
-        self.rect.left += self.xvel
-        self.collide(self.xvel, 0, Game.platformsList)
+            self.lastx = self.rect.left
+            self.rect.left += self.xvel
+            self.collide(self.xvel, 0, Game.environment)
 
-        if not self.isJump:
-            self.allowJump = False
-            self.gravityCount += 1
-            self.gravity = math.floor((self.gravityCount ** 2) * 0.5) * -1
-            self.rect.top -= self.gravity
-            self.collide(0, self.gravity, Game.platformsList)
+            if not self.isJump:
+                self.allowJump = False
+                self.gravityCount += 1
+                self.gravity = math.floor((self.gravityCount ** 2) * 0.5) * -1
+                self.rect.top -= self.gravity
+                self.collide(0, self.gravity, Game.environment)
         self.animation()
 
         if self.lastx == self.rect.left:
@@ -71,7 +71,7 @@ class EnemySprite(pygame.sprite.Sprite):
             self.right = not self.right
 
         self.rect.top -= self.yvel
-        self.collide(0, self.yvel, Game.platformsList)
+        self.collide(0, self.yvel, Game.environment)
 
     def animation(self):
         pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)

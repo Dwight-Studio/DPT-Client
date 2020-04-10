@@ -90,20 +90,20 @@ class PlayerSprite(pygame.sprite.Sprite):
                         self.yvel = 0
 
             self.rect.left += self.xvel
-            self.collide(self.xvel, 0, Game.platformsList)
+            self.collide(self.xvel, 0, Game.environment)
             self.rect.top -= self.yvel
-            self.collide(0, self.yvel, Game.platformsList)
+            self.collide(0, self.yvel, Game.environment)
 
             if not self.isJump:
                 self.allowJump = False
                 PlayerSprite.gravityCount += 1
                 PlayerSprite.gravity = math.floor((PlayerSprite.gravityCount ** 2) * 0.5) * -1
                 self.rect.top -= PlayerSprite.gravity
-                self.collide(0, PlayerSprite.gravity, Game.platformsList)
-
-            self.enemiesCollision(self.yvel, Game.enemyList)
+                self.collide(0, PlayerSprite.gravity, Game.environment)
 
             self.animation()
+            self.enemiesCollision(self.yvel, Game.enemyGroup)
+            self.deathFall()
 
         elif not self.alive:
             self.die()
@@ -145,16 +145,24 @@ class PlayerSprite(pygame.sprite.Sprite):
                     self.rect.top = i.rect.bottom
 
     def enemiesCollision(self, yVelDelta, enemies):
-        for index, i in enumerate(enemies):
+        for i in enemies:
             if pygame.sprite.collide_rect(self, i):
                 if yVelDelta < 0:
                     Game.enemyGroup.remove(i)
-                    Game.enemyList.pop(index)
                 else:
-                    self.die()
                     self.yvel = 0
+                    Game.isPlayerDead = True
                     self.xvel = 0
                     time.sleep(0.5)
+                    self.die()
+
+    def deathFall(self):
+        if self.rect.top > 1400:
+            self.yvel = 0
+            Game.isPlayerDead = True
+            self.xvel = 0
+            time.sleep(0.5)
+            self.die()
 
     def die(self):
         self.alive = False
