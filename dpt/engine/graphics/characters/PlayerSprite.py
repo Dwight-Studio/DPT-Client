@@ -30,73 +30,80 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.CONSTJUMPCOUNT = self.jumpCount
         self.onPlatform = False
         self.allowJump = True
+        self.alive = True
 
     def update(self):
 
-        keys = pygame.key.get_pressed()
-        mur = -Game.camera.last_x
-        Game.add_debug_info("Scrolling : " + str(mur))
+        if self.alive:
 
-        if keys[pygame.K_LEFT] and self.rect.x - self.xvel - 1 > mur:
-            if self.xvel > 0:
-                self.xvel = 0
-            if self.xvel > -8:
-                self.xvel -= 1
-            self.left = True
-            self.right = False
-            self.standing = False
-        elif keys[pygame.K_RIGHT]:
-            if self.xvel < 0:
-                self.xvel = 0
-            if self.xvel < 8:
-                self.xvel += 1
-            self.left = False
-            self.right = True
-            self.standing = False
-        else:
-            self.xvel = 0
-            # if self.xvel > 0:
-            #    self.xvel -= 1
-            # elif self.xvel < 0:
-            #    self.xvel += 1
-            self.standing = True
-            self.walkCount = 0
-        if self.allowJump:
-            if not self.isJump:
-                if keys[pygame.K_UP]:
-                    self.isJump = True
-                    self.left = False
-                    if self.right:
-                        self.right = True
-                    else:
-                        self.right = False
-                    self.walkCount = 0
-                    self.onPlatform = False
+            keys = pygame.key.get_pressed()
+            mur = -Game.camera.last_x
+            Game.add_debug_info("Scrolling : " + str(mur))
+
+            if keys[pygame.K_LEFT] and self.rect.x - self.xvel - 1 > mur:
+                if self.xvel > 0:
+                    self.xvel = 0
+                if self.xvel > -8:
+                    self.xvel -= 1
+                self.left = True
+                self.right = False
+                self.standing = False
+            elif keys[pygame.K_RIGHT]:
+                if self.xvel < 0:
+                    self.xvel = 0
+                if self.xvel < 8:
+                    self.xvel += 1
+                self.left = False
+                self.right = True
+                self.standing = False
             else:
-                if not self.onPlatform:
-                    if self.jumpCount > 0:
-                        neg = 1
-                    else:
-                        neg = -1
-                    self.yvel = math.floor((self.jumpCount ** 2) * 0.5) * neg
-                    self.jumpCount -= 1
-                elif self.onPlatform:
-                    self.jumpCount = self.CONSTJUMPCOUNT
-                    self.isJump = False
-                    self.yvel = 0
+                self.xvel = 0
+                # if self.xvel > 0:
+                #    self.xvel -= 1
+                # elif self.xvel < 0:
+                #    self.xvel += 1
+                self.standing = True
+                self.walkCount = 0
+            if self.allowJump:
+                if not self.isJump:
+                    if keys[pygame.K_UP]:
+                        self.isJump = True
+                        self.left = False
+                        if self.right:
+                            self.right = True
+                        else:
+                            self.right = False
+                        self.walkCount = 0
+                        self.onPlatform = False
+                else:
+                    if not self.onPlatform:
+                        if self.jumpCount > 0:
+                            neg = 1
+                        else:
+                            neg = -1
+                        self.yvel = math.floor((self.jumpCount ** 2) * 0.5) * neg
+                        self.jumpCount -= 1
+                    elif self.onPlatform:
+                        self.jumpCount = self.CONSTJUMPCOUNT
+                        self.isJump = False
+                        self.yvel = 0
 
-        self.rect.left += self.xvel
-        self.collide(self.xvel, 0, Game.platformsList)
-        self.rect.top -= self.yvel
-        self.collide(0, self.yvel, Game.platformsList)
+            self.rect.left += self.xvel
+            self.collide(self.xvel, 0, Game.platformsList)
+            self.rect.top -= self.yvel
+            self.collide(0, self.yvel, Game.platformsList)
 
-        if not self.isJump:
-            self.allowJump = False
-            PlayerSprite.gravityCount += 1
-            PlayerSprite.gravity = math.floor((PlayerSprite.gravityCount ** 2) * 0.5) * -1
-            self.rect.top -= PlayerSprite.gravity
-            self.collide(0, PlayerSprite.gravity, Game.platformsList)
-        self.animation()
+            if not self.isJump:
+                self.allowJump = False
+                PlayerSprite.gravityCount += 1
+                PlayerSprite.gravity = math.floor((PlayerSprite.gravityCount ** 2) * 0.5) * -1
+                self.rect.top -= PlayerSprite.gravity
+                self.collide(0, PlayerSprite.gravity, Game.platformsList)
+
+        self.enemiesCollision(Game.enemyList)
+
+        if self.alive:
+            self.animation()
 
     def animation(self):
         if self.walkCount + 1 >= 27:
@@ -133,3 +140,11 @@ class PlayerSprite(pygame.sprite.Sprite):
                     PlayerSprite.gravityCount = 0
                 if yVelDelta > 0:
                     self.rect.top = i.rect.bottom
+
+    def enemiesCollision(self, enemies):
+        for i in enemies:
+            if pygame.sprite.collide_rect(self, i):
+                self.die()
+
+    def die(self):
+        self.alive = False
