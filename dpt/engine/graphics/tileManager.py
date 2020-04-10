@@ -1,4 +1,5 @@
 from dpt.engine.graphics.gui.editor.editorPanel import EditorPanel
+from dpt.engine.graphics.gui.editor.fakeEntities import FakeEntity
 from dpt.engine.graphics.gui.editor.tileEditor import TileEditor
 from dpt.engine.loader import RessourceLoader, UnreachableRessourceError
 from dpt.game import Game
@@ -23,6 +24,8 @@ class TileManager:
 
     @classmethod
     def loadLevel(cls, levelName):
+        TileManager.enemyGroup.empty()
+        TileManager.environmentGroup.empty()
         if type(levelName) == str:
             cls.log.info("Loading level " + levelName)
             level = RessourceLoader.get(levelName)
@@ -69,6 +72,7 @@ class TileManager:
             Game.playerSprite = CharEntity()
             Game.playerGroup.add(Game.playerSprite)
             cls.editorCamera = EditorCamera(TileManager.maxWidthSize, TileManager.maxHeightSize)
+        TileEditor.createdLevel = level
         cls.log.info("Done")
 
     @classmethod
@@ -90,6 +94,7 @@ class TileManager:
             enemy = RessourceLoader.get(itemClass)(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)
             cls.log.debug("Tile " + itemClass + " placed at " + str(xTile) + ", " + str(yTile))
             cls.enemyGroup.add(enemy)
+
     @classmethod
     def openTilePanel(cls):
         panel = EditorPanel((255, 255, 255), Game.surface.get_size()[0] / 4 * 3, 0, Game.surface.get_size()[0] / 4, Game.surface.get_size()[1], 120)
@@ -98,13 +103,13 @@ class TileManager:
         starty = 0 + 32
         for key, value in Game.availableTiles.items():
             for element in value:
-                sprite = RessourceLoader.get(element)(startx, starty, Game.TILESIZE, Game.TILESIZE, 255)
+                print(element)
+                sprite = FakeEntity(startx, starty, Game.TILESIZE, Game.TILESIZE, 255, element)
                 Game.editorTileRegistry[str(math.floor(startx / Game.TILESIZE)) + ", " + str(math.floor(starty / Game.TILESIZE))] = {"itemClass": element, "classType": key}
                 startx += Game.TILESIZE
                 if math.floor(startx) >= Game.surface.get_size()[0] - Game.TILESIZE:
                     startx = Game.surface.get_size()[0] / 4 * 3 + Game.TILESIZE
                     starty += Game.TILESIZE
-                EditorPanel.editorPanelGroup.add(sprite)
 
     @classmethod
     def outOfWindow(cls):

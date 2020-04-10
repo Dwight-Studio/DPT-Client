@@ -6,11 +6,11 @@ from dpt.engine.loader import RessourceLoader
 
 
 class EnemySprite(pygame.sprite.Sprite):
+    texture = "dpt.images.characters.player.standing"
     screen_width, screen_height = Game.surface.get_size()
     def __init__(self, x, y, width, height, alpha):
-        char = RessourceLoader.get("dpt.images.characters.player.standing")
         pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
-        self.image = char
+        self.image = RessourceLoader.get(self.texture)
         self.image.set_alpha(alpha)
         self.alpha = alpha
         self.rect = self.image.get_rect()

@@ -67,12 +67,10 @@ class TileEditor:
             cls.lastMousePosY = None
             if cls.mousePosX != cls.lastMousePosX and cls.mousePosY != cls.lastMousePosY:
                 TileEditor.ghostBlockGroup.empty()
-                lpushed = False
                 TileManager.ghostBlock((cls.mousePosX * Game.TILESIZE) + TileManager.editorCamera.last_x, cls.mousePosY * Game.TILESIZE, Game.itemClass, Game.classType)
                 cls.lastMousePosX = cls.mousePosX
                 cls.lastMousePosY = cls.mousePosY
-                if mouseButtons[0] == 1 and not lpushed:
-                    lpushed = True
+                if mouseButtons[0] == 1:
                     if not cls.panelOpen or cls.mousePosX <= math.floor((Game.surface.get_size()[0] / 4 * 3 - Game.TILESIZE) / Game.TILESIZE):
                         TileManager.placeBlock(cls.mousePosX, cls.mousePosY, Game.itemClass, Game.classType)
                         cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)] = {Game.classType: Game.itemClass}
