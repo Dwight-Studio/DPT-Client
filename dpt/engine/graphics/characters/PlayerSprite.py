@@ -101,9 +101,9 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.rect.top -= PlayerSprite.gravity
                 self.collide(0, PlayerSprite.gravity, Game.environment)
 
+            self.animation()
             self.enemiesCollision(self.yvel, Game.enemyGroup)
             self.deathFall()
-            self.animation()
 
         elif not self.alive:
             self.die()
