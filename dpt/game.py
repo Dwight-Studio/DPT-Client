@@ -28,7 +28,7 @@ class Game(object):
     joueur = None
     ressources = None
     enemyGroup = None
-    platforms = None
+    environment = None
     ghostBlock = None
     editorPanel = None
     availableTiles = None
@@ -89,7 +89,7 @@ class Game(object):
         # Groupes Pygame
         cls.joueur = pygame.sprite.Group()
         cls.enemyGroup = pygame.sprite.Group()
-        cls.platforms = pygame.sprite.Group()
+        cls.environment = pygame.sprite.Group()
         cls.ghostBlock = pygame.sprite.Group()
         cls.editorPanel = pygame.sprite.Group()
 

@@ -43,7 +43,7 @@ class TileEditor:
                         self.spushed = False
                     if keys[pygame.K_n] and not self.npushed:
                         self.npushed = True
-                        Game.platforms.empty()
+                        Game.environment.empty()
                         self.createdLevel = {}
                     elif not keys[pygame.K_n] and self.npushed:
                         self.npushed = False

@@ -4,7 +4,7 @@ import pygame
 
 
 def redraw_Game_window():
-    Game.platforms.update()
+    Game.environment.update()
     Game.camera.update(Game.playerSprite)
     Game.editor.update()
     Game.editorPanel.draw(Game.surface)
