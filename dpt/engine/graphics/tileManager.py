@@ -23,7 +23,6 @@ class TileManager:
 
     @classmethod
     def loadLevel(cls, levelName):
-        TileManager.LISTE = []
         if type(levelName) == str:
             cls.log.info("Loading level " + levelName)
             level = RessourceLoader.get(levelName)
