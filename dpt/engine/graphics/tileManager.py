@@ -55,7 +55,7 @@ class TileManager:
                 elif key == "enemyClass":
                     try:
                         enemy = eval(data + "(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
-                        cls.log.debug("Tile " + data + " placed at " + keys)
+                        cls.log.debug("Entity " + data + " placed at " + keys)
                         cls.enemyGroup.add(enemy)
                     except NameError:
                         cls.log.warning("Invalid class name : " + data + " for tile : " + keys)
