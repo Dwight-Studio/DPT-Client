@@ -76,7 +76,8 @@ class EnemySprite(pygame.sprite.Sprite):
         self.collide(0, self.yvel, TileManager.environmentGroup)
 
     def animation(self):
-        pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
+        #pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
+        pass
 
     def collide(self, xVelDelta, yVelDelta, platforms):
         for i in platforms:

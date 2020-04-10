@@ -9,7 +9,10 @@ import pygame
 
 def redraw_Game_window():
     TileManager.environmentGroup.update()
-    Game.camera.update(Game.playerSprite)
+    if not TileEditor.inEditor:
+        TileManager.camera.update(Game.playerSprite)
+    elif TileEditor.inEditor:
+        TileManager.editorCamera.update(Game.playerSprite)
     TileEditor.update()
     EditorPanel.editorPanelGroup.draw(Game.surface)
     EditorPanel.editorPanelGroup.update()

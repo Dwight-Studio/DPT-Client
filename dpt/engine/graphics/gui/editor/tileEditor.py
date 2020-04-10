@@ -23,7 +23,7 @@ class TileEditor:
     def update(cls):
         from dpt.engine.graphics.tileManager import TileManager
         if cls.inEditor:
-            Game.camera.enableGrid()
+            TileManager.editorCamera.enableGrid()
             # Gestion des fichiers (raccourcis)
             mouseButtons = pygame.mouse.get_pressed()
             keys = pygame.key.get_pressed()
