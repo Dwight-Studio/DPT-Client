@@ -38,7 +38,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         if self.alive:
 
             keys = pygame.key.get_pressed()
-            mur = -Game.camera.last_x
+            mur = -TileManager.camera.last_x
             Game.add_debug_info("Scrolling : " + str(mur))
 
             if keys[pygame.K_LEFT] and self.rect.x - self.xvel - 1 > mur:

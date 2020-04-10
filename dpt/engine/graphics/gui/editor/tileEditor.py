@@ -60,6 +60,7 @@ class TileEditor:
                         cls.tpushed = False
             # Gestion de la position de la souris et du placement de blocks
             mouse = pygame.mouse.get_pos()
+            i = TileManager.editorCamera.last_x / Game.TILESIZE
             cls.mousePosX = math.floor(mouse[0] / Game.TILESIZE)
             cls.mousePosY = math.floor(mouse[1] / Game.TILESIZE)
             cls.lastMousePosX = None
