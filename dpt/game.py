@@ -5,7 +5,6 @@ import sys
 import tarfile
 import traceback
 import pygame
-import time
 
 
 class Game(object):
@@ -28,6 +27,8 @@ class Game(object):
     enemyGroup = None
     platforms = None
     ghostBlock = None
+    editorPanel = None
+    availableTiles = None
     platformsList = []
     enemyList = []
     surface = None
@@ -85,6 +86,7 @@ class Game(object):
         cls.enemyGroup = pygame.sprite.Group()
         cls.platforms = pygame.sprite.Group()
         cls.ghostBlock = pygame.sprite.Group()
+        cls.editorPanel = pygame.sprite.Group()
         cls.window = pygame.display
         if Game.LINUX_USER:
             cls.surface = cls.window.set_mode((0, 0), pygame.NOFRAME, pygame.RESIZABLE)
@@ -105,7 +107,7 @@ class Game(object):
             cls.tile = TileManager()
             cls.tile.loadLevel("dpt.levels.leveltest")
             cls.camera = Camera(cls.tile.maxWidthSize, cls.tile.maxHeightSize)
-            from dpt.engine.graphics.gui.tileEditor import TileEditor
+            from dpt.engine.graphics.gui.editor.tileEditor import TileEditor
             cls.editor = TileEditor()
             cls.editor.inEditor = True
             #from dpt.engine.webCommunications import Communication

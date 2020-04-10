@@ -1,5 +1,6 @@
 from dpt.engine.graphics.blocks import *
 from dpt.engine.graphics.enemies import *
+from dpt.engine.graphics.gui.editor import *
 from dpt.game import Game
 import pygame
 
@@ -14,6 +15,8 @@ class TileManager:
         self.maxWidthSize = 0
         self.maxHeightSize = 0
         self.coords = None
+        Game.availableTiles = {"blockClass": ["Block", "CeciEstUnBlock"],
+                               "enemyClass": ["EnemySprite"]}
 
     def loadLevel(self, levelName):
         TileManager.LISTE = []
@@ -62,8 +65,7 @@ class TileManager:
             ghostBlock = eval(itemClass + "((255, 0, 0), xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 80)")
             Game.ghostBlock.add(ghostBlock)
         elif classType == "enemyClass":
-            ghostBlock = eval(
-            itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE)")
+            ghostBlock = eval(itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE)")
             Game.ghostBlock.add(ghostBlock)
 
     def placeBlock(self, xTile, yTile, itemClass, classType):
@@ -76,6 +78,10 @@ class TileManager:
             self.log.debug("Tile " + itemClass + " placed at " + str(xTile) + ", " + str(yTile))
             Game.enemyGroup.add(enemy)
 
+    def openTilePanel(self):
+        panel = EditorPanel((255, 255, 255), Game.surface.get_size()[0] / 4 * 3, 0, Game.surface.get_size()[0] / 4, Game.surface.get_size()[1], 120)
+        Game.editorPanel.add(panel)
+        Game.editorPanel.draw(Game.surface)
 
 class Camera:
     def __init__(self, width, height):

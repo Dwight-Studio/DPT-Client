@@ -1,8 +1,6 @@
 import pygame
-from dpt.game import Game
 
-
-class Block(pygame.sprite.Sprite):
+class EditorPanel(pygame.sprite.Sprite):
     def __init__(self, color, x, y, width, height, alpha):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((width, height))
