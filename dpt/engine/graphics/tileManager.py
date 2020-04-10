@@ -3,6 +3,7 @@ from dpt.engine.graphics.enemies import *
 from dpt.engine.graphics.gui.editor import *
 from dpt.game import Game
 import pygame
+import math
 
 
 #          {"x, y": {"blockClass": Classe}}
@@ -84,10 +85,16 @@ class TileManager:
         panel = EditorPanel((255, 255, 255), Game.surface.get_size()[0] / 4 * 3, 0, Game.surface.get_size()[0] / 4, Game.surface.get_size()[1], 120)
         Game.editorPanel.add(panel)
         startx = Game.surface.get_size()[0] / 4 * 3 + Game.TILESIZE
-        starty = Game.surface.get_size()[1] + 32
-        for tiles in Game.availableTiles.values():
-            for element in tiles:
-                sprite = eval(element + "(0, 0, Game.TILESIZE, Game.TILESIZE, 255)")
+        starty = 0 + 32
+        for key, value in Game.availableTiles.items():
+            for element in value:
+                sprite = eval(element + "(startx, starty, Game.TILESIZE, Game.TILESIZE, 255)")
+                Game.editorTileRegistry[str(math.floor(startx / Game.TILESIZE)) + ", " + str(math.floor(starty / Game.TILESIZE))] = {"itemClass": element, "classType": key}
+                startx += Game.TILESIZE
+                if math.floor(startx) >= Game.surface.get_size()[0] - Game.TILESIZE:
+                    startx = Game.surface.get_size()[0] / 4 * 3 + Game.TILESIZE
+                    starty += Game.TILESIZE
+                Game.editorPanel.add(sprite)
 
 class Camera:
     def __init__(self, width, height):

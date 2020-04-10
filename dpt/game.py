@@ -34,6 +34,9 @@ class Game(object):
     availableTiles = None
     platformsList = []
     enemyList = []
+    itemClass = "EnemySprite"
+    classType = "enemyClass"
+    editorTileRegistry = {}
     surface = None
     playerSprite = None
     camera = None

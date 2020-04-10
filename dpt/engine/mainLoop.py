@@ -8,6 +8,7 @@ def redraw_Game_window():
     Game.camera.update(Game.playerSprite)
     Game.editor.update()
     Game.editorPanel.draw(Game.surface)
+    Game.editorPanel.update()
     Game.ghostBlock.draw(Game.surface)
     Game.player.update()
     Game.enemyGroup.update()

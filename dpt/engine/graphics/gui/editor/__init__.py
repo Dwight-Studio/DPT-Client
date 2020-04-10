@@ -1,1 +1,1 @@
-from .EditorPanel import EditorPanel
+from .editorPanel import EditorPanel
