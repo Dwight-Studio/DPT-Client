@@ -14,6 +14,9 @@ def redraw_Game_window():
     Game.enemyGroup.update()
     Game.buttonsGroup.update()
     Game.buttonsGroup.draw(Game.surface)
+    for i in Game.text_buttonsGroup:
+        Game.surface.blit(i[0], i[1])
+    Game.text_buttonsGroup = []
     Game.display_debug_info()
     Game.window.update()
 
