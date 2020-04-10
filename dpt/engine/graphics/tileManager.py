@@ -42,7 +42,7 @@ class TileManager:
             for key, data in level[keys].items():
                 if key == "blockClass":
                     try:
-                        block = eval(data + "((255, 0, 0), coords[0] * Game.TILESIZE, coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
+                        block = eval(data + "(coords[0] * Game.TILESIZE, coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
                         self.log.debug("Tile " + data + " placed at " + keys)
                         Game.platformsList.append(block)
                         Game.platforms.add(block)
@@ -62,26 +62,32 @@ class TileManager:
 
     def ghostBlock(self, xTile, yTile, itemClass, classType):
         if classType == "blockClass":
-            ghostBlock = eval(itemClass + "((255, 0, 0), xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 80)")
+            ghostBlock = eval(itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 80)")
             Game.ghostBlock.add(ghostBlock)
         elif classType == "enemyClass":
-            ghostBlock = eval(itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE)")
+            ghostBlock = eval(itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 80)")
             Game.ghostBlock.add(ghostBlock)
 
     def placeBlock(self, xTile, yTile, itemClass, classType):
         if classType == "blockClass":
-            block = eval(itemClass + "((255, 0, 0), xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
+            block = eval(itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
             self.log.debug("Tile " + itemClass + " placed at " + str(xTile) + ", " + str(yTile))
+            Game.platformsList.append(block)
             Game.platforms.add(block)
         elif classType == "enemyClass":
-            enemy = eval(itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE)")
+            enemy = eval(itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
             self.log.debug("Tile " + itemClass + " placed at " + str(xTile) + ", " + str(yTile))
+            Game.enemyList.append(enemy)
             Game.enemyGroup.add(enemy)
 
     def openTilePanel(self):
         panel = EditorPanel((255, 255, 255), Game.surface.get_size()[0] / 4 * 3, 0, Game.surface.get_size()[0] / 4, Game.surface.get_size()[1], 120)
         Game.editorPanel.add(panel)
-        Game.editorPanel.draw(Game.surface)
+        startx = Game.surface.get_size()[0] / 4 * 3 + Game.TILESIZE
+        starty = Game.surface.get_size()[1] + 32
+        for tiles in Game.availableTiles.values():
+            for element in tiles:
+                sprite = eval(element + "(0, 0, Game.TILESIZE, Game.TILESIZE, 255)")
 
 class Camera:
     def __init__(self, width, height):
