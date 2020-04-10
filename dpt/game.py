@@ -28,6 +28,7 @@ class Game(object):
     enemyGroup = None
     environment = None
     ghostBlock = None
+    buttonsGroup = None
     editorPanel = None
     availableTiles = None
     surface = None
@@ -91,6 +92,7 @@ class Game(object):
         cls.environment = pygame.sprite.Group()
         cls.ghostBlock = pygame.sprite.Group()
         cls.editorPanel = pygame.sprite.Group()
+        cls.buttonsGroup = pygame.sprite.Group()
 
         # Evenements persos
         cls.BUTTONEVENT = pygame.event.custom_type()
@@ -129,6 +131,9 @@ class Game(object):
             # time.sleep(40)
             # com.voteResult()
 
+            from dpt.engine.graphics.gui.menu.Button import Button
+            im = cls.ressources.get_multiple("dpt.images.gui.menu.button*")
+            cls.button = Button(50, 50, 200, 20, normal_image=im[1], locked_image=im[0], hover_image=im[2], pushed_image=im[3])
             from dpt.engine.mainLoop import loop
             loop()
         except Exception:

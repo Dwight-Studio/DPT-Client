@@ -3,13 +3,18 @@ from dpt.game import Game
 
 
 class Button(pygame.sprite.Sprite):
-    def __init__(self, x, y, width, height, image1, image2, image3, eventargs):
+    def __init__(self, x, y, width, height, **kwargs):
         pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
-        self.eventargs = eventargs
-        self.image = image1
-        self.normal_image = image1
-        self.pushed_image = image2
-        self.locked_image = image3
+        self.normal_image = kwargs["normal_image"]
+        del kwargs["normal_image"]
+        self.pushed_image = kwargs["pushed_image"] or self.normal_image
+        del kwargs["pushed_image"]
+        self.locked_image = kwargs["locked_image"] or self.normal_image
+        del kwargs["locked_image"]
+        self.hover_image = kwargs["hover_image"] or self.normal_image
+        del kwargs["hover_image"]
+        self.eventargs = kwargs
+        self.image = self.normal_image
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -18,6 +23,8 @@ class Button(pygame.sprite.Sprite):
         self.pushed = False
         self.locked = False
         self.previous_state = False
+        Game.get_logger("Button").debug("Button created")
+        Game.buttonsGroup.add(self)
 
     def __bool__(self):
         return self.pushed
@@ -38,10 +45,13 @@ class Button(pygame.sprite.Sprite):
         if self.pushed:
             self.image = self.pushed_image
             if not self.previous_state:
-                event = pygame.event.Event(type=Game.BUTTONEVENT, **dict(button=self, **self.eventargs))
+                event = pygame.event.Event(Game.BUTTONEVENT, **dict(button=self, **self.eventargs))
                 pygame.event.post(event)
         else:
-            self.image = self.normal_image
+            if self.rect.collidepoint(pygame.mouse.get_pos()):
+                self.image = self.hover_image
+            else:
+                self.image = self.normal_image
 
     def lock(self):
         self.locked = True

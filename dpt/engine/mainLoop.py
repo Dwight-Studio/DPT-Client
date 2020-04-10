@@ -11,6 +11,8 @@ def redraw_Game_window():
     Game.ghostBlock.draw(Game.surface)
     Game.player.update()
     Game.enemyGroup.update()
+    Game.buttonsGroup.draw(Game.surface)
+    Game.buttonsGroup.update()
     Game.display_debug_info()
     Game.window.update()
 
