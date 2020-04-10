@@ -100,10 +100,12 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.rect.top -= PlayerSprite.gravity
                 self.collide(0, PlayerSprite.gravity, Game.platformsList)
 
-        self.enemiesCollision(Game.enemyList)
+            self.enemiesCollision(Game.enemyList)
 
-        if self.alive:
             self.animation()
+
+        elif not self.alive:
+            self.die()
 
     def animation(self):
         if self.walkCount + 1 >= 27:
@@ -148,3 +150,10 @@ class PlayerSprite(pygame.sprite.Sprite):
 
     def die(self):
         self.alive = False
+        if self.jumpCount > 0:
+            neg = 1
+        else:
+            neg = -1
+        self.yvel = math.floor((self.jumpCount ** 2) * 0.5) * neg
+        self.jumpCount -= 1
+        self.rect.top -= self.yvel
