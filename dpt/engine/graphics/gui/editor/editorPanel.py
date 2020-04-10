@@ -13,6 +13,7 @@ class EditorPanel(pygame.sprite.Sprite):
         self.rect.y = y
         self.width = width
         self.height = height
+        self.log = Game.get_logger("EditorPanel")
 
     def update(self):
         mouse = pygame.mouse.get_pos()
@@ -27,6 +28,7 @@ class EditorPanel(pygame.sprite.Sprite):
                         Game.itemClass = values
                     elif keys == "classType":
                         Game.classType = values
+                self.log.debug("Selected : " + str(Game.itemClass))
             else:
-                print("None")
+                pass
 

@@ -1,4 +1,5 @@
 from dpt.engine.graphics.blocks import *
+from dpt.engine.graphics.characters.PlayerSprite import PlayerSprite
 from dpt.engine.graphics.enemies import *
 from dpt.engine.graphics.gui.editor import *
 from dpt.game import Game
@@ -32,31 +33,34 @@ class TileManager:
         if level is None:
             self.log.critical("The level can't be loaded")
         for keys in level:
-            coords = tuple(map(int, keys.split(", ")))
-            if coords[0] > self.maxWidthSize:
-                self.maxWidthSize = coords[0]
-            elif coords[1] > self.maxHeightSize:
-                self.maxHeightSize = coords[1]
-            if coords[0] < 0 or coords[1] < 0:
+            self.coords = tuple(map(int, keys.split(", ")))
+            if self.coords[0] > self.maxWidthSize:
+                self.maxWidthSize = self.coords[0]
+            elif self.coords[1] > self.maxHeightSize:
+                self.maxHeightSize = self.coords[1]
+            if self.coords[0] < 0 or self.coords[1] < 0:
                 self.log.warning("The tile position can't be negative : " + keys)
                 continue
             for key, data in level[keys].items():
                 if key == "blockClass":
                     try:
-                        block = eval(data + "(coords[0] * Game.TILESIZE, coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
+                        block = eval(data + "(self.coords[0] * Game.TILESIZE, self.coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
                         self.log.debug("Tile " + data + " placed at " + keys)
                         Game.environment.add(block)
                     except NameError:
                         self.log.warning("Invalid class name : " + data + " for tile : " + keys)
                 elif key == "enemyClass":
                     try:
-                        enemy = eval(data + "(coords[0] * Game.TILESIZE, coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
+                        enemy = eval(data + "(self.coords[0] * Game.TILESIZE, self.coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
                         self.log.debug("Tile " + data + " placed at " + keys)
                         Game.enemyGroup.add(enemy)
                     except NameError:
                         self.log.warning("Invalid class name : " + data + " for tile : " + keys)
         Game.environment.draw(Game.surface)
         Game.enemyGroup.draw(Game.surface)
+        if not Game.editor.inEditor:
+            Game.playerSprite = PlayerSprite(300, Game.surface.get_size()[1] - 500, 64, 64)
+            Game.player.add(Game.playerSprite)
         self.log.info("Done")
 
     def ghostBlock(self, xTile, yTile, itemClass, classType):
@@ -73,7 +77,7 @@ class TileManager:
             self.log.debug("Tile " + itemClass + " placed at " + str(xTile) + ", " + str(yTile))
             Game.environment.add(block)
         elif classType == "enemyClass":
-            enemy = eval(itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
+            enemy = eval(itemClass + "(xTile * Game.TILESIZEe, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
             self.log.debug("Tile " + itemClass + " placed at " + str(xTile) + ", " + str(yTile))
             Game.enemyGroup.add(enemy)
 
