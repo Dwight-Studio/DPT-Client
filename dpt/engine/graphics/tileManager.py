@@ -76,20 +76,20 @@ class TileManager:
     @classmethod
     def ghostBlock(cls, xTile, yTile, itemClass, classType):
         if classType == "blockClass":
-            ghostBlock = eval(itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 80)")
+            ghostBlock = eval(itemClass + "(xTile, yTile, Game.TILESIZE, Game.TILESIZE, 80)")
             TileEditor.ghostBlockGroup.add(ghostBlock)
         elif classType == "enemyClass":
-            ghostBlock = eval(itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 80)")
+            ghostBlock = eval(itemClass + "(xTile, yTile, Game.TILESIZE, Game.TILESIZE, 80)")
             TileEditor.ghostBlockGroup.add(ghostBlock)
 
     @classmethod
     def placeBlock(cls, xTile, yTile, itemClass, classType):
         if classType == "blockClass":
-            block = eval(itemClass + "(xTile * Game.TILESIZE - TileManager.editorCamera.last_x, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
+            block = eval(itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
             cls.log.debug("Tile " + itemClass + " placed at " + str(xTile) + ", " + str(yTile))
             cls.environmentGroup.add(block)
         elif classType == "enemyClass":
-            enemy = eval(itemClass + "(xTile * Game.TILESIZE - TileManager.editorCamera.last_x, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
+            enemy = eval(itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
             cls.log.debug("Tile " + itemClass + " placed at " + str(xTile) + ", " + str(yTile))
             cls.enemyGroup.add(enemy)
     @classmethod
@@ -151,6 +151,7 @@ class EditorCamera:
         return entity.rect.move(self.camera.topleft)
 
     def update(self, target):
+        Game.add_debug_info("Scrolling : " + str(self.last_x))
         x = -target.rect.x + int(Game.surface.get_size()[0] / 2)
         x = min(0, x)
         self.camera = pygame.Rect(x, 0, self.width, self.height)

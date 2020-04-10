@@ -60,14 +60,14 @@ class TileEditor:
                         cls.tpushed = False
             # Gestion de la position de la souris et du placement de blocks
             mouse = pygame.mouse.get_pos()
-            cls.mousePosX = math.floor(mouse[0] / Game.TILESIZE)
+            cls.mousePosX = math.floor((mouse[0] - TileManager.editorCamera.last_x) / Game.TILESIZE)
             cls.mousePosY = math.floor(mouse[1] / Game.TILESIZE)
             cls.lastMousePosX = None
             cls.lastMousePosY = None
             if cls.mousePosX != cls.lastMousePosX and cls.mousePosY != cls.lastMousePosY:
                 TileEditor.ghostBlockGroup.empty()
                 lpushed = False
-                TileManager.ghostBlock(cls.mousePosX, cls.mousePosY, Game.itemClass, Game.classType)
+                TileManager.ghostBlock((cls.mousePosX * Game.TILESIZE) + TileManager.editorCamera.last_x, cls.mousePosY * Game.TILESIZE, Game.itemClass, Game.classType)
                 cls.lastMousePosX = cls.mousePosX
                 cls.lastMousePosY = cls.mousePosY
                 if mouseButtons[0] == 1 and not lpushed:
