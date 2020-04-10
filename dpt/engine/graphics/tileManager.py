@@ -58,9 +58,8 @@ class TileManager:
                         self.log.warning("Invalid class name : " + data + " for tile : " + keys)
         Game.environment.draw(Game.surface)
         Game.enemyGroup.draw(Game.surface)
-        if not Game.editor.inEditor:
-            Game.playerSprite = PlayerSprite(300, Game.surface.get_size()[1] - 500, 64, 64)
-            Game.player.add(Game.playerSprite)
+        Game.playerSprite = PlayerSprite(300, Game.surface.get_size()[1] - 500, 64, 64)
+        Game.player.add(Game.playerSprite)
         self.log.info("Done")
 
     def ghostBlock(self, xTile, yTile, itemClass, classType):
