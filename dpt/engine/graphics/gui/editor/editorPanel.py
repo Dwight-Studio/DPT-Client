@@ -33,4 +33,3 @@ class EditorPanel(pygame.sprite.Sprite):
                 self.log.debug("Selected : " + str(Game.itemClass))
             else:
                 pass
-
