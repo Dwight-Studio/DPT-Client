@@ -13,6 +13,7 @@ class EnemySprite(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
         self.image = self.char
         self.image.set_alpha(alpha)
+        self.alpha = alpha
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -74,6 +75,7 @@ class EnemySprite(pygame.sprite.Sprite):
 
         self.rect.top -= self.yvel
         self.collide(0, self.yvel, TileManager.environmentGroup)
+        self.image.set_alpha(self.alpha)
 
     def animation(self):
         #pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
