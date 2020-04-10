@@ -29,6 +29,7 @@ class Game(object):
     environment = None
     ghostBlock = None
     buttonsGroup = None
+    text_buttonsGroup = []
     editorPanel = None
     availableTiles = None
     platformsList = []
@@ -98,6 +99,7 @@ class Game(object):
         cls.ghostBlock = pygame.sprite.Group()
         cls.editorPanel = pygame.sprite.Group()
         cls.buttonsGroup = pygame.sprite.Group()
+        cls.text_buttonsGroup = []
 
         # Evenements persos
         cls.BUTTONEVENT = pygame.event.custom_type()

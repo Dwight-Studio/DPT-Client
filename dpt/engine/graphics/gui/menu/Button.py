@@ -75,17 +75,15 @@ class Button(pygame.sprite.Sprite):
             else:
                 self.image = self.normal_image
 
+            if self.text is not None:
+                text = self.font.render(self.text, True, self.font_color)
+                rect = text.get_rect()
+                rect.centerx = self.rect.centerx
+                rect.centery = self.rect.centery
+                Game.text_buttonsGroup.append((text, rect))
+
     def lock(self):
         self.locked = True
 
     def unlock(self):
         self.locked = False
-
-    def draw(self, surface):
-        if self.text is not None:
-            print("oui")
-            text = self.font.render(self.text, True, self.font_color)
-            rect = text.get_rect()
-            rect.centerx = self.rect.centerx
-            rect.centery = self.rect.centery
-            surface.blit(text, rect)
