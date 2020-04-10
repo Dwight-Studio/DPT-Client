@@ -1,7 +1,8 @@
+from dpt.engine.graphics.gui.editor.editorPanel import EditorPanel
+from dpt.engine.graphics.gui.editor.tileEditor import TileEditor
 from dpt.engine.graphics.blocks import *
-from dpt.engine.graphics.characters.PlayerSprite import PlayerSprite
 from dpt.engine.graphics.enemies import *
-from dpt.engine.graphics.gui.editor import *
+from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 import pygame
 import math
@@ -9,6 +10,10 @@ import math
 
 #          {"x, y": {"blockClass": Classe}}
 class TileManager:
+    enemyGroup = pygame.sprite.Group()
+    environmentGroup = pygame.sprite.Group()
+    ghostBlockGroup = pygame.sprite.Group()
+
     log = Game.get_logger("TileManager")
     levelName = None
     maxWidthSize = 0
@@ -21,7 +26,7 @@ class TileManager:
         TileManager.LISTE = []
         if type(levelName) == str:
             cls.log.info("Loading level " + levelName)
-            level = Game.ressources.get(levelName)
+            level = RessourceLoader.get(levelName)
         else:
             cls.log.info("Loading unknown level")
             level = levelName
@@ -43,41 +48,42 @@ class TileManager:
                     try:
                         block = eval(data + "(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
                         cls.log.debug("Tile " + data + " placed at " + keys)
-                        Game.environment.add(block)
+                        cls.environmentGroup.add(block)
                     except NameError:
                         cls.log.warning("Invalid class name : " + data + " for tile : " + keys)
                 elif key == "enemyClass":
                     try:
                         enemy = eval(data + "(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
                         cls.log.debug("Tile " + data + " placed at " + keys)
-                        Game.enemyGroup.add(enemy)
+                        cls.enemyGroup.add(enemy)
                     except NameError:
                         cls.log.warning("Invalid class name : " + data + " for tile : " + keys)
-        Game.environment.draw(Game.surface)
-        Game.enemyGroup.draw(Game.surface)
+        cls.environmentGroup.draw(Game.surface)
+        cls.enemyGroup.draw(Game.surface)
+        from dpt.engine.graphics.characters.PlayerSprite import PlayerSprite
         Game.playerSprite = PlayerSprite(300, Game.surface.get_size()[1] - 500, 64, 64)
-        Game.player.add(Game.playerSprite)
+        Game.playerGroup.add(Game.playerSprite)
         cls.log.info("Done")
 
     @classmethod
     def ghostBlock(cls, xTile, yTile, itemClass, classType):
         if classType == "blockClass":
             ghostBlock = eval(itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 80)")
-            Game.ghostBlock.add(ghostBlock)
+            TileEditor.ghostBlockGroup.add(ghostBlock)
         elif classType == "enemyClass":
             ghostBlock = eval(itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 80)")
-            Game.ghostBlock.add(ghostBlock)
+            TileEditor.ghostBlockGroup.add(ghostBlock)
 
     @classmethod
     def placeBlock(cls, xTile, yTile, itemClass, classType):
         if classType == "blockClass":
             block = eval(itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
             cls.log.debug("Tile " + itemClass + " placed at " + str(xTile) + ", " + str(yTile))
-            Game.environment.add(block)
+            cls.environmentGroup.add(block)
         elif classType == "enemyClass":
             enemy = eval(itemClass + "(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)")
             cls.log.debug("Tile " + itemClass + " placed at " + str(xTile) + ", " + str(yTile))
-            Game.enemyGroup.add(enemy)
+            cls.enemyGroup.add(enemy)
 
     @classmethod
     def openTilePanel(cls):
@@ -120,7 +126,7 @@ class Camera:
         x = max(-calcul, x)
         self.camera = pygame.Rect(x, 0, self.width, self.height)
         Game.surface.blit(Game.playerSprite.image, self.apply(Game.playerSprite))
-        for sprite in Game.environment:
+        for sprite in TileManager.environmentGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
         self.last_x = x
 

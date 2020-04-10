@@ -55,65 +55,71 @@ def make_entries(path):
 
 
 class RessourceLoader:
-    def __init__(self):
-        self.logger = Game.get_logger("Loader")
+    RESSOURCES = {}
+    pending_ressources = {}
+    loaded_ressources = {}
+    logger = Game.get_logger("Loader")
 
-        self.logger.info("Initializing registries")
+    @classmethod
+    def init(cls):
+        cls.logger.info("Initializing registries")
 
-        self.logger.info("Building RESSOURCES registry")
-        self.RESSOURCES = {}
+        cls.logger.info("Building RESSOURCES registry")
+        cls.RESSOURCES = {}
         for entry in make_entries(RESSOURCES_DIRECTORY):
             key = entry[0]
             if key.split(".")[-1] == "level":
                 key = ".".join(key.split(".")[:-1])
-            self.RESSOURCES[key] = entry[1]
-        self.logger.info("Registered " + str(len(self.RESSOURCES)) + " entries")
+            cls.RESSOURCES[key] = entry[1]
+        cls.logger.info("Registered " + str(len(cls.RESSOURCES)) + " entries")
 
-        self.logger.info("Building pending_ressources registry")
-        self.pending_ressources = {}
-        self.logger.info("Registered " + str(len(self.pending_ressources)) + " entries")
+        cls.logger.info("Building pending_ressources registry")
+        cls.pending_ressources = {}
+        cls.logger.info("Registered " + str(len(cls.pending_ressources)) + " entries")
 
-        self.logger.info("Building loaded_ressources registry")
-        self.loaded_ressources = {}
-        self.logger.info("Registered " + str(len(self.loaded_ressources)) + " entries")
-        if len(self.loaded_ressources) > 0:
-            self.logger.warning("Bad registration: no ressources must be loaded at startup")
+        cls.logger.info("Building loaded_ressources registry")
+        cls.loaded_ressources = {}
+        cls.logger.info("Registered " + str(len(cls.loaded_ressources)) + " entries")
+        if len(cls.loaded_ressources) > 0:
+            cls.logger.warning("Bad registration: no ressources must be loaded at startup")
 
-        self.logger.info("Initialization done.")
+        cls.logger.info("Initialization done.")
 
-    def load(self):
-        self.logger.info("Starting loading ressources")
-        for entry in self.pending_ressources:
-            ext = self.pending_ressources[entry].split("/")[-1].split(".")
+    @classmethod
+    def load(cls):
+        cls.logger.info("Starting loading ressources")
+        for entry in cls.pending_ressources:
+            ext = cls.pending_ressources[entry].split("/")[-1].split(".")
             try:
                 if ext[-1] == "png":
-                    self.loaded_ressources[entry] = pygame.image.load(self.pending_ressources[entry])
-                    self.logger.debug("Entry " + entry + " loaded")
+                    cls.loaded_ressources[entry] = pygame.image.load(cls.pending_ressources[entry])
+                    cls.logger.debug("Entry " + entry + " loaded")
 
                 if ext[-2] == "level" and ext[-1] == "json":
                     table = None
-                    file = open(self.pending_ressources[entry], "r")
+                    file = open(cls.pending_ressources[entry], "r")
                     table = json.loads(file.read())
                     file.close()
-                    self.loaded_ressources[entry] = table
-                    self.logger.debug("Entry " + entry + " loaded")
-                    self.logger.info("Loaded " + str(len(self.pending_ressources)) + " entries")
-                    self.logger.info("Loading done")
-                    self.pending_ressources = []
+                    cls.loaded_ressources[entry] = table
+                    cls.logger.debug("Entry " + entry + " loaded")
+                    cls.logger.info("Loaded " + str(len(cls.pending_ressources)) + " entries")
+                    cls.logger.info("Loading done")
+                    cls.pending_ressources = []
 
             except Exception as ex:
-                self.logger.warning("Can't load entry " + entry)
+                cls.logger.warning("Can't load entry " + entry)
                 exc_type, exc_value, exc_tb = sys.exc_info()
                 trace = "".join(traceback.format_exception(exc_type, exc_value, exc_tb))
                 for ms in trace.split("\n"):
-                    self.logger.warning(ms)
+                    cls.logger.warning(ms)
 
-    def select_entries(self, path):
+    @classmethod
+    def select_entries(cls, path):
         if "*" in path:
             if path[-1] == "*":
                 path = path[:-1]
                 entries = []
-                for entry in self.RESSOURCES:
+                for entry in cls.RESSOURCES:
                     if entry[:len(path)] == path:
                         entries.append(entry)
                 return entries
@@ -122,30 +128,33 @@ class RessourceLoader:
         else:
             return [path]
 
-    def get_multiple(self, entry):
+    @classmethod
+    def get_multiple(cls, entry):
         try:
             rlist = []
-            entries = self.select_entries(entry)
+            entries = cls.select_entries(entry)
             for entry in entries:
-                rlist.append(self.loaded_ressources[entry])
+                rlist.append(cls.loaded_ressources[entry])
             return rlist
         except KeyError:
-            self.logger.critical("Ressources can't be reached (Are ressources loaded ?)")
+            cls.logger.critical("Ressources can't be reached (Are ressources loaded ?)")
             raise UnreachableRessourceError(entry)
 
-    def get(self, entry):
+    @classmethod
+    def get(cls, entry):
         try:
-            return self.loaded_ressources[entry]
+            return cls.loaded_ressources[entry]
         except KeyError:
-            self.logger.critical("Ressource can't be reached (Are ressources loaded ?)")
+            cls.logger.critical("Ressource can't be reached (Are ressources loaded ?)")
             raise UnreachableRessourceError(entry)
 
-    def add_pending(self, entry):
+    @classmethod
+    def add_pending(cls, entry):
         try:
             rlist = []
-            entries = self.select_entries(entry)
+            entries = cls.select_entries(entry)
             for entry in entries:
-                self.pending_ressources[entry] = self.RESSOURCES[entry]
+                cls.pending_ressources[entry] = cls.RESSOURCES[entry]
         except KeyError:
-            self.logger.critical("Ressource can't be added to pending ressources (path doesn't exist)")
+            cls.logger.critical("Ressource can't be added to pending ressources (path doesn't exist)")
             raise UnreachableRessourceError(entry)

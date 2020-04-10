@@ -2,15 +2,16 @@ import pygame
 import math
 
 from dpt.game import Game
+from dpt.engine.loader import RessourceLoader
 
 
 class EnemySprite(pygame.sprite.Sprite):
     screen_width, screen_height = Game.surface.get_size()
-    char = Game.ressources.get("dpt.images.characters.player.standing")
+    char = RessourceLoader.get("dpt.images.characters.player.standing")
 
     def __init__(self, x, y, width, height, alpha):
         pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
-        self.image = EnemySprite.char
+        self.image = self.char
         self.image.set_alpha(alpha)
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -33,6 +34,7 @@ class EnemySprite(pygame.sprite.Sprite):
         self.lasty = 0
 
     def update(self):
+        from dpt.engine.graphics.tileManager import TileManager
         if not Game.isPlayerDead:
             if self.left:
                 if self.xvel > 0:
@@ -56,14 +58,14 @@ class EnemySprite(pygame.sprite.Sprite):
 
             self.lastx = self.rect.left
             self.rect.left += self.xvel
-            self.collide(self.xvel, 0, Game.environment)
+            self.collide(self.xvel, 0, TileManager.environmentGroup)
 
             if not self.isJump:
                 self.allowJump = False
                 self.gravityCount += 1
                 self.gravity = math.floor((self.gravityCount ** 2) * 0.5) * -1
                 self.rect.top -= self.gravity
-                self.collide(0, self.gravity, Game.environment)
+                self.collide(0, self.gravity, TileManager.environmentGroup)
         self.animation()
 
         if self.lastx == self.rect.left:
@@ -71,7 +73,7 @@ class EnemySprite(pygame.sprite.Sprite):
             self.right = not self.right
 
         self.rect.top -= self.yvel
-        self.collide(0, self.yvel, Game.environment)
+        self.collide(0, self.yvel, TileManager.environmentGroup)
 
     def animation(self):
         pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)

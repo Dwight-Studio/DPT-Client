@@ -1,20 +1,21 @@
 import pygame
 import math
 import time
-
 from dpt.game import Game
+from dpt.engine.loader import RessourceLoader
+from dpt.engine.graphics.tileManager import TileManager
 
 
 class PlayerSprite(pygame.sprite.Sprite):
     screen_width, screen_height = Game.surface.get_size()
-    char = Game.ressources.get("dpt.images.characters.player.standing")
-    walkRight = Game.ressources.get_multiple("dpt.images.characters.player.R*")
-    walkLeft = Game.ressources.get_multiple("dpt.images.characters.player.L*")
+    char = RessourceLoader.get("dpt.images.characters.player.standing")
+    walkRight = RessourceLoader.get_multiple("dpt.images.characters.player.R*")
+    walkLeft = RessourceLoader.get_multiple("dpt.images.characters.player.L*")
     gravityCount = 0
 
     def __init__(self, x, y, width, height):
         pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
-        self.image = PlayerSprite.char
+        self.image = self.char
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -34,7 +35,6 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.alive = True
 
     def update(self):
-
         if self.alive:
 
             keys = pygame.key.get_pressed()
@@ -90,19 +90,19 @@ class PlayerSprite(pygame.sprite.Sprite):
                         self.yvel = 0
 
             self.rect.left += self.xvel
-            self.collide(self.xvel, 0, Game.environment)
+            self.collide(self.xvel, 0, TileManager.environmentGroup)
             self.rect.top -= self.yvel
-            self.collide(0, self.yvel, Game.environment)
+            self.collide(0, self.yvel, TileManager.environmentGroup)
 
             if not self.isJump:
                 self.allowJump = False
                 PlayerSprite.gravityCount += 1
                 PlayerSprite.gravity = math.floor((PlayerSprite.gravityCount ** 2) * 0.5) * -1
                 self.rect.top -= PlayerSprite.gravity
-                self.collide(0, PlayerSprite.gravity, Game.environment)
+                self.collide(0, PlayerSprite.gravity, TileManager.environmentGroup)
 
             self.animation()
-            self.enemiesCollision(self.yvel, Game.enemyGroup)
+            self.enemiesCollision(self.yvel, TileManager.enemyGroup)
             self.deathFall()
 
         elif not self.alive:
@@ -114,16 +114,16 @@ class PlayerSprite(pygame.sprite.Sprite):
 
         if not self.standing:
             if self.left:
-                self.image = PlayerSprite.walkLeft[self.walkCount // 3]
+                self.image = self.walkLeft[self.walkCount // 3]
                 self.walkCount += 1
             elif self.right:
-                self.image = PlayerSprite.walkRight[self.walkCount // 3]
+                self.image = self.walkRight[self.walkCount // 3]
                 self.walkCount += 1
         else:
             if self.right:
-                self.image = PlayerSprite.walkRight[0]
+                self.image = self.walkRight[0]
             else:
-                self.image = PlayerSprite.walkLeft[0]
+                self.image = self.walkLeft[0]
         # pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
 
     def collide(self, xVelDelta, yVelDelta, platforms):
@@ -148,7 +148,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         for i in enemies:
             if pygame.sprite.collide_rect(self, i):
                 if yVelDelta < 0:
-                    Game.enemyGroup.remove(i)
+                    TileManager.enemyGroup.remove(i)
                 else:
                     self.yvel = 0
                     Game.isPlayerDead = True

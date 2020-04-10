@@ -1,21 +1,24 @@
-from dpt.engine.graphics.characters.PlayerSprite import PlayerSprite
+from dpt.engine.graphics.gui.editor import EditorPanel
 from dpt.engine.graphics.gui.editor.tileEditor import TileEditor
+from dpt.engine.graphics.gui.menu.Button import Button
+from dpt.engine.graphics.tileManager import TileManager
+from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 import pygame
 
 
 def redraw_Game_window():
-    Game.environment.update()
+    TileManager.environmentGroup.update()
     Game.camera.update(Game.playerSprite)
     TileEditor.update()
-    Game.editorPanelGroup.draw(Game.surface)
-    Game.editorPanelGroup.update()
-    Game.ghostBlock.draw(Game.surface)
-    Game.player.update()
-    Game.enemyGroup.update()
-    Game.buttonsGroup.update()
-    Game.buttonsGroup.draw(Game.surface)
-    for i in Game.text_buttonsGroup:
+    EditorPanel.editorPanelGroup.draw(Game.surface)
+    EditorPanel.editorPanelGroup.update()
+    TileEditor.ghostBlockGroup.draw(Game.surface)
+    Game.playerGroup.update()
+    TileManager.enemyGroup.update()
+    Button.buttonsGroup.update()
+    Button.buttonsGroup.draw(Game.surface)
+    for i in Button.text_buttonsList:
         Game.surface.blit(i[0], i[1])
     Game.text_buttonsGroup = []
     Game.display_debug_info()
@@ -27,7 +30,7 @@ def loop():
     global bg
 
     screen_width, screen_height = Game.surface.get_size()
-    bg = Game.ressources.get("dpt.images.environment.background")
+    bg = RessourceLoader.get("dpt.images.environment.background")
     run = True
     while run:
         Game.clock.tick(27)

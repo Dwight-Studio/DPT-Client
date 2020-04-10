@@ -3,8 +3,11 @@ from dpt.game import Game
 
 
 class Button(pygame.sprite.Sprite):
+    buttonsGroup = pygame.sprite.Group()
+    text_buttonsList = []
+
     def __init__(self, x, y, width, height, image, **kwargs):
-        pygame.sprite.Sprite.__init__(self, Game.buttonsGroup)  # Sprite's constructor called
+        pygame.sprite.Sprite.__init__(self, Button.buttonsGroup)  # Sprite's constructor called
         self.normal_image = image
         try:
             self.pushed_image = kwargs["pushed_image"]
@@ -80,7 +83,7 @@ class Button(pygame.sprite.Sprite):
                 rect = text.get_rect()
                 rect.centerx = self.rect.centerx
                 rect.centery = self.rect.centery
-                Game.text_buttonsGroup.append((text, rect))
+                Button.text_buttonsList.append((text, rect))
 
     def lock(self):
         self.locked = True

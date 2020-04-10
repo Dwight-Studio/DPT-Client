@@ -3,6 +3,8 @@ import math
 from dpt.game import Game
 
 class EditorPanel(pygame.sprite.Sprite):
+    editorPanelGroup = pygame.sprite.Group()
+
     def __init__(self, color, x, y, width, height, alpha):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface((width, height))

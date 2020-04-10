@@ -1,7 +1,7 @@
 import pygame
 import math
 from dpt.engine.fileManager import *
-from dpt.engine.graphics.tileManager import TileManager
+from dpt.engine.graphics.gui.editor import EditorPanel
 
 
 class TileEditor:
@@ -16,10 +16,12 @@ class TileEditor:
     mousePosY = None
     lastMousePosX = None
     lastMousePosY = None
+    ghostBlockGroup = pygame.sprite.Group()
     createdLevel = {}
 
     @classmethod
     def update(cls):
+        from dpt.engine.graphics.tileManager import TileManager
         if cls.inEditor:
             Game.camera.enableGrid()
             # Gestion des fichiers (raccourcis)
@@ -42,7 +44,7 @@ class TileEditor:
                         cls.spushed = False
                     if keys[pygame.K_n] and not cls.npushed:
                         cls.npushed = True
-                        Game.environment.empty()
+                        TileManager.environmentGroup.empty()
                         cls.createdLevel = {}
                     elif not keys[pygame.K_n] and cls.npushed:
                         cls.npushed = False
@@ -52,7 +54,7 @@ class TileEditor:
                         TileManager.openTilePanel()
                     elif keys[pygame.K_t] and not cls.tpushed and cls.panelOpen:
                         cls.tpushed = True
-                        Game.editorPanelGroup.empty()
+                        EditorPanel.editorPanelGroup.empty()
                         cls.panelOpen = False
                     elif not keys[pygame.K_t] and cls.tpushed:
                         cls.tpushed = False
@@ -63,7 +65,7 @@ class TileEditor:
             cls.lastMousePosX = None
             cls.lastMousePosY = None
             if cls.mousePosX != cls.lastMousePosX and cls.mousePosY != cls.lastMousePosY:
-                Game.ghostBlock.empty()
+                TileEditor.ghostBlockGroup.empty()
                 lpushed = False
                 TileManager.ghostBlock(cls.mousePosX, cls.mousePosY, Game.itemClass, Game.classType)
                 cls.lastMousePosX = cls.mousePosX

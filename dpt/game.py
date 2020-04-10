@@ -23,14 +23,10 @@ class Game(object):
     isPlayerDead = False
     window = None
     clock = None
-    player = None
+    playerGroup = None
     ressources = None
-    enemyGroup = None
-    environment = None
-    ghostBlock = None
     buttonsGroup = None
-    text_buttonsGroup = []
-    editorPanelGroup = None
+    text_buttonsList = []
     availableTiles = None
     platformsList = []
     enemyList = []
@@ -90,18 +86,6 @@ class Game(object):
         pygame.init()
         cls._debug_infos = []
 
-        # Groupes Pygame
-        cls.player = pygame.sprite.Group()
-        cls.enemyGroup = pygame.sprite.Group()
-        cls.environment = pygame.sprite.Group()
-        cls.ghostBlock = pygame.sprite.Group()
-        cls.editorPanelGroup = pygame.sprite.Group()
-        cls.buttonsGroup = pygame.sprite.Group()
-        cls.text_buttonsGroup = []
-
-        # Evenements persos
-        cls.BUTTONEVENT = pygame.event.custom_type()
-
         cls.window = pygame.display
         if Game.LINUX_USER:
             cls.surface = cls.window.set_mode((0, 0), pygame.NOFRAME, pygame.RESIZABLE)
@@ -113,14 +97,22 @@ class Game(object):
         pygame.display.set_caption("Don't play together")
         cls.clock = pygame.time.Clock()
 
+        # Groupes Pygame
+        from dpt.engine.graphics.gui.menu.Button import Button
+
+        cls.playerGroup = pygame.sprite.Group()
+
+        # Evenements persos
+        cls.BUTTONEVENT = pygame.event.custom_type()
+
         # Déclaration des évènements
 
         try:
             # /!\ ZONE SECURISÉE /!\
             from dpt.engine.loader import RessourceLoader
-            cls.ressources = RessourceLoader()
-            cls.ressources.add_pending("*")
-            cls.ressources.load()
+            RessourceLoader.init()
+            RessourceLoader.add_pending("*")
+            RessourceLoader.load()
             from dpt.engine.graphics.tileManager import TileManager, Camera
             TileManager.loadLevel("dpt.levels.leveltest")
             cls.camera = Camera(TileManager.maxWidthSize, TileManager.maxHeightSize)
@@ -134,8 +126,7 @@ class Game(object):
             # time.sleep(40)
             # com.voteResult()
 
-            from dpt.engine.graphics.gui.menu.Button import Button
-            im = cls.ressources.get_multiple("dpt.images.gui.menu.button*")
+            im = RessourceLoader.get_multiple("dpt.images.gui.menu.button*")
             cls.button = Button(50, 50, 200, 20, im[1], locked_image=im[0], hover_image=im[2], pushed_image=im[3], text="KILL EVERYONE")
             from dpt.engine.mainLoop import loop
             loop()

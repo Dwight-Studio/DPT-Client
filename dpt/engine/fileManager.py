@@ -23,7 +23,7 @@ class FileManager:
                 # with open(wfile, "w") as fw:
                 #     data2 = json.dumps(data, indent=4)
                 #     fw.write(data2)
-                Game.environment.empty()
+                Game.environmentGroup.empty()
                 #Game.camera.enableGrid()
                 Game.tile.loadLevel(data)
                 self.log.info("Successfully loaded : " + str(rfile))
