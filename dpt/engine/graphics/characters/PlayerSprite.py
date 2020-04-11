@@ -16,8 +16,8 @@ class PlayerSprite(pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
         self.image = self.char
-        self.width = 70 * Game.DISPLAY_RATIO
-        self.height = 105 * Game.DISPLAY_RATIO
+        self.width = math.floor(60 * Game.DISPLAY_RATIO)
+        self.height = math.floor(90 * Game.DISPLAY_RATIO)
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect()
         self.rect.x = x

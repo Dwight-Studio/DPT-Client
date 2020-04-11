@@ -17,7 +17,7 @@ class Game(object):
     ROOT_DIRECTORY = os.path.abspath("../")
     SERVER_ADDRESS = "localhost"
     VOTE_TIMEOUT = 80
-    TILESIZE = 100
+    TILESIZE = 90
     DISPLAY_RATIO = 1
     LINUX_USER = True
 
@@ -99,8 +99,8 @@ class Game(object):
 
         w, h = cls.surface.get_size()
         main_logger.debug("Window size: " + str(w) + "x" + str(h))
-        cls.DISPLAY_RATIO = math.floor(h / 1080)
-        cls.TILESIZE *= cls.DISPLAY_RATIO
+        cls.DISPLAY_RATIO = h / 1080
+        cls.TILESIZE = math.floor(cls.DISPLAY_RATIO * cls.TILESIZE)
         main_logger.debug("Tile size: " + str(cls.TILESIZE))
         pygame.display.set_caption("Don't play together")
         cls.clock = pygame.time.Clock()

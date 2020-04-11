@@ -14,10 +14,10 @@ class Coin(pygame.sprite.Sprite):
         self.image = RessourceLoader.get(self.texture)
         self.frames = RessourceLoader.get_multiple(self.textures)
         self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-        self.width = Game.TILESIZE
-        self.height = Game.TILESIZE
+        self.rect.centerx = x + (Game.TILESIZE // 2)
+        self.rect.centery = y + (Game.TILESIZE // 2)
+        self.width = Game.TILESIZE // 2
+        self.height = Game.TILESIZE // 2
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
         self.animCount = 0
 
