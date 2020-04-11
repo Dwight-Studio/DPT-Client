@@ -26,11 +26,6 @@ class EditorPanel(pygame.sprite.Sprite):
             mousePosY = math.floor(mouse[1] / Game.TILESIZE)
             key = str(mousePosX) + ", " + str(mousePosY)
             if key in Game.editorTileRegistry:
-                for keys, values in Game.editorTileRegistry[key].items():
-                    if keys == "itemClass":
-                        Game.itemClass = values
-                    elif keys == "classType":
-                        Game.classType = values
-                self.log.debug("Selected : " + str(Game.itemClass))
+                Game.selectedItem = Game.editorTileRegistry[key]["class"]
             else:
                 pass

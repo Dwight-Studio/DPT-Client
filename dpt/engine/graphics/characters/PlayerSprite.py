@@ -13,10 +13,12 @@ class PlayerSprite(pygame.sprite.Sprite):
     walkLeft = RessourceLoader.get_multiple("dpt.images.characters.player.L*")
     gravityCount = 0
 
-    def __init__(self, x, y, width, height):
+    def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
         self.image = self.char
-        self.image = pygame.transform.scale(self.image, (width, height))
+        self.width = 48 * Game.DISPLAY_RATIO
+        self.height = 72 * Game.DISPLAY_RATIO
+        self.image = pygame.transform.scale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -25,8 +27,6 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.left = True
         self.right = False
         self.standing = False
-        self.width = width
-        self.height = height
         self.walkCount = 0
         self.isJump = False
         self.jumpCount = 8

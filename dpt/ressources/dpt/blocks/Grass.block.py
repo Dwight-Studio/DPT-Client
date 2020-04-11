@@ -6,13 +6,12 @@ from dpt.game import Game
 class Grass(pygame.sprite.Sprite):
     texture = "dpt.images.environment.terrain.Grass_Tile_Flat_Edge_a"
 
-    def __init__(self, x, y, width, height, alpha):
-        pygame.sprite.Sprite.__init__(self)
+    def __init__(self, x, y):
+        from dpt.engine.graphics.tileManager import TileManager
+        pygame.sprite.Sprite.__init__(self, TileManager.environmentGroup)
         self.image = RessourceLoader.get(self.texture)
-        self.image = pygame.transform.scale(self.image, (width, height))
-        self.image.set_alpha(alpha)
+        self.width = self.height = Game.TILESIZE
+        self.image = pygame.transform.scale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.width = width
-        self.height = height

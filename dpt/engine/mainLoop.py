@@ -19,6 +19,7 @@ def redraw_Game_window():
     TileEditor.ghostBlockGroup.draw(Game.surface)
     Game.playerGroup.update()
     TileManager.enemyGroup.update()
+    TileManager.entityGroup.update()
     TileManager.outOfWindow()
     Button.buttonsGroup.update()
     Button.buttonsGroup.draw(Game.surface)
@@ -46,8 +47,8 @@ def loop():
             elif event.type == Game.BUTTONEVENT:
                 TileEditor.inEditor = not TileEditor.inEditor
                 Game.playerGroup.empty()
+                TileManager.entityGroup.empty()
                 TileEditor.ghostBlockGroup.empty()
-                TileManager.ghostBlockGroup.empty()
                 TileManager.loadLevel(TileManager.levelName)
 
         redraw_Game_window()

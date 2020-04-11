@@ -18,6 +18,7 @@ class Game(object):
     SERVER_ADDRESS = "localhost"
     VOTE_TIMEOUT = 80
     TILESIZE = 48
+    DISPLAY_RATIO = 1
     LINUX_USER = True
 
     # Variable à définir
@@ -31,8 +32,7 @@ class Game(object):
     availableTiles = None
     platformsList = []
     enemyList = []
-    itemClass = "dpt.entities.EnemySprite"
-    classType = "enemyClass"
+    selectedItem = "dpt.blocks.Grass"
     editorTileRegistry = {}
     surface = None
     playerSprite = None
@@ -99,6 +99,8 @@ class Game(object):
 
         w, h = cls.surface.get_size()
         main_logger.debug("Window size: " + str(w) + "x" + str(h))
+        cls.DISPLAY_RATIO = math.floor(h / 1080)
+        cls.TILESIZE *= cls.DISPLAY_RATIO
         cls.TILESIZE = math.floor(h / 22.5)
         main_logger.debug("Tile size: " + str(cls.TILESIZE))
         pygame.display.set_caption("Don't play together")

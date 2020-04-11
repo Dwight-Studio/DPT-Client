@@ -4,7 +4,7 @@ from dpt.engine.loader import RessourceLoader, UnreachableRessourceError
 from dpt.game import Game
 
 
-class FakeEntity(pygame.sprite.Sprite):
+class PanelFakeEntity(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height, alpha, block):
         pygame.sprite.Sprite.__init__(self, EditorPanel.editorPanelGroup)
         try:

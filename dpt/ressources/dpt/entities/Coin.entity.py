@@ -1,6 +1,4 @@
 import pygame
-import math
-
 from dpt.game import Game
 from dpt.engine.loader import RessourceLoader
 
@@ -10,17 +8,16 @@ class Coin(pygame.sprite.Sprite):
     textures = "dpt.images.environment.coins.*"
     screen_width, screen_height = Game.surface.get_size()
 
-    def __init__(self, x, y, width, height, alpha):
-        pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
+    def __init__(self, x, y):
+        from dpt.engine.graphics.tileManager import TileManager
+        pygame.sprite.Sprite.__init__(self, TileManager.entityGroup)  # Sprite's constructor called
         self.image = RessourceLoader.get(self.texture)
         self.frames = RessourceLoader.get_multiple(self.textures)
-        self.image.set_alpha(alpha)
-        self.alpha = alpha
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.width = width
-        self.height = height
+        self.width = Game.TILESIZE
+        self.height = Game.TILESIZE
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
         self.animCount = 0
 
@@ -28,7 +25,6 @@ class Coin(pygame.sprite.Sprite):
         from dpt.engine.graphics.tileManager import TileManager
         self.animation()
         self.collide()
-        self.image.set_alpha(self.alpha)
 
     def animation(self):
         if self.animCount + 1 >= 72:

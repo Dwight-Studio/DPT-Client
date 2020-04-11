@@ -9,21 +9,21 @@ class EnemySprite(pygame.sprite.Sprite):
     texture = "dpt.images.characters.player.standing"
     screen_width, screen_height = Game.surface.get_size()
 
-    def __init__(self, x, y, width, height, alpha):
-        pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
+    def __init__(self, x, y):
+        from dpt.engine.graphics.tileManager import TileManager
+        pygame.sprite.Sprite.__init__(self, TileManager.enemyGroup, TileManager.entityGroup)  # Sprite's constructor called
         self.image = RessourceLoader.get(self.texture)
-        self.image.set_alpha(alpha)
-        self.alpha = alpha
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
         self.xvel = 0
         self.yvel = 0
         self.left = False
         self.right = True
         self.standing = False
-        self.width = width
-        self.height = height
+        self.width = 48 * Game.DISPLAY_RATIO
+        self.height = 72 * Game.DISPLAY_RATIO
+        self.image = pygame.transform.scale(self.image, (self.width, self.height))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
         self.isJump = False
         self.jumpCount = 8
         self.CONSTJUMPCOUNT = self.jumpCount
@@ -33,7 +33,6 @@ class EnemySprite(pygame.sprite.Sprite):
         self.gravity = 0
         self.lastx = 0
         self.lasty = 0
-        self.image = pygame.transform.scale(self.image, (self.width, self.height))
 
     def update(self):
         from dpt.engine.graphics.tileManager import TileManager
@@ -76,7 +75,6 @@ class EnemySprite(pygame.sprite.Sprite):
 
         self.rect.top -= self.yvel
         self.collide(0, self.yvel, TileManager.environmentGroup)
-        self.image.set_alpha(self.alpha)
 
     def animation(self):
         #pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)

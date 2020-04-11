@@ -1,5 +1,5 @@
 from dpt.engine.graphics.gui.editor.editorPanel import EditorPanel
-from dpt.engine.graphics.gui.editor.fakeEntities import FakeEntity
+from dpt.engine.graphics.gui.editor.panelFakeEntities import PanelFakeEntity
 from dpt.engine.graphics.gui.editor.tileEditor import TileEditor
 from dpt.engine.loader import RessourceLoader, UnreachableRessourceError
 from dpt.game import Game
@@ -11,7 +11,7 @@ import math
 class TileManager:
     enemyGroup = pygame.sprite.Group()
     environmentGroup = pygame.sprite.Group()
-    ghostBlockGroup = pygame.sprite.Group()
+    entityGroup = pygame.sprite.Group()
 
     log = Game.get_logger("TileManager")
     levelName = None
@@ -20,7 +20,9 @@ class TileManager:
     coords = None
     camera = None
     editorCamera = None
-    Game.availableTiles = {"blockClass": RessourceLoader.select_entries("dpt.blocks.*"), "enemyClass": RessourceLoader.select_entries("dpt.entities.*")}
+    Game.availableTiles = []
+    Game.availableTiles.extend(RessourceLoader.select_entries("dpt.blocks.*"))
+    Game.availableTiles.extend(RessourceLoader.select_entries("dpt.entities.*"))
 
     @classmethod
     def loadLevel(cls, levelName):
@@ -45,26 +47,20 @@ class TileManager:
             if cls.coords[0] < 0 or cls.coords[1] < 0:
                 cls.log.warning("The tile position can't be negative : " + keys)
                 continue
-            for key, data in level[keys].items():
-                if key == "blockClass":
-                    try:
-                        block = RessourceLoader.get(data)(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)
-                        cls.log.debug("Tile " + data + " placed at " + keys)
-                        cls.environmentGroup.add(block)
-                    except UnreachableRessourceError:
-                        cls.log.warning("Invalid class name : " + data + " for tile : " + keys)
-                elif key == "enemyClass":
-                    try:
-                        enemy = RessourceLoader.get(data)(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)
-                        cls.log.debug("Entity " + data + " placed at " + keys)
-                        cls.enemyGroup.add(enemy)
-                    except UnreachableRessourceError:
-                        cls.log.warning("Invalid class name : " + data + " for tile : " + keys)
+            try:
+                block = RessourceLoader.get(level[keys]["class"])(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE)
+                cls.log.debug("Tile " + level[keys]["class"] + " placed at " + keys)
+            except UnreachableRessourceError:
+                cls.log.warning("Invalid class name : " + level[keys]["class"] + " for tile : " + keys)
+            except KeyError:
+                cls.log.critical("Invalid level (corrupted ?)")
+                return
         cls.environmentGroup.draw(Game.surface)
+        cls.entityGroup.draw(Game.surface)
         cls.enemyGroup.draw(Game.surface)
         if not TileEditor.inEditor:
             from dpt.engine.graphics.characters.PlayerSprite import PlayerSprite
-            Game.playerSprite = PlayerSprite(300, Game.surface.get_size()[1] - 500, 1 * Game.TILESIZE, math.floor(1.5 * Game.TILESIZE))
+            Game.playerSprite = PlayerSprite(300, Game.surface.get_size()[1] - 500)
             Game.playerGroup.add(Game.playerSprite)
             cls.camera = Camera(TileManager.maxWidthSize, TileManager.maxHeightSize)
         elif TileEditor.inEditor:
@@ -77,24 +73,14 @@ class TileManager:
         cls.log.info("Done")
 
     @classmethod
-    def ghostBlock(cls, xTile, yTile, itemClass, classType):
-        if classType == "blockClass":
-            ghostBlock = RessourceLoader.get(itemClass)(xTile, yTile, Game.TILESIZE, Game.TILESIZE, 80)
-            TileEditor.ghostBlockGroup.add(ghostBlock)
-        elif classType == "enemyClass":
-            ghostBlock = RessourceLoader.get(itemClass)(xTile, yTile, Game.TILESIZE, Game.TILESIZE, 80)
-            TileEditor.ghostBlockGroup.add(ghostBlock)
+    def ghostBlock(cls, xTile, yTile, item):
+        from dpt.engine.graphics.ghostFakeEntities import GhostFakeEntity
+        ghostBlock = GhostFakeEntity(xTile, yTile, Game.TILESIZE, Game.TILESIZE, 80, item)
 
     @classmethod
-    def placeBlock(cls, xTile, yTile, itemClass, classType):
-        if classType == "blockClass":
-            block = RessourceLoader.get(itemClass)(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)
-            cls.log.debug("Tile " + itemClass + " placed at " + str(xTile) + ", " + str(yTile))
-            cls.environmentGroup.add(block)
-        elif classType == "enemyClass":
-            enemy = RessourceLoader.get(itemClass)(xTile * Game.TILESIZE, yTile * Game.TILESIZE, Game.TILESIZE, Game.TILESIZE, 255)
-            cls.log.debug("Tile " + itemClass + " placed at " + str(xTile) + ", " + str(yTile))
-            cls.enemyGroup.add(enemy)
+    def placeBlock(cls, xTile, yTile, item):
+        block = RessourceLoader.get(item)(xTile * Game.TILESIZE, yTile * Game.TILESIZE)
+        cls.log.debug("Tile " + item + " placed at " + str(xTile) + ", " + str(yTile))
 
     @classmethod
     def openTilePanel(cls):
@@ -102,15 +88,13 @@ class TileManager:
         EditorPanel.editorPanelGroup.add(panel)
         startx = Game.surface.get_size()[0] / 4 * 3 + Game.TILESIZE
         starty = 0 + Game.TILESIZE
-        for key, value in Game.availableTiles.items():
-            value.sort()
-            for element in value:
-                sprite = FakeEntity(startx, starty, Game.TILESIZE, Game.TILESIZE, 255, element)
-                Game.editorTileRegistry[str(math.floor(startx / Game.TILESIZE)) + ", " + str(math.floor(starty / Game.TILESIZE))] = {"itemClass": element, "classType": key}
-                startx += Game.TILESIZE
-                if math.floor(startx) >= Game.surface.get_size()[0] - Game.TILESIZE:
-                    startx = Game.surface.get_size()[0] / 4 * 3 + Game.TILESIZE
-                    starty += Game.TILESIZE
+        for element in Game.availableTiles:
+            sprite = PanelFakeEntity(startx, starty, Game.TILESIZE, Game.TILESIZE, 255, element)
+            Game.editorTileRegistry[str(math.floor(startx / Game.TILESIZE)) + ", " + str(math.floor(starty / Game.TILESIZE))] = {"class": element}
+            startx += Game.TILESIZE
+            if math.floor(startx) >= Game.surface.get_size()[0] - Game.TILESIZE:
+                startx = Game.surface.get_size()[0] / 4 * 3 + Game.TILESIZE
+                starty += Game.TILESIZE
 
     @classmethod
     def outOfWindow(cls):
@@ -147,7 +131,7 @@ class Camera:
         Game.surface.blit(Game.playerSprite.image, self.apply(Game.playerSprite))
         for sprite in TileManager.environmentGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
-        for sprite in TileManager.enemyGroup:
+        for sprite in TileManager.entityGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
         self.last_x = x
 
@@ -172,7 +156,7 @@ class EditorCamera:
         Game.surface.blit(Game.playerSprite.image, self.apply(Game.playerSprite))
         for sprite in TileManager.environmentGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
-        for sprite in TileManager.enemyGroup:
+        for sprite in TileManager.entityGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
         self.last_x = x
 
