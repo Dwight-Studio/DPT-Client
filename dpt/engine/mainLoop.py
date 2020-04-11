@@ -1,10 +1,11 @@
+import pygame
+
 from dpt.engine.graphics.gui.editor import EditorPanel
 from dpt.engine.graphics.gui.editor.tileEditor import TileEditor
 from dpt.engine.graphics.gui.menu.Button import Button
 from dpt.engine.graphics.tileManager import TileManager
 from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
-import pygame
 
 
 def redraw_Game_window():

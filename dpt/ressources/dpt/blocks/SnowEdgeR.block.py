@@ -1,4 +1,5 @@
 import pygame
+
 from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 

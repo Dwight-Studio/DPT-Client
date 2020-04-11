@@ -1,11 +1,11 @@
-import tkinter as tk
 import json
 import os
+import tkinter as tk
+from tkinter import filedialog
 
 from dpt.engine.graphics.tileManager import TileManager
 from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
-from tkinter import filedialog
 
 
 class FileManager:

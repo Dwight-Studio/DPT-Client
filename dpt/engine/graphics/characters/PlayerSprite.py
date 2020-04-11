@@ -1,9 +1,11 @@
-import pygame
 import math
 import time
-from dpt.game import Game
-from dpt.engine.loader import RessourceLoader
+
+import pygame
+
 from dpt.engine.graphics.tileManager import TileManager
+from dpt.engine.loader import RessourceLoader
+from dpt.game import Game
 
 
 class PlayerSprite(pygame.sprite.Sprite):

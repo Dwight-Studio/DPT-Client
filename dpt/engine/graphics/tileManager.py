@@ -1,10 +1,12 @@
+import math
+
+import pygame
+
 from dpt.engine.graphics.gui.editor.editorPanel import EditorPanel
 from dpt.engine.graphics.gui.editor.panelFakeEntities import PanelFakeEntity
 from dpt.engine.graphics.gui.editor.tileEditor import TileEditor
 from dpt.engine.loader import RessourceLoader, UnreachableRessourceError
 from dpt.game import Game
-import pygame
-import math
 
 
 #          {"x, y": {"blockClass": Classe}}

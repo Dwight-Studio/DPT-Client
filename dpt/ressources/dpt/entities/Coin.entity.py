@@ -1,6 +1,7 @@
 import pygame
-from dpt.game import Game
+
 from dpt.engine.loader import RessourceLoader
+from dpt.game import Game
 
 
 class Coin(pygame.sprite.Sprite):
@@ -22,7 +23,6 @@ class Coin(pygame.sprite.Sprite):
         self.animCount = 0
 
     def update(self):
-        from dpt.engine.graphics.tileManager import TileManager
         self.animation()
         self.collide()
 
@@ -32,7 +32,7 @@ class Coin(pygame.sprite.Sprite):
         else:
             self.animCount += 1
 
-        self.image = self.frames[self.animCount//2]
+        self.image = self.frames[self.animCount // 2]
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
 
     def collide(self):
