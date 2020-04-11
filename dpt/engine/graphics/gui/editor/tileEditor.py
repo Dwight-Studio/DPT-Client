@@ -46,6 +46,7 @@ class TileEditor:
                     if keys[pygame.K_n] and not cls.npushed:
                         cls.npushed = True
                         TileManager.environmentGroup.empty()
+                        TileManager.entityGroup.empty()
                         cls.createdLevel = {}
                     elif not keys[pygame.K_n] and cls.npushed:
                         cls.npushed = False
