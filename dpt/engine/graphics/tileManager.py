@@ -73,6 +73,7 @@ class TileManager:
             Game.playerGroup.add(Game.playerSprite)
             cls.editorCamera = EditorCamera(TileManager.maxWidthSize, TileManager.maxHeightSize)
         TileEditor.createdLevel = level
+        cls.levelName = levelName
         cls.log.info("Done")
 
     @classmethod
