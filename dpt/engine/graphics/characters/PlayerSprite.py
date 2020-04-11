@@ -171,4 +171,3 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.yvel = math.floor((self.jumpCount ** 2) * 0.5) * neg
         self.jumpCount -= 1
         self.rect.top -= self.yvel
-        self.kill()

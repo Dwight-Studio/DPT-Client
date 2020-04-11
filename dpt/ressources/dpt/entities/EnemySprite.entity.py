@@ -8,6 +8,7 @@ from dpt.engine.loader import RessourceLoader
 class EnemySprite(pygame.sprite.Sprite):
     texture = "dpt.images.characters.player.standing"
     screen_width, screen_height = Game.surface.get_size()
+
     def __init__(self, x, y, width, height, alpha):
         pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
         self.image = RessourceLoader.get(self.texture)

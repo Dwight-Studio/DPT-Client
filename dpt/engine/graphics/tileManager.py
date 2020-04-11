@@ -104,7 +104,6 @@ class TileManager:
         starty = 0 + 32
         for key, value in Game.availableTiles.items():
             for element in value:
-                print(element)
                 sprite = FakeEntity(startx, starty, Game.TILESIZE, Game.TILESIZE, 255, element)
                 Game.editorTileRegistry[str(math.floor(startx / Game.TILESIZE)) + ", " + str(math.floor(starty / Game.TILESIZE))] = {"itemClass": element, "classType": key}
                 startx += Game.TILESIZE
@@ -114,7 +113,7 @@ class TileManager:
 
     @classmethod
     def outOfWindow(cls):
-        Game.add_debug_info("NB ENEMY : " + str(len(TileManager.enemyGroup)))
+        Game.add_debug_info("Nb Enemies : " + str(len(TileManager.enemyGroup)))
         for enemy in TileManager.enemyGroup:
             if enemy.rect.centery >= 3000:
                 enemy.kill()

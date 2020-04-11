@@ -2,6 +2,7 @@ import pygame
 import math
 from dpt.game import Game
 
+
 class EditorPanel(pygame.sprite.Sprite):
     editorPanelGroup = pygame.sprite.Group()
 

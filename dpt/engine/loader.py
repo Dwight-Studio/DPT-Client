@@ -80,6 +80,9 @@ class RessourceLoader:
     @classmethod
     def reload(cls):
         cls.logger.info("Reloading ressources")
+        if cls.loaded_ressources_entries is None:
+            cls.logger.warning("Can't reload: no loaded entries found")
+            return
         cls.init()
         cls.pending_ressources = cls.loaded_ressources_entries.copy()
         cls.loaded_ressources_entries = {}

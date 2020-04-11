@@ -37,7 +37,6 @@ class FileManager:
     def saveFile(cls, level):
         root = tk.Tk()
         root.withdraw()
-        print(cls.defaultDir)
         file = filedialog.asksaveasfilename(parent=root, title="Sauvegarder un niveau", filetypes=[("Fichier de niveau DPT", "*.level.json")], defaultextension=".level.json", initialdir=cls.defaultDir)
         try:
             with open(file, "w") as f:

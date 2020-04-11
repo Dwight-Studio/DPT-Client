@@ -46,9 +46,10 @@ def loop():
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 run = False
             elif event.type == Game.BUTTONEVENT:
-                print("ok")
                 TileEditor.inEditor = not TileEditor.inEditor
                 Game.playerGroup.empty()
+                TileEditor.ghostBlockGroup.empty()
+                TileManager.ghostBlockGroup.empty()
                 TileManager.loadLevel(TileManager.levelName)
 
         redraw_Game_window()

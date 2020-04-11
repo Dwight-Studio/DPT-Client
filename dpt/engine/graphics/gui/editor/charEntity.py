@@ -1,5 +1,6 @@
-import  pygame
+import pygame
 from dpt.game import Game
+
 
 class CharEntity(pygame.sprite.Sprite):
     def __init__(self):
@@ -14,21 +15,20 @@ class CharEntity(pygame.sprite.Sprite):
         self.width = Game.TILESIZE
         self.height = Game.TILESIZE
 
-
     def update(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
             if self.xvel > 0:
                 self.xvel = 0
-            if self.xvel > -8:
-                self.xvel -= 8
+            if self.xvel > -16:
+                self.xvel -= 16
             if self.rect.x < Game.surface.get_size()[0] / 2:
                 self.xvel = 0
         elif keys[pygame.K_RIGHT]:
             if self.xvel < 0:
                 self.xvel = 0
-            if self.xvel < 8:
-                self.xvel += 8
+            if self.xvel < 16:
+                self.xvel += 16
         else:
             self.xvel = 0
         self.rect.left += self.xvel
