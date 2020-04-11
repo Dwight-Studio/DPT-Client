@@ -64,7 +64,7 @@ class TileManager:
         cls.enemyGroup.draw(Game.surface)
         if not TileEditor.inEditor:
             from dpt.engine.graphics.characters.PlayerSprite import PlayerSprite
-            Game.playerSprite = PlayerSprite(300, Game.surface.get_size()[1] - 500, 2 * Game.TILESIZE, 2 * Game.TILESIZE)
+            Game.playerSprite = PlayerSprite(300, Game.surface.get_size()[1] - 500, 1 * Game.TILESIZE, math.floor(1.5 * Game.TILESIZE))
             Game.playerGroup.add(Game.playerSprite)
             cls.camera = Camera(TileManager.maxWidthSize, TileManager.maxHeightSize)
         elif TileEditor.inEditor:

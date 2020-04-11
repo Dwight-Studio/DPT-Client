@@ -123,6 +123,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.image = self.walkRight[0]
             else:
                 self.image = self.walkLeft[0]
+        self.image = pygame.transform.scale(self.image, (self.width, self.height))
         # pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
 
     def collide(self, xVelDelta, yVelDelta, platforms):
