@@ -103,6 +103,7 @@ class TileManager:
         startx = Game.surface.get_size()[0] / 4 * 3 + Game.TILESIZE
         starty = 0 + Game.TILESIZE
         for key, value in Game.availableTiles.items():
+            value.sort()
             for element in value:
                 print(element)
                 sprite = FakeEntity(startx, starty, Game.TILESIZE, Game.TILESIZE, 255, element)

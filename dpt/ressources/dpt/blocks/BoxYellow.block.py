@@ -3,8 +3,8 @@ from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 
 
-class BlueBox(pygame.sprite.Sprite):
-    texture = "dpt.images.environment.blocks.Block_Blue"
+class BoxYellow(pygame.sprite.Sprite):
+    texture = "dpt.images.environment.blocks.Block_Yellow"
     def __init__(self, x, y, width, height, alpha):
         pygame.sprite.Sprite.__init__(self)
         self.image = RessourceLoader.get(self.texture)
