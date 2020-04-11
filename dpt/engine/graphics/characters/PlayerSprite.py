@@ -36,7 +36,6 @@ class PlayerSprite(pygame.sprite.Sprite):
 
     def update(self):
         if self.alive:
-
             keys = pygame.key.get_pressed()
             mur = -TileManager.camera.last_x
 

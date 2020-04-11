@@ -36,6 +36,8 @@ class Game(object):
     surface = None
     playerSprite = None
     camera = None
+    button = None
+    events = []
 
     # Evenements
     BUTTONEVENT = None
@@ -115,7 +117,7 @@ class Game(object):
             RessourceLoader.load()
             from dpt.engine.graphics.tileManager import TileManager
             from dpt.engine.graphics.gui.editor.tileEditor import TileEditor
-            TileEditor.inEditor = True
+            TileEditor.inEditor = False
             TileManager.loadLevel("dpt.levels.leveltest")
             # from dpt.engine.webCommunications import Communication
             # com = Communication()
@@ -126,7 +128,7 @@ class Game(object):
             # com.voteResult()
 
             im = RessourceLoader.get_multiple("dpt.images.gui.menu.button*")
-            cls.button = Button(50, 50, 200, 20, im[1], locked_image=im[0], hover_image=im[2], pushed_image=im[3], text="KILL EVERYONE")
+            cls.button = Button(50, 50, 200, 20, im[1], locked_image=im[0], hover_image=im[2], pushed_image=im[3], text="Editeur")
             from dpt.engine.mainLoop import loop
             loop()
         except Exception:

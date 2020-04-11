@@ -40,9 +40,18 @@ def loop():
         Game.clock.tick(27)
         Game.surface.blit(bg, (0, 0))
 
-        for event in pygame.event.get():
+        Game.events = pygame.event.get()
+
+        for event in Game.events:
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 run = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                for button in Button.buttonsGroup:
+                    if button.rect.collidepoint(pygame.mouse.get_pos()):
+                        button.pushed = True
+            elif event.type == Game.BUTTONEVENT:
+                print("ok")
+                TileEditor.inEditor = not TileEditor.inEditor
 
         redraw_Game_window()
 

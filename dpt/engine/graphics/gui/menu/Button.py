@@ -55,14 +55,19 @@ class Button(pygame.sprite.Sprite):
         return self.pushed
 
     def update(self):
+        if self.text is not None:
+            text = self.font.render(self.text, True, self.font_color)
+            rect = text.get_rect()
+            rect.centerx = self.rect.centerx
+            rect.centery = self.rect.centery
+            Button.text_buttonsList.append((text, rect))
+
         self.pushed = False
         if self.locked:
             self.image = self.locked_image
             return
 
-        events = pygame.event.get()
-
-        for event in events:
+        for event in Game.events:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.rect.collidepoint(pygame.mouse.get_pos()):
                     self.pushed = True
@@ -77,13 +82,6 @@ class Button(pygame.sprite.Sprite):
                 self.image = self.hover_image
             else:
                 self.image = self.normal_image
-
-            if self.text is not None:
-                text = self.font.render(self.text, True, self.font_color)
-                rect = text.get_rect()
-                rect.centerx = self.rect.centerx
-                rect.centery = self.rect.centery
-                Button.text_buttonsList.append((text, rect))
 
     def lock(self):
         self.locked = True
