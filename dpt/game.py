@@ -60,6 +60,8 @@ class Game(object):
     logging_format = logging.Formatter(fmt="[%(asctime)s][%(levelname)s][%(name)s] %(message)s", datefmt="%H:%M:%S")
 
     # File handler
+    if not os.path.exists(ROOT_DIRECTORY + "/logs"):
+        os.mkdir(ROOT_DIRECTORY + "/logs")
     file_handler = logging.FileHandler(ROOT_DIRECTORY + "/logs/latest.log")
     file_handler.setFormatter(logging_format)
 
