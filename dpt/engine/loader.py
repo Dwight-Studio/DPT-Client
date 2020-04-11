@@ -134,6 +134,7 @@ class RessourceLoader:
         for entry in cls.RESSOURCES:
             if entry[:len(path)] == path:
                 entries.append(entry)
+                entries.sort()
         return entries
 
     @classmethod
