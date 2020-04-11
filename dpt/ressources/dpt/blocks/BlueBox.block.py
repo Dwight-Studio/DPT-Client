@@ -3,8 +3,8 @@ from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 
 
-class Grass(pygame.sprite.Sprite):
-    texture = "dpt.images.environment.terrain.Grass_Tile_Flat_Edge_a"
+class BlueBox(pygame.sprite.Sprite):
+    texture = "dpt.images.environment.blocks.Block_Blue"
     def __init__(self, x, y, width, height, alpha):
         pygame.sprite.Sprite.__init__(self)
         self.image = RessourceLoader.get(self.texture)

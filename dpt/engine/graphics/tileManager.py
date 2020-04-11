@@ -101,7 +101,7 @@ class TileManager:
         panel = EditorPanel((255, 255, 255), Game.surface.get_size()[0] / 4 * 3, 0, Game.surface.get_size()[0] / 4, Game.surface.get_size()[1], 120)
         EditorPanel.editorPanelGroup.add(panel)
         startx = Game.surface.get_size()[0] / 4 * 3 + Game.TILESIZE
-        starty = 0 + 32
+        starty = 0 + Game.TILESIZE
         for key, value in Game.availableTiles.items():
             for element in value:
                 print(element)
