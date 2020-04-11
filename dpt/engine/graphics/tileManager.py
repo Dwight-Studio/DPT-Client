@@ -125,7 +125,7 @@ class Camera:
         x = -target.rect.x + int(Game.surface.get_size()[0] / 2)
 
         calcul = (self.width * Game.TILESIZE) - Game.surface.get_size()[0]
-        x = min(self.last_x, x)
+        x = min(0, self.last_x, x)
         x = max(-calcul, x)
         self.camera = pygame.Rect(x, 0, self.width, self.height)
         Game.surface.blit(Game.playerSprite.image, self.apply(Game.playerSprite))

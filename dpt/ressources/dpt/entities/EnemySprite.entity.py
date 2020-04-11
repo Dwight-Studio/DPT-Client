@@ -18,8 +18,8 @@ class EnemySprite(pygame.sprite.Sprite):
         self.left = False
         self.right = True
         self.standing = False
-        self.width = 48 * Game.DISPLAY_RATIO
-        self.height = 72 * Game.DISPLAY_RATIO
+        self.width = 70 * Game.DISPLAY_RATIO
+        self.height = 105 * Game.DISPLAY_RATIO
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect()
         self.rect.x = x

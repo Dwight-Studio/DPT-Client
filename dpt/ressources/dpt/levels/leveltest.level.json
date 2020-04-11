@@ -1,509 +1,452 @@
 {
-    "0, 32": {
-        "class": "dpt.blocks.Grass"
-    },
-    "1, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "2, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "3, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "4, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "5, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "6, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "7, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "8, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "9, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "10, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "11, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "12, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "13, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "14, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "15, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "16, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "17, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "18, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "19, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "20, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "21, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "22, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "23, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "24, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "25, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "26, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "27, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "28, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "29, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "30, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "31, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "32, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "33, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "34, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "35, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "36, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "37, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "38, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "39, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "40, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "41, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "42, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "43, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "44, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "45, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "46, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "47, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "48, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "49, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "50, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "51, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "52, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "53, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "54, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "55, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "56, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "57, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "58, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "59, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "60, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "61, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "62, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "63, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "64, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "65, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "66, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "67, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "68, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "69, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "70, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "71, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "72, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "73, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "74, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "75, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "76, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "77, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "78, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "79, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "80, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "81, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "82, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "83, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "84, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "85, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "86, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "87, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "88, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "89, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "91, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "92, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "93, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "94, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "90, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "95, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "96, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "97, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "98, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "99, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "100, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "101, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "102, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "103, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "104, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "105, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "106, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "107, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "108, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "109, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "110, 32": {
-      "class": "dpt.blocks.Grass"
-    },
-    "10, 31": {
-      "class": "dpt.blocks.Sand"
-    },
-    "11, 30": {
-      "class": "dpt.blocks.Sand"
-    },
-    "12, 29": {
-      "class": "dpt.blocks.Sand"
-    },
-    "13, 30": {
-      "class": "dpt.blocks.Sand"
-    },
-    "14, 31": {
-      "class": "dpt.blocks.Sand"
-    },
-    "15, 31": {
-      "class": "dpt.blocks.Sand"
-    },
-    "16, 30": {
-      "class": "dpt.blocks.Sand"
-    },
-    "17, 29": {
-      "class": "dpt.blocks.Sand"
-    },
-    "18, 28": {
-      "class": "dpt.blocks.Sand"
-    },
-    "19, 27": {
-      "class": "dpt.blocks.Sand"
-    },
-    "20, 26": {
-      "class": "dpt.blocks.Sand"
-    },
-    "21, 25": {
-      "class": "dpt.blocks.Sand"
-    },
-    "22, 26": {
-      "class": "dpt.blocks.Sand"
-    },
-    "23, 27": {
-      "class": "dpt.blocks.Sand"
-    },
-    "24, 28": {
-      "class": "dpt.blocks.Sand"
-    },
-    "25, 29": {
-      "class": "dpt.blocks.Sand"
-    },
-    "26, 30": {
-      "class": "dpt.blocks.Sand"
-    },
-    "27, 31": {
-      "class": "dpt.blocks.Sand"
-    },
-    "20, 29": {
-      "class": "dpt.blocks.Sand"
-    },
-    "21, 28": {
-      "class": "dpt.blocks.Sand"
-    },
-    "22, 29": {
-      "class": "dpt.blocks.Sand"
-    },
-    "20, 30": {
-      "class": "dpt.blocks.Sand"
-    },
-    "21, 30": {
-      "class": "dpt.blocks.Sand"
-    },
-    "22, 30": {
-      "class": "dpt.blocks.Sand"
-    },
-    "0, 31": {
-      "class": "dpt.blocks.Sand"
-    },
-    "39, 31": {
-      "class": "dpt.blocks.Sand"
-    },
-    "34, 30": {
-      "class": "dpt.entities.EnemySprite"
-    },
-    "3, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "4, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "5, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "6, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "7, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "8, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "9, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "10, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "11, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "12, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "13, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "14, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "15, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "16, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "17, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "18, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "19, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "20, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "21, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "22, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "23, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "24, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "25, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "26, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "27, 16": {
-      "class": "dpt.blocks.GrassEdgeR"
-    },
-    "10, 13": {
-      "class": "dpt.blocks.BoxYellow"
-    },
-    "11, 13": {
-      "class": "dpt.blocks.BoxYellow"
-    },
-    "12, 13": {
-      "class": "dpt.blocks.BoxYellow"
-    },
-    "12, 15": {
-      "class": "dpt.entities.Coin"
-    },
-    "11, 15": {
-      "class": "dpt.entities.Coin"
-    },
-    "10, 15": {
-      "class": "dpt.entities.Coin"
-    }
+  "0, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "1, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "2, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "3, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "4, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "5, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "6, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "7, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "8, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "9, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "10, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "11, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "12, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "13, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "14, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "15, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "16, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "17, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "18, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "19, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "20, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "21, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "22, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "23, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "24, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "25, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "26, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "27, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "28, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "29, 18": {
+    "class": "dpt.blocks.GrassEdgeR"
+  },
+  "15, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "29, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "28, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "27, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "26, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "25, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "24, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "23, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "22, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "21, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "20, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "19, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "18, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "17, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "14, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "15, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "16, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "16, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "14, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "13, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "12, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "11, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "10, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "9, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "8, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "7, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "6, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "5, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "4, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "3, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "2, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "1, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "0, 19": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "0, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "1, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "2, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "3, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "4, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "5, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "7, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "8, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "9, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "10, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "11, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "12, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "13, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "6, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "2, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "1, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "0, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "0, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "1, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "2, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "3, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "4, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "4, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "3, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "5, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "6, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "7, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "5, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "6, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "7, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "8, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "9, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "8, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "9, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "10, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "10, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "11, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "11, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "12, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "12, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "13, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "14, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "14, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "15, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "13, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "15, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "16, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "16, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "18, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "17, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "17, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "17, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "18, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "19, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "19, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "18, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "20, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "20, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "19, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "20, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "21, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "21, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "21, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "22, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "22, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "22, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "23, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "23, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "23, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "24, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "24, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "24, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "25, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "25, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "26, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "25, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "26, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "26, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "27, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "27, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "27, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "28, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "29, 21": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "29, 22": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "29, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "28, 20": {
+    "class": "dpt.blocks.GrassLower"
+  },
+  "28, 21": {
+    "class": "dpt.blocks.GrassLower"
+  }
 }
