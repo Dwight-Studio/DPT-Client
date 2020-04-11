@@ -135,6 +135,7 @@ class Game(object):
 
             im = RessourceLoader.get_multiple("dpt.images.gui.menu.button*")
             cls.button = Button(50, 50, 200, 20, im[1], locked_image=im[0], hover_image=im[2], pushed_image=im[3], text="Editeur")
+            print(RessourceLoader.select_entries("dpt.images.environment.coins.*"))
             from dpt.engine.mainLoop import loop
             loop()
         except Exception:
