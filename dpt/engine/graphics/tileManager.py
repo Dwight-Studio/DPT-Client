@@ -104,6 +104,7 @@ class TileManager:
                 enemy.kill()
                 del enemy
 
+
 class Camera:
     def __init__(self, width, height):
         self.userConfirm = True
@@ -134,7 +135,6 @@ class Camera:
         for sprite in TileManager.entityGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
         self.last_x = x
-
 
 
 class EditorCamera:
