@@ -1,5 +1,6 @@
 import datetime
 import logging
+import math
 import os
 import sys
 import tarfile
@@ -16,7 +17,7 @@ class Game(object):
     ROOT_DIRECTORY = os.path.abspath("../")
     SERVER_ADDRESS = "localhost"
     VOTE_TIMEOUT = 80
-    TILESIZE = 32
+    TILESIZE = 48
     LINUX_USER = True
 
     # Variable à définir
@@ -98,6 +99,8 @@ class Game(object):
 
         w, h = cls.surface.get_size()
         main_logger.debug("Window size: " + str(w) + "x" + str(h))
+        cls.TILESIZE = math.floor(h / 22.5)
+        main_logger.debug("Tile size: " + str(cls.TILESIZE))
         pygame.display.set_caption("Don't play together")
         cls.clock = pygame.time.Clock()
 

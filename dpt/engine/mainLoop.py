@@ -32,8 +32,6 @@ def redraw_Game_window():
 # Mainloop
 def loop():
     global bg
-
-    screen_width, screen_height = Game.surface.get_size()
     bg = RessourceLoader.get("dpt.images.environment.background")
     run = True
     while run:

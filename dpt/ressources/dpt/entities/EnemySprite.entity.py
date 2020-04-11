@@ -33,6 +33,7 @@ class EnemySprite(pygame.sprite.Sprite):
         self.gravity = 0
         self.lastx = 0
         self.lasty = 0
+        self.image = pygame.transform.scale(self.image, (self.width, self.height))
 
     def update(self):
         from dpt.engine.graphics.tileManager import TileManager
