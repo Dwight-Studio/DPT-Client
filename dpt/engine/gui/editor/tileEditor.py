@@ -78,7 +78,7 @@ class TileEditor:
                     cls.lastMousePosX = cls.mousePosX
                     cls.lastMousePosY = cls.mousePosY
                     TileManager.placeBlock(cls.mousePosX, cls.mousePosY, Game.selectedItem)
-                    cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)] = 1#{"class": Game.selectedItem}
+                    cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)] = {"class": Game.selectedItem}
             elif mouseButtons[0] != 1 and cls.mousePushedL:
                 cls.mousePushedL = False
             elif mouseButtons[0] == 1 and cls.mousePosX != cls.lastMousePosX or cls.mousePosY != cls.lastMousePosY and cls.mousePushedL:
