@@ -119,7 +119,11 @@ class RessourceLoader:
                     cls.logger.debug("Entry " + entry + " loaded")
                 elif ext[-2] == "block" and ext[-1] == "py":
                     module = runpy.run_path(cls.pending_ressources[entry])
-                    cls.loaded_ressources[entry] = module[ext[-3]]
+                    try:
+                        cls.loaded_ressources[entry] = module[ext[-3]]
+                    except KeyError:
+                        cls.logger.warning("Can't find class " + module[ext[-3]])
+                        cls.logger.warning("Can't load entry " + entry)
                     cls.logger.debug("Entry " + entry + " loaded")
                 elif ext[-2] == "entity" and ext[-1] == "py":
                     module = runpy.run_path(cls.pending_ressources[entry])

@@ -8,6 +8,8 @@ class Coin(pygame.sprite.Sprite):
     texture = "dpt.images.environment.coins.00"
     textures = "dpt.images.environment.coins.*"
     screen_width, screen_height = Game.surface.get_size()
+    width = Game.TILESIZE // 2
+    height = Game.TILESIZE // 2
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
@@ -17,8 +19,6 @@ class Coin(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.centerx = x + (Game.TILESIZE // 2)
         self.rect.centery = y + (Game.TILESIZE // 2)
-        self.width = Game.TILESIZE // 2
-        self.height = Game.TILESIZE // 2
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
         self.animCount = 0
 

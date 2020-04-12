@@ -33,7 +33,7 @@ class Game(object):
     availableTiles = None
     platformsList = []
     enemyList = []
-    selectedItem = "dpt.blocks.Grass"
+    selectedItem = "dpt.blocks.grass.Grass"
     editorTileRegistry = {}
     surface = None
     playerSprite = None

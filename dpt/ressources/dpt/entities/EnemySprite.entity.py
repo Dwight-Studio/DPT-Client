@@ -9,6 +9,8 @@ from dpt.game import Game
 class EnemySprite(pygame.sprite.Sprite):
     texture = "dpt.images.characters.player.standing"
     screen_width, screen_height = Game.surface.get_size()
+    width = math.floor(60 * Game.DISPLAY_RATIO)
+    height = math.floor(90 * Game.DISPLAY_RATIO)
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
@@ -19,8 +21,6 @@ class EnemySprite(pygame.sprite.Sprite):
         self.left = False
         self.right = True
         self.standing = False
-        self.width = math.floor(60 * Game.DISPLAY_RATIO)
-        self.height = math.floor(90 * Game.DISPLAY_RATIO)
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect()
         self.rect.x = x
