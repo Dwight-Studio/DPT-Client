@@ -26,7 +26,7 @@ class TileManager:
 
     @classmethod
     def loadLevel(cls, levelName):
-        TileManager.enemyGroup.empty()
+        TileManager.entityGroup.empty()
         TileManager.environmentGroup.empty()
         if type(levelName) == str:
             cls.log.info("Loading level " + levelName)
