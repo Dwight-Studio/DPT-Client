@@ -101,7 +101,7 @@ class RessourceLoader:
         bg = pygame.image.load(Game.ROOT_DIRECTORY + "/dpt/ressources/dpt/images/environment/background/background.png")
         width = min(Game.surface.get_size()[0] - 50, 1115)
         height = min(math.floor(52 / 1115 * width), 52)
-        pb = ProgressBar(math.floor(Game.surface.get_size()[0] / 2 - width / 2), math.floor(Game.surface.get_size()[1] - height * 2), width, height, pbar, bar, total)
+        pb = ProgressBar(math.floor(Game.surface.get_size()[0] / 2 - width / 2), math.floor(Game.surface.get_size()[1] - height), width, height, pbar, bar, total)
         font = pygame.font.SysFont("arial", 20)
 
         for entry in cls.pending_ressources:
@@ -148,7 +148,7 @@ class RessourceLoader:
             text = font.render(entry, True, (0, 0, 0))
             rect = text.get_rect()
             rect.centerx = Game.surface.get_size()[0] // 2
-            rect.centery = math.floor(Game.surface.get_size()[1] - height * 1.5)
+            rect.centery = math.floor(Game.surface.get_size()[1] - height / 2)
             Game.surface.blit(text, rect)
 
             Game.display_debug_info()
