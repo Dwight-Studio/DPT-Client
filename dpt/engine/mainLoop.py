@@ -1,11 +1,13 @@
-import pygame
-
-from dpt.engine.graphics.gui.editor import EditorPanel
-from dpt.engine.graphics.gui.editor.tileEditor import TileEditor
-from dpt.engine.graphics.gui.menu.Button import Button
-from dpt.engine.graphics.tileManager import TileManager
+import math
+from dpt.engine.gui.editor.editorPanel import EditorPanel
+from dpt.engine.gui.editor.tileEditor import TileEditor
+from dpt.engine.gui.menu.bar import Bar
+from dpt.engine.gui.menu.button import Button
+from dpt.engine.gui.menu.progressbar import ProgressBar
+from dpt.engine.tileManager import TileManager
 from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
+import pygame
 
 
 def redraw_Game_window():
@@ -14,14 +16,20 @@ def redraw_Game_window():
         TileManager.camera.update(Game.playerSprite)
     elif TileEditor.inEditor:
         TileManager.editorCamera.update(Game.playerSprite)
+
     TileEditor.update()
+
     EditorPanel.editorPanelGroup.draw(Game.surface)
     EditorPanel.editorPanelGroup.update()
+
     TileEditor.ghostBlockGroup.draw(Game.surface)
+
     Game.playerGroup.update()
+
     TileManager.enemyGroup.update()
     TileManager.entityGroup.update()
     TileManager.outOfWindow()
+
     Button.buttonsGroup.update()
     Button.buttonsGroup.draw(Game.surface)
     for i in Button.text_buttonsList:
@@ -34,7 +42,7 @@ def redraw_Game_window():
 # Mainloop
 def loop():
     global bg
-    bg = RessourceLoader.get("dpt.images.environment.background")
+    bg = RessourceLoader.get("dpt.images.environment.background.background")
     run = True
     while run:
         Game.clock.tick(27)

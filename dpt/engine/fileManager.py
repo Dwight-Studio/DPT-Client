@@ -3,7 +3,7 @@ import os
 import tkinter as tk
 from tkinter import filedialog
 
-from dpt.engine.graphics.tileManager import TileManager
+from dpt.engine.tileManager import TileManager
 from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 
@@ -25,7 +25,8 @@ class FileManager:
                     data2 = json.dumps(data, indent=4)
                     fw.write(data2)
                 TileManager.environmentGroup.empty()
-                RessourceLoader.reload()
+                RessourceLoader.add_pending("user.levels." + str(os.path.basename(rfile)).split(".")[0])
+                RessourceLoader.load()
                 TileManager.loadLevel("user.levels." + str(os.path.basename(rfile)).split(".")[0])
                 cls.log.info("Successfully loaded : " + str(rfile))
                 root.destroy()

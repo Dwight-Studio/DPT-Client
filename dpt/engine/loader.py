@@ -1,11 +1,13 @@
-import json
+import math
 import os
-import runpy
 import sys
 import traceback
-
+import json
 import pygame
+import runpy
 
+from dpt.engine.gui.menu.bar import Bar
+from dpt.engine.gui.menu.progressbar import ProgressBar
 from dpt.game import Game
 
 RESSOURCES_DIRECTORY = Game.ROOT_DIRECTORY + "/dpt/ressources/"
@@ -31,14 +33,14 @@ def make_entries(path):
         if os.path.isdir(path + "/" + item):
             for item2 in make_entries(path + "/" + item):
                 if os.path.basename(path) == '':
-                    rlist.append((item2[0], item2[1]))
+                    rlist.append((item2[0].lower(), item2[1]))
                 else:
-                    rlist.append((os.path.basename(path) + "." + item2[0], item2[1]))
+                    rlist.append((os.path.basename(path).lower() + "." + item2[0], item2[1]))
         elif os.path.isfile(path + "/" + item):
             if os.path.basename(path) == '':
-                rlist.append((os.path.splitext(item)[0], path + "/" + item))
+                rlist.append((os.path.splitext(item)[0].lower(), path + "/" + item))
             else:
-                rlist.append((os.path.basename(path) + "." + os.path.splitext(item)[0], path + "/" + item))
+                rlist.append((os.path.basename(path).lower() + "." + os.path.splitext(item)[0], path + "/" + item))
     return rlist
 
 
@@ -92,6 +94,16 @@ class RessourceLoader:
     @classmethod
     def load(cls):
         cls.logger.info("Starting loading ressources")
+        current = 0
+        total = len(cls.pending_ressources)
+        pbar = pygame.image.load(Game.ROOT_DIRECTORY + "/dpt/ressources/dpt/images/gui/ui/UI_BARFRAME.png")
+        bar = pygame.image.load(Game.ROOT_DIRECTORY + "/dpt/ressources/dpt/images/gui/ui/UI_COLORBAR_4.png")
+        bg = pygame.image.load(Game.ROOT_DIRECTORY + "/dpt/ressources/dpt/images/environment/background/background.png")
+        width = min(Game.surface.get_size()[0] - 50, 1115)
+        height = min(math.floor(52 / 1115 * width), 52)
+        pb = ProgressBar(math.floor(Game.surface.get_size()[0] / 2 - width / 2), math.floor(Game.surface.get_size()[1] - height * 2), width, height, pbar, bar, total)
+        font = pygame.font.SysFont("arial", 20)
+
         for entry in cls.pending_ressources:
             ext = cls.pending_ressources[entry].split("/")[-1].split(".")
             try:
@@ -122,6 +134,28 @@ class RessourceLoader:
                 trace = "".join(traceback.format_exception(exc_type, exc_value, exc_tb))
                 for ms in trace.split("\n"):
                     cls.logger.warning(ms)
+
+            current += 1
+            pb.value = current
+
+            Game.surface.blit(bg, (0, 0))
+
+            ProgressBar.progressbarGroup.update()
+            Bar.barGroup.update()
+            Bar.barGroup.draw(Game.surface)
+            ProgressBar.progressbarGroup.draw(Game.surface)
+
+            text = font.render(entry, True, (0, 0, 0))
+            rect = text.get_rect()
+            rect.centerx = Game.surface.get_size()[0] // 2
+            rect.centery = math.floor(Game.surface.get_size()[1] - height * 1.5)
+            Game.surface.blit(text, rect)
+
+            Game.display_debug_info()
+            Game.window.update()
+
+        pb.bar.kill()
+        pb.kill()
         cls.logger.info("Loaded " + str(len(cls.loaded_ressources)) + " entries")
         cls.logger.info("Loading done")
         cls.loaded_ressources_entries = cls.pending_ressources.copy()
@@ -142,21 +176,21 @@ class RessourceLoader:
     def get_multiple(cls, entry):
         try:
             rlist = []
-            entries = cls.select_entries(entry)
+            entries = cls.select_entries(entry.lower())
             for entry in entries:
-                rlist.append(cls.loaded_ressources[entry])
+                rlist.append(cls.loaded_ressources[entry.lower()])
             return rlist
         except KeyError:
-            cls.logger.critical(f"Ressource for entry {entry} can't be reached (Are ressources loaded ?)")
-            raise UnreachableRessourceError(entry)
+            cls.logger.critical(f"Ressource for entry {entry.lower()} can't be reached (Are ressources loaded ?)")
+            raise UnreachableRessourceError(entry.lower())
 
     @classmethod
     def get(cls, entry):
         try:
-            return cls.loaded_ressources[entry]
+            return cls.loaded_ressources[entry.lower()]
         except KeyError:
-            cls.logger.critical(f"Ressource for entry {entry} can't be reached (Are ressources loaded ?)")
-            raise UnreachableRessourceError(entry)
+            cls.logger.critical(f"Ressource for entry {entry.lower()} can't be reached (Are ressources loaded ?)")
+            raise UnreachableRessourceError(entry.lower())
 
     @classmethod
     def add_pending(cls, entry):

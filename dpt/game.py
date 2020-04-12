@@ -6,7 +6,6 @@ import sys
 import tarfile
 import traceback
 import time
-
 import pygame
 
 
@@ -108,7 +107,7 @@ class Game(object):
         cls.clock = pygame.time.Clock()
 
         # Groupes Pygame
-        from dpt.engine.graphics.gui.menu.Button import Button
+        from dpt.engine.gui.menu.button import Button
 
         cls.playerGroup = pygame.sprite.Group()
 
@@ -123,8 +122,8 @@ class Game(object):
             RessourceLoader.init()
             RessourceLoader.add_pending("*")
             RessourceLoader.load()
-            from dpt.engine.graphics.tileManager import TileManager
-            from dpt.engine.graphics.gui.editor.tileEditor import TileEditor
+            from dpt.engine.tileManager import TileManager
+            from dpt.engine.gui.editor.tileEditor import TileEditor
             TileEditor.inEditor = True
             TileManager.loadLevel("dpt.levels.leveltest")
             # from dpt.engine.webCommunications import Communication
@@ -135,9 +134,7 @@ class Game(object):
             # time.sleep(40)
             # com.voteResult()
 
-            im = RessourceLoader.get_multiple("dpt.images.gui.menu.button*")
-            cls.button = Button(50, 50, 200, 20, im[1], locked_image=im[0], hover_image=im[2], pushed_image=im[3], text="Editeur")
-            print(RessourceLoader.select_entries("dpt.images.environment.coins.*"))
+            cls.button = Button(50, 50, 127, 46, RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_OUT"), pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_IN"), text="Editeur")
             from dpt.engine.mainLoop import loop
             loop()
         except Exception:

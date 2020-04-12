@@ -10,7 +10,7 @@ class Coin(pygame.sprite.Sprite):
     screen_width, screen_height = Game.surface.get_size()
 
     def __init__(self, x, y):
-        from dpt.engine.graphics.tileManager import TileManager
+        from dpt.engine.tileManager import TileManager
         pygame.sprite.Sprite.__init__(self, TileManager.entityGroup)  # Sprite's constructor called
         self.image = RessourceLoader.get(self.texture)
         self.frames = RessourceLoader.get_multiple(self.textures)

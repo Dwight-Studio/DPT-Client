@@ -8,7 +8,7 @@ class GrassEdgeL(pygame.sprite.Sprite):
     texture = "dpt.images.environment.terrain.Grass_Tile_Flat_Edge_l"
 
     def __init__(self, x, y):
-        from dpt.engine.graphics.tileManager import TileManager
+        from dpt.engine.tileManager import TileManager
         pygame.sprite.Sprite.__init__(self, TileManager.environmentGroup)
         self.image = RessourceLoader.get(self.texture)
         self.width = self.height = Game.TILESIZE
