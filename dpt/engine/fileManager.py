@@ -17,21 +17,21 @@ class FileManager:
         root = tk.Tk()
         root.withdraw()
         rfile = filedialog.askopenfilename(parent=root, title="Sélectionner un niveau", filetypes=[("Fichier de niveau DPT", "*.level.json"), ("Tous les fichiers", "*")], initialdir=cls.defaultDir)
-        try:
-            with open(rfile) as f:
-                data = json.load(f)
-                wfile = str(cls.defaultDir) + "/" + str(os.path.basename(rfile))
-                with open(wfile, "w") as fw:
-                    data2 = json.dumps(data, indent=4)
-                    fw.write(data2)
-                TileManager.environmentGroup.empty()
-                RessourceLoader.reload()
-                TileManager.loadLevel("user.levels." + str(os.path.basename(rfile)).split(".")[0])
-                cls.log.info("Successfully loaded : " + str(rfile))
-                root.destroy()
-        except:
-            cls.log.warning("Unable to load file : " + str(rfile))
+        #try:
+        with open(rfile) as f:
+            data = json.load(f)
+            wfile = str(cls.defaultDir) + "/" + str(os.path.basename(rfile))
+            with open(wfile, "w") as fw:
+                data2 = json.dumps(data, indent=4)
+                fw.write(data2)
+            TileManager.environmentGroup.empty()
+            RessourceLoader.reload()
+            TileManager.loadLevel("user.levels." + str(os.path.basename(rfile)).split(".")[0])
+            cls.log.info("Successfully loaded : " + str(rfile))
             root.destroy()
+        #except:
+        #    cls.log.warning("Unable to load file : " + str(rfile))
+        #    root.destroy()
 
     @classmethod
     def saveFile(cls, level):
