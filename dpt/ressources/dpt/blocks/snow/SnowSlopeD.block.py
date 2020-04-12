@@ -4,9 +4,11 @@ from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 
 
-class GrassEdgeA(pygame.sprite.Sprite):
-    texture = "dpt.images.environment.terrain.Grass_Tile_Flat_Edge_a"
+class SnowSlopeD(pygame.sprite.Sprite):
+    texture = "dpt.images.environment.terrain.Snow_Tile_Slope_down"
     width = height = Game.TILESIZE
+    offset_x = 0
+    offset_y = 0
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
@@ -14,5 +16,5 @@ class GrassEdgeA(pygame.sprite.Sprite):
         self.image = RessourceLoader.get(self.texture)
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
+        self.rect.x = x + self.offset_x
+        self.rect.y = y + self.offset_y

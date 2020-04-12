@@ -11,6 +11,8 @@ class EnemySprite(pygame.sprite.Sprite):
     screen_width, screen_height = Game.surface.get_size()
     width = math.floor(60 * Game.DISPLAY_RATIO)
     height = math.floor(90 * Game.DISPLAY_RATIO)
+    offset_x = 0
+    offset_y = 0
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
@@ -23,8 +25,8 @@ class EnemySprite(pygame.sprite.Sprite):
         self.standing = False
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
+        self.rect.x = x + self.offset_x
+        self.rect.y = y + self.offset_y
         self.isJump = False
         self.jumpCount = 8
         self.CONSTJUMPCOUNT = self.jumpCount

@@ -55,6 +55,8 @@ def loop():
                 run = False
             elif event.type == Game.BUTTONEVENT:
                 TileEditor.inEditor = not TileEditor.inEditor
+                TileEditor.panelOpen = False
+                EditorPanel.editorPanelGroup.empty()
                 Game.playerGroup.empty()
                 TileManager.entityGroup.empty()
                 TileEditor.ghostBlockGroup.empty()
