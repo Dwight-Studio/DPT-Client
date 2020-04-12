@@ -1,5 +1,7 @@
-import pygame
 import math
+
+import pygame
+
 from dpt.engine.graphics.gui.editor import EditorPanel
 from dpt.game import Game
 

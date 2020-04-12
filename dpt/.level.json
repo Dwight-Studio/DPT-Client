@@ -1,71 +1,71 @@
 {
-    "19, 26": {
-        "blockClass": "Block"
-    },
-    "20, 26": {
-        "blockClass": "Block"
-    },
-    "21, 26": {
-        "blockClass": "Block"
-    },
-    "22, 26": {
-        "blockClass": "Block"
-    },
-    "23, 26": {
-        "blockClass": "Block"
-    },
-    "24, 25": {
-        "blockClass": "Block"
-    },
-    "25, 25": {
-        "blockClass": "Block"
-    },
-    "26, 25": {
-        "blockClass": "Block"
-    },
-    "27, 25": {
-        "blockClass": "Block"
-    },
-    "22, 32": {
-        "blockClass": "Block"
-    },
-    "21, 32": {
-        "blockClass": "Block"
-    },
-    "20, 32": {
-        "blockClass": "Block"
-    },
-    "19, 32": {
-        "blockClass": "Block"
-    },
-    "18, 32": {
-        "blockClass": "Block"
-    },
-    "17, 32": {
-        "blockClass": "Block"
-    },
-    "16, 32": {
-        "blockClass": "Block"
-    },
-    "15, 32": {
-        "blockClass": "Block"
-    },
-    "14, 32": {
-        "blockClass": "Block"
-    },
-    "13, 32": {
-        "blockClass": "Block"
-    },
-    "12, 32": {
-        "blockClass": "Block"
-    },
-    "11, 32": {
-        "blockClass": "Block"
-    },
-    "10, 32": {
-        "blockClass": "Block"
-    },
-    "9, 32": {
-        "blockClass": "Block"
-    }
+  "19, 26": {
+    "blockClass": "Block"
+  },
+  "20, 26": {
+    "blockClass": "Block"
+  },
+  "21, 26": {
+    "blockClass": "Block"
+  },
+  "22, 26": {
+    "blockClass": "Block"
+  },
+  "23, 26": {
+    "blockClass": "Block"
+  },
+  "24, 25": {
+    "blockClass": "Block"
+  },
+  "25, 25": {
+    "blockClass": "Block"
+  },
+  "26, 25": {
+    "blockClass": "Block"
+  },
+  "27, 25": {
+    "blockClass": "Block"
+  },
+  "22, 32": {
+    "blockClass": "Block"
+  },
+  "21, 32": {
+    "blockClass": "Block"
+  },
+  "20, 32": {
+    "blockClass": "Block"
+  },
+  "19, 32": {
+    "blockClass": "Block"
+  },
+  "18, 32": {
+    "blockClass": "Block"
+  },
+  "17, 32": {
+    "blockClass": "Block"
+  },
+  "16, 32": {
+    "blockClass": "Block"
+  },
+  "15, 32": {
+    "blockClass": "Block"
+  },
+  "14, 32": {
+    "blockClass": "Block"
+  },
+  "13, 32": {
+    "blockClass": "Block"
+  },
+  "12, 32": {
+    "blockClass": "Block"
+  },
+  "11, 32": {
+    "blockClass": "Block"
+  },
+  "10, 32": {
+    "blockClass": "Block"
+  },
+  "9, 32": {
+    "blockClass": "Block"
+  }
 }

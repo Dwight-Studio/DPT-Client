@@ -1,10 +1,12 @@
-import requests
-from dpt.game import Game
-import string
+import json
 import random
+import string
 import threading
 import time
-import json
+
+import requests
+
+from dpt.game import Game
 
 
 class Communication(object):

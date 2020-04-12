@@ -1,4 +1,5 @@
 import pygame
+
 from dpt.engine.graphics.gui.editor.tileEditor import TileEditor
 from dpt.engine.loader import RessourceLoader, UnreachableRessourceError
 from dpt.game import Game

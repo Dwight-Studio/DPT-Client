@@ -1,9 +1,10 @@
+import json
 import os
+import runpy
 import sys
 import traceback
-import json
+
 import pygame
-import runpy
 
 from dpt.game import Game
 
