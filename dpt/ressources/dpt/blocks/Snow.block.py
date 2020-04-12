@@ -5,7 +5,7 @@ from dpt.game import Game
 
 
 class Snow(pygame.sprite.Sprite):
-    texture = "dpt.images.environment.terrain.Snow_Tile"
+    texture = "dpt.images.environment.terrain.Snow_Tile_Flat"
 
     def __init__(self, x, y):
         from dpt.engine.graphics.tileManager import TileManager

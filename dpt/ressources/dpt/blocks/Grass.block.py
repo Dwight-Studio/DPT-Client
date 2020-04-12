@@ -5,7 +5,7 @@ from dpt.game import Game
 
 
 class Grass(pygame.sprite.Sprite):
-    texture = "dpt.images.environment.terrain.Grass_Tile_Flat_Edge_a"
+    texture = "dpt.images.environment.terrain.Grass_Tile_Flat"
 
     def __init__(self, x, y):
         from dpt.engine.graphics.tileManager import TileManager

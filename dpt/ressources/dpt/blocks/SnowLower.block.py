@@ -4,8 +4,8 @@ from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 
 
-class Sand(pygame.sprite.Sprite):
-    texture = "dpt.images.environment.terrain.Sand_Tile_Flat"
+class SnowLower(pygame.sprite.Sprite):
+    texture = "dpt.images.environment.terrain.Snow_Tile"
 
     def __init__(self, x, y):
         from dpt.engine.graphics.tileManager import TileManager
