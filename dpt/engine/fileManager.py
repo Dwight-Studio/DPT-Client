@@ -2,10 +2,10 @@ import json
 import os
 import tkinter as tk
 from tkinter import filedialog
-
 from dpt.engine.tileManager import TileManager
 from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
+from dpt.engine.loader import UnreachableRessourceError
 
 
 class FileManager:
@@ -30,7 +30,7 @@ class FileManager:
                 TileManager.loadLevel("user.levels." + str(os.path.basename(rfile)).split(".")[0])
                 cls.log.info("Successfully loaded : " + str(rfile))
                 root.destroy()
-        except:
+        except UnreachableRessourceError and FileNotFoundError:
             cls.log.warning("Unable to load file : " + str(rfile))
             root.destroy()
 
