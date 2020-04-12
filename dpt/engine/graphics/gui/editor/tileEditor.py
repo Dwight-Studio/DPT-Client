@@ -79,7 +79,6 @@ class TileEditor:
                     cls.lastMousePosY = cls.mousePosY
                     TileManager.placeBlock(cls.mousePosX, cls.mousePosY, Game.selectedItem)
                     cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)] = 1#{"class": Game.selectedItem}
-                    print(cls.createdLevel)
             elif mouseButtons[0] != 1 and cls.mousePushedL:
                 cls.mousePushedL = False
             elif mouseButtons[0] == 1 and cls.mousePosX != cls.lastMousePosX or cls.mousePosY != cls.lastMousePosY and cls.mousePushedL:
@@ -94,6 +93,14 @@ class TileEditor:
                             if math.floor(blocks.rect.centerx / Game.TILESIZE) == cls.mousePosX and math.floor(blocks.rect.centery / Game.TILESIZE) == cls.mousePosY:
                                 blocks.kill()
                                 del blocks
+                        for entity in TileManager.entityGroup:
+                            if math.floor(entity.rect.centerx / Game.TILESIZE) == cls.mousePosX and math.floor(entity.rect.centery / Game.TILESIZE) == cls.mousePosY:
+                                entity.kill()
+                                del entity
+                        for enemy in TileManager.enemyGroup:
+                            if math.floor(enemy.rect.centerx / Game.TILESIZE) == cls.mousePosX and math.floor(enemy.rect.centery / Game.TILESIZE) == cls.mousePosY:
+                                enemy.kill()
+                                del enemy
                         del cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)]
                     except KeyError:
                         pass
