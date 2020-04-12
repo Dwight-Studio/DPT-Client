@@ -93,7 +93,7 @@ class Game(object):
 
         cls.window = pygame.display
         if Game.LINUX_USER:
-            cls.surface = cls.window.set_mode((0, 0), pygame.NOFRAME, pygame.RESIZABLE)
+            cls.surface = cls.window.set_mode((0, 0), pygame.NOFRAME, pygame.SCALED)
         else:
             cls.surface = cls.window.set_mode((0, 0), pygame.FULLSCREEN, pygame.RESIZABLE)
 
