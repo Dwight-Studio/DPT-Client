@@ -6,14 +6,14 @@ from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 
 
-class LavaTop(pygame.sprite.Sprite):
-    texture = "dpt.images.environment.liquids.Lava_Tile_Top"
-    textures = "dpt.images.environment.liquids.Lava_Tile_Top_*"
+class Lava(pygame.sprite.Sprite):
+    texture = "dpt.images.environment.liquids.Lava_Tile"
+    textures = "dpt.images.environment.liquids.Lava_Tile_*"
     screen_width, screen_height = Game.surface.get_size()
-    width = Game.TILESIZE
-    height = math.floor(Game.TILESIZE * (116 / 208))
+    animCal = False
+    width = height = Game.TILESIZE
     offset_x = 0
-    offset_y = Game.TILESIZE - height
+    offset_y = 0
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager

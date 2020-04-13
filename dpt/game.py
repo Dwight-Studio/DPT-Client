@@ -42,6 +42,9 @@ class Game(object):
     button = None
     events = []
 
+    animCountLava = 0
+    animCountWater = 0
+
     # Evenements
     BUTTONEVENT = None
 

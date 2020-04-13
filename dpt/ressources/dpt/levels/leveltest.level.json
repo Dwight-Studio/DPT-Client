@@ -830,21 +830,27 @@
     "class": "dpt.entities.lavatop"
   },
   "20, 10": {
-    "backgroundClass": "dpt.blocks.grass.grasslower"
+    "backgroundClass": "dpt.blocks.grass.grasslower",
+    "class": "dpt.entities.lava"
   },
   "20, 11": {
-    "backgroundClass": "dpt.blocks.grass.grasslower"
+    "backgroundClass": "dpt.blocks.grass.grasslower",
+    "class": "dpt.entities.lava"
   },
   "21, 11": {
-    "backgroundClass": "dpt.blocks.grass.grasslower"
+    "backgroundClass": "dpt.blocks.grass.grasslower",
+    "class": "dpt.entities.lava"
   },
   "21, 10": {
-    "backgroundClass": "dpt.blocks.grass.grasslower"
+    "backgroundClass": "dpt.blocks.grass.grasslower",
+    "class": "dpt.entities.lava"
   },
   "22, 10": {
-    "backgroundClass": "dpt.blocks.grass.grasslower"
+    "backgroundClass": "dpt.blocks.grass.grasslower",
+    "class": "dpt.entities.lava"
   },
   "22, 11": {
-    "backgroundClass": "dpt.blocks.grass.grasslower"
+    "backgroundClass": "dpt.blocks.grass.grasslower",
+    "class": "dpt.entities.lava"
   }
 }

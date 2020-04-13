@@ -11,6 +11,20 @@ from dpt.game import Game
 import pygame
 
 
+def do_synch_anims():
+    # Lava
+    if Game.animCountLava + 1 >= 104:
+        Game.animCountLava = 0
+    else:
+        Game.animCountLava += 1
+
+    # Water
+    if Game.animCountWater + 1 >= 52:
+        Game.animCountWater = 0
+    else:
+        Game.animCountWater += 1
+
+
 def redraw_Game_window():
     TileManager.environmentGroup.update()
     if not TileEditor.inEditor:
@@ -82,6 +96,8 @@ def loop():
                     TileManager.scrollUp()
                 elif event.button == 5:
                     TileManager.scrollDown()
+
+        do_synch_anims()
         redraw_Game_window()
 
     pygame.quit()
