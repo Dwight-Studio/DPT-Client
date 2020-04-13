@@ -39,6 +39,7 @@ class Checkbox(pygame.sprite.Sprite):
             self.rect.y = self.y - 5
         else:
             self.image = self.false_image
+            self.update_rect()
             self.rect.x = self.x
             self.rect.y = self.y
 
