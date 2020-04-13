@@ -11,7 +11,7 @@ class BackgroundFakeBlocks(pygame.sprite.Sprite):
             self.image = RessourceLoader.get(self.block.texture).copy()
         except UnreachableRessourceError:
             self.image = RessourceLoader.get("dpt.images.not_found")
-        self.image.fill((20, 20, 20), special_flags=pygame.BLEND_RGB_SUB)
+        self.image.fill((30, 30, 30), special_flags=pygame.BLEND_RGB_SUB)
         self.image = pygame.transform.scale(self.image, (self.block.width, self.block.height))
         self.rect = self.image.get_rect()
         self.rect.x = x + self.block.offset_x
