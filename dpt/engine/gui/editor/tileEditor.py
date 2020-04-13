@@ -59,7 +59,7 @@ class TileEditor:
                         TileManager.openTilePanel()
                     elif keys[pygame.K_t] and not cls.tpushed and cls.panelOpen:
                         cls.tpushed = True
-                        EditorPanel.editorPanelGroup.empty()
+                        TileManager.editorPanelGroup.empty()
                         cls.panelOpen = False
                     elif not keys[pygame.K_t] and cls.tpushed:
                         cls.tpushed = False

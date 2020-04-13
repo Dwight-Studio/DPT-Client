@@ -11,7 +11,7 @@ class EnemySprite(pygame.sprite.Sprite):
     screen_width, screen_height = Game.surface.get_size()
     width = math.floor(60 * Game.DISPLAY_RATIO)
     height = math.floor(90 * Game.DISPLAY_RATIO)
-    offset_x = 0
+    offset_x = (Game.TILESIZE - width) // 2
     offset_y = 0
 
     def __init__(self, x, y):

@@ -81,7 +81,7 @@ class TileManager:
     @classmethod
     def ghostBlock(cls, xTile, yTile, item):
         from dpt.engine.ghostFakeEntities import GhostFakeEntity
-        ghostBlock = GhostFakeEntity(xTile, yTile, Game.TILESIZE, Game.TILESIZE, 80, item)
+        ghostBlock = GhostFakeEntity(xTile, yTile, 80, item)
 
     @classmethod
     def placeBlock(cls, xTile, yTile, item):
@@ -97,7 +97,7 @@ class TileManager:
         starty = 0 + Game.TILESIZE
         for element in Game.availableTiles:
             if cls.count == cls.nbSkip:
-                sprite = PanelFakeEntity(startx, starty, Game.TILESIZE, Game.TILESIZE, 255, element)
+                sprite = PanelFakeEntity(startx, starty, 255, element)
                 Game.editorTileRegistry[str(math.floor(startx / Game.TILESIZE)) + ", " + str(math.floor(starty / Game.TILESIZE))] = {"class": element}
                 startx += Game.TILESIZE
                 cls.nbPerLineCount += 1
