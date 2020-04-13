@@ -21,6 +21,7 @@ class Game(object):
     TILESIZE = 90
     DISPLAY_RATIO = 1
     LINUX_USER = True
+    DISPLAY_RECT = False
 
     # Variable à définir
     isPlayerDead = False
@@ -134,7 +135,7 @@ class Game(object):
             # time.sleep(40)
             # com.voteResult()
 
-            cls.button = Button(50, 50, 127, 46, RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_OUT"), pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_IN"), text="Editeur")
+            cls.button = Button(0, Game.surface.get_size()[1] - 50, 127, 46, RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_OUT"), pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_IN"), text="Editeur")
             from dpt.engine.mainLoop import loop
             loop()
         except Exception:

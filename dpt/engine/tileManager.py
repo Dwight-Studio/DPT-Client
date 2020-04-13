@@ -11,6 +11,7 @@ from dpt.game import Game
 
 #          {"x, y": {"blockClass": Classe}}
 class TileManager:
+    deadlyObjectGroup = pygame.sprite.Group()
     enemyGroup = pygame.sprite.Group()
     environmentGroup = pygame.sprite.Group()
     entityGroup = pygame.sprite.Group()
@@ -32,12 +33,20 @@ class TileManager:
     editorCamera = None
     Game.availableTiles = []
     Game.availableTiles.extend(RessourceLoader.select_entries("dpt.blocks.*"))
+    print(Game.availableTiles)
+    Game.availableTiles.remove("dpt.blocks.notfound")
     Game.availableTiles.extend(RessourceLoader.select_entries("dpt.entities.*"))
 
     @classmethod
     def loadLevel(cls, levelName):
+        Checkbox.checkboxGroup.empty()
+        TileManager.editorPanelGroup.empty()
+        Game.playerGroup.empty()
+        TileManager.backgroundBlocks.empty()
         TileManager.entityGroup.empty()
-        TileManager.environmentGroup.empty()
+        TileEditor.ghostBlockGroup.empty()
+        TileManager.deadlyObjectGroup.empty()
+
         if type(levelName) == str:
             cls.log.info("Loading level " + levelName)
             level = RessourceLoader.get(levelName)
@@ -74,6 +83,7 @@ class TileManager:
         cls.environmentGroup.draw(Game.surface)
         cls.entityGroup.draw(Game.surface)
         cls.enemyGroup.draw(Game.surface)
+        cls.deadlyObjectGroup.draw(Game.surface)
         if not TileEditor.inEditor:
             from dpt.engine.characters.PlayerSprite import PlayerSprite
             Game.playerSprite = PlayerSprite(300, Game.surface.get_size()[1] - 500)
@@ -148,7 +158,6 @@ class TileManager:
 
     @classmethod
     def outOfWindow(cls):
-        Game.add_debug_info("Nb Enemies : " + str(len(TileManager.enemyGroup)))
         for enemy in TileManager.enemyGroup:
             if enemy.rect.centery >= 3000:
                 enemy.kill()
@@ -167,10 +176,13 @@ class Camera:
         return entity.rect.move(self.camera.topleft)
 
     def update(self, target):
-        Game.add_debug_info("Right : " + str(Game.playerSprite.right))
-        Game.add_debug_info("Left : " + str(Game.playerSprite.left))
-        Game.add_debug_info("Player X :" + str(target.rect.centerx))
-        Game.add_debug_info("Player Y : " + str(target.rect.centery))
+        Game.add_debug_info("CAMERA INFORMATIONS")
+        Game.add_debug_info("Scrolling: " + str(-self.last_x))
+        Game.add_debug_info("Right: " + str(Game.playerSprite.right))
+        Game.add_debug_info("Left: " + str(Game.playerSprite.left))
+        Game.add_debug_info("Player X:" + str(target.rect.centerx))
+        Game.add_debug_info("Player Y: " + str(target.rect.centery))
+        Game.add_debug_info("----------")
 
         x = -target.rect.x + int(Game.surface.get_size()[0] / 2)
 
@@ -180,11 +192,23 @@ class Camera:
         self.camera = pygame.Rect(x, 0, self.width, self.height)
         for sprite in TileManager.backgroundBlocks:
             Game.surface.blit(sprite.image, self.apply(sprite))
+            if Game.DISPLAY_RECT:
+                pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
         for sprite in TileManager.environmentGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
+            if Game.DISPLAY_RECT:
+                pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
         for sprite in TileManager.entityGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
+            if Game.DISPLAY_RECT:
+                pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
         Game.surface.blit(Game.playerSprite.image, self.apply(Game.playerSprite))
+        if Game.DISPLAY_RECT:
+            pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(Game.playerSprite), width=2)
+        for sprite in TileManager.deadlyObjectGroup:
+            Game.surface.blit(sprite.image, self.apply(sprite))
+            if Game.DISPLAY_RECT:
+                pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
         self.last_x = x
 
 
@@ -200,17 +224,32 @@ class EditorCamera:
         return entity.rect.move(self.camera.topleft)
 
     def update(self, target):
-        Game.add_debug_info("Scrolling : " + str(self.last_x))
+        Game.add_debug_info("CAMERA INFORMATIONS")
+        Game.add_debug_info("Scrolling: " + str(-self.last_x))
+        Game.add_debug_info("Nb Enemies: " + str(len(TileManager.enemyGroup)))
+        Game.add_debug_info("----------")
         x = -target.rect.x + int(Game.surface.get_size()[0] / 2)
         x = min(0, x)
         self.camera = pygame.Rect(x, 0, self.width, self.height)
         for sprite in TileManager.backgroundBlocks:
             Game.surface.blit(sprite.image, self.apply(sprite))
+            if Game.DISPLAY_RECT:
+                pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
         for sprite in TileManager.environmentGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
+            if Game.DISPLAY_RECT:
+                pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
         for sprite in TileManager.entityGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
+            if Game.DISPLAY_RECT:
+                pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
         Game.surface.blit(Game.playerSprite.image, self.apply(Game.playerSprite))
+        if Game.DISPLAY_RECT:
+            pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(Game.playerSprite), width=2)
+        for sprite in TileManager.deadlyObjectGroup:
+            Game.surface.blit(sprite.image, self.apply(sprite))
+            if Game.DISPLAY_RECT:
+                pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
         self.last_x = x
 
     def enableGrid(self):

@@ -108,7 +108,7 @@ class RessourceLoader:
             ext = cls.pending_ressources[entry].split("/")[-1].split(".")
             try:
                 if ext[-1] == "png":
-                    cls.loaded_ressources[entry] = pygame.image.load(cls.pending_ressources[entry])
+                    cls.loaded_ressources[entry] = pygame.image.load(cls.pending_ressources[entry]).convert_alpha()
                     cls.logger.debug("Entry " + entry + " loaded")
                 elif ext[-2] == "level" and ext[-1] == "json":
                     table = None

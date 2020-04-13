@@ -20,8 +20,18 @@ def redraw_Game_window():
 
     TileEditor.update()
 
-    TileManager.editorPanelGroup.draw(Game.surface)
-    TileManager.editorPanelGroup.update()
+    try:
+        TileManager.editorPanelGroup.update()
+        TileManager.editorPanelGroup.draw(Game.surface)
+    except pygame.error:
+        Game.get_logger("MainLoop").critical("Error when drawing editorPanelGroup")
+        Game.get_logger("MainLoop").critical("Content: ")
+        for sp in TileManager.editorPanelGroup:
+            try:
+                Game.get_logger("MainLoop").critical("    " + str(sp.block))
+            except AttributeError:
+                pass
+        raise
 
     TileEditor.ghostBlockGroup.draw(Game.surface)
 
@@ -66,12 +76,6 @@ def loop():
             elif event.type == Game.BUTTONEVENT:
                 TileEditor.inEditor = not TileEditor.inEditor
                 TileEditor.panelOpen = False
-                Checkbox.checkboxGroup.empty()
-                TileManager.editorPanelGroup.empty()
-                Game.playerGroup.empty()
-                TileManager.backgroundBlocks.empty()
-                TileManager.entityGroup.empty()
-                TileEditor.ghostBlockGroup.empty()
                 TileManager.loadLevel(TileManager.levelName)
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 4:

@@ -102,6 +102,7 @@ class PlayerSprite(pygame.sprite.Sprite):
 
             self.animation()
             self.enemiesCollision(self.yvel, TileManager.enemyGroup)
+            self.deadlyObjectCollision()
             self.deathFall()
 
         elif not self.alive:
@@ -143,6 +144,15 @@ class PlayerSprite(pygame.sprite.Sprite):
                     PlayerSprite.gravityCount = 0
                 if yVelDelta > 0:
                     self.rect.top = i.rect.bottom
+
+    def deadlyObjectCollision(self):
+        for i in TileManager.deadlyObjectGroup:
+            if pygame.sprite.collide_rect(self, i):
+                self.yvel = 0
+                Game.isPlayerDead = True
+                self.xvel = 0
+                time.sleep(0.5)
+                self.die()
 
     def enemiesCollision(self, yVelDelta, enemies):
         for i in enemies:

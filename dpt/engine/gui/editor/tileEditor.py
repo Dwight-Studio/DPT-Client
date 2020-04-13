@@ -69,6 +69,14 @@ class TileEditor:
             mouse = pygame.mouse.get_pos()
             cls.mousePosX = math.floor((mouse[0] - TileManager.editorCamera.last_x) / Game.TILESIZE)
             cls.mousePosY = math.floor(mouse[1] / Game.TILESIZE)
+            Game.add_debug_info("MOUSE INFORMATIONS")
+            Game.add_debug_info("Mouse X: " + str(mouse[0]))
+            Game.add_debug_info("Mouse Y: " + str(mouse[1]))
+            Game.add_debug_info("")
+            Game.add_debug_info("Mouse AbsX: " + str(cls.mousePosX))
+            Game.add_debug_info("Mouse AbsY: " + str(cls.mousePosY))
+            Game.add_debug_info("----------")
+
             if cls.mousePosX != cls.lastMousePosX or cls.mousePosY != cls.lastMousePosY:
                 cls.lastMousePosX = None
                 cls.lastMousePosY = None
@@ -113,10 +121,6 @@ class TileEditor:
                             if math.floor(entity.rect.centerx / Game.TILESIZE) == cls.mousePosX and math.floor(entity.rect.centery / Game.TILESIZE) == cls.mousePosY:
                                 entity.kill()
                                 del entity
-                        for enemy in TileManager.enemyGroup:
-                            if math.floor(enemy.rect.centerx / Game.TILESIZE) == cls.mousePosX and math.floor(enemy.rect.centery / Game.TILESIZE) == cls.mousePosY:
-                                enemy.kill()
-                                del enemy
                         del cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)]
                     except KeyError:
                         pass

@@ -11,7 +11,8 @@ class GhostFakeEntity(pygame.sprite.Sprite):
             self.block = RessourceLoader.get(block)
             self.image = RessourceLoader.get(self.block.texture)
         except UnreachableRessourceError:
-            self.image = RessourceLoader.get("dpt.images.not_found")
+            self.block = RessourceLoader.get("dpt.blocks.NotFound")
+            self.image = RessourceLoader.get(self.block.texture)
         self.image = pygame.transform.scale(self.image, (self.block.width, self.block.height))
         self.image.set_alpha(alpha)
         self.rect = self.image.get_rect()
