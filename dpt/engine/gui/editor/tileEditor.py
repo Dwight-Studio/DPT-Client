@@ -79,14 +79,18 @@ class TileEditor:
                 if not cls.panelOpen or cls.mousePosX <= math.floor(((Game.surface.get_size()[0] / 4 * 3 - Game.TILESIZE) - TileManager.editorCamera.last_x) / Game.TILESIZE):
                     cls.lastMousePosX = cls.mousePosX
                     cls.lastMousePosY = cls.mousePosY
-                    TileManager.placeBlock(cls.mousePosX, cls.mousePosY, Game.selectedItem)
                     if not TileManager.checkBack:
-                        cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)] = {"class": Game.selectedItem}
+                        if str(cls.mousePosX) + ", " + str(cls.mousePosY) in cls.createdLevel:
+                            cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)]["class"] = Game.selectedItem
+                        else:
+                            cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)] = {"class": Game.selectedItem}
+                        TileManager.placeBlock(cls.mousePosX, cls.mousePosY, Game.selectedItem)
                     elif TileManager.checkBack:
                         if str(cls.mousePosX) + ", " + str(cls.mousePosY) in cls.createdLevel:
                             cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)]["backgroundClass"] = Game.selectedItem
                         else:
                             cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)] = {"backgroundClass": Game.selectedItem}
+                        TileManager.placeBackBlock(cls.mousePosX, cls.mousePosY, Game.selectedItem)
             elif mouseButtons[0] != 1 and cls.mousePushedL:
                 cls.mousePushedL = False
             elif mouseButtons[0] == 1 and cls.mousePosX != cls.lastMousePosX or cls.mousePosY != cls.lastMousePosY and cls.mousePushedL:
@@ -97,6 +101,10 @@ class TileEditor:
                     cls.lastMousePosX = cls.mousePosX
                     cls.lastMousePosY = cls.mousePosY
                     try:
+                        for blocks in TileManager.backgroundBlocks:
+                            if math.floor(blocks.rect.centerx / Game.TILESIZE) == cls.mousePosX and math.floor(blocks.rect.centery / Game.TILESIZE) == cls.mousePosY:
+                                blocks.kill()
+                                del blocks
                         for blocks in TileManager.environmentGroup:
                             if math.floor(blocks.rect.centerx / Game.TILESIZE) == cls.mousePosX and math.floor(blocks.rect.centery / Game.TILESIZE) == cls.mousePosY:
                                 blocks.kill()

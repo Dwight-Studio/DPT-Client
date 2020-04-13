@@ -701,9 +701,6 @@
   "25, 11": {
     "class": "dpt.blocks.grass.grasslower"
   },
-  "4, 8": {
-    "class": "dpt.entities.coin"
-  },
   "6, 8": {
     "class": "dpt.blocks.grass.grass"
   },
@@ -714,43 +711,19 @@
     "class": "dpt.blocks.grass.grass"
   },
   "14, 8": {
-    "class": "dpt.blocks.grass.grass"
-  },
-  "16, 8": {
-    "class": "dpt.entities.coin"
-  },
-  "5, 7": {
-    "class": "dpt.entities.coin"
-  },
-  "7, 7": {
-    "class": "dpt.blocks.grass.grassslopeu"
-  },
-  "9, 7": {
-    "class": "dpt.blocks.grass.grasslower"
+    "class": "dpt.blocks.grass.grass",
+    "backgroundClass": "dpt.blocks.grass.grasslower"
   },
   "10, 8": {
     "class": "dpt.blocks.grass.grass"
   },
-  "11, 7": {
-    "class": "dpt.blocks.grass.grasslower"
-  },
-  "13, 7": {
-    "class": "dpt.blocks.grass.grassslopeconnectorr"
-  },
-  "15, 7": {
-    "class": "dpt.entities.coin"
-  },
-  "17, 7": {
-    "class": "dpt.entities.coin"
-  },
-  "5, 8": {
-    "class": "dpt.blocks.grass.grassslopeu"
-  },
   "15, 8": {
-    "class": "dpt.blocks.grass.grasssloped"
+    "class": "dpt.blocks.grass.grasssloped",
+    "backgroundClass": "dpt.blocks.grass.grasslower"
   },
   "13, 8": {
-    "class": "dpt.blocks.grass.grass"
+    "class": "dpt.blocks.grass.grass",
+    "backgroundClass": "dpt.blocks.grass.grasslower"
   },
   "11, 8": {
     "class": "dpt.blocks.grass.grass"
@@ -761,46 +734,114 @@
   "7, 8": {
     "class": "dpt.blocks.grass.grass"
   },
-  "14, 7": {
-    "class": "dpt.blocks.grass.grasssloped"
+  "8, 7": {
+    "backgroundClass": "dpt.blocks.grass.grassslopeu"
   },
-  "13, 6": {
-    "class": "dpt.blocks.grass.grasssloped"
-  },
-  "12, 5": {
-    "class": "dpt.blocks.grass.grasssloped"
-  },
-  "8, 6": {
-    "class": "dpt.blocks.grass.grassslopeu"
-  },
-  "9, 5": {
-    "class": "dpt.blocks.grass.grassslopeu"
-  },
-  "10, 5": {
-    "class": "dpt.blocks.grass.grass"
-  },
-  "11, 5": {
-    "class": "dpt.blocks.grass.grass"
-  },
-  "9, 6": {
-    "class": "dpt.blocks.grass.grassslopeconnectorl"
-  },
-  "10, 6": {
-    "class": "dpt.blocks.grass.grasslower"
-  },
-  "11, 6": {
-    "class": "dpt.blocks.grass.grasslower"
-  },
-  "12, 6": {
-    "class": "dpt.blocks.grass.grassslopeconnectorr"
-  },
-  "12, 7": {
-    "class": "dpt.blocks.grass.grasslower"
+  "9, 7": {
+    "backgroundClass": "dpt.blocks.grass.grass"
   },
   "10, 7": {
-    "class": "dpt.blocks.grass.grasslower"
+    "backgroundClass": "dpt.blocks.grass.grass"
   },
-  "8, 7": {
-    "class": "dpt.blocks.grass.grassslopeconnectorl"
+  "11, 7": {
+    "backgroundClass": "dpt.blocks.grass.grass",
+    "class": "dpt.entities.coin"
+  },
+  "13, 7": {
+    "backgroundClass": "dpt.blocks.grass.grass"
+  },
+  "14, 7": {
+    "backgroundClass": "dpt.blocks.grass.grass"
+  },
+  "15, 7": {
+    "backgroundClass": "dpt.blocks.grass.grass",
+    "class": "dpt.entities.coin"
+  },
+  "16, 7": {
+    "backgroundClass": "dpt.blocks.grass.grass"
+  },
+  "17, 7": {
+    "backgroundClass": "dpt.blocks.grass.grass"
+  },
+  "18, 7": {
+    "backgroundClass": "dpt.blocks.grass.grass"
+  },
+  "21, 7": {
+    "backgroundClass": "dpt.blocks.grass.grass"
+  },
+  "22, 7": {
+    "backgroundClass": "dpt.blocks.grass.grass"
+  },
+  "23, 7": {
+    "backgroundClass": "dpt.blocks.grass.grass"
+  },
+  "24, 7": {
+    "backgroundClass": "dpt.blocks.grass.grass"
+  },
+  "25, 7": {
+    "backgroundClass": "dpt.blocks.grass.grass"
+  },
+  "26, 7": {
+    "backgroundClass": "dpt.blocks.grass.grasssloped"
+  },
+  "27, 8": {
+    "backgroundClass": "dpt.blocks.grass.grasssloped"
+  },
+  "26, 8": {
+    "backgroundClass": "dpt.blocks.grass.grassslopeconnectorr",
+    "class": "dpt.entities.coin"
+  },
+  "25, 8": {
+    "backgroundClass": "dpt.blocks.grass.grasslower"
+  },
+  "24, 8": {
+    "backgroundClass": "dpt.blocks.grass.grasslower"
+  },
+  "23, 8": {
+    "backgroundClass": "dpt.blocks.grass.grasslower"
+  },
+  "22, 8": {
+    "backgroundClass": "dpt.blocks.grass.grasslower",
+    "class": "dpt.entities.coin"
+  },
+  "21, 8": {
+    "backgroundClass": "dpt.blocks.grass.grasslower"
+  },
+  "20, 8": {
+    "backgroundClass": "dpt.blocks.grass.grasslower"
+  },
+  "19, 8": {
+    "backgroundClass": "dpt.blocks.grass.grasslower"
+  },
+  "18, 8": {
+    "backgroundClass": "dpt.blocks.grass.grasslower",
+    "class": "dpt.entities.coin"
+  },
+  "16, 8": {
+    "backgroundClass": "dpt.blocks.grass.grasslower"
+  },
+  "17, 8": {
+    "backgroundClass": "dpt.blocks.grass.grasslower"
+  },
+  "3, 8": {
+    "class": "dpt.entities.coin"
+  },
+  "4, 7": {
+    "class": "dpt.entities.coin"
+  },
+  "7, 7": {
+    "class": "dpt.entities.coin"
+  },
+  "5, 8": {
+    "class": "dpt.blocks.grass.grassslopeu"
+  },
+  "12, 7": {
+    "backgroundClass": "dpt.blocks.grass.grass"
+  },
+  "19, 7": {
+    "backgroundClass": "dpt.blocks.grass.grass"
+  },
+  "20, 7": {
+    "backgroundClass": "dpt.blocks.grass.grass"
   }
 }

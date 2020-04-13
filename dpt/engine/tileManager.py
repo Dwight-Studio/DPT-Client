@@ -26,7 +26,7 @@ class TileManager:
     nbPerLineCount = 0
     nbPerLine = 0
     nbSkip = 0
-    checkBack = None
+    checkBack = False
     coords = None
     camera = None
     editorCamera = None
@@ -95,15 +95,25 @@ class TileManager:
 
     @classmethod
     def placeBlock(cls, xTile, yTile, item):
-        block = RessourceLoader.get(item)(xTile * Game.TILESIZE, yTile * Game.TILESIZE)
+        RessourceLoader.get(item)(xTile * Game.TILESIZE, yTile * Game.TILESIZE)
         cls.log.debug("Tile " + item + " placed at " + str(xTile) + ", " + str(yTile))
 
     @classmethod
+    def placeBackBlock(cls, xTile, yTile, item):
+        BackgroundFakeBlocks(xTile * Game.TILESIZE, yTile * Game.TILESIZE, item)
+        cls.log.debug("Background tile " + item + " placed at " + str(xTile) + ", " + str(yTile))
+
+    @classmethod
     def openTilePanel(cls):
+        TileManager.editorPanelGroup.empty()
+        Game.editorTileRegistry.clear()
+        value = bool(cls.checkBack)
+        Checkbox.checkboxGroup.empty()
+        cls.checkBack = Checkbox(Game.surface.get_size()[0] // 4 * 3 + Game.TILESIZE // 4, Game.TILESIZE // 4)
+        cls.checkBack.value = value
         cls.count = 0
         panel = EditorPanel((255, 255, 255), Game.surface.get_size()[0] / 4 * 3, 0, Game.surface.get_size()[0] / 4, Game.surface.get_size()[1], 120)
         TileManager.editorPanelGroup.add(panel)
-        cls.checkBack = Checkbox(Game.surface.get_size()[0] // 4 * 3 + Game.TILESIZE // 4, Game.TILESIZE // 4)
         startx = Game.surface.get_size()[0] / 4 * 3 + Game.TILESIZE
         starty = 0 + Game.TILESIZE
         for element in Game.availableTiles:
@@ -118,19 +128,13 @@ class TileManager:
                     if not cls.alreadyDefined:
                         cls.nbPerLine = cls.nbPerLineCount
                         cls.alreadyDefined = True
-                        print(cls.nbPerLine)
             else:
                 cls.count += 1
-                print(element)
                 continue
 
     @classmethod
     def scrollDown(cls):
-        TileManager.editorPanelGroup.empty()
-        Checkbox.checkboxGroup.empty()
-        Game.editorTileRegistry.clear()
         cls.nbSkip += cls.nbPerLine
-        print(cls.nbSkip)
         TileManager.openTilePanel()
 
     @classmethod
@@ -140,7 +144,6 @@ class TileManager:
         Game.editorTileRegistry.clear()
         if cls.nbSkip > 0:
             cls.nbSkip -= cls.nbPerLine
-        print(cls.nbSkip)
         TileManager.openTilePanel()
 
     @classmethod
@@ -175,13 +178,13 @@ class Camera:
         x = min(0, self.last_x, x)
         x = max(-calcul, x)
         self.camera = pygame.Rect(x, 0, self.width, self.height)
-        Game.surface.blit(Game.playerSprite.image, self.apply(Game.playerSprite))
         for sprite in TileManager.backgroundBlocks:
             Game.surface.blit(sprite.image, self.apply(sprite))
         for sprite in TileManager.environmentGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
         for sprite in TileManager.entityGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
+        Game.surface.blit(Game.playerSprite.image, self.apply(Game.playerSprite))
         self.last_x = x
 
 
@@ -201,13 +204,13 @@ class EditorCamera:
         x = -target.rect.x + int(Game.surface.get_size()[0] / 2)
         x = min(0, x)
         self.camera = pygame.Rect(x, 0, self.width, self.height)
-        Game.surface.blit(Game.playerSprite.image, self.apply(Game.playerSprite))
         for sprite in TileManager.backgroundBlocks:
             Game.surface.blit(sprite.image, self.apply(sprite))
         for sprite in TileManager.environmentGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
         for sprite in TileManager.entityGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
+        Game.surface.blit(Game.playerSprite.image, self.apply(Game.playerSprite))
         self.last_x = x
 
     def enableGrid(self):
