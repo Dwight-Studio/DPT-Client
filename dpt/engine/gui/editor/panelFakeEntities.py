@@ -1,12 +1,11 @@
 import pygame
-from dpt.engine.gui.editor.editorPanel import EditorPanel
 from dpt.engine.loader import RessourceLoader, UnreachableRessourceError
-from dpt.game import Game
 
 
 class PanelFakeEntity(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height, alpha, block):
-        pygame.sprite.Sprite.__init__(self, EditorPanel.editorPanelGroup)
+        from dpt.engine.tileManager import TileManager
+        pygame.sprite.Sprite.__init__(self, TileManager.editorPanelGroup)
         try:
             self.block = RessourceLoader.get(block)
             self.image = RessourceLoader.get(self.block.texture)

@@ -19,8 +19,8 @@ def redraw_Game_window():
 
     TileEditor.update()
 
-    EditorPanel.editorPanelGroup.draw(Game.surface)
-    EditorPanel.editorPanelGroup.update()
+    TileManager.editorPanelGroup.draw(Game.surface)
+    TileManager.editorPanelGroup.update()
 
     TileEditor.ghostBlockGroup.draw(Game.surface)
 
@@ -56,12 +56,16 @@ def loop():
             elif event.type == Game.BUTTONEVENT:
                 TileEditor.inEditor = not TileEditor.inEditor
                 TileEditor.panelOpen = False
-                EditorPanel.editorPanelGroup.empty()
+                TileManager.editorPanelGroup.empty()
                 Game.playerGroup.empty()
                 TileManager.entityGroup.empty()
                 TileEditor.ghostBlockGroup.empty()
                 TileManager.loadLevel(TileManager.levelName)
-
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 4:
+                    TileManager.scrollUp()
+                elif event.button == 5:
+                    TileManager.scrollDown()
         redraw_Game_window()
 
     pygame.quit()
