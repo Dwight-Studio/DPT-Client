@@ -1,15 +1,12 @@
 import math
-
 import pygame
-
 from dpt.game import Game
 
 
 class EditorPanel(pygame.sprite.Sprite):
-    editorPanelGroup = pygame.sprite.Group()
-
     def __init__(self, color, x, y, width, height, alpha):
-        pygame.sprite.Sprite.__init__(self)
+        from dpt.engine.tileManager import TileManager
+        pygame.sprite.Sprite.__init__(self, TileManager.editorPanelGroup)
         self.image = pygame.Surface((width, height))
         self.image.fill(color)
         self.image.set_alpha(alpha)
@@ -18,7 +15,6 @@ class EditorPanel(pygame.sprite.Sprite):
         self.rect.y = y
         self.width = width
         self.height = height
-        self.log = Game.get_logger("EditorPanel")
 
     def update(self):
         mouse = pygame.mouse.get_pos()

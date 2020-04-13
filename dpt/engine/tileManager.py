@@ -12,11 +12,17 @@ class TileManager:
     enemyGroup = pygame.sprite.Group()
     environmentGroup = pygame.sprite.Group()
     entityGroup = pygame.sprite.Group()
+    editorPanelGroup = pygame.sprite.Group()
 
     log = Game.get_logger("TileManager")
     levelName = None
     maxWidthSize = 0
     maxHeightSize = 0
+    count = 0
+    alreadyDefined = False
+    nbPerLineCount = 0
+    nbPerLine = 0
+    nbSkip = 0
     coords = None
     camera = None
     editorCamera = None
@@ -84,17 +90,45 @@ class TileManager:
 
     @classmethod
     def openTilePanel(cls):
+        cls.count = 0
         panel = EditorPanel((255, 255, 255), Game.surface.get_size()[0] / 4 * 3, 0, Game.surface.get_size()[0] / 4, Game.surface.get_size()[1], 120)
-        EditorPanel.editorPanelGroup.add(panel)
+        TileManager.editorPanelGroup.add(panel)
         startx = Game.surface.get_size()[0] / 4 * 3 + Game.TILESIZE
         starty = 0 + Game.TILESIZE
         for element in Game.availableTiles:
-            sprite = PanelFakeEntity(startx, starty, Game.TILESIZE, Game.TILESIZE, 255, element)
-            Game.editorTileRegistry[str(math.floor(startx / Game.TILESIZE)) + ", " + str(math.floor(starty / Game.TILESIZE))] = {"class": element}
-            startx += Game.TILESIZE
-            if math.floor(startx) >= Game.surface.get_size()[0] - Game.TILESIZE:
-                startx = Game.surface.get_size()[0] / 4 * 3 + Game.TILESIZE
-                starty += Game.TILESIZE
+            if cls.count == cls.nbSkip:
+                sprite = PanelFakeEntity(startx, starty, Game.TILESIZE, Game.TILESIZE, 255, element)
+                Game.editorTileRegistry[str(math.floor(startx / Game.TILESIZE)) + ", " + str(math.floor(starty / Game.TILESIZE))] = {"class": element}
+                startx += Game.TILESIZE
+                cls.nbPerLineCount += 1
+                if math.floor(startx) >= Game.surface.get_size()[0] - Game.TILESIZE:
+                    startx = Game.surface.get_size()[0] / 4 * 3 + Game.TILESIZE
+                    starty += Game.TILESIZE
+                    if not cls.alreadyDefined:
+                        cls.nbPerLine = cls.nbPerLineCount
+                        cls.alreadyDefined = True
+                        print(cls.nbPerLine)
+            else:
+                cls.count += 1
+                print(element)
+                continue
+
+    @classmethod
+    def scrollDown(cls):
+        TileManager.editorPanelGroup.empty()
+        Game.editorTileRegistry.clear()
+        cls.nbSkip += cls.nbPerLine
+        print(cls.nbSkip)
+        TileManager.openTilePanel()
+
+    @classmethod
+    def scrollUp(cls):
+        TileManager.editorPanelGroup.empty()
+        Game.editorTileRegistry.clear()
+        if cls.nbSkip > 0:
+            cls.nbSkip -= cls.nbPerLine
+        print(cls.nbSkip)
+        TileManager.openTilePanel()
 
     @classmethod
     def outOfWindow(cls):
