@@ -5,6 +5,7 @@ from dpt.game import Game
 
 class Button(pygame.sprite.Sprite):
     buttonsGroup = pygame.sprite.Group()
+    text_sprite_buttonsGroup = pygame.sprite.Group()
     text_buttonsList = []
 
     def __init__(self, x, y, width, height, image, **kwargs):
@@ -40,6 +41,11 @@ class Button(pygame.sprite.Sprite):
             del kwargs["text"]
         except KeyError:
             self.text = None
+        try:
+            self.text_sprite = kwargs["text_sprite"]
+            del kwargs["text_sprite"]
+        except KeyError:
+            self.text_sprite = None
         self.eventargs = kwargs
         self.image = self.normal_image
         self.image = pygame.transform.scale(self.image, (width, height))
@@ -57,6 +63,10 @@ class Button(pygame.sprite.Sprite):
         return self.pushed
 
     def update(self):
+        if self.text_sprite is not None:
+            self.text_sprite.rect.centerx = self.rect.centerx
+            self.text_sprite.rect.centery = self.rect.centery
+
         if self.text is not None:
             text = self.font.render(self.text, True, self.font_color)
             rect = text.get_rect()
@@ -92,3 +102,13 @@ class Button(pygame.sprite.Sprite):
 
     def unlock(self):
         self.locked = False
+
+    @classmethod
+    def main_loop(cls):
+        Button.buttonsGroup.update()
+        Button.text_sprite_buttonsGroup.update()
+        Button.text_sprite_buttonsGroup.draw(Game.surface)
+        Button.buttonsGroup.draw(Game.surface)
+        for i in Button.text_buttonsList:
+            Game.surface.blit(i[0], i[1])
+        Game.text_buttonsGroup = []

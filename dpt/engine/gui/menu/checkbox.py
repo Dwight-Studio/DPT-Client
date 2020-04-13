@@ -48,3 +48,8 @@ class Checkbox(pygame.sprite.Sprite):
         self.width = self.rect.width
         self.height = self.rect.height
         self.image = pygame.transform.scale(self.image, (math.floor(self.width * Game.DISPLAY_RATIO), math.floor(self.height * Game.DISPLAY_RATIO)))
+
+    @classmethod
+    def main_loop(cls):
+        Checkbox.checkboxGroup.update()
+        Checkbox.checkboxGroup.draw(Game.surface)

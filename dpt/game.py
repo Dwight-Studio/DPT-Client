@@ -5,13 +5,34 @@ import os
 import sys
 import tarfile
 import traceback
-import time
+from github import Github
 import pygame
+
+
+def get_ver(channel):
+    nb_commit = str(Github("173defb6736714914ca2471e9db6adb15452b890").get_repo("Deleranax/DPT-Client").get_commits().totalCount)
+
+    try:
+        ver1 = int(nb_commit[-4])
+    except IndexError:
+        ver1 = 0
+
+    try:
+        ver2 = int(nb_commit[-3])
+    except IndexError:
+        ver2 = 0
+
+    try:
+        ver3 = int(nb_commit[-2:])
+    except IndexError:
+        ver3 = 0
+
+    return channel + "-" + str(ver1) + "." + str(ver2) + "." + str(ver3)
 
 
 class Game(object):
     # Constantes
-    VERSION = "ALPHA-0.8.9"
+    VERSION = get_ver("ALPHA")
     PYTHON_VERSION = str(sys.version_info[0]) + "." + str(sys.version_info[1]) + "." + str(sys.version_info[2]) + "-" + str(sys.version_info[3])
     PYGAME_VERSION = pygame.version.ver
     PLATFORM = sys.platform

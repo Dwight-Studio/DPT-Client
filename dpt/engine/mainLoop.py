@@ -55,19 +55,9 @@ def redraw_Game_window():
         raise
     TileEditor.ghostBlockGroup.draw(Game.surface)
 
-    Button.buttonsGroup.update()
-    Button.buttonsGroup.draw(Game.surface)
-    for i in Button.text_buttonsList:
-        Game.surface.blit(i[0], i[1])
-    Game.text_buttonsGroup = []
-
-    ProgressBar.progressbarGroup.update()
-    Bar.barGroup.update()
-    Bar.barGroup.draw(Game.surface)
-    ProgressBar.progressbarGroup.draw(Game.surface)
-
-    Checkbox.checkboxGroup.update()
-    Checkbox.checkboxGroup.draw(Game.surface)
+    Button.main_loop()
+    ProgressBar.main_loop()
+    Checkbox.main_loop()
 
     Game.display_debug_info()
     Game.window.update()

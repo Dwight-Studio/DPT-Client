@@ -26,3 +26,10 @@ class ProgressBar(pygame.sprite.Sprite):
 
         Game.add_debug_info(str(self.bar.progress))
         self.bar.progress = math.floor(self.width * (self.value / self.max_value))
+
+    @classmethod
+    def main_loop(cls):
+        ProgressBar.progressbarGroup.update()
+        Bar.barGroup.update()
+        Bar.barGroup.draw(Game.surface)
+        ProgressBar.progressbarGroup.draw(Game.surface)
