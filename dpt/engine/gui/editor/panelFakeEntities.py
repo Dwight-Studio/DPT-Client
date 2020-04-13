@@ -3,7 +3,7 @@ from dpt.engine.loader import RessourceLoader, UnreachableRessourceError
 
 
 class PanelFakeEntity(pygame.sprite.Sprite):
-    def __init__(self, x, y, width, height, alpha, block):
+    def __init__(self, x, y, alpha, block):
         from dpt.engine.tileManager import TileManager
         pygame.sprite.Sprite.__init__(self, TileManager.editorPanelGroup)
         try:
@@ -16,5 +16,3 @@ class PanelFakeEntity(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x + self.block.offset_x
         self.rect.y = y + self.block.offset_y
-        self.width = width
-        self.height = height

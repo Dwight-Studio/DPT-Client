@@ -5,7 +5,7 @@ from dpt.game import Game
 
 
 class GhostFakeEntity(pygame.sprite.Sprite):
-    def __init__(self, x, y, width, height, alpha, block):
+    def __init__(self, x, y, alpha, block):
         pygame.sprite.Sprite.__init__(self, TileEditor.ghostBlockGroup)
         try:
             self.block = RessourceLoader.get(block)
@@ -17,5 +17,3 @@ class GhostFakeEntity(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x + self.block.offset_x
         self.rect.y = y + self.block.offset_y
-        self.width = width
-        self.height = height
