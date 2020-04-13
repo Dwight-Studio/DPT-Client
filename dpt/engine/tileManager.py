@@ -98,6 +98,7 @@ class TileManager:
             cls.editorCamera = EditorCamera(TileManager.maxWidthSize, TileManager.maxHeightSize)
         TileEditor.createdLevel = level
         cls.levelName = levelName
+        Game.isPlayerDead = False
         cls.log.info("Done")
 
     @classmethod

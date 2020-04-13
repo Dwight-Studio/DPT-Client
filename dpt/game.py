@@ -11,7 +11,7 @@ import pygame
 
 class Game(object):
     # Constantes
-    VERSION = "ALPHA-0.0.1"
+    VERSION = "ALPHA-0.8.9"
     PYTHON_VERSION = str(sys.version_info[0]) + "." + str(sys.version_info[1]) + "." + str(sys.version_info[2]) + "-" + str(sys.version_info[3])
     PYGAME_VERSION = pygame.version.ver
     PLATFORM = sys.platform
@@ -21,7 +21,7 @@ class Game(object):
     TILESIZE = 90
     DISPLAY_RATIO = 1
     LINUX_USER = True
-    DISPLAY_RECT = True
+    DISPLAY_RECT = False
 
     # Variable à définir
     isPlayerDead = False

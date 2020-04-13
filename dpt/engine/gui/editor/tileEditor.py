@@ -27,6 +27,7 @@ class TileEditor:
     def update(cls):
         from dpt.engine.tileManager import TileManager
         if cls.inEditor:
+            Game.isPlayerDead = True
             TileManager.editorCamera.enableGrid()
             # Gestion des fichiers (raccourcis)
             mouseButtons = pygame.mouse.get_pressed()
