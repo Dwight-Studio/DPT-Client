@@ -3,6 +3,7 @@ from dpt.engine.gui.editor.editorPanel import EditorPanel
 from dpt.engine.gui.editor.tileEditor import TileEditor
 from dpt.engine.gui.menu.bar import Bar
 from dpt.engine.gui.menu.button import Button
+from dpt.engine.gui.menu.checkbox import Checkbox
 from dpt.engine.gui.menu.progressbar import ProgressBar
 from dpt.engine.tileManager import TileManager
 from dpt.engine.loader import RessourceLoader
@@ -36,6 +37,15 @@ def redraw_Game_window():
     for i in Button.text_buttonsList:
         Game.surface.blit(i[0], i[1])
     Game.text_buttonsGroup = []
+
+    ProgressBar.progressbarGroup.update()
+    Bar.barGroup.update()
+    Bar.barGroup.draw(Game.surface)
+    ProgressBar.progressbarGroup.draw(Game.surface)
+
+    Checkbox.checkboxGroup.update()
+    Checkbox.checkboxGroup.draw(Game.surface)
+
     Game.display_debug_info()
     Game.window.update()
 

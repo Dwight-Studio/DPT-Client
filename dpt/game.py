@@ -108,6 +108,7 @@ class Game(object):
 
         # Groupes Pygame
         from dpt.engine.gui.menu.button import Button
+        from dpt.engine.gui.menu.checkbox import Checkbox
 
         cls.playerGroup = pygame.sprite.Group()
 
@@ -135,6 +136,7 @@ class Game(object):
             # com.voteResult()
 
             cls.button = Button(50, 50, 127, 46, RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_OUT"), pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_IN"), text="Editeur")
+            checkbox = Checkbox(100, 50)
             from dpt.engine.mainLoop import loop
             loop()
         except Exception:
