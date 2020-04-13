@@ -1,3 +1,5 @@
+import math
+
 import pygame
 
 from dpt.engine.loader import RessourceLoader
@@ -44,4 +46,4 @@ class Checkbox(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.width = self.rect.width
         self.height = self.rect.height
-        self.image = pygame.transform.scale(self.image, (self.width * Game.DISPLAY_RATIO, self.height * Game.DISPLAY_RATIO))
+        self.image = pygame.transform.scale(self.image, (math.floor(self.width * Game.DISPLAY_RATIO), math.floor(self.height * Game.DISPLAY_RATIO)))
