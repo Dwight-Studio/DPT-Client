@@ -27,6 +27,13 @@ def do_synch_anims():
 
 def redraw_Game_window():
     TileManager.environmentGroup.update()
+
+    Game.playerGroup.update()
+
+    TileManager.enemyGroup.update()
+    TileManager.entityGroup.update()
+    TileManager.outOfWindow()
+
     if not TileEditor.inEditor:
         TileManager.camera.update(Game.playerSprite)
     elif TileEditor.inEditor:
@@ -46,14 +53,7 @@ def redraw_Game_window():
             except AttributeError:
                 pass
         raise
-
     TileEditor.ghostBlockGroup.draw(Game.surface)
-
-    Game.playerGroup.update()
-
-    TileManager.enemyGroup.update()
-    TileManager.entityGroup.update()
-    TileManager.outOfWindow()
 
     Button.buttonsGroup.update()
     Button.buttonsGroup.draw(Game.surface)

@@ -171,7 +171,6 @@ class PlayerSprite(pygame.sprite.Sprite):
             self.yvel = 0
             Game.isPlayerDead = True
             self.xvel = 0
-            time.sleep(0.5)
             self.die()
 
     def die(self):
@@ -183,3 +182,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.yvel = math.floor((self.jumpCount ** 2) * 0.5) * neg
         self.jumpCount -= 1
         self.rect.top -= self.yvel
+
+    def check_void(self):
+        if self.rect.top > 2000:
+            self.kill()

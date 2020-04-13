@@ -21,7 +21,7 @@ class Game(object):
     TILESIZE = 90
     DISPLAY_RATIO = 1
     LINUX_USER = True
-    DISPLAY_RECT = False
+    DISPLAY_RECT = True
 
     # Variable à définir
     isPlayerDead = False

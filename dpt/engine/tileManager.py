@@ -17,6 +17,7 @@ class TileManager:
     entityGroup = pygame.sprite.Group()
     editorPanelGroup = pygame.sprite.Group()
     backgroundBlocks = pygame.sprite.Group()
+    foregroundBlocks = pygame.sprite.Group()
 
     log = Game.get_logger("TileManager")
     levelName = None
@@ -46,6 +47,7 @@ class TileManager:
         TileManager.entityGroup.empty()
         TileEditor.ghostBlockGroup.empty()
         TileManager.deadlyObjectGroup.empty()
+        TileManager.foregroundBlocks.empty()
 
         if type(levelName) == str:
             cls.log.info("Loading level " + levelName)
@@ -193,7 +195,7 @@ class Camera:
         for sprite in TileManager.backgroundBlocks:
             Game.surface.blit(sprite.image, self.apply(sprite))
             if Game.DISPLAY_RECT:
-                pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
+                pygame.draw.rect(Game.surface, (0, 0, 255), self.apply(sprite), width=2)
         for sprite in TileManager.environmentGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
             if Game.DISPLAY_RECT:
@@ -201,14 +203,14 @@ class Camera:
         for sprite in TileManager.entityGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
             if Game.DISPLAY_RECT:
-                pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
+                pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(sprite), width=2)
         Game.surface.blit(Game.playerSprite.image, self.apply(Game.playerSprite))
         if Game.DISPLAY_RECT:
-            pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(Game.playerSprite), width=2)
+            pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(Game.playerSprite), width=2)
         for sprite in TileManager.deadlyObjectGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
-            if Game.DISPLAY_RECT:
-                pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
+        for sprite in TileManager.foregroundBlocks:
+            Game.surface.blit(sprite.image, self.apply(sprite))
         self.last_x = x
 
 
@@ -234,7 +236,7 @@ class EditorCamera:
         for sprite in TileManager.backgroundBlocks:
             Game.surface.blit(sprite.image, self.apply(sprite))
             if Game.DISPLAY_RECT:
-                pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
+                pygame.draw.rect(Game.surface, (0, 0, 255), self.apply(sprite), width=2)
         for sprite in TileManager.environmentGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
             if Game.DISPLAY_RECT:
@@ -242,14 +244,14 @@ class EditorCamera:
         for sprite in TileManager.entityGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
             if Game.DISPLAY_RECT:
-                pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
+                pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(sprite), width=2)
         Game.surface.blit(Game.playerSprite.image, self.apply(Game.playerSprite))
         if Game.DISPLAY_RECT:
-            pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(Game.playerSprite), width=2)
+            pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(Game.playerSprite), width=2)
         for sprite in TileManager.deadlyObjectGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
-            if Game.DISPLAY_RECT:
-                pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
+        for sprite in TileManager.foregroundBlocks:
+            Game.surface.blit(sprite.image, self.apply(sprite))
         self.last_x = x
 
     def enableGrid(self):
