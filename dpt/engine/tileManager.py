@@ -3,6 +3,7 @@ import pygame
 from dpt.engine.gui.editor.editorPanel import EditorPanel
 from dpt.engine.gui.editor.panelFakeEntities import PanelFakeEntity
 from dpt.engine.gui.editor.tileEditor import TileEditor
+from dpt.engine.backgroundFakeBlocks import BackgroundFakeBlocks
 from dpt.engine.loader import RessourceLoader, UnreachableRessourceError
 from dpt.game import Game
 
@@ -13,6 +14,7 @@ class TileManager:
     environmentGroup = pygame.sprite.Group()
     entityGroup = pygame.sprite.Group()
     editorPanelGroup = pygame.sprite.Group()
+    backgroundBlocks = pygame.sprite.Group()
 
     log = Game.get_logger("TileManager")
     levelName = None
@@ -54,7 +56,16 @@ class TileManager:
                 cls.log.warning("The tile position can't be negative : " + keys)
                 continue
             try:
-                block = RessourceLoader.get(level[keys]["class"])(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE)
+                RessourceLoader.get(level[keys]["class"])(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE)
+                if "backgroundClass" in level[keys]:
+                    try:
+                        BackgroundFakeBlocks(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE, level[keys]["backgroundClass"])
+                        cls.log.debug("Background tile " + level[keys]["class"] + " placed at " + keys)
+                    except UnreachableRessourceError:
+                        cls.log.warning("Invalid class name : " + level[keys]["class"] + " for tile : " + keys)
+                    except KeyError:
+                        cls.log.critical("Invalid level (corrupted ?)")
+                        return
                 cls.log.debug("Tile " + level[keys]["class"] + " placed at " + keys)
             except UnreachableRessourceError:
                 cls.log.warning("Invalid class name : " + level[keys]["class"] + " for tile : " + keys)
@@ -167,6 +178,8 @@ class Camera:
             Game.surface.blit(sprite.image, self.apply(sprite))
         for sprite in TileManager.entityGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
+        for sprite in TileManager.backgroundBlocks:
+            Game.surface.blit(sprite.image, self.apply(sprite))
         self.last_x = x
 
 
@@ -190,6 +203,8 @@ class EditorCamera:
         for sprite in TileManager.environmentGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
         for sprite in TileManager.entityGroup:
+            Game.surface.blit(sprite.image, self.apply(sprite))
+        for sprite in TileManager.backgroundBlocks:
             Game.surface.blit(sprite.image, self.apply(sprite))
         self.last_x = x
 

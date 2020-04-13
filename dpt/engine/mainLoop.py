@@ -22,6 +22,7 @@ def redraw_Game_window():
     TileManager.editorPanelGroup.draw(Game.surface)
     TileManager.editorPanelGroup.update()
 
+    TileManager.backgroundBlocks.draw(Game.surface)
     TileEditor.ghostBlockGroup.draw(Game.surface)
 
     Game.playerGroup.update()
@@ -58,6 +59,7 @@ def loop():
                 TileEditor.panelOpen = False
                 TileManager.editorPanelGroup.empty()
                 Game.playerGroup.empty()
+                TileManager.backgroundBlocks.empty()
                 TileManager.entityGroup.empty()
                 TileEditor.ghostBlockGroup.empty()
                 TileManager.loadLevel(TileManager.levelName)
