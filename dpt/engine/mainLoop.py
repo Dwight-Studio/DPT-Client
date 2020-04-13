@@ -23,7 +23,6 @@ def redraw_Game_window():
     TileManager.editorPanelGroup.draw(Game.surface)
     TileManager.editorPanelGroup.update()
 
-    TileManager.backgroundBlocks.draw(Game.surface)
     TileEditor.ghostBlockGroup.draw(Game.surface)
 
     Game.playerGroup.update()
@@ -67,6 +66,7 @@ def loop():
             elif event.type == Game.BUTTONEVENT:
                 TileEditor.inEditor = not TileEditor.inEditor
                 TileEditor.panelOpen = False
+                Checkbox.checkboxGroup.empty()
                 TileManager.editorPanelGroup.empty()
                 Game.playerGroup.empty()
                 TileManager.backgroundBlocks.empty()

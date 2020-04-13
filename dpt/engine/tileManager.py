@@ -4,6 +4,7 @@ from dpt.engine.gui.editor.editorPanel import EditorPanel
 from dpt.engine.gui.editor.panelFakeEntities import PanelFakeEntity
 from dpt.engine.gui.editor.tileEditor import TileEditor
 from dpt.engine.backgroundFakeBlocks import BackgroundFakeBlocks
+from dpt.engine.gui.menu.checkbox import Checkbox
 from dpt.engine.loader import RessourceLoader, UnreachableRessourceError
 from dpt.game import Game
 
@@ -25,6 +26,7 @@ class TileManager:
     nbPerLineCount = 0
     nbPerLine = 0
     nbSkip = 0
+    checkBack = None
     coords = None
     camera = None
     editorCamera = None
@@ -55,23 +57,20 @@ class TileManager:
             if cls.coords[0] < 0 or cls.coords[1] < 0:
                 cls.log.warning("The tile position can't be negative : " + keys)
                 continue
-            try:
-                RessourceLoader.get(level[keys]["class"])(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE)
-                if "backgroundClass" in level[keys]:
-                    try:
-                        BackgroundFakeBlocks(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE, level[keys]["backgroundClass"])
-                        cls.log.debug("Background tile " + level[keys]["class"] + " placed at " + keys)
-                    except UnreachableRessourceError:
-                        cls.log.warning("Invalid class name : " + level[keys]["class"] + " for tile : " + keys)
-                    except KeyError:
-                        cls.log.critical("Invalid level (corrupted ?)")
-                        return
-                cls.log.debug("Tile " + level[keys]["class"] + " placed at " + keys)
-            except UnreachableRessourceError:
-                cls.log.warning("Invalid class name : " + level[keys]["class"] + " for tile : " + keys)
-            except KeyError:
-                cls.log.critical("Invalid level (corrupted ?)")
-                return
+            if "class" in level[keys]:
+                try:
+                    RessourceLoader.get(level[keys]["class"])(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE)
+                    cls.log.debug("Tile " + level[keys]["class"] + " placed at " + keys)
+                except UnreachableRessourceError:
+                    cls.log.warning("Invalid class name : " + level[keys]["class"] + " for tile : " + keys)
+            if "backgroundClass" in level[keys]:
+                try:
+                    BackgroundFakeBlocks(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE,
+                                         level[keys]["backgroundClass"])
+                    cls.log.debug("Background tile " + level[keys]["backgroundClass"] + " placed at " + keys)
+                except UnreachableRessourceError:
+                    cls.log.warning("Invalid class name : " + level[keys]["backgroundClass"] + " for tile : " + keys)
+        cls.backgroundBlocks.draw(Game.surface)
         cls.environmentGroup.draw(Game.surface)
         cls.entityGroup.draw(Game.surface)
         cls.enemyGroup.draw(Game.surface)
@@ -104,6 +103,7 @@ class TileManager:
         cls.count = 0
         panel = EditorPanel((255, 255, 255), Game.surface.get_size()[0] / 4 * 3, 0, Game.surface.get_size()[0] / 4, Game.surface.get_size()[1], 120)
         TileManager.editorPanelGroup.add(panel)
+        cls.checkBack = Checkbox(Game.surface.get_size()[0] // 4 * 3 + Game.TILESIZE // 4, Game.TILESIZE // 4)
         startx = Game.surface.get_size()[0] / 4 * 3 + Game.TILESIZE
         starty = 0 + Game.TILESIZE
         for element in Game.availableTiles:
@@ -127,6 +127,7 @@ class TileManager:
     @classmethod
     def scrollDown(cls):
         TileManager.editorPanelGroup.empty()
+        Checkbox.checkboxGroup.empty()
         Game.editorTileRegistry.clear()
         cls.nbSkip += cls.nbPerLine
         print(cls.nbSkip)
@@ -135,6 +136,7 @@ class TileManager:
     @classmethod
     def scrollUp(cls):
         TileManager.editorPanelGroup.empty()
+        Checkbox.checkboxGroup.empty()
         Game.editorTileRegistry.clear()
         if cls.nbSkip > 0:
             cls.nbSkip -= cls.nbPerLine
@@ -174,11 +176,11 @@ class Camera:
         x = max(-calcul, x)
         self.camera = pygame.Rect(x, 0, self.width, self.height)
         Game.surface.blit(Game.playerSprite.image, self.apply(Game.playerSprite))
+        for sprite in TileManager.backgroundBlocks:
+            Game.surface.blit(sprite.image, self.apply(sprite))
         for sprite in TileManager.environmentGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
         for sprite in TileManager.entityGroup:
-            Game.surface.blit(sprite.image, self.apply(sprite))
-        for sprite in TileManager.backgroundBlocks:
             Game.surface.blit(sprite.image, self.apply(sprite))
         self.last_x = x
 
@@ -200,11 +202,11 @@ class EditorCamera:
         x = min(0, x)
         self.camera = pygame.Rect(x, 0, self.width, self.height)
         Game.surface.blit(Game.playerSprite.image, self.apply(Game.playerSprite))
+        for sprite in TileManager.backgroundBlocks:
+            Game.surface.blit(sprite.image, self.apply(sprite))
         for sprite in TileManager.environmentGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
         for sprite in TileManager.entityGroup:
-            Game.surface.blit(sprite.image, self.apply(sprite))
-        for sprite in TileManager.backgroundBlocks:
             Game.surface.blit(sprite.image, self.apply(sprite))
         self.last_x = x
 

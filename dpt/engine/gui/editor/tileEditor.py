@@ -2,6 +2,7 @@ import pygame
 import math
 import pygame
 from dpt.engine.gui.editor.editorPanel import EditorPanel
+from dpt.engine.gui.menu.checkbox import Checkbox
 from dpt.game import Game
 
 
@@ -60,6 +61,7 @@ class TileEditor:
                     elif keys[pygame.K_t] and not cls.tpushed and cls.panelOpen:
                         cls.tpushed = True
                         TileManager.editorPanelGroup.empty()
+                        Checkbox.checkboxGroup.empty()
                         cls.panelOpen = False
                     elif not keys[pygame.K_t] and cls.tpushed:
                         cls.tpushed = False
@@ -78,7 +80,13 @@ class TileEditor:
                     cls.lastMousePosX = cls.mousePosX
                     cls.lastMousePosY = cls.mousePosY
                     TileManager.placeBlock(cls.mousePosX, cls.mousePosY, Game.selectedItem)
-                    cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)] = {"class": Game.selectedItem}
+                    if not TileManager.checkBack:
+                        cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)] = {"class": Game.selectedItem}
+                    elif TileManager.checkBack:
+                        if str(cls.mousePosX) + ", " + str(cls.mousePosY) in cls.createdLevel:
+                            cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)]["backgroundClass"] = Game.selectedItem
+                        else:
+                            cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)] = {"backgroundClass": Game.selectedItem}
             elif mouseButtons[0] != 1 and cls.mousePushedL:
                 cls.mousePushedL = False
             elif mouseButtons[0] == 1 and cls.mousePosX != cls.lastMousePosX or cls.mousePosY != cls.lastMousePosY and cls.mousePushedL:
