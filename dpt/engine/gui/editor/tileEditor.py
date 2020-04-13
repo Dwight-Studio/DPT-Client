@@ -2,6 +2,7 @@ import pygame
 import math
 import pygame
 from dpt.engine.gui.editor.editorPanel import EditorPanel
+from dpt.engine.gui.menu.button import Button
 from dpt.engine.gui.menu.checkbox import Checkbox
 from dpt.game import Game
 
@@ -82,6 +83,12 @@ class TileEditor:
                 cls.lastMousePosY = None
                 TileEditor.ghostBlockGroup.empty()
                 TileManager.ghostBlock((cls.mousePosX * Game.TILESIZE) + TileManager.editorCamera.last_x, cls.mousePosY * Game.TILESIZE, Game.selectedItem)
+
+            if mouseButtons[0] == 1 or mouseButtons[1] == 1 or mouseButtons[2] == 1:
+                for btn in Button.buttonsGroup:
+                    if btn.rect.collidepoint(mouse[0], mouse[1]):
+                        return
+
             if mouseButtons[0] == 1 and not cls.mousePushedL:
                 cls.mousePushedL = True
                 if not cls.panelOpen or cls.mousePosX <= math.floor(((Game.surface.get_size()[0] / 4 * 3 - Game.TILESIZE) - TileManager.editorCamera.last_x) / Game.TILESIZE):
