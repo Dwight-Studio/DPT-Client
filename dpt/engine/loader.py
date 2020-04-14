@@ -10,7 +10,7 @@ from dpt.engine.gui.menu.bar import Bar
 from dpt.engine.gui.menu.progressbar import ProgressBar
 from dpt.game import Game
 
-RESSOURCES_DIRECTORY = Game.ROOT_DIRECTORY + "/dpt/ressources/"
+RESSOURCES_DIRECTORY = Game.ROOT_DIRECTORY + "/ressources/"
 
 
 class UnreachableRessourceError(Exception):
@@ -96,9 +96,9 @@ class RessourceLoader:
         cls.logger.info("Starting loading ressources")
         current = 0
         total = len(cls.pending_ressources)
-        pbar = pygame.image.load(Game.ROOT_DIRECTORY + "/dpt/ressources/dpt/images/gui/ui/UI_BARFRAME.png")
-        bar = pygame.image.load(Game.ROOT_DIRECTORY + "/dpt/ressources/dpt/images/gui/ui/UI_COLORBAR_4.png")
-        bg = pygame.image.load(Game.ROOT_DIRECTORY + "/dpt/ressources/dpt/images/environment/background/background.png")
+        pbar = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/gui/ui/UI_BARFRAME.png")
+        bar = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/gui/ui/UI_COLORBAR_4.png")
+        bg = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/environment/background/background.png")
         width = min(Game.surface.get_size()[0] - 50, 1115)
         height = min(math.floor(52 / 1115 * width), 52)
         pb = ProgressBar(math.floor(Game.surface.get_size()[0] / 2 - width / 2), math.floor(Game.surface.get_size()[1] - height), width, height, pbar, bar, total)

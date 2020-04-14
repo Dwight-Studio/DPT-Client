@@ -14,7 +14,7 @@ class Game(object):
     PYTHON_VERSION = str(sys.version_info[0]) + "." + str(sys.version_info[1]) + "." + str(sys.version_info[2]) + "-" + str(sys.version_info[3])
     PYGAME_VERSION = pygame.version.ver
     PLATFORM = sys.platform
-    ROOT_DIRECTORY = os.path.abspath("../")
+    ROOT_DIRECTORY = os.path.abspath(".")
     SERVER_ADDRESS = "localhost"
     VOTE_TIMEOUT = 80
     TILESIZE = 90
