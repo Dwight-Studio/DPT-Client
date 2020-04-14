@@ -8,13 +8,21 @@ import traceback
 import pygame
 
 
+def get_root():
+    cwd = os.path.abspath(os.getcwd())
+    if os.path.exists(cwd + "/dpt"):
+        return cwd + "/dpt"
+    else:
+        return cwd
+
+
 class Game(object):
     # Constantes
     VERSION = "ALPHA-0.3.4"
     PYTHON_VERSION = str(sys.version_info[0]) + "." + str(sys.version_info[1]) + "." + str(sys.version_info[2]) + "-" + str(sys.version_info[3])
     PYGAME_VERSION = pygame.version.ver
     PLATFORM = sys.platform
-    ROOT_DIRECTORY = os.path.abspath(".")
+    ROOT_DIRECTORY = get_root()
     SERVER_ADDRESS = "localhost"
     VOTE_TIMEOUT = 80
     TILESIZE = 90
@@ -91,6 +99,7 @@ class Game(object):
         main_logger.debug("Python version: " + cls.PYTHON_VERSION)
         main_logger.debug("Pygame version: " + cls.PYGAME_VERSION)
         main_logger.debug("OS: " + cls.PLATFORM)
+        main_logger.debug("CWD: " + cls.ROOT_DIRECTORY)
 
         pygame.init()
         cls._debug_infos = []

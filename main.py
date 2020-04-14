@@ -7,8 +7,8 @@ parser.add_argument('--debug', help='enable debug logging', action="store_true")
 
 
 def main():
-    print("MAIN: Adding " + os.path.pardir + " to PYTHONPATH")
-    sys.path.insert(0, os.path.pardir)
+    print("MAIN: Adding " + os.path.abspath(".") + " to PYTHONPATH")
+    sys.path.insert(0, os.path.abspath("."))
     from dpt.game import Game
     args = parser.parse_args()
     Game.play(args.debug)
