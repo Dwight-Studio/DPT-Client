@@ -19,7 +19,7 @@ from cx_Freeze import setup, Executable
 path = sys.path + [os.path.abspath(".")]
 
 # options d'inclusion/exclusion des modules
-includes = ["pygame", "json"]  # nommer les modules non trouves par cx_freeze
+includes = ["pygame", "json", "requests", "tkinter"]  # nommer les modules non trouves par cx_freeze
 excludes = []
 packages = []  # nommer les packages utilises
 
