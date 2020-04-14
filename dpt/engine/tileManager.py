@@ -34,7 +34,6 @@ class TileManager:
     editorCamera = None
     Game.availableTiles = []
     Game.availableTiles.extend(RessourceLoader.select_entries("dpt.blocks.*"))
-    print(Game.availableTiles)
     Game.availableTiles.remove("dpt.blocks.notfound")
     Game.availableTiles.extend(RessourceLoader.select_entries("dpt.entities.*"))
 
