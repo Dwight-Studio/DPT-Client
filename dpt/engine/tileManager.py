@@ -147,17 +147,19 @@ class TileManager:
 
     @classmethod
     def scrollDown(cls):
-        cls.nbSkip += cls.nbPerLine
-        TileManager.openTilePanel()
+        if TileEditor.panelOpen:
+            cls.nbSkip += cls.nbPerLine
+            TileManager.openTilePanel()
 
     @classmethod
     def scrollUp(cls):
-        TileManager.editorPanelGroup.empty()
-        Checkbox.checkboxGroup.empty()
-        Game.editorTileRegistry.clear()
-        if cls.nbSkip > 0:
-            cls.nbSkip -= cls.nbPerLine
-        TileManager.openTilePanel()
+        if TileEditor.panelOpen:
+            TileManager.editorPanelGroup.empty()
+            Checkbox.checkboxGroup.empty()
+            Game.editorTileRegistry.clear()
+            if cls.nbSkip > 0:
+                cls.nbSkip -= cls.nbPerLine
+            TileManager.openTilePanel()
 
     @classmethod
     def outOfWindow(cls):
