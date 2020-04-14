@@ -82,9 +82,9 @@ def loop():
                 TileEditor.panelOpen = False
                 TileManager.loadLevel(TileManager.levelName)
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 4:
+                if event.button == 4 and TileEditor.inEditor:
                     TileManager.scrollUp()
-                elif event.button == 5:
+                elif event.button == 5 and TileEditor.inEditor:
                     TileManager.scrollDown()
 
         do_synch_anims()
