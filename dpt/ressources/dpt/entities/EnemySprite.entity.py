@@ -78,6 +78,7 @@ class EnemySprite(pygame.sprite.Sprite):
 
         self.rect.top -= self.yvel
         self.collide(0, self.yvel, TileManager.environmentGroup)
+        self.check_void()
 
     def animation(self):
         # pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
@@ -100,3 +101,7 @@ class EnemySprite(pygame.sprite.Sprite):
                     self.gravityCount = 0
                 if yVelDelta > 0:
                     self.rect.top = i.rect.bottom
+
+    def check_void(self):
+        if self.rect.top > 2000:
+            self.kill()
