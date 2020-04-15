@@ -40,15 +40,14 @@ class TileManager:
 
     @classmethod
     def loadLevel(cls, levelName):
-        Checkbox.checkboxGroup.empty()
-        TileManager.editorPanelGroup.empty()
-        Game.playerGroup.empty()
-        TileManager.backgroundBlocks.empty()
-        TileManager.entityGroup.empty()
-        TileManager.enemyGroup.empty()
-        TileEditor.ghostBlockGroup.empty()
-        TileManager.deadlyObjectGroup.empty()
-        TileManager.foregroundBlocks.empty()
+        for entity in TileManager.entityGroup:
+            entity.kill()
+
+        for block in TileManager.environmentGroup:
+            block.kill()
+
+        for block in TileManager.backgroundBlocks:
+            block.kill()
 
         if type(levelName) == str:
             cls.log.info("Loading level " + levelName)
