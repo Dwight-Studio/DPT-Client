@@ -29,7 +29,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.standing = False
         self.walkCount = 0
         self.isJump = False
-        self.jumpCount = 8
+        self.jumpCount = 21
         self.CONSTJUMPCOUNT = self.jumpCount
         self.onPlatform = False
         self.allowJump = True
@@ -43,16 +43,16 @@ class PlayerSprite(pygame.sprite.Sprite):
             if keys[pygame.K_LEFT] and self.rect.x - self.xvel - 1 > mur:
                 if self.xvel > 0:
                     self.xvel = 0
-                if self.xvel > -8:
-                    self.xvel -= 1
+                if self.xvel > -4 * Game.DISPLAY_RATIO:
+                    self.xvel -= 0.5 * Game.DISPLAY_RATIO
                 self.left = True
                 self.right = False
                 self.standing = False
             elif keys[pygame.K_RIGHT]:
                 if self.xvel < 0:
                     self.xvel = 0
-                if self.xvel < 8:
-                    self.xvel += 1
+                if self.xvel < 4 * Game.DISPLAY_RATIO:
+                    self.xvel += 0.5 * Game.DISPLAY_RATIO
                 self.left = False
                 self.right = True
                 self.standing = False
@@ -81,7 +81,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                             neg = 1
                         else:
                             neg = -1
-                        self.yvel = math.floor((self.jumpCount ** 2) * 0.5) * neg
+                        self.yvel = math.floor((self.jumpCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * neg
                         self.jumpCount -= 1
                     elif self.onPlatform:
                         self.jumpCount = self.CONSTJUMPCOUNT
@@ -96,7 +96,7 @@ class PlayerSprite(pygame.sprite.Sprite):
             if not self.isJump:
                 self.allowJump = False
                 PlayerSprite.gravityCount += 1
-                PlayerSprite.gravity = math.floor((PlayerSprite.gravityCount ** 2) * 0.5) * -1
+                PlayerSprite.gravity = math.floor((PlayerSprite.gravityCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * -1
                 self.rect.top -= PlayerSprite.gravity
                 self.collide(0, PlayerSprite.gravity, TileManager.environmentGroup)
 
@@ -109,15 +109,15 @@ class PlayerSprite(pygame.sprite.Sprite):
             self.die()
 
     def animation(self):
-        if self.walkCount + 1 >= 27:
+        if self.walkCount + 1 >= 54:
             self.walkCount = 0
 
         if not self.standing:
             if self.left:
-                self.image = self.walkLeft[self.walkCount // 3]
+                self.image = self.walkLeft[self.walkCount // 6]
                 self.walkCount += 1
             elif self.right:
-                self.image = self.walkRight[self.walkCount // 3]
+                self.image = self.walkRight[self.walkCount // 6]
                 self.walkCount += 1
         else:
             if self.right:
@@ -179,9 +179,10 @@ class PlayerSprite(pygame.sprite.Sprite):
             neg = 1
         else:
             neg = -1
-        self.yvel = math.floor((self.jumpCount ** 2) * 0.5) * neg
+        self.yvel = math.floor((self.jumpCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * neg
         self.jumpCount -= 1
         self.rect.top -= self.yvel
+        self.check_void()
 
     def check_void(self):
         if self.rect.top > 2000:
