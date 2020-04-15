@@ -59,6 +59,7 @@ class Button(pygame.sprite.Sprite):
         self.previous_state = False
         Game.get_logger("Button").debug("Button created")
 
+
     def __bool__(self):
         return self.pushed
 
@@ -105,10 +106,10 @@ class Button(pygame.sprite.Sprite):
 
     @classmethod
     def main_loop(cls):
+        Button.text_buttonsList = []
         Button.buttonsGroup.update()
         Button.text_sprite_buttonsGroup.update()
         Button.text_sprite_buttonsGroup.draw(Game.surface)
         Button.buttonsGroup.draw(Game.surface)
         for i in Button.text_buttonsList:
             Game.surface.blit(i[0], i[1])
-        Game.text_buttonsGroup = []

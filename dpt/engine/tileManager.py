@@ -4,8 +4,10 @@ from dpt.engine.gui.editor.editorPanel import EditorPanel
 from dpt.engine.gui.editor.panelFakeEntities import PanelFakeEntity
 from dpt.engine.gui.editor.tileEditor import TileEditor
 from dpt.engine.backgroundFakeBlocks import BackgroundFakeBlocks
+from dpt.engine.gui.menu.bar import Bar
 from dpt.engine.gui.menu.button import Button
 from dpt.engine.gui.menu.checkbox import Checkbox
+from dpt.engine.gui.menu.progressbar import ProgressBar
 from dpt.engine.loader import RessourceLoader, UnreachableRessourceError
 from dpt.game import Game
 
@@ -232,6 +234,31 @@ class TileManager:
     def get_sprite_count(cls):
         return len(cls.backgroundBlocks) + len(cls.entityGroup) + len(cls.environmentGroup)
 
+    @classmethod
+    def display_cam_info(cls):
+        obj_count = TileManager.camera.sprite_count + len(TileManager.foregroundBlocks) + len(TileManager.deadlyObjectGroup) + len(Button.buttonsGroup) + len(Button.text_sprite_buttonsGroup) + len(Button.text_buttonsList) + len(Checkbox.checkboxGroup) + len(ProgressBar.progressbarGroup) + len(Bar.barGroup)
+
+        Game.add_debug_info("CAMERA INFORMATIONS")
+        Game.add_debug_info("Scrolling: " + str(-TileManager.camera.last_x))
+        Game.add_debug_info("Right: " + str(Game.playerSprite.right))
+        Game.add_debug_info("Left: " + str(Game.playerSprite.left))
+        Game.add_debug_info("Player X:" + str(TileManager.camera.target.rect.centerx))
+        Game.add_debug_info("Player Y: " + str(TileManager.camera.target.rect.centery))
+        Game.add_debug_info("Displaying " + str(obj_count) + " objects")
+        Game.add_debug_info("   " + str(len(Game.playerGroup)) + " players")
+        Game.add_debug_info("   " + str(len(TileManager.entityGroup)) + " entities")
+        Game.add_debug_info("   " + str(len(TileManager.environmentGroup)) + " blocks")
+        Game.add_debug_info("   " + str(len(TileManager.backgroundBlocks)) + " background blocks")
+        Game.add_debug_info("   " + str(len(TileManager.foregroundBlocks)) + " foreground blocks")
+        Game.add_debug_info("   " + str(len(TileManager.deadlyObjectGroup)) + " deadly objects")
+        Game.add_debug_info("   " + str(len(Button.buttonsGroup)) + " buttons")
+        Game.add_debug_info("       " + str(len(Button.text_sprite_buttonsGroup)) + " texts (sprites)")
+        Game.add_debug_info("       " + str(len(Button.text_buttonsList)) + " texts")
+        Game.add_debug_info("   " + str(len(Checkbox.checkboxGroup)) + " checkbox")
+        Game.add_debug_info("   " + str(len(ProgressBar.progressbarGroup)) + " progress bars")
+        Game.add_debug_info("       " + str(len(Bar.barGroup)) + " bars")
+        Game.add_debug_info("----------")
+
 class Camera:
     def __init__(self, width, height):
         self.userConfirm = True
@@ -247,6 +274,7 @@ class Camera:
 
     def update(self, target):
         self.sprite_count = 0
+        self.target = target
         x = -target.rect.x + int(Game.surface.get_size()[0] / 2)
 
         calcul = (self.width * Game.TILESIZE) - Game.surface.get_size()[0]
@@ -279,24 +307,7 @@ class Camera:
             Game.surface.blit(sprite.image, self.apply(sprite))
         self.last_x = x
 
-        Game.add_debug_info("CAMERA INFORMATIONS")
-        Game.add_debug_info("Scrolling: " + str(-self.last_x))
-        Game.add_debug_info("Right: " + str(Game.playerSprite.right))
-        Game.add_debug_info("Left: " + str(Game.playerSprite.left))
-        Game.add_debug_info("Player X:" + str(target.rect.centerx))
-        Game.add_debug_info("Player Y: " + str(target.rect.centery))
-        Game.add_debug_info("Displaying " + str(self.sprite_count) + " sprites")
-        Game.add_debug_info("   " + str(len(Game.playerGroup)) + " players")
-        Game.add_debug_info("   " + str(len(TileManager.entityGroup)) + " entities")
-        Game.add_debug_info("   " + str(len(TileManager.environmentGroup)) + " blocks")
-        Game.add_debug_info("   " + str(len(TileManager.backgroundBlocks)) + " background blocks")
-        Game.add_debug_info("   (" + str(len(TileManager.foregroundBlocks)) + " foreground blocks)")
-        Game.add_debug_info("   (" + str(len(TileManager.deadlyObjectGroup)) + " deadly objects)")
-        Game.add_debug_info("   (" + str(len(Button.buttonsGroup)) + " buttons)")
-        Game.add_debug_info("       (" + str(len(Button.text_sprite_buttonsGroup)) + " texts)")
-        Game.add_debug_info("       (" + str(len(Button.text_buttonsList)) + " texts)")
-        Game.add_debug_info("   (" + str(len(Checkbox.checkboxGroup)) + " checkbox)")
-        Game.add_debug_info("----------")
+        TileManager.display_cam_info()
 
 
 class EditorCamera:
@@ -313,6 +324,7 @@ class EditorCamera:
 
     def update(self, target):
         self.sprite_count = 0
+        self.target = target
         x = -target.rect.x + int(Game.surface.get_size()[0] / 2)
         x = min(0, x)
         self.camera = pygame.Rect(x, 0, self.width, self.height)
@@ -341,17 +353,7 @@ class EditorCamera:
             Game.surface.blit(sprite.image, self.apply(sprite))
         self.last_x = x
 
-        Game.add_debug_info("CAMERA INFORMATIONS")
-        Game.add_debug_info("Scrolling: " + str(-self.last_x))
-        Game.add_debug_info("Nb Enemies: " + str(len(TileManager.enemyGroup)))
-        Game.add_debug_info("Displaying " + str(self.sprite_count) + " sprites")
-        Game.add_debug_info("   " + str(len(Game.playerGroup)) + " players")
-        Game.add_debug_info("   " + str(len(TileManager.entityGroup)) + " entities")
-        Game.add_debug_info("   " + str(len(TileManager.environmentGroup)) + " blocks")
-        Game.add_debug_info("   " + str(len(TileManager.backgroundBlocks)) + " background blocks")
-        Game.add_debug_info("   (" + str(len(TileManager.foregroundBlocks)) + " foreground blocks)")
-        Game.add_debug_info("   (" + str(len(TileManager.deadlyObjectGroup)) + " deadly objects)")
-        Game.add_debug_info("----------")
+        TileManager.display_cam_info()
 
     def enableGrid(self):
         for x in range(self.last_x, Game.surface.get_size()[0], Game.TILESIZE):

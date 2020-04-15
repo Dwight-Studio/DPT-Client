@@ -37,8 +37,6 @@ class Game(object):
     clock = None
     playerGroup = None
     ressources = None
-    buttonsGroup = None
-    text_buttonsList = []
     availableTiles = None
     platformsList = []
     enemyList = []
@@ -46,7 +44,6 @@ class Game(object):
     editorTileRegistry = {}
     surface = None
     playerSprite = None
-    camera = None
     button = None
     events = []
 
