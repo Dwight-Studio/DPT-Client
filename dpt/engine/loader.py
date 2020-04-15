@@ -200,7 +200,7 @@ class RessourceLoader:
     def add_pending(cls, entry):
         try:
             rlist = []
-            entries = cls.select_entries(entry)
+            entries = cls.select_entries(entry.lower())
             for entry in entries:
                 cls.pending_ressources[entry] = cls.RESSOURCES[entry]
         except KeyError:
