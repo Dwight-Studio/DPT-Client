@@ -98,6 +98,7 @@ class RessourceLoader:
     @classmethod
     def load(cls):
         cls.logger.info("Starting loading ressources")
+        cls.pending_ressources = {key: value for key, value in cls.pending_ressources.items() if key not in cls.loaded_ressources}
         current = 0
         total = len(cls.pending_ressources)
         pbar = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/gui/ui/UI_BARFRAME.png")
@@ -109,8 +110,6 @@ class RessourceLoader:
         font = pygame.font.SysFont("arial", 20)
 
         for entry in cls.pending_ressources:
-            if entry in cls.loaded_ressources:
-                continue
             ext = cls.pending_ressources[entry].split("/")[-1].split(".")
             try:
                 if ext[-1] == "png":

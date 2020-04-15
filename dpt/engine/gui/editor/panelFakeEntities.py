@@ -15,5 +15,5 @@ class PanelFakeEntity(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (self.block.width, self.block.height))
         self.image.set_alpha(alpha)
         self.rect = self.image.get_rect()
-        self.rect.x = x + self.block.offset_x
-        self.rect.y = y + self.block.offset_y
+        self.rect.x = x
+        self.rect.y = y
