@@ -43,16 +43,16 @@ class PlayerSprite(pygame.sprite.Sprite):
             if keys[pygame.K_LEFT] and self.rect.x - self.xvel - 1 > mur:
                 if self.xvel > 0:
                     self.xvel = 0
-                if self.xvel > -4:
-                    self.xvel -= 0.5
+                if self.xvel > -4 * Game.DISPLAY_RATIO:
+                    self.xvel -= 0.5 * Game.DISPLAY_RATIO
                 self.left = True
                 self.right = False
                 self.standing = False
             elif keys[pygame.K_RIGHT]:
                 if self.xvel < 0:
                     self.xvel = 0
-                if self.xvel < 4:
-                    self.xvel += 0.5
+                if self.xvel < 4 * Game.DISPLAY_RATIO:
+                    self.xvel += 0.5 * Game.DISPLAY_RATIO
                 self.left = False
                 self.right = True
                 self.standing = False
@@ -81,7 +81,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                             neg = 1
                         else:
                             neg = -1
-                        self.yvel = math.floor((self.jumpCount ** 2) * 0.05) * neg
+                        self.yvel = math.floor((self.jumpCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * neg
                         self.jumpCount -= 1
                     elif self.onPlatform:
                         self.jumpCount = self.CONSTJUMPCOUNT
@@ -96,7 +96,7 @@ class PlayerSprite(pygame.sprite.Sprite):
             if not self.isJump:
                 self.allowJump = False
                 PlayerSprite.gravityCount += 1
-                PlayerSprite.gravity = math.floor((PlayerSprite.gravityCount ** 2) * 0.05) * -1
+                PlayerSprite.gravity = math.floor((PlayerSprite.gravityCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * -1
                 self.rect.top -= PlayerSprite.gravity
                 self.collide(0, PlayerSprite.gravity, TileManager.environmentGroup)
 
@@ -179,7 +179,7 @@ class PlayerSprite(pygame.sprite.Sprite):
             neg = 1
         else:
             neg = -1
-        self.yvel = math.floor((self.jumpCount ** 2) * 0.05) * neg
+        self.yvel = math.floor((self.jumpCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * neg
         self.jumpCount -= 1
         self.rect.top -= self.yvel
         self.check_void()
