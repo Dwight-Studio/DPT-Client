@@ -29,5 +29,5 @@ class WaterTop(pygame.sprite.Sprite):
         self.animation()
 
     def animation(self):
-        self.image = self.frames[Game.animCountWater // 2]
+        self.image = self.frames[Game.animCountWater // 4]
         self.image = pygame.transform.scale(self.image, (self.width, self.height))

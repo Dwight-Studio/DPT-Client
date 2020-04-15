@@ -40,14 +40,15 @@ class TileManager:
 
     @classmethod
     def loadLevel(cls, levelName):
-        Checkbox.checkboxGroup.empty()
-        TileManager.editorPanelGroup.empty()
         Game.playerGroup.empty()
-        TileManager.backgroundBlocks.empty()
-        TileManager.entityGroup.empty()
-        TileEditor.ghostBlockGroup.empty()
-        TileManager.deadlyObjectGroup.empty()
-        TileManager.foregroundBlocks.empty()
+        for entity in TileManager.entityGroup:
+            entity.kill()
+
+        for block in TileManager.environmentGroup:
+            block.kill()
+
+        for block in TileManager.backgroundBlocks:
+            block.kill()
 
         if type(levelName) == str:
             cls.log.info("Loading level " + levelName)
@@ -189,6 +190,10 @@ class TileManager:
                 enemy.kill()
                 del enemy
 
+    @classmethod
+    def get_sprite_count(cls):
+        return len(cls.backgroundBlocks) + len(cls.entityGroup) + len(cls.environmentGroup)
+
 class Camera:
     def __init__(self, width, height):
         self.userConfirm = True
@@ -197,19 +202,13 @@ class Camera:
         self.height = height
         self.log = Game.get_logger("Camera")
         self.last_x = 0
+        self.sprite_count = 0
 
     def apply(self, entity):
         return entity.rect.move(self.camera.topleft)
 
     def update(self, target):
-        Game.add_debug_info("CAMERA INFORMATIONS")
-        Game.add_debug_info("Scrolling: " + str(-self.last_x))
-        Game.add_debug_info("Right: " + str(Game.playerSprite.right))
-        Game.add_debug_info("Left: " + str(Game.playerSprite.left))
-        Game.add_debug_info("Player X:" + str(target.rect.centerx))
-        Game.add_debug_info("Player Y: " + str(target.rect.centery))
-        Game.add_debug_info("----------")
-
+        self.sprite_count = 0
         x = -target.rect.x + int(Game.surface.get_size()[0] / 2)
 
         calcul = (self.width * Game.TILESIZE) - Game.surface.get_size()[0]
@@ -218,17 +217,21 @@ class Camera:
         self.camera = pygame.Rect(x, 0, self.width, self.height)
         for sprite in TileManager.backgroundBlocks:
             Game.surface.blit(sprite.image, self.apply(sprite))
+            self.sprite_count += 1
             if Game.DISPLAY_RECT:
                 pygame.draw.rect(Game.surface, (0, 0, 255), self.apply(sprite), width=2)
         for sprite in TileManager.environmentGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
+            self.sprite_count += 1
             if Game.DISPLAY_RECT:
                 pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
         for sprite in TileManager.entityGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
+            self.sprite_count += 1
             if Game.DISPLAY_RECT:
                 pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(sprite), width=2)
         Game.surface.blit(Game.playerSprite.image, self.apply(Game.playerSprite))
+        self.sprite_count += 1
         if Game.DISPLAY_RECT:
             pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(Game.playerSprite), width=2)
         for sprite in TileManager.deadlyObjectGroup:
@@ -236,6 +239,20 @@ class Camera:
         for sprite in TileManager.foregroundBlocks:
             Game.surface.blit(sprite.image, self.apply(sprite))
         self.last_x = x
+
+        Game.add_debug_info("CAMERA INFORMATIONS")
+        Game.add_debug_info("Scrolling: " + str(-self.last_x))
+        Game.add_debug_info("Right: " + str(Game.playerSprite.right))
+        Game.add_debug_info("Left: " + str(Game.playerSprite.left))
+        Game.add_debug_info("Player X:" + str(target.rect.centerx))
+        Game.add_debug_info("Player Y: " + str(target.rect.centery))
+        Game.add_debug_info("Displaying " + str(self.sprite_count) + " sprites")
+        Game.add_debug_info("   " + str(len(TileManager.entityGroup)) + " entities")
+        Game.add_debug_info("   " + str(len(TileManager.environmentGroup)) + " blocks")
+        Game.add_debug_info("   " + str(len(TileManager.backgroundBlocks)) + " background blocks")
+        Game.add_debug_info("   (" + str(len(TileManager.foregroundBlocks)) + " foreground blocks)")
+        Game.add_debug_info("   (" + str(len(TileManager.deadlyObjectGroup)) + " deadly objects)")
+        Game.add_debug_info("----------")
 
 
 class EditorCamera:
@@ -245,31 +262,33 @@ class EditorCamera:
         self.height = height
         self.log = Game.get_logger("EditorCamera")
         self.last_x = 0
+        self.sprite_count = 0
 
     def apply(self, entity):
         return entity.rect.move(self.camera.topleft)
 
     def update(self, target):
-        Game.add_debug_info("CAMERA INFORMATIONS")
-        Game.add_debug_info("Scrolling: " + str(-self.last_x))
-        Game.add_debug_info("Nb Enemies: " + str(len(TileManager.enemyGroup)))
-        Game.add_debug_info("----------")
+        self.sprite_count = 0
         x = -target.rect.x + int(Game.surface.get_size()[0] / 2)
         x = min(0, x)
         self.camera = pygame.Rect(x, 0, self.width, self.height)
         for sprite in TileManager.backgroundBlocks:
             Game.surface.blit(sprite.image, self.apply(sprite))
+            self.sprite_count += 1
             if Game.DISPLAY_RECT:
                 pygame.draw.rect(Game.surface, (0, 0, 255), self.apply(sprite), width=2)
         for sprite in TileManager.environmentGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
+            self.sprite_count += 1
             if Game.DISPLAY_RECT:
                 pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
         for sprite in TileManager.entityGroup:
             Game.surface.blit(sprite.image, self.apply(sprite))
+            self.sprite_count += 1
             if Game.DISPLAY_RECT:
                 pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(sprite), width=2)
         Game.surface.blit(Game.playerSprite.image, self.apply(Game.playerSprite))
+        self.sprite_count += 1
         if Game.DISPLAY_RECT:
             pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(Game.playerSprite), width=2)
         for sprite in TileManager.deadlyObjectGroup:
@@ -277,6 +296,17 @@ class EditorCamera:
         for sprite in TileManager.foregroundBlocks:
             Game.surface.blit(sprite.image, self.apply(sprite))
         self.last_x = x
+
+        Game.add_debug_info("CAMERA INFORMATIONS")
+        Game.add_debug_info("Scrolling: " + str(-self.last_x))
+        Game.add_debug_info("Nb Enemies: " + str(len(TileManager.enemyGroup)))
+        Game.add_debug_info("Displaying " + str(self.sprite_count) + " sprites")
+        Game.add_debug_info("   " + str(len(TileManager.entityGroup)) + " entities")
+        Game.add_debug_info("   " + str(len(TileManager.environmentGroup)) + " blocks")
+        Game.add_debug_info("   " + str(len(TileManager.backgroundBlocks)) + " background blocks")
+        Game.add_debug_info("   (" + str(len(TileManager.foregroundBlocks)) + " foreground blocks)")
+        Game.add_debug_info("   (" + str(len(TileManager.deadlyObjectGroup)) + " deadly objects)")
+        Game.add_debug_info("----------")
 
     def enableGrid(self):
         for x in range(self.last_x, Game.surface.get_size()[0], Game.TILESIZE):

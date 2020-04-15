@@ -28,5 +28,5 @@ class Lava(pygame.sprite.Sprite):
         self.animation()
 
     def animation(self):
-        self.image = self.frames[Game.animCountLava // 2]
+        self.image = self.frames[Game.animCountLava // 4]
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
