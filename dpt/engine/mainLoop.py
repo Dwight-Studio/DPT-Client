@@ -65,6 +65,7 @@ def redraw_Game_window():
     Game.add_debug_info("PERFORMANCES INFORMATIONS")
     Game.add_debug_info("CPU load: " + str(psutil.cpu_percent()) + "%")
     Game.add_debug_info("Memory usage: " + str(psutil.virtual_memory().percent) + "%")
+    Game.add_debug_info(str(math.floor(Game.clock.get_fps())) + " FPS")
     Game.add_debug_info("----------")
 
     Game.display_debug_info()
