@@ -44,6 +44,7 @@ class TileManager:
         Game.playerGroup.empty()
         TileManager.backgroundBlocks.empty()
         TileManager.entityGroup.empty()
+        TileManager.entityGroup.empty()
         TileEditor.ghostBlockGroup.empty()
         TileManager.deadlyObjectGroup.empty()
         TileManager.foregroundBlocks.empty()
