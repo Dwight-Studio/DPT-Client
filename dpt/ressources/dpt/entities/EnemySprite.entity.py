@@ -28,7 +28,7 @@ class EnemySprite(pygame.sprite.Sprite):
         self.rect.x = x + self.offset_x
         self.rect.y = y + self.offset_y
         self.isJump = False
-        self.jumpCount = 8
+        self.jumpCount = 21
         self.CONSTJUMPCOUNT = self.jumpCount
         self.onPlatform = False
         self.allowJump = True
@@ -43,16 +43,16 @@ class EnemySprite(pygame.sprite.Sprite):
             if self.left:
                 if self.xvel > 0:
                     self.xvel = 0
-                if self.xvel > -5:
-                    self.xvel -= 1
+                if self.xvel > -2:
+                    self.xvel -= 0.4
                 self.left = True
                 self.right = False
                 self.standing = False
             elif self.right:
                 if self.xvel < 0:
                     self.xvel = 0
-                if self.xvel < 5:
-                    self.xvel += 1
+                if self.xvel < 2:
+                    self.xvel += 0.4
                 self.left = False
                 self.right = True
                 self.standing = False
@@ -67,7 +67,7 @@ class EnemySprite(pygame.sprite.Sprite):
             if not self.isJump:
                 self.allowJump = False
                 self.gravityCount += 1
-                self.gravity = math.floor((self.gravityCount ** 2) * 0.5) * -1
+                self.gravity = math.floor((self.gravityCount ** 2) * 0.05) * -1
                 self.rect.top -= self.gravity
                 self.collide(0, self.gravity, TileManager.environmentGroup)
         self.animation()

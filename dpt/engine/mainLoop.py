@@ -69,7 +69,7 @@ def loop():
     bg = RessourceLoader.get("dpt.images.environment.background.background")
     run = True
     while run:
-        Game.clock.tick(27)
+        Game.clock.tick(60)
         Game.surface.blit(bg, (0, 0))
 
         Game.events = pygame.event.get()
