@@ -4,6 +4,7 @@ from dpt.engine.gui.editor.editorPanel import EditorPanel
 from dpt.engine.gui.editor.panelFakeEntities import PanelFakeEntity
 from dpt.engine.gui.editor.tileEditor import TileEditor
 from dpt.engine.backgroundFakeBlocks import BackgroundFakeBlocks
+from dpt.engine.gui.menu.button import Button
 from dpt.engine.gui.menu.checkbox import Checkbox
 from dpt.engine.loader import RessourceLoader, UnreachableRessourceError
 from dpt.game import Game
@@ -43,6 +44,8 @@ class TileManager:
         Game.playerGroup.empty()
         TileManager.editorPanelGroup.empty()
         TileEditor.ghostBlockGroup.empty()
+        Button.buttonsGroup.empty()
+        Checkbox.checkboxGroup.empty()
 
         for entity in TileManager.entityGroup:
             entity.kill()
