@@ -8,7 +8,9 @@ Icone sous Windows: il faut:
 => un xxx.png pour integration avec PyQt4 + demander la recopie avec includefiles.
 """
 
-import sys, os
+import os
+import sys
+
 from cx_Freeze import setup, Executable
 
 #############################################################################
