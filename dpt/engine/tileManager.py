@@ -287,6 +287,11 @@ class EditorCamera:
         Game.add_debug_info("Scrolling: " + str(-self.last_x))
         Game.add_debug_info("Nb Enemies: " + str(len(TileManager.enemyGroup)))
         Game.add_debug_info("Displaying " + str(self.sprite_count) + " sprites")
+        Game.add_debug_info("   " + str(len(TileManager.entityGroup)) + " entities")
+        Game.add_debug_info("   " + str(len(TileManager.environmentGroup)) + " blocks")
+        Game.add_debug_info("   " + str(len(TileManager.backgroundBlocks)) + " background blocks")
+        Game.add_debug_info("   (" + str(len(TileManager.foregroundBlocks)) + " foreground blocks)")
+        Game.add_debug_info("   (" + str(len(TileManager.deadlyObjectGroup)) + " deadly objects)")
         Game.add_debug_info("----------")
 
     def enableGrid(self):
