@@ -9,7 +9,6 @@ class Grass(pygame.sprite.Sprite):
     width = height = Game.TILESIZE
     offset_x = 0
     offset_y = 0
-    customPlacement = False
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
