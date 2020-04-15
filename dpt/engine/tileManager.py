@@ -45,7 +45,6 @@ class TileManager:
         Game.playerGroup.empty()
         TileManager.backgroundBlocks.empty()
         TileManager.entityGroup.empty()
-        TileManager.entityGroup.empty()
         TileEditor.ghostBlockGroup.empty()
         TileManager.deadlyObjectGroup.empty()
         TileManager.foregroundBlocks.empty()
@@ -70,18 +69,32 @@ class TileManager:
                 cls.log.warning("The tile position can't be negative : " + keys)
                 continue
             if "class" in level[keys]:
-                try:
-                    RessourceLoader.get(level[keys]["class"])(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE)
-                    cls.log.debug("Tile " + level[keys]["class"] + " placed at " + keys)
-                except UnreachableRessourceError:
-                    cls.log.warning("Invalid class name : " + level[keys]["class"] + " for tile : " + keys)
+                if "customPlace" in level[keys]:
+                    try:
+                        RessourceLoader.get(level[keys]["class"])(cls.coords[0], cls.coords[1])
+                        cls.log.debug("Tile " + level[keys]["class"] + " placed at " + keys)
+                    except UnreachableRessourceError:
+                        cls.log.warning("Invalid class name : " + level[keys]["class"] + " for tile : " + keys)
+                else:
+                    try:
+                        RessourceLoader.get(level[keys]["class"])(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE)
+                        cls.log.debug("Tile " + level[keys]["class"] + " placed at " + keys)
+                    except UnreachableRessourceError:
+                        cls.log.warning("Invalid class name : " + level[keys]["class"] + " for tile : " + keys)
             if "backgroundClass" in level[keys]:
-                try:
-                    BackgroundFakeBlocks(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE,
-                                         level[keys]["backgroundClass"])
-                    cls.log.debug("Background tile " + level[keys]["backgroundClass"] + " placed at " + keys)
-                except UnreachableRessourceError:
-                    cls.log.warning("Invalid class name : " + level[keys]["backgroundClass"] + " for tile : " + keys)
+                if "customPlace" in level[keys]:
+                    try:
+                        BackgroundFakeBlocks(cls.coords[0], cls.coords[1], level[keys]["backgroundClass"])
+                        cls.log.debug("Background tile " + level[keys]["backgroundClass"] + " placed at " + keys)
+                    except UnreachableRessourceError:
+                        cls.log.warning("Invalid class name : " + level[keys]["backgroundClass"] + " for tile : " + keys)
+                else:
+                    try:
+                        BackgroundFakeBlocks(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE,
+                                             level[keys]["backgroundClass"])
+                        cls.log.debug("Background tile " + level[keys]["backgroundClass"] + " placed at " + keys)
+                    except UnreachableRessourceError:
+                        cls.log.warning("Invalid class name : " + level[keys]["backgroundClass"] + " for tile : " + keys)
         cls.backgroundBlocks.draw(Game.surface)
         cls.environmentGroup.draw(Game.surface)
         cls.entityGroup.draw(Game.surface)
