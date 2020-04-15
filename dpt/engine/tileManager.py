@@ -44,8 +44,6 @@ class TileManager:
         Game.playerGroup.empty()
         TileManager.editorPanelGroup.empty()
         TileEditor.ghostBlockGroup.empty()
-        Button.buttonsGroup.empty()
-        Checkbox.checkboxGroup.empty()
 
         for entity in TileManager.entityGroup:
             entity.kill()
