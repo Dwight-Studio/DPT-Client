@@ -20,8 +20,11 @@ class TileEditor:
     mousePosY = None
     lastMousePosX = None
     lastMousePosY = None
+    lastMousePosX_c = 0
+    lastMousePosY_c = 0
     ghostBlockGroup = pygame.sprite.Group()
     createdLevel = {}
+    customTilePlacement = False
 
     @classmethod
     def update(cls):
@@ -81,11 +84,17 @@ class TileEditor:
             Game.add_debug_info("Mouse AbsY: " + str(cls.mousePosY))
             Game.add_debug_info("----------")
 
-            if cls.mousePosX != cls.lastMousePosX or cls.mousePosY != cls.lastMousePosY:
+            if cls.mousePosX != cls.lastMousePosX or cls.mousePosY != cls.lastMousePosY and not cls.customTilePlacement:
                 cls.lastMousePosX = None
                 cls.lastMousePosY = None
                 TileEditor.ghostBlockGroup.empty()
                 TileManager.ghostBlock((cls.mousePosX * Game.TILESIZE) + TileManager.editorCamera.last_x, cls.mousePosY * Game.TILESIZE, Game.selectedItem)
+
+            elif mouse[0] != cls.lastMousePosX_c or mouse[1] != cls.lastMousePosY_c and cls.customTilePlacement:
+                cls.lastMousePosX_c = 0
+                cls.lastMousePosY_c = 0
+                TileEditor.ghostBlockGroup.empty()
+                TileManager.ghostBlock(mouse[0] + TileManager.editorCamera.last_x, mouse[1], Game.selectedItem)
 
             if mouseButtons[0] == 1 or mouseButtons[1] == 1 or mouseButtons[2] == 1:
                 for btn in Button.buttonsGroup:
@@ -97,18 +106,34 @@ class TileEditor:
                 if not cls.panelOpen or cls.mousePosX <= math.floor(((Game.surface.get_size()[0] / 4 * 3 - Game.TILESIZE) - TileManager.editorCamera.last_x) / Game.TILESIZE):
                     cls.lastMousePosX = cls.mousePosX
                     cls.lastMousePosY = cls.mousePosY
-                    if not TileManager.checkBack:
-                        if str(cls.mousePosX) + ", " + str(cls.mousePosY) in cls.createdLevel:
-                            cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)]["class"] = Game.selectedItem
-                        else:
-                            cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)] = {"class": Game.selectedItem}
-                        TileManager.placeBlock(cls.mousePosX, cls.mousePosY, Game.selectedItem)
-                    elif TileManager.checkBack:
-                        if str(cls.mousePosX) + ", " + str(cls.mousePosY) in cls.createdLevel:
-                            cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)]["backgroundClass"] = Game.selectedItem
-                        else:
-                            cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)] = {"backgroundClass": Game.selectedItem}
-                        TileManager.placeBackBlock(cls.mousePosX, cls.mousePosY, Game.selectedItem)
+                    cls.lastMousePosX_c = mouse[0]
+                    cls.lastMousePosY_c = mouse[1]
+                    if not cls.customTilePlacement:
+                        if not TileManager.checkBack:
+                            if str(cls.mousePosX) + ", " + str(cls.mousePosY) in cls.createdLevel:
+                                cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)]["class"] = Game.selectedItem
+                            else:
+                                cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)] = {"class": Game.selectedItem}
+                            TileManager.placeBlock(cls.mousePosX, cls.mousePosY, Game.selectedItem)
+                        elif TileManager.checkBack:
+                            if str(cls.mousePosX) + ", " + str(cls.mousePosY) in cls.createdLevel:
+                                cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)]["backgroundClass"] = Game.selectedItem
+                            else:
+                                cls.createdLevel[str(cls.mousePosX) + ", " + str(cls.mousePosY)] = {"backgroundClass": Game.selectedItem}
+                            TileManager.placeBackBlock(cls.mousePosX, cls.mousePosY, Game.selectedItem)
+                    elif cls.customTilePlacement:
+                        if not TileManager.checkBack:
+                            if str(mouse[0]) + ", " + str(mouse[1]) in cls.createdLevel:
+                                cls.createdLevel[str(mouse[0]) + ", " + str(mouse[1])]["class"] = Game.selectedItem
+                            else:
+                                cls.createdLevel[str(mouse[0]) + ", " + str(mouse[1])] = {"class": Game.selectedItem}
+                            TileManager.placeBlock(mouse[0], mouse[1], Game.selectedItem)
+                        elif TileManager.checkBack:
+                            if str(mouse[0]) + ", " + str(mouse[1]) in cls.createdLevel:
+                                cls.createdLevel[str(mouse[0]) + ", " + str(mouse[1])]["backgroundClass"] = Game.selectedItem
+                            else:
+                                cls.createdLevel[str(mouse[0]) + ", " + str(mouse[1])] = {"backgroundClass": Game.selectedItem}
+                            TileManager.placeBackBlock(mouse[0], mouse[1], Game.selectedItem)
             elif mouseButtons[0] != 1 and cls.mousePushedL:
                 cls.mousePushedL = False
             elif mouseButtons[0] == 1 and cls.mousePosX != cls.lastMousePosX or cls.mousePosY != cls.lastMousePosY and cls.mousePushedL:

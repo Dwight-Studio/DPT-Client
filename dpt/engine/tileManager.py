@@ -29,6 +29,7 @@ class TileManager:
     nbPerLine = 0
     nbSkip = 0
     checkBack = False
+    usedResources = []
     coords = None
     camera = None
     editorCamera = None
@@ -108,13 +109,20 @@ class TileManager:
 
     @classmethod
     def placeBlock(cls, xTile, yTile, item):
-        RessourceLoader.get(item)(xTile * Game.TILESIZE, yTile * Game.TILESIZE)
-        cls.log.debug("Tile " + item + " placed at " + str(xTile) + ", " + str(yTile))
-
+        if not TileEditor.customTilePlacement:
+            RessourceLoader.get(item)(xTile * Game.TILESIZE, yTile * Game.TILESIZE)
+            cls.log.debug("Tile " + item + " placed at " + str(xTile) + ", " + str(yTile))
+        elif TileEditor.customTilePlacement:
+            RessourceLoader.get(item)(xTile, yTile)
+            cls.log.debug("Tile " + item + " placed at " + str(xTile) + ", " + str(yTile))
     @classmethod
     def placeBackBlock(cls, xTile, yTile, item):
-        BackgroundFakeBlocks(xTile * Game.TILESIZE, yTile * Game.TILESIZE, item)
-        cls.log.debug("Background tile " + item + " placed at " + str(xTile) + ", " + str(yTile))
+        if not TileEditor.customTilePlacement:
+            BackgroundFakeBlocks(xTile * Game.TILESIZE, yTile * Game.TILESIZE, item)
+            cls.log.debug("Background tile " + item + " placed at " + str(xTile) + ", " + str(yTile))
+        elif TileEditor.customTilePlacement:
+            BackgroundFakeBlocks(xTile, yTile, item)
+            cls.log.debug("Background tile " + item + " placed at " + str(xTile) + ", " + str(yTile))
 
     @classmethod
     def openTilePanel(cls):

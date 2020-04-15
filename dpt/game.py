@@ -6,6 +6,7 @@ import sys
 import tarfile
 import traceback
 import pygame
+import time
 
 
 def get_root():
@@ -138,7 +139,7 @@ class Game(object):
             from dpt.engine.gui.editor.tileEditor import TileEditor
             TileEditor.inEditor = True
             TileManager.loadLevel("dpt.levels.leveltest")
-            # from dpt.engine.webCommunications import Communication
+            from dpt.engine.webCommunications import Communication
             # com = Communication()
             # com.create()
             # time.sleep(10)
