@@ -41,6 +41,9 @@ class TileManager:
     @classmethod
     def loadLevel(cls, levelName):
         Game.playerGroup.empty()
+        TileManager.editorPanelGroup.empty()
+        TileEditor.ghostBlockGroup.empty()
+
         for entity in TileManager.entityGroup:
             entity.kill()
 
@@ -231,6 +234,7 @@ class Camera:
             if Game.DISPLAY_RECT:
                 pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(sprite), width=2)
         Game.surface.blit(Game.playerSprite.image, self.apply(Game.playerSprite))
+        self.sprite_count += len(Game.playerGroup)
         self.sprite_count += 1
         if Game.DISPLAY_RECT:
             pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(Game.playerSprite), width=2)
@@ -247,6 +251,7 @@ class Camera:
         Game.add_debug_info("Player X:" + str(target.rect.centerx))
         Game.add_debug_info("Player Y: " + str(target.rect.centery))
         Game.add_debug_info("Displaying " + str(self.sprite_count) + " sprites")
+        Game.add_debug_info("   " + str(len(Game.playerGroup)) + " players")
         Game.add_debug_info("   " + str(len(TileManager.entityGroup)) + " entities")
         Game.add_debug_info("   " + str(len(TileManager.environmentGroup)) + " blocks")
         Game.add_debug_info("   " + str(len(TileManager.backgroundBlocks)) + " background blocks")
@@ -288,7 +293,7 @@ class EditorCamera:
             if Game.DISPLAY_RECT:
                 pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(sprite), width=2)
         Game.surface.blit(Game.playerSprite.image, self.apply(Game.playerSprite))
-        self.sprite_count += 1
+        self.sprite_count += len(Game.playerGroup)
         if Game.DISPLAY_RECT:
             pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(Game.playerSprite), width=2)
         for sprite in TileManager.deadlyObjectGroup:
@@ -301,6 +306,7 @@ class EditorCamera:
         Game.add_debug_info("Scrolling: " + str(-self.last_x))
         Game.add_debug_info("Nb Enemies: " + str(len(TileManager.enemyGroup)))
         Game.add_debug_info("Displaying " + str(self.sprite_count) + " sprites")
+        Game.add_debug_info("   " + str(len(Game.playerGroup)) + " players")
         Game.add_debug_info("   " + str(len(TileManager.entityGroup)) + " entities")
         Game.add_debug_info("   " + str(len(TileManager.environmentGroup)) + " blocks")
         Game.add_debug_info("   " + str(len(TileManager.backgroundBlocks)) + " background blocks")

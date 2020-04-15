@@ -13,13 +13,13 @@ import pygame
 
 def do_synch_anims():
     # Lava
-    if Game.animCountLava + 1 >= 104:
+    if Game.animCountLava + 1 >= 208:
         Game.animCountLava = 0
     else:
         Game.animCountLava += 1
 
     # Water
-    if Game.animCountWater + 1 >= 52:
+    if Game.animCountWater + 1 >= 104:
         Game.animCountWater = 0
     else:
         Game.animCountWater += 1
