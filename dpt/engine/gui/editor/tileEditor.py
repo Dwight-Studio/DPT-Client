@@ -4,6 +4,7 @@ import pygame
 from dpt.engine.gui.editor.editorPanel import EditorPanel
 from dpt.engine.gui.menu.button import Button
 from dpt.engine.gui.menu.checkbox import Checkbox
+from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 
 
@@ -83,18 +84,23 @@ class TileEditor:
             Game.add_debug_info("Mouse AbsX: " + str(cls.mousePosX))
             Game.add_debug_info("Mouse AbsY: " + str(cls.mousePosY))
             Game.add_debug_info("----------")
+            try:
+                if RessourceLoader.get(Game.selectedItem).customPlacement:
+                    cls.customTilePlacement = True
+                    if cls.customTilePlacement and mouse[0] != cls.lastMousePosX_c or mouse[1] != cls.lastMousePosY_c:
+                        cls.lastMousePosX_c = 0
+                        cls.lastMousePosY_c = 0
+                        TileEditor.ghostBlockGroup.empty()
+                        TileManager.ghostBlock(mouse[0] + TileManager.editorCamera.last_x, mouse[1], Game.selectedItem)
+            except:
+                cls.customTilePlacement = False
 
-            if cls.mousePosX != cls.lastMousePosX or cls.mousePosY != cls.lastMousePosY and not cls.customTilePlacement:
-                cls.lastMousePosX = None
-                cls.lastMousePosY = None
-                TileEditor.ghostBlockGroup.empty()
-                TileManager.ghostBlock((cls.mousePosX * Game.TILESIZE) + TileManager.editorCamera.last_x, cls.mousePosY * Game.TILESIZE, Game.selectedItem)
-
-            elif mouse[0] != cls.lastMousePosX_c or mouse[1] != cls.lastMousePosY_c and cls.customTilePlacement:
-                cls.lastMousePosX_c = 0
-                cls.lastMousePosY_c = 0
-                TileEditor.ghostBlockGroup.empty()
-                TileManager.ghostBlock(mouse[0] + TileManager.editorCamera.last_x, mouse[1], Game.selectedItem)
+            if not cls.customTilePlacement:
+                if not cls.customTilePlacement and cls.mousePosX != cls.lastMousePosX or cls.mousePosY != cls.lastMousePosY:
+                    cls.lastMousePosX = None
+                    cls.lastMousePosY = None
+                    TileEditor.ghostBlockGroup.empty()
+                    TileManager.ghostBlock((cls.mousePosX * Game.TILESIZE) + TileManager.editorCamera.last_x, cls.mousePosY * Game.TILESIZE, Game.selectedItem)
 
             if mouseButtons[0] == 1 or mouseButtons[1] == 1 or mouseButtons[2] == 1:
                 for btn in Button.buttonsGroup:
@@ -125,14 +131,16 @@ class TileEditor:
                         if not TileManager.checkBack:
                             if str(mouse[0]) + ", " + str(mouse[1]) in cls.createdLevel:
                                 cls.createdLevel[str(mouse[0]) + ", " + str(mouse[1])]["class"] = Game.selectedItem
+                                cls.createdLevel[str(mouse[0]) + ", " + str(mouse[1])]["customPlace"] = True
                             else:
-                                cls.createdLevel[str(mouse[0]) + ", " + str(mouse[1])] = {"class": Game.selectedItem}
+                                cls.createdLevel[str(mouse[0]) + ", " + str(mouse[1])] = {"class": Game.selectedItem, "customPlace": True}
                             TileManager.placeBlock(mouse[0], mouse[1], Game.selectedItem)
                         elif TileManager.checkBack:
                             if str(mouse[0]) + ", " + str(mouse[1]) in cls.createdLevel:
                                 cls.createdLevel[str(mouse[0]) + ", " + str(mouse[1])]["backgroundClass"] = Game.selectedItem
+                                cls.createdLevel[str(mouse[0]) + ", " + str(mouse[1])]["customPlace"] = True
                             else:
-                                cls.createdLevel[str(mouse[0]) + ", " + str(mouse[1])] = {"backgroundClass": Game.selectedItem}
+                                cls.createdLevel[str(mouse[0]) + ", " + str(mouse[1])] = {"backgroundClass": Game.selectedItem, "customPlace": True}
                             TileManager.placeBackBlock(mouse[0], mouse[1], Game.selectedItem)
             elif mouseButtons[0] != 1 and cls.mousePushedL:
                 cls.mousePushedL = False
