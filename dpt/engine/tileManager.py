@@ -94,6 +94,8 @@ class TileManager:
                     RessourceLoader.add_pending(obj.texture)
                     if hasattr(obj, "textures"):
                         RessourceLoader.add_pending(obj.textures)
+            RessourceLoader.add_pending("dpt.images.characters.player.*")
+            RessourceLoader.load()
 
         for keys in level:
             cls.coords = tuple(map(int, keys.split(", ")))

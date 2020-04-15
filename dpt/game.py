@@ -136,6 +136,8 @@ class Game(object):
             from dpt.engine.tileManager import TileManager
             from dpt.engine.gui.editor.tileEditor import TileEditor
             TileEditor.inEditor = False
+            RessourceLoader.add_pending("dpt.images.gui.buttons.BTN_GREEN_RECT_*")
+            RessourceLoader.add_pending("dpt.images.environment.background.background")
             TileManager.loadLevel("dpt.levels.leveltest")
             from dpt.engine.webCommunications import Communication
             # com = Communication()
