@@ -3,8 +3,11 @@ import os
 import sys
 import traceback
 import json
+
+import psutil
 import pygame
 import runpy
+import gc
 
 from dpt.engine.gui.menu.bar import Bar
 from dpt.engine.gui.menu.progressbar import ProgressBar
@@ -47,7 +50,7 @@ def make_entries(path):
 class RessourceLoader:
     RESSOURCES = {}
     pending_ressources = {}
-    loaded_ressources_entries = {}
+    loaded_ressources_entries = None
     loaded_ressources = {}
     logger = Game.get_logger("Loader")
 
@@ -86,6 +89,7 @@ class RessourceLoader:
         if cls.loaded_ressources_entries is None:
             cls.logger.warning("Can't reload: no loaded entries found")
             return
+        cls.unload()
         cls.init()
         cls.pending_ressources = cls.loaded_ressources_entries.copy()
         cls.loaded_ressources_entries = {}
@@ -105,6 +109,8 @@ class RessourceLoader:
         font = pygame.font.SysFont("arial", 20)
 
         for entry in cls.pending_ressources:
+            if entry in cls.loaded_ressources:
+                continue
             ext = cls.pending_ressources[entry].split("/")[-1].split(".")
             try:
                 if ext[-1] == "png":
@@ -164,6 +170,15 @@ class RessourceLoader:
         cls.logger.info("Loading done")
         cls.loaded_ressources_entries = cls.pending_ressources.copy()
         cls.pending_ressources = {}
+
+    @classmethod
+    def unload(cls):
+        bf = str(psutil.virtual_memory().percent)
+        del cls.loaded_ressources
+        gc.collect()
+        cls.loaded_ressources = {}
+        cls.logger.info("Unloaded all ressources")
+        cls.logger.debug("Memory:" + bf + "% before, " + str(psutil.virtual_memory().percent) + "% after")
 
     @classmethod
     def select_entries(cls, path):

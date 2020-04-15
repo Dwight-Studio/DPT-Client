@@ -53,8 +53,16 @@ class TileManager:
         for block in TileManager.backgroundBlocks:
             block.kill()
 
+        if TileEditor.inEditor:
+            RessourceLoader.add_pending("*")
+            RessourceLoader.load()
+
         if type(levelName) == str:
             cls.log.info("Loading level " + levelName)
+            if not TileEditor.inEditor:
+                cls.log.debug("Loading level main file")
+                RessourceLoader.add_pending(levelName)
+                RessourceLoader.load()
             level = RessourceLoader.get(levelName)
         else:
             cls.log.info("Loading unknown level")
@@ -63,6 +71,30 @@ class TileManager:
         cls.maxHeightSize = 0
         if level is None:
             cls.log.critical("The level can't be loaded")
+
+        if not TileEditor.inEditor:
+            cls.log.debug("Loading level blocks and entities")
+            for keys in level:
+                if "class" in level[keys]:
+                    RessourceLoader.add_pending(level[keys]["class"])
+                if "backgroundClass" in level[keys]:
+                    RessourceLoader.add_pending(level[keys]["backgroundClass"])
+            RessourceLoader.load()
+
+        if not TileEditor.inEditor:
+            cls.log.debug("Loading textures")
+            for keys in level:
+                if "class" in level[keys]:
+                    obj = RessourceLoader.get(level[keys]["class"])
+                    RessourceLoader.add_pending(obj.texture)
+                    if hasattr(obj, "textures"):
+                        RessourceLoader.add_pending(obj.textures)
+                if "backgroundClass" in level[keys]:
+                    obj = RessourceLoader.get(level[keys]["backgroundClass"])
+                    RessourceLoader.add_pending(obj.texture)
+                    if hasattr(obj, "textures"):
+                        RessourceLoader.add_pending(obj.textures)
+
         for keys in level:
             cls.coords = tuple(map(int, keys.split(", ")))
             if cls.coords[0] > cls.maxWidthSize:

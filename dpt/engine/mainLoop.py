@@ -1,4 +1,7 @@
 import math
+
+import psutil
+
 from dpt.engine.gui.editor.editorPanel import EditorPanel
 from dpt.engine.gui.editor.tileEditor import TileEditor
 from dpt.engine.gui.menu.bar import Bar
@@ -58,6 +61,11 @@ def redraw_Game_window():
     Button.main_loop()
     ProgressBar.main_loop()
     Checkbox.main_loop()
+
+    Game.add_debug_info("PERFORMANCES INFORMATIONS")
+    Game.add_debug_info("CPU load: " + str(psutil.cpu_percent()) + "%")
+    Game.add_debug_info("Memory usage: " + str(psutil.virtual_memory().percent) + "%")
+    Game.add_debug_info("----------")
 
     Game.display_debug_info()
     Game.window.update()

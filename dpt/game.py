@@ -133,8 +133,6 @@ class Game(object):
             # /!\ ZONE SECURISÉE /!\
             from dpt.engine.loader import RessourceLoader
             RessourceLoader.init()
-            RessourceLoader.add_pending("*")
-            RessourceLoader.load()
             from dpt.engine.tileManager import TileManager
             from dpt.engine.gui.editor.tileEditor import TileEditor
             TileEditor.inEditor = True
