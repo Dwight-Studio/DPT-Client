@@ -6,8 +6,8 @@ from dpt.game import Game
 class Grass_1(pygame.sprite.Sprite):
     texture = "dpt.images.environment.plants.Grass_1"
     width = height = Game.TILESIZE
-    offset_x = 0
-    offset_y = 0
+    offset_x = -(Game.TILESIZE // 2)
+    offset_y = -(Game.TILESIZE // 2)
     customPlacement = True
 
     def __init__(self, x, y):
