@@ -292,6 +292,10 @@ class Camera:
         Game.add_debug_info("   " + str(len(TileManager.backgroundBlocks)) + " background blocks")
         Game.add_debug_info("   (" + str(len(TileManager.foregroundBlocks)) + " foreground blocks)")
         Game.add_debug_info("   (" + str(len(TileManager.deadlyObjectGroup)) + " deadly objects)")
+        Game.add_debug_info("   (" + str(len(Button.buttonsGroup)) + " buttons)")
+        Game.add_debug_info("       (" + str(len(Button.text_sprite_buttonsGroup)) + " texts)")
+        Game.add_debug_info("       (" + str(len(Button.text_buttonsList)) + " texts)")
+        Game.add_debug_info("   (" + str(len(Checkbox.checkboxGroup)) + " checkbox)")
         Game.add_debug_info("----------")
 
 
