@@ -34,7 +34,7 @@ class Communication(object):
                 self.log.critical("Session creation failed")
                 return False
         except:
-            self.log.warning("Hostname not found. Check the server address !")
+            self.log.warning("Hostname not found. Is the server running ? Check the server address !")
 
     def keep_alive(self):
         while self.keep:
@@ -58,7 +58,7 @@ class Communication(object):
             self.waiting = True
             self.wait_for(Game.VOTE_TIMEOUT + 2)
         except:
-            self.log.warning("Cannot create vote event ! Is the hostname exist ?")
+            self.log.warning("Cannot create vote event ! Is the hostname exist or the server running ?")
 
     def vote_result(self):
         vote_one = 0
