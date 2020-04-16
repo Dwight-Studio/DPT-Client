@@ -22,16 +22,19 @@ class Communication(object):
         self.time_to_wait = 0
 
     def create(self):
-        request = requests.get("http://" + Game.SERVER_ADDRESS + "/init.php?session=" + self.sessionName)
-        if request.json() == self.sessionName:
-            self.log.info("Created session : " + self.sessionName)
-            self.log.info("http://" + Game.SERVER_ADDRESS + "/?session=" + self.sessionName)
-            self.log.info("Starting keepAlive...")
-            self.keep = True
-            self.keepAliveThread.start()
-        else:
-            self.log.critical("Session creation failed")
-            return False
+        try:
+            request = requests.get("http://" + Game.SERVER_ADDRESS + "/init.php?session=" + self.sessionName)
+            if request.json() == self.sessionName:
+                self.log.info("Created session : " + self.sessionName)
+                self.log.info("http://" + Game.SERVER_ADDRESS + "/?session=" + self.sessionName)
+                self.log.info("Starting keepAlive...")
+                self.keep = True
+                self.keepAliveThread.start()
+            else:
+                self.log.critical("Session creation failed")
+                return False
+        except:
+            self.log.warning("Hostname not found. Check the server address !")
 
     def keep_alive(self):
         while self.keep:
@@ -46,13 +49,16 @@ class Communication(object):
                     continue
 
     def create_vote_event(self, mod1, mod2):
-        self.log.info("Creating a new vote...")
-        self.currentTime = int(round(time.time() * 1000))
-        data = {"endDate": self.currentTime + (Game.VOTE_TIMEOUT * 1000) + 2000, "mod1": mod1, "mod2": mod2}
-        requests.get("http://" + Game.SERVER_ADDRESS + "/registerVote.php?session=" + self.sessionName + "&data=" + json.dumps(data))
-        self.log.info("Vote created")
-        self.waiting = True
-        self.wait_for(Game.VOTE_TIMEOUT + 2)
+        try:
+            self.log.info("Creating a new vote...")
+            self.currentTime = int(round(time.time() * 1000))
+            data = {"endDate": self.currentTime + (Game.VOTE_TIMEOUT * 1000) + 2000, "mod1": mod1, "mod2": mod2}
+            requests.get("http://" + Game.SERVER_ADDRESS + "/registerVote.php?session=" + self.sessionName + "&data=" + json.dumps(data))
+            self.log.info("Vote created")
+            self.waiting = True
+            self.wait_for(Game.VOTE_TIMEOUT + 2)
+        except:
+            self.log.warning("Cannot create vote event ! Is the hostname exist ?")
 
     def vote_result(self):
         vote_one = 0
