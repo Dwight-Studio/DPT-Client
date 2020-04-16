@@ -129,21 +129,22 @@ class PlayerSprite(pygame.sprite.Sprite):
 
     def collide(self, xVelDelta, yVelDelta, platforms):
         for i in platforms:
-            if pygame.sprite.collide_rect(self, i):
-                if xVelDelta > 0:
-                    self.rect.right = i.rect.left
-                    self.xvel = 0
-                if xVelDelta < 0:
-                    self.rect.left = i.rect.right
-                    self.xvel = 0
-                if yVelDelta < 0:
-                    self.rect.bottom = i.rect.top
-                    self.onPlatform = True
-                    self.jumpCount = self.CONSTJUMPCOUNT
-                    self.allowJump = True
-                    PlayerSprite.gravityCount = 0
-                if yVelDelta > 0:
-                    self.rect.top = i.rect.bottom
+            if i.rect.colliderect(Game.display_rect):
+                if pygame.sprite.collide_rect(self, i):
+                    if xVelDelta > 0:
+                        self.rect.right = i.rect.left
+                        self.xvel = 0
+                    if xVelDelta < 0:
+                        self.rect.left = i.rect.right
+                        self.xvel = 0
+                    if yVelDelta < 0:
+                        self.rect.bottom = i.rect.top
+                        self.onPlatform = True
+                        self.jumpCount = self.CONSTJUMPCOUNT
+                        self.allowJump = True
+                        PlayerSprite.gravityCount = 0
+                    if yVelDelta > 0:
+                        self.rect.top = i.rect.bottom
 
     def deadlyObjectCollision(self):
         for i in TileManager.deadlyObjectGroup:

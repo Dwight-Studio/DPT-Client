@@ -32,6 +32,8 @@ class Game(object):
     DISPLAY_RECT = False
 
     # Variable à définir
+    run = True
+    display_rect = None
     isPlayerDead = False
     window = None
     clock = None
@@ -82,60 +84,63 @@ class Game(object):
 
     @classmethod
     def play(cls, debug):
-        cls.DEBUG = debug
-
-        if cls.DEBUG:
-            cls.file_handler.setLevel(logging.DEBUG)
-            cls.stream_handler.setLevel(logging.DEBUG)
-        else:
-            cls.file_handler.setLevel(logging.INFO)
-            cls.stream_handler.setLevel(logging.INFO)
-
-        main_logger = cls.get_logger(None)
-        main_logger.info("--- Starting Don't Play Together. ---")
-        main_logger.debug("Version: " + cls.VERSION)
-        main_logger.debug("Python version: " + cls.PYTHON_VERSION)
-        main_logger.debug("Pygame version: " + cls.PYGAME_VERSION)
-        main_logger.debug("OS: " + cls.PLATFORM)
-        main_logger.debug("CWD: " + cls.ROOT_DIRECTORY)
-
-        pygame.init()
-        cls._debug_infos = []
-
-        cls.window = pygame.display
-        if Game.LINUX_USER:
-            cls.surface = cls.window.set_mode((0, 0), pygame.NOFRAME, pygame.SCALED)
-        else:
-            cls.surface = cls.window.set_mode((0, 0), pygame.FULLSCREEN, pygame.RESIZABLE)
-
-        w, h = cls.surface.get_size()
-        main_logger.debug("Window size: " + str(w) + "x" + str(h))
-        cls.DISPLAY_RATIO = h / 1080
-        cls.TILESIZE = math.floor(cls.DISPLAY_RATIO * cls.TILESIZE)
-        main_logger.debug("Tile size: " + str(cls.TILESIZE))
-        pygame.display.set_caption("Don't play together")
-        cls.clock = pygame.time.Clock()
-
-        # Groupes Pygame
-        from dpt.engine.gui.menu.button import Button
-
-        cls.playerGroup = pygame.sprite.Group()
-
-        # Evenements persos
-        cls.BUTTONEVENT = pygame.event.custom_type()
-
-        # Déclaration des évènements
-
         try:
             # /!\ ZONE SECURISÉE /!\
+            cls.DEBUG = debug
+
+            if cls.DEBUG:
+                cls.file_handler.setLevel(logging.DEBUG)
+                cls.stream_handler.setLevel(logging.DEBUG)
+            else:
+                cls.file_handler.setLevel(logging.INFO)
+                cls.stream_handler.setLevel(logging.INFO)
+
+            main_logger = cls.get_logger(None)
+            main_logger.info("--- Starting Don't Play Together. ---")
+            main_logger.debug("Version: " + cls.VERSION)
+            main_logger.debug("Python version: " + cls.PYTHON_VERSION)
+            main_logger.debug("Pygame version: " + cls.PYGAME_VERSION)
+            main_logger.debug("OS: " + cls.PLATFORM)
+            main_logger.debug("CWD: " + cls.ROOT_DIRECTORY)
+
+            pygame.init()
+            cls._debug_infos = []
+
+            cls.window = pygame.display
+            if Game.LINUX_USER:
+                cls.surface = cls.window.set_mode((0, 0), pygame.NOFRAME, pygame.SCALED)
+            else:
+                cls.surface = cls.window.set_mode((0, 0), pygame.FULLSCREEN, pygame.RESIZABLE)
+
+            w, h = cls.surface.get_size()
+            main_logger.debug("Window size: " + str(w) + "x" + str(h))
+            cls.DISPLAY_RATIO = h / 1080
+            cls.TILESIZE = math.floor(cls.DISPLAY_RATIO * cls.TILESIZE)
+            main_logger.debug("Tile size: " + str(cls.TILESIZE))
+            pygame.display.set_caption("Don't play together")
+            cls.clock = pygame.time.Clock()
+
+            # Groupes Pygame
+            from dpt.engine.gui.menu.button import Button
+
+            cls.playerGroup = pygame.sprite.Group()
+
+            # Evenements persos
+            cls.BUTTONEVENT = pygame.event.custom_type()
+
+            # Initialisation du RessourceLoader
             from dpt.engine.loader import RessourceLoader
             RessourceLoader.init()
+
+            # Initialisation du TileManager
             from dpt.engine.tileManager import TileManager
             from dpt.engine.gui.editor.tileEditor import TileEditor
             TileEditor.inEditor = False
             RessourceLoader.add_pending("dpt.images.gui.buttons.BTN_GREEN_RECT_*")
             RessourceLoader.add_pending("dpt.images.environment.background.background")
             TileManager.loadLevel("dpt.levels.leveltest")
+
+            # Initialisation des webComs
             from dpt.engine.webCommunications import Communication
             # com = Communication()
             # com.create()
@@ -144,9 +149,17 @@ class Game(object):
             # time.sleep(40)
             # com.voteResult()
 
+            # Ajout du bouton d'éditeur
             cls.button = Button(0, Game.surface.get_size()[1] - 50, 127, 46, RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_OUT"), pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_IN"), text="Editeur")
-            from dpt.engine.mainLoop import loop
-            loop()
+
+            # Loops
+            from dpt.engine.mainLoop import level_main_loop
+            cls.loop = level_main_loop
+
+            while cls.run:
+                cls.loop()
+            pygame.quit()
+
         except Exception:
             main_logger.critical("Unexpected error has occurred. Following informations has been gathered:")
             exc_type, exc_value, exc_tb = sys.exc_info()

@@ -29,12 +29,6 @@ def do_synch_anims():
 
 
 def redraw_Game_window():
-    TileManager.environmentGroup.update()
-
-    Game.playerGroup.update()
-
-    TileManager.enemyGroup.update()
-    TileManager.entityGroup.update()
     TileManager.outOfWindow()
 
     if not TileEditor.inEditor:
@@ -56,6 +50,7 @@ def redraw_Game_window():
             except AttributeError:
                 pass
         raise
+
     TileEditor.ghostBlockGroup.draw(Game.surface)
 
     Button.main_loop()
@@ -73,30 +68,25 @@ def redraw_Game_window():
 
 
 # Mainloop
-def loop():
-    global bg
+def level_main_loop():
+    Game.clock.tick(60)
     bg = RessourceLoader.get("dpt.images.environment.background.background")
-    run = True
-    while run:
-        Game.clock.tick(60)
-        Game.surface.blit(bg, (0, 0))
+    Game.surface.blit(bg, (0, 0))
 
-        Game.events = pygame.event.get()
+    Game.events = pygame.event.get()
 
-        for event in Game.events:
-            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
-                run = False
-            elif event.type == Game.BUTTONEVENT:
-                TileEditor.inEditor = not TileEditor.inEditor
-                TileEditor.panelOpen = False
-                TileManager.loadLevel(TileManager.levelName)
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 4 and TileEditor.inEditor:
-                    TileManager.scrollUp()
-                elif event.button == 5 and TileEditor.inEditor:
-                    TileManager.scrollDown()
+    for event in Game.events:
+        if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+            Game.run = False
+        elif event.type == Game.BUTTONEVENT:
+            TileEditor.inEditor = not TileEditor.inEditor
+            TileEditor.panelOpen = False
+            TileManager.loadLevel(TileManager.levelName)
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 4 and TileEditor.inEditor:
+                TileManager.scrollUp()
+            elif event.button == 5 and TileEditor.inEditor:
+                TileManager.scrollDown()
 
-        do_synch_anims()
-        redraw_Game_window()
-
-    pygame.quit()
+    do_synch_anims()
+    redraw_Game_window()
