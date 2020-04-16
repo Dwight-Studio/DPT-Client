@@ -38,14 +38,17 @@ def level_loop():
     Game.clock.tick(60)
     Game.surface.blit(bg, (0, 0))
 
-    Game.events = pygame.event.get()
-
     for event in Game.events:
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
             Game.run = False
         elif event.type == Game.BUTTON_EVENT:
             TileEditor.in_editor = not TileEditor.in_editor
+            if TileEditor.in_editor:
+                Game.button.text = "Jouer"
+            else:
+                Game.button.text = "Retour"
             TileEditor.panel_open = False
+            Checkbox.checkboxGroup.empty()
             TileManager.load_level(TileManager.levelName)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 4 and TileEditor.in_editor:
@@ -56,10 +59,7 @@ def level_loop():
     do_synch_anims()
     TileManager.out_of_window()
 
-    if not TileEditor.in_editor:
-        TileManager.camera.update(Game.player_sprite)
-    elif TileEditor.in_editor:
-        TileManager.editor_camera.update(Game.player_sprite)
+    TileManager.camera.update(Game.player_sprite)
 
     TileEditor.update()
 

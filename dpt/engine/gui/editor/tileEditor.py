@@ -32,7 +32,7 @@ class TileEditor:
         from dpt.engine.tileManager import TileManager
         if cls.in_editor:
             Game.freeze_game = True
-            TileManager.editor_camera.enable_grid()
+            TileManager.camera.enable_grid()
             # Gestion des fichiers (raccourcis)
             mouse_buttons = pygame.mouse.get_pressed()
             keys = pygame.key.get_pressed()
@@ -75,7 +75,7 @@ class TileEditor:
                         cls.tpushed = False
             # Gestion de la position de la souris et du placement de blocks
             mouse = pygame.mouse.get_pos()
-            cls.mouse_pos_x = math.floor((mouse[0] - TileManager.editor_camera.last_x) / Game.TILESIZE)
+            cls.mouse_pos_x = math.floor((mouse[0] - TileManager.camera.last_x) / Game.TILESIZE)
             cls.mouse_pos_y = math.floor(mouse[1] / Game.TILESIZE)
             Game.add_debug_info("MOUSE INFORMATIONS")
             Game.add_debug_info("Mouse X: " + str(mouse[0]))
@@ -91,7 +91,7 @@ class TileEditor:
                         cls.last_mouse_pos_x_c = 0
                         cls.last_mouse_pos_y_c = 0
                         TileEditor.ghost_block_group.empty()
-                        TileManager.ghost_block(mouse[0] + TileManager.editor_camera.last_x, mouse[1], Game.selected_item)
+                        TileManager.ghost_block(mouse[0] + TileManager.camera.last_x, mouse[1], Game.selected_item)
             except:
                 cls.custom_tile_placement = False
 
@@ -100,7 +100,7 @@ class TileEditor:
                     cls.last_mouse_pos_x = None
                     cls.last_mouse_pos_y = None
                     TileEditor.ghost_block_group.empty()
-                    TileManager.ghost_block((cls.mouse_pos_x * Game.TILESIZE) + TileManager.editor_camera.last_x, cls.mouse_pos_y * Game.TILESIZE, Game.selected_item)
+                    TileManager.ghost_block((cls.mouse_pos_x * Game.TILESIZE) + TileManager.camera.last_x, cls.mouse_pos_y * Game.TILESIZE, Game.selected_item)
 
             if mouse_buttons[0] == 1 or mouse_buttons[1] == 1 or mouse_buttons[2] == 1:
                 for btn in Button.buttonsGroup:
@@ -109,7 +109,7 @@ class TileEditor:
 
             if mouse_buttons[0] == 1 and not cls.mouse_pushed_l:
                 cls.mouse_pushed_l = True
-                if not cls.panel_open or cls.mouse_pos_x <= math.floor(((Game.surface.get_size()[0] / 4 * 3 - Game.TILESIZE) - TileManager.editor_camera.last_x) / Game.TILESIZE):
+                if not cls.panel_open or cls.mouse_pos_x <= math.floor(((Game.surface.get_size()[0] / 4 * 3 - Game.TILESIZE) - TileManager.camera.last_x) / Game.TILESIZE):
                     cls.last_mouse_pos_x = cls.mouse_pos_x
                     cls.last_mouse_pos_y = cls.mouse_pos_y
                     cls.last_mouse_pos_x_c = mouse[0]
@@ -148,7 +148,7 @@ class TileEditor:
                 cls.mouse_pushed_l = False
             if mouse_buttons[2] == 1 and not cls.mouse_pushed_r:
                 cls.mouse_pushed_r = True
-                if not cls.panel_open or cls.mouse_pos_x <= math.floor(((Game.surface.get_size()[0] / 4 * 3 - Game.TILESIZE) - TileManager.editor_camera.last_x) / Game.TILESIZE):
+                if not cls.panel_open or cls.mouse_pos_x <= math.floor(((Game.surface.get_size()[0] / 4 * 3 - Game.TILESIZE) - TileManager.camera.last_x) / Game.TILESIZE):
                     cls.last_mouse_pos_x = cls.mouse_pos_x
                     cls.last_mouse_pos_y = cls.mouse_pos_y
                     try:

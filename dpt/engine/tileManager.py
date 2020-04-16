@@ -35,7 +35,6 @@ class TileManager:
     used_resources = []
     coords = None
     camera = None
-    editor_camera = None
     Game.available_tiles = []
     Game.available_tiles.extend(RessourceLoader.select_entries("dpt.blocks.*"))
     Game.available_tiles.remove("dpt.blocks.notfound")
@@ -74,6 +73,7 @@ class TileManager:
         cls.max_height_size = 0
         if level is None:
             cls.log.critical("The level can't be loaded")
+            return False
 
         if not TileEditor.in_editor:
             cls.log.debug("Loading level blocks and entities")
@@ -149,11 +149,12 @@ class TileManager:
             from dpt.engine.gui.editor.charEntity import CharEntity
             Game.player_sprite = CharEntity()
             Game.player_group.add(Game.player_sprite)
-            cls.editor_camera = EditorCamera(TileManager.max_width_size, TileManager.max_height_size)
+            cls.camera = EditorCamera(TileManager.max_width_size, TileManager.max_height_size)
         TileEditor.created_level = level
         cls.levelName = level_name
         Game.freeze_game = False
         cls.log.info("Done")
+        return True
 
     @classmethod
     def ghost_block(cls, x_tile, y_tile, item):

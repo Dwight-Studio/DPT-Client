@@ -5,8 +5,11 @@ import os
 import sys
 import tarfile
 import traceback
-
 import pygame
+
+
+def void():
+    pass
 
 
 def get_root():
@@ -47,6 +50,7 @@ class Game(object):
     player_sprite = None
     button = None
     events = []
+    loop = void
     com = None
 
     anim_count_lava = 0
@@ -84,7 +88,7 @@ class Game(object):
     stream_handler.setFormatter(logging_format)
 
     @classmethod
-    def play(cls, debug):
+    def play(cls, debug, skip_intro):
         try:
             # /!\ ZONE SECURISÉE /!\
             cls.DEBUG = debug
@@ -134,106 +138,96 @@ class Game(object):
             RessourceLoader.init()
 
             # Séquence d'intro
-            pygame_logo = pygame.image.load(cls.ROOT_DIRECTORY + "/ressources/dpt/images/pygame_logo.png").convert_alpha()
-            logo = pygame.image.load(cls.ROOT_DIRECTORY + "/ressources/dpt/images/logo_dw.png").convert_alpha()
-            game_by = pygame.image.load(cls.ROOT_DIRECTORY + "/ressources/dpt/images/game_by.png").convert_alpha()
+            if not skip_intro:
+                pygame_logo = pygame.image.load(cls.ROOT_DIRECTORY + "/ressources/dpt/images/pygame_logo.png").convert_alpha()
+                logo = pygame.image.load(cls.ROOT_DIRECTORY + "/ressources/dpt/images/logo_dw.png").convert_alpha()
+                game_by = pygame.image.load(cls.ROOT_DIRECTORY + "/ressources/dpt/images/game_by.png").convert_alpha()
 
-            rect = pygame_logo.get_rect()
-            rect.width *= cls.DISPLAY_RATIO
-            rect.height *= cls.DISPLAY_RATIO
-            pygame_logo = pygame.transform.scale(pygame_logo, (rect.width, rect.height))
-            rect.centerx = w // 2
-            rect.centery = h // 2
+                rect = pygame_logo.get_rect()
+                rect.width *= cls.DISPLAY_RATIO
+                rect.height *= cls.DISPLAY_RATIO
+                pygame_logo = pygame.transform.scale(pygame_logo, (rect.width, rect.height))
+                rect.centerx = w // 2
+                rect.centery = h // 2
 
-            for alpha in range(0, 256, 4):
-                pygame.time.delay(1)
-                pygame.draw.rect(Game.surface, (0, 0, 0), rect)
-                pygame_logo.set_alpha(alpha)
-                cls.surface.blit(pygame_logo, rect)
-                cls.window.update()
+                for alpha in range(0, 256, 4):
+                    pygame.time.delay(1)
+                    pygame.draw.rect(Game.surface, (0, 0, 0), rect)
+                    pygame_logo.set_alpha(alpha)
+                    cls.surface.blit(pygame_logo, rect)
+                    cls.window.update()
 
-            pygame.time.delay(1000)
+                pygame.time.delay(1000)
 
-            for alpha in range(0, 256, 4):
-                pygame.time.delay(1)
-                pygame.draw.rect(Game.surface, (0, 0, 0), pygame.Rect(0, 0, w, h))
-                pygame_logo.set_alpha(255 - alpha)
-                cls.surface.blit(pygame_logo, rect)
-                cls.window.update()
+                for alpha in range(0, 256, 4):
+                    pygame.time.delay(1)
+                    pygame.draw.rect(Game.surface, (0, 0, 0), pygame.Rect(0, 0, w, h))
+                    pygame_logo.set_alpha(255 - alpha)
+                    cls.surface.blit(pygame_logo, rect)
+                    cls.window.update()
 
-            pygame.time.delay(1000)
+                pygame.time.delay(1000)
 
-            pygame.mixer_music.set_volume(0.5)
-            pygame.mixer_music.load(cls.ROOT_DIRECTORY + "/ressources/dpt/sounds/musics/intro_sequence.music.ogg")
-            pygame.mixer_music.play()
+                pygame.mixer_music.set_volume(0.5)
+                pygame.mixer_music.load(cls.ROOT_DIRECTORY + "/ressources/dpt/sounds/musics/intro_sequence.music.ogg")
+                pygame.mixer_music.play()
 
-            rect = logo.get_rect()
-            rect.width *= 0.8 * cls.DISPLAY_RATIO
-            rect.height *= 0.8 * cls.DISPLAY_RATIO
-            logo = pygame.transform.scale(logo, (rect.width, rect.height))
-            rect.centerx = w // 2
-            rect.centery = h // 2
+                rect = logo.get_rect()
+                rect.width *= 0.8 * cls.DISPLAY_RATIO
+                rect.height *= 0.8 * cls.DISPLAY_RATIO
+                logo = pygame.transform.scale(logo, (rect.width, rect.height))
+                rect.centerx = w // 2
+                rect.centery = h // 2
 
-            for alpha in range(0, 256, 2):
-                log = logo.copy()
-                pygame.time.delay(5)
-                pygame.draw.rect(Game.surface, (alpha, alpha, alpha), pygame.Rect(0, 0, w, h))
-                log.set_alpha(alpha)
-                color = min((255 - alpha) * 2, 255)
-                log.fill((color, color, color), special_flags=pygame.BLEND_RGB_ADD)
-                cls.surface.blit(log, rect)
-                cls.window.update()
+                for alpha in range(0, 256, 2):
+                    log = logo.copy()
+                    pygame.time.delay(5)
+                    pygame.draw.rect(Game.surface, (alpha, alpha, alpha), pygame.Rect(0, 0, w, h))
+                    log.set_alpha(alpha)
+                    color = min((255 - alpha) * 2, 255)
+                    log.fill((color, color, color), special_flags=pygame.BLEND_RGB_ADD)
+                    cls.surface.blit(log, rect)
+                    cls.window.update()
 
-            rect2 = game_by.get_rect()
-            rect2.width *= 0.3 * cls.DISPLAY_RATIO
-            rect2.height *= 0.3 * cls.DISPLAY_RATIO
-            game_by = pygame.transform.scale(game_by, (rect2.width, rect2.height))
-            rect2.centerx = w // 2 - rect.width // 2 - math.floor(100 * cls.DISPLAY_RATIO)
-            rect2.centery = rect.centery
+                rect2 = game_by.get_rect()
+                rect2.width *= 0.3 * cls.DISPLAY_RATIO
+                rect2.height *= 0.3 * cls.DISPLAY_RATIO
+                game_by = pygame.transform.scale(game_by, (rect2.width, rect2.height))
+                rect2.centerx = w // 2 - rect.width // 2 - math.floor(100 * cls.DISPLAY_RATIO)
+                rect2.centery = rect.centery
 
-            for alpha in range(0, 256, 10):
-                pygame.time.delay(20)
-                pygame.draw.rect(Game.surface, (255, 255, 255), rect2)
-                game_by.set_alpha(alpha)
-                cls.surface.blit(game_by, rect2)
-                cls.window.update()
+                for alpha in range(0, 256, 10):
+                    pygame.time.delay(20)
+                    pygame.draw.rect(Game.surface, (255, 255, 255), rect2)
+                    game_by.set_alpha(alpha)
+                    cls.surface.blit(game_by, rect2)
+                    cls.window.update()
 
-            pygame.time.delay(2000)
+                pygame.time.delay(2000)
 
-            for alpha in range(0, 256, 2):
-                pygame.time.delay(3)
-                pygame.draw.rect(Game.surface, (255, 255, 255), pygame.Rect(0, 0, w, h))
-                logo.set_alpha(255 - alpha)
-                game_by.set_alpha(255 - alpha)
-                cls.surface.blit(logo, rect)
-                cls.surface.blit(game_by, rect2)
-                cls.window.update()
+                for alpha in range(0, 256, 2):
+                    pygame.time.delay(3)
+                    pygame.draw.rect(Game.surface, (255, 255, 255), pygame.Rect(0, 0, w, h))
+                    logo.set_alpha(255 - alpha)
+                    game_by.set_alpha(255 - alpha)
+                    cls.surface.blit(logo, rect)
+                    cls.surface.blit(game_by, rect2)
+                    cls.window.update()
 
-            pygame.mixer_music.fadeout(1000)
-            pygame.time.delay(1000)
+                pygame.mixer_music.fadeout(1000)
+                pygame.time.delay(1000)
 
-            # Initialisation du TileManager
-            from dpt.engine.tileManager import TileManager
-            from dpt.engine.gui.editor.tileEditor import TileEditor
-            TileEditor.in_editor = False
-            RessourceLoader.add_pending("dpt.images.gui.buttons.BTN_GREEN_RECT_*")
-            RessourceLoader.add_pending("dpt.images.environment.background.default_sky")
-            TileManager.load_level("dpt.levels.leveltest")
+            # Tests webcoms
+            # from dpt.engine.webCommunications import Communication
+            # cls.com = Communication()
+            # cls.com.create()
+            # cls.com.create_vote_event(0, 0)
 
-            # Initialisation des webComs
-            from dpt.engine.webCommunications import Communication
-            cls.com = Communication()
-            cls.com.create()
-            cls.com.create_vote_event(0, 0)
+            # Scene par défaut
+            from dpt.engine.scenes import Scenes
+            Scenes.editor("dpt.levels.levelTest")
 
-            # Ajout du bouton d'éditeur
-            from dpt.engine.gui.menu.button import Button
-            cls.button = Button(0, Game.surface.get_size()[1] - 50, 127, 46, RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_OUT"), pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_IN"), text="Editeur")
-
-            # Loops
-            from dpt.engine.mainLoop import level_loop
-            cls.loop = level_loop
-
+            # MainLoop
             while cls.run:
                 Game.events = pygame.event.get()
                 cls.loop()
