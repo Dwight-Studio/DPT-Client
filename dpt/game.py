@@ -121,9 +121,9 @@ class Game(object):
             pygame.display.set_caption("Don't play together")
             cls.clock = pygame.time.Clock()
 
-            # Groupes Pygame
-            from dpt.engine.gui.menu.button import Button
+            pygame.mixer.init()
 
+            # Groupes Pygame
             cls.playerGroup = pygame.sprite.Group()
 
             # Evenements persos
@@ -132,6 +132,87 @@ class Game(object):
             # Initialisation du RessourceLoader
             from dpt.engine.loader import RessourceLoader
             RessourceLoader.init()
+
+            # Séquence d'intro
+            pygame_logo = pygame.image.load(cls.ROOT_DIRECTORY + "/ressources/dpt/images/pygame_logo.png").convert_alpha()
+            logo = pygame.image.load(cls.ROOT_DIRECTORY + "/ressources/dpt/images/logo_dw.png").convert_alpha()
+            game_by = pygame.image.load(cls.ROOT_DIRECTORY + "/ressources/dpt/images/game_by.png").convert_alpha()
+
+            rect = pygame_logo.get_rect()
+            rect.width *= cls.DISPLAY_RATIO
+            rect.height *= cls.DISPLAY_RATIO
+            pygame_logo = pygame.transform.scale(pygame_logo, (rect.width, rect.height))
+            rect.centerx = w // 2
+            rect.centery = h // 2
+
+            for alpha in range(0, 256, 4):
+                pygame.time.delay(1)
+                pygame.draw.rect(Game.surface, (0, 0, 0), rect)
+                pygame_logo.set_alpha(alpha)
+                cls.surface.blit(pygame_logo, rect)
+                cls.window.update()
+
+            pygame.time.delay(1000)
+
+            for alpha in range(0, 256, 4):
+                pygame.time.delay(1)
+                pygame.draw.rect(Game.surface, (0, 0, 0), pygame.Rect(0, 0, w, h))
+                pygame_logo.set_alpha(255 - alpha)
+                cls.surface.blit(pygame_logo, rect)
+                cls.window.update()
+
+            pygame.time.delay(1000)
+
+            pygame.mixer_music.set_volume(0.5)
+            pygame.mixer_music.load(cls.ROOT_DIRECTORY + "/ressources/dpt/sounds/musics/intro_sequence.music.ogg")
+            pygame.mixer_music.play()
+
+            rect = logo.get_rect()
+            rect.width *= 0.8 * cls.DISPLAY_RATIO
+            rect.height *= 0.8 * cls.DISPLAY_RATIO
+            logo = pygame.transform.scale(logo, (rect.width, rect.height))
+            rect.centerx = w // 2
+            rect.centery = h // 2
+
+            color = None
+
+            for alpha in range(0, 256, 2):
+                log = logo.copy()
+                pygame.time.delay(5)
+                pygame.draw.rect(Game.surface, (alpha, alpha, alpha), pygame.Rect(0, 0, w, h))
+                log.set_alpha(alpha)
+                color = min((255 - alpha) * 2, 255)
+                log.fill((color, color, color), special_flags=pygame.BLEND_RGB_ADD)
+                cls.surface.blit(log, rect)
+                cls.window.update()
+
+            rect2 = game_by.get_rect()
+            rect2.width *= 0.3 * cls.DISPLAY_RATIO
+            rect2.height *= 0.3 * cls.DISPLAY_RATIO
+            game_by = pygame.transform.scale(game_by, (rect2.width, rect2.height))
+            rect2.centerx = w // 2 - rect.width // 2
+            rect2.centery = h // 2 - rect.height // 2 + (200 * cls.DISPLAY_RATIO)
+
+            for alpha in range(0, 256, 10):
+                pygame.time.delay(20)
+                pygame.draw.rect(Game.surface, (255, 255, 255), rect2)
+                game_by.set_alpha(alpha)
+                cls.surface.blit(game_by, rect2)
+                cls.window.update()
+
+            pygame.time.delay(2000)
+
+            for alpha in range(0, 256, 2):
+                pygame.time.delay(3)
+                pygame.draw.rect(Game.surface, (255, 255, 255), pygame.Rect(0, 0, w, h))
+                logo.set_alpha(255 - alpha)
+                game_by.set_alpha(255 - alpha)
+                cls.surface.blit(logo, rect)
+                cls.surface.blit(game_by, rect2)
+                cls.window.update()
+
+            pygame.mixer_music.fadeout(1000)
+            pygame.time.delay(1000)
 
             # Initialisation du TileManager
             from dpt.engine.tileManager import TileManager
@@ -151,6 +232,7 @@ class Game(object):
             # com.voteResult()
 
             # Ajout du bouton d'éditeur
+            from dpt.engine.gui.menu.button import Button
             cls.button = Button(0, Game.surface.get_size()[1] - 50, 127, 46, RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_OUT"), pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_IN"), text="Editeur")
 
             # Loops

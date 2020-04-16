@@ -23,8 +23,6 @@ class ProgressBar(pygame.sprite.Sprite):
     def update(self):
         if self.value > self.max_value:
             self.value = self.max_value
-
-        Game.add_debug_info(str(self.bar.progress))
         self.bar.progress = math.floor(self.width * (self.value / self.max_value))
 
     @classmethod

@@ -135,6 +135,10 @@ class RessourceLoader:
                     module = runpy.run_path(cls.pending_ressources[entry])
                     cls.loaded_ressources[entry] = module[ext[-3]]
                     cls.logger.debug("Entry " + entry + " loaded")
+                elif ext[-1] == "ogg" and ext[-2] == "music":
+                    cls.loaded_ressources[entry] = cls.pending_ressources[entry]
+                elif ext[-1] == "ogg" and ext[-2] != "music":
+                    cls.loaded_ressources[entry] = pygame.mixer.Sound(cls.pending_ressources[entry])
                 else:
                     cls.logger.warning("Entry " + entry + " invalid")
 

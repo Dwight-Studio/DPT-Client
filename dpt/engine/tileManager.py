@@ -263,8 +263,8 @@ class TileManager:
     @classmethod
     def display_sprites(cls, self):
         rect = Game.surface.get_bounding_rect()
-        rect.width += 100
-        rect.x -= self.last_x + 50
+        rect.width += 200
+        rect.x -= self.last_x + 100
         Game.display_rect = rect
         for sprite in TileManager.backgroundBlocks:
             if sprite.rect.colliderect(rect):
