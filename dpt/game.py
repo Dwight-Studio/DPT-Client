@@ -174,8 +174,6 @@ class Game(object):
             rect.centerx = w // 2
             rect.centery = h // 2
 
-            color = None
-
             for alpha in range(0, 256, 2):
                 log = logo.copy()
                 pygame.time.delay(5)
@@ -190,8 +188,8 @@ class Game(object):
             rect2.width *= 0.3 * cls.DISPLAY_RATIO
             rect2.height *= 0.3 * cls.DISPLAY_RATIO
             game_by = pygame.transform.scale(game_by, (rect2.width, rect2.height))
-            rect2.centerx = w // 2 - rect.width // 2
-            rect2.centery = h // 2 - rect.height // 2 + (200 * cls.DISPLAY_RATIO)
+            rect2.centerx = w // 2 - rect.width // 2 - math.floor(100 * cls.DISPLAY_RATIO)
+            rect2.centery = rect.centery
 
             for alpha in range(0, 256, 10):
                 pygame.time.delay(20)
