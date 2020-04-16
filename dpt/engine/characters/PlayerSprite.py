@@ -103,10 +103,10 @@ class PlayerSprite(pygame.sprite.Sprite):
             self.animation()
             self.enemiesCollision(self.yvel, TileManager.enemyGroup)
             self.deadlyObjectCollision()
-            self.deathFall()
 
         elif not self.alive:
             self.die()
+        self.deathFall()
 
     def animation(self):
         if self.walkCount + 1 >= 54:
@@ -168,12 +168,11 @@ class PlayerSprite(pygame.sprite.Sprite):
                     self.die()
 
     def deathFall(self):
-        if self.rect.top > 1400:
-            self.yvel = 0
+        if self.rect.top >= Game.surface.get_size()[1]:
+            Game.get_logger("Player").info("Player sprite killed")
             Game.isPlayerDead = True
-            self.xvel = 0
-            self.die()
-            self.kill()
+            Game.playerSprite.kill()
+            del self
 
     def die(self):
         self.alive = False

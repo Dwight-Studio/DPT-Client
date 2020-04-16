@@ -287,12 +287,12 @@ class TileManager:
                 self.sprite_count += 1
                 if Game.DISPLAY_RECT:
                     pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(sprite), width=2)
-        Game.playerSprite.update()
-        Game.surface.blit(Game.playerSprite.image, self.apply(Game.playerSprite))
-        self.sprite_count += len(Game.playerGroup)
-        self.sprite_count += 1
-        if Game.DISPLAY_RECT:
-            pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(Game.playerSprite), width=2)
+        for sprite in Game.playerGroup:
+            sprite.update()
+            Game.surface.blit(sprite.image, self.apply(sprite))
+            self.sprite_count += 1
+            if Game.DISPLAY_RECT:
+                pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(sprite), width=2)
         for sprite in TileManager.deadlyObjectGroup:
             if sprite.rect.colliderect(rect):
                 sprite.update()
