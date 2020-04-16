@@ -17,6 +17,9 @@ class Communication(object):
         self.keepAliveThread = threading.Thread(target=self.keep_alive)
         self.keep = False
         self.currentTime = int(round(time.time() * 1000))
+        self.waiting = False
+        self.waitThread = threading.Thread(target=self.start_wait)
+        self.time_to_wait = 0
 
     def create(self):
         request = requests.get("http://" + Game.SERVER_ADDRESS + "/init.php?session=" + self.sessionName)
@@ -48,6 +51,8 @@ class Communication(object):
         data = {"endDate": self.currentTime + (Game.VOTE_TIMEOUT * 1000) + 2000, "mod1": mod1, "mod2": mod2}
         requests.get("http://" + Game.SERVER_ADDRESS + "/registerVote.php?session=" + self.sessionName + "&data=" + json.dumps(data))
         self.log.info("Vote created")
+        self.waiting = True
+        self.wait_for(Game.VOTE_TIMEOUT + 2)
 
     def vote_result(self):
         vote_one = 0
@@ -69,6 +74,16 @@ class Communication(object):
                 self.log.info("Vote equality")
         else:
             self.log.critical("Vote request failed")
+
+    def wait_for(self, time):
+        self.time_to_wait = time
+        self.waitThread.start()
+
+    def start_wait(self):
+        while self.waiting:
+            time.sleep(self.time_to_wait)
+            self.vote_result()
+            self.waiting = False
 
     def close(self):
         request_close = requests.get("http://" + Game.SERVER_ADDRESS + "/close.php?session=" + self.sessionName)

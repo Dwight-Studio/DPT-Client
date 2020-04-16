@@ -1,7 +1,5 @@
 import math
-
 import psutil
-
 from dpt.engine.gui.editor.tileEditor import TileEditor
 from dpt.engine.gui.menu.button import Button
 from dpt.engine.gui.menu.checkbox import Checkbox
@@ -39,6 +37,8 @@ def do_synch_anims():
 def level_loop():
     Game.clock.tick(60)
     Game.surface.blit(bg, (0, 0))
+
+    Game.events = pygame.event.get()
 
     for event in Game.events:
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):

@@ -47,6 +47,7 @@ class Game(object):
     player_sprite = None
     button = None
     events = []
+    com = None
 
     anim_count_lava = 0
     anim_count_water = 0
@@ -221,12 +222,9 @@ class Game(object):
 
             # Initialisation des webComs
             from dpt.engine.webCommunications import Communication
-            # com = Communication()
-            # com.create()
-            # time.sleep(10)
-            # com.createVoteEvent(0, 0)
-            # time.sleep(40)
-            # com.voteResult()
+            cls.com = Communication()
+            cls.com.create()
+            cls.com.create_vote_event(0, 0)
 
             # Ajout du bouton d'éditeur
             from dpt.engine.gui.menu.button import Button
