@@ -13,6 +13,9 @@ from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 import pygame
 
+bg = RessourceLoader.get("dpt.images.environment.background.default_sky")
+bg = pygame.transform.scale(bg, Game.surface.get_size())
+
 
 def do_synch_anims():
     # Lava
@@ -27,8 +30,34 @@ def do_synch_anims():
     else:
         Game.animCountWater += 1
 
+    # Coins
+    if Game.animCountCoins + 1 >= 144:
+        Game.animCountCoins = 0
+    else:
+        Game.animCountCoins += 1
 
-def redraw_Game_window():
+
+# Mainloops
+def level_loop():
+    Game.clock.tick(60)
+    Game.surface.blit(bg, (0, 0))
+
+    Game.events = pygame.event.get()
+
+    for event in Game.events:
+        if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+            Game.run = False
+        elif event.type == Game.BUTTONEVENT:
+            TileEditor.inEditor = not TileEditor.inEditor
+            TileEditor.panelOpen = False
+            TileManager.loadLevel(TileManager.levelName)
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 4 and TileEditor.inEditor:
+                TileManager.scrollUp()
+            elif event.button == 5 and TileEditor.inEditor:
+                TileManager.scrollDown()
+
+    do_synch_anims()
     TileManager.outOfWindow()
 
     if not TileEditor.inEditor:
@@ -67,26 +96,9 @@ def redraw_Game_window():
     Game.window.update()
 
 
-# Mainloop
-def level_main_loop():
-    Game.clock.tick(60)
-    bg = RessourceLoader.get("dpt.images.environment.background.background")
-    Game.surface.blit(bg, (0, 0))
+def pause_loop():
+    pass
 
-    Game.events = pygame.event.get()
 
-    for event in Game.events:
-        if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
-            Game.run = False
-        elif event.type == Game.BUTTONEVENT:
-            TileEditor.inEditor = not TileEditor.inEditor
-            TileEditor.panelOpen = False
-            TileManager.loadLevel(TileManager.levelName)
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            if event.button == 4 and TileEditor.inEditor:
-                TileManager.scrollUp()
-            elif event.button == 5 and TileEditor.inEditor:
-                TileManager.scrollDown()
-
-    do_synch_anims()
-    redraw_Game_window()
+def main_menu_loop():
+    pass

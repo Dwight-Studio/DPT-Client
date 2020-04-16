@@ -29,12 +29,7 @@ class Coin(pygame.sprite.Sprite):
         self.collide()
 
     def animation(self):
-        if self.animCount + 1 >= 144:
-            self.animCount = 0
-        else:
-            self.animCount += 1
-
-        self.image = self.frames[self.animCount // 4]
+        self.image = self.frames[Game.animCountCoins // 4]
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
 
     def collide(self):

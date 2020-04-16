@@ -159,7 +159,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         for i in enemies:
             if pygame.sprite.collide_rect(self, i):
                 if yVelDelta < 0:
-                    TileManager.enemyGroup.remove(i)
+                    i.kill()
                 else:
                     self.yvel = 0
                     Game.isPlayerDead = True

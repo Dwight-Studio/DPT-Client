@@ -51,6 +51,7 @@ class Game(object):
 
     animCountLava = 0
     animCountWater = 0
+    animCountCoins = 0
 
     # Evenements
     BUTTONEVENT = None
@@ -137,7 +138,7 @@ class Game(object):
             from dpt.engine.gui.editor.tileEditor import TileEditor
             TileEditor.inEditor = False
             RessourceLoader.add_pending("dpt.images.gui.buttons.BTN_GREEN_RECT_*")
-            RessourceLoader.add_pending("dpt.images.environment.background.background")
+            RessourceLoader.add_pending("dpt.images.environment.background.default_sky")
             TileManager.loadLevel("dpt.levels.leveltest")
 
             # Initialisation des webComs
@@ -153,14 +154,15 @@ class Game(object):
             cls.button = Button(0, Game.surface.get_size()[1] - 50, 127, 46, RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_OUT"), pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_IN"), text="Editeur")
 
             # Loops
-            from dpt.engine.mainLoop import level_main_loop
-            cls.loop = level_main_loop
+            from dpt.engine.mainLoop import level_loop
+            cls.loop = level_loop
 
             while cls.run:
                 cls.loop()
             pygame.quit()
 
         except Exception:
+            main_logger = cls.get_logger(None)
             main_logger.critical("Unexpected error has occurred. Following informations has been gathered:")
             exc_type, exc_value, exc_tb = sys.exc_info()
             trace = "".join(traceback.format_exception(exc_type, exc_value, exc_tb))

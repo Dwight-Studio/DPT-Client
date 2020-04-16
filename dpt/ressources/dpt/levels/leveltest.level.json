@@ -510,7 +510,7 @@
     "class": "dpt.blocks.grass.grasscorneredger"
   },
   "23, 9": {
-    "class": "dpt.blocks.grass.grasscorneredgel"
+    "class": "dpt.blocks.grass.grass"
   },
   "24, 9": {
     "class": "dpt.blocks.grass.grass"
@@ -651,10 +651,10 @@
     "class": "dpt.blocks.grass.grasslower"
   },
   "23, 10": {
-    "class": "dpt.blocks.grass.grassl"
+    "class": "dpt.blocks.grass.grasslower"
   },
   "23, 11": {
-    "class": "dpt.blocks.grass.grassl"
+    "class": "dpt.blocks.grass.grasslower"
   },
   "25, 10": {
     "class": "dpt.blocks.grass.grasslower"
@@ -825,10 +825,6 @@
     "backgroundClass": "dpt.blocks.grass.grasslower",
     "class": "dpt.entities.lavatop"
   },
-  "22, 9": {
-    "backgroundClass": "dpt.blocks.grass.grasslower",
-    "class": "dpt.entities.lavatop"
-  },
   "20, 10": {
     "backgroundClass": "dpt.blocks.grass.grasslower",
     "class": "dpt.entities.lava"
@@ -842,14 +838,6 @@
     "class": "dpt.entities.lava"
   },
   "21, 10": {
-    "backgroundClass": "dpt.blocks.grass.grasslower",
-    "class": "dpt.entities.lava"
-  },
-  "22, 10": {
-    "backgroundClass": "dpt.blocks.grass.grasslower",
-    "class": "dpt.entities.lava"
-  },
-  "22, 11": {
     "backgroundClass": "dpt.blocks.grass.grasslower",
     "class": "dpt.entities.lava"
   },
@@ -3525,5 +3513,14 @@
   },
   "324, 11": {
     "class": "dpt.blocks.grass.grasslower"
+  },
+  "22, 11": {
+    "class": "dpt.blocks.grass.grassl"
+  },
+  "22, 10": {
+    "class": "dpt.blocks.grass.grassl"
+  },
+  "22, 9": {
+    "class": "dpt.blocks.grass.grasscorneredgel"
   }
 }

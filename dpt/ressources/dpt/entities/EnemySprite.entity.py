@@ -76,6 +76,11 @@ class EnemySprite(pygame.sprite.Sprite):
             self.left = not self.left
             self.right = not self.right
 
+            if self.left:
+                self.xvel -= 1 * Game.DISPLAY_RATIO
+            elif self.right:
+                self.xvel += 1 * Game.DISPLAY_RATIO
+
         self.rect.top -= self.yvel
         self.collide(0, self.yvel, TileManager.environmentGroup)
         self.check_void()
@@ -86,21 +91,22 @@ class EnemySprite(pygame.sprite.Sprite):
 
     def collide(self, xVelDelta, yVelDelta, platforms):
         for i in platforms:
-            if pygame.sprite.collide_rect(self, i):
-                if xVelDelta > 0:
-                    self.rect.right = i.rect.left
-                    self.xvel = 0
-                if xVelDelta < 0:
-                    self.rect.left = i.rect.right
-                    self.xvel = 0
-                if yVelDelta < 0:
-                    self.rect.bottom = i.rect.top
-                    self.onPlatform = True
-                    self.jumpCount = self.CONSTJUMPCOUNT
-                    self.allowJump = True
-                    self.gravityCount = 0
-                if yVelDelta > 0:
-                    self.rect.top = i.rect.bottom
+            if i.rect.colliderect(Game.display_rect):
+                if pygame.sprite.collide_rect(self, i):
+                    if xVelDelta > 0:
+                        self.rect.right = i.rect.left
+                        self.xvel = 0
+                    if xVelDelta < 0:
+                        self.rect.left = i.rect.right
+                        self.xvel = 0
+                    if yVelDelta < 0:
+                        self.rect.bottom = i.rect.top
+                        self.onPlatform = True
+                        self.jumpCount = self.CONSTJUMPCOUNT
+                        self.allowJump = True
+                        self.gravityCount = 0
+                    if yVelDelta > 0:
+                        self.rect.top = i.rect.bottom
 
     def check_void(self):
         if self.rect.top > 2000:
