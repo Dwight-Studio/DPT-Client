@@ -1,7 +1,6 @@
 import pygame
 
 from dpt.engine.gui.menu.button import Button
-from dpt.game import Game
 
 
 class TextSpriteButton(pygame.sprite.Sprite):

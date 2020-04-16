@@ -5,7 +5,7 @@ from dpt.engine.loader import RessourceLoader, UnreachableRessourceError
 class BackgroundFakeBlocks(pygame.sprite.Sprite):
     def __init__(self, x, y, block):
         from dpt.engine.tileManager import TileManager
-        pygame.sprite.Sprite.__init__(self, TileManager.backgroundBlocks)
+        pygame.sprite.Sprite.__init__(self, TileManager.background_blocks)
         try:
             self.block = RessourceLoader.get(block)
             self.image = RessourceLoader.get(self.block.texture).copy()

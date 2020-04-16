@@ -89,24 +89,24 @@ class PlayerSprite(pygame.sprite.Sprite):
                         self.yvel = 0
 
             self.rect.left += self.xvel
-            self.collide(self.xvel, 0, TileManager.environmentGroup)
+            self.collide(self.xvel, 0, TileManager.environment_group)
             self.rect.top -= self.yvel
-            self.collide(0, self.yvel, TileManager.environmentGroup)
+            self.collide(0, self.yvel, TileManager.environment_group)
 
             if not self.isJump:
                 self.allowJump = False
                 PlayerSprite.gravityCount += 1
                 PlayerSprite.gravity = math.floor((PlayerSprite.gravityCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * -1
                 self.rect.top -= PlayerSprite.gravity
-                self.collide(0, PlayerSprite.gravity, TileManager.environmentGroup)
+                self.collide(0, PlayerSprite.gravity, TileManager.environment_group)
 
             self.animation()
-            self.enemiesCollision(self.yvel, TileManager.enemyGroup)
-            self.deadlyObjectCollision()
+            self.enemies_collision(self.yvel, TileManager.enemy_group)
+            self.deadly_object_collision()
 
         elif not self.alive:
             self.die()
-        self.deathFall()
+        self.death_fall()
 
     def animation(self):
         if self.walkCount + 1 >= 54:
@@ -127,51 +127,51 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
         # pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
 
-    def collide(self, xVelDelta, yVelDelta, platforms):
+    def collide(self, x_vel_delta, y_vel_delta, platforms):
         for i in platforms:
             if i.rect.colliderect(Game.display_rect):
                 if pygame.sprite.collide_rect(self, i):
-                    if xVelDelta > 0:
+                    if x_vel_delta > 0:
                         self.rect.right = i.rect.left
                         self.xvel = 0
-                    if xVelDelta < 0:
+                    if x_vel_delta < 0:
                         self.rect.left = i.rect.right
                         self.xvel = 0
-                    if yVelDelta < 0:
+                    if y_vel_delta < 0:
                         self.rect.bottom = i.rect.top
                         self.onPlatform = True
                         self.jumpCount = self.CONSTJUMPCOUNT
                         self.allowJump = True
                         PlayerSprite.gravityCount = 0
-                    if yVelDelta > 0:
+                    if y_vel_delta > 0:
                         self.rect.top = i.rect.bottom
 
-    def deadlyObjectCollision(self):
-        for i in TileManager.deadlyObjectGroup:
+    def deadly_object_collision(self):
+        for i in TileManager.deadly_object_group:
             if pygame.sprite.collide_rect(self, i):
                 self.yvel = 0
-                Game.isPlayerDead = True
+                Game.freeze_game = True
                 self.xvel = 0
                 time.sleep(0.5)
                 self.die()
 
-    def enemiesCollision(self, yVelDelta, enemies):
+    def enemies_collision(self, yVelDelta, enemies):
         for i in enemies:
             if pygame.sprite.collide_rect(self, i):
                 if yVelDelta < 0:
                     i.kill()
                 else:
                     self.yvel = 0
-                    Game.isPlayerDead = True
+                    Game.freeze_game = True
                     self.xvel = 0
                     time.sleep(0.5)
                     self.die()
 
-    def deathFall(self):
+    def death_fall(self):
         if self.rect.top >= Game.surface.get_size()[1]:
             Game.get_logger("Player").info("Player sprite killed")
-            Game.isPlayerDead = True
-            Game.playerSprite.kill()
+            Game.freeze_game = True
+            Game.player_sprite.kill()
             del self
 
     def die(self):

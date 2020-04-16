@@ -15,7 +15,7 @@ class Coin(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
-        pygame.sprite.Sprite.__init__(self, TileManager.entityGroup)  # Sprite's constructor called
+        pygame.sprite.Sprite.__init__(self, TileManager.entity_group)  # Sprite's constructor called
         self.image = RessourceLoader.get(self.texture)
         self.frames = RessourceLoader.get_multiple(self.textures)
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
@@ -29,11 +29,11 @@ class Coin(pygame.sprite.Sprite):
         self.collide()
 
     def animation(self):
-        self.image = self.frames[Game.animCountCoins // 4]
+        self.image = self.frames[Game.anim_count_coins // 4]
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
 
     def collide(self):
-        for i in Game.playerGroup:
+        for i in Game.player_group:
             if pygame.sprite.collide_mask(self, i):
                 self.kill()
                 del self

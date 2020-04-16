@@ -5,8 +5,8 @@ import os
 import sys
 import tarfile
 import traceback
+
 import pygame
-import time
 
 
 def get_root():
@@ -35,27 +35,25 @@ class Game(object):
     # Variable à définir
     run = True
     display_rect = None
-    isPlayerDead = False
+    freeze_game = False
     window = None
     clock = None
-    playerGroup = None
+    player_group = None
     ressources = None
-    availableTiles = None
-    platformsList = []
-    enemyList = []
-    selectedItem = "dpt.blocks.grass.Grass"
-    editorTileRegistry = {}
+    available_tiles = None
+    selected_item = "dpt.blocks.grass.Grass"
+    editor_tile_registry = {}
     surface = None
-    playerSprite = None
+    player_sprite = None
     button = None
     events = []
 
-    animCountLava = 0
-    animCountWater = 0
-    animCountCoins = 0
+    anim_count_lava = 0
+    anim_count_water = 0
+    anim_count_coins = 0
 
     # Evenements
-    BUTTONEVENT = None
+    BUTTON_EVENT = None
 
     _debug_infos = None
 
@@ -125,10 +123,10 @@ class Game(object):
             pygame.mixer.init()
 
             # Groupes Pygame
-            cls.playerGroup = pygame.sprite.Group()
+            cls.player_group = pygame.sprite.Group()
 
             # Evenements persos
-            cls.BUTTONEVENT = pygame.event.custom_type()
+            cls.BUTTON_EVENT = pygame.event.custom_type()
 
             # Initialisation du RessourceLoader
             from dpt.engine.loader import RessourceLoader
@@ -216,10 +214,10 @@ class Game(object):
             # Initialisation du TileManager
             from dpt.engine.tileManager import TileManager
             from dpt.engine.gui.editor.tileEditor import TileEditor
-            TileEditor.inEditor = False
+            TileEditor.in_editor = False
             RessourceLoader.add_pending("dpt.images.gui.buttons.BTN_GREEN_RECT_*")
             RessourceLoader.add_pending("dpt.images.environment.background.default_sky")
-            TileManager.loadLevel("dpt.levels.leveltest")
+            TileManager.load_level("dpt.levels.leveltest")
 
             # Initialisation des webComs
             from dpt.engine.webCommunications import Communication
@@ -239,6 +237,7 @@ class Game(object):
             cls.loop = level_loop
 
             while cls.run:
+                Game.events = pygame.event.get()
                 cls.loop()
             pygame.quit()
 

@@ -17,7 +17,7 @@ class WaterTop(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
-        pygame.sprite.Sprite.__init__(self, TileManager.entityGroup, TileManager.foregroundBlocks)  # Sprite's constructor called
+        pygame.sprite.Sprite.__init__(self, TileManager.entity_group, TileManager.foreground_blocks)  # Sprite's constructor called
         self.image = RessourceLoader.get(self.texture)
         self.frames = RessourceLoader.get_multiple(self.textures)
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
@@ -29,5 +29,5 @@ class WaterTop(pygame.sprite.Sprite):
         self.animation()
 
     def animation(self):
-        self.image = self.frames[Game.animCountWater // 4]
+        self.image = self.frames[Game.anim_count_water // 4]
         self.image = pygame.transform.scale(self.image, (self.width, self.height))

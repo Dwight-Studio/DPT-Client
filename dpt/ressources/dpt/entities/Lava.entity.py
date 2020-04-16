@@ -1,5 +1,3 @@
-import math
-
 import pygame
 
 from dpt.engine.loader import RessourceLoader
@@ -16,7 +14,7 @@ class Lava(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
-        pygame.sprite.Sprite.__init__(self, TileManager.entityGroup, TileManager.deadlyObjectGroup)  # Sprite's constructor called
+        pygame.sprite.Sprite.__init__(self, TileManager.entity_group, TileManager.deadly_object_group)  # Sprite's constructor called
         self.image = RessourceLoader.get(self.texture)
         self.frames = RessourceLoader.get_multiple(self.textures)
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
@@ -28,5 +26,5 @@ class Lava(pygame.sprite.Sprite):
         self.animation()
 
     def animation(self):
-        self.image = self.frames[Game.animCountLava // 4]
+        self.image = self.frames[Game.anim_count_lava // 4]
         self.image = pygame.transform.scale(self.image, (self.width, self.height))

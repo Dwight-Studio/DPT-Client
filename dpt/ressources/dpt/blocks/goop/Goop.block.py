@@ -12,7 +12,7 @@ class Goop(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
-        pygame.sprite.Sprite.__init__(self, TileManager.environmentGroup)
+        pygame.sprite.Sprite.__init__(self, TileManager.environment_group)
         self.image = RessourceLoader.get(self.texture)
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect()

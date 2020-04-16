@@ -14,68 +14,68 @@ from dpt.game import Game
 
 #          {"x, y": {"blockClass": Classe}}
 class TileManager:
-    deadlyObjectGroup = pygame.sprite.Group()
-    enemyGroup = pygame.sprite.Group()
-    environmentGroup = pygame.sprite.Group()
-    entityGroup = pygame.sprite.Group()
-    editorPanelGroup = pygame.sprite.Group()
-    backgroundBlocks = pygame.sprite.Group()
-    foregroundBlocks = pygame.sprite.Group()
+    deadly_object_group = pygame.sprite.Group()
+    enemy_group = pygame.sprite.Group()
+    environment_group = pygame.sprite.Group()
+    entity_group = pygame.sprite.Group()
+    editor_panel_group = pygame.sprite.Group()
+    background_blocks = pygame.sprite.Group()
+    foreground_blocks = pygame.sprite.Group()
 
     log = Game.get_logger("TileManager")
     levelName = None
-    maxWidthSize = 0
-    maxHeightSize = 0
+    max_width_size = 0
+    max_height_size = 0
     count = 0
-    alreadyDefined = False
-    nbPerLineCount = 0
-    nbPerLine = 0
-    nbSkip = 0
-    checkBack = False
-    usedResources = []
+    already_defined = False
+    per_line_count = 0
+    per_line = 0
+    nb_skip = 0
+    check_back = False
+    used_resources = []
     coords = None
     camera = None
-    editorCamera = None
-    Game.availableTiles = []
-    Game.availableTiles.extend(RessourceLoader.select_entries("dpt.blocks.*"))
-    Game.availableTiles.remove("dpt.blocks.notfound")
-    Game.availableTiles.extend(RessourceLoader.select_entries("dpt.entities.*"))
+    editor_camera = None
+    Game.available_tiles = []
+    Game.available_tiles.extend(RessourceLoader.select_entries("dpt.blocks.*"))
+    Game.available_tiles.remove("dpt.blocks.notfound")
+    Game.available_tiles.extend(RessourceLoader.select_entries("dpt.entities.*"))
 
     @classmethod
-    def loadLevel(cls, levelName):
-        Game.playerGroup.empty()
-        TileManager.editorPanelGroup.empty()
-        TileEditor.ghostBlockGroup.empty()
+    def load_level(cls, level_name):
+        Game.player_group.empty()
+        TileManager.editor_panel_group.empty()
+        TileEditor.ghost_block_group.empty()
 
-        for entity in TileManager.entityGroup:
+        for entity in TileManager.entity_group:
             entity.kill()
 
-        for block in TileManager.environmentGroup:
+        for block in TileManager.environment_group:
             block.kill()
 
-        for block in TileManager.backgroundBlocks:
+        for block in TileManager.background_blocks:
             block.kill()
 
-        if TileEditor.inEditor:
+        if TileEditor.in_editor:
             RessourceLoader.add_pending("*")
             RessourceLoader.load()
 
-        if type(levelName) == str:
-            cls.log.info("Loading level " + levelName)
-            if not TileEditor.inEditor:
+        if type(level_name) == str:
+            cls.log.info("Loading level " + level_name)
+            if not TileEditor.in_editor:
                 cls.log.debug("Loading level main file")
-                RessourceLoader.add_pending(levelName)
+                RessourceLoader.add_pending(level_name)
                 RessourceLoader.load()
-            level = RessourceLoader.get(levelName)
+            level = RessourceLoader.get(level_name)
         else:
             cls.log.info("Loading unknown level")
-            level = levelName
-        cls.maxWidthSize = 0
-        cls.maxHeightSize = 0
+            level = level_name
+        cls.max_width_size = 0
+        cls.max_height_size = 0
         if level is None:
             cls.log.critical("The level can't be loaded")
 
-        if not TileEditor.inEditor:
+        if not TileEditor.in_editor:
             cls.log.debug("Loading level blocks and entities")
             for keys in level:
                 if "class" in level[keys]:
@@ -84,7 +84,7 @@ class TileManager:
                     RessourceLoader.add_pending(level[keys]["backgroundClass"])
             RessourceLoader.load()
 
-        if not TileEditor.inEditor:
+        if not TileEditor.in_editor:
             cls.log.debug("Loading textures")
             for keys in level:
                 if "class" in level[keys]:
@@ -102,10 +102,10 @@ class TileManager:
 
         for keys in level:
             cls.coords = tuple(map(int, keys.split(", ")))
-            if cls.coords[0] > cls.maxWidthSize:
-                cls.maxWidthSize = cls.coords[0]
-            elif cls.coords[1] > cls.maxHeightSize:
-                cls.maxHeightSize = cls.coords[1]
+            if cls.coords[0] > cls.max_width_size:
+                cls.max_width_size = cls.coords[0]
+            elif cls.coords[1] > cls.max_height_size:
+                cls.max_height_size = cls.coords[1]
             if cls.coords[0] < 0 or cls.coords[1] < 0:
                 cls.log.warning("The tile position can't be negative : " + keys)
                 continue
@@ -131,127 +131,128 @@ class TileManager:
                         cls.log.warning("Invalid class name : " + level[keys]["backgroundClass"] + " for tile : " + keys)
                 else:
                     try:
-                        BackgroundFakeBlocks(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE,
-                                             level[keys]["backgroundClass"])
+                        BackgroundFakeBlocks(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE, level[keys]["backgroundClass"])
                         cls.log.debug("Background tile " + level[keys]["backgroundClass"] + " placed at " + keys)
                     except UnreachableRessourceError:
                         cls.log.warning("Invalid class name : " + level[keys]["backgroundClass"] + " for tile : " + keys)
-        cls.backgroundBlocks.draw(Game.surface)
-        cls.environmentGroup.draw(Game.surface)
-        cls.entityGroup.draw(Game.surface)
-        cls.enemyGroup.draw(Game.surface)
-        cls.deadlyObjectGroup.draw(Game.surface)
-        if not TileEditor.inEditor:
+        cls.background_blocks.draw(Game.surface)
+        cls.environment_group.draw(Game.surface)
+        cls.entity_group.draw(Game.surface)
+        cls.enemy_group.draw(Game.surface)
+        cls.deadly_object_group.draw(Game.surface)
+        if not TileEditor.in_editor:
             from dpt.engine.characters.PlayerSprite import PlayerSprite
-            Game.playerSprite = PlayerSprite(300, Game.surface.get_size()[1] - 500)
-            Game.playerGroup.add(Game.playerSprite)
-            cls.camera = Camera(TileManager.maxWidthSize, TileManager.maxHeightSize)
-        elif TileEditor.inEditor:
+            Game.player_sprite = PlayerSprite(300, Game.surface.get_size()[1] - 500)
+            Game.player_group.add(Game.player_sprite)
+            cls.camera = Camera(TileManager.max_width_size, TileManager.max_height_size)
+        elif TileEditor.in_editor:
             from dpt.engine.gui.editor.charEntity import CharEntity
-            Game.playerSprite = CharEntity()
-            Game.playerGroup.add(Game.playerSprite)
-            cls.editorCamera = EditorCamera(TileManager.maxWidthSize, TileManager.maxHeightSize)
-        TileEditor.createdLevel = level
-        cls.levelName = levelName
-        Game.isPlayerDead = False
+            Game.player_sprite = CharEntity()
+            Game.player_group.add(Game.player_sprite)
+            cls.editor_camera = EditorCamera(TileManager.max_width_size, TileManager.max_height_size)
+        TileEditor.created_level = level
+        cls.levelName = level_name
+        Game.freeze_game = False
         cls.log.info("Done")
 
     @classmethod
-    def ghostBlock(cls, xTile, yTile, item):
+    def ghost_block(cls, x_tile, y_tile, item):
         from dpt.engine.ghostFakeEntities import GhostFakeEntity
-        ghostBlock = GhostFakeEntity(xTile, yTile, 80, item)
+        ghost_block = GhostFakeEntity(x_tile, y_tile, 80, item)
 
     @classmethod
-    def placeBlock(cls, xTile, yTile, item):
-        if not TileEditor.customTilePlacement:
-            RessourceLoader.get(item)(xTile * Game.TILESIZE, yTile * Game.TILESIZE)
-            cls.log.debug("Tile " + item + " placed at " + str(xTile) + ", " + str(yTile))
-        elif TileEditor.customTilePlacement:
-            RessourceLoader.get(item)(xTile, yTile)
-            cls.log.debug("Tile " + item + " placed at " + str(xTile) + ", " + str(yTile))
-    @classmethod
-    def placeBackBlock(cls, xTile, yTile, item):
-        if not TileEditor.customTilePlacement:
-            BackgroundFakeBlocks(xTile * Game.TILESIZE, yTile * Game.TILESIZE, item)
-            cls.log.debug("Background tile " + item + " placed at " + str(xTile) + ", " + str(yTile))
-        elif TileEditor.customTilePlacement:
-            BackgroundFakeBlocks(xTile, yTile, item)
-            cls.log.debug("Background tile " + item + " placed at " + str(xTile) + ", " + str(yTile))
+    def place_block(cls, x_tile, y_tile, item):
+        if not TileEditor.custom_tile_placement:
+            RessourceLoader.get(item)(x_tile * Game.TILESIZE, y_tile * Game.TILESIZE)
+            cls.log.debug("Tile " + item + " placed at " + str(x_tile) + ", " + str(y_tile))
+        elif TileEditor.custom_tile_placement:
+            RessourceLoader.get(item)(x_tile, y_tile)
+            cls.log.debug("Tile " + item + " placed at " + str(x_tile) + ", " + str(y_tile))
 
     @classmethod
-    def openTilePanel(cls):
-        TileManager.editorPanelGroup.empty()
-        Game.editorTileRegistry.clear()
-        value = bool(cls.checkBack)
+    def place_back_block(cls, x_tile, y_tile, item):
+        if not TileEditor.custom_tile_placement:
+            BackgroundFakeBlocks(x_tile * Game.TILESIZE, y_tile * Game.TILESIZE, item)
+            cls.log.debug("Background tile " + item + " placed at " + str(x_tile) + ", " + str(y_tile))
+        elif TileEditor.custom_tile_placement:
+            BackgroundFakeBlocks(x_tile, y_tile, item)
+            cls.log.debug("Background tile " + item + " placed at " + str(x_tile) + ", " + str(y_tile))
+
+    @classmethod
+    def open_tile_panel(cls):
+        TileManager.editor_panel_group.empty()
+        Game.editor_tile_registry.clear()
+        value = bool(cls.check_back)
         Checkbox.checkboxGroup.empty()
-        cls.checkBack = Checkbox(Game.surface.get_size()[0] // 4 * 3 + Game.TILESIZE // 4, Game.TILESIZE // 4)
-        cls.checkBack.value = value
+        cls.check_back = Checkbox(Game.surface.get_size()[0] // 4 * 3 + Game.TILESIZE // 4, Game.TILESIZE // 4)
+        cls.check_back.value = value
         cls.count = 0
         panel = EditorPanel((255, 255, 255), Game.surface.get_size()[0] / 4 * 3, 0, Game.surface.get_size()[0] / 4, Game.surface.get_size()[1], 120)
-        TileManager.editorPanelGroup.add(panel)
+        TileManager.editor_panel_group.add(panel)
         startx = Game.surface.get_size()[0] / 4 * 3 + Game.TILESIZE
         starty = 0 + Game.TILESIZE
-        for element in Game.availableTiles:
-            if cls.count == cls.nbSkip:
+        for element in Game.available_tiles:
+            if cls.count == cls.nb_skip:
                 sprite = PanelFakeEntity(startx, starty, 255, element)
-                Game.editorTileRegistry[str(math.floor(startx / Game.TILESIZE)) + ", " + str(math.floor(starty / Game.TILESIZE))] = {"class": element}
+                Game.editor_tile_registry[str(math.floor(startx / Game.TILESIZE)) + ", " + str(math.floor(starty / Game.TILESIZE))] = {"class": element}
                 startx += Game.TILESIZE
-                cls.nbPerLineCount += 1
+                cls.per_line_count += 1
                 if math.floor(startx) >= Game.surface.get_size()[0] - Game.TILESIZE:
                     startx = Game.surface.get_size()[0] / 4 * 3 + Game.TILESIZE
                     starty += Game.TILESIZE
-                    if not cls.alreadyDefined:
-                        cls.nbPerLine = cls.nbPerLineCount
-                        cls.alreadyDefined = True
+                    if not cls.already_defined:
+                        cls.per_line = cls.per_line_count
+                        cls.already_defined = True
             else:
                 cls.count += 1
                 continue
 
     @classmethod
-    def scrollDown(cls):
-        if TileEditor.panelOpen:
-            cls.nbSkip += cls.nbPerLine
-            TileManager.openTilePanel()
+    def scroll_down(cls):
+        if TileEditor.panel_open:
+            cls.nb_skip += cls.per_line
+            TileManager.open_tile_panel()
 
     @classmethod
-    def scrollUp(cls):
-        if TileEditor.panelOpen:
-            TileManager.editorPanelGroup.empty()
+    def scroll_up(cls):
+        if TileEditor.panel_open:
+            TileManager.editor_panel_group.empty()
             Checkbox.checkboxGroup.empty()
-            Game.editorTileRegistry.clear()
-            if cls.nbSkip > 0:
-                cls.nbSkip -= cls.nbPerLine
-            TileManager.openTilePanel()
+            Game.editor_tile_registry.clear()
+            if cls.nb_skip > 0:
+                cls.nb_skip -= cls.per_line
+            TileManager.open_tile_panel()
 
     @classmethod
-    def outOfWindow(cls):
-        for enemy in TileManager.enemyGroup:
+    def out_of_window(cls):
+        for enemy in TileManager.enemy_group:
             if enemy.rect.centery >= 3000:
                 enemy.kill()
                 del enemy
 
     @classmethod
     def get_sprite_count(cls):
-        return len(cls.backgroundBlocks) + len(cls.entityGroup) + len(cls.environmentGroup)
+        return len(cls.background_blocks) + len(cls.entity_group) + len(cls.environment_group)
 
     @classmethod
     def display_cam_info(cls):
-        obj_count = TileManager.camera.sprite_count + len(TileManager.foregroundBlocks) + len(TileManager.deadlyObjectGroup) + len(Button.buttonsGroup) + len(Button.text_sprite_buttonsGroup) + len(Button.text_buttonsList) + len(Checkbox.checkboxGroup) + len(ProgressBar.progressbarGroup) + len(Bar.barGroup)
+        obj_count = TileManager.camera.sprite_count + len(TileManager.foreground_blocks) + len(TileManager.deadly_object_group) + len(Button.buttonsGroup) + len(Button.text_sprite_buttonsGroup) + len(Button.text_buttonsList) + len(Checkbox.checkboxGroup) + len(ProgressBar.progressbarGroup) + len(Bar.barGroup)
 
         Game.add_debug_info("CAMERA INFORMATIONS")
         Game.add_debug_info("Scrolling: " + str(-TileManager.camera.last_x))
-        if not TileEditor.inEditor:
-            Game.add_debug_info("Right: " + str(Game.playerSprite.right))
-            Game.add_debug_info("Left: " + str(Game.playerSprite.left))
+        if not TileEditor.in_editor:
+            Game.add_debug_info("Right: " + str(Game.player_sprite.right))
+            Game.add_debug_info("Left: " + str(Game.player_sprite.left))
         Game.add_debug_info("Player X:" + str(TileManager.camera.target.rect.centerx))
         Game.add_debug_info("Player Y: " + str(TileManager.camera.target.rect.centery))
         Game.add_debug_info("Displaying " + str(obj_count) + " objects")
-        Game.add_debug_info("   " + str(len(Game.playerGroup)) + " players")
-        Game.add_debug_info("   " + str(len(TileManager.entityGroup)) + " entities")
-        Game.add_debug_info("   " + str(len(TileManager.environmentGroup)) + " blocks")
-        Game.add_debug_info("   " + str(len(TileManager.backgroundBlocks)) + " background blocks")
-        Game.add_debug_info("   " + str(len(TileManager.foregroundBlocks)) + " foreground blocks")
-        Game.add_debug_info("   " + str(len(TileManager.deadlyObjectGroup)) + " deadly objects")
+        Game.add_debug_info("World: ")
+        Game.add_debug_info("   " + str(len(Game.player_group)) + " players")
+        Game.add_debug_info("   " + str(len(TileManager.entity_group)) + " entities")
+        Game.add_debug_info("   " + str(len(TileManager.environment_group)) + " blocks")
+        Game.add_debug_info("   " + str(len(TileManager.background_blocks)) + " background blocks")
+        Game.add_debug_info("   " + str(len(TileManager.foreground_blocks)) + " foreground blocks")
+        Game.add_debug_info("   " + str(len(TileManager.deadly_object_group)) + " deadly objects")
         Game.add_debug_info("   " + str(len(Button.buttonsGroup)) + " buttons")
         Game.add_debug_info("       " + str(len(Button.text_sprite_buttonsGroup)) + " texts (sprites)")
         Game.add_debug_info("       " + str(len(Button.text_buttonsList)) + " texts")
@@ -266,38 +267,38 @@ class TileManager:
         rect.width += 200
         rect.x -= self.last_x + 100
         Game.display_rect = rect
-        for sprite in TileManager.backgroundBlocks:
+        for sprite in TileManager.background_blocks:
             if sprite.rect.colliderect(rect):
                 sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))
                 self.sprite_count += 1
                 if Game.DISPLAY_RECT:
                     pygame.draw.rect(Game.surface, (0, 0, 255), self.apply(sprite), width=2)
-        for sprite in TileManager.environmentGroup:
+        for sprite in TileManager.environment_group:
             if sprite.rect.colliderect(rect):
                 sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))
                 self.sprite_count += 1
                 if Game.DISPLAY_RECT:
                     pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
-        for sprite in TileManager.entityGroup:
+        for sprite in TileManager.entity_group:
             if sprite.rect.colliderect(rect):
                 sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))
                 self.sprite_count += 1
                 if Game.DISPLAY_RECT:
                     pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(sprite), width=2)
-        for sprite in Game.playerGroup:
+        for sprite in Game.player_group:
             sprite.update()
             Game.surface.blit(sprite.image, self.apply(sprite))
             self.sprite_count += 1
             if Game.DISPLAY_RECT:
                 pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(sprite), width=2)
-        for sprite in TileManager.deadlyObjectGroup:
+        for sprite in TileManager.deadly_object_group:
             if sprite.rect.colliderect(rect):
                 sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))
-        for sprite in TileManager.foregroundBlocks:
+        for sprite in TileManager.foreground_blocks:
             if sprite.rect.colliderect(rect):
                 sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))
@@ -356,7 +357,7 @@ class EditorCamera:
 
         TileManager.display_cam_info()
 
-    def enableGrid(self):
+    def enable_grid(self):
         for x in range(self.last_x, Game.surface.get_size()[0], Game.TILESIZE):
             pygame.draw.line(Game.surface, (220, 220, 220), (x, 0), (x, Game.surface.get_size()[1]))
         for y in range(0, Game.surface.get_size()[1], Game.TILESIZE):

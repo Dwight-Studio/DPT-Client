@@ -1,7 +1,5 @@
 import pygame
 
-from dpt.game import Game
-
 
 class Bar(pygame.sprite.Sprite):
     barGroup = pygame.sprite.Group()

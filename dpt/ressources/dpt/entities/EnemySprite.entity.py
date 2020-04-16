@@ -16,7 +16,7 @@ class EnemySprite(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
-        pygame.sprite.Sprite.__init__(self, TileManager.enemyGroup, TileManager.entityGroup)  # Sprite's constructor called
+        pygame.sprite.Sprite.__init__(self, TileManager.enemy_group, TileManager.entity_group)  # Sprite's constructor called
         self.image = RessourceLoader.get(self.texture)
         self.xvel = 0
         self.yvel = 0
@@ -39,7 +39,7 @@ class EnemySprite(pygame.sprite.Sprite):
 
     def update(self):
         from dpt.engine.tileManager import TileManager
-        if not Game.isPlayerDead:
+        if not Game.freeze_game:
             if self.left:
                 if self.xvel > 0:
                     self.xvel = 0
@@ -62,14 +62,14 @@ class EnemySprite(pygame.sprite.Sprite):
 
             self.lastx = self.rect.left
             self.rect.left += self.xvel
-            self.collide(self.xvel, 0, TileManager.environmentGroup)
+            self.collide(self.xvel, 0, TileManager.environment_group)
 
             if not self.isJump:
                 self.allowJump = False
                 self.gravityCount += 1
                 self.gravity = math.floor((self.gravityCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * -1
                 self.rect.top -= self.gravity
-                self.collide(0, self.gravity, TileManager.environmentGroup)
+                self.collide(0, self.gravity, TileManager.environment_group)
         self.animation()
 
         if self.lastx == self.rect.left:
@@ -82,30 +82,30 @@ class EnemySprite(pygame.sprite.Sprite):
                 self.xvel += 1 * Game.DISPLAY_RATIO
 
         self.rect.top -= self.yvel
-        self.collide(0, self.yvel, TileManager.environmentGroup)
+        self.collide(0, self.yvel, TileManager.environment_group)
         self.check_void()
 
     def animation(self):
         # pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
         pass
 
-    def collide(self, xVelDelta, yVelDelta, platforms):
+    def collide(self, x_vel_delta, y_vel_delta, platforms):
         for i in platforms:
             if i.rect.colliderect(Game.display_rect):
                 if pygame.sprite.collide_rect(self, i):
-                    if xVelDelta > 0:
+                    if x_vel_delta > 0:
                         self.rect.right = i.rect.left
                         self.xvel = 0
-                    if xVelDelta < 0:
+                    if x_vel_delta < 0:
                         self.rect.left = i.rect.right
                         self.xvel = 0
-                    if yVelDelta < 0:
+                    if y_vel_delta < 0:
                         self.rect.bottom = i.rect.top
                         self.onPlatform = True
                         self.jumpCount = self.CONSTJUMPCOUNT
                         self.allowJump = True
                         self.gravityCount = 0
-                    if yVelDelta > 0:
+                    if y_vel_delta > 0:
                         self.rect.top = i.rect.bottom
 
     def check_void(self):

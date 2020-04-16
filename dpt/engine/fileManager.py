@@ -13,7 +13,7 @@ class FileManager:
     defaultDir = os.path.join(Game.ROOT_DIRECTORY, "ressources", "user", "levels")
 
     @classmethod
-    def importFile(cls):
+    def import_file(cls):
         root = tk.Tk()
         root.withdraw()
         rfile = filedialog.askopenfilename(parent=root, title="Sélectionner un niveau", filetypes=[("Fichier de niveau DPT", "*.level.json"), ("Tous les fichiers", "*")], initialdir=cls.defaultDir)
@@ -24,10 +24,10 @@ class FileManager:
                 with open(wfile, "w") as fw:
                     data2 = json.dumps(data, indent=4)
                     fw.write(data2)
-                TileManager.environmentGroup.empty()
+                TileManager.environment_group.empty()
                 RessourceLoader.add_pending("user.levels." + str(os.path.basename(rfile)).split(".")[0])
                 RessourceLoader.load()
-                TileManager.loadLevel("user.levels." + str(os.path.basename(rfile)).split(".")[0])
+                TileManager.load_level("user.levels." + str(os.path.basename(rfile)).split(".")[0])
                 cls.log.info("Successfully loaded : " + str(rfile))
                 root.destroy()
         except UnreachableRessourceError and FileNotFoundError:
@@ -35,7 +35,7 @@ class FileManager:
             root.destroy()
 
     @classmethod
-    def saveFile(cls, level):
+    def save_file(cls, level):
         root = tk.Tk()
         root.withdraw()
         file = filedialog.asksaveasfilename(parent=root, title="Sauvegarder un niveau", filetypes=[("Fichier de niveau DPT", "*.level.json")], defaultextension=".level.json", initialdir=cls.defaultDir)

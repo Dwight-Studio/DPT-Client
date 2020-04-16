@@ -1,12 +1,12 @@
 import pygame
+
 from dpt.engine.gui.editor.tileEditor import TileEditor
 from dpt.engine.loader import RessourceLoader, UnreachableRessourceError
-from dpt.game import Game
 
 
 class GhostFakeEntity(pygame.sprite.Sprite):
     def __init__(self, x, y, alpha, block):
-        pygame.sprite.Sprite.__init__(self, TileEditor.ghostBlockGroup)
+        pygame.sprite.Sprite.__init__(self, TileEditor.ghost_block_group)
         try:
             self.block = RessourceLoader.get(block)
             self.image = RessourceLoader.get(self.block.texture)

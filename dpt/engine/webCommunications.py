@@ -14,7 +14,7 @@ class Communication(object):
         self.i = 0
         self.log = Game.get_logger("WebCom")
         self.sessionName = "".join(random.choice(string.ascii_uppercase) for i in range(5))
-        self.keepAliveThread = threading.Thread(target=self.keepAlive)
+        self.keepAliveThread = threading.Thread(target=self.keep_alive)
         self.keep = False
         self.currentTime = int(round(time.time() * 1000))
 
@@ -30,11 +30,11 @@ class Communication(object):
             self.log.critical("Session creation failed")
             return False
 
-    def keepAlive(self):
+    def keep_alive(self):
         while self.keep:
             time.sleep(3)
-            keepLink = requests.get("http://" + Game.SERVER_ADDRESS + "/keepAlive.php?session=" + self.sessionName)
-            if not keepLink.json():
+            keep_link = requests.get("http://" + Game.SERVER_ADDRESS + "/keepAlive.php?session=" + self.sessionName)
+            if not keep_link.json():
                 self.i += 1
                 if self.i == 3:
                     self.log.critical("keepAlive failed")
@@ -42,30 +42,28 @@ class Communication(object):
                 else:
                     continue
 
-    def createVoteEvent(self, mod1, mod2):
+    def create_vote_event(self, mod1, mod2):
         self.log.info("Creating a new vote...")
         self.currentTime = int(round(time.time() * 1000))
-        data = {"endDate": self.currentTime + (Game.VOTE_TIMEOUT * 1000) + 2000,
-                "mod1": mod1,
-                "mod2": mod2}
+        data = {"endDate": self.currentTime + (Game.VOTE_TIMEOUT * 1000) + 2000, "mod1": mod1, "mod2": mod2}
         requests.get("http://" + Game.SERVER_ADDRESS + "/registerVote.php?session=" + self.sessionName + "&data=" + json.dumps(data))
         self.log.info("Vote created")
 
-    def voteResult(self):
-        voteOne = 0
-        voteTwo = 0
+    def vote_result(self):
+        vote_one = 0
+        vote_two = 0
         self.log.info("Requesting vote output...")
-        requestVote = requests.get("http://" + Game.SERVER_ADDRESS + "/sessions.json").json()
-        if requestVote != None:
-            for data in requestVote[self.sessionName].values():
+        request_vote = requests.get("http://" + Game.SERVER_ADDRESS + "/sessions.json").json()
+        if request_vote is not None:
+            for data in request_vote[self.sessionName].values():
                 self.log.debug("Vote " + data)
                 if data == "1":
-                    voteOne += 1
+                    vote_one += 1
                 elif data == "2":
-                    voteTwo += 1
-            if voteOne > voteTwo:
+                    vote_two += 1
+            if vote_one > vote_two:
                 self.log.info("Majority of vote 1")
-            elif voteTwo > voteOne:
+            elif vote_two > vote_one:
                 self.log.info("Majority of vote 2")
             else:
                 self.log.info("Vote equality")
@@ -73,8 +71,8 @@ class Communication(object):
             self.log.critical("Vote request failed")
 
     def close(self):
-        requestClose = requests.get("http://" + Game.SERVER_ADDRESS + "/close.php?session=" + self.sessionName)
+        request_close = requests.get("http://" + Game.SERVER_ADDRESS + "/close.php?session=" + self.sessionName)
         self.keep = False
-        if not requestClose.json():
+        if not request_close.json():
             self.log.warning("Close session failed")
         self.log.info("Session closed")

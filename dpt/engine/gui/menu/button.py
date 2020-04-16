@@ -59,7 +59,6 @@ class Button(pygame.sprite.Sprite):
         self.previous_state = False
         Game.get_logger("Button").debug("Button created")
 
-
     def __bool__(self):
         return self.pushed
 
@@ -88,7 +87,7 @@ class Button(pygame.sprite.Sprite):
         if self.pushed:
             self.image = self.pushed_image
             if not self.previous_state:
-                event = pygame.event.Event(Game.BUTTONEVENT, **dict(button=self, **self.eventargs))
+                event = pygame.event.Event(Game.BUTTON_EVENT, **dict(button=self, **self.eventargs))
                 pygame.event.post(event)
         else:
             if self.rect.collidepoint(pygame.mouse.get_pos()):

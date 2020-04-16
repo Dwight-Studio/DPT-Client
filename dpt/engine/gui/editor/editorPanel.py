@@ -6,7 +6,7 @@ from dpt.game import Game
 class EditorPanel(pygame.sprite.Sprite):
     def __init__(self, color, x, y, width, height, alpha):
         from dpt.engine.tileManager import TileManager
-        pygame.sprite.Sprite.__init__(self, TileManager.editorPanelGroup)
+        pygame.sprite.Sprite.__init__(self, TileManager.editor_panel_group)
         self.image = pygame.Surface((width, height))
         self.image.fill(color)
         self.image.set_alpha(alpha)
@@ -18,12 +18,12 @@ class EditorPanel(pygame.sprite.Sprite):
 
     def update(self):
         mouse = pygame.mouse.get_pos()
-        mouseButtons = pygame.mouse.get_pressed()
-        if mouseButtons[0] == 1:
-            mousePosX = math.floor(mouse[0] / Game.TILESIZE)
-            mousePosY = math.floor(mouse[1] / Game.TILESIZE)
-            key = str(mousePosX) + ", " + str(mousePosY)
-            if key in Game.editorTileRegistry:
-                Game.selectedItem = Game.editorTileRegistry[key]["class"]
+        mouse_buttons = pygame.mouse.get_pressed()
+        if mouse_buttons[0] == 1:
+            mouse_pos_x = math.floor(mouse[0] / Game.TILESIZE)
+            mouse_pos_y = math.floor(mouse[1] / Game.TILESIZE)
+            key = str(mouse_pos_x) + ", " + str(mouse_pos_y)
+            if key in Game.editor_tile_registry:
+                Game.selected_item = Game.editor_tile_registry[key]["class"]
             else:
                 pass
