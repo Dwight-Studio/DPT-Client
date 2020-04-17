@@ -64,7 +64,6 @@ def level_loop():
     do_synch_anims()
     TileManager.out_of_window()
     TileManager.interactible_blocks.update()
-    TileManager.interactible_blocks.draw(Game.surface)
     TileManager.camera.update(Game.player_sprite)
     TileEditor.update()
 
