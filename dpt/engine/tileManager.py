@@ -306,6 +306,10 @@ class TileManager:
             if sprite.rect.colliderect(rect):
                 sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))
+        for sprite in TileManager.interactible_blocks:
+            if sprite.rect.colliderect(rect):
+                sprite.update()
+                Game.surface.blit(sprite.image, self.apply(sprite))
 
 
 class Camera:

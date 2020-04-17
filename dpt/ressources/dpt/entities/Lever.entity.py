@@ -29,7 +29,8 @@ class Lever(pygame.sprite.Sprite):
         mousePos = pygame.mouse.get_pos()
         if mouseButtons[0] == 1 and not self.clicked:
             self.clicked = True
-            if mousePos[0] >= self.x and mousePos[0] <= self.x + self.width and mousePos[1] >= self.y and mousePos[1] <= self.y + self.height:
+            from dpt.engine.tileManager import TileManager
+            if mousePos[0] >= self.x + TileManager.camera.last_x and mousePos[0] <= self.x + self.width and mousePos[1] >= self.y and mousePos[1] <= self.y + self.height:
                 from dpt.engine.gui.editor.tileEditor import TileEditor
                 if not TileEditor.in_editor:
                     if self.left:
@@ -39,7 +40,7 @@ class Lever(pygame.sprite.Sprite):
                         self.image = RessourceLoader.get(texture)
                         self.image = pygame.transform.scale(self.image, (self.width, self.height))
                         self.rect = self.image.get_rect()
-                        self.rect.x = self.x + self.offset_x + 11
+                        self.rect.x = self.x + self.offset_x
                         self.rect.y = self.y + self.offset_y
                     elif self.right:
                         self.right = False
