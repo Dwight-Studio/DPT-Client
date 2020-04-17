@@ -18,7 +18,7 @@ class WaterTop(pygame.sprite.Sprite):
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
         pygame.sprite.Sprite.__init__(self, TileManager.entity_group,
-                                      TileManager.foreground_blocks)  # Sprite's constructor called
+                                      TileManager.foreground_blocks_group)  # Sprite's constructor called
         self.image = RessourceLoader.get(self.texture)
         self.frames = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in RessourceLoader.get_multiple(
             self.textures)]

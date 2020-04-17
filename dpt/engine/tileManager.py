@@ -19,9 +19,9 @@ class TileManager:
     environment_group = pygame.sprite.Group()
     entity_group = pygame.sprite.Group()
     editor_panel_group = pygame.sprite.Group()
-    background_blocks = pygame.sprite.Group()
-    foreground_blocks = pygame.sprite.Group()
-    interactible_blocks = pygame.sprite.Group()
+    background_blocks_group = pygame.sprite.Group()
+    foreground_blocks_group = pygame.sprite.Group()
+    interactible_blocks_group = pygame.sprite.Group()
 
     log = Game.get_logger("TileManager")
     levelName = None
@@ -53,7 +53,7 @@ class TileManager:
         for block in TileManager.environment_group:
             block.kill()
 
-        for block in TileManager.background_blocks:
+        for block in TileManager.background_blocks_group:
             block.kill()
 
         if TileEditor.in_editor:
@@ -138,7 +138,7 @@ class TileManager:
                         cls.log.debug("Background tile " + level[keys]["backgroundClass"] + " placed at " + keys)
                     except UnreachableRessourceError:
                         cls.log.warning("Invalid class name : " + level[keys]["backgroundClass"] + " for tile : " + keys)
-        cls.background_blocks.draw(Game.surface)
+        cls.background_blocks_group.draw(Game.surface)
         cls.environment_group.draw(Game.surface)
         cls.entity_group.draw(Game.surface)
         cls.enemy_group.draw(Game.surface)
@@ -236,11 +236,11 @@ class TileManager:
 
     @classmethod
     def get_sprite_count(cls):
-        return len(cls.background_blocks) + len(cls.entity_group) + len(cls.environment_group)
+        return len(cls.background_blocks_group) + len(cls.entity_group) + len(cls.environment_group)
 
     @classmethod
     def display_cam_info(cls):
-        obj_count = TileManager.camera.sprite_count + len(TileManager.foreground_blocks) + len(
+        obj_count = TileManager.camera.sprite_count + len(TileManager.foreground_blocks_group) + len(
             TileManager.deadly_object_group) + len(Button.buttonsGroup) + len(Button.text_sprite_buttonsGroup) + len(
             Button.text_buttonsList) + len(Checkbox.checkboxGroup) + len(ProgressBar.progressbarGroup) + len(
             ProgressBar.barGroup)
@@ -257,8 +257,8 @@ class TileManager:
         Game.add_debug_info("   " + str(len(Game.player_group)) + " players")
         Game.add_debug_info("   " + str(len(TileManager.entity_group)) + " entities")
         Game.add_debug_info("   " + str(len(TileManager.environment_group)) + " blocks")
-        Game.add_debug_info("   " + str(len(TileManager.background_blocks)) + " background blocks")
-        Game.add_debug_info("   " + str(len(TileManager.foreground_blocks)) + " foreground blocks")
+        Game.add_debug_info("   " + str(len(TileManager.background_blocks_group)) + " background blocks")
+        Game.add_debug_info("   " + str(len(TileManager.foreground_blocks_group)) + " foreground blocks")
         Game.add_debug_info("   " + str(len(TileManager.deadly_object_group)) + " deadly objects")
         Game.add_debug_info("   " + str(len(Button.buttonsGroup)) + " buttons")
         Game.add_debug_info("       " + str(len(Button.text_sprite_buttonsGroup)) + " texts (sprites)")
@@ -274,7 +274,7 @@ class TileManager:
         rect.width += 200
         rect.x -= self.last_x + 100
         Game.display_rect = rect
-        for sprite in TileManager.background_blocks:
+        for sprite in TileManager.background_blocks_group:
             if sprite.rect.colliderect(rect):
                 sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))
@@ -305,11 +305,11 @@ class TileManager:
             if sprite.rect.colliderect(rect):
                 sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))
-        for sprite in TileManager.foreground_blocks:
+        for sprite in TileManager.foreground_blocks_group:
             if sprite.rect.colliderect(rect):
                 sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))
-        for sprite in TileManager.interactible_blocks:
+        for sprite in TileManager.interactible_blocks_group:
             if sprite.rect.colliderect(rect):
                 sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))

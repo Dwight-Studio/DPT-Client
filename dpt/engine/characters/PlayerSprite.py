@@ -123,7 +123,6 @@ class PlayerSprite(pygame.sprite.Sprite):
                 PlayerSprite.gravity = math.floor((PlayerSprite.gravityCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * -1
                 self.rect.top -= PlayerSprite.gravity
                 self.collide(0, PlayerSprite.gravity, TileManager.environment_group)
-
             self.animation()
             self.enemies_collision(self.yvel, TileManager.enemy_group)
             self.deadly_object_collision()

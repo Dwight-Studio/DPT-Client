@@ -37,7 +37,6 @@ def do_synch_anims():
 
 # Mainloops
 def level_loop():
-    Game.clock.tick(60)
     Game.surface.blit(bg, (0, 0))
 
     for event in Game.events:
@@ -63,7 +62,7 @@ def level_loop():
 
     do_synch_anims()
     TileManager.out_of_window()
-    TileManager.interactible_blocks.update()
+    TileManager.interactible_blocks_group.update()
     TileManager.camera.update(Game.player_sprite)
     TileEditor.update()
 
@@ -96,7 +95,6 @@ def pause_loop():
 
 
 def main_menu_loop():
-    Game.clock.tick(60)
     Game.surface.blit(bg, (0, 0))
 
     for event in Game.events:
@@ -105,6 +103,8 @@ def main_menu_loop():
         if event.type == Game.BUTTON_EVENT:
             if event.button == Game.gui["button_play"]:
                 Scenes.level("dpt.levels.leveltest")
+                Button.buttonsGroup.empty()
+                Button.text_sprite_buttonsGroup.empty()
                 pygame.mixer_music.unload()
                 pygame.mixer_music.stop()
                 return

@@ -204,11 +204,12 @@ class Game(object):
                 rect2.width *= 0.3 * cls.DISPLAY_RATIO
                 rect2.height *= 0.3 * cls.DISPLAY_RATIO
                 game_by = pygame.transform.smoothscale(game_by, (rect2.width, rect2.height))
-                rect2.centerx = w // 2 - rect.width // 2 - math.floor(100 * cls.DISPLAY_RATIO)
+                rect2.centerx = w // 2 - rect.width // 2 - math.floor(200 * cls.DISPLAY_RATIO)
                 rect2.centery = rect.centery
 
                 for alpha in range(0, 256, 10):
                     pygame.time.delay(20)
+                    rect2.centerx += (255 - alpha) // 50
                     pygame.draw.rect(Game.surface, (255, 255, 255), rect2)
                     game_by.set_alpha(alpha)
                     cls.surface.blit(game_by, rect2)
@@ -248,9 +249,9 @@ class Game(object):
                 Game.add_debug_info("Memory usage: " + str(psutil.virtual_memory().percent) + "%")
                 Game.add_debug_info(str(math.floor(Game.clock.get_fps())) + " FPS")
                 Game.add_debug_info("----------")
-                Game.draw_cursor()
                 cls.loop()
                 Game.draw_cursor()
+                Game.clock.tick(60)
             pygame.quit()
 
         except Exception:

@@ -57,7 +57,7 @@ class TileEditor:
                         cls.npushed = True
                         TileManager.environment_group.empty()
                         TileManager.entity_group.empty()
-                        TileManager.background_blocks.empty()
+                        TileManager.background_blocks_group.empty()
                         TileManager.deadly_object_group.empty()
                         cls.created_level.clear()
                     elif not keys[pygame.K_n] and cls.npushed:
@@ -152,12 +152,14 @@ class TileEditor:
                     cls.last_mouse_pos_x = cls.mouse_pos_x
                     cls.last_mouse_pos_y = cls.mouse_pos_y
                     try:
-                        for blocks in TileManager.background_blocks:
-                            if math.floor(blocks.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(blocks.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
+                        for blocks in TileManager.background_blocks_group:
+                            if math.floor(blocks.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(
+                                    blocks.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
                                 blocks.kill()
                                 del blocks
                         for blocks in TileManager.environment_group:
-                            if math.floor(blocks.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(blocks.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
+                            if math.floor(blocks.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(
+                                    blocks.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
                                 blocks.kill()
                                 del blocks
                         for entity in TileManager.entity_group:
