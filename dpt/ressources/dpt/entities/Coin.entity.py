@@ -17,9 +17,9 @@ class Coin(pygame.sprite.Sprite):
         from dpt.engine.tileManager import TileManager
         pygame.sprite.Sprite.__init__(self, TileManager.entity_group)  # Sprite's constructor called
         self.image = RessourceLoader.get(self.texture)
-        self.frames = [pygame.transform.scale(i, (self.width, self.height)) for i in RessourceLoader.get_multiple(
+        self.frames = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in RessourceLoader.get_multiple(
             self.textures)]
-        self.image = pygame.transform.scale(self.image, (self.width, self.height))
+        self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect()
         self.rect.x = x + self.offset_x
         self.rect.y = y + self.offset_y

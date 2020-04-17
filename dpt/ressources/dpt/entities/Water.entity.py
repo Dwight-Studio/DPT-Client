@@ -19,7 +19,7 @@ class Water(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, TileManager.entity_group,
                                       TileManager.foreground_blocks)  # Sprite's constructor called
         self.image = RessourceLoader.get(self.texture)
-        self.frames = self.frames = [pygame.transform.scale(i, (self.width, self.height)) for i in
+        self.frames = self.frames = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in
                                      RessourceLoader.get_multiple(
                                          self.textures)]
         self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))

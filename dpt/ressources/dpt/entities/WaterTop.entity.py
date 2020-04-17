@@ -20,7 +20,7 @@ class WaterTop(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, TileManager.entity_group,
                                       TileManager.foreground_blocks)  # Sprite's constructor called
         self.image = RessourceLoader.get(self.texture)
-        self.frames = [pygame.transform.scale(i, (self.width, self.height)) for i in RessourceLoader.get_multiple(
+        self.frames = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in RessourceLoader.get_multiple(
             self.textures)]
         self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect()
@@ -32,4 +32,3 @@ class WaterTop(pygame.sprite.Sprite):
 
     def animation(self):
         self.image = self.frames[Game.anim_count_water // 4]
-        self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
