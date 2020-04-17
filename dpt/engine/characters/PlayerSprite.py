@@ -114,8 +114,8 @@ class PlayerSprite(pygame.sprite.Sprite):
 
             if self.damaged:
                 if self.big:
-                    self.height *= 0.7
-                    self.width *= 0.7
+                    self.height = math.floor(self.height * 0.7)
+                    self.width = math.floor(self.width * 0.7)
                     self.walkLeft = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in
                                      RessourceLoader.get_multiple(self.walkLeftTextures)]
                     self.walkRight = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in
