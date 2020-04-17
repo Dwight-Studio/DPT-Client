@@ -99,6 +99,7 @@ class RessourceLoader:
 
     @classmethod
     def load(cls):
+        before_load_nb = len(cls.loaded_ressources)
         cls.logger.info("Starting loading ressources")
         cls.pending_ressources = {key: value for key, value in cls.pending_ressources.items() if key not in cls.loaded_ressources}
         current = 0
@@ -170,7 +171,7 @@ class RessourceLoader:
 
         pb.bar.kill()
         pb.kill()
-        cls.logger.info("Loaded " + str(len(cls.loaded_ressources)) + " entries (" + str(len(cls.pending_ressources)) + " were requested)")
+        cls.logger.info("Loaded " + str(len(cls.loaded_ressources) - before_load_nb) + " entries (" + str(len(cls.pending_ressources)) + " were requested)")
         cls.logger.info("Loading done")
         cls.loaded_ressources_entries = cls.pending_ressources.copy()
         cls.pending_ressources = {}
