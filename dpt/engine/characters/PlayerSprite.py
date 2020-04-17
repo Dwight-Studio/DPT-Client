@@ -18,6 +18,8 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.image = self.char
         self.width = math.floor(60 * Game.DISPLAY_RATIO)
         self.height = math.floor(90 * Game.DISPLAY_RATIO)
+        self.CONSTWIDTH = self.width
+        self.CONSTHEIGT = self.height
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -34,6 +36,9 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.onPlatform = False
         self.allowJump = True
         self.alive = True
+        self.damaged = False
+        self.big = True
+        self.imunityTime = 180
 
     def update(self):
         if self.alive:
@@ -104,6 +109,20 @@ class PlayerSprite(pygame.sprite.Sprite):
             self.enemies_collision(self.yvel, TileManager.enemy_group)
             self.deadly_object_collision()
 
+            if self.damaged:
+                if self.big:
+                    self.height *= 0.7
+                    self.width *= 0.7
+                    self.big = False
+                    self.rect[2] //= 1.42
+                    self.rect[3] //= 1.42
+                self.imunityTime -= 1
+            else:
+                if not self.big:
+                    self.height = self.CONSTHEIGT
+                    self.width = self.CONSTWIDTH
+                    self.imunityTime = 180
+
         elif not self.alive:
             self.die()
         self.death_fall()
@@ -124,7 +143,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.image = self.walkRight[0]
             else:
                 self.image = self.walkLeft[0]
-        self.image = pygame.transform.scale(self.image, (self.width, self.height))
+        self.image = pygame.transform.scale(self.image, (math.floor(self.width), math.floor(self.height)))
         # pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
 
     def collide(self, x_vel_delta, y_vel_delta, platforms):
@@ -150,13 +169,17 @@ class PlayerSprite(pygame.sprite.Sprite):
     def deadly_object_collision(self):
         for i in TileManager.deadly_object_group:
             if pygame.sprite.collide_rect(self, i):
-                self.alive = False
-                self.yvel = 0
-                Game.freeze_game = True
-                self.xvel = 0
-                time.sleep(0.5)
-                self.die()
-                self.jumpCount = self.CONSTJUMPCOUNT
+                if self.damaged:
+                    if self.imunityTime < 0:
+                        self.alive = False
+                        self.yvel = 0
+                        Game.freeze_game = True
+                        self.xvel = 0
+                        time.sleep(0.5)
+                        self.die()
+                        self.jumpCount = self.CONSTJUMPCOUNT
+                else:
+                    self.damaged = True
 
     def enemies_collision(self, yVelDelta, enemies):
         for i in enemies:
@@ -164,12 +187,16 @@ class PlayerSprite(pygame.sprite.Sprite):
                 if yVelDelta < 0:
                     i.kill()
                 else:
-                    self.yvel = 0
-                    Game.freeze_game = True
-                    self.xvel = 0
-                    time.sleep(0.5)
-                    self.die()
-                    self.jumpCount = self.CONSTJUMPCOUNT
+                    if self.damaged:
+                        if self.imunityTime < 0:
+                            self.yvel = 0
+                            Game.freeze_game = True
+                            self.xvel = 0
+                            time.sleep(0.5)
+                            self.die()
+                            self.jumpCount = self.CONSTJUMPCOUNT
+                    else:
+                        self.damaged = True
 
     def death_fall(self):
         if self.rect.top >= Game.surface.get_size()[1]:
