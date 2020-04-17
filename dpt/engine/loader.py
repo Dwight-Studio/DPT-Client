@@ -68,6 +68,8 @@ class RessourceLoader:
                 key = ".".join(key.split(".")[:-1])
             elif key.split(".")[-1] == "entity":
                 key = ".".join(key.split(".")[:-1])
+            elif key.split(".")[-1] == "music":
+                key = ".".join(key.split(".")[:-1])
             cls.RESSOURCES[key] = entry[1]
         cls.logger.info("Registered " + str(len(cls.RESSOURCES)) + " entries")
 
@@ -81,7 +83,7 @@ class RessourceLoader:
         if len(cls.loaded_ressources) > 0:
             cls.logger.warning("Bad registration: no ressources must be loaded at startup")
 
-        cls.logger.info("Initialization done.")
+        cls.logger.info("Initialization done")
 
     @classmethod
     def reload(cls):
@@ -115,14 +117,12 @@ class RessourceLoader:
             try:
                 if ext[-1] == "png":
                     cls.loaded_ressources[entry] = pygame.image.load(cls.pending_ressources[entry]).convert_alpha()
-                    cls.logger.debug("Entry " + entry + " loaded")
                 elif ext[-2] == "level" and ext[-1] == "json":
                     table = None
                     file = open(cls.pending_ressources[entry], "r")
                     table = json.loads(file.read())
                     file.close()
                     cls.loaded_ressources[entry] = table
-                    cls.logger.debug("Entry " + entry + " loaded")
                 elif ext[-2] == "block" and ext[-1] == "py":
                     module = runpy.run_path(cls.pending_ressources[entry])
                     try:
@@ -130,17 +130,17 @@ class RessourceLoader:
                     except KeyError:
                         cls.logger.warning("Can't find class " + module[ext[-3]])
                         cls.logger.warning("Can't load entry " + entry)
-                    cls.logger.debug("Entry " + entry + " loaded")
                 elif ext[-2] == "entity" and ext[-1] == "py":
                     module = runpy.run_path(cls.pending_ressources[entry])
                     cls.loaded_ressources[entry] = module[ext[-3]]
-                    cls.logger.debug("Entry " + entry + " loaded")
                 elif ext[-1] == "ogg" and ext[-2] == "music":
                     cls.loaded_ressources[entry] = cls.pending_ressources[entry]
                 elif ext[-1] == "ogg" and ext[-2] != "music":
                     cls.loaded_ressources[entry] = pygame.mixer.Sound(cls.pending_ressources[entry])
                 else:
                     cls.logger.warning("Entry " + entry + " invalid")
+                    continue
+                cls.logger.debug("Entry " + entry + " loaded")
 
             except Exception as ex:
                 cls.logger.warning("Can't load entry " + entry)
@@ -170,7 +170,7 @@ class RessourceLoader:
 
         pb.bar.kill()
         pb.kill()
-        cls.logger.info("Loaded " + str(len(cls.loaded_ressources)) + " entries")
+        cls.logger.info("Loaded " + str(len(cls.loaded_ressources)) + " entries (" + str(len(cls.pending_ressources)) + " were requested)")
         cls.logger.info("Loading done")
         cls.loaded_ressources_entries = cls.pending_ressources.copy()
         cls.pending_ressources = {}
@@ -182,7 +182,7 @@ class RessourceLoader:
         gc.collect()
         cls.loaded_ressources = {}
         cls.logger.info("Unloaded all ressources")
-        cls.logger.debug("Memory:" + bf + "% before, " + str(psutil.virtual_memory().percent) + "% after")
+        cls.logger.debug("Memory: " + bf + "% before, " + str(psutil.virtual_memory().percent) + "% after")
 
     @classmethod
     def select_entries(cls, path):
@@ -220,6 +220,8 @@ class RessourceLoader:
         try:
             rlist = []
             entries = cls.select_entries(entry.lower())
+            if len(entries) == 0:
+                cls.logger.warning("The requested selector (" + entry + ") did not find any entries, it may cause exceptions but ignoring")
             for entry in entries:
                 cls.pending_ressources[entry] = cls.RESSOURCES[entry]
         except KeyError:

@@ -56,15 +56,17 @@ class TileManager:
             block.kill()
 
         if TileEditor.in_editor:
-            RessourceLoader.add_pending("*")
+            RessourceLoader.add_pending("dpt.blocks.*")
+            RessourceLoader.add_pending("dpt.entities.*")
+            RessourceLoader.add_pending("dpt.images.environment.*")
+            RessourceLoader.add_pending("dpt.images.characters.*")
             RessourceLoader.load()
 
         if type(level_name) == str:
             cls.log.info("Loading level " + level_name)
-            if not TileEditor.in_editor:
-                cls.log.debug("Loading level main file")
-                RessourceLoader.add_pending(level_name)
-                RessourceLoader.load()
+            cls.log.debug("Loading level main file")
+            RessourceLoader.add_pending(level_name)
+            RessourceLoader.load()
             level = RessourceLoader.get(level_name)
         else:
             cls.log.info("Loading unknown level")

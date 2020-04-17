@@ -5,6 +5,8 @@ import os
 import sys
 import tarfile
 import traceback
+
+import psutil
 import pygame
 
 
@@ -225,11 +227,17 @@ class Game(object):
 
             # Scene par défaut
             from dpt.engine.scenes import Scenes
+            # Scenes.main_menu()
             Scenes.editor("dpt.levels.levelTest")
 
             # MainLoop
             while cls.run:
                 Game.events = pygame.event.get()
+                Game.add_debug_info("PERFORMANCES INFORMATIONS")
+                Game.add_debug_info("CPU load: " + str(psutil.cpu_percent()) + "%")
+                Game.add_debug_info("Memory usage: " + str(psutil.virtual_memory().percent) + "%")
+                Game.add_debug_info(str(math.floor(Game.clock.get_fps())) + " FPS")
+                Game.add_debug_info("----------")
                 cls.loop()
             pygame.quit()
 

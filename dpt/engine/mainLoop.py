@@ -1,5 +1,4 @@
-import math
-import psutil
+from dpt.engine.fileManager import FileManager
 from dpt.engine.gui.editor.tileEditor import TileEditor
 from dpt.engine.gui.menu.button import Button
 from dpt.engine.gui.menu.checkbox import Checkbox
@@ -40,6 +39,8 @@ def level_loop():
 
     for event in Game.events:
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+            if TileEditor.in_editor:
+                FileManager.save_file(TileEditor.created_level)
             Game.run = False
         elif event.type == Game.BUTTON_EVENT:
             TileEditor.in_editor = not TileEditor.in_editor
@@ -82,12 +83,6 @@ def level_loop():
     ProgressBar.main_loop()
     Checkbox.main_loop()
 
-    Game.add_debug_info("PERFORMANCES INFORMATIONS")
-    Game.add_debug_info("CPU load: " + str(psutil.cpu_percent()) + "%")
-    Game.add_debug_info("Memory usage: " + str(psutil.virtual_memory().percent) + "%")
-    Game.add_debug_info(str(math.floor(Game.clock.get_fps())) + " FPS")
-    Game.add_debug_info("----------")
-
     Game.display_debug_info()
     Game.window.update()
 
@@ -107,12 +102,6 @@ def main_menu_loop():
     Button.main_loop()
     ProgressBar.main_loop()
     Checkbox.main_loop()
-
-    Game.add_debug_info("PERFORMANCES INFORMATIONS")
-    Game.add_debug_info("CPU load: " + str(psutil.cpu_percent()) + "%")
-    Game.add_debug_info("Memory usage: " + str(psutil.virtual_memory().percent) + "%")
-    Game.add_debug_info(str(math.floor(Game.clock.get_fps())) + " FPS")
-    Game.add_debug_info("----------")
 
     Game.display_debug_info()
     Game.window.update()

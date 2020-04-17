@@ -12,6 +12,8 @@ class Scenes:
         RessourceLoader.unload()
         RessourceLoader.add_pending("dpt.images.gui.buttons.BTN_GREEN_RECT_*")
         RessourceLoader.add_pending("dpt.images.environment.background.default_sky")
+        RessourceLoader.add_pending("dpt.images.gui.buttons.btn_checkbox_out")
+        RessourceLoader.add_pending("dpt.images.gui.buttons.btn_checkbox_in")
 
         # Initialisation du TileManager
         TileEditor.in_editor = True
@@ -44,4 +46,29 @@ class Scenes:
         # Loops
         from dpt.engine.mainLoop import level_loop
         Game.loop = level_loop
+        return True
+
+    @classmethod
+    def pause(cls):
+        # Loops
+        from dpt.engine.mainLoop import pause_loop
+        Game.loop = pause_loop
+        return True
+
+    @classmethod
+    def main_menu(cls):
+        from dpt.engine.loader import RessourceLoader
+
+        # Gestion des ressources
+        RessourceLoader.unload()
+        RessourceLoader.add_pending("dpt.images.environment.background.default_sky")
+        RessourceLoader.add_pending("dpt.images.gui.ui.UI_WINDOW_*")
+        RessourceLoader.add_pending("dpt.images.gui.buttons.*")
+        RessourceLoader.add_pending("dpt.images.dpt")
+        RessourceLoader.add_pending("dpt.sounds.musics.story_time")
+        RessourceLoader.load()
+
+        # Loops
+        from dpt.engine.mainLoop import main_menu_loop
+        Game.loop = main_menu_loop
         return True
