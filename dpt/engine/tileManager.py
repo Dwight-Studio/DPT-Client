@@ -188,7 +188,7 @@ class TileManager:
         Game.editor_tile_registry.clear()
         value = bool(cls.check_back)
         Checkbox.checkboxGroup.empty()
-        cls.check_back = Checkbox(Game.surface.get_size()[0] // 4 * 3 + Game.TILESIZE // 4, Game.TILESIZE // 4)
+        cls.check_back = Checkbox(Game.surface.get_size()[0] // 4 * 3 + Game.TILESIZE // 4, Game.TILESIZE // 4, 1)
         cls.check_back.value = value
         cls.count = 0
         panel = EditorPanel((255, 255, 255), Game.surface.get_size()[0] / 4 * 3, 0, Game.surface.get_size()[0] / 4, Game.surface.get_size()[1], 120)

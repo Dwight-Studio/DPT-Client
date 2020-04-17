@@ -1,3 +1,5 @@
+import math
+
 from dpt.game import Game
 
 
@@ -22,7 +24,12 @@ class Scenes:
 
         # Ajout du bouton d'éditeur
         from dpt.engine.gui.menu.button import Button
-        Game.button = Button(0, Game.surface.get_size()[1] - 50, 127, 46, RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_OUT"), pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_IN"), text="Jouer")
+        Game.gui = {"editor_button": Button(0, Game.surface.get_size()[1] - math.floor(50 * Game.DISPLAY_RATIO),
+                                            127,
+                                            46,
+                                            RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_OUT"),
+                                            pushed_image=RessourceLoader.get(
+                                                "dpt.images.gui.buttons.BTN_GREEN_RECT_IN"), text="Jouer")}
 
         # Loops
         from dpt.engine.mainLoop import level_loop
@@ -67,6 +74,15 @@ class Scenes:
         RessourceLoader.add_pending("dpt.images.dpt")
         RessourceLoader.add_pending("dpt.sounds.musics.story_time")
         RessourceLoader.load()
+
+        # Ajout du GUI
+        from dpt.engine.gui.menu.button import Button
+        buttons_width = math.floor(69 * Game.DISPLAY_RATIO)
+        buttons_height = math.floor(71 * Game.DISPLAY_RATIO)
+        buttons_starting_x = math.floor((Game.surface.get_size()[0] / 2) - buttons_width * 2)
+        buttons_y = Game.surface.get_size()[1] / 2 + 50 * Game.DISPLAY_RATIO
+        Game.gui = {}
+        Game.gui["button_play"] = Button()
 
         # Loops
         from dpt.engine.mainLoop import main_menu_loop

@@ -9,14 +9,18 @@ from dpt.game import Game
 class Checkbox(pygame.sprite.Sprite):
     checkboxGroup = pygame.sprite.Group()
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, size):
         pygame.sprite.Sprite.__init__(self, self.checkboxGroup)  # Sprite's constructor called
-        self.false_image = RessourceLoader.get("dpt.images.gui.Buttons.BTN_CHECKBOX_OUT")
-        self.true_image = RessourceLoader.get("dpt.images.gui.Buttons.BTN_CHECKBOX_IN")
+        self.false_image = RessourceLoader.get("dpt.images.gui.Buttons.BTN_CHECKBOX_OUT").copy()
+        self.true_image = RessourceLoader.get("dpt.images.gui.Buttons.BTN_CHECKBOX_IN").copy()
         self.image = self.false_image
+        self.size = size
         self.rect = self.image.get_rect()
-        self.width = self.rect.width
-        self.height = self.rect.height
+        self.width = math.floor(self.rect.width * self.size * Game.DISPLAY_RATIO)
+        self.height = math.floor(self.rect.height * self.size * Game.DISPLAY_RATIO)
+        self.image = pygame.transform.scale(self.image, (self.width, self.height))
+        del self.rect
+        self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
         self.x = x
@@ -36,7 +40,7 @@ class Checkbox(pygame.sprite.Sprite):
             self.image = self.true_image
             self.update_rect()
             self.rect.x = self.x
-            self.rect.y = self.y - 5
+            self.rect.y = math.floor(self.y - 5 * self.size * Game.DISPLAY_RATIO)
         else:
             self.image = self.false_image
             self.update_rect()
