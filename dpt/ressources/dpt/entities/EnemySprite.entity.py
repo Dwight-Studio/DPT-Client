@@ -36,6 +36,7 @@ class EnemySprite(pygame.sprite.Sprite):
         self.gravity = 0
         self.lastx = 0
         self.lasty = 0
+        self.securityTime = 60
 
     def update(self):
         from dpt.engine.tileManager import TileManager
@@ -44,7 +45,7 @@ class EnemySprite(pygame.sprite.Sprite):
                 if self.xvel > 0:
                     self.xvel = 0
                 if self.xvel > -2 * Game.DISPLAY_RATIO:
-                    self.xvel -= 0.4 * Game.DISPLAY_RATIO
+                    self.xvel -= 1 * Game.DISPLAY_RATIO
                 self.left = True
                 self.right = False
                 self.standing = False
@@ -52,7 +53,7 @@ class EnemySprite(pygame.sprite.Sprite):
                 if self.xvel < 0:
                     self.xvel = 0
                 if self.xvel < 2 * Game.DISPLAY_RATIO:
-                    self.xvel += 0.4 * Game.DISPLAY_RATIO
+                    self.xvel += 1 * Game.DISPLAY_RATIO
                 self.left = False
                 self.right = True
                 self.standing = False
@@ -72,7 +73,17 @@ class EnemySprite(pygame.sprite.Sprite):
                 self.collide(0, self.gravity, TileManager.environment_group)
         self.animation()
 
+        Game.add_debug_info("Enemy.lastx = " + str(self.lastx))
+        Game.add_debug_info("Enemy.rect.left" + str(self.rect.left))
+        Game.add_debug_info("Enemy.left " + str(self.left))
+        Game.add_debug_info("Enemy.right " + str(self.right))
+
         if self.lastx == self.rect.left:
+            self.left = not self.left
+            self.right = not self.right
+
+        self.securityTime -= 1
+        if self.check_fall(TileManager.environment_group):
             self.left = not self.left
             self.right = not self.right
 
@@ -111,3 +122,21 @@ class EnemySprite(pygame.sprite.Sprite):
     def check_void(self):
         if self.rect.top > 2000:
             self.kill()
+
+    def check_fall(self, platforms):
+        if self.securityTime < 0:
+            if self.right:
+                neg = 1
+            else:
+                neg = -1
+            self.rect.left += self.width * Game.DISPLAY_RATIO * neg
+            self.rect.top += self.height * Game.DISPLAY_RATIO
+            for i in platforms:
+                if pygame.sprite.collide_rect(self, i):
+                    self.rect.left -= self.width * Game.DISPLAY_RATIO * neg
+                    self.rect.top -= self.height * Game.DISPLAY_RATIO
+                    return False
+            self.rect.left -= self.width * Game.DISPLAY_RATIO * neg
+            self.rect.top -= self.height * Game.DISPLAY_RATIO
+            self.securityTime = 60
+            return True
