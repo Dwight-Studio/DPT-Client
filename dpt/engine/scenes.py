@@ -24,7 +24,9 @@ class Scenes:
 
         # Ajout du bouton d'éditeur
         from dpt.engine.gui.menu.button import Button
-        Game.gui = {"editor_button": Button(0, Game.surface.get_size()[1] - 50, 127, 46,
+        Game.gui = {"editor_button": Button(0, Game.surface.get_size()[1] - math.floor(50 * Game.DISPLAY_RATIO),
+                                            127,
+                                            46,
                                             RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_OUT"),
                                             pushed_image=RessourceLoader.get(
                                                 "dpt.images.gui.buttons.BTN_GREEN_RECT_IN"), text="Jouer")}

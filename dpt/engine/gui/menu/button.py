@@ -1,3 +1,5 @@
+import math
+
 import pygame
 
 from dpt.game import Game
@@ -30,7 +32,7 @@ class Button(pygame.sprite.Sprite):
             self.font = kwargs["font"]
             del kwargs["font"]
         except KeyError:
-            self.font = pygame.font.SysFont("arial", 15)
+            self.font = pygame.font.SysFont("arial", math.floor(15 * Game.DISPLAY_RATIO))
         try:
             self.font_color = kwargs["font_color"]
             del kwargs["font_color"]
@@ -48,12 +50,13 @@ class Button(pygame.sprite.Sprite):
             self.text_sprite = None
         self.eventargs = kwargs
         self.image = self.normal_image
-        self.image = pygame.transform.scale(self.image, (width, height))
+        self.width = math.floor(width * Game.DISPLAY_RATIO)
+        self.height = math.floor(height * Game.DISPLAY_RATIO)
+        self.image = pygame.transform.scale(self.image, (math.floor(width * Game.DISPLAY_RATIO),
+                                                         math.floor(height * Game.DISPLAY_RATIO)))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.width = width
-        self.height = height
         self.pushed = False
         self.locked = False
         self.previous_state = False

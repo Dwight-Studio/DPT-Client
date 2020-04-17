@@ -113,7 +113,7 @@ class Game(object):
             cls._debug_infos = []
 
             cls.window = pygame.display
-            cls.surface = cls.window.set_mode((640, 360), pygame.NOFRAME, pygame.SCALED)
+            cls.surface = cls.window.set_mode((0, 0), pygame.NOFRAME, pygame.SCALED)
 
             w, h = cls.surface.get_size()
             main_logger.debug("Window size: " + str(w) + "x" + str(h))
