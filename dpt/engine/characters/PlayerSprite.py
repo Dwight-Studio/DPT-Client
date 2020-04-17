@@ -9,8 +9,8 @@ from dpt.engine.tileManager import TileManager
 class PlayerSprite(pygame.sprite.Sprite):
     screen_width, screen_height = Game.surface.get_size()
     char = "dpt.images.characters.player.standing"
-    walkRight = "dpt.images.characters.player.R*"
-    walkLeft = "dpt.images.characters.player.L*"
+    walkRightTexture = "dpt.images.characters.player.R*"
+    walkLeftTexture = "dpt.images.characters.player.L*"
     gravityCount = 0
 
     def __init__(self, x, y):
@@ -21,9 +21,9 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.CONSTHEIGT = self.height
         self.image = pygame.transform.scale(RessourceLoader.get(self.char), (self.width, self.height))
         self.walkLeft = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in
-                         RessourceLoader.get_multiple(self.walkLeft)]
+                         RessourceLoader.get_multiple(self.walkLeftTexture)]
         self.walkRight = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in
-                          RessourceLoader.get_multiple(self.walkRight)]
+                          RessourceLoader.get_multiple(self.walkRightTexture)]
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -116,6 +116,10 @@ class PlayerSprite(pygame.sprite.Sprite):
                 if self.big:
                     self.height *= 0.7
                     self.width *= 0.7
+                    self.walkLeft = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in
+                                     RessourceLoader.get_multiple(self.walkLeftTexture)]
+                    self.walkRight = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in
+                                      RessourceLoader.get_multiple(self.walkRightTexture)]
                     self.big = False
                     self.rect[2] //= 1.42
                     self.rect[3] //= 1.42
