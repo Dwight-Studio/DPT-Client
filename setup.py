@@ -55,7 +55,15 @@ optimize = 0
 silent = False
 
 # construction du dictionnaire des options
-options = {"path": path, "includes": includes, "excludes": excludes, "packages": packages, "include_files": includefiles, "bin_path_includes": binpathincludes, "optimize": optimize, "silent": silent}
+options = {
+    "path": path,
+    "includes": includes,
+    "excludes": excludes,
+    "packages": packages,
+    "include_files": includefiles,
+    "bin_path_includes": binpathincludes,
+    "optimize": optimize,
+    "silent": silent}
 
 # pour inclure sous Windows les dll system de Windows necessaires
 if sys.platform == "win32":
@@ -65,7 +73,8 @@ if sys.platform == "win32":
 # preparation des cibles
 base = None
 if sys.platform == "win32":
-    base = "Win32GUI"  # pour application graphique sous Windows  # base = "Console" # pour application en console sous Windows
+    base = "Win32GUI"  # pour application graphique sous Windows  # base = "Console" # pour application en console
+    # sous Windows
 
 icone = None
 if sys.platform == "win32":
@@ -76,4 +85,8 @@ cible_1 = Executable(script="main.py", base=base)
 
 #############################################################################
 # creation du setup
-setup(name="Don't Play Together", version=get_ver(), description="Jeu vidéo non collaboratif", author="Kévin Tollemer, Maxime Savary, Alexandre Leconte", options={"build_exe": options}, executables=[cible_1])
+setup(name="Don't Play Together", version=get_ver(),
+      description="Jeu vidéo non collaboratif",
+      author="Kévin Tollemer, Maxime Savary, Alexandre Leconte",
+      options={
+          "build_exe": options}, executables=[cible_1])

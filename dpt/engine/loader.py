@@ -131,6 +131,7 @@ class RessourceLoader:
                     except KeyError:
                         cls.logger.warning("Can't find class " + module[ext[-3]])
                         cls.logger.warning("Can't load entry " + entry)
+                        continue
                 elif ext[-2] == "entity" and ext[-1] == "py":
                     module = runpy.run_path(cls.pending_ressources[entry])
                     cls.loaded_ressources[entry] = module[ext[-3]]
@@ -165,6 +166,18 @@ class RessourceLoader:
             rect.centerx = Game.surface.get_size()[0] // 2
             rect.centery = math.floor(Game.surface.get_size()[1] - height / 2)
             Game.surface.blit(text, rect)
+
+            Game.events = pygame.event.get()
+            Game.add_debug_info("PERFORMANCES INFORMATIONS")
+            Game.add_debug_info("CPU load: " + str(psutil.cpu_percent()) + "%")
+            Game.add_debug_info("Memory usage: " + str(psutil.virtual_memory().percent) + "%")
+            Game.add_debug_info(str(math.floor(Game.clock.get_fps())) + " FPS")
+            Game.add_debug_info("----------")
+
+            for event in Game.events:
+                if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+                    pygame.quit()
+                    exit()
 
             Game.display_debug_info()
             Game.window.update()

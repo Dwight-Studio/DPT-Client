@@ -50,7 +50,7 @@ class Game(object):
     editor_tile_registry = {}
     surface = None
     player_sprite = None
-    button = None
+    gui = {}
     events = []
     loop = void
     com = None

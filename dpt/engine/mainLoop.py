@@ -43,12 +43,12 @@ def level_loop():
                 FileManager.save_file(TileEditor.created_level)
             # Game.com.close()
             Game.run = False
-        elif event.type == Game.BUTTON_EVENT:
+        elif event.type == Game.BUTTON_EVENT and event.button == Game.gui["editor_button"]:
             TileEditor.in_editor = not TileEditor.in_editor
             if TileEditor.in_editor:
-                Game.button.text = "Jouer"
+                Game.gui["editor_button"].text = "Jouer"
             else:
-                Game.button.text = "Retour"
+                Game.gui["editor_button"].text = "Retour"
             TileEditor.panel_open = False
             Checkbox.checkboxGroup.empty()
             TileManager.load_level(TileManager.levelName)
