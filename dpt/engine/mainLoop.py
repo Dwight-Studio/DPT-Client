@@ -1,3 +1,5 @@
+import math
+
 from dpt.engine.fileManager import FileManager
 from dpt.engine.gui.editor.tileEditor import TileEditor
 from dpt.engine.gui.menu.button import Button
@@ -85,6 +87,7 @@ def level_loop():
     Checkbox.main_loop()
 
     Game.display_debug_info()
+    Game.draw_cursor()
     Game.window.update()
 
 
@@ -104,5 +107,13 @@ def main_menu_loop():
     ProgressBar.main_loop()
     Checkbox.main_loop()
 
+    image = RessourceLoader.get("dpt.images.dpt")
+    image = pygame.transform.scale(image, (math.floor(1480 * Game.DISPLAY_RATIO), math.floor(600 * Game.DISPLAY_RATIO)))
+    rect = image.get_rect()
+    rect.centerx = Game.surface.get_size()[0] // 2
+    rect.bottom = (Game.surface.get_size()[1] // 4) * 3
+    Game.surface.blit(image, rect)
+
     Game.display_debug_info()
+    Game.draw_cursor()
     Game.window.update()

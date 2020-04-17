@@ -53,6 +53,9 @@ class Game(object):
     events = []
     loop = void
     com = None
+    cursor_on_button = False
+    cursor1 = None
+    cursor2 = None
 
     anim_count_lava = 0
     anim_count_water = 0
@@ -136,8 +139,18 @@ class Game(object):
             RessourceLoader.init()
 
             # Séquence d'intro
+            pygame.mouse.set_visible(False)
+            cls.cursor1 = pygame.transform.scale(pygame.image.load(cls.ROOT_DIRECTORY +
+                                                                   "/ressources/dpt/images/gui/Cursors/CRS_ARROW.png").convert_alpha(),
+                                                 (32,
+                                                  39))
+            cls.cursor2 = pygame.transform.scale(pygame.image.load(cls.ROOT_DIRECTORY +
+                                                                   "/ressources/dpt/images/gui/Cursors/CRS_HAND.png").convert_alpha(),
+                                                 (32,
+                                                  44))
             if not skip_intro:
-                pygame_logo = pygame.image.load(cls.ROOT_DIRECTORY + "/ressources/dpt/images/pygame_logo.png").convert_alpha()
+                pygame_logo = pygame.image.load(
+                    cls.ROOT_DIRECTORY + "/ressources/dpt/images/pygame_logo.png").convert_alpha()
                 logo = pygame.image.load(cls.ROOT_DIRECTORY + "/ressources/dpt/images/logo_dw.png").convert_alpha()
                 game_by = pygame.image.load(cls.ROOT_DIRECTORY + "/ressources/dpt/images/game_by.png").convert_alpha()
 
@@ -216,15 +229,16 @@ class Game(object):
                 pygame.time.delay(1000)
 
             # Tests webcoms
-            # from dpt.engine.webCommunications import Communication
-            # cls.com = Communication()
+            #  from dpt.engine.webCommunications import Communication
+            #  cls.com = Communication()
             # cls.com.create()
             # cls.com.create_vote_event(0, 0)
 
             # Scene par défaut
             from dpt.engine.scenes import Scenes
             # Scenes.main_menu()
-            Scenes.editor("dpt.levels.levelTest")
+            # Scenes.editor("dpt.levels.levelTest")
+            Scenes.main_menu()
 
             # MainLoop
             while cls.run:
@@ -234,7 +248,9 @@ class Game(object):
                 Game.add_debug_info("Memory usage: " + str(psutil.virtual_memory().percent) + "%")
                 Game.add_debug_info(str(math.floor(Game.clock.get_fps())) + " FPS")
                 Game.add_debug_info("----------")
+                Game.draw_cursor()
                 cls.loop()
+                Game.draw_cursor()
             pygame.quit()
 
         except Exception:
@@ -274,3 +290,15 @@ class Game(object):
                 y += math.floor(15 * Game.DISPLAY_RATIO)
                 cls.surface.blit(debug_text, rect)
         cls._debug_infos = []
+
+    @classmethod
+    def draw_cursor(cls):
+        if not cls.cursor_on_button:
+            image = cls.cursor1
+        else:
+            image = cls.cursor2
+        rect = image.get_rect()
+        rect.x = pygame.mouse.get_pos()[0]
+        rect.y = pygame.mouse.get_pos()[1]
+        cls.surface.blit(image, rect)
+        Game.cursor_on_button = False

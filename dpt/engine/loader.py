@@ -181,6 +181,7 @@ class RessourceLoader:
                     exit()
 
             Game.display_debug_info()
+            Game.draw_cursor()
             Game.window.update()
 
         pb.bar.kill()

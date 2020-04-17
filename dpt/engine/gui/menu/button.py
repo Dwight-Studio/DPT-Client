@@ -95,6 +95,7 @@ class Button(pygame.sprite.Sprite):
         else:
             if self.rect.collidepoint(pygame.mouse.get_pos()):
                 self.image = self.hover_image
+                Game.cursor_on_button = True
             else:
                 self.image = self.normal_image
 
@@ -111,7 +112,7 @@ class Button(pygame.sprite.Sprite):
         Button.text_buttonsList = []
         Button.buttonsGroup.update()
         Button.text_sprite_buttonsGroup.update()
-        Button.text_sprite_buttonsGroup.draw(Game.surface)
         Button.buttonsGroup.draw(Game.surface)
+        Button.text_sprite_buttonsGroup.draw(Game.surface)
         for i in Button.text_buttonsList:
             Game.surface.blit(i[0], i[1])

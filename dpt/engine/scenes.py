@@ -1,5 +1,7 @@
 import math
 
+import pygame
+
 from dpt.game import Game
 
 
@@ -71,18 +73,48 @@ class Scenes:
         RessourceLoader.add_pending("dpt.images.environment.background.default_sky")
         RessourceLoader.add_pending("dpt.images.gui.ui.UI_WINDOW_*")
         RessourceLoader.add_pending("dpt.images.gui.buttons.*")
+        RessourceLoader.add_pending("dpt.images.gui.symbols.*")
         RessourceLoader.add_pending("dpt.images.dpt")
         RessourceLoader.add_pending("dpt.sounds.musics.story_time")
         RessourceLoader.load()
 
         # Ajout du GUI
         from dpt.engine.gui.menu.button import Button
-        buttons_width = math.floor(69 * Game.DISPLAY_RATIO)
-        buttons_height = math.floor(71 * Game.DISPLAY_RATIO)
-        buttons_starting_x = math.floor((Game.surface.get_size()[0] / 2) - buttons_width * 2)
-        buttons_y = Game.surface.get_size()[1] / 2 + 50 * Game.DISPLAY_RATIO
-        Game.gui = {}
-        Game.gui["button_play"] = Button()
+        from dpt.engine.gui.menu.textSpriteButton import TextSpriteButton
+        buttons_width = math.floor(92 * Game.DISPLAY_RATIO)
+        buttons_height = math.floor(95 * Game.DISPLAY_RATIO)
+        buttons_gap_x = math.floor(80 * Game.DISPLAY_RATIO)
+        buttons_starting_x = math.floor((Game.surface.get_size()[0] / 2) - (buttons_width + buttons_gap_x) * 2)
+        buttons_y = (Game.surface.get_size()[1] // 4) * 3 + 50 * Game.DISPLAY_RATIO
+        Game.gui = {"button_play": Button(buttons_starting_x, buttons_y, buttons_width, buttons_height,
+                                          RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_OUT"),
+                                          pushed_image=RessourceLoader.get(
+                                              "dpt.images.gui.buttons.BTN_GREEN_CIRCLE_IN"),
+                                          text_sprite=TextSpriteButton(47, 50, RessourceLoader.get(
+                                              "dpt.images.gui.symbols.SYMB_PLAY"))),
+                    "button_editor": Button(buttons_starting_x + (buttons_width + buttons_gap_x), buttons_y,
+                                            buttons_width,
+                                            buttons_height,
+                                            RessourceLoader.get("dpt.images.gui.buttons.BTN_BLUE_CIRCLE_OUT"),
+                                            pushed_image=RessourceLoader.get(
+                                                "dpt.images.gui.buttons.BTN_BLUE_CIRCLE_IN"),
+                                            text_sprite=TextSpriteButton(47, 50, RessourceLoader.get(
+                                                "dpt.images.gui.symbols.SYMB_PLAY"))),
+                    "button_settings": Button(buttons_starting_x + (buttons_width + buttons_gap_x) * 2, buttons_y,
+                                              buttons_width,
+                                              buttons_height,
+                                              RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_OUT"),
+                                              pushed_image=RessourceLoader.get(
+                                                  "dpt.images.gui.buttons.BTN_GRAY_CIRCLE_IN"),
+                                              text_sprite=TextSpriteButton(47, 50, RessourceLoader.get(
+                                                  "dpt.images.gui.symbols.SYMB_SETTINGS"))),
+                    "button_quit": Button(buttons_starting_x + (buttons_width + buttons_gap_x) * 3, buttons_y,
+                                          buttons_width,
+                                          buttons_height,
+                                          RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_OUT"),
+                                          pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_IN"),
+                                          text_sprite=TextSpriteButton(47, 50, RessourceLoader.get(
+                                              "dpt.images.gui.symbols.SYMB_X")))}
 
         # Loops
         from dpt.engine.mainLoop import main_menu_loop
