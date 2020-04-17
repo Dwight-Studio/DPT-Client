@@ -18,7 +18,7 @@ class Checkbox(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.width = math.floor(self.rect.width * self.size * Game.DISPLAY_RATIO)
         self.height = math.floor(self.rect.height * self.size * Game.DISPLAY_RATIO)
-        self.image = pygame.transform.scale(self.image, (self.width, self.height))
+        self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
         del self.rect
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -51,7 +51,8 @@ class Checkbox(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.width = self.rect.width
         self.height = self.rect.height
-        self.image = pygame.transform.scale(self.image, (math.floor(self.width * Game.DISPLAY_RATIO), math.floor(self.height * Game.DISPLAY_RATIO)))
+        self.image = pygame.transform.smoothscale(self.image, (
+        math.floor(self.width * Game.DISPLAY_RATIO), math.floor(self.height * Game.DISPLAY_RATIO)))
 
     @classmethod
     def main_loop(cls):

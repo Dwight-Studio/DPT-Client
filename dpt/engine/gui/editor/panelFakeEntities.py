@@ -13,7 +13,7 @@ class PanelFakeEntity(pygame.sprite.Sprite):
         except UnreachableRessourceError:
             self.block = RessourceLoader.get("dpt.blocks.NotFound")
             self.image = RessourceLoader.get(self.block.texture)
-        self.image = pygame.transform.scale(self.image, (self.block.width, self.block.height))
+        self.image = pygame.transform.smoothscale(self.image, (self.block.width, self.block.height))
         self.image.set_alpha(alpha)
         self.rect = self.image.get_rect()
         self.rect.centerx = x + Game.TILESIZE // 2

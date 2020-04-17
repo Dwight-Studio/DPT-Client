@@ -14,7 +14,7 @@ class Lever(pygame.sprite.Sprite):
         from dpt.engine.tileManager import TileManager
         pygame.sprite.Sprite.__init__(self, TileManager.interactible_blocks)
         self.image = RessourceLoader.get(self.texture)
-        self.image = pygame.transform.scale(self.image, (self.width, self.height))
+        self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect()
         self.rect.x = x + self.offset_x
         self.rect.y = y + self.offset_y
@@ -37,7 +37,7 @@ class Lever(pygame.sprite.Sprite):
                         self.right = True
                         texture = "dpt.images.environment.lever.Lever_Right"
                         self.image = RessourceLoader.get(texture)
-                        self.image = pygame.transform.scale(self.image, (self.width, self.height))
+                        self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
                         self.rect = self.image.get_rect()
                         self.rect.x = self.x + self.offset_x + 11
                         self.rect.y = self.y + self.offset_y
@@ -46,7 +46,7 @@ class Lever(pygame.sprite.Sprite):
                         self.left = True
                         texture = "dpt.images.environment.lever.Lever_Left"
                         self.image = RessourceLoader.get(texture)
-                        self.image = pygame.transform.scale(self.image, (self.width, self.height))
+                        self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
                         self.rect = self.image.get_rect()
                         self.rect.x = self.x + self.offset_x
                         self.rect.y = self.y + self.offset_y

@@ -17,7 +17,7 @@ class Lava(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, TileManager.entity_group, TileManager.deadly_object_group)  # Sprite's constructor called
         self.image = RessourceLoader.get(self.texture)
         self.frames = RessourceLoader.get_multiple(self.textures)
-        self.image = pygame.transform.scale(self.image, (self.width, self.height))
+        self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect()
         self.rect.x = x + self.offset_x
         self.rect.y = y + self.offset_y
@@ -27,4 +27,4 @@ class Lava(pygame.sprite.Sprite):
 
     def animation(self):
         self.image = self.frames[Game.anim_count_lava // 4]
-        self.image = pygame.transform.scale(self.image, (self.width, self.height))
+        self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))

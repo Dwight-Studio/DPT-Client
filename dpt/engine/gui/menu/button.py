@@ -52,8 +52,8 @@ class Button(pygame.sprite.Sprite):
         self.image = self.normal_image
         self.width = math.floor(width * Game.DISPLAY_RATIO)
         self.height = math.floor(height * Game.DISPLAY_RATIO)
-        self.image = pygame.transform.scale(self.image, (math.floor(width * Game.DISPLAY_RATIO),
-                                                         math.floor(height * Game.DISPLAY_RATIO)))
+        self.image = pygame.transform.smoothscale(self.image, (math.floor(width * Game.DISPLAY_RATIO),
+                                                               math.floor(height * Game.DISPLAY_RATIO)))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -101,7 +101,7 @@ class Button(pygame.sprite.Sprite):
             else:
                 self.image = self.normal_image
 
-        self.image = pygame.transform.scale(self.image, (self.width, self.height))
+        self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
 
     def lock(self):
         self.locked = True

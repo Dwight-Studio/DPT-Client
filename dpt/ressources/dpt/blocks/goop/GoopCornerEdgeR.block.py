@@ -14,7 +14,7 @@ class GoopCornerEdgeR(pygame.sprite.Sprite):
         from dpt.engine.tileManager import TileManager
         pygame.sprite.Sprite.__init__(self, TileManager.environment_group)
         self.image = RessourceLoader.get(self.texture)
-        self.image = pygame.transform.scale(self.image, (self.width, self.height))
+        self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect()
         self.rect.x = x + self.offset_x
         self.rect.y = y + self.offset_y

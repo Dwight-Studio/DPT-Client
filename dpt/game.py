@@ -140,14 +140,14 @@ class Game(object):
 
             # Séquence d'intro
             pygame.mouse.set_visible(False)
-            cls.cursor1 = pygame.transform.scale(pygame.image.load(cls.ROOT_DIRECTORY +
-                                                                   "/ressources/dpt/images/gui/Cursors/CRS_ARROW.png").convert_alpha(),
-                                                 (32,
-                                                  39))
-            cls.cursor2 = pygame.transform.scale(pygame.image.load(cls.ROOT_DIRECTORY +
-                                                                   "/ressources/dpt/images/gui/Cursors/CRS_HAND.png").convert_alpha(),
-                                                 (32,
-                                                  44))
+            cls.cursor1 = pygame.transform.smoothscale(pygame.image.load(cls.ROOT_DIRECTORY +
+                                                                         "/ressources/dpt/images/gui/Cursors/CRS_ARROW.png").convert_alpha(),
+                                                       (32,
+                                                        39))
+            cls.cursor2 = pygame.transform.smoothscale(pygame.image.load(cls.ROOT_DIRECTORY +
+                                                                         "/ressources/dpt/images/gui/Cursors/CRS_HAND.png").convert_alpha(),
+                                                       (32,
+                                                        44))
             if not skip_intro:
                 pygame_logo = pygame.image.load(
                     cls.ROOT_DIRECTORY + "/ressources/dpt/images/pygame_logo.png").convert_alpha()
@@ -157,7 +157,7 @@ class Game(object):
                 rect = pygame_logo.get_rect()
                 rect.width *= cls.DISPLAY_RATIO
                 rect.height *= cls.DISPLAY_RATIO
-                pygame_logo = pygame.transform.scale(pygame_logo, (rect.width, rect.height))
+                pygame_logo = pygame.transform.smoothscale(pygame_logo, (rect.width, rect.height))
                 rect.centerx = w // 2
                 rect.centery = h // 2
 
@@ -186,7 +186,7 @@ class Game(object):
                 rect = logo.get_rect()
                 rect.width *= 0.8 * cls.DISPLAY_RATIO
                 rect.height *= 0.8 * cls.DISPLAY_RATIO
-                logo = pygame.transform.scale(logo, (rect.width, rect.height))
+                logo = pygame.transform.smoothscale(logo, (rect.width, rect.height))
                 rect.centerx = w // 2
                 rect.centery = h // 2
 
@@ -203,7 +203,7 @@ class Game(object):
                 rect2 = game_by.get_rect()
                 rect2.width *= 0.3 * cls.DISPLAY_RATIO
                 rect2.height *= 0.3 * cls.DISPLAY_RATIO
-                game_by = pygame.transform.scale(game_by, (rect2.width, rect2.height))
+                game_by = pygame.transform.smoothscale(game_by, (rect2.width, rect2.height))
                 rect2.centerx = w // 2 - rect.width // 2 - math.floor(100 * cls.DISPLAY_RATIO)
                 rect2.centery = rect.centery
 

@@ -11,7 +11,7 @@ class ProgressBar(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height, image, image2, max_value):
         pygame.sprite.Sprite.__init__(self, self.progressbarGroup)  # Sprite's constructor called
         self.image = image
-        self.image = pygame.transform.scale(self.image, (width, height))
+        self.image = pygame.transform.smoothscale(self.image, (width, height))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y

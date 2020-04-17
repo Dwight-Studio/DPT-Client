@@ -107,7 +107,7 @@ class RessourceLoader:
         pbar = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/gui/ui/UI_BARFRAME.png")
         bar = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/gui/ui/UI_COLORBAR_2.png")
         bg = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/environment/background/default_sky.png")
-        bg = pygame.transform.scale(bg, Game.surface.get_size())
+        bg = pygame.transform.smoothscale(bg, Game.surface.get_size())
         width = min(Game.surface.get_size()[0] - 50, 1115)
         height = min(math.floor(52 / 1115 * width), 52)
         pb = ProgressBar(math.floor(Game.surface.get_size()[0] / 2 - width / 2),

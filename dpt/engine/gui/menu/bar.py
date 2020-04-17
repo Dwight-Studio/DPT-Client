@@ -9,8 +9,8 @@ class Bar(pygame.sprite.Sprite):
         self.normal_image = image
         self.width = width
         self.height = height
-        self.image = pygame.transform.scale(self.normal_image, (self.width, self.height))
-        self.normal_image = pygame.transform.scale(self.normal_image, (self.width, self.height))
+        self.image = pygame.transform.smoothscale(self.normal_image, (self.width, self.height))
+        self.normal_image = pygame.transform.smoothscale(self.normal_image, (self.width, self.height))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y

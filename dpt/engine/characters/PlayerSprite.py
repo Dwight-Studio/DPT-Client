@@ -20,7 +20,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.height = math.floor(90 * Game.DISPLAY_RATIO)
         self.CONSTWIDTH = self.width
         self.CONSTHEIGT = self.height
-        self.image = pygame.transform.scale(self.image, (self.width, self.height))
+        self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -143,7 +143,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.image = self.walkRight[0]
             else:
                 self.image = self.walkLeft[0]
-        self.image = pygame.transform.scale(self.image, (math.floor(self.width), math.floor(self.height)))
+        self.image = pygame.transform.smoothscale(self.image, (math.floor(self.width), math.floor(self.height)))
         # pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
 
     def collide(self, x_vel_delta, y_vel_delta, platforms):

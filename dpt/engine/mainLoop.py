@@ -12,7 +12,7 @@ from dpt.game import Game
 import pygame
 
 bg = RessourceLoader.get("dpt.images.environment.background.default_sky")
-bg = pygame.transform.scale(bg, Game.surface.get_size())
+bg = pygame.transform.smoothscale(bg, Game.surface.get_size())
 
 
 def do_synch_anims():
@@ -124,7 +124,8 @@ def main_menu_loop():
     Checkbox.main_loop()
 
     image = RessourceLoader.get("dpt.images.dpt")
-    image = pygame.transform.scale(image, (math.floor(1480 * Game.DISPLAY_RATIO), math.floor(600 * Game.DISPLAY_RATIO)))
+    image = pygame.transform.smoothscale(image,
+                                         (math.floor(1480 * Game.DISPLAY_RATIO), math.floor(600 * Game.DISPLAY_RATIO)))
     rect = image.get_rect()
     rect.centerx = Game.surface.get_size()[0] // 2
     rect.bottom = (Game.surface.get_size()[1] // 4) * 3
