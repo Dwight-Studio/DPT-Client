@@ -111,11 +111,11 @@ class PlayerSprite(pygame.sprite.Sprite):
 
             if self.damaged:
                 if self.big:
-                    self.height *= 0.5
-                    self.width *= 0.5
+                    self.height *= 0.7
+                    self.width *= 0.7
                     self.big = False
-                    self.rect[2] //= 2
-                    self.rect[3] //= 2
+                    self.rect[2] //= 1.42
+                    self.rect[3] //= 1.42
                 self.imunityTime -= 1
             else:
                 if not self.big:
