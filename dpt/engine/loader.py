@@ -158,8 +158,8 @@ class RessourceLoader:
             Game.surface.blit(bg, (0, 0))
 
             ProgressBar.progressbarGroup.update()
-            Bar.barGroup.update()
-            Bar.barGroup.draw(Game.surface)
+            ProgressBar.barGroup.update()
+            ProgressBar.barGroup.draw(Game.surface)
             ProgressBar.progressbarGroup.draw(Game.surface)
 
             text = font.render(entry, True, (0, 0, 0))

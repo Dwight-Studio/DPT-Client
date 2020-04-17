@@ -5,6 +5,7 @@ from dpt.engine.gui.editor.tileEditor import TileEditor
 from dpt.engine.gui.menu.button import Button
 from dpt.engine.gui.menu.checkbox import Checkbox
 from dpt.engine.gui.menu.progressbar import ProgressBar
+from dpt.engine.scenes import Scenes
 from dpt.engine.tileManager import TileManager
 from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
@@ -100,8 +101,19 @@ def main_menu_loop():
     Game.surface.blit(bg, (0, 0))
 
     for event in Game.events:
-        if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+        if event.type == pygame.QUIT:
             Game.run = False
+        if event.type == Game.BUTTON_EVENT:
+            if event.button == Game.gui["button_play"]:
+                return
+            elif event.button == Game.gui["button_editor"]:
+                Scenes.editor("dpt.levels.leveltest")
+                return
+            elif event.button == Game.gui["button_settings"]:
+                return
+            elif event.button == Game.gui["button_quit"]:
+                Game.run = False
+                return
 
     Button.main_loop()
     ProgressBar.main_loop()

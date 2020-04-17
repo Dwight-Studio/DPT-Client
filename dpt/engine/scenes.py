@@ -12,6 +12,16 @@ class Scenes:
         from dpt.engine.tileManager import TileManager
         from dpt.engine.gui.editor.tileEditor import TileEditor
 
+        # Nettoyage
+        from dpt.engine.gui.menu.button import Button
+        from dpt.engine.gui.menu.progressbar import ProgressBar
+        from dpt.engine.gui.menu.checkbox import Checkbox
+        Button.buttonsGroup.empty()
+        Button.text_sprite_buttonsGroup.empty()
+        ProgressBar.progressbarGroup.empty()
+        ProgressBar.barGroup.empty()
+        Checkbox.checkboxGroup.empty()
+
         # Gestion des ressources
         RessourceLoader.unload()
         RessourceLoader.add_pending("dpt.images.gui.buttons.BTN_GREEN_RECT_*")
@@ -25,7 +35,6 @@ class Scenes:
             return False
 
         # Ajout du bouton d'éditeur
-        from dpt.engine.gui.menu.button import Button
         Game.gui = {"editor_button": Button(0, Game.surface.get_size()[1] - math.floor(50 * Game.DISPLAY_RATIO),
                                             127,
                                             46,

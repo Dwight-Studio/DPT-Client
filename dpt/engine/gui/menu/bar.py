@@ -2,10 +2,9 @@ import pygame
 
 
 class Bar(pygame.sprite.Sprite):
-    barGroup = pygame.sprite.Group()
-
     def __init__(self, x, y, width, height, image):
-        pygame.sprite.Sprite.__init__(self, self.barGroup)  # Sprite's constructor called
+        from dpt.engine.gui.menu.progressbar import ProgressBar
+        pygame.sprite.Sprite.__init__(self, ProgressBar.barGroup)  # Sprite's constructor called
         self.image = image
         self.normal_image = image
         self.width = width

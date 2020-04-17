@@ -89,6 +89,8 @@ class Button(pygame.sprite.Sprite):
 
         if self.pushed:
             self.image = self.pushed_image
+            if self.text_sprite is not None:
+                self.text_sprite.rect.centery = self.rect.centery + math.floor(self.rect.height * 0.1)
             if not self.previous_state:
                 event = pygame.event.Event(Game.BUTTON_EVENT, **dict(button=self, **self.eventargs))
                 pygame.event.post(event)
