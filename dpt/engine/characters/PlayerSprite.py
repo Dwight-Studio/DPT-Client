@@ -8,19 +8,22 @@ from dpt.engine.tileManager import TileManager
 
 class PlayerSprite(pygame.sprite.Sprite):
     screen_width, screen_height = Game.surface.get_size()
-    char = RessourceLoader.get("dpt.images.characters.player.standing")
-    walkRight = RessourceLoader.get_multiple("dpt.images.characters.player.R*")
-    walkLeft = RessourceLoader.get_multiple("dpt.images.characters.player.L*")
+    char = "dpt.images.characters.player.standing"
+    walkRight = "dpt.images.characters.player.R*"
+    walkLeft = "dpt.images.characters.player.L*"
     gravityCount = 0
 
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
-        self.image = self.char
         self.width = math.floor(60 * Game.DISPLAY_RATIO)
         self.height = math.floor(90 * Game.DISPLAY_RATIO)
         self.CONSTWIDTH = self.width
         self.CONSTHEIGT = self.height
-        self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
+        self.image = pygame.transform.scale(RessourceLoader.get(self.char), (self.width, self.height))
+        self.walkLeft = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in
+                         RessourceLoader.get_multiple(self.walkLeft)]
+        self.walkRight = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in
+                          RessourceLoader.get_multiple(self.walkRight)]
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -143,7 +146,6 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.image = self.walkRight[0]
             else:
                 self.image = self.walkLeft[0]
-        self.image = pygame.transform.smoothscale(self.image, (math.floor(self.width), math.floor(self.height)))
         # pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
 
     def collide(self, x_vel_delta, y_vel_delta, platforms):
