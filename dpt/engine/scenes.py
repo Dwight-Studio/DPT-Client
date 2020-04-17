@@ -87,6 +87,10 @@ class Scenes:
         RessourceLoader.add_pending("dpt.sounds.musics.story_time")
         RessourceLoader.load()
 
+        # Gestion de la musique
+        pygame.mixer_music.load(RessourceLoader.get("dpt.sounds.musics.story_time"))
+        pygame.mixer_music.play(-1)
+
         # Ajout du GUI
         from dpt.engine.gui.menu.button import Button
         from dpt.engine.gui.menu.textSpriteButton import TextSpriteButton

@@ -105,13 +105,17 @@ def main_menu_loop():
             Game.run = False
         if event.type == Game.BUTTON_EVENT:
             if event.button == Game.gui["button_play"]:
+                pygame.mixer_music.unload()
                 return
             elif event.button == Game.gui["button_editor"]:
                 Scenes.editor("dpt.levels.leveltest")
+                pygame.mixer_music.unload()
                 return
             elif event.button == Game.gui["button_settings"]:
+                pygame.mixer_music.unload()
                 return
             elif event.button == Game.gui["button_quit"]:
+                pygame.mixer_music.unload()
                 Game.run = False
                 return
 
