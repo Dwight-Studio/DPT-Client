@@ -34,7 +34,6 @@ class Game(object):
     VOTE_TIMEOUT = 80
     TILESIZE = 90
     DISPLAY_RATIO = 1
-    LINUX_USER = True
     DISPLAY_RECT = False
 
     # Variable à définir
@@ -114,10 +113,7 @@ class Game(object):
             cls._debug_infos = []
 
             cls.window = pygame.display
-            if Game.LINUX_USER:
-                cls.surface = cls.window.set_mode((0, 0), pygame.NOFRAME, pygame.SCALED)
-            else:
-                cls.surface = cls.window.set_mode((0, 0), pygame.FULLSCREEN, pygame.RESIZABLE)
+            cls.surface = cls.window.set_mode((640, 360), pygame.NOFRAME, pygame.SCALED)
 
             w, h = cls.surface.get_size()
             main_logger.debug("Window size: " + str(w) + "x" + str(h))
@@ -268,13 +264,13 @@ class Game(object):
     @classmethod
     def display_debug_info(cls):
         if cls.DEBUG:
-            font = pygame.font.SysFont("arial", 15)
+            font = pygame.font.SysFont("arial", math.floor(15 * Game.DISPLAY_RATIO))
             y = 0
             for text in cls._debug_infos:
                 debug_text = font.render(text, True, (0, 0, 0))
                 rect = debug_text.get_rect()
                 rect.x = 0
                 rect.y = y
-                y += 15
+                y += math.floor(15 * Game.DISPLAY_RATIO)
                 cls.surface.blit(debug_text, rect)
         cls._debug_infos = []

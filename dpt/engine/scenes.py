@@ -1,3 +1,5 @@
+import math
+
 from dpt.game import Game
 
 
@@ -72,7 +74,13 @@ class Scenes:
         RessourceLoader.load()
 
         # Ajout du GUI
+        from dpt.engine.gui.menu.button import Button
+        buttons_width = math.floor(69 * Game.DISPLAY_RATIO)
+        buttons_height = math.floor(71 * Game.DISPLAY_RATIO)
+        buttons_starting_x = math.floor((Game.surface.get_size()[0] / 2) - buttons_width * 2)
+        buttons_y = Game.surface.get_size()[1] / 2 + 50 * Game.DISPLAY_RATIO
         Game.gui = {}
+        Game.gui["button_play"] = Button()
 
         # Loops
         from dpt.engine.mainLoop import main_menu_loop

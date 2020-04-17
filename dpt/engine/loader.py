@@ -110,8 +110,9 @@ class RessourceLoader:
         bg = pygame.transform.scale(bg, Game.surface.get_size())
         width = min(Game.surface.get_size()[0] - 50, 1115)
         height = min(math.floor(52 / 1115 * width), 52)
-        pb = ProgressBar(math.floor(Game.surface.get_size()[0] / 2 - width / 2), math.floor(Game.surface.get_size()[1] - height), width, height, pbar, bar, total)
-        font = pygame.font.SysFont("arial", 20)
+        pb = ProgressBar(math.floor(Game.surface.get_size()[0] / 2 - width / 2),
+                         math.floor(Game.surface.get_size()[1] - height), width, height, pbar, bar, total)
+        font = pygame.font.SysFont("arial", math.floor(20 * Game.DISPLAY_RATIO))
 
         for entry in cls.pending_ressources:
             ext = cls.pending_ressources[entry].split("/")[-1].split(".")
