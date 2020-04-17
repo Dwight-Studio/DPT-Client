@@ -21,6 +21,7 @@ class TileManager:
     editor_panel_group = pygame.sprite.Group()
     background_blocks = pygame.sprite.Group()
     foreground_blocks = pygame.sprite.Group()
+    interactible_blocks = pygame.sprite.Group()
 
     log = Game.get_logger("TileManager")
     levelName = None

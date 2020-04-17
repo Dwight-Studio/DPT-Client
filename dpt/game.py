@@ -220,8 +220,8 @@ class Game(object):
                 pygame.time.delay(1000)
 
             # Tests webcoms
-            # from dpt.engine.webCommunications import Communication
-            # cls.com = Communication()
+            # from dpt.engine.webCommunications import Communication
+            # cls.com = Communication()
             # cls.com.create()
             # cls.com.create_vote_event(0, 0)
 

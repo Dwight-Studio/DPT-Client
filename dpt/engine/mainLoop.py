@@ -41,6 +41,7 @@ def level_loop():
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
             if TileEditor.in_editor:
                 FileManager.save_file(TileEditor.created_level)
+            # Game.com.close()
             Game.run = False
         elif event.type == Game.BUTTON_EVENT:
             TileEditor.in_editor = not TileEditor.in_editor
@@ -59,9 +60,9 @@ def level_loop():
 
     do_synch_anims()
     TileManager.out_of_window()
-
+    TileManager.interactible_blocks.update()
+    TileManager.interactible_blocks.draw(Game.surface)
     TileManager.camera.update(Game.player_sprite)
-
     TileEditor.update()
 
     try:
