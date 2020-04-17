@@ -1,8 +1,11 @@
+import math
+
 from dpt.engine.fileManager import FileManager
 from dpt.engine.gui.editor.tileEditor import TileEditor
 from dpt.engine.gui.menu.button import Button
 from dpt.engine.gui.menu.checkbox import Checkbox
 from dpt.engine.gui.menu.progressbar import ProgressBar
+from dpt.engine.scenes import Scenes
 from dpt.engine.tileManager import TileManager
 from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
@@ -84,6 +87,7 @@ def level_loop():
     Checkbox.main_loop()
 
     Game.display_debug_info()
+    Game.draw_cursor()
     Game.window.update()
 
 
@@ -96,12 +100,35 @@ def main_menu_loop():
     Game.surface.blit(bg, (0, 0))
 
     for event in Game.events:
-        if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+        if event.type == pygame.QUIT:
             Game.run = False
+        if event.type == Game.BUTTON_EVENT:
+            if event.button == Game.gui["button_play"]:
+                pygame.mixer_music.unload()
+                return
+            elif event.button == Game.gui["button_editor"]:
+                Scenes.editor("dpt.levels.leveltest")
+                pygame.mixer_music.unload()
+                return
+            elif event.button == Game.gui["button_settings"]:
+                pygame.mixer_music.unload()
+                return
+            elif event.button == Game.gui["button_quit"]:
+                pygame.mixer_music.unload()
+                Game.run = False
+                return
 
     Button.main_loop()
     ProgressBar.main_loop()
     Checkbox.main_loop()
 
+    image = RessourceLoader.get("dpt.images.dpt")
+    image = pygame.transform.scale(image, (math.floor(1480 * Game.DISPLAY_RATIO), math.floor(600 * Game.DISPLAY_RATIO)))
+    rect = image.get_rect()
+    rect.centerx = Game.surface.get_size()[0] // 2
+    rect.bottom = (Game.surface.get_size()[1] // 4) * 3
+    Game.surface.blit(image, rect)
+
     Game.display_debug_info()
+    Game.draw_cursor()
     Game.window.update()

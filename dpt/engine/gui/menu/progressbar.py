@@ -6,6 +6,7 @@ from dpt.game import Game
 
 class ProgressBar(pygame.sprite.Sprite):
     progressbarGroup = pygame.sprite.Group()
+    barGroup = pygame.sprite.Group()
 
     def __init__(self, x, y, width, height, image, image2, max_value):
         pygame.sprite.Sprite.__init__(self, self.progressbarGroup)  # Sprite's constructor called
@@ -28,6 +29,6 @@ class ProgressBar(pygame.sprite.Sprite):
     @classmethod
     def main_loop(cls):
         ProgressBar.progressbarGroup.update()
-        Bar.barGroup.update()
-        Bar.barGroup.draw(Game.surface)
+        ProgressBar.barGroup.update()
+        ProgressBar.barGroup.draw(Game.surface)
         ProgressBar.progressbarGroup.draw(Game.surface)
