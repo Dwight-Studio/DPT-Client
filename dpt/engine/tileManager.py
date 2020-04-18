@@ -40,9 +40,11 @@ class TileManager:
     Game.available_tiles.extend(RessourceLoader.select_entries("dpt.blocks.*"))
     Game.available_tiles.remove("dpt.blocks.notfound")
     Game.available_tiles.extend(RessourceLoader.select_entries("dpt.entities.*"))
+    loadlevel = False
 
     @classmethod
     def load_level(cls, level_name):
+        cls.loadlevel = True
         Game.player_group.empty()
         TileManager.editor_panel_group.empty()
         TileEditor.ghost_block_group.empty()
@@ -156,6 +158,7 @@ class TileManager:
         TileEditor.created_level = level
         cls.levelName = level_name
         Game.freeze_game = False
+        cls.loadlevel = False
         cls.log.info("Done")
         return True
 
