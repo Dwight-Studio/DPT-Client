@@ -116,7 +116,7 @@ class Scenes:
                                             pushed_image=RessourceLoader.get(
                                                 "dpt.images.gui.buttons.BTN_BLUE_CIRCLE_IN"),
                                             text_sprite=TextSpriteButton(47, 50, RessourceLoader.get(
-                                                "dpt.images.gui.symbols.SYMB_PLAY"))),
+                                                "dpt.images.gui.symbols.SYMB_PLUS"))),
                     "button_settings": Button(buttons_starting_x + (button_width + buttons_gap_x) * 2, buttons_y,
                                               button_width,
                                               button_height,
