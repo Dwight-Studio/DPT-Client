@@ -60,7 +60,7 @@ class Game(object):
     settings = {
         "general_volume": 0.5,
         "music_volume": 1,
-        "sounds_volume": 1,
+        "sound_volume": 1,
         "window_width": 0,
         "window_height": 0
     }
@@ -124,7 +124,7 @@ class Game(object):
             cls._debug_infos = []
 
             cls.window = pygame.display
-            cls.surface = cls.window.set_mode((0, 0), pygame.FULLSCREEN, pygame.HWSURFACE, pygame.DOUBLEBUF)
+            cls.surface = cls.window.set_mode((0, 0), pygame.NOFRAME, pygame.SCALED)
 
             w, h = cls.surface.get_size()
             main_logger.debug("Window size: " + str(w) + "x" + str(h))

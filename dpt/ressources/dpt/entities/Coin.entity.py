@@ -7,6 +7,7 @@ from dpt.game import Game
 class Coin(pygame.sprite.Sprite):
     texture = "dpt.images.environment.coins.00"
     textures = "dpt.images.environment.coins.*"
+    sounds = "dpt.sounds.sfx.sfx_stone"
     screen_width, screen_height = Game.surface.get_size()
     width = Game.TILESIZE // 2
     height = Game.TILESIZE // 2
@@ -24,6 +25,10 @@ class Coin(pygame.sprite.Sprite):
         self.rect.x = x + self.offset_x
         self.rect.y = y + self.offset_y
         self.animCount = 0
+        if not TileManager.loadlevel:
+            self.sound = RessourceLoader.get(self.sounds)
+            self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
+            self.sound.play()
 
     def update(self):
         self.animation()

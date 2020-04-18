@@ -10,6 +10,7 @@ class Water(pygame.sprite.Sprite):
     texture = "dpt.images.environment.liquids.Water_Tile"
     textures = "dpt.images.environment.liquids.Water_Tile_*"
     screen_width, screen_height = Game.surface.get_size()
+    sounds = "dpt.sounds.sfx.sfx_snow"
     width = height = Game.TILESIZE
     offset_x = 0
     offset_y = 0

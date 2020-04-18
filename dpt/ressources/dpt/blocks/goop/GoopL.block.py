@@ -6,6 +6,7 @@ from dpt.game import Game
 
 class GoopL(pygame.sprite.Sprite):
     texture = "dpt.images.environment.terrain.Goop_Tile_Flat_l"
+    sounds = "dpt.sounds.sfx.sfx_snow"
     width = height = Game.TILESIZE
     offset_x = 0
     offset_y = 0
