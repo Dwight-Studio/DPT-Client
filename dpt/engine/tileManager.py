@@ -97,11 +97,15 @@ class TileManager:
                     RessourceLoader.add_pending(obj.texture)
                     if hasattr(obj, "textures"):
                         RessourceLoader.add_pending(obj.textures)
+                    if hasattr(obj, "sounds"):
+                        RessourceLoader.add_pending(obj.sounds)
                 if "backgroundClass" in level[keys]:
                     obj = RessourceLoader.get(level[keys]["backgroundClass"])
                     RessourceLoader.add_pending(obj.texture)
                     if hasattr(obj, "textures"):
                         RessourceLoader.add_pending(obj.textures)
+                    if hasattr(obj, "sounds"):
+                        RessourceLoader.add_pending(obj.sounds)
             RessourceLoader.add_pending("dpt.images.characters.player.*")
             RessourceLoader.load()
 

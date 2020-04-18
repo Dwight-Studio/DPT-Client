@@ -57,6 +57,14 @@ class Game(object):
     cursor1 = None
     cursor2 = None
 
+    settings = {
+        "general_volume": 0.5,
+        "music_volume": 1,
+        "sounds_volume": 1,
+        "window_width": 0,
+        "window_height": 0
+    }
+
     anim_count_lava = 0
     anim_count_water = 0
     anim_count_coins = 0
@@ -116,7 +124,7 @@ class Game(object):
             cls._debug_infos = []
 
             cls.window = pygame.display
-            cls.surface = cls.window.set_mode((0, 0), pygame.NOFRAME, pygame.SCALED)
+            cls.surface = cls.window.set_mode((0, 0), pygame.FULLSCREEN, pygame.HWSURFACE, pygame.DOUBLEBUF)
 
             w, h = cls.surface.get_size()
             main_logger.debug("Window size: " + str(w) + "x" + str(h))
@@ -161,8 +169,8 @@ class Game(object):
                 rect.centerx = w // 2
                 rect.centery = h // 2
 
-                for alpha in range(0, 256, 4):
-                    cls.clock.tick(60)
+                for alpha in range(0, 256, 8):
+                    cls.clock.tick(30)
                     pygame.draw.rect(Game.surface, (0, 0, 0), rect)
                     pygame_logo.set_alpha(alpha)
                     cls.surface.blit(pygame_logo, rect)
@@ -170,8 +178,8 @@ class Game(object):
 
                 pygame.time.delay(1000)
 
-                for alpha in range(0, 256, 4):
-                    cls.clock.tick(60)
+                for alpha in range(0, 256, 8):
+                    cls.clock.tick(30)
                     pygame.draw.rect(Game.surface, (0, 0, 0), pygame.Rect(0, 0, w, h))
                     pygame_logo.set_alpha(255 - alpha)
                     cls.surface.blit(pygame_logo, rect)
@@ -190,9 +198,9 @@ class Game(object):
                 rect.centerx = w // 2
                 rect.centery = h // 2
 
-                for alpha in range(0, 256, 1):
+                for alpha in range(0, 256, 2):
                     log = logo.copy()
-                    cls.clock.tick(60)
+                    cls.clock.tick(30)
                     pygame.draw.rect(Game.surface, (alpha, alpha, alpha), pygame.Rect(0, 0, w, h))
                     log.set_alpha(alpha)
                     color = min((255 - alpha) * 2, 255)
@@ -207,8 +215,8 @@ class Game(object):
                 rect2.centerx = w // 2 - rect.width // 2 - math.floor(200 * cls.DISPLAY_RATIO)
                 rect2.centery = rect.centery
 
-                for alpha in range(0, 256, 10):
-                    cls.clock.tick(60)
+                for alpha in range(0, 256, 20):
+                    cls.clock.tick(30)
                     rect2.centerx += (255 - alpha) // 50
                     pygame.draw.rect(Game.surface, (255, 255, 255), rect2)
                     game_by.set_alpha(alpha)
@@ -217,8 +225,8 @@ class Game(object):
 
                 pygame.time.delay(2000)
 
-                for alpha in range(0, 256, 1):
-                    cls.clock.tick(60)
+                for alpha in range(0, 256, 2):
+                    cls.clock.tick(30)
                     pygame.draw.rect(Game.surface, (255, 255, 255), pygame.Rect(0, 0, w, h))
                     logo.set_alpha(255 - alpha)
                     game_by.set_alpha(255 - alpha)
