@@ -24,6 +24,7 @@ class Lever(pygame.sprite.Sprite):
         self.clicked = False
         self.right = False
         self.left = True
+        self.set = False
         if not TileManager.loadlevel:
             self.sound = RessourceLoader.get(self.sounds)
             self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
@@ -32,10 +33,10 @@ class Lever(pygame.sprite.Sprite):
     def update(self):
         mouseButtons = pygame.mouse.get_pressed()
         mousePos = pygame.mouse.get_pos()
-        if mouseButtons[0] == 1 and not self.clicked:
-            self.clicked = True
-            from dpt.engine.tileManager import TileManager
-            if mousePos[0] >= self.x + TileManager.camera.last_x and mousePos[0] <= self.x + self.width and mousePos[1] >= self.y and mousePos[1] <= self.y + self.height:
+        from dpt.engine.tileManager import TileManager
+        if self.x + TileManager.camera.last_x <= mousePos[0] <= self.x + self.width and self.y <= mousePos[1] <= self.y + self.height:
+            if mouseButtons[0] == 1 and not self.clicked:
+                self.clicked = True
                 from dpt.engine.gui.editor.tileEditor import TileEditor
                 if not TileEditor.in_editor:
                     if self.left:
@@ -58,5 +59,7 @@ class Lever(pygame.sprite.Sprite):
                         self.rect.y = self.y + self.offset_y
                 elif TileEditor.in_editor:
                     pass
-        elif mouseButtons[0] != 1 and self.clicked:
-            self.clicked = False
+            elif mouseButtons[0] != 1 and self.clicked:
+                self.clicked = False
+        if not self.set:
+            pygame.draw.line(Game.surface, (0, 0, 0), (self.x + TileManager.camera.last_x, self.y + 30), (mousePos[0], mousePos[1]))

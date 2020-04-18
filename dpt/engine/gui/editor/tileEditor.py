@@ -91,7 +91,7 @@ class TileEditor:
                         cls.last_mouse_pos_x_c = 0
                         cls.last_mouse_pos_y_c = 0
                         TileEditor.ghost_block_group.empty()
-                        TileManager.ghost_block(mouse[0] + TileManager.camera.last_x, mouse[1], Game.selected_item)
+                        TileManager.ghost_block(mouse[0], mouse[1], Game.selected_item)
             except:
                 cls.custom_tile_placement = False
 
@@ -134,14 +134,14 @@ class TileEditor:
                                 cls.created_level[str(mouse[0]) + ", " + str(mouse[1])]["customPlace"] = True
                             else:
                                 cls.created_level[str(mouse[0]) + ", " + str(mouse[1])] = {"class": Game.selected_item, "customPlace": True}
-                            TileManager.place_block(mouse[0], mouse[1], Game.selected_item)
+                            TileManager.place_block(mouse[0] - TileManager.camera.last_x, mouse[1], Game.selected_item)
                         elif TileManager.check_back:
                             if str(mouse[0]) + ", " + str(mouse[1]) in cls.created_level:
                                 cls.created_level[str(mouse[0]) + ", " + str(mouse[1])]["backgroundClass"] = Game.selected_item
                                 cls.created_level[str(mouse[0]) + ", " + str(mouse[1])]["customPlace"] = True
                             else:
                                 cls.created_level[str(mouse[0]) + ", " + str(mouse[1])] = {"backgroundClass": Game.selected_item, "customPlace": True}
-                            TileManager.place_back_block(mouse[0], mouse[1], Game.selected_item)
+                            TileManager.place_back_block(mouse[0] - TileManager.camera.last_x, mouse[1], Game.selected_item)
             elif mouse_buttons[0] != 1 and cls.mouse_pushed_l:
                 cls.mouse_pushed_l = False
             elif mouse_buttons[0] == 1 and cls.mouse_pos_x != cls.last_mouse_pos_x or cls.mouse_pos_y != cls.last_mouse_pos_y and cls.mouse_pushed_l:
