@@ -23,3 +23,4 @@ class SnowSlopeConnectorR(pygame.sprite.Sprite):
             self.sound = RessourceLoader.get(self.sounds)
             self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
             self.sound.play()
+        self.mask = pygame.mask.from_surface(self.image)

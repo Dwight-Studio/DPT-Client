@@ -151,7 +151,7 @@ class TileManager:
         cls.enemy_group.draw(Game.surface)
         cls.deadly_object_group.draw(Game.surface)
         if not TileEditor.in_editor:
-            from dpt.engine.characters.PlayerSprite import PlayerSprite
+            from dpt.engine.characters.PlayerSpriteModifs import PlayerSprite
             Game.player_sprite = PlayerSprite(300, Game.surface.get_size()[1] - 500)
             Game.player_group.add(Game.player_sprite)
             print(math.floor(Game.surface.get_size()[0] / Game.TILESIZE))

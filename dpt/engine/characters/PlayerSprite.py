@@ -49,6 +49,8 @@ class PlayerSprite(pygame.sprite.Sprite):
         if self.alive:
             keys = pygame.key.get_pressed()
             mur = -TileManager.camera.last_x
+            if not self.isRebound and not self.isFalling:
+                self.allowJump = True
 
             if keys[pygame.K_LEFT] and self.rect.x - self.xvel - 1 > mur:
                 if self.xvel > 0:
@@ -126,7 +128,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                     self.isFalling = False
                     self.allowJump = True
             self.animation()
-            self.enemies_collision(PlayerSprite.gravity, TileManager.enemy_group)
+            self.enemies_collision(self.yvel, TileManager.enemy_group)
             self.deadly_object_collision()
 
             if self.damaged:
