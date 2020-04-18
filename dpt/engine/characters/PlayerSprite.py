@@ -46,6 +46,9 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.isFalling = True
 
     def update(self):
+        Game.add_debug_info("Player.allowJump = " + str(self.allowJump))
+        Game.add_debug_info("Player.isRebound = " + str(self.isRebound))
+        Game.add_debug_info("Player.isFalling = " + str(self.isFalling))
         if self.alive:
             keys = pygame.key.get_pressed()
             mur = -TileManager.camera.last_x
@@ -122,7 +125,11 @@ class PlayerSprite(pygame.sprite.Sprite):
                 PlayerSprite.gravityCount += 1
                 PlayerSprite.gravity = math.floor((PlayerSprite.gravityCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * -1
                 self.rect.top -= PlayerSprite.gravity
+                test = self.rect.top
                 self.collide(0, PlayerSprite.gravity, TileManager.environment_group)
+                if test == self.rect.top:
+                    self.isFalling = False
+                    self.allowJump = True
             self.animation()
             self.enemies_collision(self.yvel, TileManager.enemy_group)
             self.deadly_object_collision()
