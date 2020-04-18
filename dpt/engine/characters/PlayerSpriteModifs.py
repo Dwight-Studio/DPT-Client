@@ -136,7 +136,6 @@ class PlayerSprite(pygame.sprite.Sprite):
                         if dy > 0:
                             self.onPlatform = True
                             self.allowJump = True
-                        self.rect.y -= dy
                     else:
                         self.onPlatform = False
                         self.allowJump = False
@@ -147,4 +146,3 @@ class PlayerSprite(pygame.sprite.Sprite):
                         dx = (self.rect.width - x)
                         if dx != 0:
                             self.xvel = 0
-                        self.rect.x -= dx
