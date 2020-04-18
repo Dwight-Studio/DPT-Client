@@ -73,11 +73,6 @@ class EnemySprite(pygame.sprite.Sprite):
                 self.collide(0, self.gravity, TileManager.environment_group)
         self.animation()
 
-        Game.add_debug_info("Enemy.lastx = " + str(self.lastx))
-        Game.add_debug_info("Enemy.rect.left = " + str(self.rect.left))
-        Game.add_debug_info("Enemy.left = " + str(self.left))
-        Game.add_debug_info("Enemy.right = " + str(self.right))
-
         if self.lastx == self.rect.left:
             self.left = not self.left
             self.right = not self.right

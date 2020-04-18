@@ -46,9 +46,6 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.isFalling = True
 
     def update(self):
-        Game.add_debug_info("Player.allowJump = " + str(self.allowJump))
-        Game.add_debug_info("Player.isRebound = " + str(self.isRebound))
-        Game.add_debug_info("Player.isFalling = " + str(self.isFalling))
         if self.alive:
             keys = pygame.key.get_pressed()
             mur = -TileManager.camera.last_x
@@ -175,9 +172,6 @@ class PlayerSprite(pygame.sprite.Sprite):
         # pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
 
     def collide(self, x_vel_delta, y_vel_delta, platforms):
-        Game.add_debug_info("self.allowJump = " + str(self.allowJump))
-        Game.add_debug_info("self.isRebound = " + str(self.isRebound))
-        Game.add_debug_info("self.isJump = " + str(self.isJump))
         for i in platforms:
             if i.rect.colliderect(Game.display_rect):
                 if pygame.sprite.collide_rect(self, i):
