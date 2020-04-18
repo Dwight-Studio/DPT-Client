@@ -6,8 +6,11 @@ from dpt.game import Game
 
 
 class Scenes:
+    logger = Game.get_logger("Scenes")
+
     @classmethod
     def editor(cls, level):
+        cls.logger.info("Displaying EDITOR")
         from dpt.engine.loader import RessourceLoader
         from dpt.engine.tileManager import TileManager
         from dpt.engine.gui.editor.tileEditor import TileEditor
@@ -36,8 +39,8 @@ class Scenes:
 
         # Ajout du bouton d'éditeur
         Game.gui = {"editor_button": Button(0, Game.surface.get_size()[1] - math.floor(50 * Game.DISPLAY_RATIO),
-                                            127,
-                                            46,
+                                            math.floor(127 * Game.DISPLAY_RATIO),
+                                            math.floor(46 * Game.DISPLAY_RATIO),
                                             RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_OUT"),
                                             pushed_image=RessourceLoader.get(
                                                 "dpt.images.gui.buttons.BTN_GREEN_RECT_IN"), text="Jouer")}
@@ -49,6 +52,7 @@ class Scenes:
 
     @classmethod
     def level(cls, level):
+        cls.logger.info("Displaying LEVEL")
         from dpt.engine.loader import RessourceLoader
         from dpt.engine.tileManager import TileManager
         from dpt.engine.gui.editor.tileEditor import TileEditor
@@ -68,6 +72,7 @@ class Scenes:
 
     @classmethod
     def pause(cls):
+        cls.logger.info("Displaying PAUSE")
         # Loops
         from dpt.engine.mainLoop import pause_loop
         Game.loop = pause_loop
@@ -75,6 +80,7 @@ class Scenes:
 
     @classmethod
     def main_menu(cls):
+        cls.logger.info("Displaying MAIN_MENU")
         from dpt.engine.loader import RessourceLoader
 
         # Gestion des ressources
@@ -92,36 +98,36 @@ class Scenes:
         # Ajout du GUI
         from dpt.engine.gui.menu.button import Button
         from dpt.engine.gui.menu.textSpriteButton import TextSpriteButton
-        buttons_width = math.floor(92 * Game.DISPLAY_RATIO)
-        buttons_height = math.floor(95 * Game.DISPLAY_RATIO)
+        button_width = math.floor(92 * Game.DISPLAY_RATIO)
+        button_height = math.floor(95 * Game.DISPLAY_RATIO)
         buttons_gap_x = math.floor(80 * Game.DISPLAY_RATIO)
-        buttons_starting_x = math.floor((Game.surface.get_size()[0] / 2) - (buttons_width + buttons_gap_x) * 2)
+        buttons_starting_x = math.floor((Game.surface.get_size()[0] / 2) - (button_width + buttons_gap_x) * 2)
         buttons_y = (Game.surface.get_size()[1] // 4) * 3 + 50 * Game.DISPLAY_RATIO
-        Game.gui = {"button_play": Button(buttons_starting_x, buttons_y, buttons_width, buttons_height,
+        Game.gui = {"button_play": Button(buttons_starting_x, buttons_y, button_width, button_height,
                                           RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_OUT"),
                                           pushed_image=RessourceLoader.get(
                                               "dpt.images.gui.buttons.BTN_GREEN_CIRCLE_IN"),
                                           text_sprite=TextSpriteButton(47, 50, RessourceLoader.get(
                                               "dpt.images.gui.symbols.SYMB_PLAY"))),
-                    "button_editor": Button(buttons_starting_x + (buttons_width + buttons_gap_x), buttons_y,
-                                            buttons_width,
-                                            buttons_height,
+                    "button_editor": Button(buttons_starting_x + (button_width + buttons_gap_x), buttons_y,
+                                            button_width,
+                                            button_height,
                                             RessourceLoader.get("dpt.images.gui.buttons.BTN_BLUE_CIRCLE_OUT"),
                                             pushed_image=RessourceLoader.get(
                                                 "dpt.images.gui.buttons.BTN_BLUE_CIRCLE_IN"),
                                             text_sprite=TextSpriteButton(47, 50, RessourceLoader.get(
                                                 "dpt.images.gui.symbols.SYMB_PLAY"))),
-                    "button_settings": Button(buttons_starting_x + (buttons_width + buttons_gap_x) * 2, buttons_y,
-                                              buttons_width,
-                                              buttons_height,
+                    "button_settings": Button(buttons_starting_x + (button_width + buttons_gap_x) * 2, buttons_y,
+                                              button_width,
+                                              button_height,
                                               RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_OUT"),
                                               pushed_image=RessourceLoader.get(
                                                   "dpt.images.gui.buttons.BTN_GRAY_CIRCLE_IN"),
                                               text_sprite=TextSpriteButton(47, 50, RessourceLoader.get(
                                                   "dpt.images.gui.symbols.SYMB_SETTINGS"))),
-                    "button_quit": Button(buttons_starting_x + (buttons_width + buttons_gap_x) * 3, buttons_y,
-                                          buttons_width,
-                                          buttons_height,
+                    "button_quit": Button(buttons_starting_x + (button_width + buttons_gap_x) * 3, buttons_y,
+                                          button_width,
+                                          button_height,
                                           RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_OUT"),
                                           pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_IN"),
                                           text_sprite=TextSpriteButton(47, 50, RessourceLoader.get(
@@ -134,12 +140,17 @@ class Scenes:
 
     @classmethod
     def settings_menu(cls):
+        cls.logger.info("Displaying SETTINGS_MENU")
         from dpt.engine.loader import RessourceLoader
 
         # Ajout du GUI
         from dpt.engine.gui.menu.slider import Slider
         from dpt.engine.gui.menu import ProgressBar
-        Game.gui = {"slider": Slider(50, 50, 400, 40, pygame.mixer_music.get_volume(),
+        Game.gui = {"slider": Slider(math.floor(50 * Game.DISPLAY_RATIO),
+                                     math.floor(50 * Game.DISPLAY_RATIO),
+                                     math.floor(400 * Game.DISPLAY_RATIO),
+                                     math.floor(40 * Game.DISPLAY_RATIO),
+                                     pygame.mixer_music.get_volume(),
                                      image_left=RessourceLoader.get("dpt.images.gui.buttons.BTN_HORIZ_SINGLE_19"),
                                      image_left_pushed=RessourceLoader.get("dpt.images.gui.buttons.BTN_HORIZ_SINGLE_7"),
                                      image_right=RessourceLoader.get("dpt.images.gui.buttons.BTN_HORIZ_SINGLE_1"),

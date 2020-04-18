@@ -50,10 +50,9 @@ class Button(pygame.sprite.Sprite):
             self.text_sprite = None
         self.eventargs = kwargs
         self.image = self.normal_image
-        self.width = math.floor(width * Game.DISPLAY_RATIO)
-        self.height = math.floor(height * Game.DISPLAY_RATIO)
-        self.image = pygame.transform.smoothscale(self.image, (math.floor(width * Game.DISPLAY_RATIO),
-                                                               math.floor(height * Game.DISPLAY_RATIO)))
+        self.width = width
+        self.height = height
+        self.image = pygame.transform.smoothscale(self.image, (width, height))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y

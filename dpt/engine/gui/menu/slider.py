@@ -15,22 +15,20 @@ class Slider(object):
         Slider.slider_list.append(self)
 
         self.rect = pygame.Rect(x, y, width, height)
-        self.width = math.floor(width * Game.DISPLAY_RATIO)
-        self.height = math.floor(height * Game.DISPLAY_RATIO)
+        self.width = width
+        self.height = height
 
         try:
             image_left = kwargs["image_left"]
             self.image_left = pygame.transform.smoothscale(image_left, (
-                math.floor((image_left.get_rect().width / image_left.get_rect().height) * height *
-                           Game.DISPLAY_RATIO), math.floor(height * Game.DISPLAY_RATIO)))
+                math.floor((image_left.get_rect().width / image_left.get_rect().height) * height), height))
         except KeyError:
             raise
 
         try:
             image_left_pushed = kwargs["image_left_pushed"]
             self.image_left_pushed = pygame.transform.smoothscale(image_left_pushed, (
-                math.floor((image_left_pushed.get_rect().width / image_left_pushed.get_rect().height *
-                            Game.DISPLAY_RATIO) * math.floor(height * Game.DISPLAY_RATIO)),
+                math.floor((image_left_pushed.get_rect().width / image_left_pushed.get_rect().height) * height),
                 height))
         except KeyError:
             self.image_left_pushed = self.image_left
@@ -45,19 +43,16 @@ class Slider(object):
         try:
             image_right = kwargs["image_right"]
             self.image_right = pygame.transform.smoothscale(image_right, (
-                math.floor(
-                    (image_right.get_rect().width / image_right.get_rect().height) * height * Game.DISPLAY_RATIO),
-                math.floor(height * Game.DISPLAY_RATIO)))
+                math.floor((image_right.get_rect().width / image_right.get_rect().height) * height),
+                height))
         except KeyError:
             raise
 
         try:
             image_right_pushed = kwargs["image_right_pushed"]
             self.image_right_pushed = pygame.transform.smoothscale(image_right_pushed, (
-                math.floor((
-                                   image_right_pushed.get_rect().width / image_right_pushed.get_rect().height) *
-                           height * Game.DISPLAY_RATIO),
-                math.floor(height * Game.DISPLAY_RATIO)))
+                math.floor((image_right_pushed.get_rect().width / image_right_pushed.get_rect().height) * height),
+                height))
         except KeyError:
             self.image_right_pushed = self.image_right
 
@@ -71,34 +66,32 @@ class Slider(object):
         try:
             image_slide = kwargs["image_slide"]
             self.image_slide = pygame.transform.smoothscale(image_slide, (
-                math.floor(
-                    (image_slide.get_rect().width / image_slide.get_rect().height) * height * Game.DISPLAY_RATIO),
-                math.floor(height * Game.DISPLAY_RATIO)))
+                math.floor((image_slide.get_rect().width / image_slide.get_rect().height) * height),
+                height))
         except KeyError:
             raise
 
         try:
             image_slide_pushed = kwargs["image_slide_pushed"]
             self.image_slide_pushed = pygame.transform.smoothscale(image_slide_pushed, (
-                math.floor((image_slide_pushed.get_rect().width / image_slide_pushed.get_rect().height) * height *
-                           Game.DISPLAY_RATIO),
-                math.floor(height * Game.DISPLAY_RATIO)))
+                math.floor((image_slide_pushed.get_rect().width / image_slide_pushed.get_rect().height) * height),
+                height))
         except KeyError:
             self.image_slide_pushed = self.image_slide
 
         try:
             image_progress_bar_frame = kwargs["image_progress_bar_frame"]
             self.image_progress_bar_frame = pygame.transform.smoothscale(image_progress_bar_frame, (
-                math.floor((self.rect.width - self.left.width - self.right.width) * Game.DISPLAY_RATIO),
-                math.floor(height * Game.DISPLAY_RATIO)))
+                math.floor((self.rect.width - self.left.width - self.right.width)),
+                height))
         except KeyError:
             self.image_progress_bar_frame = None
 
         try:
             image_progress_bar_bar = kwargs["image_progress_bar_bar"]
             self.image_progress_bar_bar = pygame.transform.smoothscale(image_progress_bar_bar, (
-                math.floor((self.rect.width - self.left.width - self.right.width) * Game.DISPLAY_RATIO),
-                math.floor(height * Game.DISPLAY_RATIO)))
+                math.floor((self.rect.width - self.left.width - self.right.width)),
+                height))
         except KeyError:
             if self.image_progress_bar_frame is not None:
                 raise

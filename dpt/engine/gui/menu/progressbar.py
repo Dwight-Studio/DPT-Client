@@ -10,16 +10,17 @@ class ProgressBar(pygame.sprite.Sprite):
 
     def __init__(self, x, y, width, height, image, image2, max_value):
         pygame.sprite.Sprite.__init__(self, self.progress_bar_group)  # Sprite's constructor called
+        self.width = width
+        self.height = height
         self.image = image
-        self.image = pygame.transform.smoothscale(self.image, (width, height))
+        self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.width = width
-        self.height = height
         self.bar = Bar(x, y, width, height, image2)
         self.max_value = max_value
         self.value = 0
+        Game.get_logger("ProgressBar").debug("ProgressBar created")
 
     def update(self):
         if self.value > self.max_value:
