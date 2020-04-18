@@ -146,7 +146,8 @@ def settings_menu_loop():
 
     menu.main_loop()
 
-    pygame.mixer_music.set_volume(Game.gui["slider"].value)
+    Game.settings["music_volume"] = Game.gui["slider"].value
+    pygame.mixer_music.set_volume(Game.settings["music_volume"] * Game.settings["general_volume"])
 
     Game.display_debug_info()
     Game.draw_cursor()

@@ -5,9 +5,9 @@ import os
 import sys
 import tarfile
 import traceback
-
 import psutil
 import pygame
+import json
 
 
 def void():
@@ -26,7 +26,8 @@ class Game(object):
     # Constantes
     DEBUG = False
     VERSION = "ALPHA-0.1.0"
-    PYTHON_VERSION = str(sys.version_info[0]) + "." + str(sys.version_info[1]) + "." + str(sys.version_info[2]) + "-" + str(sys.version_info[3])
+    PYTHON_VERSION = str(sys.version_info[0]) + "." + str(sys.version_info[1]) + "." + str(
+        sys.version_info[2]) + "-" + str(sys.version_info[3])
     PYGAME_VERSION = pygame.version.ver
     PLATFORM = sys.platform
     ROOT_DIRECTORY = get_root()
@@ -37,6 +38,7 @@ class Game(object):
     DISPLAY_RECT = False
 
     # Variable à définir
+    main_logger = None
     run = True
     display_rect = None
     freeze_game = False
@@ -60,7 +62,7 @@ class Game(object):
     settings = {
         "general_volume": 0.5,
         "music_volume": 1,
-        "sounds_volume": 1,
+        "sound_volume": 1,
         "window_width": 0,
         "window_height": 0
     }
@@ -77,7 +79,9 @@ class Game(object):
     # Logs
     # Gère les fichiers de logs
     if os.path.isfile(ROOT_DIRECTORY + "/logs/latest.log"):
-        file = tarfile.open(ROOT_DIRECTORY + "/logs/" + datetime.datetime.today().strftime("%d-%m-%Y-%H-%M-%S") + ".tar.gz", mode="x:gz", )
+        file = tarfile.open(
+            ROOT_DIRECTORY + "/logs/" + datetime.datetime.today().strftime("%d-%m-%Y-%H-%M-%S") + ".tar.gz",
+            mode="x:gz", )
         file.add(ROOT_DIRECTORY + "/logs/latest.log", arcname="latest.log")
         file.close()
         os.remove(ROOT_DIRECTORY + "/logs/latest.log")
@@ -113,6 +117,7 @@ class Game(object):
                 cls.stream_handler.setLevel(logging.INFO)
 
             main_logger = cls.get_logger(None)
+            cls.main_logger = main_logger
             main_logger.info("--- Starting Don't Play Together. ---")
             main_logger.debug("Version: " + cls.VERSION)
             main_logger.debug("Python version: " + cls.PYTHON_VERSION)
@@ -120,11 +125,14 @@ class Game(object):
             main_logger.debug("OS: " + cls.PLATFORM)
             main_logger.debug("CWD: " + cls.ROOT_DIRECTORY)
 
+            # Chargement des réglages
+            cls.load_settings()
+
             pygame.init()
             cls._debug_infos = []
 
             cls.window = pygame.display
-            cls.surface = cls.window.set_mode((0, 0), pygame.FULLSCREEN, pygame.HWSURFACE, pygame.DOUBLEBUF)
+            cls.surface = cls.window.set_mode((0, 0), pygame.NOFRAME)
 
             w, h = cls.surface.get_size()
             main_logger.debug("Window size: " + str(w) + "x" + str(h))
@@ -147,15 +155,16 @@ class Game(object):
             RessourceLoader.init()
 
             # Séquence d'intro
+            pygame.mixer_music.set_volume(Game.settings["general_volume"] * Game.settings["music_volume"])
             pygame.mouse.set_visible(False)
-            cls.cursor1 = pygame.transform.smoothscale(pygame.image.load(cls.ROOT_DIRECTORY +
-                                                                         "/ressources/dpt/images/gui/Cursors/CRS_ARROW.png").convert_alpha(),
-                                                       (32,
-                                                        39))
-            cls.cursor2 = pygame.transform.smoothscale(pygame.image.load(cls.ROOT_DIRECTORY +
-                                                                         "/ressources/dpt/images/gui/Cursors/CRS_HAND.png").convert_alpha(),
-                                                       (32,
-                                                        44))
+            cls.cursor1 = pygame.transform.smoothscale(
+                pygame.image.load(
+                    cls.ROOT_DIRECTORY + "/ressources/dpt/images/gui/Cursors/CRS_ARROW.png").convert_alpha(),
+                (32, 39))
+            cls.cursor2 = pygame.transform.smoothscale(
+                pygame.image.load(
+                    cls.ROOT_DIRECTORY + "/ressources/dpt/images/gui/Cursors/CRS_HAND.png").convert_alpha(),
+                (32, 44))
             if not skip_intro:
                 pygame_logo = pygame.image.load(
                     cls.ROOT_DIRECTORY + "/ressources/dpt/images/pygame_logo.png").convert_alpha()
@@ -187,7 +196,6 @@ class Game(object):
 
                 pygame.time.delay(1000)
 
-                pygame.mixer_music.set_volume(0.5)
                 pygame.mixer_music.load(cls.ROOT_DIRECTORY + "/ressources/dpt/sounds/musics/intro_sequence.music.ogg")
                 pygame.mixer_music.play()
 
@@ -260,6 +268,8 @@ class Game(object):
                 cls.loop()
                 Game.draw_cursor()
                 Game.clock.tick(60)
+
+            cls.save_settings()
             pygame.quit()
 
         except Exception:
@@ -311,3 +321,31 @@ class Game(object):
         rect.y = pygame.mouse.get_pos()[1]
         cls.surface.blit(image, rect)
         Game.cursor_on_button = False
+
+    @classmethod
+    def load_settings(cls):
+        try:
+            from dpt.engine.loader import RESSOURCES_DIRECTORY
+            file = open(RESSOURCES_DIRECTORY + "user/settings.json", "r")
+            Game.settings = json.loads(file.read())
+            file.close()
+            cls.main_logger.info("Settings loaded")
+
+        except FileNotFoundError:
+            cls.save_settings()
+            cls.main_logger.warning("Can't find settings, creating one")
+
+        except Exception:
+            cls.main_logger.critical("Can't load settings")
+            exc_type, exc_value, exc_tb = sys.exc_info()
+            trace = "".join(traceback.format_exception(exc_type, exc_value, exc_tb))
+            for ms in trace.split("\n"):
+                cls.main_logger.warning(ms)
+
+    @classmethod
+    def save_settings(cls):
+        from dpt.engine.loader import RESSOURCES_DIRECTORY
+        file = open(RESSOURCES_DIRECTORY + "user/settings.json", "w")
+        file.write(json.dumps(Game.settings))
+        file.close()
+        cls.main_logger.info("Settings saved")
