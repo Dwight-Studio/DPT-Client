@@ -18,3 +18,5 @@ class GrassSlopeU(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x + self.offset_x
         self.rect.y = y + self.offset_y
+        pygame.mixer_music.load(Game.ROOT_DIRECTORY + "/ressources/dpt/sounds/sfx/sfx_grass.ogg")
+        pygame.mixer_music.play()
