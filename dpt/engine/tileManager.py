@@ -63,6 +63,7 @@ class TileManager:
             RessourceLoader.add_pending("dpt.entities.*")
             RessourceLoader.add_pending("dpt.images.environment.*")
             RessourceLoader.add_pending("dpt.images.characters.*")
+            RessourceLoader.add_pending("dpt.sounds.*")
             RessourceLoader.load()
 
         if type(level_name) == str:
