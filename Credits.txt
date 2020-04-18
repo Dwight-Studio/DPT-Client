@@ -21,3 +21,6 @@ By Jason Dagenet
 
 Story time
 By HaelDB
+
+Picked Coin Echo 2
+By NenadSimic
