@@ -220,8 +220,8 @@ class Game(object):
                 rect2.width *= 0.3 * cls.DISPLAY_RATIO
                 rect2.height *= 0.3 * cls.DISPLAY_RATIO
                 game_by = pygame.transform.smoothscale(game_by, (rect2.width, rect2.height))
-                rect2.centerx = w // 2 - rect.width // 2 - math.floor(200 * cls.DISPLAY_RATIO)
-                rect2.centery = rect.centery
+                rect2.x = rect.left - math.floor(10 * Game.DISPLAY_RATIO)
+                rect2.y = rect.bottom - math.floor(80 * Game.DISPLAY_RATIO)
 
                 for alpha in range(0, 256, 20):
                     cls.clock.tick(30)
