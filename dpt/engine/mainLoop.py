@@ -100,14 +100,14 @@ def main_menu_loop():
             Game.run = False
         if event.type == Game.BUTTON_EVENT:
             if event.button == Game.gui["button_play"]:
-                Scenes.level("dpt.levels.leveltest")
                 menu.delete_items()
+                Scenes.level("dpt.levels.leveltest")
                 pygame.mixer_music.unload()
                 pygame.mixer_music.stop()
                 return
             elif event.button == Game.gui["button_editor"]:
-                Scenes.editor("dpt.levels.leveltest")
                 menu.delete_items()
+                Scenes.editor("dpt.levels.leveltest")
                 pygame.mixer_music.unload()
                 pygame.mixer_music.stop()
                 return
