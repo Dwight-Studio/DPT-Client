@@ -6,6 +6,7 @@ from dpt.game import Game
 
 class GrassHalf(pygame.sprite.Sprite):
     texture = "dpt.images.environment.terrain.Grass_Tile_Half_Flat-01"
+    sounds = "dpt.sounds.sfx.sfx_grass"
     width = Game.TILESIZE
     height = Game.TILESIZE // 2
     offset_x = 0
@@ -20,6 +21,6 @@ class GrassHalf(pygame.sprite.Sprite):
         self.rect.x = x + self.offset_x
         self.rect.y = y + self.offset_y
         if not TileManager.loadlevel:
-            pygame.mixer_music.set_volume(0.5)
-            pygame.mixer_music.load(Game.ROOT_DIRECTORY + "/ressources/dpt/sounds/sfx/sfx_grass.ogg")
-            pygame.mixer_music.play()
+            self.sound = RessourceLoader.get(self.sounds)
+            self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
+            self.sound.play()

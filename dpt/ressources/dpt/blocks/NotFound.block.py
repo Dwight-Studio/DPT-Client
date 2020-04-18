@@ -6,6 +6,7 @@ from dpt.game import Game
 
 class NotFound(pygame.sprite.Sprite):
     texture = "dpt.images.not_found"
+    sounds = "dpt.sounds.sfx.sfx_snow"
     width = height = Game.TILESIZE
     offset_x = 0
     offset_y = 0

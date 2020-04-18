@@ -5,6 +5,7 @@ from dpt.game import Game
 
 class Lever(pygame.sprite.Sprite):
     texture = "dpt.images.environment.lever.Lever_Left"
+    sounds = "dpt.sounds.sfx.sfx_stone"
     width = height = Game.TILESIZE
     offset_x = -(Game.TILESIZE // 2)
     offset_y = -(Game.TILESIZE // 2)
@@ -23,6 +24,10 @@ class Lever(pygame.sprite.Sprite):
         self.clicked = False
         self.right = False
         self.left = True
+        if not TileManager.loadlevel:
+            self.sound = RessourceLoader.get(self.sounds)
+            self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
+            self.sound.play()
 
     def update(self):
         mouseButtons = pygame.mouse.get_pressed()

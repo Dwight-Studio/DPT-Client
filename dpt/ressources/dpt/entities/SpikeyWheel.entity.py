@@ -5,6 +5,7 @@ from dpt.game import Game
 
 class SpikeyWheel(pygame.sprite.Sprite):
     texture = "dpt.images.environment.traps.SpikeyWheel"
+    sounds = "dpt.sounds.sfx.sfx_stone"
     width = height = Game.TILESIZE
     offset_x = -(Game.TILESIZE // 2)
     offset_y = -(Game.TILESIZE // 2)
@@ -20,6 +21,10 @@ class SpikeyWheel(pygame.sprite.Sprite):
         self.rect.x = x + self.offset_x
         self.rect.y = y + self.offset_y
         self.rotate = 1
+        if not TileManager.loadlevel:
+            self.sound = RessourceLoader.get(self.sounds)
+            self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
+            self.sound.play()
 
     def update(self):
         if self.i == 3:

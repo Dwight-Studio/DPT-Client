@@ -6,6 +6,7 @@ from dpt.game import Game
 
 class SandSlopeConnectorL(pygame.sprite.Sprite):
     texture = "dpt.images.environment.terrain.Sand_Tile_Slope_Connector_l"
+    sounds = "dpt.sounds.sfx.sfx_sand"
     width = height = Game.TILESIZE
     offset_x = 0
     offset_y = 0
@@ -18,3 +19,7 @@ class SandSlopeConnectorL(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x + self.offset_x
         self.rect.y = y + self.offset_y
+        if not TileManager.loadlevel:
+            self.sound = RessourceLoader.get(self.sounds)
+            self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
+            self.sound.play()

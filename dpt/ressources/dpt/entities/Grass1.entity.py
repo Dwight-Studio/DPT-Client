@@ -5,6 +5,7 @@ from dpt.game import Game
 
 class Grass1(pygame.sprite.Sprite):
     texture = "dpt.images.environment.plants.Grass_1"
+    sounds = "dpt.sounds.sfx.sfx_snow"
     width = height = Game.TILESIZE
     offset_x = -(Game.TILESIZE // 2)
     offset_y = -(Game.TILESIZE // 2)
