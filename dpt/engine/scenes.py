@@ -18,8 +18,8 @@ class Scenes:
         from dpt.engine.gui.menu.checkbox import Checkbox
         Button.buttonsGroup.empty()
         Button.text_sprite_buttonsGroup.empty()
-        ProgressBar.progressbarGroup.empty()
-        ProgressBar.barGroup.empty()
+        ProgressBar.progress_bar_group.empty()
+        ProgressBar.bar_group.empty()
         Checkbox.checkboxGroup.empty()
 
         # Gestion des ressources
@@ -80,9 +80,7 @@ class Scenes:
         # Gestion des ressources
         RessourceLoader.unload()
         RessourceLoader.add_pending("dpt.images.environment.background.default_sky")
-        RessourceLoader.add_pending("dpt.images.gui.ui.UI_WINDOW_*")
-        RessourceLoader.add_pending("dpt.images.gui.buttons.*")
-        RessourceLoader.add_pending("dpt.images.gui.symbols.*")
+        RessourceLoader.add_pending("dpt.images.gui.*")
         RessourceLoader.add_pending("dpt.images.dpt")
         RessourceLoader.add_pending("dpt.sounds.musics.story_time")
         RessourceLoader.load()
@@ -132,4 +130,27 @@ class Scenes:
         # Loops
         from dpt.engine.mainLoop import main_menu_loop
         Game.loop = main_menu_loop
+        return True
+
+    @classmethod
+    def settings_menu(cls):
+        from dpt.engine.loader import RessourceLoader
+
+        # Ajout du GUI
+        from dpt.engine.gui.menu.slider import Slider
+        from dpt.engine.gui.menu import ProgressBar
+        Game.gui = {"slider": Slider(50, 50, 400, 40, pygame.mixer_music.get_volume(),
+                                     image_left=RessourceLoader.get("dpt.images.gui.buttons.BTN_HORIZ_SINGLE_19"),
+                                     image_left_pushed=RessourceLoader.get("dpt.images.gui.buttons.BTN_HORIZ_SINGLE_7"),
+                                     image_right=RessourceLoader.get("dpt.images.gui.buttons.BTN_HORIZ_SINGLE_1"),
+                                     image_right_pushed=RessourceLoader.get(
+                                         "dpt.images.gui.buttons.BTN_HORIZ_SINGLE_13"),
+                                     image_slide=RessourceLoader.get("dpt.images.gui.buttons.BTN_SLIDER_SM_2"),
+                                     image_slide_pushed=RessourceLoader.get("dpt.images.gui.buttons.BTN_SLIDER_SM_8"),
+                                     image_progress_bar_frame=RessourceLoader.get("dpt.images.gui.ui.UI_BARFRAME"),
+                                     image_progress_bar_bar=RessourceLoader.get("dpt.images.gui.ui.UI_COLORBAR_4"))}
+
+        # Loops
+        from dpt.engine.mainLoop import settings_menu_loop
+        Game.loop = settings_menu_loop
         return True

@@ -3,14 +3,11 @@ import os
 import sys
 import traceback
 import json
-
 import psutil
 import pygame
 import runpy
 import gc
 
-from dpt.engine.gui.menu.bar import Bar
-from dpt.engine.gui.menu.progressbar import ProgressBar
 from dpt.game import Game
 
 RESSOURCES_DIRECTORY = Game.ROOT_DIRECTORY + "/ressources/"
@@ -99,9 +96,12 @@ class RessourceLoader:
 
     @classmethod
     def load(cls):
+        from dpt.engine.gui.menu.progressbar import ProgressBar
+
         before_load_nb = len(cls.loaded_ressources)
         cls.logger.info("Starting loading ressources")
-        cls.pending_ressources = {key: value for key, value in cls.pending_ressources.items() if key not in cls.loaded_ressources}
+        cls.pending_ressources = {key: value for key, value in cls.pending_ressources.items() if
+                                  key not in cls.loaded_ressources}
         current = 0
         total = len(cls.pending_ressources)
         pbar = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/gui/ui/UI_BARFRAME.png")
@@ -157,10 +157,10 @@ class RessourceLoader:
 
             Game.surface.blit(bg, (0, 0))
 
-            ProgressBar.progressbarGroup.update()
-            ProgressBar.barGroup.update()
-            ProgressBar.barGroup.draw(Game.surface)
-            ProgressBar.progressbarGroup.draw(Game.surface)
+            ProgressBar.progress_bar_group.update()
+            ProgressBar.bar_group.update()
+            ProgressBar.bar_group.draw(Game.surface)
+            ProgressBar.progress_bar_group.draw(Game.surface)
 
             text = font.render(entry, True, (0, 0, 0))
             rect = text.get_rect()

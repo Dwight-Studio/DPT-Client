@@ -1,15 +1,15 @@
 import math
+import dpt.engine.gui.menu as menu
+import pygame
 
 from dpt.engine.fileManager import FileManager
 from dpt.engine.gui.editor.tileEditor import TileEditor
 from dpt.engine.gui.menu.button import Button
 from dpt.engine.gui.menu.checkbox import Checkbox
-from dpt.engine.gui.menu.progressbar import ProgressBar
 from dpt.engine.scenes import Scenes
 from dpt.engine.tileManager import TileManager
 from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
-import pygame
 
 bg = RessourceLoader.get("dpt.images.environment.background.default_sky")
 bg = pygame.transform.smoothscale(bg, Game.surface.get_size())
@@ -43,7 +43,7 @@ def level_loop():
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
             if TileEditor.in_editor:
                 FileManager.save_file(TileEditor.created_level)
-            # Game.com.close()
+            #  Game.com.close()
             Game.run = False
         elif event.type == Game.BUTTON_EVENT and event.button == Game.gui["editor_button"]:
             TileEditor.in_editor = not TileEditor.in_editor
@@ -82,8 +82,6 @@ def level_loop():
     TileEditor.ghost_block_group.draw(Game.surface)
 
     Button.main_loop()
-    ProgressBar.main_loop()
-    Checkbox.main_loop()
 
     Game.display_debug_info()
     Game.draw_cursor()
@@ -103,29 +101,28 @@ def main_menu_loop():
         if event.type == Game.BUTTON_EVENT:
             if event.button == Game.gui["button_play"]:
                 Scenes.level("dpt.levels.leveltest")
-                Button.buttonsGroup.empty()
-                Button.text_sprite_buttonsGroup.empty()
+                menu.delete_items()
                 pygame.mixer_music.unload()
                 pygame.mixer_music.stop()
                 return
             elif event.button == Game.gui["button_editor"]:
                 Scenes.editor("dpt.levels.leveltest")
+                menu.delete_items()
                 pygame.mixer_music.unload()
                 pygame.mixer_music.stop()
                 return
             elif event.button == Game.gui["button_settings"]:
-                pygame.mixer_music.unload()
-                pygame.mixer_music.stop()
+                menu.delete_items()
+                Scenes.settings_menu()
                 return
             elif event.button == Game.gui["button_quit"]:
+                menu.delete_items()
                 pygame.mixer_music.unload()
                 pygame.mixer_music.stop()
                 Game.run = False
                 return
 
-    Button.main_loop()
-    ProgressBar.main_loop()
-    Checkbox.main_loop()
+    menu.main_loop()
 
     image = RessourceLoader.get("dpt.images.dpt")
     image = pygame.transform.smoothscale(image,
@@ -134,6 +131,22 @@ def main_menu_loop():
     rect.centerx = Game.surface.get_size()[0] // 2
     rect.bottom = (Game.surface.get_size()[1] // 4) * 3
     Game.surface.blit(image, rect)
+
+    Game.display_debug_info()
+    Game.draw_cursor()
+    Game.window.update()
+
+
+def settings_menu_loop():
+    Game.surface.blit(bg, (0, 0))
+
+    for event in Game.events:
+        if event.type == pygame.QUIT:
+            Game.run = False
+
+    menu.main_loop()
+
+    pygame.mixer_music.set_volume(Game.gui["slider"].value)
 
     Game.display_debug_info()
     Game.draw_cursor()

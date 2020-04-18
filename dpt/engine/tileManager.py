@@ -242,8 +242,8 @@ class TileManager:
     def display_cam_info(cls):
         obj_count = TileManager.camera.sprite_count + len(TileManager.foreground_blocks_group) + len(
             TileManager.deadly_object_group) + len(Button.buttonsGroup) + len(Button.text_sprite_buttonsGroup) + len(
-            Button.text_buttonsList) + len(Checkbox.checkboxGroup) + len(ProgressBar.progressbarGroup) + len(
-            ProgressBar.barGroup)
+            Button.text_buttonsList) + len(Checkbox.checkboxGroup) + len(ProgressBar.progress_bar_group) + len(
+            ProgressBar.bar_group)
 
         Game.add_debug_info("CAMERA INFORMATIONS")
         Game.add_debug_info("Scrolling: " + str(-TileManager.camera.last_x))
@@ -264,8 +264,8 @@ class TileManager:
         Game.add_debug_info("       " + str(len(Button.text_sprite_buttonsGroup)) + " texts (sprites)")
         Game.add_debug_info("       " + str(len(Button.text_buttonsList)) + " texts")
         Game.add_debug_info("   " + str(len(Checkbox.checkboxGroup)) + " checkbox")
-        Game.add_debug_info("   " + str(len(ProgressBar.progressbarGroup)) + " progress bars")
-        Game.add_debug_info("       " + str(len(ProgressBar.barGroup)) + " bars")
+        Game.add_debug_info("   " + str(len(ProgressBar.progress_bar_group)) + " progress bars")
+        Game.add_debug_info("       " + str(len(ProgressBar.bar_group)) + " bars")
         Game.add_debug_info("----------")
 
     @classmethod

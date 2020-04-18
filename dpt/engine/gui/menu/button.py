@@ -10,9 +10,9 @@ class Button(pygame.sprite.Sprite):
     text_sprite_buttonsGroup = pygame.sprite.Group()
     text_buttonsList = []
 
-    def __init__(self, x, y, width, height, image, **kwargs):
+    def __init__(self, x, y, width, height, normal_image, **kwargs):
         pygame.sprite.Sprite.__init__(self, Button.buttonsGroup)  # Sprite's constructor called
-        self.normal_image = image
+        self.normal_image = normal_image
         try:
             self.pushed_image = kwargs["pushed_image"]
             del kwargs["pushed_image"]
@@ -59,7 +59,6 @@ class Button(pygame.sprite.Sprite):
         self.rect.y = y
         self.pushed = False
         self.locked = False
-        self.previous_state = False
         Game.get_logger("Button").debug("Button created")
 
     def __bool__(self):
@@ -91,7 +90,6 @@ class Button(pygame.sprite.Sprite):
             self.image = self.pushed_image
             if self.text_sprite is not None:
                 self.text_sprite.rect.centery = self.rect.centery + math.floor(self.rect.height * 0.1)
-            if not self.previous_state:
                 event = pygame.event.Event(Game.BUTTON_EVENT, **dict(button=self, **self.eventargs))
                 pygame.event.post(event)
         else:
