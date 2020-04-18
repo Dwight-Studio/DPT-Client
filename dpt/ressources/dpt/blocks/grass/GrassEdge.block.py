@@ -18,5 +18,7 @@ class GrassEdge(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x + self.offset_x
         self.rect.y = y + self.offset_y
-        pygame.mixer_music.load(Game.ROOT_DIRECTORY + "/ressources/dpt/sounds/sfx/sfx_grass.ogg")
-        pygame.mixer_music.play()
+        if not TileManager.loadlevel:
+            pygame.mixer_music.set_volume(0.5)
+            pygame.mixer_music.load(Game.ROOT_DIRECTORY + "/ressources/dpt/sounds/sfx/sfx_grass.ogg")
+            pygame.mixer_music.play()
