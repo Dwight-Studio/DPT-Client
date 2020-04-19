@@ -52,6 +52,7 @@ class TileManager:
 
         TileManager.editor_panel_group.empty()
         TileEditor.ghost_block_group.empty()
+        TileManager.interactible_blocks_group.empty()
 
         for entity in TileManager.entity_group:
             entity.kill()

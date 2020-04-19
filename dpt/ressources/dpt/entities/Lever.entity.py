@@ -22,22 +22,24 @@ class Lever(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.clicked = False
+        self.clicked2 = False
         self.right = False
         self.left = True
         self.set = False
+        self.attributing = False
         if not TileManager.loadlevel:
             self.sound = RessourceLoader.get(self.sounds)
             self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
             self.sound.play()
 
     def update(self):
-        mouseButtons = pygame.mouse.get_pressed()
+        mouse_buttons = pygame.mouse.get_pressed()
         mousePos = pygame.mouse.get_pos()
         from dpt.engine.tileManager import TileManager
+        from dpt.engine.gui.editor.tileEditor import TileEditor
         if self.x + TileManager.camera.last_x <= mousePos[0] <= self.x + self.width and self.y <= mousePos[1] <= self.y + self.height:
-            if mouseButtons[0] == 1 and not self.clicked:
+            if mouse_buttons[0] == 1 and not self.clicked:
                 self.clicked = True
-                from dpt.engine.gui.editor.tileEditor import TileEditor
                 if not TileEditor.in_editor:
                     if self.left:
                         self.left = False
@@ -48,6 +50,12 @@ class Lever(pygame.sprite.Sprite):
                         self.rect = self.image.get_rect()
                         self.rect.x = self.x + self.offset_x
                         self.rect.y = self.y + self.offset_y
+                        for keys, data in TileEditor.created_level.items():
+                            if keys == str(self.x) + ", " + str(self.y):
+                                for interact in TileManager.interactible_blocks_group:
+                                    pos = tuple(map(int, data["assignement"].split(", ")))
+                                    if interact.x == pos[0] and interact.y == pos[1]:
+                                        interact.deactivate()
                     elif self.right:
                         self.right = False
                         self.left = True
@@ -57,9 +65,28 @@ class Lever(pygame.sprite.Sprite):
                         self.rect = self.image.get_rect()
                         self.rect.x = self.x + self.offset_x
                         self.rect.y = self.y + self.offset_y
+                        for keys, data in TileEditor.created_level.items():
+                            if keys == str(self.x) + ", " + str(self.y):
+                                for interact in TileManager.interactible_blocks_group:
+                                    pos = tuple(map(int, data["assignement"].split(", ")))
+                                    if interact.x == pos[0] and interact.y == pos[1]:
+                                        interact.activate()
                 elif TileEditor.in_editor:
-                    pass
-            elif mouseButtons[0] != 1 and self.clicked:
+                    self.attributing = True
+            elif mouse_buttons[0] != 1 and self.clicked:
                 self.clicked = False
-        if not self.set:
+        if TileEditor.in_editor and self.attributing:
             pygame.draw.line(Game.surface, (0, 0, 0), (self.x + TileManager.camera.last_x, self.y + 30), (mousePos[0], mousePos[1]))
+            if mouse_buttons[0] == 1 and not self.clicked2:
+                self.clicked2 = True
+                for sprites in TileManager.interactible_blocks_group:
+                    try:
+                        if isinstance(sprites, RessourceLoader.get("dpt.entities.spike")):
+                            if sprites.x + TileManager.camera.last_x <= mousePos[0] <= sprites.x + sprites.width and sprites.y + sprites.offset_y <= mousePos[1] <= sprites.y:
+                                self.attributing = False
+                                TileEditor.created_level[str(self.x) + ", " + str(self.y)]["assignement"] = str(sprites.x) + ", " + str(sprites.y)
+                                print(TileEditor.created_level)
+                    except AttributeError:
+                        continue
+            elif mouse_buttons[0] != 1 and self.clicked2:
+                self.clicked2 = False

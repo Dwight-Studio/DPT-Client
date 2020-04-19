@@ -59,6 +59,7 @@ class TileEditor:
                         TileManager.entity_group.empty()
                         TileManager.background_blocks_group.empty()
                         TileManager.deadly_object_group.empty()
+                        TileManager.interactible_blocks_group.empty()
                         cls.created_level.clear()
                     elif not keys[pygame.K_n] and cls.npushed:
                         cls.npushed = False
@@ -105,6 +106,10 @@ class TileEditor:
             if mouse_buttons[0] == 1 or mouse_buttons[1] == 1 or mouse_buttons[2] == 1:
                 for btn in Button.buttonsGroup:
                     if btn.rect.collidepoint(mouse[0], mouse[1]):
+                        return
+            if mouse_buttons[0] == 1:
+                for interact in TileManager.interactible_blocks_group:
+                    if isinstance(interact, RessourceLoader.get("dpt.entities.spike")) and interact.x + TileManager.camera.last_x <= mouse[0] <= interact.x + interact.width and interact.y + interact.offset_y <= mouse[1] <= interact.y:
                         return
 
             if mouse_buttons[0] == 1 and not cls.mouse_pushed_l:
