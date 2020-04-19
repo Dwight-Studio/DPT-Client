@@ -37,7 +37,7 @@ class Lever(pygame.sprite.Sprite):
         mousePos = pygame.mouse.get_pos()
         from dpt.engine.tileManager import TileManager
         from dpt.engine.gui.editor.tileEditor import TileEditor
-        if self.x + TileManager.camera.last_x <= mousePos[0] <= self.x + self.width and self.y <= mousePos[1] <= self.y + self.height:
+        if self.x + self.offset_x + TileManager.camera.last_x <= mousePos[0] <= self.x + self.offset_x + self.width and self.y + self.offset_y <= mousePos[1] <= self.y + self.offset_y + self.height:
             if mouse_buttons[0] == 1 and not self.clicked:
                 self.clicked = True
                 if not TileEditor.in_editor:
