@@ -13,6 +13,10 @@ class Window:
 
         try:
             self.rect.centerx = kwargs["centerx"]
+        except KeyError:
+            pass
+
+        try:
             self.rect.centery = kwargs["centery"]
         except KeyError:
             pass

@@ -265,6 +265,10 @@ class Game(object):
                 Game.add_debug_info("Memory usage: " + str(psutil.virtual_memory().percent) + "%")
                 Game.add_debug_info(str(math.floor(Game.clock.get_fps())) + " FPS")
                 Game.add_debug_info("----------")
+                Game.add_debug_info("MOUSE INFORMATIONS")
+                Game.add_debug_info("Mouse X: " + str(pygame.mouse.get_pos()[0]))
+                Game.add_debug_info("Mouse Y: " + str(pygame.mouse.get_pos()[1]))
+                Game.add_debug_info("----------")
 
                 cls.loop()
                 Game.draw_cursor()
