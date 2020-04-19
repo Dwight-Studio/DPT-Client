@@ -50,9 +50,9 @@ class PlayerSprite(pygame.sprite.Sprite):
             if self.xvel > 0:
                 self.xvel = 0
             if self.xvel > -8 * Game.DISPLAY_RATIO:
-                self.xvel += self.xvel * 0.03
+                self.xvel += self.xvel * 0.01
             if self.xvel == 0:
-                self.xvel -= 2 * Game.DISPLAY_RATIO
+                self.xvel -= 4 * Game.DISPLAY_RATIO
             self.left = True
             self.right = False
             self.standing = False
@@ -60,9 +60,9 @@ class PlayerSprite(pygame.sprite.Sprite):
             if self.xvel < 0:
                 self.xvel = 0
             if self.xvel < 8 * Game.DISPLAY_RATIO:
-                self.xvel += self.xvel * 0.03
+                self.xvel += self.xvel * 0.01
             if self.xvel == 0:
-                self.xvel += 2 * Game.DISPLAY_RATIO
+                self.xvel += 4 * Game.DISPLAY_RATIO
             self.left = False
             self.right = True
             self.standing = False
