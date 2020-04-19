@@ -190,7 +190,7 @@ class Game(object):
                 for alpha in range(0, 256, 8):
                     cls.clock.tick(30)
                     pygame.draw.rect(Game.surface, (0, 0, 0), pygame.Rect(0, 0, w, h))
-                    pygame_logo.set_alpha(255 - alpha)
+                    pygame_logo.set_alpha(248 - alpha)
                     cls.surface.blit(pygame_logo, rect)
                     cls.window.update()
 

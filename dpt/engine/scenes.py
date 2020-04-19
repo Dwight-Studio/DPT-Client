@@ -1,5 +1,4 @@
 import math
-
 import pygame
 
 from dpt.game import Game
@@ -98,10 +97,11 @@ class Scenes:
         # Ajout du GUI
         from dpt.engine.gui.menu.button import Button
         from dpt.engine.gui.menu.textSpriteButton import TextSpriteButton
+        from dpt.engine.gui.menu import Window
         button_width = math.floor(92 * Game.DISPLAY_RATIO)
         button_height = math.floor(95 * Game.DISPLAY_RATIO)
         buttons_gap_x = math.floor(80 * Game.DISPLAY_RATIO)
-        buttons_starting_x = math.floor((Game.surface.get_size()[0] / 2) - (button_width + buttons_gap_x) * 2)
+        buttons_starting_x = math.floor((Game.surface.get_size()[0] / 2) - button_width * 2 - buttons_gap_x * 1.5)
         buttons_y = (Game.surface.get_size()[1] // 4) * 3 + 50 * Game.DISPLAY_RATIO
         Game.gui = {"button_play": Button(buttons_starting_x, buttons_y, button_width, button_height,
                                           RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_OUT"),
@@ -131,7 +131,9 @@ class Scenes:
                                           RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_OUT"),
                                           pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_IN"),
                                           text_sprite=TextSpriteButton(47, 50, RessourceLoader.get(
-                                              "dpt.images.gui.symbols.SYMB_X")))}
+                                              "dpt.images.gui.symbols.SYMB_X"))),
+                    "window": Window((Game.surface.get_size()[0] // 2) - math.floor(122 * 3 * Game.DISPLAY_RATIO),
+                                     buttons_y + button_height // 2 - math.floor(64 * 1.5 * Game.DISPLAY_RATIO), 6, 3)}
 
         # Loops
         from dpt.engine.mainLoop import main_menu_loop

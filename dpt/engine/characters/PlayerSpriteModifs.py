@@ -49,7 +49,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         if keys[pygame.K_LEFT] and self.rect.x - self.xvel - 1 > mur:
             if self.xvel > 0:
                 self.xvel = 0
-            if -4 * Game.DISPLAY_RATIO > self.xvel > -8 * Game.DISPLAY_RATIO:
+            if -4 * Game.DISPLAY_RATIO > self.xvel > -8 * Game.DISPLAY_RATIO and self.onPlatform:
                 self.xvel += self.xvel * 0.01
             if self.xvel >= -4 * Game.DISPLAY_RATIO:
                 self.xvel -= 0.25 * Game.DISPLAY_RATIO
@@ -59,7 +59,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         elif keys[pygame.K_RIGHT]:
             if self.xvel < 0:
                 self.xvel = 0
-            if 4 * Game.DISPLAY_RATIO < self.xvel < 8 * Game.DISPLAY_RATIO:
+            if 4 * Game.DISPLAY_RATIO < self.xvel < 8 * Game.DISPLAY_RATIO and self.onPlatform:
                 self.xvel += self.xvel * 0.01
             if self.xvel <= 4 * Game.DISPLAY_RATIO:
                 self.xvel += 0.25 * Game.DISPLAY_RATIO
