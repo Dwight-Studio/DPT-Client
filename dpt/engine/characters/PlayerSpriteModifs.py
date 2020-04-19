@@ -50,7 +50,9 @@ class PlayerSprite(pygame.sprite.Sprite):
             if self.xvel > 0:
                 self.xvel = 0
             if self.xvel > -8 * Game.DISPLAY_RATIO:
-                self.xvel -= 0.5 * Game.DISPLAY_RATIO
+                self.xvel += self.xvel * 0.03
+            if self.xvel == 0:
+                self.xvel -= 2 * Game.DISPLAY_RATIO
             self.left = True
             self.right = False
             self.standing = False
@@ -58,7 +60,9 @@ class PlayerSprite(pygame.sprite.Sprite):
             if self.xvel < 0:
                 self.xvel = 0
             if self.xvel < 8 * Game.DISPLAY_RATIO:
-                self.xvel += 0.5 * Game.DISPLAY_RATIO
+                self.xvel += self.xvel * 0.03
+            if self.xvel == 0:
+                self.xvel += 2 * Game.DISPLAY_RATIO
             self.left = False
             self.right = True
             self.standing = False
@@ -126,7 +130,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                         mask = self.mask.overlap_mask(i.mask, (rx, ry))
                         b_rects = mask.get_bounding_rects()
                         for rect in b_rects:
-                            if -8 <= rect.height <= 8:
+                            if -8 * Game.DISPLAY_RATIO <= rect.height <= 8 * Game.DISPLAY_RATIO:
                                 dy = rect.height
                                 self.yvel = 0
                                 self.onPlatform = True
