@@ -102,14 +102,14 @@ def main_menu_loop():
             if event.button == Game.gui["button_play"]:
                 menu.delete_items()
                 Scenes.level("dpt.levels.leveltest")
+                pygame.mixer_music.fadeout(1000)
                 pygame.mixer_music.unload()
-                pygame.mixer_music.stop()
                 return
             elif event.button == Game.gui["button_editor"]:
                 menu.delete_items()
                 Scenes.editor("dpt.levels.leveltest")
+                pygame.mixer_music.fadeout(1000)
                 pygame.mixer_music.unload()
-                pygame.mixer_music.stop()
                 return
             elif event.button == Game.gui["button_settings"]:
                 menu.delete_items()
@@ -117,8 +117,8 @@ def main_menu_loop():
                 return
             elif event.button == Game.gui["button_quit"]:
                 menu.delete_items()
+                pygame.mixer_music.fadeout(1000)
                 pygame.mixer_music.unload()
-                pygame.mixer_music.stop()
                 Game.run = False
                 return
 

@@ -49,7 +49,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         if keys[pygame.K_LEFT] and self.rect.x - self.xvel - 1 > mur:
             if self.xvel > 0:
                 self.xvel = 0
-            if self.xvel > -4 * Game.DISPLAY_RATIO:
+            if self.xvel > -8 * Game.DISPLAY_RATIO:
                 self.xvel -= 0.5 * Game.DISPLAY_RATIO
             self.left = True
             self.right = False
@@ -57,7 +57,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         elif keys[pygame.K_RIGHT]:
             if self.xvel < 0:
                 self.xvel = 0
-            if self.xvel < 4 * Game.DISPLAY_RATIO:
+            if self.xvel < 8 * Game.DISPLAY_RATIO:
                 self.xvel += 0.5 * Game.DISPLAY_RATIO
             self.left = False
             self.right = True
@@ -82,6 +82,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                     self.jumpCount -= 1
 
         if not self.isJump:
+            Game.add_debug_info("GRAVITY")
             self.allowJump = False
             self.gravityCount += 1
             self.gravity = math.floor((self.gravityCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * -1
@@ -116,13 +117,26 @@ class PlayerSprite(pygame.sprite.Sprite):
         for i in TileManager.environment_group:
             if i.rect.colliderect(Game.display_rect):
                 rx = i.rect.x - (self.rect.x + math.floor(self.xvel))
-                crx = i.rect.x - self.rect.x
                 ry = i.rect.y - (self.rect.y - math.floor(self.yvel))
-                cry = (i.rect.y - self.rect.y)
                 if self.mask.overlap(i.mask, (rx, ry)):
                     dx = 0
                     dy = 0
 
+                    if math.floor(self.yvel) == 0:
+                        mask = self.mask.overlap_mask(i.mask, (rx, ry))
+                        b_rects = mask.get_bounding_rects()
+                        for rect in b_rects:
+                            if -8 <= rect.height <= 8:
+                                dy = rect.height
+                                self.yvel = 0
+                                self.onPlatform = True
+                                self.gravityCount = 0
+                                self.isJump = False
+                                self.allowJump = True
+                                self.jumpCount = self.CONSTJUMPCOUNT
+                            break
+
+                    crx = i.rect.x - self.rect.x
                     mask = self.mask.overlap_mask(i.mask, (crx, ry))
                     b_rects = mask.get_bounding_rects()
                     for rect in b_rects:
@@ -134,7 +148,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                             self.isJump = False
                             self.allowJump = True
                             self.jumpCount = self.CONSTJUMPCOUNT
-                        else:
+                        elif self.rect.y > i.rect.y:
                             dy = - rect.height + math.floor(self.yvel)
                             self.yvel = 0
                             self.isJump = False
@@ -142,16 +156,18 @@ class PlayerSprite(pygame.sprite.Sprite):
                             self.jumpCount = self.CONSTJUMPCOUNT
                         break
 
+                    self.rect.y -= dy
+
+                    cry = (i.rect.y - self.rect.y)
                     mask = self.mask.overlap_mask(i.mask, (rx, cry))
                     b_rects = mask.get_bounding_rects()
                     for rect in b_rects:
                         if self.rect.x > i.rect.x:
                             dx = rect.width + math.floor(self.xvel)
                             self.xvel = 0
-                        else:
+                        elif self.rect.x < i.rect.x:
                             dx = - rect.width + math.floor(self.xvel)
                             self.xvel = 0
                         break
 
                     self.rect.x += dx
-                    self.rect.y -= dy
