@@ -267,7 +267,7 @@ class Game(object):
                 Game.add_debug_info("----------")
                 cls.loop()
                 Game.draw_cursor()
-                Game.clock.tick(60)
+                Game.clock.tick(15)
 
             cls.save_settings()
             pygame.quit()

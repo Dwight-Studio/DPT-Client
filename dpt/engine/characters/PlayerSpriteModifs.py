@@ -12,7 +12,6 @@ class PlayerSprite(pygame.sprite.Sprite):
     walkRightTextures = "dpt.images.characters.player.R*"
     walkLeftTextures = "dpt.images.characters.player.L*"
     mask = "dpt.images.characters.player.mask"
-    gravityCount = 0
 
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
@@ -39,9 +38,9 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.CONSTJUMPCOUNT = self.jumpCount
         self.onPlatform = False
         self.allowJump = True
-        self.isFalling = True
         self.mask = pygame.mask.from_surface(pygame.transform.scale(RessourceLoader.get(PlayerSprite.mask),
                                                                     (self.width, self.height)))
+        self.gravityCount = 0
 
     def update(self):
         keys = pygame.key.get_pressed()
@@ -81,17 +80,12 @@ class PlayerSprite(pygame.sprite.Sprite):
                         neg = -1
                     self.yvel = math.floor((self.jumpCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * neg
                     self.jumpCount -= 1
-                elif self.onPlatform:
-                    self.jumpCount = self.CONSTJUMPCOUNT
-                    self.isJump = False
-                    self.yvel = 0
 
         if not self.isJump:
-            self.isFalling = True
             self.allowJump = False
-            PlayerSprite.gravityCount += 1
-            PlayerSprite.gravity = math.floor((PlayerSprite.gravityCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * -1
-            self.yvel = PlayerSprite.gravity
+            self.gravityCount += 1
+            self.gravity = math.floor((self.gravityCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * -1
+            self.yvel = self.gravity
 
         self.collide()
 
@@ -124,25 +118,41 @@ class PlayerSprite(pygame.sprite.Sprite):
                 rx = math.floor(i.rect.x - (self.rect.x + self.xvel))
                 crx = i.rect.x - self.rect.x
                 ry = math.floor(i.rect.y - (self.rect.y - self.yvel))
+                cry = (i.rect.y - self.rect.y)
                 if self.mask.overlap(i.mask, (rx, ry)):
-                    coords = self.mask.overlap(i.mask, (crx, ry))
+                    Game.add_debug_info("COLLIDE")
+                    dx = 0
                     dy = 0
-                    if coords is not None:
-                        x, y = coords
-                        dy = (self.rect.height - y)
-                        if dy != 0:
-                            self.yvel = 0
-                            PlayerSprite.gravityCount = 0
-                        if dy > 0:
-                            self.onPlatform = True
-                            self.allowJump = True
-                    else:
-                        self.onPlatform = False
-                        self.allowJump = False
 
-                    coords = self.mask.overlap(i.mask, (rx, ry + dy))
-                    if coords is not None:
-                        x, y = coords
-                        dx = (self.rect.width - x)
-                        if dx != 0:
+                    mask = self.mask.overlap_mask(i.mask, (crx, ry))
+                    b_rects = mask.get_bounding_rects()
+                    for rect in b_rects:
+                        if self.rect.y < i.rect.y:
+                            dy = rect.height + self.yvel
+                            self.yvel = 0
+                            self.onPlatform = True
+                            self.gravityCount = 0
+                            self.isJump = False
+                            self.allowJump = True
+                            self.jumpCount = self.CONSTJUMPCOUNT
+                        else:
+                            dy = - rect.height + self.yvel
+                            self.yvel = 0
+                            self.isJump = False
+                            self.allowJump = False
+                            self.jumpCount = self.CONSTJUMPCOUNT
+                        break
+
+                    mask = self.mask.overlap_mask(i.mask, (rx, cry))
+                    b_rects = mask.get_bounding_rects()
+                    for rect in b_rects:
+                        if self.rect.x > i.rect.x:
+                            dx = rect.width + self.xvel
                             self.xvel = 0
+                        else:
+                            dx = - rect.width + self.xvel
+                            self.xvel = 0
+                        break
+
+                    self.rect.x += dx
+                    self.rect.y -= dy

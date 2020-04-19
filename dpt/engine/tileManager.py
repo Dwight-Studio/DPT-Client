@@ -45,7 +45,11 @@ class TileManager:
     @classmethod
     def load_level(cls, level_name):
         cls.loadlevel = True
+        if Game.player_sprite is not None:
+            Game.player_sprite.kill()
+            Game.player_sprite = None
         Game.player_group.empty()
+
         TileManager.editor_panel_group.empty()
         TileEditor.ghost_block_group.empty()
 
@@ -145,11 +149,7 @@ class TileManager:
                         cls.log.debug("Background tile " + level[keys]["backgroundClass"] + " placed at " + keys)
                     except UnreachableRessourceError:
                         cls.log.warning("Invalid class name : " + level[keys]["backgroundClass"] + " for tile : " + keys)
-        cls.background_blocks_group.draw(Game.surface)
-        cls.environment_group.draw(Game.surface)
-        cls.entity_group.draw(Game.surface)
-        cls.enemy_group.draw(Game.surface)
-        cls.deadly_object_group.draw(Game.surface)
+
         if not TileEditor.in_editor:
             from dpt.engine.characters.PlayerSpriteModifs import PlayerSprite
             Game.player_sprite = PlayerSprite(300, Game.surface.get_size()[1] - 500)
