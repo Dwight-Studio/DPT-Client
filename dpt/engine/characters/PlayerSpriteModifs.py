@@ -89,8 +89,8 @@ class PlayerSprite(pygame.sprite.Sprite):
 
         self.collide()
 
-        self.rect.left += self.xvel
-        self.rect.top -= self.yvel
+        self.rect.left += math.floor(self.xvel)
+        self.rect.top -= math.floor(self.yvel)
 
         self.animation()
 
@@ -115,12 +115,11 @@ class PlayerSprite(pygame.sprite.Sprite):
     def collide(self):
         for i in TileManager.environment_group:
             if i.rect.colliderect(Game.display_rect):
-                rx = math.floor(i.rect.x - (self.rect.x + self.xvel))
+                rx = i.rect.x - (self.rect.x + math.floor(self.xvel))
                 crx = i.rect.x - self.rect.x
-                ry = math.floor(i.rect.y - (self.rect.y - self.yvel))
+                ry = i.rect.y - (self.rect.y - math.floor(self.yvel))
                 cry = (i.rect.y - self.rect.y)
                 if self.mask.overlap(i.mask, (rx, ry)):
-                    Game.add_debug_info("COLLIDE")
                     dx = 0
                     dy = 0
 
@@ -128,7 +127,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                     b_rects = mask.get_bounding_rects()
                     for rect in b_rects:
                         if self.rect.y < i.rect.y:
-                            dy = rect.height + self.yvel
+                            dy = rect.height + math.floor(self.yvel)
                             self.yvel = 0
                             self.onPlatform = True
                             self.gravityCount = 0
@@ -136,7 +135,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                             self.allowJump = True
                             self.jumpCount = self.CONSTJUMPCOUNT
                         else:
-                            dy = - rect.height + self.yvel
+                            dy = - rect.height + math.floor(self.yvel)
                             self.yvel = 0
                             self.isJump = False
                             self.allowJump = False
@@ -147,10 +146,10 @@ class PlayerSprite(pygame.sprite.Sprite):
                     b_rects = mask.get_bounding_rects()
                     for rect in b_rects:
                         if self.rect.x > i.rect.x:
-                            dx = rect.width + self.xvel
+                            dx = rect.width + math.floor(self.xvel)
                             self.xvel = 0
                         else:
-                            dx = - rect.width + self.xvel
+                            dx = - rect.width + math.floor(self.xvel)
                             self.xvel = 0
                         break
 

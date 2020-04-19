@@ -154,7 +154,6 @@ class TileManager:
             from dpt.engine.characters.PlayerSpriteModifs import PlayerSprite
             Game.player_sprite = PlayerSprite(300, Game.surface.get_size()[1] - 500)
             Game.player_group.add(Game.player_sprite)
-            print(math.floor(Game.surface.get_size()[0] / Game.TILESIZE))
             if TileManager.max_width_size < math.floor(Game.surface.get_size()[0] / Game.TILESIZE):
                 TileManager.max_width_size = math.floor(Game.surface.get_size()[0] / Game.TILESIZE) + 2
             cls.camera = Camera(TileManager.max_width_size, TileManager.max_height_size)
