@@ -145,7 +145,6 @@ def settings_menu_loop():
             Game.run = False
 
     menu.main_loop()
-
     Game.settings["music_volume"] = Game.gui["slider"].value
     pygame.mixer_music.set_volume(Game.settings["music_volume"] * Game.settings["general_volume"])
 

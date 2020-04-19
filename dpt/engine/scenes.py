@@ -147,12 +147,12 @@ class Scenes:
 
         # Ajout du GUI
         from dpt.engine.gui.menu.slider import Slider
-        from dpt.engine.gui.menu import ProgressBar
+        from dpt.engine.gui.menu import Window
         Game.gui = {"slider": Slider(math.floor(50 * Game.DISPLAY_RATIO),
                                      math.floor(50 * Game.DISPLAY_RATIO),
                                      math.floor(400 * Game.DISPLAY_RATIO),
                                      math.floor(40 * Game.DISPLAY_RATIO),
-                                     pygame.mixer_music.get_volume(),
+                                     Game.settings["music_volume"],
                                      image_left=RessourceLoader.get("dpt.images.gui.buttons.BTN_HORIZ_SINGLE_19"),
                                      image_left_pushed=RessourceLoader.get("dpt.images.gui.buttons.BTN_HORIZ_SINGLE_7"),
                                      image_right=RessourceLoader.get("dpt.images.gui.buttons.BTN_HORIZ_SINGLE_1"),
@@ -161,7 +161,8 @@ class Scenes:
                                      image_slide=RessourceLoader.get("dpt.images.gui.buttons.BTN_SLIDER_SM_2"),
                                      image_slide_pushed=RessourceLoader.get("dpt.images.gui.buttons.BTN_SLIDER_SM_8"),
                                      image_progress_bar_frame=RessourceLoader.get("dpt.images.gui.ui.UI_BARFRAME"),
-                                     image_progress_bar_bar=RessourceLoader.get("dpt.images.gui.ui.UI_COLORBAR_4"))}
+                                     image_progress_bar_bar=RessourceLoader.get("dpt.images.gui.ui.UI_COLORBAR_4")),
+                    "window": Window(0, 0, 12, 15, centerx=Game.surface.get_size()[0] // 2, centery=Game.surface.get_size()[1] // 2)}
 
         # Loops
         from dpt.engine.mainLoop import settings_menu_loop

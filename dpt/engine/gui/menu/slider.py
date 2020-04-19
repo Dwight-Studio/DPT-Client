@@ -106,7 +106,7 @@ class Slider(object):
             self.progress_bar = None
 
         self.slide = Slide(self, self.image_slide, self.image_slide_pushed)
-        self.slide.rect.x = self.left.rect.right + value * (self.right.rect.left - self.left.rect.right)
+        self.slide.rect.x = self.left.rect.right + (value * (self.right.rect.left - self.left.rect.right))
         self.slide.apply_x()
         self.value = value
 

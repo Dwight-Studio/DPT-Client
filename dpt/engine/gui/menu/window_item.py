@@ -1,5 +1,4 @@
 import pygame
-from random import randint
 import math
 
 from dpt.engine.loader import RessourceLoader
@@ -22,7 +21,7 @@ class WindowItem(pygame.sprite.Sprite):
     def __init__(self, x, y, item_type):
         from dpt.engine.gui.menu.window import Window
         pygame.sprite.Sprite.__init__(self, Window.window_group)
-        self.image = pygame.transform.smoothscale(RessourceLoader.get(WindowItem.type[item_type]), (math.floor(122 * Game.DISPLAY_RATIO), math.floor(64 * Game.DISPLAY_RATIO)))
+        self.image = pygame.transform.smoothscale(RessourceLoader.get(WindowItem.type[item_type]), (math.ceil(122 * Game.DISPLAY_RATIO), math.ceil(64 * Game.DISPLAY_RATIO)))
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y

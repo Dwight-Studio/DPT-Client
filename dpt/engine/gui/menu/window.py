@@ -8,8 +8,15 @@ from dpt.game import Game
 class Window:
     window_group = pygame.sprite.Group()
 
-    def __init__(self, x, y, width_number, height_number):
+    def __init__(self, x, y, width_number, height_number, **kwargs):
         self.rect = pygame.rect.Rect(x, y, width_number * 122 * Game.DISPLAY_RATIO, height_number * 64 * Game.DISPLAY_RATIO)
+
+        try:
+            self.rect.centerx = kwargs["centerx"]
+            self.rect.centery = kwargs["centery"]
+        except KeyError:
+            pass
+
         self.sprites = []
         for rx in range(width_number):
             for ry in range(height_number):
@@ -25,7 +32,7 @@ class Window:
                     item_type[0] = "D"
 
                 item_type = item_type[0] + item_type[1]
-                self.sprites.append(WindowItem(x + (rx * 122 * Game.DISPLAY_RATIO), y + (ry * 64 * Game.DISPLAY_RATIO) - ry, item_type))
+                self.sprites.append(WindowItem(self.rect.x + (rx * 122 * Game.DISPLAY_RATIO), self.rect.y + (ry * 64 * Game.DISPLAY_RATIO) - ry, item_type))
         Game.get_logger("Window").debug("Window created")
 
     @classmethod
