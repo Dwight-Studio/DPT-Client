@@ -23,10 +23,10 @@ class Communication(object):
 
     def create(self):
         try:
-            request = requests.get("http://" + Game.settings["server_adress"] + "/init.php?session=" + self.sessionName)
+            request = requests.get("http://" + Game.settings["server_address"] + "/init.php?session=" + self.sessionName)
             if request.json() == self.sessionName:
                 self.log.info("Created session : " + self.sessionName)
-                self.log.info("http://" + Game.settings["server_adress"] + "/?session=" + self.sessionName)
+                self.log.info("http://" + Game.settings["server_address"] + "/?session=" + self.sessionName)
                 self.log.info("Starting keepAlive...")
                 self.keep = True
                 self.keepAliveThread.start()
@@ -39,7 +39,7 @@ class Communication(object):
     def keep_alive(self):
         while self.keep:
             time.sleep(3)
-            keep_link = requests.get("http://" + Game.settings["server_adress"] + "/keepAlive.php?session=" + self.sessionName)
+            keep_link = requests.get("http://" + Game.settings["server_address"] + "/keepAlive.php?session=" + self.sessionName)
             if not keep_link.json():
                 self.i += 1
                 if self.i == 3:
@@ -53,7 +53,7 @@ class Communication(object):
             self.log.info("Creating a new vote...")
             self.currentTime = int(round(time.time() * 1000))
             data = {"endDate": self.currentTime + (Game.VOTE_TIMEOUT * 1000) + 2000, "mod1": mod1, "mod2": mod2}
-            requests.get("http://" + Game.settings["server_adress"] + "/registerVote.php?session=" + self.sessionName + "&data=" + json.dumps(data))
+            requests.get("http://" + Game.settings["server_address"] + "/registerVote.php?session=" + self.sessionName + "&data=" + json.dumps(data))
             self.log.info("Vote created")
             self.waiting = True
             self.wait_for(Game.VOTE_TIMEOUT + 2)
@@ -64,7 +64,7 @@ class Communication(object):
         vote_one = 0
         vote_two = 0
         self.log.info("Requesting vote output...")
-        request_vote = requests.get("http://" + Game.settings["server_adress"] + "/sessions.json").json()
+        request_vote = requests.get("http://" + Game.settings["server_address"] + "/sessions.json").json()
         if request_vote is not None:
             for data in request_vote[self.sessionName].values():
                 self.log.debug("Vote " + data)
@@ -92,7 +92,7 @@ class Communication(object):
             self.waiting = False
 
     def close(self):
-        request_close = requests.get("http://" + Game.settings["server_adress"] + "/close.php?session=" + self.sessionName)
+        request_close = requests.get("http://" + Game.settings["server_address"] + "/close.php?session=" + self.sessionName)
         self.keep = False
         if not request_close.json():
             self.log.warning("Close session failed")

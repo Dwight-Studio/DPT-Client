@@ -316,7 +316,7 @@ class Scenes:
                                             text_sprite=TextSpriteButton(47, 33, RessourceLoader.get("dpt.images.gui.symbols.SYMB_LEFTARROW")))
                     }
 
-        if Game.settings["server_adress"] == Game.DEFAULT_SERVER_ADRESS:
+        if Game.settings["server_address"] == Game.DEFAULT_SERVER_ADDRESS:
             Game.gui["default_server_button"].value = True
         else:
             Game.gui["custom_server_button"].value = True

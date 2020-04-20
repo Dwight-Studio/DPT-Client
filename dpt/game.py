@@ -32,12 +32,13 @@ class Game(object):
     PLATFORM = sys.platform
     ROOT_DIRECTORY = get_root()
     VOTE_TIMEOUT = 80
-    DEFAULT_SERVER_ADRESS = "join.dont-play-together.fr"
+    DEFAULT_SERVER_ADDRESS = "join.dont-play-together.fr"
     TILESIZE = 90
     DISPLAY_RATIO = 1
     DISPLAY_RECT = False
 
     # Variable à définir
+    temp = None
     main_logger = None
     run = True
     display_rect = None
@@ -65,7 +66,7 @@ class Game(object):
         "sound_volume": 1,
         "window_width": 0,
         "window_height": 0,
-        "server_adress": "localhost"
+        "server_address": "localhost"
     }
 
     anim_count_lava = 0
