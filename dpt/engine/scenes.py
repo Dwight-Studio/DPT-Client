@@ -22,7 +22,7 @@ class Scenes:
         Button.text_sprite_buttonsGroup.empty()
         ProgressBar.progress_bar_group.empty()
         ProgressBar.bar_group.empty()
-        Checkbox.checkboxGroup.empty()
+        Checkbox.checkbox_group.empty()
 
         # Gestion des ressources
         RessourceLoader.unload()
@@ -78,21 +78,24 @@ class Scenes:
         return True
 
     @classmethod
-    def main_menu(cls):
+    def main_menu(cls, load=True):
         cls.logger.info("Displaying MAIN_MENU")
         from dpt.engine.loader import RessourceLoader
 
         # Gestion des ressources
-        RessourceLoader.unload()
-        RessourceLoader.add_pending("dpt.images.environment.background.default_sky")
-        RessourceLoader.add_pending("dpt.images.gui.*")
-        RessourceLoader.add_pending("dpt.images.dpt")
-        RessourceLoader.add_pending("dpt.sounds.musics.story_time")
-        RessourceLoader.load()
+        if load:
+            RessourceLoader.unload()
+            RessourceLoader.add_pending("dpt.images.environment.background.default_sky")
+            RessourceLoader.add_pending("dpt.images.gui.*")
+            RessourceLoader.add_pending("dpt.images.dpt")
+            RessourceLoader.add_pending("dpt.fonts.*")
+            RessourceLoader.add_pending("dpt.sounds.musics.story_time")
+            RessourceLoader.load()
 
         # Gestion de la musique
-        pygame.mixer_music.load(RessourceLoader.get("dpt.sounds.musics.story_time"))
-        pygame.mixer_music.play(-1)
+        if load:
+            pygame.mixer_music.load(RessourceLoader.get("dpt.sounds.musics.story_time"))
+            pygame.mixer_music.play(-1)
 
         # Ajout du GUI
         from dpt.engine.gui.menu.button import Button
@@ -105,33 +108,34 @@ class Scenes:
         buttons_y = (Game.surface.get_size()[1] // 4) * 3 + 50 * Game.DISPLAY_RATIO
         Game.gui = {"button_play": Button(buttons_starting_x, buttons_y, button_width, button_height,
                                           RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_OUT"),
-                                          pushed_image=RessourceLoader.get(
-                                              "dpt.images.gui.buttons.BTN_GREEN_CIRCLE_IN"),
-                                          text_sprite=TextSpriteButton(47, 50, RessourceLoader.get(
-                                              "dpt.images.gui.symbols.SYMB_PLAY"))),
+                                          pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_IN"),
+                                          text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                       math.floor(50 * Game.DISPLAY_RATIO),
+                                                                       RessourceLoader.get("dpt.images.gui.symbols.SYMB_PLAY"))),
                     "button_editor": Button(buttons_starting_x + (button_width + buttons_gap_x), buttons_y,
                                             button_width,
                                             button_height,
                                             RessourceLoader.get("dpt.images.gui.buttons.BTN_BLUE_CIRCLE_OUT"),
-                                            pushed_image=RessourceLoader.get(
-                                                "dpt.images.gui.buttons.BTN_BLUE_CIRCLE_IN"),
-                                            text_sprite=TextSpriteButton(47, 50, RessourceLoader.get(
-                                                "dpt.images.gui.symbols.SYMB_PLUS"))),
+                                            pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_BLUE_CIRCLE_IN"),
+                                            text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                         math.floor(50 * Game.DISPLAY_RATIO),
+                                                                         RessourceLoader.get("dpt.images.gui.symbols.SYMB_PLUS"))),
                     "button_settings": Button(buttons_starting_x + (button_width + buttons_gap_x) * 2, buttons_y,
                                               button_width,
                                               button_height,
                                               RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_OUT"),
-                                              pushed_image=RessourceLoader.get(
-                                                  "dpt.images.gui.buttons.BTN_GRAY_CIRCLE_IN"),
-                                              text_sprite=TextSpriteButton(47, 50, RessourceLoader.get(
-                                                  "dpt.images.gui.symbols.SYMB_SETTINGS"))),
+                                              pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_IN"),
+                                              text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                           math.floor(50 * Game.DISPLAY_RATIO),
+                                                                           RessourceLoader.get("dpt.images.gui.symbols.SYMB_SETTINGS"))),
                     "button_quit": Button(buttons_starting_x + (button_width + buttons_gap_x) * 3, buttons_y,
                                           button_width,
                                           button_height,
                                           RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_OUT"),
                                           pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_IN"),
-                                          text_sprite=TextSpriteButton(47, 50, RessourceLoader.get(
-                                              "dpt.images.gui.symbols.SYMB_X"))),
+                                          text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                       math.floor(50 * Game.DISPLAY_RATIO),
+                                                                       RessourceLoader.get("dpt.images.gui.symbols.SYMB_X"))),
                     "window": Window((Game.surface.get_size()[0] // 2) - math.floor(122 * 3 * Game.DISPLAY_RATIO),
                                      buttons_y + button_height // 2 - math.floor(64 * 1.5 * Game.DISPLAY_RATIO), 6, 3)}
 
@@ -148,11 +152,22 @@ class Scenes:
         # Ajout du GUI
         from dpt.engine.gui.menu.slider import Slider
         from dpt.engine.gui.menu import Window
-        Game.gui = {"window_sound": Window(410 * Game.DISPLAY_RATIO, 130, 9, 5),
-                    "window_graphics": Window(410 * Game.DISPLAY_RATIO, 550, 9, 6),
-                    "window_menu": Window(50 * Game.DISPLAY_RATIO, 0, 2, 6, centery=Game.surface.get_size()[1] // 2),
+        from dpt.engine.gui.menu.button import Button
+        from dpt.engine.gui.menu.textSpriteButton import TextSpriteButton
+        from dpt.engine.gui.menu.text import Text
+        from dpt.engine.gui.menu.ratioButton import RatioButton
+
+        btn_list = []
+
+        Game.gui = {"window_sound": Window(410 * Game.DISPLAY_RATIO, 190 * Game.DISPLAY_RATIO, 9, 5),
+                    "sound_title": Text(math.floor(810 * Game.DISPLAY_RATIO),
+                                        math.floor(200 * Game.DISPLAY_RATIO),
+                                        "Options sonores",
+                                        math.floor(50 * Game.DISPLAY_RATIO),
+                                        (0, 0, 0),
+                                        "dpt.fonts.DINOT_CondBlack"),
                     "general_volume_slider": Slider(math.floor(480 * Game.DISPLAY_RATIO),
-                                                    math.floor(270 * Game.DISPLAY_RATIO),
+                                                    math.floor(330 * Game.DISPLAY_RATIO),
                                                     math.floor(960 * Game.DISPLAY_RATIO),
                                                     math.floor(50 * Game.DISPLAY_RATIO),
                                                     Game.settings["general_volume"],
@@ -164,8 +179,14 @@ class Scenes:
                                                     image_slide_pushed=RessourceLoader.get("dpt.images.gui.buttons.BTN_SLIDER_SM_8"),
                                                     image_progress_bar_frame=RessourceLoader.get("dpt.images.gui.ui.UI_BARFRAME"),
                                                     image_progress_bar_bar=RessourceLoader.get("dpt.images.gui.ui.UI_FULLBAR")),
+                    "general_volume_title": Text(math.floor(890 * Game.DISPLAY_RATIO),
+                                                 math.floor(295 * Game.DISPLAY_RATIO),
+                                                 "Volume général",
+                                                 math.floor(25 * Game.DISPLAY_RATIO),
+                                                 (0, 0, 0),
+                                                 "dpt.fonts.DINOT_CondBlack"),
                     "music_volume_slider": Slider(math.floor(480 * Game.DISPLAY_RATIO),
-                                                  math.floor(320 * Game.DISPLAY_RATIO),
+                                                  math.floor(380 * Game.DISPLAY_RATIO),
                                                   math.floor(470 * Game.DISPLAY_RATIO),
                                                   math.floor(50 * Game.DISPLAY_RATIO),
                                                   Game.settings["music_volume"],
@@ -177,8 +198,14 @@ class Scenes:
                                                   image_slide_pushed=RessourceLoader.get("dpt.images.gui.buttons.BTN_SLIDER_SM_6"),
                                                   image_progress_bar_frame=RessourceLoader.get("dpt.images.gui.ui.UI_BARFRAME"),
                                                   image_progress_bar_bar=RessourceLoader.get("dpt.images.gui.ui.UI_COLORBAR_2")),
+                    "music_volume_title": Text(math.floor(620 * Game.DISPLAY_RATIO),
+                                               math.floor(430 * Game.DISPLAY_RATIO),
+                                               "Volume de la musique",
+                                               math.floor(25 * Game.DISPLAY_RATIO),
+                                               (0, 0, 0),
+                                               "dpt.fonts.DINOT_CondBlack"),
                     "sound_volume_slider": Slider(math.floor(970 * Game.DISPLAY_RATIO),
-                                                  math.floor(320 * Game.DISPLAY_RATIO),
+                                                  math.floor(380 * Game.DISPLAY_RATIO),
                                                   math.floor(470 * Game.DISPLAY_RATIO),
                                                   math.floor(50 * Game.DISPLAY_RATIO),
                                                   Game.settings["sound_volume"],
@@ -189,8 +216,110 @@ class Scenes:
                                                   image_slide=RessourceLoader.get("dpt.images.gui.buttons.BTN_SLIDER_SM_11"),
                                                   image_slide_pushed=RessourceLoader.get("dpt.images.gui.buttons.BTN_SLIDER_SM_5"),
                                                   image_progress_bar_frame=RessourceLoader.get("dpt.images.gui.ui.UI_BARFRAME"),
-                                                  image_progress_bar_bar=RessourceLoader.get("dpt.images.gui.ui.UI_COLORBAR_3"))
+                                                  image_progress_bar_bar=RessourceLoader.get("dpt.images.gui.ui.UI_COLORBAR_3")),
+                    "sound_volume_title": Text(math.floor(1125 * Game.DISPLAY_RATIO),
+                                               math.floor(430 * Game.DISPLAY_RATIO),
+                                               "Volume des effets",
+                                               math.floor(25 * Game.DISPLAY_RATIO),
+                                               (0, 0, 0),
+                                               "dpt.fonts.DINOT_CondBlack"),
+
+                    "window_graphics": Window(math.floor(409 * Game.DISPLAY_RATIO), math.floor(505 * Game.DISPLAY_RATIO), 5, 6),
+                    "graphics_title": Text(math.floor(550 * Game.DISPLAY_RATIO),
+                                           math.floor(515 * Game.DISPLAY_RATIO),
+                                           "Options graphiques",
+                                           math.floor(50 * Game.DISPLAY_RATIO),
+                                           (0, 0, 0),
+                                           "dpt.fonts.DINOT_CondBlack"),
+
+                    "window_server": Window(math.floor(1022 * Game.DISPLAY_RATIO), math.floor(505 * Game.DISPLAY_RATIO), 4, 6),
+                    "server_title": Text(math.floor(1080 * Game.DISPLAY_RATIO),
+                                         math.floor(515 * Game.DISPLAY_RATIO),
+                                         "Options de connexion",
+                                         math.floor(50 * Game.DISPLAY_RATIO),
+                                         (0, 0, 0),
+                                         "dpt.fonts.DINOT_CondBlack"),
+                    "default_server_button": RatioButton(math.floor(1100 * Game.DISPLAY_RATIO),
+                                                         math.floor(625 * Game.DISPLAY_RATIO),
+                                                         0.7,
+                                                         btn_list),
+                    "custom_server_button": RatioButton(math.floor(1100 * Game.DISPLAY_RATIO),
+                                                        math.floor(675 * Game.DISPLAY_RATIO),
+                                                        0.7,
+                                                        btn_list),
+                    "default_server_text": Text(math.floor(1150 * Game.DISPLAY_RATIO),
+                                                math.floor(620 * Game.DISPLAY_RATIO),
+                                                "Serveur officiel",
+                                                math.floor(30 * Game.DISPLAY_RATIO),
+                                                (0, 0, 0),
+                                                "dpt.fonts.DINOT_CondBlack"),
+                    "custom_server_text": Text(math.floor(1150 * Game.DISPLAY_RATIO),
+                                               math.floor(670 * Game.DISPLAY_RATIO),
+                                               "Serveur privé",
+                                               math.floor(30 * Game.DISPLAY_RATIO),
+                                               (0, 0, 0),
+                                               "dpt.fonts.DINOT_CondBlack"),
+                    "custom_server_text_button": Button(math.floor(1330 * Game.DISPLAY_RATIO),
+                                                        math.floor(665 * Game.DISPLAY_RATIO),
+                                                        math.floor(69 * Game.DISPLAY_RATIO),
+                                                        math.floor(52 * Game.DISPLAY_RATIO),
+                                                        RessourceLoader.get("dpt.images.gui.buttons.BTN_PLAIN_2"),
+                                                        text_sprite=TextSpriteButton(math.floor(40 * Game.DISPLAY_RATIO),
+                                                                                     math.floor(30 * Game.DISPLAY_RATIO),
+                                                                                     RessourceLoader.get("dpt.images.gui.symbols.SYMB_MENU"))),
+                    "custom_server_text_1": Text(math.floor(1100 * Game.DISPLAY_RATIO),
+                                                 math.floor(710 * Game.DISPLAY_RATIO),
+                                                 "Attention, cet option permet de se",
+                                                 math.floor(25 * Game.DISPLAY_RATIO),
+                                                 (0, 0, 0),
+                                                 "dpt.fonts.DINOT_CondBlack"),
+                    "custom_server_text_2": Text(math.floor(1100 * Game.DISPLAY_RATIO),
+                                                 math.floor(735 * Game.DISPLAY_RATIO),
+                                                 "connecter à un serveur, pas de le créer !",
+                                                 math.floor(25 * Game.DISPLAY_RATIO),
+                                                 (0, 0, 0),
+                                                 "dpt.fonts.DINOT_CondBlack"),
+                    "custom_server_text_3": Text(math.floor(1100 * Game.DISPLAY_RATIO),
+                                                 math.floor(760 * Game.DISPLAY_RATIO),
+                                                 "Voir la documentation pour plus d'infor-",
+                                                 math.floor(25 * Game.DISPLAY_RATIO),
+                                                 (0, 0, 0),
+                                                 "dpt.fonts.DINOT_CondBlack"),
+                    "custom_server_text_4": Text(math.floor(1100 * Game.DISPLAY_RATIO),
+                                                 math.floor(785 * Game.DISPLAY_RATIO),
+                                                 "mations sur la création de serveurs.",
+                                                 math.floor(25 * Game.DISPLAY_RATIO),
+                                                 (0, 0, 0),
+                                                 "dpt.fonts.DINOT_CondBlack"),
+
+                    "window_menu": Window(50 * Game.DISPLAY_RATIO, 0, 2, 6, centery=Game.surface.get_size()[1] // 2),
+                    "apply_button": Button(math.floor(125 * Game.DISPLAY_RATIO),
+                                           math.floor(390 * Game.DISPLAY_RATIO),
+                                           math.floor(92 * Game.DISPLAY_RATIO),
+                                           math.floor(95 * Game.DISPLAY_RATIO),
+                                           RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_OUT"),
+                                           pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_IN"),
+                                           text_sprite=TextSpriteButton(50, 47, RessourceLoader.get("dpt.images.gui.symbols.SYMB_CHECK"))),
+                    "cancel_button": Button(math.floor(125 * Game.DISPLAY_RATIO),
+                                            math.floor(495 * Game.DISPLAY_RATIO),
+                                            math.floor(92 * Game.DISPLAY_RATIO),
+                                            math.floor(95 * Game.DISPLAY_RATIO),
+                                            RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_OUT"),
+                                            pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_IN"),
+                                            text_sprite=TextSpriteButton(47, 50, RessourceLoader.get("dpt.images.gui.symbols.SYMB_BIGX"))),
+                    "return_button": Button(math.floor(125 * Game.DISPLAY_RATIO),
+                                            math.floor(600 * Game.DISPLAY_RATIO),
+                                            math.floor(92 * Game.DISPLAY_RATIO),
+                                            math.floor(95 * Game.DISPLAY_RATIO),
+                                            RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_OUT"),
+                                            pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_IN"),
+                                            text_sprite=TextSpriteButton(47, 33, RessourceLoader.get("dpt.images.gui.symbols.SYMB_LEFTARROW")))
                     }
+
+        if Game.settings["server_adress"] == Game.DEFAULT_SERVER_ADRESS:
+            Game.gui["default_server_button"].value = True
+        else:
+            Game.gui["custom_server_button"].value = True
 
         # Loops
         from dpt.engine.mainLoop import settings_menu_loop

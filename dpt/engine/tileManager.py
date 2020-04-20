@@ -198,7 +198,7 @@ class TileManager:
         TileManager.editor_panel_group.empty()
         Game.editor_tile_registry.clear()
         value = bool(cls.check_back)
-        Checkbox.checkboxGroup.empty()
+        Checkbox.checkbox_group.empty()
         cls.check_back = Checkbox(Game.surface.get_size()[0] // 4 * 3 + Game.TILESIZE // 4, Game.TILESIZE // 4, 1)
         cls.check_back.value = value
         cls.count = 0
@@ -232,7 +232,7 @@ class TileManager:
     def scroll_up(cls):
         if TileEditor.panel_open:
             TileManager.editor_panel_group.empty()
-            Checkbox.checkboxGroup.empty()
+            Checkbox.checkbox_group.empty()
             Game.editor_tile_registry.clear()
             if cls.nb_skip > 0:
                 cls.nb_skip -= cls.per_line
@@ -253,7 +253,7 @@ class TileManager:
     def display_cam_info(cls):
         obj_count = TileManager.camera.sprite_count + len(TileManager.foreground_blocks_group) + len(
             TileManager.deadly_object_group) + len(Button.buttonsGroup) + len(Button.text_sprite_buttonsGroup) + len(
-            Button.text_buttonsList) + len(Checkbox.checkboxGroup) + len(ProgressBar.progress_bar_group) + len(
+            Button.text_buttonsList) + len(Checkbox.checkbox_group) + len(ProgressBar.progress_bar_group) + len(
             ProgressBar.bar_group)
 
         Game.add_debug_info("CAMERA INFORMATIONS")
@@ -274,7 +274,7 @@ class TileManager:
         Game.add_debug_info("   " + str(len(Button.buttonsGroup)) + " buttons")
         Game.add_debug_info("       " + str(len(Button.text_sprite_buttonsGroup)) + " texts (sprites)")
         Game.add_debug_info("       " + str(len(Button.text_buttonsList)) + " texts")
-        Game.add_debug_info("   " + str(len(Checkbox.checkboxGroup)) + " checkbox")
+        Game.add_debug_info("   " + str(len(Checkbox.checkbox_group)) + " checkbox")
         Game.add_debug_info("   " + str(len(ProgressBar.progress_bar_group)) + " progress bars")
         Game.add_debug_info("       " + str(len(ProgressBar.bar_group)) + " bars")
         Game.add_debug_info("----------")

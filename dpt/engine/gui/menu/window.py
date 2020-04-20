@@ -11,15 +11,11 @@ class Window:
     def __init__(self, x, y, width_number, height_number, **kwargs):
         self.rect = pygame.rect.Rect(x, y, width_number * 122 * Game.DISPLAY_RATIO, height_number * 64 * Game.DISPLAY_RATIO)
 
-        try:
+        if "centerx" in kwargs:
             self.rect.centerx = kwargs["centerx"]
-        except KeyError:
-            pass
 
-        try:
+        if "centery" in kwargs:
             self.rect.centery = kwargs["centery"]
-        except KeyError:
-            pass
 
         self.sprites = []
         for rx in range(width_number):

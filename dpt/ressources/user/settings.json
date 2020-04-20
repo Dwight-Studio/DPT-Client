@@ -1,7 +1,8 @@
 {
-  "general_volume": 0.5,
-  "music_volume": 0.3836477987421384,
-  "sound_volume": 1,
+  "general_volume": 0.4975247524752475,
+  "music_volume": 0.3113207547169811,
+  "sound_volume": 1.0,
   "window_width": 0,
-  "window_height": 0
+  "window_height": 0,
+  "server_adress": "localhost"
 }

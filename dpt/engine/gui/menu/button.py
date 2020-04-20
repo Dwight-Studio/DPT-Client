@@ -13,41 +13,42 @@ class Button(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height, normal_image, **kwargs):
         pygame.sprite.Sprite.__init__(self, Button.buttonsGroup)  # Sprite's constructor called
         self.normal_image = normal_image
-        try:
+        if "pushed_image" in kwargs:
             self.pushed_image = kwargs["pushed_image"]
             del kwargs["pushed_image"]
-        except KeyError:
+        else:
             self.pushed_image = self.normal_image
-        try:
+        if "locked_image" in kwargs:
             self.locked_image = kwargs["locked_image"]
             del kwargs["locked_image"]
-        except KeyError:
+        else:
             self.locked_image = self.normal_image
-        try:
+        if "hover_image" in kwargs:
             self.hover_image = kwargs["hover_image"] or self.normal_image
             del kwargs["hover_image"]
-        except KeyError:
+        else:
             self.hover_image = self.normal_image
-        try:
+        if "font" in kwargs:
             self.font = kwargs["font"]
             del kwargs["font"]
-        except KeyError:
+        else:
             self.font = pygame.font.SysFont("arial", math.floor(15 * Game.DISPLAY_RATIO))
-        try:
+        if "font_color" in kwargs:
             self.font_color = kwargs["font_color"]
             del kwargs["font_color"]
-        except KeyError:
+        else:
             self.font_color = (0, 0, 0)
-        try:
+        if "text" in kwargs:
             self.text = kwargs["text"]
             del kwargs["text"]
-        except KeyError:
+        else:
             self.text = None
-        try:
+        if "text_sprite" in kwargs:
             self.text_sprite = kwargs["text_sprite"]
             del kwargs["text_sprite"]
-        except KeyError:
+        else:
             self.text_sprite = None
+
         self.eventargs = kwargs
         self.image = self.normal_image
         self.width = width
@@ -57,6 +58,7 @@ class Button(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
         self.pushed = False
+        self.previous = 0
         self.locked = False
         Game.get_logger("Button").debug("Button created")
 
@@ -84,13 +86,17 @@ class Button(pygame.sprite.Sprite):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.rect.collidepoint(pygame.mouse.get_pos()):
                     self.pushed = True
+                    self.previous = 5
 
-        if self.pushed:
+        if self.pushed or self.previous > 0:
             self.image = self.pushed_image
             if self.text_sprite is not None:
                 self.text_sprite.rect.centery = self.rect.centery + math.floor(self.rect.height * 0.1)
-            event = pygame.event.Event(Game.BUTTON_EVENT, **dict(button=self, **self.eventargs))
-            pygame.event.post(event)
+            if self.pushed:
+                event = pygame.event.Event(Game.BUTTON_EVENT, **dict(button=self, **self.eventargs))
+                pygame.event.post(event)
+            else:
+                self.previous -= 1
         else:
             if self.rect.collidepoint(pygame.mouse.get_pos()):
                 self.image = self.hover_image

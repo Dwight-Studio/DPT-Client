@@ -70,7 +70,7 @@ class TileEditor:
                     elif keys[pygame.K_t] and not cls.tpushed and cls.panel_open:
                         cls.tpushed = True
                         TileManager.editor_panel_group.empty()
-                        Checkbox.checkboxGroup.empty()
+                        Checkbox.checkbox_group.empty()
                         cls.panel_open = False
                     elif not keys[pygame.K_t] and cls.tpushed:
                         cls.tpushed = False

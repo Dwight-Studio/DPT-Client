@@ -1,6 +1,8 @@
 import math
 import dpt.engine.gui.menu as menu
 import pygame
+import tkinter as tk
+from tkinter import simpledialog
 
 from dpt.engine.fileManager import FileManager
 from dpt.engine.gui.editor.tileEditor import TileEditor
@@ -52,7 +54,7 @@ def level_loop():
             else:
                 Game.gui["editor_button"].text = "Retour"
             TileEditor.panel_open = False
-            Checkbox.checkboxGroup.empty()
+            Checkbox.checkbox_group.empty()
             TileManager.load_level(TileManager.levelName)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 4 and TileEditor.in_editor:
@@ -140,13 +142,41 @@ def main_menu_loop():
 def settings_menu_loop():
     Game.surface.blit(bg, (0, 0))
 
+    menu.main_loop()
+
+    from dpt.engine.gui.menu.slider import Slider
+
     for event in Game.events:
         if event.type == pygame.QUIT:
             Game.run = False
-
-    menu.main_loop()
-    Game.settings["music_volume"] = Game.gui["music_volume_slider"].value
-    pygame.mixer_music.set_volume(Game.settings["music_volume"] * Game.settings["general_volume"])
+        if event.type == Game.BUTTON_EVENT:
+            if event.button == Game.gui["apply_button"]:
+                Game.settings["general_volume"] = Game.gui["general_volume_slider"].value
+                Game.settings["music_volume"] = Game.gui["music_volume_slider"].value
+                Game.settings["sound_volume"] = Game.gui["sound_volume_slider"].value
+                pygame.mixer_music.set_volume(Game.settings["general_volume"] * Game.settings["music_volume"])
+                Game.surface = Game.window.set_mode((Game.settings["window_width"], Game.settings["window_height"]), pygame.NOFRAME)
+            if event.button == Game.gui["cancel_button"]:
+                pygame.mixer_music.set_volume(Game.settings["general_volume"] * Game.settings["music_volume"])
+                Game.surface = Game.window.set_mode((Game.settings["window_width"], Game.settings["window_height"]), pygame.NOFRAME)
+                menu.delete_items()
+                Scenes.main_menu(load=False)
+                return
+            if event.button == Game.gui["return_button"]:
+                Game.settings["general_volume"] = Game.gui["general_volume_slider"].value
+                Game.settings["music_volume"] = Game.gui["music_volume_slider"].value
+                Game.settings["sound_volume"] = Game.gui["sound_volume_slider"].value
+                pygame.mixer_music.set_volume(Game.settings["general_volume"] * Game.settings["music_volume"])
+                Game.surface = Game.window.set_mode((Game.settings["window_width"], Game.settings["window_height"]), pygame.NOFRAME)
+                menu.delete_items()
+                Scenes.main_menu(load=False)
+                return
+            if event.button == Game.gui["custom_server_text_button"]:
+                root = tk.Tk()
+                root.withdraw()
+                s = simpledialog.askstring("Adresse du serveur", "URL (sans le http(s)://)", parent=root, )
+                if s is not None:
+                    Game.gui["server_address"] = s
 
     Game.display_debug_info()
     Game.draw_cursor()

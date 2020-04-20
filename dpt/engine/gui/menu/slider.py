@@ -18,19 +18,16 @@ class Slider(object):
         self.width = width
         self.height = height
 
-        try:
-            image_left = kwargs["image_left"]
-            self.image_left = pygame.transform.smoothscale(image_left, (
-                math.floor((image_left.get_rect().width / image_left.get_rect().height) * height), height))
-        except KeyError:
-            raise
+        image_left = kwargs["image_left"]
+        self.image_left = pygame.transform.smoothscale(image_left, (
+            math.floor((image_left.get_rect().width / image_left.get_rect().height) * height), height))
 
-        try:
+        if "image_left_pushed" in kwargs:
             image_left_pushed = kwargs["image_left_pushed"]
             self.image_left_pushed = pygame.transform.smoothscale(image_left_pushed, (
                 math.floor((image_left_pushed.get_rect().width / image_left_pushed.get_rect().height) * height),
                 height))
-        except KeyError:
+        else:
             self.image_left_pushed = self.image_left
 
         self.left = Button(self.rect.x,
@@ -40,20 +37,17 @@ class Slider(object):
                            self.image_left,
                            pushed_image=self.image_left_pushed)
 
-        try:
-            image_right = kwargs["image_right"]
-            self.image_right = pygame.transform.smoothscale(image_right, (
-                math.floor((image_right.get_rect().width / image_right.get_rect().height) * height),
-                height))
-        except KeyError:
-            raise
+        image_right = kwargs["image_right"]
+        self.image_right = pygame.transform.smoothscale(image_right, (
+            math.floor((image_right.get_rect().width / image_right.get_rect().height) * height),
+            height))
 
-        try:
+        if "image_right_pushed" in kwargs:
             image_right_pushed = kwargs["image_right_pushed"]
             self.image_right_pushed = pygame.transform.smoothscale(image_right_pushed, (
                 math.floor((image_right_pushed.get_rect().width / image_right_pushed.get_rect().height) * height),
                 height))
-        except KeyError:
+        else:
             self.image_right_pushed = self.image_right
 
         self.right = Button(self.rect.right - self.image_right.get_rect().width,
@@ -63,28 +57,25 @@ class Slider(object):
                             self.image_right,
                             pushed_image=self.image_right_pushed)
 
-        try:
-            image_slide = kwargs["image_slide"]
-            self.image_slide = pygame.transform.smoothscale(image_slide, (
-                math.floor((image_slide.get_rect().width / image_slide.get_rect().height) * height),
-                height))
-        except KeyError:
-            raise
+        image_slide = kwargs["image_slide"]
+        self.image_slide = pygame.transform.smoothscale(image_slide, (
+            math.floor((image_slide.get_rect().width / image_slide.get_rect().height) * height),
+            height))
 
-        try:
+        if "image_slide_pushed" in kwargs:
             image_slide_pushed = kwargs["image_slide_pushed"]
             self.image_slide_pushed = pygame.transform.smoothscale(image_slide_pushed, (
                 math.floor((image_slide_pushed.get_rect().width / image_slide_pushed.get_rect().height) * height),
                 height))
-        except KeyError:
+        else:
             self.image_slide_pushed = self.image_slide
 
-        try:
+        if "image_progress_bar_frame" in kwargs:
             image_progress_bar_frame = kwargs["image_progress_bar_frame"]
             self.image_progress_bar_frame = pygame.transform.smoothscale(image_progress_bar_frame, (
                 math.floor((self.rect.width - self.left.width - self.right.width)),
                 height))
-        except KeyError:
+        else:
             self.image_progress_bar_frame = None
 
         try:
@@ -109,6 +100,7 @@ class Slider(object):
         self.slide.rect.x = self.left.rect.right + (value * (self.right.rect.left - self.left.rect.right - self.slide.width))
         self.slide.apply_x()
         self.value = value
+        Game.get_logger("Slider").debug("Slider created")
 
     def update(self):
         self.right.update()
@@ -138,7 +130,6 @@ class Slider(object):
         self.right.kill()
         self.left.kill()
         self.slide.kill()
-        Slider.slider_list.remove(self)
 
     def draw(self, surface):
         surface.blit(self.right.image, self.right.rect)

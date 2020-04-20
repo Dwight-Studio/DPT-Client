@@ -140,6 +140,8 @@ class RessourceLoader:
                     cls.loaded_ressources[entry] = cls.pending_ressources[entry]
                 elif ext[-1] == "ogg" and ext[-2] != "music":
                     cls.loaded_ressources[entry] = pygame.mixer.Sound(cls.pending_ressources[entry])
+                elif ext[-1] == "otf":
+                    cls.loaded_ressources[entry] = cls.pending_ressources[entry]
                 else:
                     cls.logger.warning("Entry " + entry + " invalid")
                     continue

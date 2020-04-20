@@ -1,5 +1,4 @@
 import math
-
 import pygame
 
 from dpt.engine.loader import RessourceLoader
@@ -7,10 +6,10 @@ from dpt.game import Game
 
 
 class Checkbox(pygame.sprite.Sprite):
-    checkboxGroup = pygame.sprite.Group()
+    checkbox_group = pygame.sprite.Group()
 
     def __init__(self, x, y, size):
-        pygame.sprite.Sprite.__init__(self, self.checkboxGroup)  # Sprite's constructor called
+        pygame.sprite.Sprite.__init__(self, self.checkbox_group)  # Sprite's constructor called
         self.false_image = RessourceLoader.get("dpt.images.gui.Buttons.BTN_CHECKBOX_OUT").copy()
         self.true_image = RessourceLoader.get("dpt.images.gui.Buttons.BTN_CHECKBOX_IN").copy()
         self.image = self.false_image
@@ -18,7 +17,8 @@ class Checkbox(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.width = math.floor(self.rect.width * self.size * Game.DISPLAY_RATIO)
         self.height = math.floor(self.rect.height * self.size * Game.DISPLAY_RATIO)
-        self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
+        self.true_image = pygame.transform.smoothscale(self.true_image, (self.width, self.height))
+        self.false_image = pygame.transform.smoothscale(self.false_image, (self.width, self.height))
         del self.rect
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -57,5 +57,5 @@ class Checkbox(pygame.sprite.Sprite):
 
     @classmethod
     def main_loop(cls):
-        Checkbox.checkboxGroup.update()
-        Checkbox.checkboxGroup.draw(Game.surface)
+        Checkbox.checkbox_group.update()
+        Checkbox.checkbox_group.draw(Game.surface)

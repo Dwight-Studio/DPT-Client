@@ -31,8 +31,8 @@ class Game(object):
     PYGAME_VERSION = pygame.version.ver
     PLATFORM = sys.platform
     ROOT_DIRECTORY = get_root()
-    SERVER_ADDRESS = "localhost"
     VOTE_TIMEOUT = 80
+    DEFAULT_SERVER_ADRESS = "join.dont-play-together.fr"
     TILESIZE = 90
     DISPLAY_RATIO = 1
     DISPLAY_RECT = False
@@ -60,11 +60,12 @@ class Game(object):
     cursor2 = None
 
     settings = {
-        "general_volume": 0.5,
+        "general_volume": 1,
         "music_volume": 1,
         "sound_volume": 1,
         "window_width": 0,
-        "window_height": 0
+        "window_height": 0,
+        "server_adress": "localhost"
     }
 
     anim_count_lava = 0
