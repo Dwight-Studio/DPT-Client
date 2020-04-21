@@ -54,6 +54,8 @@ class PlayerSprite(pygame.sprite.Sprite):
             mur = -TileManager.camera.last_x
 
             Game.add_debug_info("Player.damaged = " + str(self.damaged))
+            Game.add_debug_info("Player.yvel = " + str(self.yvel))
+            Game.add_debug_info("Player.jumpCount = " + str(self.jumpCount))
 
             if keys[pygame.K_LEFT] and self.rect.x - self.xvel - 1 > mur:
                 if self.xvel > 0:
@@ -87,12 +89,11 @@ class PlayerSprite(pygame.sprite.Sprite):
                         self.onPlatform = False
                 else:
                     if not self.onPlatform:
-                        if self.jumpCount > 0:
-                            neg = 1
+                        if self.jumpCount >= 0:
+                            self.yvel = math.floor((self.jumpCount ** 2) * 0.05 * Game.DISPLAY_RATIO)
+                            self.jumpCount -= 1
                         else:
-                            neg = -1
-                        self.yvel = math.floor((self.jumpCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * neg
-                        self.jumpCount -= 1
+                            self.isJump = False
 
             if not self.isJump and not self.isRebound:
                 Game.add_debug_info("GRAVITY")
@@ -107,7 +108,8 @@ class PlayerSprite(pygame.sprite.Sprite):
             self.collide()
 
             self.rect.left += math.floor(self.xvel)
-            self.rect.top -= math.floor(self.yvel)
+            if not self.isRebound:
+                self.rect.top -= math.floor(self.yvel)
 
             self.animation()
             self.enemies_collision(self.yvel, TileManager.enemy_group)
@@ -280,7 +282,7 @@ class PlayerSprite(pygame.sprite.Sprite):
             neg = 1
         else:
             neg = -1
-        self.yvel = math.floor((self.gravityCount ** 2) * 0.008 * Game.DISPLAY_RATIO) * neg
+        self.yvel = math.floor((self.gravityCount ** 2) * 0.01 * Game.DISPLAY_RATIO) * neg
         self.jumpCount -= 1
         self.collide()
         self.rect.top -= self.yvel
