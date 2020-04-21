@@ -152,7 +152,7 @@ class TileManager:
                         cls.log.warning("Invalid class name : " + level[keys]["backgroundClass"] + " for tile : " + keys)
 
         if not TileEditor.in_editor:
-            from dpt.engine.characters.PlayerSpriteModifs import PlayerSprite
+            from dpt.engine.characters.yesOnceAgainThereIsANewPlayerFile import PlayerSprite
             Game.player_sprite = PlayerSprite(300, Game.surface.get_size()[1] - 500)
             Game.player_group.add(Game.player_sprite)
             if TileManager.max_width_size < math.floor(Game.surface.get_size()[0] / Game.TILESIZE):

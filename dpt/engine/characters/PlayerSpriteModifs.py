@@ -166,6 +166,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                     mask = self.mask.overlap_mask(i.mask, (rx, cry))
                     b_rects = mask.get_bounding_rects()
                     for rect in b_rects:
+                        Game.add_debug_info("dx = " + str(dx))
                         if self.rect.x > i.rect.x:
                             dx = rect.width + math.floor(self.xvel)
                             self.xvel = 0

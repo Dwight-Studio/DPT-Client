@@ -11,7 +11,7 @@ class PlayerSprite(pygame.sprite.Sprite):
     char = "dpt.images.characters.player.standing"
     walkRightTextures = "dpt.images.characters.player.R*"
     walkLeftTextures = "dpt.images.characters.player.L*"
-    gravityCount = 0
+    mask = "dpt.images.characters.player.mask"
 
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
@@ -38,98 +38,80 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.CONSTJUMPCOUNT = self.jumpCount
         self.onPlatform = False
         self.allowJump = True
+        self.mask = pygame.mask.from_surface(pygame.transform.scale(RessourceLoader.get(PlayerSprite.mask),
+                                                                    (self.width, self.height)))
+        self.gravityCount = 0
+        self.gravity = 0
+        self.imunityTime = 180
         self.alive = True
         self.damaged = False
         self.big = True
-        self.imunityTime = 180
         self.isRebound = False
-        self.isFalling = True
 
     def update(self):
         if self.alive:
             keys = pygame.key.get_pressed()
             mur = -TileManager.camera.last_x
-            if not self.isRebound and not self.isFalling:
-                self.allowJump = True
+
+            Game.add_debug_info("Player.damaged = " + str(self.damaged))
 
             if keys[pygame.K_LEFT] and self.rect.x - self.xvel - 1 > mur:
                 if self.xvel > 0:
                     self.xvel = 0
-                if self.xvel > -4 * Game.DISPLAY_RATIO:
-                    self.xvel -= 0.5 * Game.DISPLAY_RATIO
+                if -4 * Game.DISPLAY_RATIO > self.xvel > -8 * Game.DISPLAY_RATIO and self.onPlatform:
+                    self.xvel += self.xvel * 0.01
+                if self.xvel >= -4 * Game.DISPLAY_RATIO:
+                    self.xvel -= 0.25 * Game.DISPLAY_RATIO
                 self.left = True
                 self.right = False
                 self.standing = False
             elif keys[pygame.K_RIGHT]:
                 if self.xvel < 0:
                     self.xvel = 0
-                if self.xvel < 4 * Game.DISPLAY_RATIO:
-                    self.xvel += 0.5 * Game.DISPLAY_RATIO
+                if 4 * Game.DISPLAY_RATIO < self.xvel < 8 * Game.DISPLAY_RATIO and self.onPlatform:
+                    self.xvel += self.xvel * 0.01
+                if self.xvel <= 4 * Game.DISPLAY_RATIO:
+                    self.xvel += 0.25 * Game.DISPLAY_RATIO
                 self.left = False
                 self.right = True
                 self.standing = False
             else:
                 self.xvel = 0
-                # if self.xvel > 0:
-                #    self.xvel -= 1
-                # elif self.xvel < 0:
-                #    self.xvel += 1
                 self.standing = True
                 self.walkCount = 0
-            if not self.isRebound:
-                if self.allowJump:
-                    if not self.isJump:
-                        if keys[pygame.K_UP]:
-                            self.isJump = True
-                            self.left = False
-                            self.walkCount = 0
-                            self.onPlatform = False
-                    else:
-                        if not self.onPlatform:
-                            if self.jumpCount > 0:
-                                neg = 1
-                            else:
-                                neg = -1
-                            self.yvel = math.floor((self.jumpCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * neg
-                            self.jumpCount -= 1
-                        elif self.onPlatform:
-                            self.jumpCount = self.CONSTJUMPCOUNT
-                            self.isJump = False
-                            self.yvel = 0
-
-            if self.isRebound:
-                if self.jumpCount > 0:
-                    neg = 1
+            if self.allowJump and not self.isRebound:
+                if not self.isJump:
+                    if keys[pygame.K_UP]:
+                        self.isJump = True
+                        self.walkCount = 0
+                        self.onPlatform = False
                 else:
-                    neg = -1
-                self.yvel = math.floor((self.jumpCount ** 2) * 0.008 * Game.DISPLAY_RATIO) * neg
-                self.jumpCount -= 1
-                self.rect.top -= self.yvel
-                self.collide(0, self.yvel, TileManager.environment_group)
-
-            self.rect.left += self.xvel
-            self.collide(self.xvel, 0, TileManager.environment_group)
-            self.rect.top -= self.yvel
-            self.collide(0, self.yvel, TileManager.environment_group)
+                    if not self.onPlatform:
+                        if self.jumpCount > 0:
+                            neg = 1
+                        else:
+                            neg = -1
+                        self.yvel = math.floor((self.jumpCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * neg
+                        self.jumpCount -= 1
 
             if not self.isJump and not self.isRebound:
-                self.isFalling = True
+                Game.add_debug_info("GRAVITY")
                 self.allowJump = False
-                PlayerSprite.gravityCount += 1
-                PlayerSprite.gravity = math.floor((PlayerSprite.gravityCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * -1
-                self.rect.top -= PlayerSprite.gravity
-                test = self.rect.top
-                self.collide(0, PlayerSprite.gravity, TileManager.environment_group)
-                if test == self.rect.top:
-                    self.isFalling = False
-                    self.allowJump = True
-                else:
-                    self.isFalling = True
-                    self.allowJump = False
+                self.gravityCount += 1
+                self.gravity = math.floor((self.gravityCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * -1
+                self.yvel = self.gravity
+
+            if self.isRebound:
+                self.rebound()
+
+            self.collide()
+
+            self.rect.left += math.floor(self.xvel)
+            self.rect.top -= math.floor(self.yvel)
+
             self.animation()
             self.enemies_collision(self.yvel, TileManager.enemy_group)
             self.deadly_object_collision()
-
             if self.damaged:
                 if self.big:
                     self.height = math.floor(self.height * 0.7)
@@ -141,14 +123,15 @@ class PlayerSprite(pygame.sprite.Sprite):
                     self.big = False
                     self.rect[2] //= 1.42
                     self.rect[3] //= 1.42
+                    self.mask = pygame.mask.from_surface(pygame.transform.scale(RessourceLoader.get(PlayerSprite.mask),
+                                                                                (self.width, self.height)))
                 self.imunityTime -= 1
             else:
                 if not self.big:
                     self.height = self.CONSTHEIGT
                     self.width = self.CONSTWIDTH
                     self.imunityTime = 180
-
-        elif not self.alive:
+        else:
             self.die()
         self.death_fall()
 
@@ -170,27 +153,67 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.image = self.walkLeft[0]
         # pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
 
-    def collide(self, x_vel_delta, y_vel_delta, platforms):
-        for i in platforms:
+    def collide(self):
+        for i in TileManager.environment_group:
             if i.rect.colliderect(Game.display_rect):
-                if pygame.sprite.collide_rect(self, i):
-                    if x_vel_delta > 0:
-                        self.rect.right = i.rect.left
-                        self.xvel = 0
-                    if x_vel_delta < 0:
-                        self.rect.left = i.rect.right
-                        self.xvel = 0
-                    if y_vel_delta < 0:
-                        self.rect.bottom = i.rect.top
-                        self.onPlatform = True
-                        self.isFalling = False
-                        self.jumpCount = self.CONSTJUMPCOUNT
-                        self.isRebound = False
-                        self.allowJump = True
-                        PlayerSprite.gravityCount = 0
-                    if y_vel_delta > 0:
-                        self.rect.top = i.rect.bottom
-                        self.jumpCount = 0
+                rx = i.rect.x - (self.rect.x + math.floor(self.xvel))
+                ry = i.rect.y - (self.rect.y - math.floor(self.yvel))
+                if self.mask.overlap(i.mask, (rx, ry)):
+                    dx = 0
+                    dy = 0
+
+                    if math.floor(self.yvel) == 0:
+                        mask = self.mask.overlap_mask(i.mask, (rx, ry))
+                        b_rects = mask.get_bounding_rects()
+                        for rect in b_rects:
+                            if -8 * Game.DISPLAY_RATIO <= rect.height <= 8 * Game.DISPLAY_RATIO:
+                                dy = rect.height
+                                self.yvel = 0
+                                self.onPlatform = True
+                                self.gravityCount = 0
+                                self.isJump = False
+                                self.allowJump = True
+                                self.jumpCount = self.CONSTJUMPCOUNT
+                                self.isRebound = False
+                            break
+
+                    crx = i.rect.x - self.rect.x
+                    mask = self.mask.overlap_mask(i.mask, (crx, ry))
+                    b_rects = mask.get_bounding_rects()
+                    for rect in b_rects:
+                        if self.rect.y < i.rect.y:
+                            dy = rect.height + math.floor(self.yvel)
+                            self.yvel = 0
+                            self.onPlatform = True
+                            self.gravityCount = 0
+                            self.isJump = False
+                            self.allowJump = True
+                            self.jumpCount = self.CONSTJUMPCOUNT
+                            self.isRebound = False
+                        elif self.rect.y > i.rect.y:
+                            dy = - rect.height + math.floor(self.yvel)
+                            self.yvel = 0
+                            self.isJump = False
+                            self.allowJump = False
+                            self.jumpCount = self.CONSTJUMPCOUNT
+                        break
+
+                    self.rect.y -= dy
+
+                    cry = (i.rect.y - self.rect.y)
+                    mask = self.mask.overlap_mask(i.mask, (rx, cry))
+                    b_rects = mask.get_bounding_rects()
+                    for rect in b_rects:
+                        Game.add_debug_info("dx = " + str(dx))
+                        if self.rect.x > i.rect.x:
+                            dx = rect.width + math.floor(self.xvel)
+                            self.xvel = 0
+                        elif self.rect.x < i.rect.x:
+                            dx = - rect.width + math.floor(self.xvel)
+                            self.xvel = 0
+                        break
+
+                    self.rect.x += dx
 
     def deadly_object_collision(self):
         for i in TileManager.deadly_object_group:
@@ -206,17 +229,22 @@ class PlayerSprite(pygame.sprite.Sprite):
                         self.jumpCount = self.CONSTJUMPCOUNT
                 else:
                     self.damaged = True
-                    self.isRebound = True
                     self.jumpCount = 25
+                    self.rebound()
+                    self.isRebound = True
 
     def enemies_collision(self, yVelDelta, enemies):
         for i in enemies:
             if pygame.sprite.collide_rect(self, i):
                 if yVelDelta < 0:
-                    i.kill()
+                    if self.damaged and self.imunityTime < 150:
+                        i.kill()
+                    elif not self.damaged:
+                        i.kill()
                 else:
                     if self.damaged:
                         if self.imunityTime < 0:
+                            self.alive = False
                             self.yvel = 0
                             Game.freeze_game = True
                             self.xvel = 0
@@ -225,15 +253,9 @@ class PlayerSprite(pygame.sprite.Sprite):
                             self.jumpCount = self.CONSTJUMPCOUNT
                     else:
                         self.damaged = True
-                        self.isRebound = True
                         self.jumpCount = 25
-
-    def death_fall(self):
-        if self.rect.top >= Game.surface.get_size()[1]:
-            Game.get_logger("Player").info("Player sprite killed")
-            Game.freeze_game = True
-            Game.player_sprite.kill()
-            del self
+                        self.rebound()
+                        self.isRebound = True
 
     def die(self):
         self.alive = False
@@ -243,4 +265,22 @@ class PlayerSprite(pygame.sprite.Sprite):
             neg = -1
         self.yvel = math.floor((self.jumpCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * neg
         self.jumpCount -= 1
+        self.rect.top -= self.yvel
+
+    def death_fall(self):
+        if self.rect.top >= Game.surface.get_size()[1]:
+            Game.get_logger("Player").info("Player sprite killed")
+            Game.freeze_game = True
+            Game.player_sprite.kill()
+            del self
+
+    def rebound(self):
+        self.allowJump = False
+        if self.jumpCount > 0:
+            neg = 1
+        else:
+            neg = -1
+        self.yvel = math.floor((self.gravityCount ** 2) * 0.008 * Game.DISPLAY_RATIO) * neg
+        self.jumpCount -= 1
+        self.collide()
         self.rect.top -= self.yvel
