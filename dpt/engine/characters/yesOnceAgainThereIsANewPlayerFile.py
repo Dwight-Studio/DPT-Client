@@ -47,6 +47,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.damaged = False
         self.big = True
         self.isRebound = False
+        self.Ice = True
 
     def update(self):
         if self.alive:
@@ -54,11 +55,12 @@ class PlayerSprite(pygame.sprite.Sprite):
             mur = -TileManager.camera.last_x
 
             Game.add_debug_info("Player.damaged = " + str(self.damaged))
+            Game.add_debug_info("Player.xvel = " + str(self.xvel))
             Game.add_debug_info("Player.yvel = " + str(self.yvel))
             Game.add_debug_info("Player.jumpCount = " + str(self.jumpCount))
 
             if keys[pygame.K_LEFT] and self.rect.x - self.xvel - 1 > mur:
-                if self.xvel > 0:
+                if self.xvel > 0 and not self.Ice:
                     self.xvel = 0
                 if -4 * Game.DISPLAY_RATIO > self.xvel > -8 * Game.DISPLAY_RATIO and self.onPlatform:
                     self.xvel += self.xvel * 0.01
@@ -68,7 +70,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.right = False
                 self.standing = False
             elif keys[pygame.K_RIGHT]:
-                if self.xvel < 0:
+                if self.xvel < 0 and not self.Ice:
                     self.xvel = 0
                 if 4 * Game.DISPLAY_RATIO < self.xvel < 8 * Game.DISPLAY_RATIO and self.onPlatform:
                     self.xvel += self.xvel * 0.01
@@ -78,7 +80,15 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.right = True
                 self.standing = False
             else:
-                self.xvel = 0
+                if not self.Ice:
+                    self.xvel = 0
+                else:
+                    if self.xvel > 0.12 * Game.DISPLAY_RATIO:
+                        self.xvel -= 0.12 * Game.DISPLAY_RATIO
+                    elif self.xvel < -0.12 * Game.DISPLAY_RATIO:
+                        self.xvel += 0.12 * Game.DISPLAY_RATIO
+                    else:
+                        self.xvel = 0
                 self.standing = True
                 self.walkCount = 0
             if self.allowJump and not self.isRebound:
