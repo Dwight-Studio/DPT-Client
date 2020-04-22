@@ -83,10 +83,10 @@ class PlayerSprite(pygame.sprite.Sprite):
                 if not self.Ice:
                     self.xvel = 0
                 else:
-                    if self.xvel > 0.12 * Game.DISPLAY_RATIO:
-                        self.xvel -= 0.12 * Game.DISPLAY_RATIO
-                    elif self.xvel < -0.12 * Game.DISPLAY_RATIO:
-                        self.xvel += 0.12 * Game.DISPLAY_RATIO
+                    if self.xvel > 0.05 * Game.DISPLAY_RATIO:
+                        self.xvel -= 0.05 * Game.DISPLAY_RATIO
+                    elif self.xvel < -0.05 * Game.DISPLAY_RATIO:
+                        self.xvel += 0.05 * Game.DISPLAY_RATIO
                     else:
                         self.xvel = 0
                 self.standing = True
@@ -244,6 +244,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                     self.jumpCount = 25
                     self.rebound()
                     self.isRebound = True
+                print(i)
 
     def enemies_collision(self, yVelDelta, enemies):
         for i in enemies:
