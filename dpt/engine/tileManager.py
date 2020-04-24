@@ -333,7 +333,7 @@ class TileManager:
         from dpt.engine.gui.Cloud import Cloud
         xpos = 10
         for i in range(10):
-            xpos += Game.surface.get_size()[0] // 10
+            xpos += randint(Game.surface.get_size()[0] // 14, Game.surface.get_size()[0] // 8)
             ypos = randint(0, Game.surface.get_size()[1] // 4)
             sprite = Cloud(xpos, ypos)
             cls.clouds_group.add(sprite)
