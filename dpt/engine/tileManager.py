@@ -10,6 +10,7 @@ from dpt.engine.gui.menu.checkbox import Checkbox
 from dpt.engine.gui.menu.progressbar import ProgressBar
 from dpt.engine.loader import RessourceLoader, UnreachableRessourceError
 from dpt.game import Game
+from random import randint
 
 
 #          {"x, y": {"blockClass": Classe}}
@@ -22,6 +23,7 @@ class TileManager:
     background_blocks_group = pygame.sprite.Group()
     foreground_blocks_group = pygame.sprite.Group()
     interactible_blocks_group = pygame.sprite.Group()
+    clouds_group = pygame.sprite.Group()
 
     log = Game.get_logger("TileManager")
     levelName = None
@@ -167,6 +169,7 @@ class TileManager:
         cls.levelName = level_name
         Game.freeze_game = False
         cls.loadlevel = False
+        cls.generate_clouds()
         cls.log.info("Done")
         return True
 
@@ -325,6 +328,28 @@ class TileManager:
                 sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))
 
+    @classmethod
+    def generate_clouds(cls):
+        from dpt.engine.gui.Cloud import Cloud
+        xpos = 10
+        for i in range(10):
+            xpos += Game.surface.get_size()[0] // 10
+            ypos = randint(0, Game.surface.get_size()[1] // 4)
+            sprite = Cloud(xpos, ypos)
+            cls.clouds_group.add(sprite)
+            cls.clouds_group.draw(Game.surface)
+
+    @classmethod
+    def update_clouds(cls):
+        from dpt.engine.gui.Cloud import Cloud
+        for cloud in cls.clouds_group:
+            if cloud.rect.x <= 1:
+                cls.clouds_group.remove(cloud)
+                del cloud
+                ypos = randint(0, Game.surface.get_size()[1] // 4)
+                sprite = Cloud(Game.surface.get_size()[0], ypos)
+                cls.clouds_group.add(sprite)
+                cls.clouds_group.draw(Game.surface)
 
 class Camera:
     def __init__(self, width, height):

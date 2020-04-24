@@ -38,5 +38,3 @@ class SpikeyWheel(pygame.sprite.Sprite):
             self.rect = self.image.get_rect(center=self.rect.center)
         else:
             self.i += 1
-
-        self.detect_click()

@@ -54,8 +54,11 @@ class Lever(pygame.sprite.Sprite):
                             if keys == str(self.x) + ", " + str(self.y):
                                 for interact in TileManager.interactible_blocks_group:
                                     pos = tuple(map(int, data["assignement"].split(", ")))
-                                    if interact.x == pos[0] and interact.y == pos[1]:
-                                        interact.deactivate()
+                                    try:
+                                        if interact.x == pos[0] and interact.y == pos[1]:
+                                            interact.deactivate()
+                                    except AttributeError:
+                                        continue
                     elif self.right:
                         self.right = False
                         self.left = True

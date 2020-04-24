@@ -63,6 +63,8 @@ def level_loop():
                 TileManager.scroll_down()
 
     do_synch_anims()
+    TileManager.clouds_group.update()
+    TileManager.update_clouds()
     TileManager.out_of_window()
     TileManager.interactible_blocks_group.update()
     TileManager.camera.update(Game.player_sprite)
