@@ -45,16 +45,19 @@ def level_loop():
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
             if TileEditor.in_editor:
                 FileManager.save_file(TileEditor.created_level)
-            #  Game.com.close()
+            #   Game.com.close()
             Game.run = False
         elif event.type == Game.BUTTON_EVENT and event.button == Game.gui["editor_button"]:
             TileEditor.in_editor = not TileEditor.in_editor
             if TileEditor.in_editor:
                 Game.gui["editor_button"].text = "Jouer"
+                for clouds in TileManager.clouds_group:
+                    clouds.kill()
             else:
                 Game.gui["editor_button"].text = "Retour"
             TileEditor.panel_open = False
             Checkbox.checkbox_group.empty()
+            TileManager.clouds_group.empty()
             TileManager.load_level(TileManager.levelName)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 4 and TileEditor.in_editor:

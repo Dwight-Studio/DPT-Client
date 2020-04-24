@@ -55,6 +55,7 @@ class TileManager:
         TileManager.editor_panel_group.empty()
         TileEditor.ghost_block_group.empty()
         TileManager.interactible_blocks_group.empty()
+        TileManager.clouds_group.empty()
 
         for entity in TileManager.entity_group:
             entity.kill()
@@ -115,6 +116,7 @@ class TileManager:
                     if hasattr(obj, "sounds"):
                         RessourceLoader.add_pending(obj.sounds)
             RessourceLoader.add_pending("dpt.images.characters.player.*")
+            RessourceLoader.add_pending("dpt.images.environment.background.Cloud_1_full")
             RessourceLoader.load()
 
         for keys in level:
