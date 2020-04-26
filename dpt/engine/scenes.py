@@ -320,21 +320,27 @@ class Scenes:
                                            math.floor(95 * Game.DISPLAY_RATIO),
                                            RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_OUT"),
                                            pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_IN"),
-                                           text_sprite=TextSpriteButton(50, 47, RessourceLoader.get("dpt.images.gui.symbols.SYMB_CHECK"))),
+                                           text_sprite=TextSpriteButton(math.floor(50 * Game.DISPLAY_RATIO),
+                                                                        math.floor(47 * Game.DISPLAY_RATIO),
+                                                                        RessourceLoader.get("dpt.images.gui.symbols.SYMB_CHECK"))),
                     "cancel_button": Button(math.floor(125 * Game.DISPLAY_RATIO),
                                             math.floor(495 * Game.DISPLAY_RATIO),
                                             math.floor(92 * Game.DISPLAY_RATIO),
                                             math.floor(95 * Game.DISPLAY_RATIO),
                                             RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_OUT"),
                                             pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_IN"),
-                                            text_sprite=TextSpriteButton(47, 50, RessourceLoader.get("dpt.images.gui.symbols.SYMB_BIGX"))),
+                                            text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                         math.floor(50 * Game.DISPLAY_RATIO),
+                                                                         RessourceLoader.get("dpt.images.gui.symbols.SYMB_BIGX"))),
                     "return_button": Button(math.floor(125 * Game.DISPLAY_RATIO),
                                             math.floor(600 * Game.DISPLAY_RATIO),
                                             math.floor(92 * Game.DISPLAY_RATIO),
                                             math.floor(95 * Game.DISPLAY_RATIO),
                                             RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_OUT"),
                                             pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_IN"),
-                                            text_sprite=TextSpriteButton(47, 33, RessourceLoader.get("dpt.images.gui.symbols.SYMB_LEFTARROW")))
+                                            text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                         math.floor(33 * Game.DISPLAY_RATIO),
+                                                                         RessourceLoader.get("dpt.images.gui.symbols.SYMB_LEFTARROW")))
                     }
 
         if Game.settings["server_address"] == Game.DEFAULT_SERVER_ADDRESS:

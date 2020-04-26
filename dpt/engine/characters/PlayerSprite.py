@@ -58,6 +58,9 @@ class PlayerSprite(pygame.sprite.Sprite):
             Game.add_debug_info("Player.xvel = " + str(self.xvel))
             Game.add_debug_info("Player.yvel = " + str(self.yvel))
             Game.add_debug_info("Player.jumpCount = " + str(self.jumpCount))
+            Game.add_debug_info("Player.big = " + str(self.big))
+            Game.add_debug_info("Player.isJump = " + str(self.isJump))
+            Game.add_debug_info("Player.isRebound = " + str(self.isRebound))
 
             if keys[pygame.K_LEFT] and self.rect.x - self.xvel - 1 > mur:
                 if self.xvel > 0 and not self.Ice:
@@ -114,7 +117,6 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.gravityCount += 1
                 self.gravity = math.floor((self.gravityCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * -1
                 self.yvel = self.gravity
-                self.isRebound = False
 
             if self.isRebound:
                 self.rebound()
@@ -244,6 +246,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                         self.die()
                         self.jumpCount = self.CONSTJUMPCOUNT
                 else:
+                    self.isJump = False
                     self.damaged = True
                     self.jumpCount = 9
                     self.rebound()
