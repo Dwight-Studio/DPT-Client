@@ -47,7 +47,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.damaged = False
         self.big = True
         self.isRebound = False
-        self.Ice = True
+        self.Ice = False
 
     def update(self):
         if self.alive:
@@ -114,6 +114,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.gravityCount += 1
                 self.gravity = math.floor((self.gravityCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * -1
                 self.yvel = self.gravity
+                self.isRebound = False
 
             if self.isRebound:
                 self.rebound()
@@ -244,10 +245,9 @@ class PlayerSprite(pygame.sprite.Sprite):
                         self.jumpCount = self.CONSTJUMPCOUNT
                 else:
                     self.damaged = True
-                    self.jumpCount = 25
+                    self.jumpCount = 9
                     self.rebound()
                     self.isRebound = True
-                print(i)
 
     def enemies_collision(self, yVelDelta, enemies):
         for i in enemies:
@@ -269,7 +269,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                             self.jumpCount = self.CONSTJUMPCOUNT
                     else:
                         self.damaged = True
-                        self.jumpCount = 25
+                        self.jumpCount = 9
                         self.rebound()
                         self.isRebound = True
 
@@ -296,7 +296,7 @@ class PlayerSprite(pygame.sprite.Sprite):
             neg = 1
         else:
             neg = -1
-        self.yvel = math.floor((self.gravityCount ** 2) * 0.01 * Game.DISPLAY_RATIO) * neg
+        self.yvel = math.floor((self.gravityCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * neg
         self.jumpCount -= 1
         self.collide()
         self.rect.top -= self.yvel
