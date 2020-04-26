@@ -219,12 +219,12 @@ def settings_menu_loop():
     rect1.centerx = Game.gui["window_graphics"].rect.centerx
 
     if w == 0:
-        w = Game.surface.get_size()[0]
+        w = Game.SCREEN_WIDTH
     if h == 0:
-        h = Game.surface.get_size()[1]
+        h = Game.SCREEN_HEIGHT
 
-    w_rect_t = math.floor((w / Game.surface.get_size()[0]) * rect1.width)
-    h_rect_t = math.floor((h / Game.surface.get_size()[1]) * rect1.height)
+    w_rect_t = math.floor((w / Game.SCREEN_WIDTH) * rect1.width)
+    h_rect_t = math.floor((h / Game.SCREEN_HEIGHT) * rect1.height)
 
     w_rect = min(w_rect_t, rect1.width)
     h_rect = min(h_rect_t, rect1.height)
