@@ -375,4 +375,4 @@ class Game(object):
         w, h = cls.surface.get_size()
         cls.main_logger.debug("Window size: " + str(w) + "x" + str(h))
         cls.DISPLAY_RATIO = h / 1080
-        cls.TILESIZE = math.floor(cls.DISPLAY_RATIO * cls.TILESIZE)
+        cls.TILESIZE = math.floor(cls.DISPLAY_RATIO * 90)
