@@ -361,7 +361,8 @@ class Game(object):
 
     @classmethod
     def update_display(cls):
-        os.environ['SDL_VIDEO_WINDOW_POS'] = "0,0"
+        if cls.PLATFORM == "win32":
+            os.environ['SDL_VIDEO_WINDOW_POS'] = "0,0"
         cls.window = pygame.display
 
         try:
