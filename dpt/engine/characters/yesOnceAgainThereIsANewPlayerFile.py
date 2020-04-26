@@ -86,7 +86,10 @@ class PlayerSprite(pygame.sprite.Sprite):
                     if self.xvel > 0.05 * Game.DISPLAY_RATIO:
                         self.xvel -= 0.05 * Game.DISPLAY_RATIO
                     elif self.xvel < -0.05 * Game.DISPLAY_RATIO:
-                        self.xvel += 0.05 * Game.DISPLAY_RATIO
+                        if self.rect.x - self.xvel - 1 > mur:
+                            self.xvel += 0.05 * Game.DISPLAY_RATIO
+                        else:
+                            self.xvel = 0
                     else:
                         self.xvel = 0
                 self.standing = True
