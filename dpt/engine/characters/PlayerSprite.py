@@ -116,7 +116,6 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.gravity = math.floor((self.gravityCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * -1
                 self.yvel = self.gravity
 
-
             self.collide()
 
             self.rect.left += math.floor(self.xvel)
@@ -288,4 +287,3 @@ class PlayerSprite(pygame.sprite.Sprite):
             Game.freeze_game = True
             Game.player_sprite.kill()
             del self
-
