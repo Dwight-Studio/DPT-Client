@@ -106,6 +106,8 @@ class TileEditor:
                         return
             if mouse_buttons[0] == 1:
                 for interact in TileManager.interactible_blocks_group:
+                    if isinstance(interact, RessourceLoader.get("dpt.entities.lever")) and interact.x + interact.offset_x + TileManager.camera.last_x <= mouse[0] <= interact.x + interact.offset_x + interact.width and interact.y + interact.offset_y <= mouse[1] <= interact.y + interact.offset_y + interact.height:
+                        return
                     if isinstance(interact, RessourceLoader.get("dpt.entities.spike")) and interact.x + TileManager.camera.last_x <= mouse[0] <= interact.x + interact.width and interact.y + interact.offset_y <= mouse[1] <= interact.y:
                         return
 
