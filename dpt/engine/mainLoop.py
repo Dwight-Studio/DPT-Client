@@ -213,7 +213,7 @@ def settings_menu_loop():
 
     rect1 = pygame.rect.Rect(0,
                              math.floor(600 * Game.DISPLAY_RATIO),
-                             math.floor(175 * 16 / 9 * Game.DISPLAY_RATIO),
+                             math.floor(175 * (Game.surface.get_size()[0] / Game.surface.get_size()[1]) * Game.DISPLAY_RATIO),
                              math.floor(175 * Game.DISPLAY_RATIO))
     rect1.centerx = Game.gui["window_graphics"].rect.centerx
 
