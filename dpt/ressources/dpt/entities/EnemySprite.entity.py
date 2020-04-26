@@ -37,12 +37,13 @@ class EnemySprite(pygame.sprite.Sprite):
         self.lastx = 0
         self.lasty = 0
         self.securityTime = 60
+        self.Ice = True
 
     def update(self):
         from dpt.engine.tileManager import TileManager
         if not Game.freeze_game:
             if self.left:
-                if self.xvel > 0:
+                if self.xvel > 0 and not self.Ice:
                     self.xvel = 0
                 if self.xvel > -2 * Game.DISPLAY_RATIO:
                     self.xvel -= 1 * Game.DISPLAY_RATIO
@@ -50,7 +51,7 @@ class EnemySprite(pygame.sprite.Sprite):
                 self.right = False
                 self.standing = False
             elif self.right:
-                if self.xvel < 0:
+                if self.xvel < 0 and not self.Ice:
                     self.xvel = 0
                 if self.xvel < 2 * Game.DISPLAY_RATIO:
                     self.xvel += 1 * Game.DISPLAY_RATIO
