@@ -67,6 +67,7 @@ def level_loop():
 
     do_synch_anims()
     TileManager.clouds_group.update()
+    TileManager.clouds_group.draw(Game.surface)
     TileManager.update_clouds()
     TileManager.out_of_window()
     TileManager.interactible_blocks_group.update()

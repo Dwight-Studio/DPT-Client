@@ -10,7 +10,7 @@ from dpt.engine.gui.menu.checkbox import Checkbox
 from dpt.engine.gui.menu.progressbar import ProgressBar
 from dpt.engine.loader import RessourceLoader, UnreachableRessourceError
 from dpt.game import Game
-from random import randint
+from random import uniform, randint
 
 
 #          {"x, y": {"blockClass": Classe}}
@@ -334,24 +334,22 @@ class TileManager:
     def generate_clouds(cls):
         from dpt.engine.gui.Cloud import Cloud
         xpos = 10
-        for i in range(10):
+        for i in range(12):
+            speed = uniform(-1, -5)
             xpos += randint(Game.surface.get_size()[0] // 14, Game.surface.get_size()[0] // 8)
             ypos = randint(0, Game.surface.get_size()[1] // 4)
-            sprite = Cloud(xpos, ypos)
-            cls.clouds_group.add(sprite)
-            cls.clouds_group.draw(Game.surface)
+            Cloud(xpos, ypos, speed)
 
     @classmethod
     def update_clouds(cls):
         from dpt.engine.gui.Cloud import Cloud
         for cloud in cls.clouds_group:
-            if cloud.rect.x <= 1:
+            if cloud.rect.midright[0] <= 0:
                 cls.clouds_group.remove(cloud)
                 del cloud
+                speed = uniform(-1, -5)
                 ypos = randint(0, Game.surface.get_size()[1] // 4)
-                sprite = Cloud(Game.surface.get_size()[0], ypos)
-                cls.clouds_group.add(sprite)
-                cls.clouds_group.draw(Game.surface)
+                Cloud(Game.surface.get_size()[0], ypos, speed)
 
 class Camera:
     def __init__(self, width, height):
