@@ -1,8 +1,8 @@
 import math
-
 import pygame
 
 from dpt.game import Game
+from dpt.engine.loader import RessourceLoader
 
 
 class Button(pygame.sprite.Sprite):
@@ -85,6 +85,9 @@ class Button(pygame.sprite.Sprite):
         for event in Game.events:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.rect.collidepoint(pygame.mouse.get_pos()):
+                    sound = RessourceLoader.get("dpt.sounds.sfx.switch6")
+                    sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
+                    sound.play()
                     self.pushed = True
                     self.previous = 5
 

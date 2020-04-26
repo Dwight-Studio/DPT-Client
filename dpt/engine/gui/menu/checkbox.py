@@ -36,6 +36,9 @@ class Checkbox(pygame.sprite.Sprite):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.rect.collidepoint(pygame.mouse.get_pos()):
                     self.value = not self.value
+                    sound = RessourceLoader.get("dpt.sounds.sfx.switch6")
+                    sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
+                    sound.play()
 
         if self.value:
             self.image = self.true_image

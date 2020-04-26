@@ -90,6 +90,7 @@ class Scenes:
             RessourceLoader.add_pending("dpt.images.dpt")
             RessourceLoader.add_pending("dpt.fonts.*")
             RessourceLoader.add_pending("dpt.sounds.musics.story_time")
+            RessourceLoader.add_pending("dpt.sounds.sfx.switch6")
             RessourceLoader.load()
 
         # Gestion de la musique
@@ -231,6 +232,26 @@ class Scenes:
                                            math.floor(50 * Game.DISPLAY_RATIO),
                                            (0, 0, 0),
                                            "dpt.fonts.DINOT_CondBlack"),
+                    "left_button": Button(math.floor(490 * Game.DISPLAY_RATIO),
+                                          math.floor(800 * Game.DISPLAY_RATIO),
+                                          math.floor(43 * Game.DISPLAY_RATIO),
+                                          math.floor(50 * Game.DISPLAY_RATIO),
+                                          RessourceLoader.get("dpt.images.gui.buttons.BTN_HORIZ_SINGLE_19"),
+                                          pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_HORIZ_SINGLE_7")),
+                    "right_button": Button(math.floor(890 * Game.DISPLAY_RATIO),
+                                           math.floor(800 * Game.DISPLAY_RATIO),
+                                           math.floor(43 * Game.DISPLAY_RATIO),
+                                           math.floor(50 * Game.DISPLAY_RATIO),
+                                           RessourceLoader.get("dpt.images.gui.buttons.BTN_HORIZ_SINGLE_1"),
+                                           pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_HORIZ_SINGLE_13")),
+                    "graphics_text": Text(math.floor(550 * Game.DISPLAY_RATIO),
+                                          math.floor(800 * Game.DISPLAY_RATIO),
+                                          "Par défaut",
+                                          math.floor(30 * Game.DISPLAY_RATIO),
+                                          (0, 0, 0),
+                                          "dpt.fonts.DINOT_CondBlack",
+                                          centerx=math.floor(711 * Game.DISPLAY_RATIO),
+                                          centery=math.floor(825 * Game.DISPLAY_RATIO)),
 
                     "window_server": Window(math.floor(1022 * Game.DISPLAY_RATIO), math.floor(505 * Game.DISPLAY_RATIO), 4, 6),
                     "server_title": Text(math.floor(1080 * Game.DISPLAY_RATIO),
@@ -320,6 +341,9 @@ class Scenes:
             Game.gui["default_server_button"].value = True
         else:
             Game.gui["custom_server_button"].value = True
+
+        Game.temp["display_size"] = Game.settings["display_size"]
+        Game.temp["prev"] = Game.settings.copy()
 
         # Loops
         from dpt.engine.mainLoop import settings_menu_loop

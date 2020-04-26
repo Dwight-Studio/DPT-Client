@@ -40,6 +40,9 @@ class RatioButton(pygame.sprite.Sprite):
                     for btn in self.list:
                         btn.value = False
                         self.value = True
+                    sound = RessourceLoader.get("dpt.sounds.sfx.switch6")
+                    sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
+                    sound.play()
 
         if self.value:
             self.image = self.true_image

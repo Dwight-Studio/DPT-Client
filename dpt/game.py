@@ -38,7 +38,7 @@ class Game(object):
     DISPLAY_RECT = False
 
     # Variable à définir
-    temp = None
+    temp = {}
     main_logger = None
     run = True
     display_rect = None
@@ -64,10 +64,16 @@ class Game(object):
         "general_volume": 1,
         "music_volume": 1,
         "sound_volume": 1,
-        "window_width": 0,
-        "window_height": 0,
+        "display_size": 0,
         "server_address": "localhost"
     }
+
+    display_list = [("Automatique", 0, 0),
+                    ("480p (720 x 480)", 720, 480),
+                    ("720p (1280 x 720)", 1280, 720),
+                    ("1080p (1920 x 1080)", 1920, 1080),
+                    ("4K (3840 x 2160)", 3840, 2160),
+                    ("8K (7680 x 4320)", 7680, 4320)]
 
     anim_count_lava = 0
     anim_count_water = 0
@@ -133,13 +139,9 @@ class Game(object):
             pygame.init()
             cls._debug_infos = []
 
-            cls.window = pygame.display
-            cls.surface = cls.window.set_mode((Game.settings["window_width"], Game.settings["window_height"]), pygame.NOFRAME)
-
+            # Chargement de l'affichage
+            cls.update_display()
             w, h = cls.surface.get_size()
-            main_logger.debug("Window size: " + str(w) + "x" + str(h))
-            cls.DISPLAY_RATIO = h / 1080
-            cls.TILESIZE = math.floor(cls.DISPLAY_RATIO * cls.TILESIZE)
             main_logger.debug("Tile size: " + str(cls.TILESIZE))
             pygame.display.set_caption("Don't play together")
             cls.clock = pygame.time.Clock()
@@ -334,7 +336,7 @@ class Game(object):
         try:
             from dpt.engine.loader import RESSOURCES_DIRECTORY
             file = open(RESSOURCES_DIRECTORY + "user/settings.json", "r")
-            Game.settings = json.loads(file.read())
+            Game.settings.update(json.loads(file.read()))
             file.close()
             cls.main_logger.info("Settings loaded")
 
@@ -356,3 +358,21 @@ class Game(object):
         file.write(json.dumps(Game.settings))
         file.close()
         cls.main_logger.info("Settings saved")
+
+    @classmethod
+    def update_display(cls):
+        os.environ['SDL_VIDEO_WINDOW_POS'] = "0,0"
+        cls.window = pygame.display
+
+        try:
+            text, window_width, window_height = cls.display_list[Game.settings["display_size"]]
+        except KeyError:
+            window_width = 0
+            window_height = 0
+
+        cls.surface = cls.window.set_mode((window_width, window_height), pygame.NOFRAME)
+
+        w, h = cls.surface.get_size()
+        cls.main_logger.debug("Window size: " + str(w) + "x" + str(h))
+        cls.DISPLAY_RATIO = h / 1080
+        cls.TILESIZE = math.floor(cls.DISPLAY_RATIO * cls.TILESIZE)

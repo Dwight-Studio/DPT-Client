@@ -147,36 +147,61 @@ def main_menu_loop():
 def settings_menu_loop():
     Game.surface.blit(bg, (0, 0))
 
+    ds = Game.temp["display_size"]
+    Game.gui["graphics_text"].text, w, h = Game.display_list[ds]
+
     menu.main_loop()
 
     def apply_settings():
         Game.settings["general_volume"] = Game.gui["general_volume_slider"].value
         Game.settings["music_volume"] = Game.gui["music_volume_slider"].value
         Game.settings["sound_volume"] = Game.gui["sound_volume_slider"].value
-        if Game.temp is not None and Game.gui["custom_server_button"]:
-            Game.settings["server_address"] = Game.temp
+
+        Game.settings["display_size"] = ds
+
+        if "s" in Game.temp and Game.gui["custom_server_button"]:
+            Game.settings["server_address"] = Game.temp["s"]
         elif Game.gui["default_server_button"]:
             Game.settings["server_address"] = Game.DEFAULT_SERVER_ADDRESS
         pygame.mixer_music.set_volume(Game.settings["general_volume"] * Game.settings["music_volume"])
-        Game.surface = Game.window.set_mode((Game.settings["window_width"], Game.settings["window_height"]), pygame.NOFRAME)
+
+        if Game.temp["prev"]["display_size"] != Game.settings["display_size"]:
+            Game.update_display()
+            global bg
+            bg = RessourceLoader.get("dpt.images.environment.background.default_sky")
+            bg = pygame.transform.smoothscale(bg, Game.surface.get_size())
+            menu.delete_items()
+            Game.save_settings()
+            Game.temp = {}
+            Scenes.settings_menu()
+
         Game.save_settings()
 
     for event in Game.events:
         if event.type == pygame.QUIT:
             Game.run = False
         if event.type == Game.BUTTON_EVENT:
+            if event.button == Game.gui["left_button"]:
+                Game.temp["display_size"] -= 1
+                Game.temp["display_size"] = max(Game.temp["display_size"], 0)
+                Game.temp["display_size"] = min(Game.temp["display_size"], 5)
+            if event.button == Game.gui["right_button"]:
+                Game.temp["display_size"] += 1
+                Game.temp["display_size"] = max(Game.temp["display_size"], 0)
+                Game.temp["display_size"] = min(Game.temp["display_size"], 5)
             if event.button == Game.gui["apply_button"]:
                 apply_settings()
             if event.button == Game.gui["cancel_button"]:
                 pygame.mixer_music.set_volume(Game.settings["general_volume"] * Game.settings["music_volume"])
-                Game.surface = Game.window.set_mode((Game.settings["window_width"], Game.settings["window_height"]), pygame.NOFRAME)
                 menu.delete_items()
                 Game.save_settings()
+                Game.temp = {}
                 Scenes.main_menu(load=False)
                 return
             if event.button == Game.gui["return_button"]:
                 apply_settings()
                 menu.delete_items()
+                Game.temp = {}
                 Scenes.main_menu(load=False)
                 return
             if event.button == Game.gui["custom_server_text_button"]:
@@ -184,7 +209,7 @@ def settings_menu_loop():
                 root.withdraw()
                 s = simpledialog.askstring("Adresse du serveur", "URL (sans le http(s)://)", parent=root, )
                 if s is not None:
-                    Game.temp = s
+                    Game.temp["s"] = s
 
     Game.display_debug_info()
     Game.draw_cursor()

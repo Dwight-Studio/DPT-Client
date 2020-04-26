@@ -1,6 +1,8 @@
 import pygame
 import math
+
 from dpt.game import Game
+from dpt.engine.loader import RessourceLoader
 
 
 class Slide(pygame.sprite.Sprite):
@@ -22,11 +24,17 @@ class Slide(pygame.sprite.Sprite):
         self.pushed = False
 
     def update(self):
+        prev = self.pushed
         self.pushed = False
 
         if pygame.mouse.get_pressed()[0]:
             if self.rect.collidepoint(pygame.mouse.get_pos()):
                 self.pushed = True
+
+        if not prev and self.pushed:
+            sound = RessourceLoader.get("dpt.sounds.sfx.switch6")
+            sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
+            sound.play()
 
         if self.pushed:
             self.image = self.pushed_image
