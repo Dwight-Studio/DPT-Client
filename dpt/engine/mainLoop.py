@@ -43,10 +43,7 @@ def level_loop():
 
     for event in Game.events:
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
-            if TileEditor.in_editor:
-                FileManager.save_file(TileEditor.created_level)
-            #   Game.com.close()
-            Game.run = False
+            Scenes.pause()
         elif event.type == Game.BUTTON_EVENT and event.button == Game.gui["editor_button"]:
             TileEditor.in_editor = not TileEditor.in_editor
             if TileEditor.in_editor:
@@ -70,7 +67,6 @@ def level_loop():
     TileManager.clouds_group.draw(Game.surface)
     TileManager.update_clouds()
     TileManager.out_of_window()
-    TileManager.interactible_blocks_group.update()
     TileManager.camera.update(Game.player_sprite)
     TileEditor.update()
 
@@ -97,7 +93,45 @@ def level_loop():
 
 
 def pause_loop():
-    pass
+    Game.surface.blit(bg, (0, 0))
+
+    TileManager.camera.update(Game.player_sprite, True)
+    TileManager.clouds_group.draw(Game.surface)
+
+    menu.main_loop()
+
+    for event in Game.events:
+        if event.type == pygame.QUIT:
+            if TileEditor.in_editor:
+                FileManager.save_file(TileEditor.created_level)
+            # Game.com.close()
+            Game.run = False
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            menu.delete_items()
+            Game.loop = Game.temp["prev_loop"]
+            return
+        if event.type == Game.BUTTON_EVENT:
+            menu.delete_items()
+            if event.button == Game.gui["button_resume"]:
+                Game.loop = Game.temp["prev_loop"]
+                return
+            elif event.button == Game.gui["button_restart"]:
+                menu.delete_items()
+                Scenes.level(TileManager.levelName)
+                return
+            elif event.button == Game.gui["button_main_menu"]:
+                menu.delete_items()
+                Scenes.main_menu()
+                return
+            elif event.button == Game.gui["button_quit"]:
+                if TileEditor.in_editor:
+                    FileManager.save_file(TileEditor.created_level)
+                # Game.com.close()
+                Game.run = False
+
+    Game.display_debug_info()
+    Game.draw_cursor()
+    Game.window.update()
 
 
 def main_menu_loop():
@@ -181,6 +215,12 @@ def settings_menu_loop():
     for event in Game.events:
         if event.type == pygame.QUIT:
             Game.run = False
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            apply_settings()
+            menu.delete_items()
+            Game.temp = {}
+            Scenes.main_menu(load=False)
+            return
         if event.type == Game.BUTTON_EVENT:
             if event.button == Game.gui["left_button"]:
                 Game.temp["display_size"] -= 1

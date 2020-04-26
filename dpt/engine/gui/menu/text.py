@@ -31,9 +31,12 @@ class Text:
         self.rect = self.text_rendered.get_rect()
         self.rect.x = self.x
         self.rect.y = self.y
-        if self.centerx is not None and self.centery is not None:
+        if self.centerx is not None:
             self.rect.centerx = self.centerx
+
+        if self.centery is not None:
             self.rect.centery = self.centery
+
         surface.blit(self.text_rendered, self.rect)
 
     @classmethod

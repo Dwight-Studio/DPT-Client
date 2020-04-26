@@ -22,8 +22,6 @@ class Cloud(pygame.sprite.Sprite):
     def update(self):
         if self.i == 3:
             self.i = 0
-            self.image = RessourceLoader.get(self.texture)
-            self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
             self.rect.move_ip(self.speed, 0)
         else:
             self.i += 1

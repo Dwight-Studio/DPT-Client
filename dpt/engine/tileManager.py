@@ -285,49 +285,56 @@ class TileManager:
         Game.add_debug_info("----------")
 
     @classmethod
-    def display_sprites(cls, self):
+    def display_sprites(cls, self, freeze):
         rect = Game.surface.get_bounding_rect()
         rect.width += 200
         rect.x -= self.last_x + 100
         Game.display_rect = rect
         for sprite in TileManager.background_blocks_group:
             if sprite.rect.colliderect(rect):
-                sprite.update()
+                if not freeze:
+                    sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))
                 self.sprite_count += 1
                 if Game.DISPLAY_RECT:
                     pygame.draw.rect(Game.surface, (0, 0, 255), self.apply(sprite), width=2)
         for sprite in TileManager.environment_group:
             if sprite.rect.colliderect(rect):
-                sprite.update()
+                if not freeze:
+                    sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))
                 self.sprite_count += 1
                 if Game.DISPLAY_RECT:
                     pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
         for sprite in TileManager.entity_group:
             if sprite.rect.colliderect(rect):
-                sprite.update()
+                if not freeze:
+                    sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))
                 self.sprite_count += 1
                 if Game.DISPLAY_RECT:
                     pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(sprite), width=2)
         for sprite in Game.player_group:
-            sprite.update()
+            if not freeze:
+                sprite.update()
             Game.surface.blit(sprite.image, self.apply(sprite))
             self.sprite_count += 1
             if Game.DISPLAY_RECT:
                 pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(sprite), width=2)
         for sprite in TileManager.deadly_object_group:
             if sprite.rect.colliderect(rect):
-                sprite.update()
+                if not freeze:
+                    sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))
         for sprite in TileManager.foreground_blocks_group:
             if sprite.rect.colliderect(rect):
-                sprite.update()
+                if not freeze:
+                    sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))
         for sprite in TileManager.interactible_blocks_group:
             if sprite.rect.colliderect(rect):
-                sprite.update()
+                if not freeze:
+                    sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))
 
     @classmethod
@@ -365,7 +372,7 @@ class Camera:
     def apply(self, entity):
         return entity.rect.move(self.camera.topleft)
 
-    def update(self, target):
+    def update(self, target, freeze=False):
         self.sprite_count = 0
         self.target = target
         self.x = -target.rect.x + int(Game.surface.get_size()[0] / 2)
@@ -374,7 +381,7 @@ class Camera:
         self.x = min(0, self.last_x, self.x)
         self.x = max(-calcul, self.x)
         self.camera = pygame.Rect(self.x, 0, self.width, self.height)
-        TileManager.display_sprites(self)
+        TileManager.display_sprites(self, freeze)
         self.last_x = self.x
 
         TileManager.display_cam_info()
@@ -393,13 +400,13 @@ class EditorCamera:
     def apply(self, entity):
         return entity.rect.move(self.camera.topleft)
 
-    def update(self, target):
+    def update(self, target, freeze=False):
         self.sprite_count = 0
         self.target = target
         self.x = -target.rect.x + int(Game.surface.get_size()[0] / 2)
         self.x = min(0, self.x)
         self.camera = pygame.Rect(self.x, 0, self.width, self.height)
-        TileManager.display_sprites(self)
+        TileManager.display_sprites(self, freeze)
         self.last_x = self.x
 
         TileManager.display_cam_info()
