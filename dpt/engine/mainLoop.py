@@ -211,6 +211,34 @@ def settings_menu_loop():
                 if s is not None:
                     Game.temp["s"] = s
 
+    rect1 = pygame.rect.Rect(0,
+                             math.floor(600 * Game.DISPLAY_RATIO),
+                             math.floor(175 * 16 / 9 * Game.DISPLAY_RATIO),
+                             math.floor(175 * Game.DISPLAY_RATIO))
+    rect1.centerx = Game.gui["window_graphics"].rect.centerx
+
+    if w == 0:
+        w = Game.surface.get_size()[0]
+    if h == 0:
+        h = Game.surface.get_size()[1]
+
+    w_rect_t = math.floor((w / Game.surface.get_size()[0]) * rect1.width)
+    h_rect_t = math.floor((h / Game.surface.get_size()[1]) * rect1.height)
+
+    w_rect = min(w_rect_t, rect1.width)
+    h_rect = min(h_rect_t, rect1.height)
+
+    rect1.width = math.floor((w_rect / w_rect_t) * rect1.width)
+    rect1.height = math.floor((h_rect / h_rect_t) * rect1.height)
+
+    rect2 = pygame.rect.Rect(rect1.x,
+                             math.floor(600 * Game.DISPLAY_RATIO),
+                             w_rect,
+                             h_rect)
+
+    pygame.draw.rect(Game.surface, (255, 255, 255, 2), rect1)
+    pygame.draw.rect(Game.surface, (0, 0, 0), rect2, width=3)
+
     Game.display_debug_info()
     Game.draw_cursor()
     Game.window.update()
