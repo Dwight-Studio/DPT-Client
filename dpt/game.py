@@ -36,6 +36,8 @@ class Game(object):
     TILESIZE = 90
     DISPLAY_RATIO = 1
     DISPLAY_RECT = False
+    SCREEN_WIDTH = None
+    SCREEN_HEIGHT = None
 
     # Variable à définir
     temp = {}
@@ -137,6 +139,10 @@ class Game(object):
             cls.load_settings()
 
             pygame.init()
+            cls.SCREEN_WIDTH = pygame.display.Info().current_w
+            cls.SCREEN_HEIGHT = pygame.display.Info().current_h
+            main_logger.debug("Screen size: " + str(cls.SCREEN_WIDTH) + "x" + str(cls.SCREEN_HEIGHT))
+
             cls._debug_infos = []
 
             # Chargement de l'affichage
