@@ -45,7 +45,6 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.imunityTime = 180
         self.alive = True
         self.damaged = False
-        self.big = True
         self.Ice = False
         self.Slow = False
         self.frameCount = 0
@@ -89,7 +88,6 @@ class PlayerSprite(pygame.sprite.Sprite):
             Game.add_debug_info("Player.xvel = " + str(self.xvel))
             Game.add_debug_info("Player.yvel = " + str(self.yvel))
             Game.add_debug_info("Player.jumpCount = " + str(self.jumpCount))
-            Game.add_debug_info("Player.big = " + str(self.big))
             Game.add_debug_info("Player.isJump = " + str(self.isJump))
 
             if self.inversion:
