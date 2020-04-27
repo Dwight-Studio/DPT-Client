@@ -49,13 +49,14 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.Ice = False
         self.Slow = False
         self.frameCount = 0
-        self.lowGravity = True
+        self.lowGravity = False
         self.gravityModifier = 0
-        self.Fast = True
+        self.Fast = False
         self.maxvelocity = 4
         self.jumpBoost = False
         self.jumpModifier = 0
-        self.inversion = True
+        self.inversion = False
+        self.star = False
 
     def update(self):
         if self.alive:
@@ -305,7 +306,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                     elif not self.damaged:
                         i.kill()
                 else:
-                    if self.damaged:
+                    if self.damaged and not self.star:
                         if self.imunityTime < 0:
                             self.alive = False
                             self.yvel = 0
@@ -314,6 +315,8 @@ class PlayerSprite(pygame.sprite.Sprite):
                             time.sleep(0.5)
                             self.die()
                             self.jumpCount = self.CONSTJUMPCOUNT
+                    elif self.star:
+                        i.kill()
                     else:
                         self.isJump = True
                         self.walkCount = 0
