@@ -74,10 +74,13 @@ class Communication(object):
                     vote_two += 1
             if vote_one > vote_two:
                 self.log.info("Majority of vote 1")
+                return "1"
             elif vote_two > vote_one:
                 self.log.info("Majority of vote 2")
+                return "2"
             else:
                 self.log.info("Vote equality")
+                return "0"
         else:
             self.log.critical("Vote request failed")
 
