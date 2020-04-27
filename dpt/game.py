@@ -61,6 +61,8 @@ class Game(object):
     cursor_on_button = False
     cursor1 = None
     cursor2 = None
+    effects_management = None
+    count = None
 
     settings = {
         "general_volume": 1,
