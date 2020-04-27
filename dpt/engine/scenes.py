@@ -402,3 +402,11 @@ class Scenes:
         from dpt.engine.mainLoop import settings_menu_loop
         Game.loop = settings_menu_loop
         return True
+
+    @classmethod
+    def end_level(cls):
+        pass
+
+    @classmethod
+    def game_over(cls):
+        pass

@@ -9,21 +9,25 @@ from dpt.engine.tileManager import TileManager
 class PlayerSprite(pygame.sprite.Sprite):
     screen_width, screen_height = Game.surface.get_size()
     char = "dpt.images.characters.player.standing"
-    walkRightTextures = "dpt.images.characters.player.R*"
-    walkLeftTextures = "dpt.images.characters.player.L*"
+    walk_right_textures = "dpt.images.characters.player.R-*"
+    walk_left_textures = "dpt.images.characters.player.L-*"
+    jump_right_texture = "dpt.images.characters.player.RJumping"
+    jump_left_texture = "dpt.images.characters.player.LJumping"
     mask = "dpt.images.characters.player.mask"
 
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
-        self.width = math.floor(60 * Game.DISPLAY_RATIO)
+        self.width = math.floor(113 * Game.DISPLAY_RATIO)
         self.height = math.floor(90 * Game.DISPLAY_RATIO)
         self.CONSTWIDTH = self.width
         self.CONSTHEIGT = self.height
         self.image = pygame.transform.scale(RessourceLoader.get(self.char), (self.width, self.height))
         self.walkLeft = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in
-                         RessourceLoader.get_multiple(self.walkLeftTextures)]
+                         RessourceLoader.get_multiple(self.walk_left_textures)]
+
         self.walkRight = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in
-                          RessourceLoader.get_multiple(self.walkRightTextures)]
+                          RessourceLoader.get_multiple(self.walk_right_textures)]
+
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -205,6 +209,7 @@ class PlayerSprite(pygame.sprite.Sprite):
             if i.rect.colliderect(Game.display_rect):
                 rx = i.rect.x - (self.rect.x + math.floor(self.xvel))
                 ry = i.rect.y - (self.rect.y - math.floor(self.yvel))
+
                 if self.mask.overlap(i.mask, (rx, ry)):
                     dx = 0
                     dy = 0
