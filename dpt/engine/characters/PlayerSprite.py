@@ -57,6 +57,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.jumpModifier = 0
         self.inversion = False
         self.star = False
+        self.monsterimmortal = True
 
     def update(self):
         if self.alive:
@@ -173,7 +174,8 @@ class PlayerSprite(pygame.sprite.Sprite):
 
             self.animation()
             self.enemies_collision(self.yvel, TileManager.enemy_group)
-            self.deadly_object_collision()
+            if not self.star:
+                self.deadly_object_collision()
             if self.damaged:
                 if self.big:
                     self.height = math.floor(self.height * 0.7)
@@ -300,7 +302,7 @@ class PlayerSprite(pygame.sprite.Sprite):
     def enemies_collision(self, yVelDelta, enemies):
         for i in enemies:
             if pygame.sprite.collide_rect(self, i):
-                if yVelDelta < 0:
+                if yVelDelta < 0 and not self.monsterimmortal:
                     if self.damaged and self.imunityTime < 150:
                         i.kill()
                     elif not self.damaged:

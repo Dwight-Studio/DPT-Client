@@ -24,9 +24,13 @@ class EnemySprite(pygame.sprite.Sprite):
         self.right = True
         self.standing = False
         self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
+        self.CONSTHEIGT = self.height
+        self.CONSTWIDTH = self.width
         self.rect = self.image.get_rect()
         self.rect.x = x + self.offset_x
         self.rect.y = y + self.offset_y
+        self.CONSTRECT2 = self.rect[2]
+        self.CONSTRECT3 = self.rect[3]
         self.isJump = False
         self.jumpCount = 21
         self.CONSTJUMPCOUNT = self.jumpCount
@@ -43,6 +47,8 @@ class EnemySprite(pygame.sprite.Sprite):
         self.maxvelocity = 2
         self.lowGravity = False
         self.gravityModifier = 0
+        self.monsterimmortal = True
+        self.big = False
 
     def update(self):
         from dpt.engine.tileManager import TileManager
@@ -57,6 +63,21 @@ class EnemySprite(pygame.sprite.Sprite):
                 self.gravityModifier = 0.02
             else:
                 self.gravityModifier = 0
+
+            if self.monsterimmortal and not self.big:
+                self.height = math.floor(self.height * 1.4)
+                self.width = math.floor(self.width * 1.4)
+                self.big = True
+                self.rect[2] //= 0.71
+                self.rect[3] //= 0.71
+                self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
+            elif not self.monsterimmortal:
+                self.height = self.CONSTHEIGT
+                self.width = self.CONSTWIDTH
+                self.big = False
+                self.rect[2] = self.CONSTRECT2
+                self.rect[3] = self.CONSTRECT3
+                self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
 
             if self.left:
                 if self.xvel > 0 and not self.Ice:
