@@ -9,7 +9,7 @@ class Cloud(pygame.sprite.Sprite):
     height = Game.TILESIZE
     i = 0
 
-    def __init__(self, x, y, speed=1):
+    def __init__(self, x, y, speed):
         from dpt.engine.tileManager import TileManager
         pygame.sprite.Sprite.__init__(self, TileManager.clouds_group)
         self.image = RessourceLoader.get(self.texture)
@@ -20,8 +20,4 @@ class Cloud(pygame.sprite.Sprite):
         self.rect.y = y
 
     def update(self):
-        if self.i == 3:
-            self.i = 0
-            self.rect.move_ip(self.speed, 0)
-        else:
-            self.i += 1
+        self.rect.move_ip(-self.speed, 0)
