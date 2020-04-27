@@ -192,7 +192,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         if self.walkCount + 1 >= 60:
             self.walkCount = 0
 
-        if not self.onPlatform:
+        if self.onPlatform:
             if not self.standing:
                 if self.left:
                     self.image = self.walkLeft[self.walkCount // 4 + 1]
