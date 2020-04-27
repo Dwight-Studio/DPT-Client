@@ -11,22 +11,24 @@ class PlayerSprite(pygame.sprite.Sprite):
     char = "dpt.images.characters.player.standing"
     walk_right_textures = "dpt.images.characters.player.R-*"
     walk_left_textures = "dpt.images.characters.player.L-*"
-    jump_right_texture = "dpt.images.characters.player.RJumping"
-    jump_left_texture = "dpt.images.characters.player.LJumping"
+    jump_right_texture = "dpt.images.characters.player.RJump"
+    jump_left_texture = "dpt.images.characters.player.LJump"
     mask = "dpt.images.characters.player.mask"
 
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
-        self.width = math.floor(113 * Game.DISPLAY_RATIO)
+        self.width = math.floor(120 * Game.DISPLAY_RATIO)
         self.height = math.floor(90 * Game.DISPLAY_RATIO)
         self.CONSTWIDTH = self.width
         self.CONSTHEIGT = self.height
         self.image = pygame.transform.scale(RessourceLoader.get(self.char), (self.width, self.height))
         self.walkLeft = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in
                          RessourceLoader.get_multiple(self.walk_left_textures)]
+        self.jumpLeft = pygame.transform.smoothscale(RessourceLoader.get(self.jump_left_texture), (self.width, self.height))
 
         self.walkRight = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in
                           RessourceLoader.get_multiple(self.walk_right_textures)]
+        self.jumpRight = pygame.transform.smoothscale(RessourceLoader.get(self.jump_right_texture), (self.width, self.height))
 
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -187,21 +189,27 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.death_fall()
 
     def animation(self):
-        if self.walkCount + 1 >= 54:
+        if self.walkCount + 1 >= 60:
             self.walkCount = 0
 
-        if not self.standing:
-            if self.left:
-                self.image = self.walkLeft[self.walkCount // 6]
-                self.walkCount += 1
-            elif self.right:
-                self.image = self.walkRight[self.walkCount // 6]
-                self.walkCount += 1
+        if not self.onPlatform:
+            if not self.standing:
+                if self.left:
+                    self.image = self.walkLeft[self.walkCount // 4 + 1]
+                    self.walkCount += 1
+                elif self.right:
+                    self.image = self.walkRight[self.walkCount // 4 + 1]
+                    self.walkCount += 1
+            else:
+                if self.right:
+                    self.image = self.walkRight[0]
+                else:
+                    self.image = self.walkLeft[0]
         else:
             if self.right:
-                self.image = self.walkRight[0]
+                self.image = self.jumpRight
             else:
-                self.image = self.walkLeft[0]
+                self.image = self.jumpLeft
         # pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
 
     def collide(self):
