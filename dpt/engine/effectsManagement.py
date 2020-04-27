@@ -1,11 +1,11 @@
 from dpt.engine.webCommunications import Communication
 from dpt.engine.tileManager import TileManager
+from dpt.game import Game
 
 import random
 
 
 class effectsManagement(Communication):
-
     listEffects = ["Ice",
                    "Slow",
                    "Fast",
@@ -24,12 +24,35 @@ class effectsManagement(Communication):
                    "inversion": "Temp",
                    "lowGravity": "Perm"}
 
+    dicoLinks = {"Ice": "PlayerAndEnemy",
+                 "Slow": "PlayerAndEnemy",
+                 "Fast": "Player",
+                 "monsterimmortal": "PlayerAndEnemy",
+                 "star": "Player",
+                 "jumpBoost": "Player",
+                 "inversion": "Player",
+                 "lowGravity": "PlayerAndEnemy"}
+
     def __init__(self):
         super().__init__()
         self.result = None
+        self.tempList = []
 
     def update(self):
         self.vote()
+        for effects in self.tempList:
+            if effectsManagement.dicoLinks[effects] == "PlayerAndEnemy":
+                for enemies in TileManager.enemy_group:
+                    enemies.effects = False
+            for player in Game.player_group:
+                player.effects = False
+        if effectsManagement.dicoEffects[self.result] == "Temp":
+            self.tempList.append(self.result)
+        if effectsManagement.dicoLinks[self.result] == "PlayerAndEnemy":
+            for enemies in TileManager.enemy_group:
+                enemies.self.result = True
+        for player in Game.player_group:
+            player.self.result = True
 
     def vote(self):
         mod1 = random.choice(effectsManagement.listEffects)
