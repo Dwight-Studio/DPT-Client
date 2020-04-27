@@ -47,9 +47,39 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.damaged = False
         self.big = True
         self.Ice = False
+        self.Slow = False
+        self.frameCount = 0
+        self.lowGravity = True
+        self.gravityModifier = 0
+        self.Fast = True
+        self.maxvelocity = 4
+        self.jumpBoost = False
+        self.jumpModifier = 0
+        self.inversion = True
 
     def update(self):
         if self.alive:
+
+            if self.Fast:
+                self.maxvelocity = 6
+            else:
+                self.maxvelocity = 4
+
+            if self.lowGravity:
+                self.gravityModifier = 0.04
+            else:
+                self.gravityModifier = 0
+
+            if self.Slow:
+                self.frameCount += 1
+            else:
+                self.frameCount = 0
+
+            if self.jumpBoost:
+                self.jumpModifier = 0.07
+            else:
+                self.jumpModifier = 0
+
             keys = pygame.key.get_pressed()
             mur = -TileManager.camera.last_x
 
@@ -60,22 +90,31 @@ class PlayerSprite(pygame.sprite.Sprite):
             Game.add_debug_info("Player.big = " + str(self.big))
             Game.add_debug_info("Player.isJump = " + str(self.isJump))
 
-            if keys[pygame.K_LEFT] and self.rect.x - self.xvel - 1 > mur:
+            if self.inversion:
+                left = pygame.K_RIGHT
+                right = pygame.K_LEFT
+                up = pygame.K_DOWN
+            else:
+                left = pygame.K_LEFT
+                right = pygame.K_RIGHT
+                up = pygame.K_UP
+
+            if keys[left] and self.rect.x - self.xvel - 1 > mur:
                 if self.xvel > 0 and not self.Ice:
                     self.xvel = 0
-                if -4 * Game.DISPLAY_RATIO > self.xvel > -8 * Game.DISPLAY_RATIO and self.onPlatform:
+                if -self.maxvelocity * Game.DISPLAY_RATIO > self.xvel > -self.maxvelocity * 2 * Game.DISPLAY_RATIO and self.onPlatform:
                     self.xvel += self.xvel * 0.01
-                if self.xvel >= -4 * Game.DISPLAY_RATIO:
+                if self.xvel >= -self.maxvelocity * Game.DISPLAY_RATIO:
                     self.xvel -= 0.25 * Game.DISPLAY_RATIO
                 self.left = True
                 self.right = False
                 self.standing = False
-            elif keys[pygame.K_RIGHT]:
+            elif keys[right]:
                 if self.xvel < 0 and not self.Ice:
                     self.xvel = 0
-                if 4 * Game.DISPLAY_RATIO < self.xvel < 8 * Game.DISPLAY_RATIO and self.onPlatform:
+                if self.maxvelocity * Game.DISPLAY_RATIO < self.xvel < self.maxvelocity * 2 * Game.DISPLAY_RATIO and self.onPlatform:
                     self.xvel += self.xvel * 0.01
-                if self.xvel <= 4 * Game.DISPLAY_RATIO:
+                if self.xvel <= self.maxvelocity * Game.DISPLAY_RATIO:
                     self.xvel += 0.25 * Game.DISPLAY_RATIO
                 self.left = False
                 self.right = True
@@ -97,24 +136,34 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.walkCount = 0
             if self.allowJump:
                 if not self.isJump:
-                    if keys[pygame.K_UP]:
+                    if keys[up]:
                         self.isJump = True
                         self.walkCount = 0
                         self.onPlatform = False
                 else:
                     if not self.onPlatform:
-                        if self.jumpCount >= 0:
-                            self.yvel = math.floor((self.jumpCount ** 2) * 0.05 * Game.DISPLAY_RATIO)
+                        if (self.jumpCount >= 0 and not self.Slow) or (self.Slow and self.frameCount % 3 == 0):
+                            self.yvel = math.floor((self.jumpCount ** 2) * (0.05 + self.gravityModifier + self.jumpModifier) * Game.DISPLAY_RATIO)
                             self.jumpCount -= 1
-                        else:
+                            if self.Slow:
+                                self.frameCount += 1
+                        elif self.jumpCount < 0:
                             self.isJump = False
+                        else:
+                            self.yvel = 0
+                            if self.Slow:
+                                self.frameCount += 1
 
             if not self.isJump:
-                Game.add_debug_info("GRAVITY")
-                self.allowJump = False
-                self.gravityCount += 1
-                self.gravity = math.floor((self.gravityCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * -1
-                self.yvel = self.gravity
+                if (self.Slow and self.frameCount % 3 == 0) or not self.Slow:
+                    self.frameCount += 1
+                    Game.add_debug_info("GRAVITY")
+                    self.allowJump = False
+                    self.gravityCount += 1
+                    self.gravity = math.floor((self.gravityCount ** 2) * (0.05 - self.gravityModifier) * Game.DISPLAY_RATIO) * -1
+                    self.yvel = self.gravity
+                else:
+                    self.frameCount += 1
 
             self.collide()
 
@@ -186,6 +235,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                                 self.isJump = False
                                 self.allowJump = True
                                 self.jumpCount = self.CONSTJUMPCOUNT
+                                self.frameCount = 0
                             break
 
                     crx = i.rect.x - self.rect.x
@@ -200,6 +250,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                             self.isJump = False
                             self.allowJump = True
                             self.jumpCount = self.CONSTJUMPCOUNT
+                            self.frameCount = 0
                         elif self.rect.y > i.rect.y:
                             dy = - rect.height + math.floor(self.yvel)
                             self.yvel = 0

@@ -37,24 +37,40 @@ class EnemySprite(pygame.sprite.Sprite):
         self.lastx = 0
         self.lasty = 0
         self.securityTime = 60
-        self.Ice = True
+        self.Ice = False
+        self.Slow = False
+        self.frameCount = 0
+        self.maxvelocity = 2
+        self.lowGravity = False
+        self.gravityModifier = 0
 
     def update(self):
         from dpt.engine.tileManager import TileManager
         if not Game.freeze_game:
+
+            if self.Slow:
+                self.maxvelocity = 1
+            else:
+                self.maxvelocity = 2
+
+            if self.lowGravity:
+                self.gravityModifier = 0.02
+            else:
+                self.gravityModifier = 0
+
             if self.left:
                 if self.xvel > 0 and not self.Ice:
                     self.xvel = 0
-                if self.xvel > -2 * Game.DISPLAY_RATIO:
-                    self.xvel -= 1 * Game.DISPLAY_RATIO
+                if self.xvel > -self.maxvelocity * Game.DISPLAY_RATIO:
+                    self.xvel -= (self.maxvelocity / 2) * Game.DISPLAY_RATIO
                 self.left = True
                 self.right = False
                 self.standing = False
             elif self.right:
                 if self.xvel < 0 and not self.Ice:
                     self.xvel = 0
-                if self.xvel < 2 * Game.DISPLAY_RATIO:
-                    self.xvel += 1 * Game.DISPLAY_RATIO
+                if self.xvel < self.maxvelocity * Game.DISPLAY_RATIO:
+                    self.xvel += (self.maxvelocity / 2) * Game.DISPLAY_RATIO
                 self.left = False
                 self.right = True
                 self.standing = False
@@ -66,12 +82,15 @@ class EnemySprite(pygame.sprite.Sprite):
             self.rect.left += self.xvel
             self.collide(self.xvel, 0, TileManager.environment_group)
 
-            if not self.isJump:
+            if not (self.isJump and not self.Slow) or (self.Slow and self.frameCount % 3 == 0):
                 self.allowJump = False
                 self.gravityCount += 1
-                self.gravity = math.floor((self.gravityCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * -1
+                self.gravity = math.floor((self.gravityCount ** 2) * (0.05 - self.gravityModifier) * Game.DISPLAY_RATIO) * -1
                 self.rect.top -= self.gravity
                 self.collide(0, self.gravity, TileManager.environment_group)
+                self.frameCount += 1
+            else:
+                self.frameCount += 1
         self.animation()
 
         if self.lastx == self.rect.left:
