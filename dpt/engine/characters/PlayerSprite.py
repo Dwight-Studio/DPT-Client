@@ -177,24 +177,9 @@ class PlayerSprite(pygame.sprite.Sprite):
             if not self.star:
                 self.deadly_object_collision()
             if self.damaged:
-                if self.big:
-                    self.height = math.floor(self.height * 0.7)
-                    self.width = math.floor(self.width * 0.7)
-                    self.walkLeft = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in
-                                     RessourceLoader.get_multiple(self.walkLeftTextures)]
-                    self.walkRight = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in
-                                      RessourceLoader.get_multiple(self.walkRightTextures)]
-                    self.big = False
-                    self.rect[2] //= 1.42
-                    self.rect[3] //= 1.42
-                    self.mask = pygame.mask.from_surface(pygame.transform.scale(RessourceLoader.get(PlayerSprite.mask),
-                                                                                (self.width, self.height)))
                 self.imunityTime -= 1
             else:
-                if not self.big:
-                    self.height = self.CONSTHEIGT
-                    self.width = self.CONSTWIDTH
-                    self.imunityTime = 180
+                self.imunityTime = 180
         else:
             self.die()
         self.death_fall()
