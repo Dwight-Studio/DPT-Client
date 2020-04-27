@@ -20,6 +20,7 @@ class FlagBlue(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x + self.offset_x
         self.rect.y = y + self.offset_y
+        self.already_collide = False
         if not TileManager.loadlevel:
             self.sound = RessourceLoader.get(self.sounds)
             self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
@@ -27,5 +28,8 @@ class FlagBlue(pygame.sprite.Sprite):
 
     def update(self):
         for i in Game.player_group:
-            if pygame.sprite.collide_mask(self, i):
+            if pygame.sprite.collide_mask(self, i) and not self.already_collide:
+                self.already_collide = True
                 print("YOU WIN")
+            elif not pygame.sprite.collide_mask(self, i) and self.already_collide:
+                self.already_collide = False
