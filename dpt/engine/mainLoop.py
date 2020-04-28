@@ -85,9 +85,9 @@ def level_loop():
 
     TileEditor.ghost_block_group.draw(Game.surface)
 
-    if not TileEditor.in_editor and Game.count % 1800 == 0:
-        Game.effects_management.update()
-    Game.count += 1
+    # if not TileEditor.in_editor and Game.count % 1800 == 0:
+    # Game.effects_management.update()
+    # Game.count += 1
 
     Button.main_loop()
 
