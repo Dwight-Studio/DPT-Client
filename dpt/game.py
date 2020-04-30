@@ -264,16 +264,8 @@ class Game(object):
                 pygame.mixer_music.fadeout(1000)
                 pygame.time.delay(1000)
 
-            # Tests webcoms
-            #  from dpt.engine.webCommunications import Communication
-            #  cls.com = Communication()
-            # cls.com.create()
-            # cls.com.create_vote_event(0, 0)
-
             # Scene par défaut
             from dpt.engine.scenes import Scenes
-            # Scenes.main_menu()
-            # Scenes.editor("dpt.levels.levelTest")
             Scenes.main_menu()
 
             # MainLoop

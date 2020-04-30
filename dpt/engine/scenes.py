@@ -79,6 +79,16 @@ class Scenes:
         Game.effects_management = effectsManagement()
         Game.count = 0
 
+        from dpt.engine.gui.menu import Text
+        Game.gui = {"players_text": Text(Game.surface.get_size()[0] - math.floor(Game.DISPLAY_RATIO * 220),
+                                         0,
+                                         "Joueurs connectés : 000",
+                                         math.floor(25 * Game.DISPLAY_RATIO),
+                                         (0, 0, 0),
+                                         "dpt.fonts.DINOT_CondBlack")}
+
+        Game.temp["player_count_check"] = 0
+
         # Loops
         from dpt.engine.mainLoop import level_loop
         Game.loop = level_loop
@@ -458,7 +468,118 @@ class Scenes:
         :return: `True` en cas de réussite, sinon `False`
         :rtype: bool
         """
-        pass
+        from dpt.engine.loader import RessourceLoader
+        cls.logger.info("Displaying START_LEVEL")
+
+        # WebComs
+        from dpt.engine.webCommunications import Communication
+        Game.com = Communication()
+        if not Game.com.create():
+            Scenes.return_error(["Impossible de se connecter au serveur de jeu.",
+                                 "Verifiez votre connexion internet et réessayer",
+                                 " ",
+                                 "Si le problème persiste, vous pouvez nous contacter sur Discord",
+                                 "Dwight Studio Hub: discord.gg/yZwuNqN",
+                                 "(Lien copié dans le presse-papier)"])
+
+            from tkinter import Tk
+            root = Tk()
+            root.withdraw()
+            root.clipboard_clear()
+            root.clipboard_append("https://discord.gg/yZwuNqN")
+            root.update()
+            root.destroy()
+            return
+
+        # Ajout du GUI
+        from dpt.engine.gui.menu.button import Button
+        from dpt.engine.gui.menu.textSpriteButton import TextSpriteButton
+        from dpt.engine.gui.menu import Window
+        from dpt.engine.gui.menu.text import Text
+        button_width = math.floor(92 * Game.DISPLAY_RATIO)
+        button_height = math.floor(95 * Game.DISPLAY_RATIO)
+
+        Game.gui = {"window": Window(0, 0, 10, 10, centerx=Game.surface.get_size()[0] // 2, centery=Game.surface.get_size()[1] // 2),
+                    "title": Text(0,
+                                  math.floor(230 * Game.DISPLAY_RATIO),
+                                  "Démarrer une nouvelle session",
+                                  math.floor(50 * Game.DISPLAY_RATIO),
+                                  (0, 0, 0),
+                                  "dpt.fonts.DINOT_CondBlack",
+                                  centerx=Game.surface.get_size()[0] // 2),
+                    "session1": Text(0,
+                                     math.floor(320 * Game.DISPLAY_RATIO),
+                                     "ID de session :",
+                                     math.floor(40 * Game.DISPLAY_RATIO),
+                                     (0, 0, 0),
+                                     "dpt.fonts.DINOT_CondBlack",
+                                     centerx=Game.surface.get_size()[0] // 2),
+                    "session2": Text(0,
+                                     math.floor(350 * Game.DISPLAY_RATIO),
+                                     Game.com.sessionName,
+                                     math.floor(120 * Game.DISPLAY_RATIO),
+                                     (84, 66, 243),
+                                     "dpt.fonts.DINOT_CondBlack",
+                                     centerx=Game.surface.get_size()[0] // 2),
+                    "session3": Text(0,
+                                     math.floor(525 * Game.DISPLAY_RATIO),
+                                     "ou utilisez directement le lien",
+                                     math.floor(40 * Game.DISPLAY_RATIO),
+                                     (0, 0, 0),
+                                     "dpt.fonts.DINOT_CondBlack",
+                                     centerx=Game.surface.get_size()[0] // 2),
+                    "session4": Text(0,
+                                     math.floor(555 * Game.DISPLAY_RATIO),
+                                     Game.settings["server_address"] + "/?session=" + Game.com.sessionName,
+                                     math.floor(80 * Game.DISPLAY_RATIO),
+                                     (84, 66, 243),
+                                     "dpt.fonts.DINOT_CondBlack",
+                                     centerx=Game.surface.get_size()[0] // 2),
+                    "session5": Text(0,
+                                     math.floor(635 * Game.DISPLAY_RATIO),
+                                     "(Le lien a été copié dans votre presse-papier)",
+                                     math.floor(40 * Game.DISPLAY_RATIO),
+                                     (0, 0, 0),
+                                     "dpt.fonts.DINOT_CondBlack",
+                                     centerx=Game.surface.get_size()[0] // 2),
+                    "button_start": Button(math.floor(Game.surface.get_size()[0] / 2 + 50 * Game.DISPLAY_RATIO),
+                                           math.floor(Game.DISPLAY_RATIO * 720), button_width, button_height,
+                                           RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_OUT"),
+                                           pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_IN"),
+                                           text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                        math.floor(50 * Game.DISPLAY_RATIO),
+                                                                        RessourceLoader.get("dpt.images.gui.symbols.SYMB_PLAY"))),
+                    "button_main_menu": Button(math.floor(Game.surface.get_size()[0] / 2 - button_width - 50 * Game.DISPLAY_RATIO),
+                                               math.floor(Game.DISPLAY_RATIO * 720),
+                                               button_width,
+                                               button_height,
+                                               RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_OUT"),
+                                               pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_IN"),
+                                               text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                            math.floor(50 * Game.DISPLAY_RATIO),
+                                                                            RessourceLoader.get("dpt.images.gui.symbols.SYMB_X"))),
+                    "players_text": Text(Game.surface.get_size()[0] - math.floor(Game.DISPLAY_RATIO * 220),
+                                         0,
+                                         "Joueurs connectés : 000",
+                                         math.floor(25 * Game.DISPLAY_RATIO),
+                                         (0, 0, 0),
+                                         "dpt.fonts.DINOT_CondBlack")}
+
+        from tkinter import Tk
+        root = Tk()
+        root.withdraw()
+        root.clipboard_clear()
+        root.clipboard_append("http://" + Game.settings["server_address"] + "/?session=" + Game.com.sessionName)
+        root.update()
+        root.destroy()
+
+        Game.temp["next_level"] = level
+        Game.temp["player_count_check"] = 0
+
+        # Loops
+        from dpt.engine.mainLoop import start_level_loop
+        Game.loop = start_level_loop
+        return True
 
     @classmethod
     def end_level(cls):
@@ -477,3 +598,44 @@ class Scenes:
         :rtype: bool
         """
         pass
+
+    @classmethod
+    def return_error(cls, messages):
+        """Met en place les élèments du menu d'erreur
+
+        :param messages: Messages d'erreur
+        :type messages: list
+
+        :return: `True` en cas de réussite, sinon `False`
+        :rtype: bool
+        """
+        Scenes.main_menu(False)
+
+        cls.logger.info("Displaying RETURN_ERROR")
+
+        # Ajout du GUI
+        from dpt.engine.gui.menu import Window
+        from dpt.engine.gui.menu.text import Text
+        from random import randint
+
+        Game.gui.update({"window_error": Window(0, 0, 6, 4, centerx=Game.surface.get_size()[0] // 2, centery=Game.surface.get_size()[1] // 2),
+                         "title_error": Text(0,
+                                             math.floor(425 * Game.DISPLAY_RATIO),
+                                             "Erreur",
+                                             math.floor(50 * Game.DISPLAY_RATIO),
+                                             (0, 0, 0),
+                                             "dpt.fonts.DINOT_CondBlack",
+                                             centerx=Game.surface.get_size()[0] // 2)})
+
+        for i in range(len(messages)):
+            Game.gui["message_" + str(randint(1000, 9999))] = Text(0, 0, messages[i],
+                                                                   math.floor(25 * Game.DISPLAY_RATIO),
+                                                                   (254, 0, 61),
+                                                                   "dpt.fonts.DINOT_CondBlack",
+                                                                   centerx=Game.surface.get_size()[0] // 2,
+                                                                   centery=(Game.surface.get_size()[1] // 2 + math.floor(30 * Game.DISPLAY_RATIO) - (math.floor(12.5 * Game.DISPLAY_RATIO) * len(messages)) + (math.floor((25 * i) * Game.DISPLAY_RATIO))))
+
+        # Loops
+        from dpt.engine.mainLoop import main_menu_loop
+        Game.loop = main_menu_loop
+        return True

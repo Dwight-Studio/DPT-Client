@@ -12,6 +12,7 @@ from dpt.engine.scenes import Scenes
 from dpt.engine.tileManager import TileManager
 from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
+from dpt.engine.gui.menu import Text
 
 bg = RessourceLoader.get("dpt.images.environment.background.default_sky")
 bg = pygame.transform.smoothscale(bg, Game.surface.get_size())
@@ -91,6 +92,25 @@ def level_loop():
     # Game.effects_management.update()
     # Game.count += 1
 
+    if Game.temp["player_count_check"] + 1 >= 60:
+        Game.temp["player_count_check"] = 0
+        if Game.com is not None:
+            nb = Game.com.get_player_count()
+            if nb is None:
+                Game.gui["players_text"].text = "Déconnecté du serveur"
+                Game.gui["players_text"].color = (254, 0, 61)
+            else:
+                nb = str()
+                while len(nb) < 3:
+                    nb = "0" + nb
+                Game.gui["players_text"].text = "Joueurs connectés : " + nb
+        else:
+            Game.gui["players_text"].text = "Déconnecté des serveurs"
+            Game.gui["players_text"].color = (254, 0, 61)
+    else:
+        Game.temp["player_count_check"] += 1
+
+    Text.main_loop()
     Button.main_loop()
 
     Game.display_debug_info()
@@ -109,9 +129,10 @@ def pause_loop():
 
     for event in Game.events:
         if event.type == pygame.QUIT:
+            if Game.com is not None:
+                Game.com.close()
             if TileEditor.in_editor:
                 FileManager.save_file(TileEditor.created_level)
-            # Game.com.close()
             Game.run = False
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             menu.delete_items()
@@ -127,10 +148,16 @@ def pause_loop():
                 Scenes.level(TileManager.levelName)
                 return
             elif event.button == Game.gui["button_main_menu"]:
+                if Game.com is not None:
+                    Game.com.close()
+                if TileEditor.in_editor:
+                    FileManager.save_file(TileEditor.created_level)
                 menu.delete_items()
                 Scenes.main_menu()
                 return
             elif event.button == Game.gui["button_quit"]:
+                if Game.com is not None:
+                    Game.com.close()
                 if TileEditor.in_editor:
                     FileManager.save_file(TileEditor.created_level)
                 # Game.com.close()
@@ -151,9 +178,7 @@ def main_menu_loop():
         if event.type == Game.BUTTON_EVENT:
             if event.button == Game.gui["button_play"]:
                 menu.delete_items()
-                Scenes.level("dpt.levels.leveltest")
-                pygame.mixer_music.fadeout(1000)
-                pygame.mixer_music.unload()
+                Scenes.start_level("dpt.levels.leveltest")
                 return
             elif event.button == Game.gui["button_editor"]:
                 menu.delete_items()
@@ -172,8 +197,6 @@ def main_menu_loop():
                 Game.run = False
                 return
 
-    menu.main_loop()
-
     image = RessourceLoader.get("dpt.images.dpt")
     image = pygame.transform.smoothscale(image,
                                          (math.floor(1480 * Game.DISPLAY_RATIO), math.floor(600 * Game.DISPLAY_RATIO)))
@@ -181,6 +204,8 @@ def main_menu_loop():
     rect.centerx = Game.surface.get_size()[0] // 2
     rect.bottom = (Game.surface.get_size()[1] // 4) * 3
     Game.surface.blit(image, rect)
+
+    menu.main_loop()
 
     Game.display_debug_info()
     Game.draw_cursor()
@@ -288,6 +313,51 @@ def settings_menu_loop():
 
     pygame.draw.rect(Game.surface, (255, 255, 255, 2), rect1)
     pygame.draw.rect(Game.surface, (0, 0, 0), rect2, width=3)
+
+    Game.display_debug_info()
+    Game.draw_cursor()
+    Game.window.update()
+
+
+def start_level_loop():
+    """Boucle de début de niveau"""
+    Game.surface.blit(bg, (0, 0))
+
+    if Game.temp["player_count_check"] + 1 >= 60:
+        Game.temp["player_count_check"] = 0
+        if Game.com is not None:
+            nb = str(Game.com.get_player_count())
+
+            while len(nb) < 3:
+                nb = "0" + nb
+
+            Game.gui["players_text"].text = "Joueurs connectés : " + nb
+        else:
+            Game.gui["players_text"].text = "Déconnecté des serveurs"
+            Game.gui["players_text"].color = (254, 0, 61)
+    else:
+        Game.temp["player_count_check"] += 1
+
+    menu.main_loop()
+
+    for event in Game.events:
+        if event.type == pygame.QUIT:
+            Game.com.close()
+            Game.run = False
+            return
+        if event.type == Game.BUTTON_EVENT:
+            menu.delete_items()
+            if event.button == Game.gui["button_main_menu"]:
+                Game.com.close()
+                Scenes.main_menu(False)
+                return
+            elif event.button == Game.gui["button_start"]:
+                Scenes.level(Game.temp["next_level"])
+                pygame.mixer_music.fadeout(1000)
+                pygame.mixer_music.unload()
+                return
+
+    menu.main_loop()
 
     Game.display_debug_info()
     Game.draw_cursor()

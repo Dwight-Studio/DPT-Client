@@ -30,6 +30,7 @@ class Communication(object):
                 self.log.info("Starting keepAlive...")
                 self.keep = True
                 self.keepAliveThread.start()
+                return True
             else:
                 self.log.critical("Session creation failed")
                 return False
@@ -104,12 +105,9 @@ class Communication(object):
         :return nb: Nombre de joueurs connectés à la session
         :rtype nb: int, None
         """
-        request_vote = requests.get("http://" + Game.settings["server_address"] + "/sessions.json").json()
-        if request_vote is not None:
-            nb = 0
-            for data in request_vote[self.sessionName].values():
-                nb += 1
-            return nb
+        request = requests.get("http://" + Game.settings["server_address"] + "/sessions.json").json()
+        if request is not None and self.sessionName in request:
+            return len(request[self.sessionName])
         else:
             self.log.critical("Connection error (" + Game.settings["server_address"] + ")")
             return None
