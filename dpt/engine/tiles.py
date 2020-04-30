@@ -45,3 +45,11 @@ class Entity(ABC, pygame.sprite.Sprite):
         :rtype: pygame.sprite.Sprite
         """
         pass
+
+    @abstractmethod
+    def update(self, *args, **kwargs):
+        """Actualise les sprites
+
+        :param args: Arguments spécifique
+        :param kwargs: Arguments spécifique
+        """
