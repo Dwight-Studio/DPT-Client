@@ -29,6 +29,7 @@ class TileEditor:
 
     @classmethod
     def update(cls):
+        """Permet de faire beaucoup trop de choses (="""
         from dpt.engine.tileManager import TileManager
         if cls.in_editor:
             Game.freeze_game = True
@@ -162,6 +163,11 @@ class TileEditor:
                                 blocks.kill()
                                 del blocks
                         for blocks in TileManager.environment_group:
+                            if math.floor(blocks.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(
+                                    blocks.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
+                                blocks.kill()
+                                del blocks
+                        for blocks in TileManager.interactible_blocks_group:
                             if math.floor(blocks.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(
                                     blocks.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
                                 blocks.kill()
