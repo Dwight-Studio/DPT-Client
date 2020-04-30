@@ -117,6 +117,13 @@ class Game(object):
 
     @classmethod
     def play(cls, debug, skip_intro):
+        """Lance le jeu
+
+        :param debug: Activation du déboggage
+        :type debug: bool
+        :param skip_intro: Ignorer l'introduction
+        :type skip_intro: bool
+        """
         try:
             # /!\ ZONE SECURISÉE /!\
             cls.DEBUG = debug
@@ -299,6 +306,13 @@ class Game(object):
 
     @classmethod
     def get_logger(cls, name):
+        """Retourne un logger
+
+        :param name: Nom du module
+        :type name str
+
+        :return: Logger specifique au module
+        """
 
         logger = logging.getLogger(name)
         logger.setLevel(logging.DEBUG)
@@ -311,10 +325,16 @@ class Game(object):
 
     @classmethod
     def add_debug_info(cls, str):
+        """Ajoute une information de déboggage à afficher (pendant une frame)
+
+        :param str: Message
+        :type str: str
+        """
         cls._debug_infos.append(str)
 
     @classmethod
     def display_debug_info(cls):
+        """Affiche les informations de déboggage"""
         if cls.DEBUG:
             font = pygame.font.SysFont("arial", math.floor(15 * Game.DISPLAY_RATIO))
             y = 0
@@ -329,6 +349,7 @@ class Game(object):
 
     @classmethod
     def draw_cursor(cls):
+        """Affiche le curseur"""
         if not cls.cursor_on_button:
             image = cls.cursor1
         else:
@@ -341,6 +362,7 @@ class Game(object):
 
     @classmethod
     def load_settings(cls):
+        """Charge les paramètres"""
         try:
             from dpt.engine.loader import RESSOURCES_DIRECTORY
             file = open(RESSOURCES_DIRECTORY + "user/settings.json", "r")
@@ -361,6 +383,7 @@ class Game(object):
 
     @classmethod
     def save_settings(cls):
+        """Sauvegarde les paramètres"""
         from dpt.engine.loader import RESSOURCES_DIRECTORY
         file = open(RESSOURCES_DIRECTORY + "user/settings.json", "w")
         file.write(json.dumps(Game.settings))
@@ -369,6 +392,7 @@ class Game(object):
 
     @classmethod
     def update_display(cls):
+        """Actualise l'affichage (paramètres)"""
         if cls.PLATFORM == "win32":
             os.environ['SDL_VIDEO_WINDOW_POS'] = "0,0"
         cls.window = pygame.display

@@ -296,7 +296,7 @@ class TileManager:
 
     @classmethod
     def display_cam_info(cls):
-        """Affiche les informations de débogge de la caméra"""
+        """Affiche les informations de déboggage de la caméra"""
         obj_count = TileManager.camera.sprite_count + len(TileManager.foreground_blocks_group) + len(
             TileManager.deadly_object_group) + len(Button.buttonsGroup) + len(Button.text_sprite_buttonsGroup) + len(
             Button.text_buttonsList) + len(Checkbox.checkbox_group) + len(ProgressBar.progress_bar_group) + len(
