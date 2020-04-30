@@ -43,16 +43,16 @@ class effectsManagement(Communication):
         for effects in self.tempList:
             if effectsManagement.dicoLinks[effects] == "PlayerAndEnemy":
                 for enemies in TileManager.enemy_group:
-                    enemies.effects = False
+                    eval("enemies." + effects + " = False")
             for player in Game.player_group:
-                player.effects = False
+                eval("player." + effects + " = False")
         if effectsManagement.dicoEffects[self.result] == "Temp":
             self.tempList.append(self.result)
         if effectsManagement.dicoLinks[self.result] == "PlayerAndEnemy":
             for enemies in TileManager.enemy_group:
-                enemies.self.result = True
+                eval("enemies." + self.result + " = True")
         for player in Game.player_group:
-            player.self.result = True
+            eval("player." + self.result + " = True")
 
     def vote(self):
         mod1 = random.choice(effectsManagement.listEffects)

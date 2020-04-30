@@ -10,7 +10,7 @@ from dpt.engine.gui.menu.checkbox import Checkbox
 from dpt.engine.gui.menu.progressbar import ProgressBar
 from dpt.engine.loader import RessourceLoader, UnreachableRessourceError
 from dpt.game import Game
-from random import uniform, randint
+from random import random, randint
 
 
 #          {"x, y": {"blockClass": Classe}}
@@ -392,7 +392,7 @@ class TileManager:
         from dpt.engine.gui.Cloud import Cloud
         xpos = 10
         for i in range(12):
-            speed = uniform(-1, -5)
+            speed = randint(1, 5)
             xpos += randint(Game.surface.get_size()[0] // 14, Game.surface.get_size()[0] // 8)
             ypos = randint(0, Game.surface.get_size()[1] // 4)
             Cloud(xpos, ypos, speed)
@@ -405,7 +405,7 @@ class TileManager:
             if cloud.rect.midright[0] <= 0:
                 cls.clouds_group.remove(cloud)
                 del cloud
-                speed = uniform(-1, -5)
+                speed = randint(1, 3)
                 ypos = randint(0, Game.surface.get_size()[1] // 4)
                 Cloud(Game.surface.get_size()[0], ypos, speed)
 

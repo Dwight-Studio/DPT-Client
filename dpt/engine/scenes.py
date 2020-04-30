@@ -68,11 +68,16 @@ class Scenes:
         from dpt.engine.loader import RessourceLoader
         from dpt.engine.tileManager import TileManager
         from dpt.engine.gui.editor.tileEditor import TileEditor
+        from dpt.engine.effectsManagement import effectsManagement
 
         # Initialisation du TileManager
         TileEditor.in_editor = False
         if not TileManager.load_level(level):
             return False
+
+        # Initialisation de la gestion des effets
+        Game.effects_management = effectsManagement()
+        Game.count = 0
 
         # Loops
         from dpt.engine.mainLoop import level_loop
