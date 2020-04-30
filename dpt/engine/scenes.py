@@ -13,7 +13,7 @@ class Scenes:
 
         :param level: Niveau à charger
 
-        :return: `True` en cas de réussite, sinon `False`
+        :return: True en cas de réussite, sinon False
         :rtype: bool
         """
         cls.logger.info("Displaying EDITOR")
@@ -61,7 +61,7 @@ class Scenes:
 
         :param level: Niveau à charger
 
-        :return: `True` en cas de réussite, sinon `False`
+        :return: True en cas de réussite, sinon False
         :rtype: bool
         """
         cls.logger.info("Displaying LEVEL")
@@ -98,7 +98,7 @@ class Scenes:
     def pause(cls):
         """Met en place les élèments du menu pause
 
-        :return: `True` en cas de réussite, sinon `False`
+        :return: True en cas de réussite, sinon False
         :rtype: bool
         """
         from dpt.engine.loader import RessourceLoader
@@ -165,7 +165,7 @@ class Scenes:
         :param load: (Re)Charge les ressources
         :type load: bool
 
-        :return: `True` en cas de réussite, sinon `False`
+        :return: True en cas de réussite, sinon False
         :rtype: bool
         """
         cls.logger.info("Displaying MAIN_MENU")
@@ -238,7 +238,7 @@ class Scenes:
     def settings_menu(cls):
         """Met en place les élèments du menu des paramètres
 
-        :return: `True` en cas de réussite, sinon `False`
+        :return: True en cas de réussite, sinon False
         :rtype: bool
         """
 
@@ -455,7 +455,7 @@ class Scenes:
     def levels_menu(cls):
         """Met en place les élèments du menu de choix de niveau
 
-        :return: `True` en cas de réussite, sinon `False`
+        :return: True en cas de réussite, sinon False
         :rtype: bool
         """
 
@@ -465,7 +465,7 @@ class Scenes:
 
         :param level: Niveau à charger
 
-        :return: `True` en cas de réussite, sinon `False`
+        :return: True en cas de réussite, sinon False
         :rtype: bool
         """
         from dpt.engine.loader import RessourceLoader
@@ -585,7 +585,7 @@ class Scenes:
     def end_level(cls):
         """Met en place les élèments du menu de fin de niveau
 
-        :return: `True` en cas de réussite, sinon `False`
+        :return: True en cas de réussite, sinon False
         :rtype: bool
         """
         pass
@@ -594,7 +594,7 @@ class Scenes:
     def game_over(cls):
         """Met en place les élèments du menu d'échec
 
-        :return: `True` en cas de réussite, sinon `False`
+        :return: True en cas de réussite, sinon False
         :rtype: bool
         """
         pass
@@ -606,7 +606,7 @@ class Scenes:
         :param messages: Messages d'erreur
         :type messages: list
 
-        :return: `True` en cas de réussite, sinon `False`
+        :return: True en cas de réussite, sinon False
         :rtype: bool
         """
         Scenes.main_menu(False)

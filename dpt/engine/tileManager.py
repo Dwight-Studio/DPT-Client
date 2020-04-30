@@ -51,7 +51,7 @@ class TileManager:
         :param level_name: Niveau à charger
         :type level_name: str, dict
 
-        :return: `True` si le niveau est chargée sans problème, sinon `False`
+        :return: True si le niveau est chargée sans problème, sinon False
         :rtype: bool
         """
 
