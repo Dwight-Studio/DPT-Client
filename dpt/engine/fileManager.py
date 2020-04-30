@@ -14,6 +14,7 @@ class FileManager:
 
     @classmethod
     def import_file(cls):
+        """Permet de charger un fichier .level.json"""
         root = tk.Tk()
         root.withdraw()
         rfile = filedialog.askopenfilename(parent=root, title="Sélectionner un niveau", filetypes=[("Fichier de niveau DPT", "*.level.json"), ("Tous les fichiers", "*")], initialdir=cls.defaultDir)
@@ -24,7 +25,6 @@ class FileManager:
                 with open(wfile, "w") as fw:
                     data2 = json.dumps(data, indent=4)
                     fw.write(data2)
-                TileManager.environment_group.empty()
                 RessourceLoader.add_pending("user.levels." + str(os.path.basename(rfile)).split(".")[0])
                 RessourceLoader.load()
                 TileManager.load_level("user.levels." + str(os.path.basename(rfile)).split(".")[0])
@@ -36,6 +36,11 @@ class FileManager:
 
     @classmethod
     def save_file(cls, level):
+        """Permet de sauvegarder un niveau
+
+        :param level: Niveau
+        :type level: dict
+        """
         root = tk.Tk()
         root.withdraw()
         file = filedialog.asksaveasfilename(parent=root, title="Sauvegarder un niveau", filetypes=[("Fichier de niveau DPT", "*.level.json")], defaultextension=".level.json", initialdir=cls.defaultDir)

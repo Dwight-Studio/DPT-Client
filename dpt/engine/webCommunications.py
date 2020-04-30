@@ -11,17 +11,21 @@ from dpt.game import Game
 
 class Communication(object):
     def __init__(self):
+        """Initialize la communication avec le serveur
+
+        :rtype: Communication
+        """
         self.i = 0
         self.log = Game.get_logger("WebCom")
         self.sessionName = "".join(random.choice(string.ascii_uppercase) for i in range(5))
         self.keepAliveThread = threading.Thread(target=self.keep_alive)
         self.keep = False
         self.currentTime = int(round(time.time() * 1000))
-        self.waiting = False
         self.waitThread = threading.Thread(target=self.start_wait)
         self.time_to_wait = 0
 
     def create(self):
+        """Crée la session sur le serveur """
         try:
             request = requests.get("http://" + Game.settings["server_address"] + "/init.php?session=" + self.sessionName)
             if request.json() == self.sessionName:
@@ -38,6 +42,7 @@ class Communication(object):
             self.log.warning("Hostname not found. Is the server running ? Check the server address !")
 
     def keep_alive(self):
+        """Envoie de paquets toutes les 3 secondes pour garder la session active"""
         while self.keep:
             time.sleep(3)
             keep_link = requests.get("http://" + Game.settings["server_address"] + "/keepAlive.php?session=" + self.sessionName)
@@ -50,13 +55,21 @@ class Communication(object):
                     continue
 
     def create_vote_event(self, mod1, mod2):
+        """Crée un évènement de vote
+
+        :param mod1: Modificateur 1
+        :type mod1: str
+        :param mod2: Modificateur 2
+        :type mod2: str
+        :rtype: bool
+        :return: Retourne True si le vote est correctement créé sinon False
+        """
         try:
             self.log.info("Creating a new vote...")
             self.currentTime = int(round(time.time() * 1000))
             data = {"endDate": self.currentTime + (Game.VOTE_TIMEOUT * 1000) + 2000, "mod1": mod1, "mod2": mod2}
             requests.get("http://" + Game.settings["server_address"] + "/registerVote.php?session=" + self.sessionName + "&data=" + json.dumps(data))
             self.log.info("Vote created")
-            self.waiting = True
             self.wait_for(Game.VOTE_TIMEOUT + 2)
             return True
         except:
@@ -64,6 +77,11 @@ class Communication(object):
             return False
 
     def vote_result(self):
+        """Donne le résultat des votes
+
+        :return str: Résultat du vote
+        :rtype str: str, None
+        """
         vote_one = 0
         vote_two = 0
         self.log.info("Requesting vote output...")
@@ -90,14 +108,18 @@ class Communication(object):
             return None
 
     def wait_for(self, time):
+        """Spécifie le temps du timer en secondes
+
+        :param time: Temps en seconde
+        :type time: int
+        """
         self.time_to_wait = time
         self.waitThread.start()
 
     def start_wait(self):
-        while self.waiting:
-            time.sleep(self.time_to_wait)
-            self.vote_result()
-            self.waiting = False
+        """Lance le timer"""
+        time.sleep(self.time_to_wait)
+        self.vote_result()
 
     def get_player_count(self):
         """Évalue le nombre de joueurs connectés à la session
@@ -113,6 +135,7 @@ class Communication(object):
             return None
 
     def close(self):
+        """Ferme la session actuelle"""
         request_close = requests.get("http://" + Game.settings["server_address"] + "/close.php?session=" + self.sessionName)
         self.keep = False
         if not request_close.json():
