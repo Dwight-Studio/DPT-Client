@@ -43,12 +43,21 @@ class Scenes:
             return False
 
         # Ajout du bouton d'éditeur
+        from dpt.engine.gui.menu import Text
         Game.gui = {"editor_button": Button(0, Game.surface.get_size()[1] - math.floor(50 * Game.DISPLAY_RATIO),
                                             math.floor(127 * Game.DISPLAY_RATIO),
                                             math.floor(46 * Game.DISPLAY_RATIO),
                                             RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_OUT"),
                                             pushed_image=RessourceLoader.get(
-                                                "dpt.images.gui.buttons.BTN_GREEN_RECT_IN"), text="Jouer")}
+                                                "dpt.images.gui.buttons.BTN_GREEN_RECT_IN"), text="Jouer"),
+                    "players_text": Text(Game.surface.get_size()[0] - math.floor(Game.DISPLAY_RATIO * 220),
+                                         0,
+                                         "Joueurs connectés : 000",
+                                         math.floor(25 * Game.DISPLAY_RATIO),
+                                         (0, 0, 0),
+                                         "dpt.fonts.DINOT_CondBlack")}
+
+        Game.temp["player_count_check"] = 0
 
         # Loops
         from dpt.engine.mainLoop import level_loop
