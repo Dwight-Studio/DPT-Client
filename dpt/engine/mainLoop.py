@@ -91,24 +91,24 @@ def level_loop():
     # if not TileEditor.in_editor and Game.count % 1800 == 0:
     # Game.effects_management.update()
     # Game.count += 1
-
-    if Game.temp["player_count_check"] + 1 >= 60:
-        Game.temp["player_count_check"] = 0
+    if not TileEditor.in_editor:
         if Game.com is not None:
-            nb = Game.com.get_player_count()
-            if nb is None:
-                Game.gui["players_text"].text = "Déconnecté du serveur"
-                Game.gui["players_text"].color = (254, 0, 61)
+            if Game.temp["player_count_check"] + 1 >= 60:
+                Game.temp["player_count_check"] = 0
+                nb = Game.com.get_player_count()
+                if nb is None:
+                    Game.gui["players_text"].text = "Déconnecté du serveur"
+                    Game.gui["players_text"].color = (254, 0, 61)
+                else:
+                    nb = str()
+                    while len(nb) < 3:
+                        nb = "0" + nb
+                    Game.gui["players_text"].text = "Joueurs connectés : " + nb
             else:
-                nb = str()
-                while len(nb) < 3:
-                    nb = "0" + nb
-                Game.gui["players_text"].text = "Joueurs connectés : " + nb
+                Game.temp["player_count_check"] += 1
         else:
             Game.gui["players_text"].text = "Déconnecté des serveurs"
             Game.gui["players_text"].color = (254, 0, 61)
-    else:
-        Game.temp["player_count_check"] += 1
 
     Text.main_loop()
     Button.main_loop()
