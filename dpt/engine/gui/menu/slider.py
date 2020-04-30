@@ -11,6 +11,30 @@ class Slider(object):
     slider_list = []
 
     def __init__(self, x, y, width, height, value, **kwargs):
+        """Crée une glissière
+
+        :param x: Abscisse
+        :type x: int
+        :param y: Ordonnée
+        :type x: int
+        :param width: Largeur
+        :type width: int
+        :param height: Hauteur
+        :type height: int
+        :param value: Valeur par défaut (relative)
+        :type value: float
+
+        :keyword image_left: Image du bouton de gauche
+        :keyword image_left_pushed: Image du bouton de gauche une fois pressé
+        :keyword image_right: Image du bouton de gauche
+        :keyword image_right_pushed: Image du bouton de gauche une fois pressé
+        :keyword image_slide: Image du bouton de glissière
+        :keyword image_slide_pushed: Image du bouton de glissière une fois pressé
+        :keyword image_progress_bar_frame: Image du cadre de la bar de progression
+        :keyword image_progress_bar_bar: Image de la bar de progression
+
+        :rtype: Slider
+        """
         from dpt.engine.gui.menu.progressbar import ProgressBar
         Slider.slider_list.append(self)
 
@@ -103,6 +127,7 @@ class Slider(object):
         Game.get_logger("Slider").debug("Slider created")
 
     def update(self):
+        """Actualise la glissière"""
         self.right.update()
         self.left.update()
         self.slide.update()
@@ -122,16 +147,19 @@ class Slider(object):
 
     @classmethod
     def main_loop(cls):
+        """Actualise toutes les glissières"""
         for slider in Slider.slider_list:
             slider.update()
             slider.draw(Game.surface)
 
     def kill(self):
+        """Supprime la glissière"""
         self.right.kill()
         self.left.kill()
         self.slide.kill()
 
     def draw(self, surface):
+        """Dessine la glissière"""
         surface.blit(self.right.image, self.right.rect)
         surface.blit(self.left.image, self.left.rect)
         surface.blit(self.slide.image, self.slide.rect)

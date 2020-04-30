@@ -5,11 +5,24 @@ from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 
 
-class RatioButton(pygame.sprite.Sprite):
-    ratio_button_group = pygame.sprite.Group()
+class RadioButton(pygame.sprite.Sprite):
+    radio_button_group = pygame.sprite.Group()
 
     def __init__(self, x, y, size, btn_list):
-        pygame.sprite.Sprite.__init__(self, self.ratio_button_group)  # Sprite's constructor called
+        """Crée un bouton radio
+
+        :param x: Abscisse
+        :type x: int
+        :param y: Ordonnée
+        :type y: int
+        :param size: Taille (relative)
+        :type size: float
+        :param btn_list: Liste contenant les autres boutons liés
+        :type btn_list: list
+
+        :rtype: RadioButton
+        """
+        pygame.sprite.Sprite.__init__(self, self.radio_button_group)  # Sprite's constructor called
         self.false_image = RessourceLoader.get("dpt.images.gui.Buttons.BTN_RADIO_OUT").copy()
         self.true_image = RessourceLoader.get("dpt.images.gui.Buttons.BTN_RADIO_IN").copy()
         self.image = self.false_image
@@ -28,12 +41,13 @@ class RatioButton(pygame.sprite.Sprite):
         self.value = False
         self.list = btn_list
         self.list.append(self)
-        Game.get_logger("RatioButton").debug("RatioButton created")
+        Game.get_logger("RadioButton").debug("RadioButton created")
 
     def __bool__(self):
         return self.value
 
     def update(self):
+        """Actualise le bouton radio"""
         for event in Game.events:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.rect.collidepoint(pygame.mouse.get_pos()):
@@ -51,5 +65,6 @@ class RatioButton(pygame.sprite.Sprite):
 
     @classmethod
     def main_loop(cls):
-        RatioButton.ratio_button_group.update()
-        RatioButton.ratio_button_group.draw(Game.surface)
+        """Actualise tous les boutons radio"""
+        RadioButton.radio_button_group.update()
+        RadioButton.radio_button_group.draw(Game.surface)

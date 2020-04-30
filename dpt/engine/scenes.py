@@ -9,6 +9,13 @@ class Scenes:
 
     @classmethod
     def editor(cls, level):
+        """Met en place les élèments d'éditeur
+
+        :param level: Niveau à charger
+
+        :return: `True` en cas de réussite, sinon `False`
+        :rtype: bool
+        """
         cls.logger.info("Displaying EDITOR")
         from dpt.engine.loader import RessourceLoader
         from dpt.engine.tileManager import TileManager
@@ -50,6 +57,13 @@ class Scenes:
 
     @classmethod
     def level(cls, level):
+        """Met en place les élèments de niveau
+
+        :param level: Niveau à charger
+
+        :return: `True` en cas de réussite, sinon `False`
+        :rtype: bool
+        """
         cls.logger.info("Displaying LEVEL")
         from dpt.engine.loader import RessourceLoader
         from dpt.engine.tileManager import TileManager
@@ -67,6 +81,11 @@ class Scenes:
 
     @classmethod
     def pause(cls):
+        """Met en place les élèments du menu pause
+
+        :return: `True` en cas de réussite, sinon `False`
+        :rtype: bool
+        """
         from dpt.engine.loader import RessourceLoader
         cls.logger.info("Displaying PAUSE")
 
@@ -126,6 +145,14 @@ class Scenes:
 
     @classmethod
     def main_menu(cls, load=True):
+        """Met en place les élèments du menu principale
+
+        :param load: (Re)Charge les ressources
+        :type load: bool
+
+        :return: `True` en cas de réussite, sinon `False`
+        :rtype: bool
+        """
         cls.logger.info("Displaying MAIN_MENU")
         from dpt.engine.loader import RessourceLoader
 
@@ -194,6 +221,12 @@ class Scenes:
 
     @classmethod
     def settings_menu(cls):
+        """Met en place les élèments du menu des paramètres
+
+        :return: `True` en cas de réussite, sinon `False`
+        :rtype: bool
+        """
+
         cls.logger.info("Displaying SETTINGS_MENU")
         from dpt.engine.loader import RessourceLoader
 
@@ -203,7 +236,7 @@ class Scenes:
         from dpt.engine.gui.menu.button import Button
         from dpt.engine.gui.menu.textSpriteButton import TextSpriteButton
         from dpt.engine.gui.menu.text import Text
-        from dpt.engine.gui.menu.ratioButton import RatioButton
+        from dpt.engine.gui.menu.radioButton import RadioButton
 
         btn_list = []
 
@@ -307,11 +340,11 @@ class Scenes:
                                          math.floor(50 * Game.DISPLAY_RATIO),
                                          (0, 0, 0),
                                          "dpt.fonts.DINOT_CondBlack"),
-                    "default_server_button": RatioButton(math.floor(1100 * Game.DISPLAY_RATIO),
+                    "default_server_button": RadioButton(math.floor(1100 * Game.DISPLAY_RATIO),
                                                          math.floor(625 * Game.DISPLAY_RATIO),
                                                          0.7,
                                                          btn_list),
-                    "custom_server_button": RatioButton(math.floor(1100 * Game.DISPLAY_RATIO),
+                    "custom_server_button": RadioButton(math.floor(1100 * Game.DISPLAY_RATIO),
                                                         math.floor(675 * Game.DISPLAY_RATIO),
                                                         0.7,
                                                         btn_list),
@@ -404,9 +437,38 @@ class Scenes:
         return True
 
     @classmethod
+    def levels_menu(cls):
+        """Met en place les élèments du menu de choix de niveau
+
+        :return: `True` en cas de réussite, sinon `False`
+        :rtype: bool
+        """
+
+    @classmethod
+    def start_level(cls, level):
+        """Met en place les élèments du menu de début de niveau
+
+        :param level: Niveau à charger
+
+        :return: `True` en cas de réussite, sinon `False`
+        :rtype: bool
+        """
+        pass
+
+    @classmethod
     def end_level(cls):
+        """Met en place les élèments du menu de fin de niveau
+
+        :return: `True` en cas de réussite, sinon `False`
+        :rtype: bool
+        """
         pass
 
     @classmethod
     def game_over(cls):
+        """Met en place les élèments du menu d'échec
+
+        :return: `True` en cas de réussite, sinon `False`
+        :rtype: bool
+        """
         pass

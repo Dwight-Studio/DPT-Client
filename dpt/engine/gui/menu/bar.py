@@ -3,6 +3,21 @@ import pygame
 
 class Bar(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height, image):
+        """Crée une barre
+
+        :param x: Abscisse
+        :type x: int
+        :param y: Ordonnée
+        :type y: int
+        :param width: Largeur
+        :type width: int
+        :param height: Hauteur
+        :type height: int
+        :param image: Image
+        :type image: pygame.Surface
+
+        :rtype: Bar
+        """
         from dpt.engine.gui.menu.progressbar import ProgressBar
         pygame.sprite.Sprite.__init__(self, ProgressBar.bar_group)  # Sprite's constructor called
         self.image = image
@@ -17,5 +32,6 @@ class Bar(pygame.sprite.Sprite):
         self.progress = width
 
     def update(self):
+        """Actualise la barre"""
         self.rect.width = self.progress
         self.image = self.normal_image.subsurface(pygame.Rect(0, 0, self.rect.width, self.rect.height)).copy()

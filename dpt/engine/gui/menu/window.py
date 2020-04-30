@@ -9,6 +9,22 @@ class Window:
     window_group = pygame.sprite.Group()
 
     def __init__(self, x, y, width_number, height_number, **kwargs):
+        """Crée une fenêtre
+
+        :param x: Abscisse
+        :type x: int
+        :param y: Ordonnée
+        :type x: int
+        :param width_number: Largeur (en nombre de sprites)
+        :type width_number: int
+        :param height_number: Hauteur (en nombre de sprites)
+        :type height_number: int
+
+        :keyword centerx: Abscisse du centre, si specifié, ignore le paramètre x original
+        :keyword centery: ordonnée du centre, si specifié, ignore le paramètre y original
+
+        :rtype: Window
+        """
         self.rect = pygame.rect.Rect(x, y, width_number * 122 * Game.DISPLAY_RATIO, height_number * 64 * Game.DISPLAY_RATIO)
 
         if "centerx" in kwargs:
@@ -37,5 +53,6 @@ class Window:
 
     @classmethod
     def main_loop(cls):
+        """Actualise toutes les fenêtres"""
         Window.window_group.update()
         Window.window_group.draw(Game.surface)

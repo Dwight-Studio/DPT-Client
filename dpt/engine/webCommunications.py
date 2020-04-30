@@ -57,8 +57,10 @@ class Communication(object):
             self.log.info("Vote created")
             self.waiting = True
             self.wait_for(Game.VOTE_TIMEOUT + 2)
+            return True
         except:
             self.log.warning("Cannot create vote event ! Is the hostname exist or the server running ?")
+            return False
 
     def vote_result(self):
         vote_one = 0
@@ -82,7 +84,9 @@ class Communication(object):
                 self.log.info("Vote equality")
                 return "0"
         else:
+            self.log.critical("Connection error (" + Game.settings["server_address"] + ")")
             self.log.critical("Vote request failed")
+            return None
 
     def wait_for(self, time):
         self.time_to_wait = time
@@ -94,9 +98,26 @@ class Communication(object):
             self.vote_result()
             self.waiting = False
 
+    def get_player_count(self):
+        """Évalue le nombre de joueurs connectés à la session
+
+        :return nb: Nombre de joueurs connectés à la session
+        :rtype nb: int, None
+        """
+        request_vote = requests.get("http://" + Game.settings["server_address"] + "/sessions.json").json()
+        if request_vote is not None:
+            nb = 0
+            for data in request_vote[self.sessionName].values():
+                nb += 1
+            return nb
+        else:
+            self.log.critical("Connection error (" + Game.settings["server_address"] + ")")
+            return None
+
     def close(self):
         request_close = requests.get("http://" + Game.settings["server_address"] + "/close.php?session=" + self.sessionName)
         self.keep = False
         if not request_close.json():
+            self.log.critical("Connection error (" + Game.settings["server_address"] + ")")
             self.log.warning("Close session failed")
         self.log.info("Session closed")

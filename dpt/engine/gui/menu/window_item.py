@@ -19,6 +19,17 @@ class WindowItem(pygame.sprite.Sprite):
     }
 
     def __init__(self, x, y, item_type):
+        """Crée une partie de fenêtre
+
+        :param x: Abscisse
+        :type x: int
+        :param y: Ordonnée
+        :type x: int
+        :param item_type: Type
+        :type item_type: str
+
+        :rtype: WindowItem
+        """
         from dpt.engine.gui.menu.window import Window
         pygame.sprite.Sprite.__init__(self, Window.window_group)
         self.image = pygame.transform.smoothscale(RessourceLoader.get(WindowItem.type[item_type]), (math.ceil(122 * Game.DISPLAY_RATIO), math.ceil(64 * Game.DISPLAY_RATIO)))

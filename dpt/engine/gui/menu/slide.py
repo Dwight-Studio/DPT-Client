@@ -7,6 +7,16 @@ from dpt.engine.loader import RessourceLoader
 
 class Slide(pygame.sprite.Sprite):
     def __init__(self, slider, normal_image, pushed_image):
+        """Crée un bouton de glissière
+
+        :param slider: Glissière parente
+        :type slider: dpt.engine.gui.menu.Slider
+        :param normal_image: Image
+        :type normal_image: pygame.Surface
+        :param pushed_image: Image utilisée lorque le bouton est pressé
+        :type pushed_image: pygame.Surface
+        """
+
         from dpt.engine.gui.menu import Slider
         pygame.sprite.Sprite.__init__(self, Slider.slide_group)  # Sprite's constructor called
         self.slider = slider
@@ -24,6 +34,7 @@ class Slide(pygame.sprite.Sprite):
         self.pushed = False
 
     def update(self):
+        """Actualise le bouton de glissière"""
         prev = self.pushed
         self.pushed = False
 
@@ -48,6 +59,7 @@ class Slide(pygame.sprite.Sprite):
                 self.image = self.normal_image
 
     def apply_x(self):
+        """Applique de modification en abscisse pour limiter son déplacement"""
         new_x = max(self.rect.x, self.slider.left.rect.right)
         new_x = min(new_x, self.slider.right.rect.left - self.rect.width)
         self.rect.x = new_x

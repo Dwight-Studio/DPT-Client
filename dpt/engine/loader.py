@@ -28,6 +28,13 @@ class UnreachableRessourceError(Exception):
 
 
 def make_entries(path):
+    """Génère une liste formatée des fichiers et sous-dossiers d'un dossier.
+
+    :param path: Chemin à utiliser
+    :type path: str
+    :return: Liste des fichiers et dossiers formatés
+    :rtype: list
+    """
     rlist = []
     for item in os.listdir(path):
         if os.path.isdir(path + "/" + item):
@@ -53,6 +60,7 @@ class RessourceLoader:
 
     @classmethod
     def init(cls):
+        """Initialise le module RessourceLoader"""
         cls.logger.info("Initializing registries")
 
         cls.logger.info("Building RESSOURCES registry")
@@ -84,6 +92,7 @@ class RessourceLoader:
 
     @classmethod
     def reload(cls):
+        """Recharge les ressources"""
         cls.logger.info("Reloading ressources")
         if cls.loaded_ressources_entries is None:
             cls.logger.warning("Can't reload: no loaded entries found")
@@ -96,6 +105,7 @@ class RessourceLoader:
 
     @classmethod
     def load(cls):
+        """Charge toutes les ressources préalablement ajouté avec `RessourceLoader.add_pending()`"""
         from dpt.engine.gui.menu.progressbar import ProgressBar
 
         before_load_nb = len(cls.loaded_ressources)
@@ -195,6 +205,7 @@ class RessourceLoader:
 
     @classmethod
     def unload(cls):
+        """Décharge toutes les ressources actuellement chargées"""
         bf = str(psutil.virtual_memory().percent)
         del cls.loaded_ressources
         gc.collect()
@@ -204,6 +215,14 @@ class RessourceLoader:
 
     @classmethod
     def select_entries(cls, path):
+        """Génère une liste d'entrées correspondantes à un chemin
+
+        :param path: Chemin à utiliser
+        :type path: str
+
+        :return: Liste d'entrées correspondantes au chemin
+        :rtype: list
+        """
         if path[-1] == "*":
             path = path[:-1]
         entries = []
@@ -214,19 +233,38 @@ class RessourceLoader:
         return entries
 
     @classmethod
-    def get_multiple(cls, entry):
+    def get_multiple(cls, path):
+        """Permet de récuper plusieurs ressources
+
+        :param path: Chemin à utiliser
+        :type path: str
+
+        :raise UnreachableRessourceError: Les ressources ne peuvent être atteintes (non chargée / manquante)
+
+        :return: Liste de ressources correspondantes sans arrangement particulier
+        :rtype: list
+        """
         try:
             rlist = []
-            entries = cls.select_entries(entry.lower())
-            for entry in entries:
-                rlist.append(cls.loaded_ressources[entry.lower()])
+            entries = cls.select_entries(path.lower())
+            for path in entries:
+                rlist.append(cls.loaded_ressources[path.lower()])
             return rlist
         except KeyError:
-            cls.logger.critical(f"Ressource for entry {entry.lower()} can't be reached (Are ressources loaded ?)")
-            raise UnreachableRessourceError(entry.lower())
+            cls.logger.critical(f"Ressources for path {path.lower()} can't be reached (Are ressources loaded ?)")
+            raise UnreachableRessourceError(path.lower())
 
     @classmethod
     def get(cls, entry):
+        """Permet de récuper plusieurs ressources
+
+        :param entry: Nom de l'entrée
+        :type entry: str
+
+        :raise UnreachableRessourceError: La ressource ne peut être atteinte (non chargée / manquante)
+
+        :return: Ressource correspondante
+        """
         try:
             return cls.loaded_ressources[entry.lower()]
         except KeyError:
@@ -234,14 +272,21 @@ class RessourceLoader:
             raise UnreachableRessourceError(entry.lower())
 
     @classmethod
-    def add_pending(cls, entry):
+    def add_pending(cls, path):
+        """Ajoute une entrée (ou plusieurs, selon le chemin donné)
+
+        :param path: Chemin à utiliser
+        :type path: str
+
+        :raise UnreachableRessourceError: Le chemin ne renvois aucune entrée
+        """
         try:
             rlist = []
-            entries = cls.select_entries(entry.lower())
+            entries = cls.select_entries(path.lower())
             if len(entries) == 0:
-                cls.logger.warning("The requested selector (" + entry + ") did not find any entries, it may cause exceptions but ignoring")
-            for entry in entries:
-                cls.pending_ressources[entry] = cls.RESSOURCES[entry]
+                cls.logger.warning("The requested selector (" + path + ") did not find any entries, it may cause exceptions but ignoring")
+            for path in entries:
+                cls.pending_ressources[path] = cls.RESSOURCES[path]
         except KeyError:
             cls.logger.critical("Ressource can't be added to pending ressources (path doesn't exist)")
-            raise UnreachableRessourceError(entry)
+            raise UnreachableRessourceError(path)

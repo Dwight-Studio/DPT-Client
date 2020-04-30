@@ -11,6 +11,30 @@ class Button(pygame.sprite.Sprite):
     text_buttonsList = []
 
     def __init__(self, x, y, width, height, normal_image, **kwargs):
+        """Crée un bouton
+
+        :param x: Abscisse
+        :type x: int
+        :param y: Ordonnée
+        :type x: int
+        :param width: Largeur
+        :type width: int
+        :param height: Hauteur
+        :type height: int
+        :param normal_image: Image
+        :type normal_image: pygame.Surface
+
+        :keyword pushed_image: Image utilisé lorsque le bouton est pressé
+        :keyword locked_image: Image utilisé lorque le bouton est verrouillé
+        :keyword hover_image: Image utilisé lorsque le bouton est survolé
+        :keyword font: Police d'écriture
+        :keyword font_color: Couleur du texte
+        :keyword text: Texte du bouton
+        :keyword text_sprite: Image à afficher sur le bouton (Utilise l'objet 'TextSpriteButton')
+
+        :rtype: Button
+        """
+
         pygame.sprite.Sprite.__init__(self, Button.buttonsGroup)  # Sprite's constructor called
         self.normal_image = normal_image
         if "pushed_image" in kwargs:
@@ -66,6 +90,7 @@ class Button(pygame.sprite.Sprite):
         return self.pushed
 
     def update(self):
+        """Actualise le bouton"""
         if self.text_sprite is not None:
             self.text_sprite.rect.centerx = self.rect.centerx
             self.text_sprite.rect.centery = self.rect.centery
@@ -110,13 +135,16 @@ class Button(pygame.sprite.Sprite):
         self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
 
     def lock(self):
+        """Verrouille le bouton"""
         self.locked = True
 
     def unlock(self):
+        """Déverrouille """
         self.locked = False
 
     @classmethod
     def main_loop(cls):
+        """Actualise tous les boutons"""
         Button.text_buttonsList = []
         Button.buttonsGroup.update()
         Button.text_sprite_buttonsGroup.update()

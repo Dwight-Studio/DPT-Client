@@ -46,6 +46,15 @@ class TileManager:
 
     @classmethod
     def load_level(cls, level_name):
+        """Charge un niveau
+
+        :param level_name: Niveau à charger
+        :type level_name: str, dict
+
+        :return: `True` si le niveau est chargée sans problème, sinon `False`
+        :rtype: bool
+        """
+
         cls.loadlevel = True
         if Game.player_sprite is not None:
             Game.player_sprite.kill()
@@ -177,11 +186,31 @@ class TileManager:
 
     @classmethod
     def ghost_block(cls, x_tile, y_tile, item):
+        """Crée un faux block / fausse entitée
+
+        :param x_tile: Abscisse (Tile)
+        :type x_tile: int
+        :param y_tile: Ordonnée (Tile)
+        :type y_tile: int
+        :param item: Type d'entitée à utiliser
+        :type item: str
+        """
+
         from dpt.engine.ghostFakeEntities import GhostFakeEntity
-        ghost_block = GhostFakeEntity(x_tile, y_tile, 80, item)
+        GhostFakeEntity(x_tile, y_tile, 80, item)
 
     @classmethod
     def place_block(cls, x_tile, y_tile, item):
+        """Crée un bloc
+
+        :param x_tile: Abscisse (Tile)
+        :type x_tile: int
+        :param y_tile: Ordonnée (Tile)
+        :type y_tile: int
+        :param item: Type d'entitée à utiliser
+        :type item: str
+        """
+
         if not TileEditor.custom_tile_placement:
             RessourceLoader.get(item)(x_tile * Game.TILESIZE, y_tile * Game.TILESIZE)
             cls.log.debug("Tile " + item + " placed at " + str(x_tile) + ", " + str(y_tile))
@@ -191,6 +220,16 @@ class TileManager:
 
     @classmethod
     def place_back_block(cls, x_tile, y_tile, item):
+        """Crée un bloc d'arrière plan
+
+        :param x_tile: Abscisse (Tile)
+        :type x_tile: int
+        :param y_tile: Ordonnée (Tile)
+        :type y_tile: int
+        :param item: Type d'entitée à utiliser
+        :type item: str
+        """
+
         if not TileEditor.custom_tile_placement:
             BackgroundFakeBlocks(x_tile * Game.TILESIZE, y_tile * Game.TILESIZE, item)
             cls.log.debug("Background tile " + item + " placed at " + str(x_tile) + ", " + str(y_tile))
@@ -200,6 +239,8 @@ class TileManager:
 
     @classmethod
     def open_tile_panel(cls):
+        """Génère le panneau d'édition"""
+
         TileManager.editor_panel_group.empty()
         Game.editor_tile_registry.clear()
         value = bool(cls.check_back)
@@ -229,12 +270,14 @@ class TileManager:
 
     @classmethod
     def scroll_down(cls):
+        """Gère le déroulement du panneau d'édition vers le bas"""
         if TileEditor.panel_open:
             cls.nb_skip += cls.per_line
             TileManager.open_tile_panel()
 
     @classmethod
     def scroll_up(cls):
+        """Gère le déroulement du panneau d'édition vers le haut"""
         if TileEditor.panel_open:
             TileManager.editor_panel_group.empty()
             Checkbox.checkbox_group.empty()
@@ -245,17 +288,15 @@ class TileManager:
 
     @classmethod
     def out_of_window(cls):
+        """Tue les ennemis sorties de la carte"""
         for enemy in TileManager.enemy_group:
             if enemy.rect.centery >= 3000:
                 enemy.kill()
                 del enemy
 
     @classmethod
-    def get_sprite_count(cls):
-        return len(cls.background_blocks_group) + len(cls.entity_group) + len(cls.environment_group)
-
-    @classmethod
     def display_cam_info(cls):
+        """Affiche les informations de débogge de la caméra"""
         obj_count = TileManager.camera.sprite_count + len(TileManager.foreground_blocks_group) + len(
             TileManager.deadly_object_group) + len(Button.buttonsGroup) + len(Button.text_sprite_buttonsGroup) + len(
             Button.text_buttonsList) + len(Checkbox.checkbox_group) + len(ProgressBar.progress_bar_group) + len(
@@ -286,6 +327,14 @@ class TileManager:
 
     @classmethod
     def display_sprites(cls, self, freeze):
+        """Affiche les sprites en utilisant une caméra
+
+        :param self: Caméra à utiliser
+        :type self: Camera, EditorCamera
+        :param freeze: Désactiver l'actualisation des sprites
+        :type freeze: bool
+        """
+
         rect = Game.surface.get_bounding_rect()
         rect.width += 200
         rect.x -= self.last_x + 100
@@ -339,6 +388,7 @@ class TileManager:
 
     @classmethod
     def generate_clouds(cls):
+        """Génère les nuages"""
         from dpt.engine.gui.Cloud import Cloud
         xpos = 10
         for i in range(12):
@@ -349,6 +399,7 @@ class TileManager:
 
     @classmethod
     def update_clouds(cls):
+        """Actualise les nuages"""
         from dpt.engine.gui.Cloud import Cloud
         for cloud in cls.clouds_group:
             if cloud.rect.midright[0] <= 0:
@@ -360,6 +411,16 @@ class TileManager:
 
 class Camera:
     def __init__(self, width, height):
+        """Crée une nouvelle caméra
+
+        :param width: Largeur de l'écran (Tile)
+        :type width: int
+        :param height: Hauteur de l'écran (Tile)
+        :type height: int
+
+        :rtype: Camera
+        """
+
         self.userConfirm = True
         self.camera = None
         self.width = width
@@ -370,9 +431,24 @@ class Camera:
         self.sprite_count = 0
 
     def apply(self, entity):
+        """Applique la translation de défilement
+
+        :param entity: Surface à déplacer
+        :type entity: pygame.Surface
+
+        :return: Surface déplacée
+        :rtype: pygame.Surface
+        """
         return entity.rect.move(self.camera.topleft)
 
     def update(self, target, freeze=False):
+        """Actualisation de la caméra
+
+        :param target: Objectif
+        :type target: pygame.sprite.Sprite
+        :param freeze: Désactiver l'actualisation des sprites
+        :type freeze: bool
+        """
         self.sprite_count = 0
         self.target = target
         self.x = -target.rect.x + int(Game.surface.get_size()[0] / 2)
@@ -389,6 +465,15 @@ class Camera:
 
 class EditorCamera:
     def __init__(self, width, height):
+        """Crée une nouvelle caméra d'éditeur
+
+        :param width: Largeur de l'écran (Tile)
+        :type width: int
+        :param height: Hauteur de l'écran (Tile)
+        :type height: int
+
+        :rtype: EditorCamera
+        """
         self.camera = None
         self.width = width
         self.height = height
@@ -398,9 +483,24 @@ class EditorCamera:
         self.sprite_count = 0
 
     def apply(self, entity):
+        """Applique la translation de défilement
+
+        :param entity: Surface à déplacer
+        :type entity: pygame.Surface
+
+        :return: Surface déplacée
+        :rtype: pygame.Surface
+        """
         return entity.rect.move(self.camera.topleft)
 
     def update(self, target, freeze=False):
+        """Actualisation de la caméra
+
+        :param target: Objectif
+        :type target: pygame.sprite.Sprite
+        :param freeze: Désactiver l'actualisation des sprites
+        :type freeze: bool
+        """
         self.sprite_count = 0
         self.target = target
         self.x = -target.rect.x + int(Game.surface.get_size()[0] / 2)
@@ -412,6 +512,7 @@ class EditorCamera:
         TileManager.display_cam_info()
 
     def enable_grid(self):
+        """Ajoute la grille de placement"""
         for x in range(self.last_x, Game.surface.get_size()[0], Game.TILESIZE):
             pygame.draw.line(Game.surface, (220, 220, 220), (x, 0), (x, Game.surface.get_size()[1]))
         for y in range(0, Game.surface.get_size()[1], Game.TILESIZE):

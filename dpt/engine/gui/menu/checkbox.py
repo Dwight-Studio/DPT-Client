@@ -9,6 +9,17 @@ class Checkbox(pygame.sprite.Sprite):
     checkbox_group = pygame.sprite.Group()
 
     def __init__(self, x, y, size):
+        """Crée une case à cocher
+
+        :param x: Abscisse
+        :type x: int
+        :param y: Ordonnée
+        :type y: int
+        :param size: Taille (relative)
+        :type size: float
+
+        :rtype: Checkbox
+        """
         pygame.sprite.Sprite.__init__(self, self.checkbox_group)  # Sprite's constructor called
         self.false_image = RessourceLoader.get("dpt.images.gui.Buttons.BTN_CHECKBOX_OUT").copy()
         self.true_image = RessourceLoader.get("dpt.images.gui.Buttons.BTN_CHECKBOX_IN").copy()
@@ -32,6 +43,7 @@ class Checkbox(pygame.sprite.Sprite):
         return self.value
 
     def update(self):
+        """Actualise la case à cocher"""
         for event in Game.events:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.rect.collidepoint(pygame.mouse.get_pos()):
@@ -52,6 +64,7 @@ class Checkbox(pygame.sprite.Sprite):
             self.rect.y = self.y
 
     def update_rect(self):
+        """Actualise le rectange"""
         self.rect = self.image.get_rect()
         self.width = self.rect.width
         self.height = self.rect.height
@@ -60,5 +73,6 @@ class Checkbox(pygame.sprite.Sprite):
 
     @classmethod
     def main_loop(cls):
+        """Actualise toutes les cases à cocher"""
         Checkbox.checkbox_group.update()
         Checkbox.checkbox_group.draw(Game.surface)

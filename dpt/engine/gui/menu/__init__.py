@@ -4,10 +4,11 @@ from dpt.engine.gui.menu.progressbar import ProgressBar
 from dpt.engine.gui.menu.slider import Slider
 from dpt.engine.gui.menu.window import Window
 from dpt.engine.gui.menu.text import Text
-from dpt.engine.gui.menu.ratioButton import RatioButton
+from dpt.engine.gui.menu.radioButton import RadioButton
 
 
 def delete_items():
+    """Supprime toutes les éléments de menu"""
     Window.window_group.empty()
     Button.buttonsGroup.empty()
     Button.text_sprite_buttonsGroup.empty()
@@ -19,14 +20,15 @@ def delete_items():
         slide.kill()
     Slider.slider_list = []
     Text.text_list = []
-    RatioButton.ratio_button_group.empty()
+    RadioButton.radio_button_group.empty()
 
 
 def main_loop():
+    """Execute toutes les boucles des éléments de menu"""
     Window.main_loop()
     Button.main_loop()
     Checkbox.main_loop()
     ProgressBar.main_loop()
     Slider.main_loop()
     Text.main_loop()
-    RatioButton.main_loop()
+    RadioButton.main_loop()

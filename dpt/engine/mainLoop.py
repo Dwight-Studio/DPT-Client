@@ -18,6 +18,7 @@ bg = pygame.transform.smoothscale(bg, Game.surface.get_size())
 
 
 def do_synch_anims():
+    """Gère les annimations synchronisées"""
     # Lava
     if Game.anim_count_lava + 1 >= 208:
         Game.anim_count_lava = 0
@@ -39,6 +40,7 @@ def do_synch_anims():
 
 # Mainloops
 def level_loop():
+    """Boucle des niveaux"""
     Game.surface.blit(bg, (0, 0))
 
     for event in Game.events:
@@ -93,6 +95,7 @@ def level_loop():
 
 
 def pause_loop():
+    """Boucle de pause"""
     Game.surface.blit(bg, (0, 0))
 
     TileManager.camera.update(Game.player_sprite, True)
@@ -135,6 +138,7 @@ def pause_loop():
 
 
 def main_menu_loop():
+    """Boucle du menu principale"""
     Game.surface.blit(bg, (0, 0))
 
     for event in Game.events:
@@ -180,6 +184,7 @@ def main_menu_loop():
 
 
 def settings_menu_loop():
+    """Boucle du menu des paramètres"""
     Game.surface.blit(bg, (0, 0))
 
     ds = Game.temp["display_size"]
