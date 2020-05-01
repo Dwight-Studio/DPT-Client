@@ -14,8 +14,11 @@ from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 from dpt.engine.gui.menu import Text
 
-bg = RessourceLoader.get("dpt.images.environment.background.default_sky")
-bg = pygame.transform.smoothscale(bg, Game.surface.get_size())
+try:
+    bg = RessourceLoader.get("dpt.images.environment.background.default_sky")
+    bg = pygame.transform.smoothscale(bg, Game.surface.get_size())
+except:
+    pass
 
 
 def do_synch_anims():

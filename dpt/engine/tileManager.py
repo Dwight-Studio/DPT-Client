@@ -15,6 +15,7 @@ from random import random, randint
 
 #          {"x, y": {"blockClass": Classe}}
 class TileManager:
+    """Gestionnaire des tiles"""
     deadly_object_group = pygame.sprite.Group()
     enemy_group = pygame.sprite.Group()
     environment_group = pygame.sprite.Group()
@@ -38,10 +39,13 @@ class TileManager:
     used_resources = []
     coords = None
     camera = None
-    Game.available_tiles = []
-    Game.available_tiles.extend(RessourceLoader.select_entries("dpt.blocks.*"))
-    Game.available_tiles.remove("dpt.blocks.notfound")
-    Game.available_tiles.extend(RessourceLoader.select_entries("dpt.entities.*"))
+    try:
+        Game.available_tiles = []
+        Game.available_tiles.extend(RessourceLoader.select_entries("dpt.blocks.*"))
+        Game.available_tiles.remove("dpt.blocks.notfound")
+        Game.available_tiles.extend(RessourceLoader.select_entries("dpt.entities.*"))
+    except:
+        pass
     loadlevel = False
 
     @classmethod

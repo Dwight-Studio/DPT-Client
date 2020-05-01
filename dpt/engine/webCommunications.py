@@ -10,6 +10,7 @@ from dpt.game import Game
 
 
 class Communication(object):
+    """Gestionnaire des communication webs"""
     def __init__(self):
         """Initialize la communication avec le serveur
 

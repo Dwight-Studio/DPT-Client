@@ -5,6 +5,7 @@ from dpt.game import Game
 
 
 class Scenes:
+    """Gestionnaire des scènes"""
     logger = Game.get_logger("Scenes")
 
     @classmethod
@@ -540,7 +541,7 @@ class Scenes:
                     "session4": Text(0,
                                      math.floor(555 * Game.DISPLAY_RATIO),
                                      Game.settings["server_address"] + "/?session=" + Game.com.sessionName,
-                                     math.floor(80 * Game.DISPLAY_RATIO),
+                                     math.floor(70 * Game.DISPLAY_RATIO),
                                      (84, 66, 243),
                                      "dpt.fonts.DINOT_CondBlack",
                                      centerx=Game.surface.get_size()[0] // 2),

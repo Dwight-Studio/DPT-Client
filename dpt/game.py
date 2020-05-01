@@ -23,6 +23,7 @@ def get_root():
 
 
 class Game(object):
+    """Classe principale du jeu"""
     # Constantes
     DEBUG = False
     VERSION = "ALPHA-0.1.4"

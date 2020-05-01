@@ -52,6 +52,7 @@ def make_entries(path):
 
 
 class RessourceLoader:
+    """Gestionnaire des ressources"""
     RESSOURCES = {}
     pending_ressources = {}
     loaded_ressources_entries = None
