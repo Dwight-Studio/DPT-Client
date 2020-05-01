@@ -87,6 +87,6 @@ cible_1 = Executable(script="main.py", base=base)
 # creation du setup
 setup(name="Don't Play Together", version=get_ver(),
       description="Jeu vidéo non collaboratif",
-      author="Kévin Tollemer, Maxime Savary, Alexandre Leconte",
+      author="GamerMine, WhiteRed, Deleranax",
       options={
           "build_exe": options}, executables=[cible_1])

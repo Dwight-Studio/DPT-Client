@@ -25,7 +25,7 @@ def get_root():
 class Game(object):
     # Constantes
     DEBUG = False
-    VERSION = "ALPHA-0.1.0"
+    VERSION = "ALPHA-0.1.4"
     PYTHON_VERSION = str(sys.version_info[0]) + "." + str(sys.version_info[1]) + "." + str(
         sys.version_info[2]) + "-" + str(sys.version_info[3])
     PYGAME_VERSION = pygame.version.ver
