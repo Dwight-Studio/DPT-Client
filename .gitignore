@@ -131,3 +131,4 @@ dmypy.json
 .idea/
 dpt/logs/latest.log
 dpt/logs/
+docs/source/logs/
