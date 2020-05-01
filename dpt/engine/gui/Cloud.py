@@ -10,6 +10,15 @@ class Cloud(pygame.sprite.Sprite):
     i = 0
 
     def __init__(self, x, y, speed):
+        """Crée un nuage
+
+        :param x: Abscice
+        :type x: int
+        :param y: Ordonnée
+        :type y: int
+        :param speed: Vitesse
+        :type speed: int
+        """
         from dpt.engine.tileManager import TileManager
         pygame.sprite.Sprite.__init__(self, TileManager.clouds_group)
         self.image = RessourceLoader.get(self.texture)
@@ -20,4 +29,5 @@ class Cloud(pygame.sprite.Sprite):
         self.rect.y = y
 
     def update(self):
+        """Déplace le nugae de speed par frame"""
         self.rect.move_ip(-self.speed, 0)

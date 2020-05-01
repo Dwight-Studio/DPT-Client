@@ -6,6 +6,17 @@ from dpt.engine.loader import RessourceLoader, UnreachableRessourceError
 
 class GhostFakeEntity(pygame.sprite.Sprite):
     def __init__(self, x, y, alpha, block):
+        """Crée un "faux" sprite
+
+        :param x: Abscisse
+        :type x: int
+        :param y: Ordonnée
+        :type y: int
+        :param alpha: Entier entre 0 et 255
+        :type alpha: int
+        :param block: Classe du block
+        :type block: class
+        """
         pygame.sprite.Sprite.__init__(self, TileEditor.ghost_block_group)
         try:
             self.block = RessourceLoader.get(block)
