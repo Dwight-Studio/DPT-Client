@@ -7,16 +7,12 @@ from dpt.engine.tileManager import TileManager
 
 
 class PlayerSprite(pygame.sprite.Sprite):
-    try:
-        screen_width, screen_height = Game.surface.get_size()
-        char = "dpt.images.characters.player.standing"
-        walk_right_textures = "dpt.images.characters.player.R-*"
-        walk_left_textures = "dpt.images.characters.player.L-*"
-        jump_right_texture = "dpt.images.characters.player.RJump"
-        jump_left_texture = "dpt.images.characters.player.LJump"
-        mask = "dpt.images.characters.player.mask"
-    except:
-        pass
+    char = "dpt.images.characters.player.standing"
+    walk_right_textures = "dpt.images.characters.player.R-*"
+    walk_left_textures = "dpt.images.characters.player.L-*"
+    jump_right_texture = "dpt.images.characters.player.RJump"
+    jump_left_texture = "dpt.images.characters.player.LJump"
+    mask = "dpt.images.characters.player.mask"
 
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
