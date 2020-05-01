@@ -26,7 +26,7 @@ class Game(object):
     """Classe principale du jeu"""
     # Constantes
     DEBUG = False
-    VERSION = "ALPHA-0.1.4"
+    VERSION = "ALPHA-0.1.6"
     PYTHON_VERSION = str(sys.version_info[0]) + "." + str(sys.version_info[1]) + "." + str(
         sys.version_info[2]) + "-" + str(sys.version_info[3])
     PYGAME_VERSION = pygame.version.ver
@@ -64,6 +64,8 @@ class Game(object):
     cursor2 = None
     effects_management = None
     count = None
+    loading = False
+    count_thread = None
 
     settings = {
         "general_volume": 1,

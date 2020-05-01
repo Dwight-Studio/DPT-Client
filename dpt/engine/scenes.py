@@ -481,26 +481,6 @@ class Scenes:
         from dpt.engine.loader import RessourceLoader
         cls.logger.info("Displaying START_LEVEL")
 
-        # WebComs
-        from dpt.engine.webCommunications import Communication
-        Game.com = Communication()
-        if not Game.com.create():
-            Scenes.return_error(["Impossible de se connecter au serveur de jeu.",
-                                 "Verifiez votre connexion internet et réessayer",
-                                 " ",
-                                 "Si le problème persiste, vous pouvez nous contacter sur Discord",
-                                 "Dwight Studio Hub: discord.gg/yZwuNqN",
-                                 "(Lien copié dans le presse-papier)"])
-
-            from tkinter import Tk
-            root = Tk()
-            root.withdraw()
-            root.clipboard_clear()
-            root.clipboard_append("https://discord.gg/yZwuNqN")
-            root.update()
-            root.destroy()
-            return
-
         # Ajout du GUI
         from dpt.engine.gui.menu.button import Button
         from dpt.engine.gui.menu.textSpriteButton import TextSpriteButton
@@ -648,4 +628,22 @@ class Scenes:
         # Loops
         from dpt.engine.mainLoop import main_menu_loop
         Game.loop = main_menu_loop
+        return True
+
+    @classmethod
+    def loading(cls):
+        """Met en place les élèments du menu des paramètres
+
+        :return: True en cas de réussite, sinon False
+        :rtype: bool
+        """
+
+        cls.logger.info("Displaying LOADING")
+
+        Game.loading = True
+
+        from threading import Thread
+        from dpt.engine.mainLoop import loading_loop
+        Thread(target=loading_loop).start()
+
         return True

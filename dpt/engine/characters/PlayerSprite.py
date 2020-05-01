@@ -188,17 +188,18 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.death_fall()
 
     def animation(self):
-        if self.walkCount + 1 >= 60:
+        add = abs(math.floor(self.xvel / (self.maxvelocity // 4)))
+        if self.walkCount + add >= 180:
             self.walkCount = 0
 
         if self.onPlatform:
             if not self.standing:
                 if self.left:
-                    self.image = self.walkLeft[self.walkCount // 4 + 1]
-                    self.walkCount += 1
+                    self.image = self.walkLeft[self.walkCount // 12 + 1]
+                    self.walkCount += add
                 elif self.right:
-                    self.image = self.walkRight[self.walkCount // 4 + 1]
-                    self.walkCount += 1
+                    self.image = self.walkRight[self.walkCount // 12 + 1]
+                    self.walkCount += add
             else:
                 if self.right:
                     self.image = self.walkRight[0]

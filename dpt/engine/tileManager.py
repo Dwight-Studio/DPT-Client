@@ -132,6 +132,9 @@ class TileManager:
             RessourceLoader.add_pending("dpt.images.environment.background.Cloud_1_full")
             RessourceLoader.load()
 
+        from dpt.engine.scenes import Scenes
+        Scenes.loading()
+
         for keys in level:
             cls.coords = tuple(map(int, keys.split(", ")))
             if cls.coords[0] > cls.max_width_size:
@@ -186,6 +189,7 @@ class TileManager:
         cls.loadlevel = False
         cls.generate_clouds()
         cls.log.info("Done")
+        Game.loading = False
         return True
 
     @classmethod

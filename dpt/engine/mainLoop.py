@@ -13,6 +13,7 @@ from dpt.engine.tileManager import TileManager
 from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 from dpt.engine.gui.menu import Text
+from threading import Thread
 
 try:
     bg = RessourceLoader.get("dpt.images.environment.background.default_sky")
@@ -94,10 +95,11 @@ def level_loop():
     # if not TileEditor.in_editor and Game.count % 1800 == 0:
     # Game.effects_management.update()
     # Game.count += 1
+
+    # Comptage des joueurs
     if not TileEditor.in_editor:
-        if Game.com is not None:
-            if Game.temp["player_count_check"] + 1 >= 60:
-                Game.temp["player_count_check"] = 0
+        def count():
+            try:
                 nb = Game.com.get_player_count()
                 if nb is None:
                     Game.gui["players_text"].text = "Déconnecté du serveur"
@@ -107,11 +109,21 @@ def level_loop():
                     while len(nb) < 3:
                         nb = "0" + nb
                     Game.gui["players_text"].text = "Joueurs connectés : " + nb
+            except KeyError:
+                pass
+
+        try:
+            if Game.com is not None:
+                if Game.temp["player_count_check"] + 1 >= 60:
+                    Game.temp["player_count_check"] = 0
+                    Thread(target=count).start()
+                else:
+                    Game.temp["player_count_check"] += 1
             else:
-                Game.temp["player_count_check"] += 1
-        else:
-            Game.gui["players_text"].text = "Déconnecté des serveurs"
-            Game.gui["players_text"].color = (254, 0, 61)
+                Game.gui["players_text"].text = "Déconnecté des serveurs"
+                Game.gui["players_text"].color = (254, 0, 61)
+        except KeyError:
+            pass
 
     Text.main_loop()
     Button.main_loop()
@@ -133,7 +145,9 @@ def pause_loop():
     for event in Game.events:
         if event.type == pygame.QUIT:
             if Game.com is not None:
+                Scenes.loading()
                 Game.com.close()
+                Game.loading = False
             if TileEditor.in_editor:
                 FileManager.save_file(TileEditor.created_level)
             Game.run = False
@@ -152,7 +166,9 @@ def pause_loop():
                 return
             elif event.button == Game.gui["button_main_menu"]:
                 if Game.com is not None:
+                    Scenes.loading()
                     Game.com.close()
+                    Game.loading = False
                 if TileEditor.in_editor:
                     FileManager.save_file(TileEditor.created_level)
                 menu.delete_items()
@@ -160,11 +176,41 @@ def pause_loop():
                 return
             elif event.button == Game.gui["button_quit"]:
                 if Game.com is not None:
+                    Scenes.loading()
                     Game.com.close()
+                    Game.loading = False
                 if TileEditor.in_editor:
                     FileManager.save_file(TileEditor.created_level)
-                # Game.com.close()
                 Game.run = False
+
+        # Comptage des joueurs
+        if not TileEditor.in_editor:
+            def count():
+                try:
+                    nb = Game.com.get_player_count()
+                    if nb is None:
+                        Game.gui["players_text"].text = "Déconnecté du serveur"
+                        Game.gui["players_text"].color = (254, 0, 61)
+                    else:
+                        nb = str()
+                        while len(nb) < 3:
+                            nb = "0" + nb
+                        Game.gui["players_text"].text = "Joueurs connectés : " + nb
+                except KeyError:
+                    pass
+
+            try:
+                if Game.com is not None:
+                    if Game.temp["player_count_check"] + 1 >= 60:
+                        Game.temp["player_count_check"] = 0
+                        Thread(target=count).start()
+                    else:
+                        Game.temp["player_count_check"] += 1
+                else:
+                    Game.gui["players_text"].text = "Déconnecté des serveurs"
+                    Game.gui["players_text"].color = (254, 0, 61)
+            except KeyError:
+                pass
 
     Game.display_debug_info()
     Game.draw_cursor()
@@ -181,6 +227,31 @@ def main_menu_loop():
         if event.type == Game.BUTTON_EVENT:
             if event.button == Game.gui["button_play"]:
                 menu.delete_items()
+
+                Scenes.loading()
+
+                # Initialisation de la session (dans un thread pour ne pas bloquer)
+                from dpt.engine.webCommunications import Communication
+                Game.com = Communication()
+                if not Game.com.create():
+                    Scenes.return_error(["Impossible de se connecter au serveur de jeu.",
+                                         "Verifiez votre connexion internet et réessayer",
+                                         " ",
+                                         "Si le problème persiste, vous pouvez nous contacter sur Discord",
+                                         "Dwight Studio Hub: discord.gg/yZwuNqN",
+                                         "(Lien copié dans le presse-papier)"])
+
+                    from tkinter import Tk
+                    root = Tk()
+                    root.withdraw()
+                    root.clipboard_clear()
+                    root.clipboard_append("https://discord.gg/yZwuNqN")
+                    root.update()
+                    root.destroy()
+                    Game.loading = False
+                    return
+
+                Game.loading = False
                 Scenes.start_level("dpt.levels.leveltest")
                 return
             elif event.button == Game.gui["button_editor"]:
@@ -326,32 +397,50 @@ def start_level_loop():
     """Boucle de début de niveau"""
     Game.surface.blit(bg, (0, 0))
 
-    if Game.temp["player_count_check"] + 1 >= 60:
-        Game.temp["player_count_check"] = 0
-        if Game.com is not None:
-            nb = str(Game.com.get_player_count())
+    # Comptage des joueurs
+    if not TileEditor.in_editor:
+        def count():
+            try:
+                nb = Game.com.get_player_count()
+                if nb is None:
+                    Game.gui["players_text"].text = "Déconnecté du serveur"
+                    Game.gui["players_text"].color = (254, 0, 61)
+                else:
+                    nb = str()
+                    while len(nb) < 3:
+                        nb = "0" + nb
+                    Game.gui["players_text"].text = "Joueurs connectés : " + nb
+            except KeyError:
+                pass
 
-            while len(nb) < 3:
-                nb = "0" + nb
-
-            Game.gui["players_text"].text = "Joueurs connectés : " + nb
-        else:
-            Game.gui["players_text"].text = "Déconnecté des serveurs"
-            Game.gui["players_text"].color = (254, 0, 61)
-    else:
-        Game.temp["player_count_check"] += 1
+        try:
+            if Game.com is not None:
+                if Game.temp["player_count_check"] + 1 >= 60:
+                    Game.temp["player_count_check"] = 0
+                    Thread(target=count).start()
+                else:
+                    Game.temp["player_count_check"] += 1
+            else:
+                Game.gui["players_text"].text = "Déconnecté des serveurs"
+                Game.gui["players_text"].color = (254, 0, 61)
+        except KeyError:
+            pass
 
     menu.main_loop()
 
     for event in Game.events:
         if event.type == pygame.QUIT:
+            Scenes.loading()
             Game.com.close()
+            Game.loading = False
             Game.run = False
             return
         if event.type == Game.BUTTON_EVENT:
             menu.delete_items()
             if event.button == Game.gui["button_main_menu"]:
+                Scenes.loading()
                 Game.com.close()
+                Game.loading = False
                 Scenes.main_menu(False)
                 return
             elif event.button == Game.gui["button_start"]:
@@ -365,3 +454,52 @@ def start_level_loop():
     Game.display_debug_info()
     Game.draw_cursor()
     Game.window.update()
+
+
+def loading_loop():
+    """Boucle de chargement. Boucle spécial car non executée dans game"""
+    from dpt.engine.gui.menu import ProgressBar
+    pbar = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/gui/ui/UI_BARFRAME.png")
+    bar = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/gui/ui/UI_COLORBAR_2.png")
+    width = min(Game.surface.get_size()[0] - 50, 1115)
+    height = min(math.floor(52 / 1115 * width), 52)
+    pb = ProgressBar(math.floor(Game.surface.get_size()[0] / 2 - width / 2),
+                     math.floor(Game.surface.get_size()[1] - height), width, height, pbar, bar, 1)
+    pb.value = 1
+    font = pygame.font.SysFont("arial", math.floor(20 * Game.DISPLAY_RATIO))
+
+    text = font.render("Chargement", True, (0, 0, 0))
+    rect = text.get_rect()
+    rect.centerx = Game.surface.get_size()[0] // 2
+    rect.centery = math.floor(Game.surface.get_size()[1] - height / 2)
+
+    t = ""
+    c = 0
+
+    while Game.loading:
+        Game.surface.blit(bg, (0, 0))
+
+        if c >= 20:
+            t += "."
+            if t == "....":
+                t = ""
+            c = 0
+        c += 1
+
+        # Afficahe de la progressbar
+        ProgressBar.progress_bar_group.update()
+        ProgressBar.bar_group.update()
+        ProgressBar.bar_group.draw(Game.surface)
+        ProgressBar.progress_bar_group.draw(Game.surface)
+
+        # Affichage du text
+        text = font.render("Chargement" + t, True, (0, 0, 0))
+        Game.surface.blit(text, rect)
+
+        Game.display_debug_info()
+        Game.draw_cursor()
+        Game.window.update()
+        Game.clock.tick(60)
+
+    ProgressBar.bar_group.empty()
+    ProgressBar.progress_bar_group.empty()

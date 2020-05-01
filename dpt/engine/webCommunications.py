@@ -139,7 +139,12 @@ class Communication(object):
         """Ferme la session actuelle"""
         request_close = requests.get("http://" + Game.settings["server_address"] + "/close.php?session=" + self.sessionName)
         self.keep = False
-        if not request_close.json():
-            self.log.critical("Connection error (" + Game.settings["server_address"] + ")")
-            self.log.warning("Close session failed")
-        self.log.info("Session closed")
+        try:
+            success = request_close.json()
+            if not success:
+                self.log.critical("Connection error (" + Game.settings["server_address"] + ")")
+                self.log.warning("Close session failed")
+            self.log.info("Session closed")
+        except Exception:
+            self.log.critical("Unable to json: " + str(request_close.content))
+            raise
