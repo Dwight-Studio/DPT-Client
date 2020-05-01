@@ -80,8 +80,7 @@ icone = None
 if sys.platform == "win32":
     icone = "icone.ico"
 
-cible_1 = Executable(script="main.py", base=base)
-# icon=icone)
+cible_1 = Executable(script="main.py", base=base, icon=icone)
 
 #############################################################################
 # creation du setup
