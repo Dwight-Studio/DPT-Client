@@ -17,7 +17,7 @@ class Communication(object):
         :rtype: Communication
         """
         self.i = 0
-        self.log = Game.get_logger("root.WebCom")
+        self.log = Game.get_logger("WebCom")
         self.sessionName = "".join(random.choice(string.ascii_uppercase) for i in range(5))
         self.keepAliveThread = threading.Thread(target=self.keep_alive)
         self.keep = False

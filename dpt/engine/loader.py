@@ -57,7 +57,7 @@ class RessourceLoader:
     pending_ressources = {}
     loaded_ressources_entries = None
     loaded_ressources = {}
-    logger = Game.get_logger("root.Loader")
+    logger = Game.get_logger("Loader")
 
     @classmethod
     def init(cls):

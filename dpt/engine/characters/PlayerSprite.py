@@ -335,7 +335,7 @@ class PlayerSprite(pygame.sprite.Sprite):
 
     def death_fall(self):
         if self.rect.top >= Game.surface.get_size()[1]:
-            Game.get_logger("root.Player").info("Player sprite killed")
+            Game.get_logger("Player").info("Player sprite killed")
             Game.freeze_game = True
             Game.player_sprite.kill()
             del self

@@ -26,7 +26,7 @@ class TileManager:
     interactible_blocks_group = pygame.sprite.Group()
     clouds_group = pygame.sprite.Group()
 
-    log = Game.get_logger("root.TileManager")
+    log = Game.get_logger("TileManager")
     levelName = None
     max_width_size = 0
     max_height_size = 0
@@ -443,7 +443,7 @@ class Camera:
         self.camera = None
         self.width = width
         self.height = height
-        self.log = Game.get_logger("root.Camera")
+        self.log = Game.get_logger("Camera")
         self.x = 0
         self.last_x = 0
         self.sprite_count = 0
@@ -495,7 +495,7 @@ class EditorCamera:
         self.camera = None
         self.width = width
         self.height = height
-        self.log = Game.get_logger("root.EditorCamera")
+        self.log = Game.get_logger("EditorCamera")
         self.x = 0
         self.last_x = 0
         self.sprite_count = 0

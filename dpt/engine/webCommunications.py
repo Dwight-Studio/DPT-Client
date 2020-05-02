@@ -11,30 +11,45 @@ from dpt.game import Game
 class Communication(object):
     """Gestionnaire des communication webs"""
 
-    log = Game.get_logger("root.WebCom")
+    log = Game.get_logger("WebCom")
+    sessionName = None
     sessionName = "".join(random.choice(string.ascii_uppercase) for i in range(5))
     connected = False
     player_number = 0
 
     @classmethod
     def make_request(cls, url):
-        logger_request = Game.get_logger("root.WebComs.Request")
-        logger_json = Game.get_logger("root.WebComs.JSONDecoder")
+        logger_request = Game.get_logger("WebComs.Request")
+        logger_json = Game.get_logger("WebComs.JSONDecoder")
+
+        request = None
+        message = None
+
         try:
             request = requests.get(url)
 
-        except ConnectionAbortedError:
-            Game.get_logger("root.WebComs").critical("Connection error: Connection aborted")
-            return False
-        except ConnectionRefusedError:
-            Game.get_logger("root.WebComs").critical("Connection error: Connection refused")
-            return False
-        except ConnectionResetError:
-            Game.get_logger("root.WebComs").critical("Connection error: Connection reset")
-            return False
-        except ConnectionError:
-            logger = Game.get_logger("root.WebComs").critical("Connection error: Can't connect to server")
-            return False
+            message = request.json()
+
+            return message
+        except ConnectionAbortedError as ex:
+            logger_request.critical("Connection aborted: " + str(ex))
+            cls.connected = False
+            return None
+        except ConnectionRefusedError as ex:
+            logger_request.critical("Connection refused: " + str(ex))
+            cls.connected = False
+            return None
+        except ConnectionResetError as ex:
+            logger_request.critical("Connection reset: " + str(ex))
+            cls.connected = False
+            return None
+        except ConnectionError as ex:
+            logger_request.critical("Connection error: " + str(ex))
+            cls.connected = False
+            return None
+        except ValueError as ex:
+            logger_json.critical("Can't decode request: " + str(ex))
+            logger_json.critical("  " + str(request.content))
 
     @classmethod
     def create(cls):
@@ -55,3 +70,10 @@ class Communication(object):
 
     @classmethod
     def update(cls):
+
+        for event in Game.events:
+            if event.type == Game.KEEP_ALIVE_EVENT:
+                if cls.sessionName is not None:
+                    cls.make_request("http://" + Game.settings["server_address"] + "/keepAlive.php?session=" + cls.sessionName)
+                else:
+                    Game.get_logger("WebComs")

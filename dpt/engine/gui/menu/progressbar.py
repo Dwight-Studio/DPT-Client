@@ -39,7 +39,7 @@ class ProgressBar(pygame.sprite.Sprite):
         self.bar = Bar(x, y, width, height, image2)
         self.max_value = max_value
         self.value = 0
-        Game.get_logger("root.Menu.ProgressBar").debug("ProgressBar created")
+        Game.get_logger("Menu.ProgressBar").debug("ProgressBar created")
 
     def update(self):
         """Actualise la barre de progression"""
