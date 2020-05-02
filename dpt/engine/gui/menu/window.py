@@ -49,7 +49,7 @@ class Window:
 
                 item_type = item_type[0] + item_type[1]
                 self.sprites.append(WindowItem(self.rect.x + (rx * 122 * Game.DISPLAY_RATIO), self.rect.y + (ry * 64 * Game.DISPLAY_RATIO) - ry, item_type))
-        Game.get_logger("Menu.Window").debug("Window created")
+        Game.get_logger(__name__).debug("Window created")
 
     @classmethod
     def main_loop(cls):

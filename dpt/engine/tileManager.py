@@ -26,7 +26,7 @@ class TileManager:
     interactible_blocks_group = pygame.sprite.Group()
     clouds_group = pygame.sprite.Group()
 
-    log = Game.get_logger("TileManager")
+    log = Game.get_logger(__name__)
     levelName = None
     max_width_size = 0
     max_height_size = 0

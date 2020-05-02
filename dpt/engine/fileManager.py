@@ -9,7 +9,7 @@ from dpt.engine.loader import UnreachableRessourceError
 
 
 class FileManager:
-    log = Game.get_logger("FileManager")
+    log = Game.get_logger(__name__)
     defaultDir = os.path.join(Game.ROOT_DIRECTORY, "ressources", "user", "levels")
 
     @classmethod

@@ -124,7 +124,7 @@ class Slider(object):
         self.slide.rect.x = self.left.rect.right + (value * (self.right.rect.left - self.left.rect.right - self.slide.width))
         self.slide.apply_x()
         self.value = value
-        Game.get_logger("Menu.Slider").debug("Slider created")
+        Game.get_logger(__name__).debug("Slider created")
 
     def update(self):
         """Actualise la glissière"""

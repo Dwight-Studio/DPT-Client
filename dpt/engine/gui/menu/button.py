@@ -84,7 +84,7 @@ class Button(pygame.sprite.Sprite):
         self.pushed = False
         self.previous = 0
         self.locked = False
-        Game.get_logger("Menu.Button").debug("Button created")
+        Game.get_logger(__name__).debug("Button created")
 
     def __bool__(self):
         return self.pushed

@@ -37,7 +37,7 @@ class Checkbox(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.value = False
-        Game.get_logger("Menu.Checkbox").debug("Checkbox created")
+        Game.get_logger(__name__).debug("Checkbox created")
 
     def __bool__(self):
         return self.value

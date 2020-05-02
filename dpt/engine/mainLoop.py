@@ -81,11 +81,11 @@ def level_loop():
         TileManager.editor_panel_group.update()
         TileManager.editor_panel_group.draw(Game.surface)
     except pygame.error:
-        Game.get_logger("MainLoop").critical("Error when drawing editorPanelGroup")
-        Game.get_logger("MainLoop").critical("Content: ")
+        Game.get_logger(__name__).critical("Error when drawing editorPanelGroup")
+        Game.get_logger(__name__).critical("Content: ")
         for sp in TileManager.editor_panel_group:
             try:
-                Game.get_logger("MainLoop").critical("    " + str(sp.block))
+                Game.get_logger(__name__).critical("    " + str(sp.block))
             except AttributeError:
                 pass
         raise
