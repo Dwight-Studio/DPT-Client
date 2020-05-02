@@ -27,7 +27,7 @@ class Lever(pygame.sprite.Sprite):
         self.left = True
         self.set = False
         self.attributing = False
-        if not TileManager.loadlevel:
+        if not TileManager.is_loading_level:
             self.sound = RessourceLoader.get(self.sounds)
             self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
             self.sound.play()
@@ -88,7 +88,6 @@ class Lever(pygame.sprite.Sprite):
                             if sprites.x + TileManager.camera.last_x <= mousePos[0] <= sprites.x + sprites.width and sprites.y + sprites.offset_y <= mousePos[1] <= sprites.y:
                                 self.attributing = False
                                 TileEditor.created_level[str(self.x) + ", " + str(self.y)]["assignement"] = str(sprites.x) + ", " + str(sprites.y)
-                                print(TileEditor.created_level)
                     except AttributeError:
                         continue
             elif mouse_buttons[0] != 1 and self.clicked2:

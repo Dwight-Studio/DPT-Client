@@ -39,6 +39,7 @@ class TileManager:
     used_resources = []
     coords = None
     camera = None
+    clouds_last_x = None
     try:
         Game.available_tiles = []
         Game.available_tiles.extend(RessourceLoader.select_entries("dpt.blocks.*"))
@@ -46,7 +47,7 @@ class TileManager:
         Game.available_tiles.extend(RessourceLoader.select_entries("dpt.entities.*"))
     except:
         pass
-    loadlevel = False
+    is_loading_level = False
 
     @classmethod
     def load_level(cls, level_name):
@@ -59,7 +60,7 @@ class TileManager:
         :rtype: bool
         """
 
-        cls.loadlevel = True
+        cls.is_loading_level = True
         if Game.player_sprite is not None:
             Game.player_sprite.kill()
             Game.player_sprite = None
@@ -129,7 +130,7 @@ class TileManager:
                     if hasattr(obj, "sounds"):
                         RessourceLoader.add_pending(obj.sounds)
             RessourceLoader.add_pending("dpt.images.characters.player.*")
-            RessourceLoader.add_pending("dpt.images.environment.background.Cloud_1_full")
+            RessourceLoader.add_pending("dpt.images.environment.background.Cloud_full_*")
             RessourceLoader.load()
 
         from dpt.engine.scenes import Scenes
@@ -186,7 +187,8 @@ class TileManager:
         TileEditor.created_level = level
         cls.levelName = level_name
         Game.freeze_game = False
-        cls.loadlevel = False
+        cls.is_loading_level = False
+        cls.clouds_last_x = 0
         cls.generate_clouds()
         cls.log.info("Done")
         Game.loading = False
@@ -320,6 +322,7 @@ class TileManager:
         Game.add_debug_info("Displaying " + str(obj_count) + " objects")
         Game.add_debug_info("World: ")
         Game.add_debug_info("   " + str(len(Game.player_group)) + " players")
+        Game.add_debug_info("   " + str(len(TileManager.clouds_group)) + " clouds")
         Game.add_debug_info("   " + str(len(TileManager.entity_group)) + " entities")
         Game.add_debug_info("   " + str(len(TileManager.environment_group)) + " blocks")
         Game.add_debug_info("   " + str(len(TileManager.background_blocks_group)) + " background blocks")
@@ -399,23 +402,30 @@ class TileManager:
         """Génère les nuages"""
         from dpt.engine.gui.Cloud import Cloud
         xpos = 10
-        for i in range(12):
+        for i in range(5):
             speed = randint(1, 5)
-            xpos += randint(Game.surface.get_size()[0] // 14, Game.surface.get_size()[0] // 8)
-            ypos = randint(0, Game.surface.get_size()[1] // 4)
+            xpos += randint((Game.surface.get_size()[0] // 14) * 2, (Game.surface.get_size()[0] // 14) * 4)
+            ypos = randint(0, Game.TILESIZE * 2)
             Cloud(xpos, ypos, speed)
+            if xpos > Game.SCREEN_WIDTH - 50:
+                xpos = 10
 
     @classmethod
     def update_clouds(cls):
         """Actualise les nuages"""
+
         from dpt.engine.gui.Cloud import Cloud
         for cloud in cls.clouds_group:
+            cloud.rect.x += cls.camera.last_x - cls.clouds_last_x
             if cloud.rect.midright[0] <= 0:
-                cls.clouds_group.remove(cloud)
+                cloud.kill()
                 del cloud
-                speed = randint(1, 3)
+                speed = randint(1, 5)
                 ypos = randint(0, Game.surface.get_size()[1] // 4)
                 Cloud(Game.surface.get_size()[0], ypos, speed)
+
+        cls.clouds_last_x = cls.camera.last_x
+
 
 class Camera:
     def __init__(self, width, height):
