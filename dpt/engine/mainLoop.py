@@ -400,6 +400,7 @@ def start_level_loop():
     # Comptage des joueurs
     if not TileEditor.in_editor:
         def count():
+            print("start")
             try:
                 nb = Game.com.get_player_count()
                 if nb is None:
@@ -411,7 +412,7 @@ def start_level_loop():
                         nb = "0" + nb
                     Game.gui["players_text"].text = "Joueurs connectés : " + nb
             except KeyError:
-                pass
+                raise
 
         try:
             if Game.com is not None:
@@ -424,7 +425,7 @@ def start_level_loop():
                 Game.gui["players_text"].text = "Déconnecté des serveurs"
                 Game.gui["players_text"].color = (254, 0, 61)
         except KeyError:
-            pass
+            raise
 
     menu.main_loop()
 
@@ -477,6 +478,9 @@ def loading_loop():
     c = 0
 
     while Game.loading:
+
+        Game.events = pygame.event.get()
+
         Game.surface.blit(bg, (0, 0))
 
         if c >= 20:

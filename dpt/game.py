@@ -197,6 +197,7 @@ class Game(object):
                 rect.centery = h // 2
 
                 for alpha in range(0, 256, 8):
+                    Game.events = pygame.event.get()
                     cls.clock.tick(30)
                     pygame.draw.rect(Game.surface, (0, 0, 0), rect)
                     pygame_logo.set_alpha(alpha)
@@ -206,6 +207,7 @@ class Game(object):
                 pygame.time.delay(1000)
 
                 for alpha in range(0, 256, 8):
+                    Game.events = pygame.event.get()
                     cls.clock.tick(30)
                     pygame.draw.rect(Game.surface, (0, 0, 0), pygame.Rect(0, 0, w, h))
                     pygame_logo.set_alpha(248 - alpha)
@@ -225,6 +227,7 @@ class Game(object):
                 rect.centery = h // 2
 
                 for alpha in range(0, 256, 2):
+                    Game.events = pygame.event.get()
                     log = logo.copy()
                     cls.clock.tick(30)
                     pygame.draw.rect(Game.surface, (alpha, alpha, alpha), pygame.Rect(0, 0, w, h))
@@ -242,6 +245,7 @@ class Game(object):
                 rect2.y = rect.bottom - math.floor(80 * Game.DISPLAY_RATIO)
 
                 for alpha in range(0, 256, 13):
+                    Game.events = pygame.event.get()
                     cls.clock.tick(30)
                     pygame.draw.rect(Game.surface, (255, 255, 255), rect2)
                     rect2.centerx += (255 - alpha) // 50
@@ -252,6 +256,7 @@ class Game(object):
                 pygame.time.delay(2000)
 
                 for alpha in range(0, 256, 2):
+                    Game.events = pygame.event.get()
                     cls.clock.tick(30)
                     pygame.draw.rect(Game.surface, (255, 255, 255), pygame.Rect(0, 0, w, h))
                     logo.set_alpha(255 - alpha)
