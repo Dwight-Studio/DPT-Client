@@ -8,6 +8,7 @@ import time
 
 from dpt.game import Game
 from dpt.engine.gui.menu.text import Text
+from threading import Thread
 
 
 class CommunicationError(object):
@@ -63,6 +64,8 @@ class WebCommunication(object):
             cls.log.info("Session " + cls.sessionName + " created")
             cls.log.info("URL: http://" + Game.settings["server_address"] + "/?session=" + cls.sessionName)
             pygame.time.set_timer(Game.KEEP_ALIVE_EVENT, 5000)
+            pygame.event.post(pygame.event.Event(Game.KEEP_ALIVE_EVENT))
+            cls.connected = True
             return True
         else:
             cls.log.critical("Session creation failed")
@@ -72,36 +75,48 @@ class WebCommunication(object):
     def update(cls):
         """Actualise les communications"""
         if cls.sessionName is not None:
-
             for event in Game.events:
                 if event.type == Game.KEEP_ALIVE_EVENT:
-                    if cls.connected:
-                        reply = cls.make_request("http://" + Game.settings["server_address"] + "/keepAlive.php?session=" + cls.sessionName)
+                    def ka():
+                        if cls.connected:
+                            reply = cls.make_request("http://" + Game.settings["server_address"] + "/keepAlive.php?session=" + cls.sessionName)
 
-                        if not isinstance(reply, CommunicationError):
-                            continue
+                            if isinstance(reply, CommunicationError):
+                                return
 
-                        reply = cls.make_request("http://" + Game.settings["server_address"] + "/sessions.json")
+                            if "wb_player_count" not in Game.gui:
+                                Game.gui["wb_player_count"]: Text(Game.surface.get_size()[0] - math.floor(Game.DISPLAY_RATIO * 220),
+                                                                  0,
+                                                                  "Connexion au server...",
+                                                                  math.floor(25 * Game.DISPLAY_RATIO),
+                                                                  (0, 0, 0),
+                                                                  "dpt.fonts.DINOT_CondBlack")
 
-                        if not isinstance(reply, CommunicationError) or cls.sessionName not in reply:
-                            cls.log.warning("Can't get connected players count")
+                            reply = cls.make_request("http://" + Game.settings["server_address"] + "/sessions.json")
+
+                            if isinstance(reply, CommunicationError) or cls.sessionName not in reply:
+                                cls.log.warning("Can't get connected players count")
+                                Game.gui["wb_player_count"].text = "Déconnecté du serveur"
+                                Game.gui["wb_player_count"].color = (255, 0, 0)
+                                return
+
+                            nb = str(len(reply[cls.sessionName]))
+
+                            while len(nb) < 3:
+                                nb += "0"
+
+                            Game.gui["wb_player_count"].text = "Joueurs connectés : " + nb
+                            Game.gui["wb_player_count"].color = (0, 0, 0)
+
+                        else:
                             Game.gui["wb_player_count"] = Text(Game.surface.get_size()[0] - math.floor(Game.DISPLAY_RATIO * 220), 0,
                                                                "Déconnecté du serveur",
                                                                math.floor(25 * Game.DISPLAY_RATIO),
                                                                (255, 0, 0),
                                                                "dpt.fonts.DINOT_CondBlack")
-                            continue
 
-                        nb = str(len(reply[cls.sessionName]))
-
-                        Game.gui["wb_player_count"] = Text(Game.surface.get_size()[0] - math.floor(Game.DISPLAY_RATIO * 220), 0,
-                                                           "Joueurs connectés : " + nb,
-                                                           math.floor(25 * Game.DISPLAY_RATIO),
-                                                           (0, 0, 0),
-                                                           "dpt.fonts.DINOT_CondBlack")
-
-                        Text.main_loop()
-                        continue
+                    Thread(target=ka).start()
+                    continue
 
                 elif event.type == Game.VOTE_FINISED_EVENT:
                     if cls.connected:
@@ -137,6 +152,8 @@ class WebCommunication(object):
                     else:
                         cls.log.warning("Handling VOTE_FINISHED_EVENT while disconnected")
                         continue
+
+        Text.main_loop()
 
     @classmethod
     def close(cls):

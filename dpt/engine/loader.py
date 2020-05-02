@@ -108,6 +108,7 @@ class RessourceLoader:
     def load(cls):
         """Charge toutes les ressources préalablement ajouté avec `RessourceLoader.add_pending()`"""
         from dpt.engine.gui.menu.progressbar import ProgressBar
+        from dpt.engine.webCommunications import WebCommunication
 
         before_load_nb = len(cls.loaded_ressources)
         cls.logger.info("Starting loading ressources")
@@ -192,6 +193,8 @@ class RessourceLoader:
                 if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                     pygame.quit()
                     exit()
+
+            WebCommunication.update()
 
             Game.display_debug_info()
             Game.draw_cursor()

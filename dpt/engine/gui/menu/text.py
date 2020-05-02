@@ -60,6 +60,11 @@ class Text:
 
         surface.blit(self.text_rendered, self.rect)
 
+    def kill(self):
+        """Supprime le texte"""
+        Text.text_list.remove(self)
+        del self
+
     @classmethod
     def main_loop(cls):
         """Dessine tous les textes"""

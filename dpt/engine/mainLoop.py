@@ -379,6 +379,8 @@ def start_level_loop():
 def loading_loop():
     """Boucle de chargement. Boucle spécial car non executée dans game"""
     from dpt.engine.gui.menu import ProgressBar
+    from dpt.engine.webCommunications import WebCommunication
+
     pbar = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/gui/ui/UI_BARFRAME.png")
     bar = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/gui/ui/UI_COLORBAR_2.png")
     width = min(Game.surface.get_size()[0] - 50, 1115)
