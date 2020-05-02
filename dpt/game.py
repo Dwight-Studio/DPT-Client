@@ -32,7 +32,7 @@ class Game(object):
     PYGAME_VERSION = pygame.version.ver
     PLATFORM = sys.platform
     ROOT_DIRECTORY = get_root()
-    VOTE_TIMEOUT = 80
+    VOTE_TIMEOUT = 60
     DEFAULT_SERVER_ADDRESS = "join.dont-play-together.fr"
     TILESIZE = 90
     DISPLAY_RATIO = 1

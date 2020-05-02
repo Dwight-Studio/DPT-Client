@@ -29,7 +29,7 @@ class TileEditor:
 
     @classmethod
     def update(cls):
-        """Permet de faire beaucoup trop de choses (="""
+        """S'occupe de toutes la parties placement/suppression de blocs de l'éditeur de niveau"""
         from dpt.engine.tileManager import TileManager
         if cls.in_editor:
             Game.freeze_game = True
