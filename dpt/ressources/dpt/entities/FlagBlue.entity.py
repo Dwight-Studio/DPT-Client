@@ -30,6 +30,5 @@ class FlagBlue(pygame.sprite.Sprite):
         for i in Game.player_group:
             if pygame.sprite.collide_mask(self, i) and not self.already_collide:
                 self.already_collide = True
-                print("YOU WIN")
             elif not pygame.sprite.collide_mask(self, i) and self.already_collide:
                 self.already_collide = False

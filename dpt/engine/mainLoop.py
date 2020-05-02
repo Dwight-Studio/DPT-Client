@@ -400,7 +400,6 @@ def start_level_loop():
     # Comptage des joueurs
     if not TileEditor.in_editor:
         def count():
-            print("start")
             try:
                 nb = Game.com.get_player_count()
                 if nb is None:
