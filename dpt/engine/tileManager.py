@@ -250,7 +250,7 @@ class TileManager:
         """Génère le panneau d'édition"""
 
         TileManager.editor_panel_group.empty()
-        Game.editor_tile_registry.clear()
+        EditorPanel.editor_tile_registry.clear()
         value = bool(cls.check_back)
         Checkbox.checkbox_group.empty()
         cls.check_back = Checkbox(Game.surface.get_size()[0] // 4 * 3 + Game.TILESIZE // 4, Game.TILESIZE // 4, 1)
@@ -263,7 +263,7 @@ class TileManager:
         for element in Game.available_tiles:
             if cls.count == cls.nb_skip:
                 sprite = PanelFakeEntity(startx, starty, 255, element)
-                Game.editor_tile_registry[str(math.floor(startx / Game.TILESIZE)) + ", " + str(math.floor(starty / Game.TILESIZE))] = {"class": element}
+                EditorPanel.editor_tile_registry[str(math.floor(startx / Game.TILESIZE)) + ", " + str(math.floor(starty / Game.TILESIZE))] = {"class": element}
                 startx += Game.TILESIZE
                 cls.per_line_count += 1
                 if math.floor(startx) >= Game.surface.get_size()[0] - Game.TILESIZE:
@@ -289,7 +289,7 @@ class TileManager:
         if TileEditor.panel_open:
             TileManager.editor_panel_group.empty()
             Checkbox.checkbox_group.empty()
-            Game.editor_tile_registry.clear()
+            EditorPanel.editor_tile_registry.clear()
             if cls.nb_skip > 0:
                 cls.nb_skip -= cls.per_line
             TileManager.open_tile_panel()
@@ -353,7 +353,7 @@ class TileManager:
                     sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))
                 self.sprite_count += 1
-                if Game.DISPLAY_RECT:
+                if Game.DISPLAY_DEBUG_RECTS:
                     pygame.draw.rect(Game.surface, (0, 0, 255), self.apply(sprite), width=2)
         for sprite in TileManager.environment_group:
             if sprite.rect.colliderect(rect):
@@ -361,7 +361,7 @@ class TileManager:
                     sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))
                 self.sprite_count += 1
-                if Game.DISPLAY_RECT:
+                if Game.DISPLAY_DEBUG_RECTS:
                     pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
         for sprite in TileManager.entity_group:
             if sprite.rect.colliderect(rect):
@@ -369,14 +369,14 @@ class TileManager:
                     sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))
                 self.sprite_count += 1
-                if Game.DISPLAY_RECT:
+                if Game.DISPLAY_DEBUG_RECTS:
                     pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(sprite), width=2)
         for sprite in Game.player_group:
             if not freeze:
                 sprite.update()
             Game.surface.blit(sprite.image, self.apply(sprite))
             self.sprite_count += 1
-            if Game.DISPLAY_RECT:
+            if Game.DISPLAY_DEBUG_RECTS:
                 pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(sprite), width=2)
         for sprite in TileManager.deadly_object_group:
             if sprite.rect.colliderect(rect):

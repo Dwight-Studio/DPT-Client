@@ -87,7 +87,6 @@ class Scenes:
 
         # Initialisation de la gestion des effets
         Game.effects_management = effectsManagement()
-        Game.count = 0
 
         from dpt.engine.gui.menu import Text
         Game.gui = {"players_text": Text(Game.surface.get_size()[0] - math.floor(Game.DISPLAY_RATIO * 220),

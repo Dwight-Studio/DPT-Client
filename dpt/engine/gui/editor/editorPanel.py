@@ -1,9 +1,13 @@
 import math
 import pygame
+
+from dpt.engine.gui.editor.tileEditor import TileEditor
 from dpt.game import Game
 
 
 class EditorPanel(pygame.sprite.Sprite):
+    editor_tile_registry = {}  # Dict contenant les blocs du panel
+
     def __init__(self, color, x, y, width, height, alpha):
         from dpt.engine.tileManager import TileManager
         pygame.sprite.Sprite.__init__(self, TileManager.editor_panel_group)
@@ -23,7 +27,7 @@ class EditorPanel(pygame.sprite.Sprite):
             mouse_pos_x = math.floor(mouse[0] / Game.TILESIZE)
             mouse_pos_y = math.floor(mouse[1] / Game.TILESIZE)
             key = str(mouse_pos_x) + ", " + str(mouse_pos_y)
-            if key in Game.editor_tile_registry:
-                Game.selected_item = Game.editor_tile_registry[key]["class"]
+            if key in EditorPanel.editor_tile_registry:
+                TileEditor.selected_item = EditorPanel.editor_tile_registry[key]["class"]
             else:
                 pass

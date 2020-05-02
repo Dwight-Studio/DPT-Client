@@ -36,36 +36,31 @@ class Game(object):
     DEFAULT_SERVER_ADDRESS = "join.dont-play-together.fr"
     TILESIZE = 90
     DISPLAY_RATIO = 1
-    DISPLAY_RECT = False
+    DISPLAY_DEBUG_RECTS = False
     SCREEN_WIDTH = None
     SCREEN_HEIGHT = None
 
     # Variable à définir
-    temp = {}
-    main_logger = None
-    run = True
-    display_rect = None
-    freeze_game = False
-    window = None
-    clock = None
-    player_group = None
-    ressources = None
-    available_tiles = None
-    selected_item = "dpt.blocks.grass.Grass"
-    editor_tile_registry = {}
-    surface = None
-    player_sprite = None
-    gui = {}
-    events = []
-    loop = void
-    com = None
-    cursor_on_button = False
-    cursor1 = None
-    cursor2 = None
-    effects_management = None
-    count = None
-    loading = False
-    count_thread = None
+    temp = {}  # Variable temporaire pour stocker différentes données temporaires
+    main_logger = None  # Logger principal
+    run = True  # Varibale indiquant si la main loop doit continuer
+    display_rect = None  # Rectange de l'écran (pour savoir si un objet est dans l'écran)
+    freeze_game = False  # Indique si le jeu est sur pause
+    window = None  # Variable contenant l'écran
+    clock = None  # Variable contenant l'horloge
+    player_group = None  # Groupe du joueur
+    available_tiles = None  # Liste de tous les tiles disponnibles
+    surface = None  # Surface principale
+    player_sprite = None  # Variable contenant le sprite du joueur
+    gui = {}  # Dict contenant le GUI
+    events = []  # Liste des évènements (actualisés à chaque frame)
+    loop = void  # Loop actuelle
+    com = None  # Variable contenant l'objet WebCom (à changer Objet --> Classe car pas besoins de plusieurs objets)
+    cursor_on_button = False  # Variable indiquant si le curseur est sur un bouton (changement de curseur)
+    cursor1 = None  # Image 1 du curseur
+    cursor2 = None  # Image 2 du curseur
+    effects_management = None  # Variable contenant le gestionnaire de coms
+    loading = False  # Variable indiquant si le jeu est en train de load (si false, desactive l'affichage)
 
     settings = {
         "general_volume": 1,
@@ -89,6 +84,7 @@ class Game(object):
     # Evenements
     BUTTON_EVENT = None
 
+    # Variable privée pour l'affichage des infos de debug
     _debug_infos = None
 
     # Logs
