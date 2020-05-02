@@ -61,7 +61,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.jumpModifier = 0
         self.inversion = False
         self.star = False
-        self.monsterimmortal = True
+        self.monsterimmortal = False
 
     def update(self):
         if self.alive:
