@@ -46,6 +46,10 @@ class WebCommunication(object):
             logger_request.error(ex.__class__.__name__ + ": " + str(ex))
             cls.connected = False
             return CommunicationError("CommunicationError: " + ex.__class__.__name__)
+        except json.decoder.JSONDecodeError as ex:
+            logger_request.error(ex.__class__.__name__ + ": " + str(ex))
+            cls.connected = False
+            return CommunicationError("CommunicationError: " + ex.__class__.__name__)
 
     @classmethod
     def init_connection(cls):
