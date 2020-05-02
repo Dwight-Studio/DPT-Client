@@ -78,7 +78,7 @@ class Scenes:
         from dpt.engine.loader import RessourceLoader
         from dpt.engine.tileManager import TileManager
         from dpt.engine.gui.editor.tileEditor import TileEditor
-        from dpt.engine.effectsManagement import effectsManagement
+        from dpt.engine.effectsManagement import EffectsManagement
 
         # Initialisation du TileManager
         TileEditor.in_editor = False
@@ -86,7 +86,7 @@ class Scenes:
             return False
 
         # Initialisation de la gestion des effets
-        Game.effects_management = effectsManagement()
+        Game.effects_management = EffectsManagement()
 
         from dpt.engine.gui.menu import Text
         Game.gui = {"players_text": Text(Game.surface.get_size()[0] - math.floor(Game.DISPLAY_RATIO * 220),
@@ -485,6 +485,7 @@ class Scenes:
         from dpt.engine.gui.menu.textSpriteButton import TextSpriteButton
         from dpt.engine.gui.menu import Window
         from dpt.engine.gui.menu.text import Text
+        from dpt.engine.webCommunications import WebCommunication
         button_width = math.floor(92 * Game.DISPLAY_RATIO)
         button_height = math.floor(95 * Game.DISPLAY_RATIO)
 
@@ -505,7 +506,7 @@ class Scenes:
                                      centerx=Game.surface.get_size()[0] // 2),
                     "session2": Text(0,
                                      math.floor(350 * Game.DISPLAY_RATIO),
-                                     Game.com.sessionName,
+                                     WebCommunication.sessionName,
                                      math.floor(120 * Game.DISPLAY_RATIO),
                                      (84, 66, 243),
                                      "dpt.fonts.DINOT_CondBlack",
@@ -519,7 +520,7 @@ class Scenes:
                                      centerx=Game.surface.get_size()[0] // 2),
                     "session4": Text(0,
                                      math.floor(555 * Game.DISPLAY_RATIO),
-                                     Game.settings["server_address"] + "/?session=" + Game.com.sessionName,
+                                     Game.settings["server_address"] + "/?session=" + WebCommunication.sessionName,
                                      math.floor(70 * Game.DISPLAY_RATIO),
                                      (84, 66, 243),
                                      "dpt.fonts.DINOT_CondBlack",
@@ -546,19 +547,13 @@ class Scenes:
                                                pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_IN"),
                                                text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
                                                                             math.floor(50 * Game.DISPLAY_RATIO),
-                                                                            RessourceLoader.get("dpt.images.gui.symbols.SYMB_X"))),
-                    "players_text": Text(Game.surface.get_size()[0] - math.floor(Game.DISPLAY_RATIO * 220),
-                                         0,
-                                         "Joueurs connectés : 000",
-                                         math.floor(25 * Game.DISPLAY_RATIO),
-                                         (0, 0, 0),
-                                         "dpt.fonts.DINOT_CondBlack")}
+                                                                            RessourceLoader.get("dpt.images.gui.symbols.SYMB_X")))}
 
         from tkinter import Tk
         root = Tk()
         root.withdraw()
         root.clipboard_clear()
-        root.clipboard_append("http://" + Game.settings["server_address"] + "/?session=" + Game.com.sessionName)
+        root.clipboard_append("http://" + Game.settings["server_address"] + "/?session=" + WebCommunication.sessionName)
         root.update()
         root.destroy()
 

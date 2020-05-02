@@ -32,7 +32,7 @@ class Game(object):
     PYGAME_VERSION = pygame.version.ver
     PLATFORM = sys.platform
     ROOT_DIRECTORY = get_root()
-    VOTE_TIMEOUT = 80
+    VOTE_TIMEOUT = 20
     DEFAULT_SERVER_ADDRESS = "join.dont-play-together.fr"
     TILESIZE = 90
     DISPLAY_RATIO = 1
@@ -55,7 +55,6 @@ class Game(object):
     gui = {}  # Dict contenant le GUI
     events = []  # Liste des évènements (actualisés à chaque frame)
     loop = void  # Loop actuelle
-    com = None  # Variable contenant l'objet WebCom (à changer Objet --> Classe car pas besoins de plusieurs objets)
     cursor_on_button = False  # Variable indiquant si le curseur est sur un bouton (changement de curseur)
     cursor1 = None  # Image 1 du curseur
     cursor2 = None  # Image 2 du curseur
@@ -84,6 +83,7 @@ class Game(object):
     # Evenements
     BUTTON_EVENT = pygame.event.custom_type()
     VOTE_FINISED_EVENT = pygame.event.custom_type()
+    VOTE_RESULT_AVAILABLE_EVENT = pygame.event.custom_type()
     KEEP_ALIVE_EVENT = pygame.event.custom_type()
 
     # Variable privée pour l'affichage des infos de debug

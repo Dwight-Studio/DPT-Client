@@ -1,11 +1,11 @@
-from dpt.engine.webCommunications import Communication
+from dpt.engine.webCommunications import WebCommunication
 from dpt.engine.tileManager import TileManager
 from dpt.game import Game
 
 import random
 
 
-class effectsManagement(Communication):
+class EffectsManagement(WebCommunication):
     listEffects = ["Ice",
                    "Slow",
                    "Fast",
@@ -41,22 +41,22 @@ class effectsManagement(Communication):
     def update(self):
         self.vote()
         for effects in self.tempList:
-            if effectsManagement.dicoLinks[effects] == "PlayerAndEnemy":
+            if EffectsManagement.dicoLinks[effects] == "PlayerAndEnemy":
                 for enemies in TileManager.enemy_group:
                     eval("enemies." + effects + " = False")
             for player in Game.player_group:
                 eval("player." + effects + " = False")
-        if effectsManagement.dicoEffects[self.result] == "Temp":
+        if EffectsManagement.dicoEffects[self.result] == "Temp":
             self.tempList.append(self.result)
-        if effectsManagement.dicoLinks[self.result] == "PlayerAndEnemy":
+        if EffectsManagement.dicoLinks[self.result] == "PlayerAndEnemy":
             for enemies in TileManager.enemy_group:
                 eval("enemies." + self.result + " = True")
         for player in Game.player_group:
             eval("player." + self.result + " = True")
 
     def vote(self):
-        mod1 = random.choice(effectsManagement.listEffects)
-        mod2 = random.choice(effectsManagement.listEffects)
+        mod1 = random.choice(EffectsManagement.listEffects)
+        mod2 = random.choice(EffectsManagement.listEffects)
         while mod2 == mod1:
-            mod2 = random.choice(effectsManagement.listEffects)
+            mod2 = random.choice(EffectsManagement.listEffects)
         self.result = self.create_vote_event(mod1, mod2)

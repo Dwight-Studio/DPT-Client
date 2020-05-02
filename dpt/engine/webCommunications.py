@@ -1,29 +1,39 @@
 import json
 import random
+import math
 import string
-import threading
-import time
 import requests
 import pygame
+import time
 
 from dpt.game import Game
+from dpt.engine.gui.menu.text import Text
 
-class Communication(object):
+
+class CommunicationError(object):
+    def __init__(self, message):
+        self.message = message
+
+    def __str__(self):
+        return self.message
+
+
+class WebCommunication(object):
     """Gestionnaire des communication webs"""
 
-    log = Game.get_logger("WebCom")
+    log = Game.get_logger(__name__)
     sessionName = None
-    sessionName = "".join(random.choice(string.ascii_uppercase) for i in range(5))
     connected = False
-    player_number = 0
+    connected_players_count = 0
+    last_result = None
 
     @classmethod
     def make_request(cls, url):
+        """"Crée une requète vers un serveur"""
         logger_request = Game.get_logger("WebComs.Request")
         logger_json = Game.get_logger("WebComs.JSONDecoder")
 
         request = None
-        message = None
 
         try:
             request = requests.get(url)
@@ -31,49 +41,137 @@ class Communication(object):
             message = request.json()
 
             return message
-        except ConnectionAbortedError as ex:
-            logger_request.critical("Connection aborted: " + str(ex))
+
+        except requests.exceptions.RequestException as ex:
+            logger_request.error(ex.__class__.__name__ + ": " + str(ex))
             cls.connected = False
-            return None
-        except ConnectionRefusedError as ex:
-            logger_request.critical("Connection refused: " + str(ex))
-            cls.connected = False
-            return None
-        except ConnectionResetError as ex:
-            logger_request.critical("Connection reset: " + str(ex))
-            cls.connected = False
-            return None
-        except ConnectionError as ex:
-            logger_request.critical("Connection error: " + str(ex))
-            cls.connected = False
-            return None
-        except ValueError as ex:
-            logger_json.critical("Can't decode request: " + str(ex))
-            logger_json.critical("  " + str(request.content))
+            return CommunicationError("CommunicationError: " + ex.__class__.__name__)
 
     @classmethod
-    def create(cls):
-        """Crée la session sur le serveur """
-        try:
-            request = requests.get("http://" + Game.settings["server_address"] + "/init.php?session=" + cls.sessionName)
-            if request.json() == cls.sessionName:
-                cls.log.info("Created session : " + cls.sessionName)
-                cls.log.info("http://" + Game.settings["server_address"] + "/?session=" + cls.sessionName)
-                cls.log.info("KeepAlive event sent")
-                pygame.time.set_timer(Game.KEEP_ALIVE_EVENT, 5000)
-                return True
-            else:
-                cls.log.critical("Session creation failed")
-                return False
-        except:
-            cls.log.warning("Hostname not found. Is the server running ? Check the server address !")
+    def init_connection(cls):
+        """Crée la session sur le serveur"""
+
+        cls.sessionName = "".join(random.choice(string.ascii_uppercase) for i in range(5))
+
+        reply = cls.make_request("http://" + Game.settings["server_address"] + "/init.php?session=" + cls.sessionName)
+
+        if not isinstance(reply, CommunicationError):
+            cls.log.info("Session " + cls.sessionName + " created")
+            cls.log.info("URL: http://" + Game.settings["server_address"] + "/?session=" + cls.sessionName)
+            pygame.time.set_timer(Game.KEEP_ALIVE_EVENT, 5000)
+            return True
+        else:
+            cls.log.critical("Session creation failed")
+            return reply
 
     @classmethod
     def update(cls):
+        """Actualise les communications"""
+        if cls.sessionName is not None:
 
-        for event in Game.events:
-            if event.type == Game.KEEP_ALIVE_EVENT:
-                if cls.sessionName is not None:
-                    cls.make_request("http://" + Game.settings["server_address"] + "/keepAlive.php?session=" + cls.sessionName)
-                else:
-                    Game.get_logger("WebComs")
+            for event in Game.events:
+                if event.type == Game.KEEP_ALIVE_EVENT:
+                    if cls.connected:
+                        reply = cls.make_request("http://" + Game.settings["server_address"] + "/keepAlive.php?session=" + cls.sessionName)
+
+                        if not isinstance(reply, CommunicationError):
+                            continue
+
+                        reply = cls.make_request("http://" + Game.settings["server_address"] + "/sessions.json")
+
+                        if not isinstance(reply, CommunicationError) or cls.sessionName not in reply:
+                            cls.log.warning("Can't get connected players count")
+                            Game.gui["wb_player_count"] = Text(Game.surface.get_size()[0] - math.floor(Game.DISPLAY_RATIO * 220), 0,
+                                                               "Déconnecté du serveur",
+                                                               math.floor(25 * Game.DISPLAY_RATIO),
+                                                               (255, 0, 0),
+                                                               "dpt.fonts.DINOT_CondBlack")
+                            continue
+
+                        nb = str(len(reply[cls.sessionName]))
+
+                        Game.gui["wb_player_count"] = Text(Game.surface.get_size()[0] - math.floor(Game.DISPLAY_RATIO * 220), 0,
+                                                           "Joueurs connectés : " + nb,
+                                                           math.floor(25 * Game.DISPLAY_RATIO),
+                                                           (0, 0, 0),
+                                                           "dpt.fonts.DINOT_CondBlack")
+
+                        Text.main_loop()
+                        continue
+
+                elif event.type == Game.VOTE_FINISED_EVENT:
+                    if cls.connected:
+                        vote_one = 0
+                        vote_two = 0
+                        cls.log.info("Requesting vote output...")
+
+                        reply = cls.make_request("http://" + Game.settings["server_address"] + "/sessions.json")
+
+                        if not isinstance(reply, CommunicationError):
+                            for data in reply[cls.sessionName].values():
+                                cls.log.debug("Vote " + data)
+                                if data == "1":
+                                    vote_one += 1
+                                elif data == "2":
+                                    vote_two += 1
+                            if vote_one > vote_two:
+                                cls.log.info("Effect 1 won")
+                                cls.last_result = 1
+                            elif vote_two > vote_one:
+                                cls.log.info("Effect 2 won")
+                                cls.last_result = 2
+                            else:
+                                cls.log.info("Draw")
+                                cls.last_result = 0
+
+                            event = pygame.event.Event(Game.VOTE_RESULT_AVAILABLE_EVENT, {"results": cls.last_result})
+                            pygame.event.post(event)
+
+                        else:
+                            cls.log.error("Results request failed")
+                            continue
+                    else:
+                        cls.log.warning("Handling VOTE_FINISHED_EVENT while disconnected")
+                        continue
+
+    @classmethod
+    def close(cls):
+        """Ferme la session actuelle"""
+
+        reply = cls.make_request("http://" + Game.settings["server_address"] + "/close.php?session=" + cls.sessionName)
+        pygame.time.set_timer(Game.KEEP_ALIVE_EVENT, 0)
+
+        if not isinstance(reply, CommunicationError):
+            cls.log.info("Session closed")
+        else:
+            cls.log.warning("Failed to close session, ignoring (session will be marked as timedOut in few seconds)")
+
+    @classmethod
+    def create_vote_event(cls, mod1, mod2):
+        """Crée un évènement de vote
+
+        :param mod1: Modificateur 1
+        :type mod1: str
+        :param mod2: Modificateur 2
+        :type mod2: str
+        :rtype: bool
+        :return: Retourne True si le vote est correctement créé sinon False
+        """
+
+        cls.log.info("Creating a new vote...")
+        current_time = int(round(time.time() * 1000))
+
+        data = {"endDate": current_time + (Game.VOTE_TIMEOUT * 1000) + 2000,
+                "mod1": mod1,
+                "mod2": mod2}
+
+        reply = cls.make_request("http://" + Game.settings["server_address"] + "/registerVote.php?session=" + cls.sessionName + "&data=" + json.dumps(data))
+
+        if isinstance(reply, CommunicationError):
+            cls.log.error("Can't create vote event")
+            return reply
+
+        cls.log.info("Vote created, results will be available in " + str(Game.VOTE_TIMEOUT + 2) + " seconds")
+
+        pygame.time.set_timer(Game.VOTE_FINISED_EVENT, (Game.VOTE_TIMEOUT + 2) * 1000, True)
+        return True

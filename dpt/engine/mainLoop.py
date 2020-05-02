@@ -13,7 +13,7 @@ from dpt.engine.tileManager import TileManager
 from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 from dpt.engine.gui.menu import Text
-from threading import Thread
+from dpt.engine.webCommunications import WebCommunication
 
 try:
     bg = RessourceLoader.get("dpt.images.environment.background.default_sky")
@@ -96,9 +96,9 @@ def level_loop():
     # Game.effects_management.update()
     # Game.count += 1
 
-
-    Text.main_loop()
     Button.main_loop()
+
+    WebCommunication.update()
 
     Game.display_debug_info()
     Game.draw_cursor()
@@ -116,9 +116,9 @@ def pause_loop():
 
     for event in Game.events:
         if event.type == pygame.QUIT:
-            if Game.com is not None:
+            if WebCommunication.sessionName is not None:
                 Scenes.loading()
-                Game.com.close()
+                WebCommunication.close()
                 Game.loading = False
             if TileEditor.in_editor:
                 FileManager.save_file(TileEditor.created_level)
@@ -137,9 +137,9 @@ def pause_loop():
                 Scenes.level(TileManager.levelName)
                 return
             elif event.button == Game.gui["button_main_menu"]:
-                if Game.com is not None:
+                if WebCommunication.sessionName is not None:
                     Scenes.loading()
-                    Game.com.close()
+                    WebCommunication.close()
                     Game.loading = False
                 if TileEditor.in_editor:
                     FileManager.save_file(TileEditor.created_level)
@@ -147,14 +147,15 @@ def pause_loop():
                 Scenes.main_menu()
                 return
             elif event.button == Game.gui["button_quit"]:
-                if Game.com is not None:
+                if WebCommunication.sessionName is not None:
                     Scenes.loading()
-                    Game.com.close()
+                    WebCommunication.close()
                     Game.loading = False
                 if TileEditor.in_editor:
                     FileManager.save_file(TileEditor.created_level)
                 Game.run = False
 
+    WebCommunication.update()
 
     Game.display_debug_info()
     Game.draw_cursor()
@@ -175,11 +176,13 @@ def main_menu_loop():
                 Scenes.loading()
 
                 # Initialisation de la session (dans un thread pour ne pas bloquer)
-                from dpt.engine.webCommunications import Communication
-                Game.com = Communication()
-                if not Game.com.create():
-                    Scenes.return_error(["Impossible de se connecter au serveur de jeu.",
-                                         "Verifiez votre connexion internet et réessayer",
+                from dpt.engine.webCommunications import WebCommunication
+                from dpt.engine.webCommunications import CommunicationError
+
+                reply = WebCommunication.init_connection()
+
+                if isinstance(reply, CommunicationError):
+                    Scenes.return_error([str(reply),
                                          " ",
                                          "Si le problème persiste, vous pouvez nous contacter sur Discord",
                                          "Dwight Studio Hub: discord.gg/yZwuNqN",
@@ -346,7 +349,7 @@ def start_level_loop():
     for event in Game.events:
         if event.type == pygame.QUIT:
             Scenes.loading()
-            Game.com.close()
+            WebCommunication.close()
             Game.loading = False
             Game.run = False
             return
@@ -354,7 +357,7 @@ def start_level_loop():
             menu.delete_items()
             if event.button == Game.gui["button_main_menu"]:
                 Scenes.loading()
-                Game.com.close()
+                WebCommunication.close()
                 Game.loading = False
                 Scenes.main_menu(False)
                 return
@@ -365,6 +368,8 @@ def start_level_loop():
                 return
 
     menu.main_loop()
+
+    WebCommunication.update()
 
     Game.display_debug_info()
     Game.draw_cursor()
@@ -413,6 +418,8 @@ def loading_loop():
         # Affichage du text
         text = font.render("Chargement" + t, True, (0, 0, 0))
         Game.surface.blit(text, rect)
+
+        WebCommunication.update()
 
         Game.display_debug_info()
         Game.draw_cursor()
