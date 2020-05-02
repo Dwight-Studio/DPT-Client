@@ -22,7 +22,7 @@ class Cloud(pygame.sprite.Sprite):
         import math
 
         pygame.sprite.Sprite.__init__(self, TileManager.clouds_group)
-        self.image = choice(RessourceLoader.get_multiple(self.textures))
+        self.image = choice(RessourceLoader.get_multiple(self.textures)).copy()
         self.rect = self.image.get_rect()
 
         self.height = Game.TILESIZE
@@ -31,9 +31,15 @@ class Cloud(pygame.sprite.Sprite):
         self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect()
         self.speed = speed
+        brightness = math.floor(speed * (30 / 5))
+        self.image.fill((brightness, brightness, brightness), special_flags=pygame.BLEND_RGB_SUB)
+        self.count = 0
         self.rect.x = x
         self.rect.y = y
 
     def update(self):
-        """Déplace le nugae de speed par frame"""
-        self.rect.move_ip(-self.speed, 0)
+        """Déplace le nuage"""
+        if self.count == self.speed:
+            self.rect.x -= 1
+            self.count = 0
+        self.count += 1

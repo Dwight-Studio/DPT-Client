@@ -27,7 +27,7 @@ class Lever(pygame.sprite.Sprite):
         self.left = True
         self.set = False
         self.attributing = False
-        if not TileManager.loadlevel:
+        if not TileManager.is_loading_level:
             self.sound = RessourceLoader.get(self.sounds)
             self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
             self.sound.play()
