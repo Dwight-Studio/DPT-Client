@@ -44,7 +44,7 @@ class Text:
         self.y = y
         self.font = pygame.font.Font(RessourceLoader.get(font), size)
         Text.text_list.append(self)
-        Game.get_logger("Text").debug("Text created")
+        Game.get_logger("root.Menu.Text").debug("Text created")
 
     def draw(self, surface):
         """Dessine le texte"""

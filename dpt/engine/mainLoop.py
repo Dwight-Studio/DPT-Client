@@ -81,11 +81,11 @@ def level_loop():
         TileManager.editor_panel_group.update()
         TileManager.editor_panel_group.draw(Game.surface)
     except pygame.error:
-        Game.get_logger("MainLoop").critical("Error when drawing editorPanelGroup")
-        Game.get_logger("MainLoop").critical("Content: ")
+        Game.get_logger("root.MainLoop").critical("Error when drawing editorPanelGroup")
+        Game.get_logger("root.MainLoop").critical("Content: ")
         for sp in TileManager.editor_panel_group:
             try:
-                Game.get_logger("MainLoop").critical("    " + str(sp.block))
+                Game.get_logger("root.MainLoop").critical("    " + str(sp.block))
             except AttributeError:
                 pass
         raise
@@ -96,34 +96,6 @@ def level_loop():
     # Game.effects_management.update()
     # Game.count += 1
 
-    # Comptage des joueurs
-    if not TileEditor.in_editor:
-        def count():
-            try:
-                nb = Game.com.get_player_count()
-                if nb is None:
-                    Game.gui["players_text"].text = "Déconnecté du serveur"
-                    Game.gui["players_text"].color = (254, 0, 61)
-                else:
-                    nb = str()
-                    while len(nb) < 3:
-                        nb = "0" + nb
-                    Game.gui["players_text"].text = "Joueurs connectés : " + nb
-            except KeyError:
-                pass
-
-        try:
-            if Game.com is not None:
-                if Game.temp["player_count_check"] + 1 >= 60:
-                    Game.temp["player_count_check"] = 0
-                    Thread(target=count).start()
-                else:
-                    Game.temp["player_count_check"] += 1
-            else:
-                Game.gui["players_text"].text = "Déconnecté des serveurs"
-                Game.gui["players_text"].color = (254, 0, 61)
-        except KeyError:
-            pass
 
     Text.main_loop()
     Button.main_loop()
@@ -183,34 +155,6 @@ def pause_loop():
                     FileManager.save_file(TileEditor.created_level)
                 Game.run = False
 
-        # Comptage des joueurs
-        if not TileEditor.in_editor:
-            def count():
-                try:
-                    nb = Game.com.get_player_count()
-                    if nb is None:
-                        Game.gui["players_text"].text = "Déconnecté du serveur"
-                        Game.gui["players_text"].color = (254, 0, 61)
-                    else:
-                        nb = str()
-                        while len(nb) < 3:
-                            nb = "0" + nb
-                        Game.gui["players_text"].text = "Joueurs connectés : " + nb
-                except KeyError:
-                    pass
-
-            try:
-                if Game.com is not None:
-                    if Game.temp["player_count_check"] + 1 >= 60:
-                        Game.temp["player_count_check"] = 0
-                        Thread(target=count).start()
-                    else:
-                        Game.temp["player_count_check"] += 1
-                else:
-                    Game.gui["players_text"].text = "Déconnecté des serveurs"
-                    Game.gui["players_text"].color = (254, 0, 61)
-            except KeyError:
-                pass
 
     Game.display_debug_info()
     Game.draw_cursor()
@@ -396,35 +340,6 @@ def settings_menu_loop():
 def start_level_loop():
     """Boucle de début de niveau"""
     Game.surface.blit(bg, (0, 0))
-
-    # Comptage des joueurs
-    if not TileEditor.in_editor:
-        def count():
-            try:
-                nb = Game.com.get_player_count()
-                if nb is None:
-                    Game.gui["players_text"].text = "Déconnecté du serveur"
-                    Game.gui["players_text"].color = (254, 0, 61)
-                else:
-                    nb = str()
-                    while len(nb) < 3:
-                        nb = "0" + nb
-                    Game.gui["players_text"].text = "Joueurs connectés : " + nb
-            except KeyError:
-                raise
-
-        try:
-            if Game.com is not None:
-                if Game.temp["player_count_check"] + 1 >= 60:
-                    Game.temp["player_count_check"] = 0
-                    Thread(target=count).start()
-                else:
-                    Game.temp["player_count_check"] += 1
-            else:
-                Game.gui["players_text"].text = "Déconnecté des serveurs"
-                Game.gui["players_text"].color = (254, 0, 61)
-        except KeyError:
-            raise
 
     menu.main_loop()
 

@@ -6,7 +6,7 @@ from dpt.game import Game
 
 class Scenes:
     """Gestionnaire des scènes"""
-    logger = Game.get_logger("Scenes")
+    logger = Game.get_logger("root.Scenes")
 
     @classmethod
     def editor(cls, level):

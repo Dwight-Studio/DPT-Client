@@ -41,7 +41,7 @@ class RadioButton(pygame.sprite.Sprite):
         self.value = False
         self.list = btn_list
         self.list.append(self)
-        Game.get_logger("RadioButton").debug("RadioButton created")
+        Game.get_logger("root.Menu.RadioButton").debug("RadioButton created")
 
     def __bool__(self):
         return self.value

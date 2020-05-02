@@ -26,7 +26,7 @@ class TileManager:
     interactible_blocks_group = pygame.sprite.Group()
     clouds_group = pygame.sprite.Group()
 
-    log = Game.get_logger("TileManager")
+    log = Game.get_logger("root.TileManager")
     levelName = None
     max_width_size = 0
     max_height_size = 0
@@ -402,7 +402,7 @@ class TileManager:
         """Génère les nuages"""
         from dpt.engine.gui.Cloud import Cloud
         xpos = 10
-        for i in range(5):
+        for i in range(3):
             speed = randint(1, 5)
             xpos += randint((Game.surface.get_size()[0] // 14) * 2, (Game.surface.get_size()[0] // 14) * 4)
             ypos = randint(0, Game.TILESIZE * 2)
@@ -443,7 +443,7 @@ class Camera:
         self.camera = None
         self.width = width
         self.height = height
-        self.log = Game.get_logger("Camera")
+        self.log = Game.get_logger("root.Camera")
         self.x = 0
         self.last_x = 0
         self.sprite_count = 0
@@ -495,7 +495,7 @@ class EditorCamera:
         self.camera = None
         self.width = width
         self.height = height
-        self.log = Game.get_logger("EditorCamera")
+        self.log = Game.get_logger("root.EditorCamera")
         self.x = 0
         self.last_x = 0
         self.sprite_count = 0

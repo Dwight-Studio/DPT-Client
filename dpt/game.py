@@ -82,7 +82,9 @@ class Game(object):
     anim_count_coins = 0
 
     # Evenements
-    BUTTON_EVENT = None
+    BUTTON_EVENT = pygame.event.custom_type()
+    VOTE_FINISED_EVENT = pygame.event.custom_type()
+    KEEP_ALIVE_EVENT = pygame.event.custom_type()
 
     # Variable privée pour l'affichage des infos de debug
     _debug_infos = None
@@ -164,9 +166,6 @@ class Game(object):
 
             # Groupes Pygame
             cls.player_group = pygame.sprite.Group()
-
-            # Evenements persos
-            cls.BUTTON_EVENT = pygame.event.custom_type()
 
             # Initialisation du RessourceLoader
             from dpt.engine.loader import RessourceLoader
