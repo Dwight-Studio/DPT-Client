@@ -103,7 +103,7 @@ class WebCommunication(object):
                             nb = str(len(reply[cls.sessionName]))
 
                             while len(nb) < 3:
-                                nb += "0"
+                                nb = "0" + nb
 
                             Game.gui["wb_player_count"].text = "Joueurs connectés : " + nb
                             Game.gui["wb_player_count"].color = (0, 0, 0)
