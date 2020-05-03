@@ -404,7 +404,7 @@ class TileManager:
         """Génère les nuages"""
         from dpt.engine.gui.Cloud import Cloud
         xpos = 10
-        for i in range(5):
+        for i in range(3):
             speed = randrange(1, 6)
             ypos = randrange(10, Game.TILESIZE + 11, Game.TILESIZE // 2)
 
