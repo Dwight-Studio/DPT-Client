@@ -40,7 +40,7 @@ class Cloud(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
 
-        TileManager.clouds_group.add(self)
+        TileManager.clouds_group.add(self, layer=self.layer)
 
     def update(self):
         """Déplace le nuage"""

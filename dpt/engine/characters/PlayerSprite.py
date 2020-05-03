@@ -14,10 +14,11 @@ class PlayerSprite(pygame.sprite.Sprite):
     jump_left_texture = "dpt.images.characters.player.LJump"
     mask = "dpt.images.characters.player.mask"
 
+    width = math.floor(156 * Game.DISPLAY_RATIO)
+    height = math.floor(117 * Game.DISPLAY_RATIO)
+
     def __init__(self, x, y):
-        pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
-        self.width = math.floor(120 * Game.DISPLAY_RATIO)
-        self.height = math.floor(90 * Game.DISPLAY_RATIO)
+        pygame.sprite.Sprite.__init__(self, Game.player_group)  # Sprite's constructor called
         self.CONSTWIDTH = self.width
         self.CONSTHEIGT = self.height
         self.image = pygame.transform.scale(RessourceLoader.get(self.char), (self.width, self.height))
@@ -337,5 +338,9 @@ class PlayerSprite(pygame.sprite.Sprite):
         if self.rect.top >= Game.surface.get_size()[1]:
             Game.get_logger("Player").info("Player sprite killed")
             Game.freeze_game = True
+
+            from dpt.engine.scenes import Scenes
+            Scenes.game_over()
+
             Game.player_sprite.kill()
             del self

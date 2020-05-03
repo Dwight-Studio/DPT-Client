@@ -11,10 +11,6 @@ Principe
 
 Les `ressources` sont la deuxième partie importante du jeu avec le package ``dpt``. En effet, elles représentent tous les objets modifiables du jeu (textures, blocks, entitées...) ainsi que tous les différents niveaux.
 
-Certaines `ressources` sont particulières car uniques et non réplicables :
-   - `user/settings.json`
-   - `user/profile.json`
-
 .. important::
         Si les `ressources` sont modifiables et extensibles, elle font tout de même partie de la base du jeu et une modification érronée peut rendre le jeu inutilisable.
 

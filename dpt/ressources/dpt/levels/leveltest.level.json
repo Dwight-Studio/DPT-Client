@@ -714,7 +714,8 @@
     "backgroundClass": "dpt.blocks.grass.grass"
   },
   "10, 7": {
-    "backgroundClass": "dpt.blocks.grass.grass"
+    "backgroundClass": "dpt.blocks.grass.grass",
+    "class": "dpt.entities.flagblue"
   },
   "11, 7": {
     "backgroundClass": "dpt.blocks.grass.grass",
@@ -724,7 +725,8 @@
     "backgroundClass": "dpt.blocks.grass.grass"
   },
   "14, 7": {
-    "backgroundClass": "dpt.blocks.grass.grass"
+    "backgroundClass": "dpt.blocks.grass.grass",
+    "class": "dpt.entities.flagblue"
   },
   "15, 7": {
     "backgroundClass": "dpt.blocks.grass.grass",
@@ -3522,5 +3524,14 @@
   },
   "22, 9": {
     "class": "dpt.blocks.grass.grasscorneredgel"
+  },
+  "0, 8": {
+    "class": "dpt.entities.flagred"
+  },
+  "6, 7": {
+    "class": "dpt.entities.flagblue"
+  },
+  "29, 8": {
+    "class": "dpt.entities.flaggreen"
   }
 }

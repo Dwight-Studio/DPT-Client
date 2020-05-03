@@ -61,13 +61,17 @@ class Game(object):
     effects_management = None  # Variable contenant le gestionnaire de coms
     loading = False  # Variable indiquant si le jeu est en train de load (si false, desactive l'affichage)
 
+    # Paramètres utilisateur
     settings = {
         "general_volume": 1,
         "music_volume": 1,
         "sound_volume": 1,
         "display_size": 0,
-        "server_address": "localhost"
+        "server_address": DEFAULT_SERVER_ADDRESS
     }
+
+    # Sauvegarde utilisateur
+    saves = {}
 
     display_list = [("Automatique", 0, 0),
                     ("480p (720 x 480)", 720, 480),
@@ -146,7 +150,7 @@ class Game(object):
             main_logger.debug("CWD: " + cls.ROOT_DIRECTORY)
 
             # Chargement des réglages
-            cls.load_settings()
+            cls.load_profile()
 
             pygame.init()
             cls.SCREEN_WIDTH = pygame.display.Info().current_w
@@ -288,7 +292,7 @@ class Game(object):
                 Game.draw_cursor()
                 Game.clock.tick(60)
 
-            cls.save_settings()
+            cls.save_profile()
             pygame.quit()
 
         except Exception:
@@ -356,34 +360,36 @@ class Game(object):
         Game.cursor_on_button = False
 
     @classmethod
-    def load_settings(cls):
+    def load_profile(cls):
         """Charge les paramètres"""
         try:
             from dpt.engine.loader import RESSOURCES_DIRECTORY
-            file = open(RESSOURCES_DIRECTORY + "user/settings.json", "r")
-            Game.settings.update(json.loads(file.read()))
+            file = open(RESSOURCES_DIRECTORY + "user/profile.json", "r")
+            profile = json.loads(file.read())
+            Game.settings.update(profile["settings"])
+            Game.saves.update(profile["saves"])
             file.close()
-            cls.main_logger.info("Settings loaded")
+            cls.get_logger("ProfileManager").info("Profile loaded")
 
         except FileNotFoundError:
-            cls.save_settings()
-            cls.main_logger.warning("Can't find settings, creating one")
+            cls.save_profile()
+            cls.get_logger("ProfileManager").warning("Can't find profile file, creating one")
 
         except Exception:
-            cls.main_logger.critical("Can't load settings")
+            cls.get_logger("ProfileManager").critical("Can't load profile")
             exc_type, exc_value, exc_tb = sys.exc_info()
             trace = "".join(traceback.format_exception(exc_type, exc_value, exc_tb))
             for ms in trace.split("\n"):
                 cls.main_logger.warning(ms)
 
     @classmethod
-    def save_settings(cls):
+    def save_profile(cls):
         """Sauvegarde les paramètres"""
         from dpt.engine.loader import RESSOURCES_DIRECTORY
-        file = open(RESSOURCES_DIRECTORY + "user/settings.json", "w")
-        file.write(json.dumps(Game.settings))
+        file = open(RESSOURCES_DIRECTORY + "user/profile.json", "w")
+        file.write(json.dumps({"settings": Game.settings, "saves": Game.saves}))
         file.close()
-        cls.main_logger.info("Settings saved")
+        cls.get_logger("ProfileManager").info("Profile saved")
 
     @classmethod
     def update_display(cls):

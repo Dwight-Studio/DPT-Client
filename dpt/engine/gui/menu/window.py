@@ -6,7 +6,7 @@ from dpt.game import Game
 
 
 class Window:
-    window_group = pygame.sprite.Group()
+    window_list = []
 
     def __init__(self, x, y, width_number, height_number, **kwargs):
         """Crée une fenêtre
@@ -33,7 +33,7 @@ class Window:
         if "centery" in kwargs:
             self.rect.centery = kwargs["centery"]
 
-        self.sprites = []
+        self.sprites = pygame.sprite.Group()
         for rx in range(width_number):
             for ry in range(height_number):
                 item_type = ["M", "M"]
@@ -48,11 +48,18 @@ class Window:
                     item_type[0] = "D"
 
                 item_type = item_type[0] + item_type[1]
-                self.sprites.append(WindowItem(self.rect.x + (rx * 122 * Game.DISPLAY_RATIO), self.rect.y + (ry * 64 * Game.DISPLAY_RATIO) - ry, item_type))
+                self.sprites.add(WindowItem(self.rect.x + (rx * 122 * Game.DISPLAY_RATIO), self.rect.y + (ry * 64 * Game.DISPLAY_RATIO) - ry, item_type))
+        Window.window_list.append(self)
         Game.get_logger(__name__).debug("Window created")
+
+    def kill(self):
+        for sprite in self.sprites:
+            sprite.kill()
+        Window.window_list.remove(self)
 
     @classmethod
     def main_loop(cls):
         """Actualise toutes les fenêtres"""
-        Window.window_group.update()
-        Window.window_group.draw(Game.surface)
+        for win in Window.window_list:
+            win.sprites.update()
+            win.sprites.draw(Game.surface)

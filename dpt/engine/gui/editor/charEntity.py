@@ -5,7 +5,7 @@ from dpt.game import Game
 
 class CharEntity(pygame.sprite.Sprite):
     def __init__(self):
-        pygame.sprite.Sprite.__init__(self)  # Sprite's constructor called
+        pygame.sprite.Sprite.__init__(self, Game.player_group)  # Sprite's constructor called
         self.image = pygame.Surface((Game.TILESIZE, Game.TILESIZE))
         self.image.set_colorkey((0, 0, 0))
         self.rect = self.image.get_rect()

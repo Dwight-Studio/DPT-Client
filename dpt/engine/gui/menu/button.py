@@ -142,6 +142,11 @@ class Button(pygame.sprite.Sprite):
         """Déverrouille """
         self.locked = False
 
+    def kill(self):
+        if self.text_sprite is not None:
+            self.text_sprite.kill()
+        pygame.sprite.Sprite.kill(self)
+
     @classmethod
     def main_loop(cls):
         """Actualise tous les boutons"""

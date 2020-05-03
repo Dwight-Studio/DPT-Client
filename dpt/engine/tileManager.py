@@ -54,6 +54,7 @@ class TileManager:
     def load_level(cls, level_name):
         """Charge un niveau
 
+        :param checkpoint: Checkpoint à charger
         :param level_name: Niveau à charger
         :type level_name: str, dict
 
@@ -106,6 +107,7 @@ class TileManager:
 
         if not TileEditor.in_editor:
             cls.log.debug("Loading level blocks and entities")
+            RessourceLoader.add_pending("dpt.entities.Flag*")
             for keys in level:
                 if "class" in level[keys]:
                     RessourceLoader.add_pending(level[keys]["class"])
@@ -131,11 +133,14 @@ class TileManager:
                     if hasattr(obj, "sounds"):
                         RessourceLoader.add_pending(obj.sounds)
             RessourceLoader.add_pending("dpt.images.characters.player.*")
+            RessourceLoader.add_pending("dpt.images.environment.flag.*")
             RessourceLoader.add_pending("dpt.images.environment.background.Cloud_full_*")
             RessourceLoader.load()
 
         from dpt.engine.scenes import Scenes
         Scenes.loading()
+
+        RessourceLoader.get("dpt.entities.FlagBlue").checkpoint_list = []
 
         for keys in level:
             cls.coords = tuple(map(int, keys.split(", ")))
@@ -173,17 +178,32 @@ class TileManager:
                     except UnreachableRessourceError:
                         cls.log.warning("Invalid class name : " + level[keys]["backgroundClass"] + " for tile : " + keys)
 
+        RessourceLoader.get("dpt.entities.FlagBlue").compute_ids()
+
         if not TileEditor.in_editor:
+            player_x = 300
+            player_y = Game.surface.get_size()[1] - 500
+
+            sf = RessourceLoader.get("dpt.entities.FlagRed").spawn_flag
+
+            if sf is not None:
+                player_x = sf.rect.x - sf.offset_x
+                player_y = sf.rect.y - sf.offset_y
+
+            if "last_checkpoint" in Game.temp:
+                cp = RessourceLoader.get("dpt.entities.FlagBlue").checkpoint_list[Game.temp["last_checkpoint"]]
+                player_x = cp.rect.x - cp.offset_x
+                player_y = cp.rect.y - cp.offset_y
+
             from dpt.engine.characters.PlayerSprite import PlayerSprite
-            Game.player_sprite = PlayerSprite(300, Game.surface.get_size()[1] - 500)
-            Game.player_group.add(Game.player_sprite)
+            Game.player_sprite = PlayerSprite(player_x, player_y)
+
             if TileManager.max_width_size < math.floor(Game.surface.get_size()[0] / Game.TILESIZE):
                 TileManager.max_width_size = math.floor(Game.surface.get_size()[0] / Game.TILESIZE) + 2
             cls.camera = Camera(TileManager.max_width_size, TileManager.max_height_size)
         elif TileEditor.in_editor:
             from dpt.engine.gui.editor.charEntity import CharEntity
             Game.player_sprite = CharEntity()
-            Game.player_group.add(Game.player_sprite)
             cls.camera = EditorCamera(TileManager.max_width_size, TileManager.max_height_size)
         TileEditor.created_level = level
         cls.levelName = level_name
@@ -360,14 +380,6 @@ class TileManager:
                 self.sprite_count += 1
                 if Game.DISPLAY_DEBUG_RECTS:
                     pygame.draw.rect(Game.surface, (0, 0, 255), self.apply(sprite), width=2)
-        for sprite in TileManager.environment_group:
-            if sprite.rect.colliderect(rect):
-                if not freeze:
-                    sprite.update()
-                Game.surface.blit(sprite.image, self.apply(sprite))
-                self.sprite_count += 1
-                if Game.DISPLAY_DEBUG_RECTS:
-                    pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
         for sprite in TileManager.entity_group:
             if sprite.rect.colliderect(rect):
                 if not freeze:
@@ -383,6 +395,14 @@ class TileManager:
             Game.surface.blit(sprite.image, self.apply(sprite))
             if Game.DISPLAY_DEBUG_RECTS:
                 pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(sprite), width=2)
+        for sprite in TileManager.environment_group:
+            if sprite.rect.colliderect(rect):
+                if not freeze:
+                    sprite.update()
+                Game.surface.blit(sprite.image, self.apply(sprite))
+                self.sprite_count += 1
+                if Game.DISPLAY_DEBUG_RECTS:
+                    pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
         for sprite in TileManager.deadly_object_group:
             if sprite.rect.colliderect(rect):
                 if not freeze:

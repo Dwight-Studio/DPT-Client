@@ -107,6 +107,11 @@ def pause_loop():
     """Boucle de pause"""
     Game.surface.blit(bg, (0, 0))
 
+    def kill_menu():
+        for key, item in Game.gui.items():
+            if key[:2] == "p_":
+                item.kill()
+
     TileManager.camera.update(Game.player_sprite, True)
     TileManager.clouds_group.draw(Game.surface)
 
@@ -122,29 +127,28 @@ def pause_loop():
                 FileManager.save_file(TileEditor.created_level)
             Game.run = False
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            menu.delete_items()
+            kill_menu()
             Game.loop = Game.temp["prev_loop"]
             return
         if event.type == Game.BUTTON_EVENT:
-            menu.delete_items()
-            if event.button == Game.gui["button_resume"]:
+            kill_menu()
+            if event.button == Game.gui["p_button_resume"]:
                 Game.loop = Game.temp["prev_loop"]
                 return
-            elif event.button == Game.gui["button_restart"]:
-                menu.delete_items()
+            elif event.button == Game.gui["p_button_restart"]:
+                del Game.temp["last_checkpoint"]
                 Scenes.level(TileManager.levelName)
                 return
-            elif event.button == Game.gui["button_main_menu"]:
+            elif event.button == Game.gui["p_button_main_menu"]:
                 if WebCommunication.sessionName is not None:
                     Scenes.loading()
                     WebCommunication.close()
                     Game.loading = False
                 if TileEditor.in_editor:
                     FileManager.save_file(TileEditor.created_level)
-                menu.delete_items()
                 Scenes.main_menu()
                 return
-            elif event.button == Game.gui["button_quit"]:
+            elif event.button == Game.gui["p_button_quit"]:
                 if WebCommunication.sessionName is not None:
                     Scenes.loading()
                     WebCommunication.close()
@@ -259,11 +263,11 @@ def settings_menu_loop():
             bg = RessourceLoader.get("dpt.images.environment.background.default_sky")
             bg = pygame.transform.smoothscale(bg, Game.surface.get_size())
             menu.delete_items()
-            Game.save_settings()
+            Game.save_profile()
             Game.temp = {}
             Scenes.settings_menu()
 
-        Game.save_settings()
+        Game.save_profile()
 
     for event in Game.events:
         if event.type == pygame.QUIT:
@@ -288,7 +292,7 @@ def settings_menu_loop():
             if event.button == Game.gui["cancel_button"]:
                 pygame.mixer_music.set_volume(Game.settings["general_volume"] * Game.settings["music_volume"])
                 menu.delete_items()
-                Game.save_settings()
+                Game.save_profile()
                 Game.temp = {}
                 Scenes.main_menu(load=False)
                 return
@@ -428,3 +432,50 @@ def loading_loop():
 
     ProgressBar.bar_group.empty()
     ProgressBar.progress_bar_group.empty()
+
+
+def game_over_loop():
+    """Boucle de game over"""
+    Game.surface.blit(bg, (0, 0))
+
+    TileManager.camera.update(Game.player_sprite, True)
+    TileManager.clouds_group.draw(Game.surface)
+
+    menu.main_loop()
+
+    for event in Game.events:
+        if event.type == pygame.QUIT:
+            if WebCommunication.sessionName is not None:
+                Scenes.loading()
+                WebCommunication.close()
+                Game.loading = False
+            if TileEditor.in_editor:
+                FileManager.save_file(TileEditor.created_level)
+            Game.run = False
+            return
+        if event.type == Game.BUTTON_EVENT:
+            menu.delete_items()
+            if event.button == Game.gui["button_checkpoint"]:
+                Scenes.level(TileManager.levelName)
+                return
+            elif event.button == Game.gui["button_main_menu"]:
+                if WebCommunication.sessionName is not None:
+                    del Game.temp["last_checkpoint"]
+                    Scenes.loading()
+                    WebCommunication.close()
+                    Game.loading = False
+                Scenes.main_menu()
+                return
+            elif event.button == Game.gui["button_quit"]:
+                if WebCommunication.sessionName is not None:
+                    del Game.temp["last_checkpoint"]
+                    Scenes.loading()
+                    WebCommunication.close()
+                    Game.loading = False
+                Game.run = False
+
+    WebCommunication.update()
+
+    Game.display_debug_info()
+    Game.draw_cursor()
+    Game.window.update()

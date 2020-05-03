@@ -31,7 +31,7 @@ class WindowItem(pygame.sprite.Sprite):
         :rtype: WindowItem
         """
         from dpt.engine.gui.menu.window import Window
-        pygame.sprite.Sprite.__init__(self, Window.window_group)
+        pygame.sprite.Sprite.__init__(self)
         self.image = pygame.transform.smoothscale(RessourceLoader.get(WindowItem.type[item_type]), (math.ceil(122 * Game.DISPLAY_RATIO), math.ceil(64 * Game.DISPLAY_RATIO)))
         self.rect = self.image.get_rect()
         self.rect.x = x

@@ -9,7 +9,8 @@ from dpt.engine.gui.menu.radioButton import RadioButton
 
 def delete_items():
     """Supprime toutes les éléments de menu"""
-    Window.window_group.empty()
+    for win in Window.window_list:
+        win.kill()
     Button.buttonsGroup.empty()
     Button.text_sprite_buttonsGroup.empty()
     Checkbox.checkbox_group.empty()
