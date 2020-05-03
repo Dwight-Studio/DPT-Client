@@ -162,14 +162,14 @@ class WebCommunication(object):
     @classmethod
     def close(cls):
         """Ferme la session actuelle"""
+        if cls.connected:
+            reply = cls.make_request("http://" + Game.settings["server_address"] + "/close.php?session=" + cls.sessionName)
+            pygame.time.set_timer(Game.KEEP_ALIVE_EVENT, 0)
 
-        reply = cls.make_request("http://" + Game.settings["server_address"] + "/close.php?session=" + cls.sessionName)
-        pygame.time.set_timer(Game.KEEP_ALIVE_EVENT, 0)
-
-        if not isinstance(reply, CommunicationError):
-            cls.log.info("Session closed")
-        else:
-            cls.log.warning("Failed to close session, ignoring (session will be marked as timedOut in few seconds)")
+            if not isinstance(reply, CommunicationError):
+                cls.log.info("Session closed")
+            else:
+                cls.log.warning("Failed to close session, ignoring (session will be marked as timedOut in few seconds)")
 
     @classmethod
     def create_vote_event(cls, mod1, mod2):
