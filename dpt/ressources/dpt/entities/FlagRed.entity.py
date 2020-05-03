@@ -26,9 +26,3 @@ class FlagRed(pygame.sprite.Sprite):
             self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
             self.sound.play()
         FlagRed.spawn_flag = self
-
-    def update(self):
-        for i in Game.player_group:
-            if pygame.sprite.collide_mask(self, i):
-                from dpt.engine.scenes import Scenes
-                Scenes.end_level()

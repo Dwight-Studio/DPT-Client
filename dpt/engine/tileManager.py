@@ -184,7 +184,7 @@ class TileManager:
             player_x = 300
             player_y = Game.surface.get_size()[1] - 500
 
-            sf = RessourceLoader.get("dpt.entities.FlagRed").spawn_flag
+            sf = RessourceLoader.get("dpt.entities.FlagGreen").spawn_flag
 
             if sf is not None:
                 player_x = sf.rect.x - sf.offset_x
