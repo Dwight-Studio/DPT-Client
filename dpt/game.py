@@ -60,6 +60,7 @@ class Game(object):
     cursor2 = None  # Image 2 du curseur
     effects_management = None  # Variable contenant le gestionnaire de coms
     loading = False  # Variable indiquant si le jeu est en train de load (si false, desactive l'affichage)
+    life = 1  # Variable indiquant la vie du joueur vis à vis de son affichage
 
     # Paramètres utilisateur
     settings = {

@@ -100,6 +100,7 @@ def level_loop():
 
     Game.display_debug_info()
     Game.draw_cursor()
+    TileManager.heart_group.update()
     Game.window.update()
 
 

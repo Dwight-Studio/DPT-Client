@@ -25,6 +25,7 @@ class TileManager:
     background_blocks_group = pygame.sprite.Group()
     foreground_blocks_group = pygame.sprite.Group()
     interactible_blocks_group = pygame.sprite.Group()
+    heart_group = pygame.sprite.Group()
     clouds_group = pygame.sprite.LayeredUpdates()
 
     log = Game.get_logger(__name__)
@@ -135,6 +136,7 @@ class TileManager:
             RessourceLoader.add_pending("dpt.images.characters.player.*")
             RessourceLoader.add_pending("dpt.images.environment.flag.*")
             RessourceLoader.add_pending("dpt.images.environment.background.Cloud_full_*")
+            RessourceLoader.add_pending("dpt.images.gui.ui.UI_HEART*")
             RessourceLoader.load()
 
         from dpt.engine.scenes import Scenes

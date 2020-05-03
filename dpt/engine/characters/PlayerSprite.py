@@ -4,6 +4,7 @@ import time
 from dpt.game import Game
 from dpt.engine.loader import RessourceLoader
 from dpt.engine.tileManager import TileManager
+from dpt.engine.gui.ui.Heart import Heart
 
 
 class PlayerSprite(pygame.sprite.Sprite):
@@ -63,6 +64,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.inversion = False
         self.star = False
         self.monsterimmortal = False
+        Heart()
 
     def update(self):
         if self.alive:
@@ -182,8 +184,10 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.deadly_object_collision()
             if self.damaged:
                 self.imunityTime -= 1
+                Game.life = 2
             else:
                 self.imunityTime = 180
+                Game.life = 1
         else:
             self.die()
         self.death_fall()
@@ -325,6 +329,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                         self.gravityCount = 0
 
     def die(self):
+        Game.life = 3
         self.alive = False
         if self.jumpCount > 0:
             neg = 1
