@@ -10,7 +10,8 @@ from dpt.engine.gui.menu.checkbox import Checkbox
 from dpt.engine.gui.menu.progressbar import ProgressBar
 from dpt.engine.loader import RessourceLoader, UnreachableRessourceError
 from dpt.game import Game
-from random import random, randint
+from dpt.engine.gui.menu import Text
+from random import randint
 
 
 #          {"x, y": {"blockClass": Classe}}
@@ -334,6 +335,7 @@ class TileManager:
         Game.add_debug_info("   " + str(len(Checkbox.checkbox_group)) + " checkbox")
         Game.add_debug_info("   " + str(len(ProgressBar.progress_bar_group)) + " progress bars")
         Game.add_debug_info("       " + str(len(ProgressBar.bar_group)) + " bars")
+        Game.add_debug_info("   " + str(len(Text.text_list)) + " Texts")
         Game.add_debug_info("----------")
 
     @classmethod
