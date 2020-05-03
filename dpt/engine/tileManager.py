@@ -307,10 +307,9 @@ class TileManager:
     @classmethod
     def display_cam_info(cls):
         """Affiche les informations de déboggage de la caméra"""
-        obj_count = TileManager.camera.sprite_count + len(TileManager.foreground_blocks_group) + len(
-            TileManager.deadly_object_group) + len(Button.buttonsGroup) + len(Button.text_sprite_buttonsGroup) + len(
+        obj_count = TileManager.camera.sprite_count + len(Button.buttonsGroup) + len(Button.text_sprite_buttonsGroup) + len(
             Button.text_buttonsList) + len(Checkbox.checkbox_group) + len(ProgressBar.progress_bar_group) + len(
-            ProgressBar.bar_group)
+            ProgressBar.bar_group) + len(TileManager.clouds_group) + len(TileManager.interactible_blocks_group)
 
         Game.add_debug_info("CAMERA INFORMATIONS")
         Game.add_debug_info("Scrolling: " + str(-TileManager.camera.last_x))
@@ -327,6 +326,7 @@ class TileManager:
         Game.add_debug_info("   " + str(len(TileManager.environment_group)) + " blocks")
         Game.add_debug_info("   " + str(len(TileManager.background_blocks_group)) + " background blocks")
         Game.add_debug_info("   " + str(len(TileManager.foreground_blocks_group)) + " foreground blocks")
+        Game.add_debug_info("   " + str(len(TileManager.interactible_blocks_group)) + " interactible blocks")
         Game.add_debug_info("   " + str(len(TileManager.deadly_object_group)) + " deadly objects")
         Game.add_debug_info("   " + str(len(Button.buttonsGroup)) + " buttons")
         Game.add_debug_info("       " + str(len(Button.text_sprite_buttonsGroup)) + " texts (sprites)")
@@ -375,10 +375,10 @@ class TileManager:
                 if Game.DISPLAY_DEBUG_RECTS:
                     pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(sprite), width=2)
         for sprite in Game.player_group:
+            self.sprite_count += 1
             if not freeze:
                 sprite.update()
             Game.surface.blit(sprite.image, self.apply(sprite))
-            self.sprite_count += 1
             if Game.DISPLAY_DEBUG_RECTS:
                 pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(sprite), width=2)
         for sprite in TileManager.deadly_object_group:
