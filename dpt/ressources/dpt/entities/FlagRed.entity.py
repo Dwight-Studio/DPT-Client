@@ -4,7 +4,6 @@ from dpt.game import Game
 
 
 class FlagRed(pygame.sprite.Sprite):
-    spawn_flag = None
     texture = "dpt.images.environment.flag.Flag_Red"
     sounds = "dpt.sounds.sfx.sfx_stone"
     screen_width, screen_height = Game.surface.get_size()

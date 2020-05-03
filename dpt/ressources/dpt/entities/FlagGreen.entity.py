@@ -4,6 +4,7 @@ from dpt.game import Game
 
 
 class FlagGreen(pygame.sprite.Sprite):
+    spawn_flag = None
     texture = "dpt.images.environment.flag.Flag_Green"
     sounds = "dpt.sounds.sfx.sfx_stone"
     screen_width, screen_height = Game.surface.get_size()
