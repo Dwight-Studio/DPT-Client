@@ -11,7 +11,7 @@ from dpt.engine.gui.menu.progressbar import ProgressBar
 from dpt.engine.loader import RessourceLoader, UnreachableRessourceError
 from dpt.game import Game
 from dpt.engine.gui.menu import Text
-from random import randint
+from random import randrange
 
 
 #          {"x, y": {"blockClass": Classe}}
@@ -25,7 +25,7 @@ class TileManager:
     background_blocks_group = pygame.sprite.Group()
     foreground_blocks_group = pygame.sprite.Group()
     interactible_blocks_group = pygame.sprite.Group()
-    clouds_group = pygame.sprite.Group()
+    clouds_group = pygame.sprite.LayeredUpdates()
 
     log = Game.get_logger(__name__)
     levelName = None
@@ -404,11 +404,14 @@ class TileManager:
         """Génère les nuages"""
         from dpt.engine.gui.Cloud import Cloud
         xpos = 10
-        for i in range(3):
-            speed = randint(1, 5)
-            xpos += randint((Game.surface.get_size()[0] // 14) * 2, (Game.surface.get_size()[0] // 14) * 4)
-            ypos = randint(0, Game.TILESIZE * 2)
-            Cloud(xpos, ypos, speed)
+        for i in range(5):
+            speed = randrange(1, 6)
+            ypos = randrange(10, Game.TILESIZE + 11, Game.TILESIZE // 2)
+
+            c = Cloud(xpos, ypos, speed)
+
+            xpos += math.floor(3 * c.rect.width / 4)
+
             if xpos > Game.SCREEN_WIDTH - 50:
                 xpos = 10
 
@@ -416,14 +419,17 @@ class TileManager:
     def update_clouds(cls):
         """Actualise les nuages"""
 
+        TileManager.clouds_group.update()
+        TileManager.clouds_group.draw(Game.surface)
+
         from dpt.engine.gui.Cloud import Cloud
         for cloud in cls.clouds_group:
             cloud.rect.x += cls.camera.last_x - cls.clouds_last_x
             if cloud.rect.midright[0] <= 0:
                 cloud.kill()
                 del cloud
-                speed = randint(1, 5)
-                ypos = randint(0, Game.surface.get_size()[1] // 4)
+                speed = randrange(1, 6)
+                ypos = randrange(10, Game.TILESIZE + 11, Game.TILESIZE // 2)
                 Cloud(Game.surface.get_size()[0], ypos, speed)
 
         cls.clouds_last_x = cls.camera.last_x

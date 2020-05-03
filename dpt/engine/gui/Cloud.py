@@ -19,9 +19,11 @@ class Cloud(pygame.sprite.Sprite):
         """
         from dpt.engine.tileManager import TileManager
         from random import choice
+        from dpt.engine.tileManager import TileManager
         import math
 
-        pygame.sprite.Sprite.__init__(self, TileManager.clouds_group)
+        pygame.sprite.Sprite.__init__(self)
+
         self.image = choice(RessourceLoader.get_multiple(self.textures)).copy()
         self.rect = self.image.get_rect()
 
@@ -31,11 +33,14 @@ class Cloud(pygame.sprite.Sprite):
         self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect()
         self.speed = speed
+        self.layer = 5 - speed
         brightness = math.floor(speed * (30 / 5))
         self.image.fill((brightness, brightness, brightness), special_flags=pygame.BLEND_RGB_SUB)
         self.count = 0
         self.rect.x = x
         self.rect.y = y
+
+        TileManager.clouds_group.add(self)
 
     def update(self):
         """Déplace le nuage"""
