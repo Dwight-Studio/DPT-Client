@@ -78,6 +78,14 @@ class Scenes:
             return False
 
         # Initialisation de la gestion des effets
+        EffectsManagement.dico_current_effects = {"Ice": False,
+                                                  "Slow": False,
+                                                  "Fast": False,
+                                                  "monsterimmortal": False,
+                                                  "star": False,
+                                                  "jumpBoost": False,
+                                                  "inversion": False,
+                                                  "lowGravity": False}
         EffectsManagement.vote()
 
         from dpt.engine.gui.menu import Text
