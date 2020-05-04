@@ -27,6 +27,7 @@ class WebCommunication(object):
     connected = False
     connected_players_count = 0
     last_result = None
+    last_vote = None
 
     @classmethod
     def make_request(cls, url):
@@ -131,7 +132,7 @@ class WebCommunication(object):
                         reply = cls.make_request("http://" + Game.settings["server_address"] + "/sessions.json")
 
                         if not isinstance(reply, CommunicationError):
-                            for data in reply[cls.sessionName].values():
+                            for data in reply[cls.sessionName]:
                                 cls.log.debug("Vote " + data)
                                 if data == "1":
                                     vote_one += 1
@@ -139,13 +140,13 @@ class WebCommunication(object):
                                     vote_two += 1
                             if vote_one > vote_two:
                                 cls.log.info("Effect 1 won")
-                                cls.last_result = 1
+                                cls.last_result = cls.last_vote[0]
                             elif vote_two > vote_one:
                                 cls.log.info("Effect 2 won")
-                                cls.last_result = 2
+                                cls.last_result = cls.last_vote[1]
                             else:
                                 cls.log.info("Draw")
-                                cls.last_result = 0
+                                cls.last_result = None
 
                             event = pygame.event.Event(Game.VOTE_RESULT_AVAILABLE_EVENT, {"results": cls.last_result})
                             pygame.event.post(event)
@@ -165,6 +166,8 @@ class WebCommunication(object):
         if cls.connected:
             reply = cls.make_request("http://" + Game.settings["server_address"] + "/close.php?session=" + cls.sessionName)
             pygame.time.set_timer(Game.KEEP_ALIVE_EVENT, 0)
+
+            cls.last_vote = None
 
             if not isinstance(reply, CommunicationError):
                 cls.log.info("Session closed")
@@ -198,5 +201,6 @@ class WebCommunication(object):
 
         cls.log.info("Vote created, results will be available in " + str(Game.VOTE_TIMEOUT + 2) + " seconds")
 
+        cls.last_vote = (mod1, mod2)
         pygame.time.set_timer(Game.VOTE_FINISHED_EVENT, (Game.VOTE_TIMEOUT + 2) * 1000, True)
         return True
