@@ -164,9 +164,6 @@ class Scenes:
                                                                                     math.floor(47 * Game.DISPLAY_RATIO),
                                                                                     RessourceLoader.get("dpt.images.gui.symbols.SYMB_STOP")))
 
-        # Loops
-        Game.temp["prev_loop"] = Game.loop
-
         from dpt.engine.mainLoop import pause_loop
         Game.loop = pause_loop
         return True
@@ -638,9 +635,6 @@ class Scenes:
                                                   text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
                                                                                math.floor(50 * Game.DISPLAY_RATIO),
                                                                                RessourceLoader.get("dpt.images.gui.symbols.SYMB_X")))})
-
-        # Loops
-        Game.temp["prev_loop"] = Game.loop
 
         from dpt.engine.mainLoop import game_over_loop
         Game.loop = game_over_loop

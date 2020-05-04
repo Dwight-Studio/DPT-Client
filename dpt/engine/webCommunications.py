@@ -132,7 +132,7 @@ class WebCommunication(object):
                         reply = cls.make_request("http://" + Game.settings["server_address"] + "/sessions.json")
 
                         if not isinstance(reply, CommunicationError):
-                            for data in reply[cls.sessionName].values():
+                            for key, data in reply[cls.sessionName].values():
                                 cls.log.debug("Vote " + data)
                                 if data == "1":
                                     vote_one += 1

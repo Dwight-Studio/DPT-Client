@@ -133,11 +133,11 @@ def pause_loop():
             Game.run = False
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             kill_menu()
-            Game.loop = Game.temp["prev_loop"]
+            Game.loop = Game.loop = level_loop
             return
         if event.type == Game.BUTTON_EVENT:
             if event.button == Game.gui["p_button_resume"]:
-                Game.loop = Game.temp["prev_loop"]
+                Game.loop = level_loop
                 kill_menu()
                 return
             elif event.button == Game.gui["p_button_restart_save"] and not TileEditor.can_edit:
@@ -145,10 +145,12 @@ def pause_loop():
                     del Game.temp["last_checkpoint"]
                 kill_menu()
                 TileManager.load_level(TileManager.levelName)
+                Game.loop = level_loop
                 return
             elif event.button == Game.gui["p_button_restart_save"] and TileEditor.can_edit:
                 kill_menu()
                 FileManager.save_file(TileEditor.created_level)
+                Game.loop = level_loop
             elif event.button == Game.gui["p_button_main_menu"]:
                 if WebCommunication.sessionName is not None:
                     Scenes.loading()
@@ -473,7 +475,7 @@ def game_over_loop():
             if event.button == Game.gui["go_button_checkpoint"]:
                 kill_menu()
                 TileManager.load_level(TileManager.levelName)
-                Game.loop = Game.temp["prev_loop"]
+                Game.loop = level_loop
                 return
             elif event.button == Game.gui["go_button_main_menu"]:
                 if WebCommunication.sessionName is not None:
