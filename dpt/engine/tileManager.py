@@ -199,6 +199,8 @@ class TileManager:
 
                 if "last_checkpoint_time" in Game.temp and "timer" in Game.gui:
                     Game.gui["timer"].time = Game.temp["last_checkpoint_time"]
+                    pygame.time.set_timer(Game.TIMER_EVENT, 0)
+                    pygame.time.set_timer(Game.TIMER_EVENT, 1000)
                 else:
                     TileManager.log.warning("Can't find timer or last checkpoint time")
 
