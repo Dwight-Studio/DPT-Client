@@ -450,7 +450,7 @@ def game_over_loop():
     Game.surface.blit(bg, (0, 0))
 
     def kill_menu():
-        for key, item in Game.gui.items():
+        for key, item in Game.gui.copy().items():
             if key[:3] == "go_":
                 item.kill()
 

@@ -122,7 +122,7 @@ class WebCommunication(object):
                     Thread(target=ka).start()
                     continue
 
-                elif event.type == Game.VOTE_FINISED_EVENT:
+                elif event.type == Game.VOTE_FINISHED_EVENT:
                     if cls.connected:
                         vote_one = 0
                         vote_two = 0
@@ -198,5 +198,5 @@ class WebCommunication(object):
 
         cls.log.info("Vote created, results will be available in " + str(Game.VOTE_TIMEOUT + 2) + " seconds")
 
-        pygame.time.set_timer(Game.VOTE_FINISED_EVENT, (Game.VOTE_TIMEOUT + 2) * 1000, True)
+        pygame.time.set_timer(Game.VOTE_FINISHED_EVENT, (Game.VOTE_TIMEOUT + 2) * 1000, True)
         return True

@@ -87,7 +87,7 @@ class Game(object):
 
     # Evenements
     BUTTON_EVENT = pygame.event.custom_type()
-    VOTE_FINISED_EVENT = pygame.event.custom_type()
+    VOTE_FINISHED_EVENT = pygame.event.custom_type()
     VOTE_RESULT_AVAILABLE_EVENT = pygame.event.custom_type()
     KEEP_ALIVE_EVENT = pygame.event.custom_type()
     TIMER_EVENT = pygame.event.custom_type()
