@@ -146,7 +146,7 @@ class WebCommunication(object):
                                 cls.last_result = cls.last_vote[1]
                             else:
                                 cls.log.info("Draw")
-                                cls.last_result = "both"
+                                cls.last_result = "Both"
 
                             event = pygame.event.Event(Game.VOTE_RESULT_AVAILABLE_EVENT, {"results": cls.last_result})
                             pygame.event.post(event)
