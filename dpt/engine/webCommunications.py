@@ -90,7 +90,7 @@ class WebCommunication(object):
                             if "wb_player_count" not in Game.gui:
                                 Game.gui["wb_player_count"]: Text(Game.surface.get_size()[0] - math.floor(Game.DISPLAY_RATIO * 220),
                                                                   0,
-                                                                  "Connexion au server...",
+                                                                  "Connexion au serveur...",
                                                                   math.floor(25 * Game.DISPLAY_RATIO),
                                                                   (0, 0, 0),
                                                                   "dpt.fonts.DINOT_CondBlack")

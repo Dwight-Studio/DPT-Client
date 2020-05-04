@@ -83,7 +83,7 @@ class Scenes:
         from dpt.engine.gui.menu import Text
         Game.gui = {"wb_player_count": Text(Game.surface.get_size()[0] - math.floor(Game.DISPLAY_RATIO * 220),
                                             0,
-                                            "Connexion au server...",
+                                            "Connexion au serveur...",
                                             math.floor(25 * Game.DISPLAY_RATIO),
                                             (0, 0, 0),
                                             "dpt.fonts.DINOT_CondBlack")}
@@ -553,7 +553,7 @@ class Scenes:
                                                                             math.floor(50 * Game.DISPLAY_RATIO),
                                                                             RessourceLoader.get("dpt.images.gui.symbols.SYMB_X"))),
                     "wb_player_count": Text(Game.surface.get_size()[0] - math.floor(Game.DISPLAY_RATIO * 220), 0,
-                                            "Connexion au server...",
+                                            "Connexion au serveur...",
                                             math.floor(25 * Game.DISPLAY_RATIO),
                                             (0, 0, 0),
                                             "dpt.fonts.DINOT_CondBlack")}
