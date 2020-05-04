@@ -32,22 +32,20 @@ class FlagBlue(pygame.sprite.Sprite):
         FlagBlue.checkpoint_list.append(self)
 
     def update(self):
+        from dpt.engine.gui.menu.timer import Timer
         for i in Game.player_group:
             if pygame.sprite.collide_mask(self, i) and not self.already_activated:
                 self.already_activated = True
                 if "last_checkpoint" in Game.temp:
                     Game.temp["last_checkpoint"] = max(self.id, Game.temp["last_checkpoint"])
-                    if Game.temp["last_checkpoint"] == self.id and "timer" in Game.gui:
-                        Game.temp["last_checkpoint_time"] = Game.gui["timer"].time
+                    if Game.temp["last_checkpoint"] == self.id:
+                        Game.temp["last_checkpoint_time"] = Timer.time
                     else:
-                        Game.get_logger(FlagBlue.__name__).warning("Can't find timer or this is not the last checkpoint")
+                        Game.get_logger(FlagBlue.__name__).warning("This checkpoint is not the last checkpoint")
 
                 else:
                     Game.temp["last_checkpoint"] = self.id
-                    if "timer" in Game.gui:
-                        Game.temp["last_checkpoint_time"] = Game.gui["timer"].time
-                    else:
-                        Game.get_logger(FlagBlue.__name__).warning("Can't find timer")
+                    Game.temp["last_checkpoint_time"] = Timer.time
 
     @classmethod
     def compute_ids(cls):

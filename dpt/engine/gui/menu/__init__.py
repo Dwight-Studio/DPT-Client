@@ -10,8 +10,7 @@ from dpt.engine.gui.menu.timer import Timer
 
 def delete_items():
     """Supprime toutes les éléments de menu"""
-    for item in Timer.timer_list.copy():
-        item.kill()
+    Timer.kill()
     for win in Window.window_list:
         win.sprites.empty()
     Window.window_list = []

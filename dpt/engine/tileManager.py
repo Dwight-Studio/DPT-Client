@@ -4,6 +4,7 @@ from dpt.engine.gui.editor.editorPanel import EditorPanel
 from dpt.engine.gui.editor.panelFakeEntities import PanelFakeEntity
 from dpt.engine.gui.editor.tileEditor import TileEditor
 from dpt.engine.backgroundFakeBlocks import BackgroundFakeBlocks
+from dpt.engine.gui.menu import Timer
 from dpt.engine.gui.menu.bar import Bar
 from dpt.engine.gui.menu.button import Button
 from dpt.engine.gui.menu.checkbox import Checkbox
@@ -197,12 +198,12 @@ class TileManager:
                 player_x = cp.rect.x - cp.offset_x
                 player_y = cp.rect.y - cp.offset_y
 
-                if "last_checkpoint_time" in Game.temp and "timer" in Game.gui:
-                    Game.gui["timer"].time = Game.temp["last_checkpoint_time"]
+                if "last_checkpoint_time" in Game.temp:
+                    Timer.time = Game.temp["last_checkpoint_time"]
                     pygame.time.set_timer(Game.TIMER_EVENT, 0)
                     pygame.time.set_timer(Game.TIMER_EVENT, 1000)
                 else:
-                    TileManager.log.warning("Can't find timer or last checkpoint time")
+                    TileManager.log.warning("Can't find last checkpoint time")
 
             from dpt.engine.characters.PlayerSprite import PlayerSprite
             Game.player_sprite = PlayerSprite(player_x, player_y)

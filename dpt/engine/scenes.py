@@ -81,14 +81,16 @@ class Scenes:
         Game.effects_management = EffectsManagement()
 
         from dpt.engine.gui.menu import Text
-        from dpt.engine.gui.menu.timer import Timer
         Game.gui = {"wb_player_count": Text(Game.surface.get_size()[0] - math.floor(Game.DISPLAY_RATIO * 220),
                                             0,
                                             "Connexion au server...",
                                             math.floor(25 * Game.DISPLAY_RATIO),
                                             (0, 0, 0),
-                                            "dpt.fonts.DINOT_CondBlack"),
-                    "timer": Timer(180)}
+                                            "dpt.fonts.DINOT_CondBlack")}
+
+        # Timer
+        from dpt.engine.gui.menu.timer import Timer
+        Timer.start(180)
 
         # Loops
         from dpt.engine.mainLoop import level_loop
