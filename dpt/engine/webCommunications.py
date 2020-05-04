@@ -102,7 +102,7 @@ class WebCommunication(object):
     @classmethod
     def reconnect(cls):
         """Recrée la session sur le serveur, avec la même ID"""
-        reply = cls.make_request("http://" + Game.settings["server_address"] + "/init.php?session=" + cls.sessionName)
+        reply = cls.make_request("http://" + Game.settings["server_address"] + "/init.php?session=" + cls.sessionName, True)
 
         if not isinstance(reply, CommunicationError):
             cls.log.info("Session " + cls.sessionName + " created")
@@ -175,7 +175,7 @@ class WebCommunication(object):
                         vote_two = 0
                         cls.log.info("Requesting vote output...")
 
-                        reply = cls.make_request("http://" + Game.settings["server_address"] + "/sessions.json")
+                        reply = cls.make_request("http://" + Game.settings["server_address"] + "/sessions.json", True)
 
                         if not isinstance(reply, CommunicationError):
                             if cls.sessionName not in reply:
