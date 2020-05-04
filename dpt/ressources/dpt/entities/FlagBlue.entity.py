@@ -23,6 +23,7 @@ class FlagBlue(pygame.sprite.Sprite):
         self.rect.x = x + self.offset_x
         self.rect.y = y + self.offset_y
         self.id = None
+        self.already_activated = False
         if not TileManager.is_loading_level:
             self.sound = RessourceLoader.get(self.sounds)
             self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
@@ -32,9 +33,12 @@ class FlagBlue(pygame.sprite.Sprite):
 
     def update(self):
         for i in Game.player_group:
-            if pygame.sprite.collide_mask(self, i):
+            if pygame.sprite.collide_mask(self, i) and not self.already_activated:
+                self.already_activated = True
                 if "last_checkpoint" in Game.temp:
                     Game.temp["last_checkpoint"] = max(self.id, Game.temp["last_checkpoint"])
+                    if Game.temp["last_checkpoint"] == self.id and "timer" in Game.gui:
+                        Game.temp["last_checkpoint_time"] = Game.gui["timer"].time
                 else:
                     Game.temp["last_checkpoint"] = self.id
 

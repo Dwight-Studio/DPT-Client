@@ -197,6 +197,11 @@ class TileManager:
                 player_x = cp.rect.x - cp.offset_x
                 player_y = cp.rect.y - cp.offset_y
 
+                if "last_checkpoint_time" in Game.temp and "timer" in Game.gui:
+                    Game.gui["timer"].time = Game.temp["last_checkpoint_time"]
+                else:
+                    TileManager.log.warning("Can't find timer or last checkpoint time")
+
             from dpt.engine.characters.PlayerSprite import PlayerSprite
             Game.player_sprite = PlayerSprite(player_x, player_y)
 
