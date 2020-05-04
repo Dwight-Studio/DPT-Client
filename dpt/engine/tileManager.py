@@ -5,7 +5,6 @@ from dpt.engine.gui.editor.panelFakeEntities import PanelFakeEntity
 from dpt.engine.gui.editor.tileEditor import TileEditor
 from dpt.engine.backgroundFakeBlocks import BackgroundFakeBlocks
 from dpt.engine.gui.menu import Timer
-from dpt.engine.gui.menu.bar import Bar
 from dpt.engine.gui.menu.button import Button
 from dpt.engine.gui.menu.checkbox import Checkbox
 from dpt.engine.gui.menu.progressbar import ProgressBar
@@ -56,13 +55,14 @@ class TileManager:
     def load_level(cls, level_name):
         """Charge un niveau
 
-        :param checkpoint: Checkpoint à charger
         :param level_name: Niveau à charger
         :type level_name: str, dict
 
         :return: True si le niveau est chargée sans problème, sinon False
         :rtype: bool
         """
+        from dpt.engine.scenes import Scenes
+        from dpt.engine.mainLoop import loading_loop
 
         cls.is_loading_level = True
         if Game.player_sprite is not None:
@@ -145,7 +145,10 @@ class TileManager:
 
         RessourceLoader.get("dpt.entities.FlagBlue").checkpoint_list = []
 
+        Scenes.loading()
+
         for keys in level:
+            loading_loop()
             cls.coords = tuple(map(int, keys.split(", ")))
             if cls.coords[0] > cls.max_width_size:
                 cls.max_width_size = cls.coords[0]
@@ -222,7 +225,7 @@ class TileManager:
         cls.clouds_last_x = 0
         cls.generate_clouds()
         cls.log.info("Done")
-        Game.loading = False
+        loading_loop(True)
         return True
 
     @classmethod

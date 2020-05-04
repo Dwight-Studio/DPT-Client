@@ -125,9 +125,7 @@ def pause_loop():
     for event in Game.events:
         if event.type == pygame.QUIT:
             if WebCommunication.sessionName is not None:
-                Scenes.loading()
                 WebCommunication.close()
-                Game.loading = False
             if TileEditor.enabled_editor:
                 FileManager.save_file(TileEditor.created_level)
             Game.run = False
@@ -153,9 +151,7 @@ def pause_loop():
                 Game.loop = level_loop
             elif event.button == Game.gui["p_button_main_menu"]:
                 if WebCommunication.sessionName is not None:
-                    Scenes.loading()
                     WebCommunication.close()
-                    Game.loading = False
                 if TileEditor.enabled_editor:
                     FileManager.save_file(TileEditor.created_level)
                 Menu.delete_items()
@@ -163,9 +159,7 @@ def pause_loop():
                 return
             elif event.button == Game.gui["p_button_quit"]:
                 if WebCommunication.sessionName is not None:
-                    Scenes.loading()
                     WebCommunication.close()
-                    Game.loading = False
                 if TileEditor.enabled_editor:
                     FileManager.save_file(TileEditor.created_level)
                 Game.run = False
@@ -188,8 +182,6 @@ def main_menu_loop():
             if event.button == Game.gui["button_play"]:
                 menu.delete_items()
 
-                Scenes.loading()
-
                 # Initialisation de la session (dans un thread pour ne pas bloquer)
                 from dpt.engine.webCommunications import WebCommunication
                 from dpt.engine.webCommunications import CommunicationError
@@ -210,10 +202,8 @@ def main_menu_loop():
                     root.clipboard_append("https://discord.gg/yZwuNqN")
                     root.update()
                     root.destroy()
-                    Game.loading = False
                     return
 
-                Game.loading = False
                 Scenes.start_level("dpt.levels.leveltest")
                 return
             elif event.button == Game.gui["button_editor"]:
@@ -363,17 +353,13 @@ def start_level_loop():
 
     for event in Game.events:
         if event.type == pygame.QUIT:
-            Scenes.loading()
             WebCommunication.close()
-            Game.loading = False
             Game.run = False
             return
         if event.type == Game.BUTTON_EVENT:
             menu.delete_items()
             if event.button == Game.gui["button_main_menu"]:
-                Scenes.loading()
                 WebCommunication.close()
-                Game.loading = False
                 Scenes.main_menu(False)
                 return
             elif event.button == Game.gui["button_start"]:
@@ -391,60 +377,37 @@ def start_level_loop():
     Game.window.update()
 
 
-def loading_loop():
+def loading_loop(kill=False):
     """Boucle de chargement. Boucle spécial car non executée dans game"""
     from dpt.engine.gui.menu import ProgressBar
-    from dpt.engine.webCommunications import WebCommunication
+    Game.surface.blit(bg, (0, 0))
 
-    pbar = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/gui/ui/UI_BARFRAME.png")
-    bar = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/gui/ui/UI_COLORBAR_2.png")
-    width = min(Game.surface.get_size()[0] - 50, 1115)
-    height = min(math.floor(52 / 1115 * width), 52)
-    pb = ProgressBar(math.floor(Game.surface.get_size()[0] / 2 - width / 2),
-                     math.floor(Game.surface.get_size()[1] - height), width, height, pbar, bar, 1)
-    pb.value = 1
-    font = pygame.font.SysFont("arial", math.floor(20 * Game.DISPLAY_RATIO))
+    if Game.temp["count"] >= 20:
+        Game.temp["text"] += "."
+        if Game.temp["text"] == "....":
+            Game.temp["text"] = ""
+        Game.temp["count"] = 0
+    Game.temp["count"] += 1
 
-    text = font.render("Chargement", True, (0, 0, 0))
-    rect = text.get_rect()
-    rect.centerx = Game.surface.get_size()[0] // 2
-    rect.centery = math.floor(Game.surface.get_size()[1] - height / 2)
+    # Afficahe de la progressbar
+    ProgressBar.bar_group.draw(Game.surface)
+    ProgressBar.progress_bar_group.draw(Game.surface)
 
-    t = ""
-    c = 0
+    # Affichage du text
+    Game.temp["text_rendered"] = Game.temp["font"].render("Chargement" + Game.temp["text"], True, (0, 0, 0))
+    Game.surface.blit(Game.temp["text_rendered"], Game.temp["rect"])
 
-    while Game.loading:
+    Game.events = pygame.event.get()
 
-        Game.events = pygame.event.get()
+    WebCommunication.update()
 
-        Game.surface.blit(bg, (0, 0))
+    Game.display_debug_info()
+    Game.draw_cursor()
+    Game.window.update()
 
-        if c >= 20:
-            t += "."
-            if t == "....":
-                t = ""
-            c = 0
-        c += 1
-
-        # Afficahe de la progressbar
-        ProgressBar.progress_bar_group.update()
-        ProgressBar.bar_group.update()
-        ProgressBar.bar_group.draw(Game.surface)
-        ProgressBar.progress_bar_group.draw(Game.surface)
-
-        # Affichage du text
-        text = font.render("Chargement" + t, True, (0, 0, 0))
-        Game.surface.blit(text, rect)
-
-        WebCommunication.update()
-
-        Game.display_debug_info()
-        Game.draw_cursor()
-        Game.window.update()
-        Game.clock.tick(60)
-
-    ProgressBar.bar_group.empty()
-    ProgressBar.progress_bar_group.empty()
+    if kill:
+        ProgressBar.bar_group.empty()
+        ProgressBar.progress_bar_group.empty()
 
 
 def game_over_loop():
@@ -464,9 +427,7 @@ def game_over_loop():
     for event in Game.events:
         if event.type == pygame.QUIT:
             if WebCommunication.sessionName is not None:
-                Scenes.loading()
                 WebCommunication.close()
-                Game.loading = False
             if TileEditor.enabled_editor:
                 FileManager.save_file(TileEditor.created_level)
             Game.run = False
@@ -480,18 +441,14 @@ def game_over_loop():
             elif event.button == Game.gui["go_button_main_menu"]:
                 if WebCommunication.sessionName is not None:
                     del Game.temp["last_checkpoint"]
-                    Scenes.loading()
                     WebCommunication.close()
-                    Game.loading = False
                 menu.delete_items()
                 Scenes.main_menu()
                 return
             elif event.button == Game.gui["go_button_quit"]:
                 if WebCommunication.sessionName is not None:
                     del Game.temp["last_checkpoint"]
-                    Scenes.loading()
                     WebCommunication.close()
-                    Game.loading = False
                 Game.run = False
 
     WebCommunication.update()

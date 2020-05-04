@@ -696,13 +696,24 @@ class Scenes:
         :return: True en cas de réussite, sinon False
         :rtype: bool
         """
+        from dpt.engine.gui.menu.progressbar import ProgressBar
 
         cls.logger.info("Displaying LOADING")
 
-        Game.loading = True
+        Game.temp["text"] = ""
+        Game.temp["count"] = 0
 
-        from threading import Thread
-        from dpt.engine.mainLoop import loading_loop
-        Thread(target=loading_loop).start()
+        pbar = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/gui/ui/UI_BARFRAME.png")
+        bar = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/gui/ui/UI_COLORBAR_2.png")
+        width = min(Game.surface.get_size()[0] - 50, 1115)
+        height = min(math.floor(52 / 1115 * width), 52)
+        pb = ProgressBar(math.floor(Game.surface.get_size()[0] / 2 - width / 2),
+                         math.floor(Game.surface.get_size()[1] - height), width, height, pbar, bar, 1)
+        pb.value = 1
+        Game.temp["font"] = pygame.font.SysFont("arial", math.floor(20 * Game.DISPLAY_RATIO))
 
+        Game.temp["text_rendered"] = Game.temp["font"].render("Chargement", True, (0, 0, 0))
+        Game.temp["rect"] = Game.temp["text_rendered"].get_rect()
+        Game.temp["rect"].centerx = Game.surface.get_size()[0] // 2
+        Game.temp["rect"].centery = math.floor(Game.surface.get_size()[1] - height / 2)
         return True
