@@ -3,60 +3,66 @@ from dpt.engine.tileManager import TileManager
 from dpt.game import Game
 
 import random
+import pygame
 
 
-class EffectsManagement(WebCommunication):
-    listEffects = ["Ice",
-                   "Slow",
-                   "Fast",
-                   "monsterimmortal",
-                   "star",
-                   "jumpBoost",
-                   "inversion",
-                   "lowGravity"]
+class EffectsManagement:
+    list_effects = ["Ice",
+                    "Slow",
+                    "Fast",
+                    "monsterimmortal",
+                    "star",
+                    "jumpBoost",
+                    "inversion",
+                    "lowGravity"]
 
-    dicoEffects = {"Ice": "Perm",
-                   "Slow": "Temp",
-                   "Fast": "Temp",
-                   "monsterimmortal": "Temp",
-                   "star": "Temp",
-                   "jumpBoost": "Temp",
-                   "inversion": "Temp",
-                   "lowGravity": "Perm"}
+    dico_effects = {"Ice": "Perm",
+                    "Slow": "Temp",
+                    "Fast": "Temp",
+                    "monsterimmortal": "Temp",
+                    "star": "Temp",
+                    "jumpBoost": "Temp",
+                    "inversion": "Temp",
+                    "lowGravity": "Perm"}
 
-    dicoLinks = {"Ice": "PlayerAndEnemy",
-                 "Slow": "PlayerAndEnemy",
-                 "Fast": "Player",
-                 "monsterimmortal": "PlayerAndEnemy",
-                 "star": "Player",
-                 "jumpBoost": "Player",
-                 "inversion": "Player",
-                 "lowGravity": "PlayerAndEnemy"}
+    dico_current_effects = {"Ice": False,
+                            "Slow": False,
+                            "Fast": False,
+                            "monsterimmortal": False,
+                            "star": False,
+                            "jumpBoost": False,
+                            "inversion": False,
+                            "lowGravity": False}
 
-    def __init__(self):
-        super().__init__()
-        self.result = None
-        self.tempList = []
+    temp_list = []
+    mods = []
 
-    def update(self):
-        self.vote()
-        for effects in self.tempList:
-            if EffectsManagement.dicoLinks[effects] == "PlayerAndEnemy":
-                for enemies in TileManager.enemy_group:
-                    eval("enemies." + effects + " = False")
-            for player in Game.player_group:
-                eval("player." + effects + " = False")
-        if EffectsManagement.dicoEffects[self.result] == "Temp":
-            self.tempList.append(self.result)
-        if EffectsManagement.dicoLinks[self.result] == "PlayerAndEnemy":
-            for enemies in TileManager.enemy_group:
-                eval("enemies." + self.result + " = True")
-        for player in Game.player_group:
-            eval("player." + self.result + " = True")
+    @classmethod
+    def update(cls):
+        for event in Game.events:
+            if event.type == Game.VOTE_RESULT_AVAILABLE_EVENT:
+                for effects in cls.temp_list:
+                    cls.dico_current_effects[effects] = False
+                    cls.temp_list.remove(effects)
+                if not WebCommunication.last_result == "Both":
+                    if cls.dico_effects[WebCommunication.last_result] == "Temp":
+                        cls.temp_list.append(WebCommunication.last_result)
+                    cls.dico_current_effects[WebCommunication.last_result] = True
+                    pygame.time.set_timer(Game.WAIT_BETWEEN_VOTE_EVENT, 30000, True)
+                else:
+                    for mods in cls.mods:
+                        if cls.dico_effects[mods] == "Temp":
+                            cls.temp_list.append(mods)
+                        cls.dico_current_effects[mods] = True
+                        pygame.time.set_timer(Game.WAIT_BETWEEN_VOTE_EVENT, 30000, True)
+            elif event.type == Game.WAIT_BETWEEN_VOTE_EVENT:
+                cls.vote()
 
-    def vote(self):
-        mod1 = random.choice(EffectsManagement.listEffects)
-        mod2 = random.choice(EffectsManagement.listEffects)
+    @classmethod
+    def vote(cls):
+        mod1 = random.choice(cls.list_effects)
+        mod2 = random.choice(cls.list_effects)
+        cls.mods = [mod1, mod2]
         while mod2 == mod1:
-            mod2 = random.choice(EffectsManagement.listEffects)
-        self.result = self.create_vote_event(mod1, mod2)
+            mod2 = random.choice(cls.list_effects)
+        WebCommunication.create_vote_event(mod1, mod2)

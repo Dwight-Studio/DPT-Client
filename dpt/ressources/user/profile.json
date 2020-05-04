@@ -1,10 +1,1 @@
-{
-  "settings": {
-    "general_volume": 0.5037128712871287,
-    "music_volume": 0.3238993710691824,
-    "sound_volume": 1.0,
-    "display_size": 0,
-    "server_address": "join.dont-play-together.fr"
-  },
-  "saves": {}
-}
+{"settings": {"general_volume": 0.5037128712871287, "music_volume": 0.05660377358490566, "sound_volume": 1.0, "display_size": 0, "server_address": "join.dont-play-together.fr"}, "saves": {}}

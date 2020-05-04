@@ -4,6 +4,7 @@ import pygame
 
 from dpt.engine.gui.editor.tileEditor import TileEditor
 from dpt.engine.loader import RessourceLoader
+from dpt.engine.effectsManagement import EffectsManagement
 from dpt.engine.tileManager import TileManager
 from dpt.game import Game
 
@@ -46,13 +47,9 @@ class EnemySprite(pygame.sprite.Sprite):
         self.lastx = 0
         self.lasty = 0
         self.securityTime = 60
-        self.Ice = False
-        self.Slow = False
         self.frameCount = 0
         self.maxvelocity = 2
-        self.lowGravity = False
         self.gravityModifier = 0
-        self.monsterimmortal = False
         self.big = False
 
     def update(self):
@@ -63,24 +60,24 @@ class EnemySprite(pygame.sprite.Sprite):
                 Game.add_debug_info("Enemy.left = " + str(self.left))
                 Game.add_debug_info("Enemy.right = " + str(self.right))
 
-                if self.Slow:
+                if EffectsManagement.dico_current_effects["Slow"]:
                     self.maxvelocity = 1
                 else:
                     self.maxvelocity = 2
 
-                if self.lowGravity:
+                if EffectsManagement.dico_current_effects["lowGravity"]:
                     self.gravityModifier = 0.02
                 else:
                     self.gravityModifier = 0
 
-                if self.monsterimmortal and not self.big:
+                if EffectsManagement.dico_current_effects["monsterimmortal"] and not self.big:
                     self.height = math.floor(self.height * 1.4)
                     self.width = math.floor(self.width * 1.4)
                     self.big = True
                     self.rect[2] //= 0.71
                     self.rect[3] //= 0.71
                     self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
-                elif not self.monsterimmortal:
+                elif not EffectsManagement.dico_current_effects["monsterimmortal"]:
                     self.height = self.CONSTHEIGT
                     self.width = self.CONSTWIDTH
                     self.big = False
@@ -89,7 +86,7 @@ class EnemySprite(pygame.sprite.Sprite):
                     self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
 
                 if self.left:
-                    if self.xvel > 0 and not self.Ice:
+                    if self.xvel > 0 and not EffectsManagement.dico_current_effects["Ice"]:
                         self.xvel = 0
                     if self.xvel > -self.maxvelocity * Game.DISPLAY_RATIO:
                         self.xvel -= (self.maxvelocity / 2) * Game.DISPLAY_RATIO
@@ -97,7 +94,7 @@ class EnemySprite(pygame.sprite.Sprite):
                     self.right = False
                     self.standing = False
                 elif self.right:
-                    if self.xvel < 0 and not self.Ice:
+                    if self.xvel < 0 and not EffectsManagement.dico_current_effects["Ice"]:
                         self.xvel = 0
                     if self.xvel < self.maxvelocity * Game.DISPLAY_RATIO:
                         self.xvel += (self.maxvelocity / 2) * Game.DISPLAY_RATIO
@@ -110,7 +107,7 @@ class EnemySprite(pygame.sprite.Sprite):
 
                 self.lastx = self.rect.x
 
-                if not (self.isJump and not self.Slow) or (self.Slow and self.frameCount % 3 == 0):
+                if not (self.isJump and not EffectsManagement.dico_current_effects["Slow"]) or (EffectsManagement.dico_current_effects["Slow"] and self.frameCount % 3 == 0):
                     self.allowJump = False
                     self.gravityCount += 1
                     self.gravity = math.floor((self.gravityCount ** 2) * (0.05 - self.gravityModifier) * Game.DISPLAY_RATIO) * -1
