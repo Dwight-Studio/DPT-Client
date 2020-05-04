@@ -90,6 +90,7 @@ class TileManager:
             RessourceLoader.add_pending("dpt.images.environment.*")
             RessourceLoader.add_pending("dpt.images.characters.*")
             RessourceLoader.add_pending("dpt.sounds.*")
+            RessourceLoader.add_pending("dpt.images.not_found")
             RessourceLoader.load()
 
         if type(level_name) == str:
@@ -109,7 +110,7 @@ class TileManager:
 
         if not TileEditor.enabled_editor:
             cls.log.debug("Loading level blocks and entities")
-            RessourceLoader.add_pending("dpt.entities.Flag*")
+            RessourceLoader.add_pending("dpt.entities.flags.*")
             for keys in level:
                 if "class" in level[keys]:
                     RessourceLoader.add_pending(level[keys]["class"])
@@ -120,30 +121,43 @@ class TileManager:
         if not TileEditor.enabled_editor:
             cls.log.debug("Loading textures")
             for keys in level:
-                if "class" in level[keys]:
-                    obj = RessourceLoader.get(level[keys]["class"])
-                    RessourceLoader.add_pending(obj.texture)
-                    if hasattr(obj, "textures"):
-                        RessourceLoader.add_pending(obj.textures)
-                    if hasattr(obj, "sounds"):
-                        RessourceLoader.add_pending(obj.sounds)
-                if "backgroundClass" in level[keys]:
-                    obj = RessourceLoader.get(level[keys]["backgroundClass"])
-                    RessourceLoader.add_pending(obj.texture)
-                    if hasattr(obj, "textures"):
-                        RessourceLoader.add_pending(obj.textures)
-                    if hasattr(obj, "sounds"):
-                        RessourceLoader.add_pending(obj.sounds)
+                try:
+                    if "class" in level[keys]:
+                        obj = RessourceLoader.get(level[keys]["class"])
+                        RessourceLoader.add_pending(obj.texture)
+                        if hasattr(obj, "textures"):
+                            RessourceLoader.add_pending(obj.textures)
+                        if hasattr(obj, "sounds"):
+                            if isinstance(obj.sounds, list):
+                                for s in obj.sounds:
+                                    RessourceLoader.add_pending(s)
+                            else:
+                                RessourceLoader.add_pending(obj.sounds)
+                except UnreachableRessourceError:
+                    cls.log.warning("Invalid class name : " + level[keys]["class"] + " for tile : " + keys)
+
+                try:
+                    if "backgroundClass" in level[keys]:
+                        obj = RessourceLoader.get(level[keys]["backgroundClass"])
+                        RessourceLoader.add_pending(obj.texture)
+                        if hasattr(obj, "textures"):
+                            RessourceLoader.add_pending(obj.textures)
+                        if hasattr(obj, "sounds"):
+                            RessourceLoader.add_pending(obj.sounds)
+                except UnreachableRessourceError:
+                    cls.log.warning("Invalid class name : " + level[keys]["backgroundClass"] + " for tile : " + keys)
+
             RessourceLoader.add_pending("dpt.images.characters.player.*")
             RessourceLoader.add_pending("dpt.images.environment.flag.*")
             RessourceLoader.add_pending("dpt.images.environment.background.Cloud_full_*")
             RessourceLoader.add_pending("dpt.images.gui.ui.UI_HEART*")
+            RessourceLoader.add_pending("dpt.images.not_found")
             RessourceLoader.load()
 
         from dpt.engine.scenes import Scenes
         Scenes.loading()
 
-        RessourceLoader.get("dpt.entities.FlagBlue").checkpoint_list = []
+        RessourceLoader.get("dpt.entities.flags.FlagBlue").checkpoint_list = []
 
         Scenes.loading()
 
@@ -184,13 +198,13 @@ class TileManager:
                     except UnreachableRessourceError:
                         cls.log.warning("Invalid class name : " + level[keys]["backgroundClass"] + " for tile : " + keys)
 
-        RessourceLoader.get("dpt.entities.FlagBlue").compute_ids()
+        RessourceLoader.get("dpt.entities.flags.FlagBlue").compute_ids()
 
         if not TileEditor.enabled_editor:
             player_x = 300
             player_y = Game.surface.get_size()[1] - 500
 
-            sf = RessourceLoader.get("dpt.entities.FlagGreen").spawn_flag
+            sf = RessourceLoader.get("dpt.entities.flags.FlagGreen").spawn_flag
 
             if sf is not None:
                 player_x = sf.rect.x - sf.offset_x

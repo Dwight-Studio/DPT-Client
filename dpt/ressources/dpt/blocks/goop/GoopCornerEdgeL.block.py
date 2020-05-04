@@ -6,7 +6,7 @@ from dpt.game import Game
 
 class GoopCornerEdgeL(pygame.sprite.Sprite):
     texture = "dpt.images.environment.terrain.Goop_Tile_Corner_Edge_l"
-    sounds = "dpt.sounds.sfx.sfx_snow"
+    sounds = "dpt.sounds.sfx.sfx_goop"
     width = height = Game.TILESIZE
     offset_x = 0
     offset_y = 0
@@ -19,3 +19,8 @@ class GoopCornerEdgeL(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x + self.offset_x
         self.rect.y = y + self.offset_y
+        if not TileManager.is_loading_level:
+            self.sound = RessourceLoader.get(self.sounds)
+            self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
+            self.sound.play()
+        self.mask = pygame.mask.from_surface(self.image)

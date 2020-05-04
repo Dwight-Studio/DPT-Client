@@ -96,9 +96,10 @@ def level_loop():
 
     if not TileEditor.can_edit:
         EffectsManagement.update()
-
-    Button.main_loop()
-    Timer.main_loop()
+        Button.main_loop()
+        Timer.main_loop()
+    else:
+        Menu.main_loop()
 
     WebCommunication.update()
 
@@ -382,6 +383,15 @@ def loading_loop(kill=False):
     from dpt.engine.gui.menu import ProgressBar
     Game.surface.blit(bg, (0, 0))
 
+    for event in Game.events:
+        if event.type == pygame.QUIT:
+            if WebCommunication.sessionName is not None:
+                WebCommunication.close()
+            if TileEditor.enabled_editor:
+                FileManager.save_file(TileEditor.created_level)
+            Game.run = False
+            return
+
     if Game.temp["count"] >= 20:
         Game.temp["text"] += "."
         if Game.temp["text"] == "....":
@@ -440,14 +450,20 @@ def game_over_loop():
                 return
             elif event.button == Game.gui["go_button_main_menu"]:
                 if WebCommunication.sessionName is not None:
-                    del Game.temp["last_checkpoint"]
+                    try:
+                        del Game.temp["last_checkpoint"]
+                    except KeyError:
+                        pass
                     WebCommunication.close()
                 menu.delete_items()
                 Scenes.main_menu()
                 return
             elif event.button == Game.gui["go_button_quit"]:
                 if WebCommunication.sessionName is not None:
-                    del Game.temp["last_checkpoint"]
+                    try:
+                        del Game.temp["last_checkpoint"]
+                    except KeyError:
+                        pass
                     WebCommunication.close()
                 Game.run = False
 

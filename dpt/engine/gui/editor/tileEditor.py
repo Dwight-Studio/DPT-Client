@@ -109,9 +109,9 @@ class TileEditor:
                         return
             if mouse_buttons[0] == 1:
                 for interact in TileManager.interactible_blocks_group:
-                    if isinstance(interact, RessourceLoader.get("dpt.entities.lever")) and interact.x + interact.offset_x + TileManager.camera.last_x <= mouse[0] <= interact.x + interact.offset_x + interact.width and interact.y + interact.offset_y <= mouse[1] <= interact.y + interact.offset_y + interact.height:
+                    if isinstance(interact, RessourceLoader.get("dpt.entities.interactible.lever")) and interact.x + interact.offset_x + TileManager.camera.last_x <= mouse[0] <= interact.x + interact.offset_x + interact.width and interact.y + interact.offset_y <= mouse[1] <= interact.y + interact.offset_y + interact.height:
                         return
-                    if isinstance(interact, RessourceLoader.get("dpt.entities.spike")) and interact.x + TileManager.camera.last_x <= mouse[0] <= interact.x + interact.width and interact.y + interact.offset_y <= mouse[1] <= interact.y:
+                    if isinstance(interact, RessourceLoader.get("dpt.entities.interactible.spike")) and interact.x + TileManager.camera.last_x <= mouse[0] <= interact.x + interact.width and interact.y + interact.offset_y <= mouse[1] <= interact.y:
                         return
 
             if mouse_buttons[0] == 1 and not cls.mouse_pushed_l:
@@ -125,12 +125,32 @@ class TileEditor:
                         if not TileManager.check_back:
                             if str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y) in cls.created_level:
                                 cls.created_level[str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)]["class"] = TileEditor.selected_item
+                                for blocks in TileManager.environment_group:
+                                    if math.floor(blocks.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(
+                                            blocks.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
+                                        blocks.kill()
+                                        del blocks
+                                for blocks in TileManager.interactible_blocks_group:
+                                    if math.floor(blocks.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(
+                                            blocks.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
+                                        blocks.kill()
+                                        del blocks
+                                for entity in TileManager.entity_group:
+                                    if math.floor(entity.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(entity.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
+                                        entity.kill()
+                                        del entity
                             else:
                                 cls.created_level[str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)] = {"class": TileEditor.selected_item}
+
                             TileManager.place_block(cls.mouse_pos_x, cls.mouse_pos_y, TileEditor.selected_item)
                         elif TileManager.check_back:
                             if str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y) in cls.created_level:
                                 cls.created_level[str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)]["backgroundClass"] = TileEditor.selected_item
+                                for blocks in TileManager.background_blocks_group:
+                                    if math.floor(blocks.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(
+                                            blocks.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
+                                        blocks.kill()
+                                        del blocks
                             else:
                                 cls.created_level[str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)] = {"backgroundClass": TileEditor.selected_item}
                             TileManager.place_back_block(cls.mouse_pos_x, cls.mouse_pos_y, TileEditor.selected_item)

@@ -4,8 +4,8 @@ from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 
 
-class GoopL(pygame.sprite.Sprite):
-    texture = "dpt.images.environment.terrain.Goop_Tile_Flat_l"
+class GoopLower(pygame.sprite.Sprite):
+    texture = "dpt.images.environment.terrain.Goop_Tile_lower"
     sounds = "dpt.sounds.sfx.sfx_goop"
     width = height = Game.TILESIZE
     offset_x = 0
