@@ -39,7 +39,7 @@ class Scenes:
         RessourceLoader.add_pending("dpt.images.gui.buttons.btn_checkbox_in")
 
         # Initialisation du TileManager
-        TileEditor.in_editor = True
+        TileEditor.enabled_editor = True
         if not TileManager.load_level(level):
             return False
 
@@ -73,7 +73,7 @@ class Scenes:
         from dpt.engine.effectsManagement import EffectsManagement
 
         # Initialisation du TileManager
-        TileEditor.in_editor = False
+        TileEditor.enabled_editor = TileEditor.can_edit = False
         if not TileManager.load_level(level):
             return False
 
@@ -81,12 +81,14 @@ class Scenes:
         Game.effects_management = EffectsManagement()
 
         from dpt.engine.gui.menu import Text
+        from dpt.engine.gui.menu.timer import Timer
         Game.gui = {"wb_player_count": Text(Game.surface.get_size()[0] - math.floor(Game.DISPLAY_RATIO * 220),
                                             0,
                                             "Connexion au server...",
                                             math.floor(25 * Game.DISPLAY_RATIO),
                                             (0, 0, 0),
-                                            "dpt.fonts.DINOT_CondBlack")}
+                                            "dpt.fonts.DINOT_CondBlack"),
+                    "timer": Timer(180)}
 
         # Loops
         from dpt.engine.mainLoop import level_loop
@@ -101,6 +103,7 @@ class Scenes:
         :rtype: bool
         """
         from dpt.engine.loader import RessourceLoader
+        from dpt.engine.gui.editor.tileEditor import TileEditor
         cls.logger.info("Displaying PAUSE")
 
         # Ajout du GUI
@@ -129,12 +132,6 @@ class Scenes:
                                                    text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
                                                                                 math.floor(50 * Game.DISPLAY_RATIO),
                                                                                 RessourceLoader.get("dpt.images.gui.symbols.SYMB_PLAY"))),
-                         "p_button_restart": Button(buttons_x, buttons_starting_y + (buttons_gap_y + button_height), button_width, button_height,
-                                                    RessourceLoader.get("dpt.images.gui.buttons.BTN_BLUE_CIRCLE_OUT"),
-                                                    pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_BLUE_CIRCLE_IN"),
-                                                    text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
-                                                                                 math.floor(40 * Game.DISPLAY_RATIO),
-                                                                                 RessourceLoader.get("dpt.images.gui.symbols.SYMB_REPLAY"))),
                          "p_button_main_menu": Button(buttons_x, buttons_starting_y + (buttons_gap_y + button_height) * 2, button_width, button_height,
                                                       RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_OUT"),
                                                       pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_IN"),
@@ -149,6 +146,21 @@ class Scenes:
                                                  text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
                                                                               math.floor(50 * Game.DISPLAY_RATIO),
                                                                               RessourceLoader.get("dpt.images.gui.symbols.SYMB_X")))})
+
+        if not TileEditor.can_edit:
+            Game.gui["p_button_restart_save"] = Button(buttons_x, buttons_starting_y + (buttons_gap_y + button_height), button_width, button_height,
+                                                       RessourceLoader.get("dpt.images.gui.buttons.BTN_BLUE_CIRCLE_OUT"),
+                                                       pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_BLUE_CIRCLE_IN"),
+                                                       text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                                    math.floor(40 * Game.DISPLAY_RATIO),
+                                                                                    RessourceLoader.get("dpt.images.gui.symbols.SYMB_REPLAY")))
+        else:
+            Game.gui["p_button_restart_save"] = Button(buttons_x, buttons_starting_y + (buttons_gap_y + button_height), button_width, button_height,
+                                                       RessourceLoader.get("dpt.images.gui.buttons.BTN_BLUE_CIRCLE_OUT"),
+                                                       pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_BLUE_CIRCLE_IN"),
+                                                       text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                                    math.floor(47 * Game.DISPLAY_RATIO),
+                                                                                    RessourceLoader.get("dpt.images.gui.symbols.SYMB_STOP")))
 
         # Loops
         Game.temp["prev_loop"] = Game.loop
@@ -575,10 +587,11 @@ class Scenes:
         :return: True en cas de réussite, sinon False
         :rtype: bool
         """
+
         from dpt.engine.loader import RessourceLoader
         from dpt.engine.gui.editor.tileEditor import TileEditor
 
-        if TileEditor.in_editor:
+        if TileEditor.can_edit:
             return
 
         cls.logger.info("Displaying GAME_OVER")

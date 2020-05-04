@@ -5,13 +5,15 @@ from dpt.engine.gui.menu.slider import Slider
 from dpt.engine.gui.menu.window import Window
 from dpt.engine.gui.menu.text import Text
 from dpt.engine.gui.menu.radioButton import RadioButton
+from dpt.engine.gui.menu.timer import Timer
 
 
 def delete_items():
     """Supprime toutes les éléments de menu"""
+    for item in Timer.timer_list.copy():
+        item.kill()
     for win in Window.window_list:
-        for sprite in win.sprites:
-            sprite.kill()
+        win.sprites.empty()
     Window.window_list = []
     Button.buttonsGroup.empty()
     Button.text_sprite_buttonsGroup.empty()
@@ -28,6 +30,7 @@ def delete_items():
 
 def main_loop():
     """Execute toutes les boucles des éléments de menu"""
+    Timer.main_loop()
     Window.main_loop()
     Button.main_loop()
     Checkbox.main_loop()

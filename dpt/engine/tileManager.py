@@ -83,7 +83,7 @@ class TileManager:
         for block in TileManager.background_blocks_group:
             block.kill()
 
-        if TileEditor.in_editor:
+        if TileEditor.enabled_editor:
             RessourceLoader.add_pending("dpt.blocks.*")
             RessourceLoader.add_pending("dpt.entities.*")
             RessourceLoader.add_pending("dpt.images.environment.*")
@@ -106,7 +106,7 @@ class TileManager:
             cls.log.critical("The level can't be loaded")
             return False
 
-        if not TileEditor.in_editor:
+        if not TileEditor.enabled_editor:
             cls.log.debug("Loading level blocks and entities")
             RessourceLoader.add_pending("dpt.entities.Flag*")
             for keys in level:
@@ -116,7 +116,7 @@ class TileManager:
                     RessourceLoader.add_pending(level[keys]["backgroundClass"])
             RessourceLoader.load()
 
-        if not TileEditor.in_editor:
+        if not TileEditor.enabled_editor:
             cls.log.debug("Loading textures")
             for keys in level:
                 if "class" in level[keys]:
@@ -182,7 +182,7 @@ class TileManager:
 
         RessourceLoader.get("dpt.entities.FlagBlue").compute_ids()
 
-        if not TileEditor.in_editor:
+        if not TileEditor.enabled_editor:
             player_x = 300
             player_y = Game.surface.get_size()[1] - 500
 
@@ -203,7 +203,7 @@ class TileManager:
             if TileManager.max_width_size < math.floor(Game.surface.get_size()[0] / Game.TILESIZE):
                 TileManager.max_width_size = math.floor(Game.surface.get_size()[0] / Game.TILESIZE) + 2
             cls.camera = Camera(TileManager.max_width_size, TileManager.max_height_size)
-        elif TileEditor.in_editor:
+        elif TileEditor.enabled_editor:
             from dpt.engine.gui.editor.charEntity import CharEntity
             Game.player_sprite = CharEntity()
             cls.camera = EditorCamera(TileManager.max_width_size, TileManager.max_height_size)
@@ -336,7 +336,7 @@ class TileManager:
 
         Game.add_debug_info("CAMERA INFORMATIONS")
         Game.add_debug_info("Scrolling: " + str(-TileManager.camera.last_x))
-        if not TileEditor.in_editor:
+        if not TileEditor.enabled_editor:
             Game.add_debug_info("Right: " + str(Game.player_sprite.right))
             Game.add_debug_info("Left: " + str(Game.player_sprite.left))
         Game.add_debug_info("Player X:" + str(TileManager.camera.target.rect.centerx))

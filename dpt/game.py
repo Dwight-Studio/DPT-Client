@@ -90,6 +90,8 @@ class Game(object):
     VOTE_FINISED_EVENT = pygame.event.custom_type()
     VOTE_RESULT_AVAILABLE_EVENT = pygame.event.custom_type()
     KEEP_ALIVE_EVENT = pygame.event.custom_type()
+    TIMER_EVENT = pygame.event.custom_type()
+    TIMER_FINISHED_EVENT = pygame.event.custom_type()
 
     # Variable privée pour l'affichage des infos de debug
     _debug_infos = None

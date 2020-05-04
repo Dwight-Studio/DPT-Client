@@ -12,7 +12,7 @@ from dpt.engine.scenes import Scenes
 from dpt.engine.tileManager import TileManager
 from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
-from dpt.engine.gui.menu import Text
+from dpt.engine.gui.menu import Timer
 from dpt.engine.webCommunications import WebCommunication
 
 try:
@@ -52,8 +52,8 @@ def level_loop():
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
             Scenes.pause()
         elif event.type == Game.BUTTON_EVENT and event.button == Game.gui["editor_button"]:
-            TileEditor.in_editor = not TileEditor.in_editor
-            if TileEditor.in_editor:
+            TileEditor.enabled_editor = not TileEditor.enabled_editor
+            if TileEditor.enabled_editor:
                 Game.gui["editor_button"].text = "Jouer"
                 for clouds in TileManager.clouds_group:
                     clouds.kill()
@@ -64,10 +64,12 @@ def level_loop():
             TileManager.clouds_group.empty()
             TileManager.load_level(TileManager.levelName)
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            if event.button == 4 and TileEditor.in_editor:
+            if event.button == 4 and TileEditor.enabled_editor:
                 TileManager.scroll_up()
-            elif event.button == 5 and TileEditor.in_editor:
+            elif event.button == 5 and TileEditor.enabled_editor:
                 TileManager.scroll_down()
+        elif event.type == Game.TIMER_FINISHED_EVENT:
+            Scenes.game_over()
 
     do_synch_anims()
     TileManager.update_clouds()
@@ -95,6 +97,7 @@ def level_loop():
     # Game.count += 1
 
     Button.main_loop()
+    Timer.main_loop()
 
     WebCommunication.update()
 
@@ -124,7 +127,7 @@ def pause_loop():
                 Scenes.loading()
                 WebCommunication.close()
                 Game.loading = False
-            if TileEditor.in_editor:
+            if TileEditor.enabled_editor:
                 FileManager.save_file(TileEditor.created_level)
             Game.run = False
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
@@ -136,16 +139,19 @@ def pause_loop():
             if event.button == Game.gui["p_button_resume"]:
                 Game.loop = Game.temp["prev_loop"]
                 return
-            elif event.button == Game.gui["p_button_restart"]:
-                del Game.temp["last_checkpoint"]
+            elif event.button == Game.gui["p_button_restart_save"] and not TileEditor.can_edit:
+                if "last_checkpoint" in Game.temp:
+                    del Game.temp["last_checkpoint"]
                 Scenes.level(TileManager.levelName)
                 return
+            elif event.button == Game.gui["p_button_restart_save"] and TileEditor.can_edit:
+                FileManager.save_file(TileEditor.created_level)
             elif event.button == Game.gui["p_button_main_menu"]:
                 if WebCommunication.sessionName is not None:
                     Scenes.loading()
                     WebCommunication.close()
                     Game.loading = False
-                if TileEditor.in_editor:
+                if TileEditor.enabled_editor:
                     FileManager.save_file(TileEditor.created_level)
                 Scenes.main_menu()
                 return
@@ -154,7 +160,7 @@ def pause_loop():
                     Scenes.loading()
                     WebCommunication.close()
                     Game.loading = False
-                if TileEditor.in_editor:
+                if TileEditor.enabled_editor:
                     FileManager.save_file(TileEditor.created_level)
                 Game.run = False
 
@@ -450,7 +456,7 @@ def game_over_loop():
                 Scenes.loading()
                 WebCommunication.close()
                 Game.loading = False
-            if TileEditor.in_editor:
+            if TileEditor.enabled_editor:
                 FileManager.save_file(TileEditor.created_level)
             Game.run = False
             return

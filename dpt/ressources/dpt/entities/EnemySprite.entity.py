@@ -56,7 +56,7 @@ class EnemySprite(pygame.sprite.Sprite):
         self.big = False
 
     def update(self):
-        if not TileEditor.in_editor:
+        if not TileEditor.enabled_editor:
             from dpt.engine.tileManager import TileManager
             if not Game.freeze_game:
 
