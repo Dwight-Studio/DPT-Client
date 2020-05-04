@@ -15,6 +15,7 @@ from dpt.game import Game
 from dpt.engine.gui.menu import Timer
 import dpt.engine.gui.menu as Menu
 from dpt.engine.webCommunications import WebCommunication
+from dpt.engine.effectsManagement import EffectsManagement
 
 try:
     bg = RessourceLoader.get("dpt.images.environment.background.default_sky")
@@ -93,9 +94,8 @@ def level_loop():
 
     TileEditor.ghost_block_group.draw(Game.surface)
 
-    # if not TileEditor.in_editor and Game.count % 1800 == 0:
-    # Game.effects_management.update()
-    # Game.count += 1
+    if not TileEditor.can_edit:
+        EffectsManagement.update()
 
     Button.main_loop()
     Timer.main_loop()

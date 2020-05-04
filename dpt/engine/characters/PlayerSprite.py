@@ -5,6 +5,7 @@ from dpt.game import Game
 from dpt.engine.loader import RessourceLoader
 from dpt.engine.tileManager import TileManager
 from dpt.engine.gui.ui.Heart import Heart
+from dpt.engine.effectsManagement import EffectsManagement
 
 
 class PlayerSprite(pygame.sprite.Sprite):
@@ -52,39 +53,31 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.imunityTime = 180
         self.alive = True
         self.damaged = False
-        self.Ice = False
-        self.Slow = False
         self.frameCount = 0
-        self.lowGravity = False
         self.gravityModifier = 0
-        self.Fast = False
         self.maxvelocity = 4
-        self.jumpBoost = False
         self.jumpModifier = 0
-        self.inversion = False
-        self.star = False
-        self.monsterimmortal = False
         Heart()
 
     def update(self):
         if self.alive:
 
-            if self.Fast:
+            if EffectsManagement.dico_current_effects["Fast"]:
                 self.maxvelocity = 6
             else:
                 self.maxvelocity = 4
 
-            if self.lowGravity:
+            if EffectsManagement.dico_current_effects["lowGravity"]:
                 self.gravityModifier = 0.04
             else:
                 self.gravityModifier = 0
 
-            if self.Slow:
+            if EffectsManagement.dico_current_effects["Slow"]:
                 self.frameCount += 1
             else:
                 self.frameCount = 0
 
-            if self.jumpBoost:
+            if EffectsManagement.dico_current_effects["jumpBoost"]:
                 self.jumpModifier = 0.07
             else:
                 self.jumpModifier = 0
@@ -98,7 +91,7 @@ class PlayerSprite(pygame.sprite.Sprite):
             Game.add_debug_info("Player.jumpCount = " + str(self.jumpCount))
             Game.add_debug_info("Player.isJump = " + str(self.isJump))
 
-            if self.inversion:
+            if EffectsManagement.dico_current_effects["inversion"]:
                 left = pygame.K_RIGHT
                 right = pygame.K_LEFT
                 up = pygame.K_DOWN
@@ -108,7 +101,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                 up = pygame.K_UP
 
             if keys[left] and self.rect.x - self.xvel - 1 > mur:
-                if self.xvel > 0 and not self.Ice:
+                if self.xvel > 0 and not EffectsManagement.dico_current_effects["Ice"]:
                     self.xvel = 0
                 if -self.maxvelocity * Game.DISPLAY_RATIO > self.xvel > -self.maxvelocity * 2 * Game.DISPLAY_RATIO and self.onPlatform:
                     self.xvel += self.xvel * 0.01
@@ -118,7 +111,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.right = False
                 self.standing = False
             elif keys[right]:
-                if self.xvel < 0 and not self.Ice:
+                if self.xvel < 0 and not EffectsManagement.dico_current_effects["Ice"]:
                     self.xvel = 0
                 if self.maxvelocity * Game.DISPLAY_RATIO < self.xvel < self.maxvelocity * 2 * Game.DISPLAY_RATIO and self.onPlatform:
                     self.xvel += self.xvel * 0.01
@@ -128,7 +121,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.right = True
                 self.standing = False
             else:
-                if not self.Ice:
+                if not EffectsManagement.dico_current_effects["Ice"]:
                     self.xvel = 0
                 else:
                     if self.xvel > 0.05 * Game.DISPLAY_RATIO:
@@ -150,20 +143,20 @@ class PlayerSprite(pygame.sprite.Sprite):
                         self.onPlatform = False
                 else:
                     if not self.onPlatform:
-                        if (self.jumpCount >= 0 and not self.Slow) or (self.Slow and self.frameCount % 3 == 0):
+                        if (self.jumpCount >= 0 and not EffectsManagement.dico_current_effects["Slow"]) or (EffectsManagement.dico_current_effects["Slow"] and self.frameCount % 3 == 0):
                             self.yvel = math.floor((self.jumpCount ** 2) * (0.05 + self.gravityModifier + self.jumpModifier) * Game.DISPLAY_RATIO)
                             self.jumpCount -= 1
-                            if self.Slow:
+                            if EffectsManagement.dico_current_effects["Slow"]:
                                 self.frameCount += 1
                         elif self.jumpCount < 0:
                             self.isJump = False
                         else:
                             self.yvel = 0
-                            if self.Slow:
+                            if EffectsManagement.dico_current_effects["Slow"]:
                                 self.frameCount += 1
 
             if not self.isJump:
-                if (self.Slow and self.frameCount % 3 == 0) or not self.Slow:
+                if (EffectsManagement.dico_current_effects["Slow"] and self.frameCount % 3 == 0) or not EffectsManagement.dico_current_effects["Slow"]:
                     self.frameCount += 1
                     Game.add_debug_info("GRAVITY")
                     self.allowJump = False
@@ -180,7 +173,7 @@ class PlayerSprite(pygame.sprite.Sprite):
 
             self.animation()
             self.enemies_collision(self.yvel, TileManager.enemy_group)
-            if not self.star:
+            if not EffectsManagement.dico_current_effects["star"]:
                 self.deadly_object_collision()
             if self.damaged:
                 self.imunityTime -= 1
@@ -303,13 +296,13 @@ class PlayerSprite(pygame.sprite.Sprite):
     def enemies_collision(self, yVelDelta, enemies):
         for i in enemies:
             if pygame.sprite.collide_rect(self, i):
-                if yVelDelta < 0 and not self.monsterimmortal:
+                if yVelDelta < 0 and not EffectsManagement.dico_current_effects["monsterimmortal"]:
                     if self.damaged and self.imunityTime < 150:
                         i.kill()
                     elif not self.damaged:
                         i.kill()
                 else:
-                    if self.damaged and not self.star:
+                    if self.damaged and not EffectsManagement.dico_current_effects["star"]:
                         if self.imunityTime < 0:
                             self.alive = False
                             self.yvel = 0
@@ -318,7 +311,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                             time.sleep(0.5)
                             self.die()
                             self.jumpCount = self.CONSTJUMPCOUNT
-                    elif self.star:
+                    elif EffectsManagement.dico_current_effects["star"]:
                         i.kill()
                     else:
                         self.isJump = True

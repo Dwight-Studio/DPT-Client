@@ -58,7 +58,6 @@ class Game(object):
     cursor_on_button = False  # Variable indiquant si le curseur est sur un bouton (changement de curseur)
     cursor1 = None  # Image 1 du curseur
     cursor2 = None  # Image 2 du curseur
-    effects_management = None  # Variable contenant le gestionnaire de coms
     loading = False  # Variable indiquant si le jeu est en train de load (si false, desactive l'affichage)
     life = 1  # Variable indiquant la vie du joueur vis à vis de son affichage
 
@@ -92,6 +91,7 @@ class Game(object):
     KEEP_ALIVE_EVENT = pygame.event.custom_type()
     TIMER_EVENT = pygame.event.custom_type()
     TIMER_FINISHED_EVENT = pygame.event.custom_type()
+    WAIT_BETWEEN_VOTE_EVENT = pygame.event.custom_type()
 
     # Variable privée pour l'affichage des infos de debug
     _debug_infos = None
