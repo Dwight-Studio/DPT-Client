@@ -30,7 +30,6 @@ def delete_items():
 
 def main_loop():
     """Execute toutes les boucles des éléments de menu"""
-    Timer.main_loop()
     Window.main_loop()
     Button.main_loop()
     Checkbox.main_loop()

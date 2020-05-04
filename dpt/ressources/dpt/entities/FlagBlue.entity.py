@@ -39,8 +39,15 @@ class FlagBlue(pygame.sprite.Sprite):
                     Game.temp["last_checkpoint"] = max(self.id, Game.temp["last_checkpoint"])
                     if Game.temp["last_checkpoint"] == self.id and "timer" in Game.gui:
                         Game.temp["last_checkpoint_time"] = Game.gui["timer"].time
+                    else:
+                        Game.get_logger(FlagBlue.__name__).warning("Can't find timer or this is not the last checkpoint")
+
                 else:
                     Game.temp["last_checkpoint"] = self.id
+                    if "timer" in Game.gui:
+                        Game.temp["last_checkpoint_time"] = Game.gui["timer"].time
+                    else:
+                        Game.get_logger(FlagBlue.__name__).warning("Can't find timer")
 
     @classmethod
     def compute_ids(cls):

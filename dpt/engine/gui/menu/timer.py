@@ -76,6 +76,10 @@ class Timer:
                 self.digit3.image = self.digits_images[(self.time % 60) // 10]
                 self.digit4.image = self.digits_images[(self.time % 60) % 10]
 
+        Game.add_debug_info("TIMER INFORMATIONS")
+        Game.add_debug_info("Time: " + str(self.time))
+        Game.add_debug_info("----------")
+
     def kill(self):
         """Supprime le timer"""
         Timer.timer_list.remove(self)

@@ -608,36 +608,38 @@ class Scenes:
         buttons_starting_y = math.floor((Game.surface.get_size()[1] / 2) - button_height * 2 - buttons_gap_y * 1.5) + math.floor(32 * Game.DISPLAY_RATIO)
         buttons_x = (Game.surface.get_size()[0] // 2) - (button_width // 2)
 
-        Game.gui.update({"window": Window(0, 0, 3, 9, centerx=Game.surface.get_size()[0] // 2, centery=Game.surface.get_size()[1] // 2),
-                         "title": Text(0,
-                                       buttons_starting_y - math.floor(90 * Game.DISPLAY_RATIO),
-                                       "Échec",
-                                       math.floor(50 * Game.DISPLAY_RATIO),
-                                       (0, 0, 0),
-                                       "dpt.fonts.DINOT_CondBlack",
-                                       centerx=Game.surface.get_size()[0] // 2),
-                         "button_checkpoint": Button(buttons_x, buttons_starting_y, button_width, button_height,
-                                                     RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_OUT"),
-                                                     pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_IN"),
-                                                     text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
-                                                                                  math.floor(50 * Game.DISPLAY_RATIO),
-                                                                                  RessourceLoader.get("dpt.images.gui.symbols.SYMB_REPLAY"))),
-                         "button_main_menu": Button(buttons_x, buttons_starting_y + (buttons_gap_y + button_height) * 2, button_width, button_height,
-                                                    RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_OUT"),
-                                                    pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_IN"),
-                                                    text_sprite=TextSpriteButton(math.floor(50 * Game.DISPLAY_RATIO),
-                                                                                 math.floor(38 * Game.DISPLAY_RATIO),
-                                                                                 RessourceLoader.get("dpt.images.gui.symbols.SYMB_MENU"))),
-                         "button_quit": Button(buttons_x, buttons_starting_y + (buttons_gap_y + button_height) * 3,
-                                               button_width,
-                                               button_height,
-                                               RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_OUT"),
-                                               pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_IN"),
-                                               text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
-                                                                            math.floor(50 * Game.DISPLAY_RATIO),
-                                                                            RessourceLoader.get("dpt.images.gui.symbols.SYMB_X")))})
+        Game.gui.update({"go_window": Window(0, 0, 3, 9, centerx=Game.surface.get_size()[0] // 2, centery=Game.surface.get_size()[1] // 2),
+                         "go_title": Text(0,
+                                          buttons_starting_y - math.floor(90 * Game.DISPLAY_RATIO),
+                                          "Échec",
+                                          math.floor(50 * Game.DISPLAY_RATIO),
+                                          (0, 0, 0),
+                                          "dpt.fonts.DINOT_CondBlack",
+                                          centerx=Game.surface.get_size()[0] // 2),
+                         "go_button_checkpoint": Button(buttons_x, buttons_starting_y, button_width, button_height,
+                                                        RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_OUT"),
+                                                        pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_IN"),
+                                                        text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                                     math.floor(50 * Game.DISPLAY_RATIO),
+                                                                                     RessourceLoader.get("dpt.images.gui.symbols.SYMB_REPLAY"))),
+                         "go_button_main_menu": Button(buttons_x, buttons_starting_y + (buttons_gap_y + button_height) * 2, button_width, button_height,
+                                                       RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_OUT"),
+                                                       pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_IN"),
+                                                       text_sprite=TextSpriteButton(math.floor(50 * Game.DISPLAY_RATIO),
+                                                                                    math.floor(38 * Game.DISPLAY_RATIO),
+                                                                                    RessourceLoader.get("dpt.images.gui.symbols.SYMB_MENU"))),
+                         "go_button_quit": Button(buttons_x, buttons_starting_y + (buttons_gap_y + button_height) * 3,
+                                                  button_width,
+                                                  button_height,
+                                                  RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_OUT"),
+                                                  pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_IN"),
+                                                  text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                               math.floor(50 * Game.DISPLAY_RATIO),
+                                                                               RessourceLoader.get("dpt.images.gui.symbols.SYMB_X")))})
 
         # Loops
+        Game.temp["prev_loop"] = Game.loop
+
         from dpt.engine.mainLoop import game_over_loop
         Game.loop = game_over_loop
         return True

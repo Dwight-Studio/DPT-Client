@@ -13,6 +13,7 @@ from dpt.engine.tileManager import TileManager
 from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 from dpt.engine.gui.menu import Timer
+import dpt.engine.gui.menu as Menu
 from dpt.engine.webCommunications import WebCommunication
 
 try:
@@ -135,16 +136,18 @@ def pause_loop():
             Game.loop = Game.temp["prev_loop"]
             return
         if event.type == Game.BUTTON_EVENT:
-            kill_menu()
             if event.button == Game.gui["p_button_resume"]:
                 Game.loop = Game.temp["prev_loop"]
+                kill_menu()
                 return
             elif event.button == Game.gui["p_button_restart_save"] and not TileEditor.can_edit:
                 if "last_checkpoint" in Game.temp:
                     del Game.temp["last_checkpoint"]
-                Scenes.level(TileManager.levelName)
+                kill_menu()
+                TileManager.load_level(TileManager.levelName)
                 return
             elif event.button == Game.gui["p_button_restart_save"] and TileEditor.can_edit:
+                kill_menu()
                 FileManager.save_file(TileEditor.created_level)
             elif event.button == Game.gui["p_button_main_menu"]:
                 if WebCommunication.sessionName is not None:
@@ -153,6 +156,7 @@ def pause_loop():
                     Game.loading = False
                 if TileEditor.enabled_editor:
                     FileManager.save_file(TileEditor.created_level)
+                Menu.delete_items()
                 Scenes.main_menu()
                 return
             elif event.button == Game.gui["p_button_quit"]:
@@ -445,6 +449,11 @@ def game_over_loop():
     """Boucle de game over"""
     Game.surface.blit(bg, (0, 0))
 
+    def kill_menu():
+        for key, item in Game.gui.items():
+            if key[:3] == "go_":
+                item.kill()
+
     TileManager.camera.update(Game.player_sprite, True)
     TileManager.clouds_group.draw(Game.surface)
 
@@ -461,19 +470,21 @@ def game_over_loop():
             Game.run = False
             return
         if event.type == Game.BUTTON_EVENT:
-            menu.delete_items()
-            if event.button == Game.gui["button_checkpoint"]:
-                Scenes.level(TileManager.levelName)
+            if event.button == Game.gui["go_button_checkpoint"]:
+                kill_menu()
+                TileManager.load_level(TileManager.levelName)
+                Game.loop = Game.temp["prev_loop"]
                 return
-            elif event.button == Game.gui["button_main_menu"]:
+            elif event.button == Game.gui["go_button_main_menu"]:
                 if WebCommunication.sessionName is not None:
                     del Game.temp["last_checkpoint"]
                     Scenes.loading()
                     WebCommunication.close()
                     Game.loading = False
+                menu.delete_items()
                 Scenes.main_menu()
                 return
-            elif event.button == Game.gui["button_quit"]:
+            elif event.button == Game.gui["go_button_quit"]:
                 if WebCommunication.sessionName is not None:
                     del Game.temp["last_checkpoint"]
                     Scenes.loading()
