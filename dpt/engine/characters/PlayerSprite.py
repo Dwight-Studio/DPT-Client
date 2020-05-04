@@ -95,12 +95,18 @@ class PlayerSprite(pygame.sprite.Sprite):
                 left = pygame.K_RIGHT
                 right = pygame.K_LEFT
                 up = pygame.K_DOWN
+                leftLetter = pygame.K_d
+                rightLetter = pygame.K_q
+                upLetter = pygame.K_s
             else:
                 left = pygame.K_LEFT
                 right = pygame.K_RIGHT
                 up = pygame.K_UP
+                leftLetter = pygame.K_q
+                rightLetter = pygame.K_d
+                upLetter = pygame.K_z
 
-            if keys[left] and self.rect.x - self.xvel - 1 > mur:
+            if (keys[left] or keys[leftLetter]) and self.rect.x - self.xvel - 1 > mur:
                 if self.xvel > 0 and not EffectsManagement.dico_current_effects["Ice"]:
                     self.xvel = 0
                 if -self.maxvelocity * Game.DISPLAY_RATIO > self.xvel > -self.maxvelocity * 2 * Game.DISPLAY_RATIO and self.onPlatform:
@@ -110,7 +116,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.left = True
                 self.right = False
                 self.standing = False
-            elif keys[right]:
+            elif keys[right] or keys[rightLetter]:
                 if self.xvel < 0 and not EffectsManagement.dico_current_effects["Ice"]:
                     self.xvel = 0
                 if self.maxvelocity * Game.DISPLAY_RATIO < self.xvel < self.maxvelocity * 2 * Game.DISPLAY_RATIO and self.onPlatform:
@@ -137,7 +143,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.walkCount = 0
             if self.allowJump:
                 if not self.isJump:
-                    if keys[up]:
+                    if keys[up] or keys[upLetter]:
                         self.isJump = True
                         self.walkCount = 0
                         self.onPlatform = False
