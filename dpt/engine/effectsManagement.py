@@ -1,9 +1,8 @@
-from dpt.engine.webCommunications import WebCommunication
-from dpt.engine.tileManager import TileManager
-from dpt.game import Game
-
 import random
 import pygame
+
+from dpt.engine.webCommunications import WebCommunication
+from dpt.game import Game
 
 
 class EffectsManagement:
@@ -66,3 +65,15 @@ class EffectsManagement:
         while mod2 == mod1:
             mod2 = random.choice(cls.list_effects)
         WebCommunication.create_vote_event(mod1, mod2)
+
+    @classmethod
+    def reset(cls):
+        cls.dico_current_effects = {"Ice": False,
+                                    "Slow": False,
+                                    "Fast": False,
+                                    "monsterimmortal": False,
+                                    "star": False,
+                                    "jumpBoost": False,
+                                    "inversion": False,
+                                    "lowGravity": False}
+        cls.temp_list = []
