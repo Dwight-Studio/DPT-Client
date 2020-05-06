@@ -40,6 +40,8 @@ class EffectsManagement:
     def update(cls):
         for event in Game.events:
             if event.type == Game.VOTE_RESULT_AVAILABLE_EVENT:
+                print(cls.mods)
+                print(WebCommunication.last_result)
                 for effects in cls.temp_list:
                     cls.dico_current_effects[effects] = False
                     cls.temp_list.remove(effects)

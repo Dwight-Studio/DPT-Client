@@ -57,6 +57,10 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.gravityModifier = 0
         self.maxvelocity = 4
         self.jumpModifier = 0
+
+        self.isReallyInJump = False
+        self.fallCount = 0
+
         Heart()
 
     def update(self):
@@ -73,9 +77,15 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.gravityModifier = 0
 
             if EffectsManagement.dico_current_effects["Slow"]:
-                self.frameCount += 1
-            else:
-                self.frameCount = 0
+                if self.isJump:
+                    self.isReallyInJump = True
+                if not self.isReallyInJump:
+                    self.frameCount = 0
+                    self.fallCount += 1
+                    self.isJump = False
+                else:
+                    self.frameCount += 1
+                    self.fallCount = 0
 
             if EffectsManagement.dico_current_effects["jumpBoost"]:
                 self.jumpModifier = 0.07
@@ -152,25 +162,21 @@ class PlayerSprite(pygame.sprite.Sprite):
                         if (self.jumpCount >= 0 and not EffectsManagement.dico_current_effects["Slow"]) or (EffectsManagement.dico_current_effects["Slow"] and self.frameCount % 3 == 0):
                             self.yvel = math.floor((self.jumpCount ** 2) * (0.05 + self.gravityModifier + self.jumpModifier) * Game.DISPLAY_RATIO)
                             self.jumpCount -= 1
-                            if EffectsManagement.dico_current_effects["Slow"]:
-                                self.frameCount += 1
                         elif self.jumpCount < 0:
-                            self.isJump = False
+                            if self.isReallyInJump:
+                                self.isJump = True
+                            else:
+                                self.isJump = False
                         else:
                             self.yvel = 0
-                            if EffectsManagement.dico_current_effects["Slow"]:
-                                self.frameCount += 1
 
-            if not self.isJump:
-                if (EffectsManagement.dico_current_effects["Slow"] and self.frameCount % 3 == 0) or not EffectsManagement.dico_current_effects["Slow"]:
-                    self.frameCount += 1
+            if not self.isJump or self.jumpCount < 0:
+                if (EffectsManagement.dico_current_effects["Slow"] and self.fallCount % 3 == 0) or not EffectsManagement.dico_current_effects["Slow"]:
                     Game.add_debug_info("GRAVITY")
                     self.allowJump = False
                     self.gravityCount += 1
                     self.gravity = math.floor((self.gravityCount ** 2) * (0.05 - self.gravityModifier) * Game.DISPLAY_RATIO) * -1
                     self.yvel = self.gravity
-                else:
-                    self.frameCount += 1
 
             self.collide()
 
@@ -237,6 +243,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                                 self.gravityCount = 0
                                 self.isJump = False
                                 self.allowJump = True
+                                self.isReallyInJump = False
                                 self.jumpCount = self.CONSTJUMPCOUNT
                                 self.frameCount = 0
                             break
@@ -251,6 +258,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                             self.onPlatform = True
                             self.gravityCount = 0
                             self.isJump = False
+                            self.isReallyInJump = False
                             self.allowJump = True
                             self.jumpCount = self.CONSTJUMPCOUNT
                             self.frameCount = 0
@@ -258,6 +266,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                             dy = - rect.height + math.floor(self.yvel)
                             self.yvel = 0
                             self.isJump = False
+                            self.isReallyInJump = False
                             self.allowJump = False
                             self.jumpCount = self.CONSTJUMPCOUNT
                         break
