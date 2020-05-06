@@ -40,7 +40,7 @@ class Lever(pygame.sprite.Sprite):
         if self.x + self.offset_x + TileManager.camera.last_x <= mousePos[0] <= self.x + self.offset_x + self.width and self.y + self.offset_y <= mousePos[1] <= self.y + self.offset_y + self.height:
             if mouse_buttons[0] == 1 and not self.clicked:
                 self.clicked = True
-                if not TileEditor.enabled_editor:
+                if not TileEditor.is_editing:
                     if self.left:
                         self.left = False
                         self.right = True
@@ -74,11 +74,11 @@ class Lever(pygame.sprite.Sprite):
                                     pos = tuple(map(int, data["assignement"].split(", ")))
                                     if interact.x == pos[0] and interact.y == pos[1]:
                                         interact.activate()
-                elif TileEditor.enabled_editor:
+                elif TileEditor.is_editing:
                     self.attributing = True
             elif mouse_buttons[0] != 1 and self.clicked:
                 self.clicked = False
-        if TileEditor.enabled_editor and self.attributing:
+        if TileEditor.is_editing and self.attributing:
             pygame.draw.line(Game.surface, (0, 0, 0), (self.x + TileManager.camera.last_x, self.y + 30), (mousePos[0], mousePos[1]))
             if mouse_buttons[0] == 1 and not self.clicked2:
                 self.clicked2 = True

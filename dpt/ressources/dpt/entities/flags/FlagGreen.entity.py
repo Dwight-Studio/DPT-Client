@@ -7,7 +7,7 @@ class FlagGreen(pygame.sprite.Sprite):
     spawn_flag = None
     texture = "dpt.images.environment.flag.Flag_Green"
     sounds = "dpt.sounds.sfx.sfx_stone"
-    screen_width, screen_height = Game.surface.get_size()
+    screen_width, screen_height = (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)
     width = Game.TILESIZE
     height = Game.TILESIZE * 2
     offset_x = 0

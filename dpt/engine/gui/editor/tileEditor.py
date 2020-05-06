@@ -15,8 +15,8 @@ class TileEditor:
     mouse_pushed_l = False
     mouse_pushed_r = False
     panel_open = False
+    is_editing = False
     enabled_editor = False
-    can_edit = False
     mouse_pos_x = None
     mouse_pos_y = None
     last_mouse_pos_x = None
@@ -36,8 +36,8 @@ class TileEditor:
     def update(cls):
         """S'occupe de toutes la parties placement/suppression de blocs de l'éditeur de niveau"""
         from dpt.engine.tileManager import TileManager
-        if cls.enabled_editor:
-            cls.can_edit = True
+        if cls.is_editing:
+            cls.enabled_editor = True
             Game.freeze_game = True
             TileManager.camera.enable_grid()
             # Gestion des fichiers (raccourcis)
@@ -123,7 +123,7 @@ class TileEditor:
 
             if mouse_buttons[0] == 1 and not cls.mouse_pushed_l:
                 cls.mouse_pushed_l = True
-                if not cls.panel_open or cls.mouse_pos_x <= math.floor(((Game.surface.get_size()[
+                if not cls.panel_open or cls.mouse_pos_x <= math.floor((((Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)[
                                                                              0] / 4 * 3 - Game.TILESIZE) - TileManager.camera.last_x) / Game.TILESIZE):
                     cls.last_mouse_pos_x = cls.mouse_pos_x
                     cls.last_mouse_pos_y = cls.mouse_pos_y
@@ -198,7 +198,7 @@ class TileEditor:
                 cls.mouse_pushed_l = False
             if mouse_buttons[2] == 1 and not cls.mouse_pushed_r:
                 cls.mouse_pushed_r = True
-                if not cls.panel_open or cls.mouse_pos_x <= math.floor(((Game.surface.get_size()[
+                if not cls.panel_open or cls.mouse_pos_x <= math.floor((((Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)[
                                                                              0] / 4 * 3 - Game.TILESIZE) - TileManager.camera.last_x) / Game.TILESIZE):
                     cls.last_mouse_pos_x = cls.mouse_pos_x
                     cls.last_mouse_pos_y = cls.mouse_pos_y

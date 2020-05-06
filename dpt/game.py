@@ -38,6 +38,8 @@ class Game(object):
     DISPLAY_RATIO = 1
     SCREEN_WIDTH = None
     SCREEN_HEIGHT = None
+    WINDOW_WIDTH = None
+    WINDOW_HEIGHT = None
 
     # Variable à définir
     temp = {}  # Variable temporaire pour stocker différentes données temporaires
@@ -402,12 +404,18 @@ class Game(object):
         cls.window = pygame.display
 
         try:
-            text, window_width, window_height = cls.display_list[Game.settings["display_size"]]
+            text, cls.WINDOW_WIDTH, cls.WINDOW_HEIGHT = cls.display_list[Game.settings["display_size"]]
         except KeyError:
-            window_width = 0
-            window_height = 0
+            cls.WINDOW_WIDTH = 0
+            cls.WINDOW_HEIGHT = 0
 
-        cls.surface = cls.window.set_mode((window_width, window_height), pygame.NOFRAME)
+        if cls.WINDOW_WIDTH == 0:
+            cls.WINDOW_WIDTH = cls.SCREEN_WIDTH
+
+        if cls.WINDOW_HEIGHT == 0:
+            cls.WINDOW_HEIGHT = cls.SCREEN_HEIGHT
+
+        cls.surface = cls.window.set_mode((cls.WINDOW_WIDTH, cls.WINDOW_HEIGHT), pygame.NOFRAME)
 
         w, h = cls.surface.get_size()
         cls.main_logger.debug("Window size: " + str(w) + "x" + str(h))

@@ -6,7 +6,7 @@ from dpt.game import Game
 class FlagRed(pygame.sprite.Sprite):
     texture = "dpt.images.environment.flag.Flag_Red"
     sounds = "dpt.sounds.sfx.sfx_stone"
-    screen_width, screen_height = Game.surface.get_size()
+    screen_width, screen_height = (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)
     width = Game.TILESIZE
     height = Game.TILESIZE * 2
     offset_x = 0

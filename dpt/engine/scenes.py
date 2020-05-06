@@ -39,13 +39,13 @@ class Scenes:
         RessourceLoader.add_pending("dpt.images.gui.buttons.btn_checkbox_in")
 
         # Initialisation du TileManager
-        TileEditor.enabled_editor = True
+        TileEditor.is_editing = True
         if not TileManager.load_level(level):
             return False
 
         # Ajout du bouton d'éditeur
         from dpt.engine.gui.menu import Text
-        Game.gui = {"editor_button": Button(0, Game.surface.get_size()[1] - math.floor(50 * Game.DISPLAY_RATIO),
+        Game.gui = {"editor_button": Button(0, Game.WINDOW_HEIGHT - math.floor(50 * Game.DISPLAY_RATIO),
                                             math.floor(127 * Game.DISPLAY_RATIO),
                                             math.floor(46 * Game.DISPLAY_RATIO),
                                             RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_OUT"),
@@ -73,23 +73,17 @@ class Scenes:
         from dpt.engine.effectsManagement import EffectsManagement
 
         # Initialisation du TileManager
-        TileEditor.enabled_editor = TileEditor.can_edit = False
+        TileEditor.is_editing = TileEditor.enabled_editor = False
         if not TileManager.load_level(level):
             return False
 
         # Initialisation de la gestion des effets
-        EffectsManagement.dico_current_effects = {"Ice": False,
-                                                  "Slow": False,
-                                                  "Fast": False,
-                                                  "monsterimmortal": False,
-                                                  "star": False,
-                                                  "jumpBoost": False,
-                                                  "inversion": False,
-                                                  "lowGravity": False}
+        EffectsManagement.create_effects_image()
+        EffectsManagement.reset()
         EffectsManagement.vote()
 
         from dpt.engine.gui.menu import Text
-        Game.gui = {"wb_player_count": Text(Game.surface.get_size()[0] - math.floor(Game.DISPLAY_RATIO * 220),
+        Game.gui = {"wb_player_count": Text(Game.WINDOW_WIDTH - math.floor(Game.DISPLAY_RATIO * 220),
                                             0,
                                             "Connexion au serveur...",
                                             math.floor(25 * Game.DISPLAY_RATIO),
@@ -125,17 +119,17 @@ class Scenes:
         button_height = math.floor(95 * Game.DISPLAY_RATIO)
 
         buttons_gap_y = math.floor(15 * Game.DISPLAY_RATIO)
-        buttons_starting_y = math.floor((Game.surface.get_size()[1] / 2) - button_height * 2 - buttons_gap_y * 1.5) + math.floor(32 * Game.DISPLAY_RATIO)
-        buttons_x = (Game.surface.get_size()[0] // 2) - (button_width // 2)
+        buttons_starting_y = math.floor((Game.WINDOW_HEIGHT / 2) - button_height * 2 - buttons_gap_y * 1.5) + math.floor(32 * Game.DISPLAY_RATIO)
+        buttons_x = (Game.WINDOW_WIDTH // 2) - (button_width // 2)
 
-        Game.gui.update({"p_window": Window(0, 0, 3, 9, centerx=Game.surface.get_size()[0] // 2, centery=Game.surface.get_size()[1] // 2),
+        Game.gui.update({"p_window": Window(0, 0, 3, 9, centerx=Game.WINDOW_WIDTH // 2, centery=Game.WINDOW_HEIGHT // 2),
                          "p_title": Text(0,
                                          buttons_starting_y - math.floor(90 * Game.DISPLAY_RATIO),
                                          "Pause",
                                          math.floor(50 * Game.DISPLAY_RATIO),
                                          (0, 0, 0),
                                          "dpt.fonts.DINOT_CondBlack",
-                                         centerx=Game.surface.get_size()[0] // 2),
+                                         centerx=Game.WINDOW_WIDTH // 2),
                          "p_button_resume": Button(buttons_x, buttons_starting_y, button_width, button_height,
                                                    RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_OUT"),
                                                    pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_IN"),
@@ -157,7 +151,7 @@ class Scenes:
                                                                               math.floor(50 * Game.DISPLAY_RATIO),
                                                                               RessourceLoader.get("dpt.images.gui.symbols.SYMB_X")))})
 
-        if not TileEditor.can_edit:
+        if not TileEditor.enabled_editor:
             Game.gui["p_button_restart_save"] = Button(buttons_x, buttons_starting_y + (buttons_gap_y + button_height), button_width, button_height,
                                                        RessourceLoader.get("dpt.images.gui.buttons.BTN_BLUE_CIRCLE_OUT"),
                                                        pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_BLUE_CIRCLE_IN"),
@@ -212,8 +206,8 @@ class Scenes:
         button_width = math.floor(92 * Game.DISPLAY_RATIO)
         button_height = math.floor(95 * Game.DISPLAY_RATIO)
         buttons_gap_x = math.floor(80 * Game.DISPLAY_RATIO)
-        buttons_starting_x = math.floor((Game.surface.get_size()[0] / 2) - button_width * 2 - buttons_gap_x * 1.5)
-        buttons_y = (Game.surface.get_size()[1] // 4) * 3 + 50 * Game.DISPLAY_RATIO
+        buttons_starting_x = math.floor((Game.WINDOW_WIDTH / 2) - button_width * 2 - buttons_gap_x * 1.5)
+        buttons_y = (Game.WINDOW_HEIGHT // 4) * 3 + 50 * Game.DISPLAY_RATIO
         Game.gui = {"button_play": Button(buttons_starting_x, buttons_y, button_width, button_height,
                                           RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_OUT"),
                                           pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_IN"),
@@ -244,7 +238,7 @@ class Scenes:
                                           text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
                                                                        math.floor(50 * Game.DISPLAY_RATIO),
                                                                        RessourceLoader.get("dpt.images.gui.symbols.SYMB_X"))),
-                    "window": Window((Game.surface.get_size()[0] // 2) - math.floor(122 * 3 * Game.DISPLAY_RATIO),
+                    "window": Window((Game.WINDOW_WIDTH // 2) - math.floor(122 * 3 * Game.DISPLAY_RATIO),
                                      buttons_y + button_height // 2 - math.floor(64 * 1.5 * Game.DISPLAY_RATIO), 6, 3)}
 
         # Loops
@@ -426,7 +420,7 @@ class Scenes:
                                                  (0, 0, 0),
                                                  "dpt.fonts.DINOT_CondBlack"),
 
-                    "window_menu": Window(50 * Game.DISPLAY_RATIO, 0, 2, 6, centery=Game.surface.get_size()[1] // 2),
+                    "window_menu": Window(50 * Game.DISPLAY_RATIO, 0, 2, 6, centery=Game.WINDOW_HEIGHT // 2),
                     "apply_button": Button(math.floor(125 * Game.DISPLAY_RATIO),
                                            math.floor(390 * Game.DISPLAY_RATIO),
                                            math.floor(92 * Game.DISPLAY_RATIO),
@@ -498,57 +492,57 @@ class Scenes:
         button_width = math.floor(92 * Game.DISPLAY_RATIO)
         button_height = math.floor(95 * Game.DISPLAY_RATIO)
 
-        Game.gui = {"window": Window(0, 0, 10, 10, centerx=Game.surface.get_size()[0] // 2, centery=Game.surface.get_size()[1] // 2),
+        Game.gui = {"window": Window(0, 0, 10, 10, centerx=Game.WINDOW_WIDTH // 2, centery=Game.WINDOW_HEIGHT // 2),
                     "title": Text(0,
                                   math.floor(230 * Game.DISPLAY_RATIO),
                                   "Démarrer une nouvelle session",
                                   math.floor(50 * Game.DISPLAY_RATIO),
                                   (0, 0, 0),
                                   "dpt.fonts.DINOT_CondBlack",
-                                  centerx=Game.surface.get_size()[0] // 2),
+                                  centerx=Game.WINDOW_WIDTH // 2),
                     "session1": Text(0,
                                      math.floor(320 * Game.DISPLAY_RATIO),
                                      "ID de session :",
                                      math.floor(40 * Game.DISPLAY_RATIO),
                                      (0, 0, 0),
                                      "dpt.fonts.DINOT_CondBlack",
-                                     centerx=Game.surface.get_size()[0] // 2),
+                                     centerx=Game.WINDOW_WIDTH // 2),
                     "session2": Text(0,
                                      math.floor(350 * Game.DISPLAY_RATIO),
                                      WebCommunication.sessionName,
                                      math.floor(120 * Game.DISPLAY_RATIO),
                                      (84, 66, 243),
                                      "dpt.fonts.DINOT_CondBlack",
-                                     centerx=Game.surface.get_size()[0] // 2),
+                                     centerx=Game.WINDOW_WIDTH // 2),
                     "session3": Text(0,
                                      math.floor(525 * Game.DISPLAY_RATIO),
                                      "ou utilisez directement le lien",
                                      math.floor(40 * Game.DISPLAY_RATIO),
                                      (0, 0, 0),
                                      "dpt.fonts.DINOT_CondBlack",
-                                     centerx=Game.surface.get_size()[0] // 2),
+                                     centerx=Game.WINDOW_WIDTH // 2),
                     "session4": Text(0,
                                      math.floor(555 * Game.DISPLAY_RATIO),
                                      Game.settings["server_address"] + "/?session=" + WebCommunication.sessionName,
                                      math.floor(70 * Game.DISPLAY_RATIO),
                                      (84, 66, 243),
                                      "dpt.fonts.DINOT_CondBlack",
-                                     centerx=Game.surface.get_size()[0] // 2),
+                                     centerx=Game.WINDOW_WIDTH // 2),
                     "session5": Text(0,
                                      math.floor(635 * Game.DISPLAY_RATIO),
                                      "(Le lien a été copié dans votre presse-papier)",
                                      math.floor(40 * Game.DISPLAY_RATIO),
                                      (0, 0, 0),
                                      "dpt.fonts.DINOT_CondBlack",
-                                     centerx=Game.surface.get_size()[0] // 2),
-                    "button_start": Button(math.floor(Game.surface.get_size()[0] / 2 + 50 * Game.DISPLAY_RATIO),
+                                     centerx=Game.WINDOW_WIDTH // 2),
+                    "button_start": Button(math.floor(Game.WINDOW_WIDTH / 2 + 50 * Game.DISPLAY_RATIO),
                                            math.floor(Game.DISPLAY_RATIO * 720), button_width, button_height,
                                            RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_OUT"),
                                            pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_IN"),
                                            text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
                                                                         math.floor(50 * Game.DISPLAY_RATIO),
                                                                         RessourceLoader.get("dpt.images.gui.symbols.SYMB_PLAY"))),
-                    "button_main_menu": Button(math.floor(Game.surface.get_size()[0] / 2 - button_width - 50 * Game.DISPLAY_RATIO),
+                    "button_main_menu": Button(math.floor(Game.WINDOW_WIDTH / 2 - button_width - 50 * Game.DISPLAY_RATIO),
                                                math.floor(Game.DISPLAY_RATIO * 720),
                                                button_width,
                                                button_height,
@@ -557,7 +551,7 @@ class Scenes:
                                                text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
                                                                             math.floor(50 * Game.DISPLAY_RATIO),
                                                                             RessourceLoader.get("dpt.images.gui.symbols.SYMB_X"))),
-                    "wb_player_count": Text(Game.surface.get_size()[0] - math.floor(Game.DISPLAY_RATIO * 220), 0,
+                    "wb_player_count": Text(Game.WINDOW_WIDTH - math.floor(Game.DISPLAY_RATIO * 220), 0,
                                             "Connexion au serveur...",
                                             math.floor(25 * Game.DISPLAY_RATIO),
                                             (0, 0, 0),
@@ -598,7 +592,7 @@ class Scenes:
         from dpt.engine.loader import RessourceLoader
         from dpt.engine.gui.editor.tileEditor import TileEditor
 
-        if TileEditor.can_edit:
+        if TileEditor.enabled_editor:
             return
 
         cls.logger.info("Displaying GAME_OVER")
@@ -612,17 +606,17 @@ class Scenes:
         button_height = math.floor(95 * Game.DISPLAY_RATIO)
 
         buttons_gap_y = math.floor(15 * Game.DISPLAY_RATIO)
-        buttons_starting_y = math.floor((Game.surface.get_size()[1] / 2) - button_height * 2 - buttons_gap_y * 1.5) + math.floor(32 * Game.DISPLAY_RATIO)
-        buttons_x = (Game.surface.get_size()[0] // 2) - (button_width // 2)
+        buttons_starting_y = math.floor((Game.WINDOW_HEIGHT / 2) - button_height * 2 - buttons_gap_y * 1.5) + math.floor(32 * Game.DISPLAY_RATIO)
+        buttons_x = (Game.WINDOW_WIDTH // 2) - (button_width // 2)
 
-        Game.gui.update({"go_window": Window(0, 0, 3, 9, centerx=Game.surface.get_size()[0] // 2, centery=Game.surface.get_size()[1] // 2),
+        Game.gui.update({"go_window": Window(0, 0, 3, 9, centerx=Game.WINDOW_WIDTH // 2, centery=Game.WINDOW_HEIGHT // 2),
                          "go_title": Text(0,
                                           buttons_starting_y - math.floor(90 * Game.DISPLAY_RATIO),
                                           "Échec",
                                           math.floor(50 * Game.DISPLAY_RATIO),
                                           (0, 0, 0),
                                           "dpt.fonts.DINOT_CondBlack",
-                                          centerx=Game.surface.get_size()[0] // 2),
+                                          centerx=Game.WINDOW_WIDTH // 2),
                          "go_button_checkpoint": Button(buttons_x, buttons_starting_y, button_width, button_height,
                                                         RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_OUT"),
                                                         pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_IN"),
@@ -667,22 +661,22 @@ class Scenes:
         from dpt.engine.gui.menu.text import Text
         from random import randint
 
-        Game.gui.update({"window_error": Window(0, 0, 6, 4, centerx=Game.surface.get_size()[0] // 2, centery=Game.surface.get_size()[1] // 2),
+        Game.gui.update({"window_error": Window(0, 0, 6, 4, centerx=Game.WINDOW_WIDTH // 2, centery=Game.WINDOW_HEIGHT // 2),
                          "title_error": Text(0,
                                              math.floor(425 * Game.DISPLAY_RATIO),
                                              "Erreur",
                                              math.floor(50 * Game.DISPLAY_RATIO),
                                              (0, 0, 0),
                                              "dpt.fonts.DINOT_CondBlack",
-                                             centerx=Game.surface.get_size()[0] // 2)})
+                                             centerx=Game.WINDOW_WIDTH // 2)})
 
         for i in range(len(messages)):
             Game.gui["message_" + str(randint(1000, 9999))] = Text(0, 0, messages[i],
                                                                    math.floor(25 * Game.DISPLAY_RATIO),
                                                                    (254, 0, 61),
                                                                    "dpt.fonts.DINOT_CondBlack",
-                                                                   centerx=Game.surface.get_size()[0] // 2,
-                                                                   centery=(Game.surface.get_size()[1] // 2 + math.floor(30 * Game.DISPLAY_RATIO) - (math.floor(12.5 * Game.DISPLAY_RATIO) * len(messages)) + (math.floor((25 * i) * Game.DISPLAY_RATIO))))
+                                                                   centerx=Game.WINDOW_WIDTH // 2,
+                                                                   centery=(Game.WINDOW_HEIGHT // 2 + math.floor(30 * Game.DISPLAY_RATIO) - (math.floor(12.5 * Game.DISPLAY_RATIO) * len(messages)) + (math.floor((25 * i) * Game.DISPLAY_RATIO))))
 
         # Loops
         from dpt.engine.mainLoop import main_menu_loop
@@ -705,15 +699,15 @@ class Scenes:
 
         pbar = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/gui/ui/UI_BARFRAME.png")
         bar = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/gui/ui/UI_COLORBAR_2.png")
-        width = min(Game.surface.get_size()[0] - 50, 1115)
+        width = min(Game.WINDOW_WIDTH - 50, 1115)
         height = min(math.floor(52 / 1115 * width), 52)
-        pb = ProgressBar(math.floor(Game.surface.get_size()[0] / 2 - width / 2),
-                         math.floor(Game.surface.get_size()[1] - height), width, height, pbar, bar, 1)
+        pb = ProgressBar(math.floor(Game.WINDOW_WIDTH / 2 - width / 2),
+                         math.floor(Game.WINDOW_HEIGHT - height), width, height, pbar, bar, 1)
         pb.value = 1
         Game.temp["font"] = pygame.font.SysFont("arial", math.floor(20 * Game.DISPLAY_RATIO))
 
         Game.temp["text_rendered"] = Game.temp["font"].render("Chargement", True, (0, 0, 0))
         Game.temp["rect"] = Game.temp["text_rendered"].get_rect()
-        Game.temp["rect"].centerx = Game.surface.get_size()[0] // 2
-        Game.temp["rect"].centery = math.floor(Game.surface.get_size()[1] - height / 2)
+        Game.temp["rect"].centerx = Game.WINDOW_WIDTH // 2
+        Game.temp["rect"].centery = math.floor(Game.WINDOW_HEIGHT - height / 2)
         return True

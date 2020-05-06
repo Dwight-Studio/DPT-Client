@@ -9,8 +9,8 @@ class CharEntity(pygame.sprite.Sprite):
         self.image = pygame.Surface((Game.TILESIZE, Game.TILESIZE))
         self.image.set_colorkey((0, 0, 0))
         self.rect = self.image.get_rect()
-        self.rect.x = Game.surface.get_size()[0] / 2
-        self.rect.y = Game.surface.get_size()[1] / 2
+        self.rect.x = Game.WINDOW_WIDTH / 2
+        self.rect.y = Game.WINDOW_HEIGHT / 2
         self.xvel = 0
         self.yvel = 0
         self.width = Game.TILESIZE
@@ -23,7 +23,7 @@ class CharEntity(pygame.sprite.Sprite):
                 self.xvel = 0
             if self.xvel > -16:
                 self.xvel -= 16
-            if self.rect.x < Game.surface.get_size()[0] / 2:
+            if self.rect.x < Game.WINDOW_WIDTH / 2:
                 self.xvel = 0
         elif keys[pygame.K_RIGHT]:
             if self.xvel < 0:

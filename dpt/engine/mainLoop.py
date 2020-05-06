@@ -2,8 +2,9 @@ import math
 import dpt.engine.gui.menu as menu
 import pygame
 import tkinter as tk
-from tkinter import simpledialog
+import dpt.engine.gui.menu as Menu
 
+from tkinter import simpledialog
 from dpt.engine.fileManager import FileManager
 from dpt.engine.gui.editor.tileEditor import TileEditor
 from dpt.engine.gui.menu.button import Button
@@ -13,13 +14,12 @@ from dpt.engine.tileManager import TileManager
 from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 from dpt.engine.gui.menu import Timer
-import dpt.engine.gui.menu as Menu
 from dpt.engine.webCommunications import WebCommunication
 from dpt.engine.effectsManagement import EffectsManagement
 
 try:
     bg = RessourceLoader.get("dpt.images.environment.background.default_sky")
-    bg = pygame.transform.smoothscale(bg, Game.surface.get_size())
+    bg = pygame.transform.smoothscale(bg, (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT))
 except:
     pass
 
@@ -54,8 +54,8 @@ def level_loop():
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
             Scenes.pause()
         elif event.type == Game.BUTTON_EVENT and event.button == Game.gui["editor_button"]:
-            TileEditor.enabled_editor = not TileEditor.enabled_editor
-            if TileEditor.enabled_editor:
+            TileEditor.is_editing = not TileEditor.is_editing
+            if TileEditor.is_editing:
                 Game.gui["editor_button"].text = "Jouer"
                 for clouds in TileManager.clouds_group:
                     clouds.kill()
@@ -66,9 +66,9 @@ def level_loop():
             TileManager.clouds_group.empty()
             TileManager.load_level(TileManager.levelName)
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            if event.button == 4 and TileEditor.enabled_editor:
+            if event.button == 4 and TileEditor.is_editing:
                 TileManager.scroll_up()
-            elif event.button == 5 and TileEditor.enabled_editor:
+            elif event.button == 5 and TileEditor.is_editing:
                 TileManager.scroll_down()
         elif event.type == Game.TIMER_FINISHED_EVENT:
             Scenes.game_over()
@@ -93,7 +93,7 @@ def level_loop():
 
     TileEditor.ghost_block_group.draw(Game.surface)
 
-    if not TileEditor.can_edit:
+    if not TileEditor.enabled_editor:
         EffectsManagement.update()
         Button.main_loop()
         Timer.main_loop()
@@ -125,7 +125,7 @@ def pause_loop():
         if event.type == pygame.QUIT:
             if WebCommunication.sessionName is not None:
                 WebCommunication.close()
-            if TileEditor.enabled_editor:
+            if TileEditor.is_editing:
                 FileManager.save_file(TileEditor.created_level)
             Game.run = False
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
@@ -137,21 +137,21 @@ def pause_loop():
                 Game.loop = level_loop
                 kill_menu()
                 return
-            elif event.button == Game.gui["p_button_restart_save"] and not TileEditor.can_edit:
+            elif event.button == Game.gui["p_button_restart_save"] and not TileEditor.enabled_editor:
                 if "last_checkpoint" in Game.temp:
                     del Game.temp["last_checkpoint"]
                 kill_menu()
                 TileManager.load_level(TileManager.levelName)
                 Game.loop = level_loop
                 return
-            elif event.button == Game.gui["p_button_restart_save"] and TileEditor.can_edit:
+            elif event.button == Game.gui["p_button_restart_save"] and TileEditor.enabled_editor:
                 kill_menu()
                 FileManager.save_file(TileEditor.created_level)
                 Game.loop = level_loop
             elif event.button == Game.gui["p_button_main_menu"]:
                 if WebCommunication.sessionName is not None:
                     WebCommunication.close()
-                if TileEditor.enabled_editor:
+                if TileEditor.is_editing:
                     FileManager.save_file(TileEditor.created_level)
                 Menu.delete_items()
                 Scenes.main_menu()
@@ -159,7 +159,7 @@ def pause_loop():
             elif event.button == Game.gui["p_button_quit"]:
                 if WebCommunication.sessionName is not None:
                     WebCommunication.close()
-                if TileEditor.enabled_editor:
+                if TileEditor.is_editing:
                     FileManager.save_file(TileEditor.created_level)
                 Game.run = False
 
@@ -226,8 +226,8 @@ def main_menu_loop():
     image = pygame.transform.smoothscale(image,
                                          (math.floor(1480 * Game.DISPLAY_RATIO), math.floor(600 * Game.DISPLAY_RATIO)))
     rect = image.get_rect()
-    rect.centerx = Game.surface.get_size()[0] // 2
-    rect.bottom = (Game.surface.get_size()[1] // 4) * 3
+    rect.centerx = Game.WINDOW_WIDTH // 2
+    rect.bottom = (Game.WINDOW_HEIGHT // 4) * 3
     Game.surface.blit(image, rect)
 
     menu.main_loop()
@@ -263,7 +263,7 @@ def settings_menu_loop():
             Game.update_display()
             global bg
             bg = RessourceLoader.get("dpt.images.environment.background.default_sky")
-            bg = pygame.transform.smoothscale(bg, Game.surface.get_size())
+            bg = pygame.transform.smoothscale(bg, (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT))
             menu.delete_items()
             Game.save_profile()
             Game.temp = {}
@@ -313,7 +313,7 @@ def settings_menu_loop():
 
     rect1 = pygame.rect.Rect(0,
                              math.floor(600 * Game.DISPLAY_RATIO),
-                             math.floor(175 * (Game.surface.get_size()[0] / Game.surface.get_size()[1]) * Game.DISPLAY_RATIO),
+                             math.floor(175 * (Game.WINDOW_WIDTH / Game.WINDOW_HEIGHT) * Game.DISPLAY_RATIO),
                              math.floor(175 * Game.DISPLAY_RATIO))
     rect1.centerx = Game.gui["window_graphics"].rect.centerx
 
@@ -385,7 +385,7 @@ def loading_loop(kill=False):
         if event.type == pygame.QUIT:
             if WebCommunication.sessionName is not None:
                 WebCommunication.close()
-            if TileEditor.enabled_editor:
+            if TileEditor.is_editing:
                 FileManager.save_file(TileEditor.created_level)
             Game.run = False
             return
@@ -435,7 +435,7 @@ def game_over_loop():
         if event.type == pygame.QUIT:
             if WebCommunication.sessionName is not None:
                 WebCommunication.close()
-            if TileEditor.enabled_editor:
+            if TileEditor.is_editing:
                 FileManager.save_file(TileEditor.created_level)
             Game.run = False
             return
