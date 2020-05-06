@@ -26,6 +26,7 @@ class TileManager:
     foreground_blocks_group = pygame.sprite.Group()
     interactible_blocks_group = pygame.sprite.Group()
     heart_group = pygame.sprite.Group()
+    effects_group = pygame.sprite.Group()
     clouds_group = pygame.sprite.LayeredUpdates()
 
     log = Game.get_logger(__name__)
