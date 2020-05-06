@@ -6,11 +6,11 @@ from dpt.engine.tileManager import TileManager
 
 
 class LowGravity(pygame.sprite.Sprite):
-    full_heart = "dpt.images.gui.ui.UI_HEART_FULL"
+    lowGravity = "dpt.images.effects.star"
 
     def __init__(self):
         pygame.sprite.Sprite.__init__(self, TileManager.effects_group)
-        self.full_heart = pygame.transform.smoothscale(RessourceLoader.get(LowGravity.full_heart), (math.floor(100 * Game.DISPLAY_RATIO), math.floor(100 * Game.DISPLAY_RATIO)))
+        self.full_heart = pygame.transform.smoothscale(RessourceLoader.get(LowGravity.lowGravity), (math.floor(100 * Game.DISPLAY_RATIO), math.floor(100 * Game.DISPLAY_RATIO)))
         self.image = self.full_heart
         self.rect = [0, 980 * Game.DISPLAY_RATIO, 100 * Game.DISPLAY_RATIO, 100 * Game.DISPLAY_RATIO]
 

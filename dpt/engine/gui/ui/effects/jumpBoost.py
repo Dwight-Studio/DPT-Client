@@ -6,11 +6,11 @@ from dpt.engine.tileManager import TileManager
 
 
 class JumpBoost(pygame.sprite.Sprite):
-    full_heart = "dpt.images.gui.ui.UI_HEART_FULL"
+    jumpBoost = "dpt.images.effects.jumpBoost"
 
     def __init__(self):
         pygame.sprite.Sprite.__init__(self, TileManager.effects_group)
-        self.full_heart = pygame.transform.smoothscale(RessourceLoader.get(JumpBoost.full_heart), (math.floor(100 * Game.DISPLAY_RATIO), math.floor(100 * Game.DISPLAY_RATIO)))
+        self.full_heart = pygame.transform.smoothscale(RessourceLoader.get(JumpBoost.jumpBoost), (math.floor(100 * Game.DISPLAY_RATIO), math.floor(100 * Game.DISPLAY_RATIO)))
         self.image = self.full_heart
         self.rect = [0, 980 * Game.DISPLAY_RATIO, 100 * Game.DISPLAY_RATIO, 100 * Game.DISPLAY_RATIO]
 

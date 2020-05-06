@@ -48,14 +48,26 @@ class EffectsManagement:
     temp_list = []
     perm_list = []
     mods = []
-    image_fast = Fast()
-    image_ice = Ice()
-    image_inversion = Inversion()
-    image_jumpBoost = JumpBoost()
-    image_lowGravity = LowGravity()
-    image_monsterimmortal = Monsterimmortal()
-    image_slow = Slow()
-    image_star = Star()
+
+    image_fast = None
+    image_ice = None
+    image_inversion = None
+    image_jumpBoost = None
+    image_lowGravity = None
+    image_monsterimmortal = None
+    image_slow = None
+    image_star = None
+
+    @classmethod
+    def create_effects_image(cls):
+        cls.image_fast = Fast()
+        cls.image_ice = Ice()
+        cls.image_inversion = Inversion()
+        cls.image_jumpBoost = JumpBoost()
+        cls.image_lowGravity = LowGravity()
+        cls.image_monsterimmortal = Monsterimmortal()
+        cls.image_slow = Slow()
+        cls.image_star = Star()
 
     @classmethod
     def update(cls):
@@ -125,6 +137,6 @@ class EffectsManagement:
         for images in cls.list_current_effects:
             list_current_images_effects.append(dico_images_effects[images])
         for images in list_current_images_effects:
-            images.rect[0] = math.floor(i * 110 * Game.DISPLAY_RATIO)
+            images.rect[0] = math.floor(i * 110 * Game.DISPLAY_RATIO + 10)
             images.update()
             i += 1

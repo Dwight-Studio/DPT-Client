@@ -153,6 +153,7 @@ class TileManager:
             RessourceLoader.add_pending("dpt.images.environment.flag.*")
             RessourceLoader.add_pending("dpt.images.environment.background.Cloud_full_*")
             RessourceLoader.add_pending("dpt.images.gui.ui.UI_HEART*")
+            RessourceLoader.add_pending("dpt.images.effects.*")
             RessourceLoader.add_pending("dpt.images.not_found")
             RessourceLoader.load()
 

@@ -78,6 +78,7 @@ class Scenes:
             return False
 
         # Initialisation de la gestion des effets
+        EffectsManagement.create_effects_image()
         EffectsManagement.reset()
         EffectsManagement.vote()
 
