@@ -1,6 +1,5 @@
 import math
 import pygame
-
 from dpt.engine.gui.menu.button import Button
 from dpt.engine.gui.menu.checkbox import Checkbox
 from dpt.engine.loader import RessourceLoader
@@ -93,13 +92,12 @@ class TileEditor:
             try:
                 if RessourceLoader.get(TileEditor.selected_item).customPlacement:
                     cls.custom_tile_placement = True
-                    if cls.custom_tile_placement and mouse[0] != cls.last_mouse_pos_x_c or mouse[
-                        1] != cls.last_mouse_pos_y_c:
+                    if cls.custom_tile_placement and mouse[0] != cls.last_mouse_pos_x_c or mouse[1] != cls.last_mouse_pos_y_c:
                         cls.last_mouse_pos_x_c = 0
                         cls.last_mouse_pos_y_c = 0
                         TileEditor.ghost_block_group.empty()
                         TileManager.ghost_block(mouse[0], mouse[1], TileEditor.selected_item)
-            except:
+            except AttributeError:
                 cls.custom_tile_placement = False
 
             if not cls.custom_tile_placement:
@@ -196,8 +194,7 @@ class TileEditor:
                                                          TileEditor.selected_item)
             elif mouse_buttons[0] != 1 and cls.mouse_pushed_l:
                 cls.mouse_pushed_l = False
-            elif mouse_buttons[
-                0] == 1 and cls.mouse_pos_x != cls.last_mouse_pos_x or cls.mouse_pos_y != cls.last_mouse_pos_y and cls.mouse_pushed_l:
+            elif mouse_buttons[0] == 1 and cls.mouse_pos_x != cls.last_mouse_pos_x or cls.mouse_pos_y != cls.last_mouse_pos_y and cls.mouse_pushed_l:
                 cls.mouse_pushed_l = False
             if mouse_buttons[2] == 1 and not cls.mouse_pushed_r:
                 cls.mouse_pushed_r = True
@@ -221,7 +218,7 @@ class TileEditor:
                         for cls.env in TileManager.environment_group:
                             try:
                                 if cls.env.customPlacement:
-                                    if cls.env.rect.left <= mouse[0] <= cls.env.rect.right and cls.env.rect.top <= mouse[1] <= cls.entity.rect.bottom:
+                                    if cls.env.rect.left <= mouse[0] <= cls.env.rect.right and cls.env.rect.top <= mouse[1] <= cls.env.rect.bottom:
                                         cls.mouse_pos_y = cls.env.rect.y - cls.env.offset_y
                                         cls.mouse_pos_x = cls.env.rect.x - cls.env.offset_x
                                         cls.env.kill()
@@ -289,6 +286,5 @@ class TileEditor:
                         pass
             elif mouse_buttons[1] != 1 and cls.mouse_pushed_r:
                 cls.mouse_pushed_r = False
-            elif mouse_buttons[
-                1] == 1 and cls.mouse_pos_x != cls.last_mouse_pos_x or cls.mouse_pos_y != cls.last_mouse_pos_y and cls.mouse_pushed_r:
+            elif mouse_buttons[1] == 1 and cls.mouse_pos_x != cls.last_mouse_pos_x or cls.mouse_pos_y != cls.last_mouse_pos_y and cls.mouse_pushed_r:
                 cls.mouse_pushed_r = False

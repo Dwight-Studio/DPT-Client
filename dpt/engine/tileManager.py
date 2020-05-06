@@ -14,7 +14,6 @@ from dpt.engine.gui.menu import Text
 from random import randrange
 
 
-#          {"x, y": {"blockClass": Classe}}
 class TileManager:
     """Gestionnaire des tiles"""
     deadly_object_group = pygame.sprite.Group()
@@ -314,7 +313,7 @@ class TileManager:
         starty = 0 + Game.TILESIZE
         for element in Game.available_tiles:
             if cls.count == cls.nb_skip:
-                sprite = PanelFakeEntity(startx, starty, 255, element)
+                PanelFakeEntity(startx, starty, 255, element)
                 EditorPanel.editor_tile_registry[str(math.floor(startx / Game.TILESIZE)) + ", " + str(math.floor(starty / Game.TILESIZE))] = {"class": element}
                 startx += Game.TILESIZE
                 cls.per_line_count += 1
