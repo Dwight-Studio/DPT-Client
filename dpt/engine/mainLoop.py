@@ -240,6 +240,7 @@ def main_menu_loop():
 
 def settings_menu_loop():
     """Boucle du menu des paramètres"""
+    Game.surface.blit(bg, (0, 0))
 
     ds = Game.temp["display_size"]
     Game.gui["graphics_text"].text, w, h = Game.display_list[ds]

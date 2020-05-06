@@ -25,10 +25,4 @@ class FlagGreen(pygame.sprite.Sprite):
             self.sound = RessourceLoader.get(self.sounds)
             self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
             self.sound.play()
-        self.spawn_flag = self
-
-    def update(self):
-        for i in Game.player_group:
-            if pygame.sprite.collide_mask(self, i):
-                from dpt.engine.scenes import Scenes
-                Scenes.end_level()
+        FlagGreen.spawn_flag = self

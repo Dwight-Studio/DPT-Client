@@ -210,7 +210,7 @@ class TileManager:
                 player_x = sf.rect.x - sf.offset_x
                 player_y = sf.rect.y - sf.offset_y
             else:
-                cls.log.warning("Can't find GreenFlag for spawn")
+                cls.log.warning("Can't find FlagGreen for spawn")
 
             if "last_checkpoint" in Game.temp:
                 cp = RessourceLoader.get("dpt.entities.flags.FlagBlue").checkpoint_list[Game.temp["last_checkpoint"]]
