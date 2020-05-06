@@ -107,10 +107,9 @@ class WebCommunication(object):
         if not isinstance(reply, CommunicationError):
             cls.log.info("Session " + cls.sessionName + " created")
             cls.log.info("URL: http://" + Game.settings["server_address"] + "/?session=" + cls.sessionName)
-            pygame.time.set_timer(Game.KEEP_ALIVE_EVENT, 0)
-            pygame.time.set_timer(Game.VOTE_TIMEOUT, 0)
+            pygame.time.set_timer(Game.WAIT_BETWEEN_RECONNECT_EVENT, 0)
             pygame.time.set_timer(Game.KEEP_ALIVE_EVENT, 5000)
-            pygame.event.post(pygame.event.Event(Game.KEEP_ALIVE_EVENT))
+            pygame.event.post(pygame.event.Event(Game.KEEP_ALIVE_EVENT, {}))
             cls.connected = True
             return True
         else:
@@ -216,6 +215,7 @@ class WebCommunication(object):
                     cls.reconnect()
                 elif event.type == Game.DISCONNECTED_EVENT:
                     cls.connected = False
+                    pygame.time.set_timer(Game.KEEP_ALIVE_EVENT, 0)
                     cls.reconnect()
 
         Text.main_loop()
