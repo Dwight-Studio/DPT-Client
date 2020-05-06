@@ -1,5 +1,7 @@
 import math
 import pygame
+import sys
+import traceback
 
 from dpt.engine.gui.menu.button import Button
 from dpt.engine.gui.menu.checkbox import Checkbox
@@ -210,74 +212,69 @@ class TileEditor:
                     cls.last_mouse_pos_x = cls.mouse_pos_x
                     cls.last_mouse_pos_y = cls.mouse_pos_y
                     try:
-                        for cls.backnd in TileManager.background_blocks_group:
-                            try:
-                                if cls.backnd.customPlacement:
-                                    if cls.backnd.rect.left <= mouse[0] <= cls.backnd.rect.right and cls.backnd.rect.top <= mouse[1] <= cls.backnd.rect.bottom:
-                                        cls.mouse_pos_y = cls.backnd.rect.y - cls.backnd.offset_y
-                                        cls.mouse_pos_x = cls.backnd.rect.x - cls.backnd.offset_x
-                                        cls.backnd.kill()
-                                        del cls.backnd
-                            except AttributeError:
+                        if TileManager.check_back:
+                            for cls.backnd in TileManager.background_blocks_group:
                                 if math.floor(cls.backnd.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(cls.backnd.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
                                     cls.backnd.kill()
                                     del cls.backnd
-                        for cls.env in TileManager.environment_group:
-                            try:
-                                if cls.env.customPlacement:
-                                    if cls.env.rect.left <= mouse[0] <= cls.env.rect.right and cls.env.rect.top <= mouse[1] <= cls.entity.rect.bottom:
-                                        cls.mouse_pos_y = cls.env.rect.y - cls.env.offset_y
-                                        cls.mouse_pos_x = cls.env.rect.x - cls.env.offset_x
+                            del cls.created_level[str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)]["backgroundClass"]
+                        else:
+                            for cls.env in TileManager.environment_group:
+                                try:
+                                    if cls.env.customPlacement:
+                                        if cls.env.rect.left <= mouse[0] <= cls.env.rect.right and cls.env.rect.top <= mouse[1] <= cls.env.rect.bottom:
+                                            cls.mouse_pos_y = cls.env.rect.y - cls.env.offset_y
+                                            cls.mouse_pos_x = cls.env.rect.x - cls.env.offset_x
+                                            cls.env.kill()
+                                            del cls.env
+                                except AttributeError:
+                                    if math.floor(
+                                            cls.env.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(cls.env.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
                                         cls.env.kill()
                                         del cls.env
-                            except AttributeError:
-                                if math.floor(
-                                        cls.env.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(cls.env.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
-                                    cls.env.kill()
-                                    del cls.env
-                        for cls.intera in TileManager.interactible_blocks_group:
-                            try:
-                                if cls.intera.customPlacement:
-                                    if cls.intera.rect.left <= mouse[0] <= cls.intera.rect.right and cls.intera.rect.top <= mouse[1] <= cls.intera.rect.bottom:
-                                        cls.mouse_pos_y = cls.intera.rect.y - cls.intera.offset_y
-                                        cls.mouse_pos_x = cls.intera.rect.x - cls.intera.offset_x
+                            for cls.intera in TileManager.interactible_blocks_group:
+                                try:
+                                    if cls.intera.customPlacement:
+                                        if cls.intera.rect.left <= mouse[0] <= cls.intera.rect.right and cls.intera.rect.top <= mouse[1] <= cls.intera.rect.bottom:
+                                            cls.mouse_pos_y = cls.intera.rect.y - cls.intera.offset_y
+                                            cls.mouse_pos_x = cls.intera.rect.x - cls.intera.offset_x
+                                            cls.intera.kill()
+                                            del cls.intera
+                                except AttributeError:
+                                    if math.floor(cls.intera.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(
+                                            cls.intera.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
                                         cls.intera.kill()
                                         del cls.intera
-                            except AttributeError:
-                                if math.floor(cls.intera.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(
-                                        cls.intera.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
-                                    cls.intera.kill()
-                                    del cls.intera
-                        for cls.entitys in TileManager.entity_group:
-                            try:
-                                if cls.entitys.customPlacement:
-                                    if cls.entitys.rect.left <= mouse[0] <= cls.entitys.rect.right and cls.entitys.rect.top <= mouse[1] <= cls.entitys.rect.bottom:
-                                        cls.mouse_pos_y = cls.entitys.rect.y - cls.entitys.offset_y
-                                        cls.mouse_pos_x = cls.entitys.rect.x - cls.entitys.offset_x
+                            for cls.entitys in TileManager.entity_group:
+                                try:
+                                    if cls.entitys.customPlacement:
+                                        if cls.entitys.rect.left <= mouse[0] <= cls.entitys.rect.right and cls.entitys.rect.top <= mouse[1] <= cls.entitys.rect.bottom:
+                                            cls.mouse_pos_y = cls.entitys.rect.y - cls.entitys.offset_y
+                                            cls.mouse_pos_x = cls.entitys.rect.x - cls.entitys.offset_x
+                                            cls.entitys.kill()
+                                            del cls.entitys
+                                except AttributeError:
+                                    if math.floor(
+                                            cls.entitys.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(
+                                        cls.entitys.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
                                         cls.entitys.kill()
                                         del cls.entitys
-                            except AttributeError:
-                                if math.floor(
-                                        cls.entitys.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(
-                                        cls.entitys.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
-                                    cls.entitys.kill()
-                                    del cls.entitys
-                        for cls.dead in TileManager.entity_group:
-                            try:
-                                if cls.dead.customPlacement:
-                                    if cls.dead.rect.left <= mouse[0] <= cls.entitys.rect.right and cls.entitys.rect.top <= mouse[1] <= cls.entitys.rect.bottom:
-                                        cls.mouse_pos_y = cls.dead.rect.y - cls.dead.offset_y
-                                        cls.mouse_pos_x = cls.dead.rect.x - cls.dead.offset_x
+                            for cls.dead in TileManager.entity_group:
+                                try:
+                                    if cls.dead.customPlacement:
+                                        if cls.dead.rect.left <= mouse[0] <= cls.entitys.rect.right and cls.entitys.rect.top <= mouse[1] <= cls.entitys.rect.bottom:
+                                            cls.mouse_pos_y = cls.dead.rect.y - cls.dead.offset_y
+                                            cls.mouse_pos_x = cls.dead.rect.x - cls.dead.offset_x
+                                            cls.dead.kill()
+                                            del cls.dead
+                                except AttributeError:
+                                    if math.floor(
+                                            cls.dead.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(
+                                        cls.dead.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
                                         cls.dead.kill()
                                         del cls.dead
-                            except AttributeError:
-                                if math.floor(
-                                        cls.dead.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(
-                                        cls.dead.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
-                                    cls.dead.kill()
-                                    del cls.dead
-                        del cls.created_level[str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)]
-                    except KeyError:
+                            del cls.created_level[str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)]["class"]
+                    except KeyError as ex:
                         pass
             elif mouse_buttons[1] != 1 and cls.mouse_pushed_r:
                 cls.mouse_pushed_r = False
