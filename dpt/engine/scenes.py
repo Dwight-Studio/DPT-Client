@@ -39,7 +39,7 @@ class Scenes:
         RessourceLoader.add_pending("dpt.images.gui.buttons.btn_checkbox_in")
 
         # Initialisation du TileManager
-        TileEditor.enabled_editor = True
+        TileEditor.is_editing = True
         if not TileManager.load_level(level):
             return False
 
@@ -73,7 +73,7 @@ class Scenes:
         from dpt.engine.effectsManagement import EffectsManagement
 
         # Initialisation du TileManager
-        TileEditor.enabled_editor = TileEditor.can_edit = False
+        TileEditor.is_editing = TileEditor.enabled_editor = False
         if not TileManager.load_level(level):
             return False
 
@@ -157,7 +157,7 @@ class Scenes:
                                                                               math.floor(50 * Game.DISPLAY_RATIO),
                                                                               RessourceLoader.get("dpt.images.gui.symbols.SYMB_X")))})
 
-        if not TileEditor.can_edit:
+        if not TileEditor.enabled_editor:
             Game.gui["p_button_restart_save"] = Button(buttons_x, buttons_starting_y + (buttons_gap_y + button_height), button_width, button_height,
                                                        RessourceLoader.get("dpt.images.gui.buttons.BTN_BLUE_CIRCLE_OUT"),
                                                        pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_BLUE_CIRCLE_IN"),
@@ -598,7 +598,7 @@ class Scenes:
         from dpt.engine.loader import RessourceLoader
         from dpt.engine.gui.editor.tileEditor import TileEditor
 
-        if TileEditor.can_edit:
+        if TileEditor.enabled_editor:
             return
 
         cls.logger.info("Displaying GAME_OVER")
