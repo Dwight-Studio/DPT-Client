@@ -15,7 +15,7 @@ class FlagGreen(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
-        pygame.sprite.Sprite.__init__(self, TileManager.interactible_blocks_group)  # Sprite's constructor called
+        pygame.sprite.Sprite.__init__(self, TileManager.interactible_blocks_group, TileManager.foreground_blocks_group)  # Sprite's constructor called
         self.image = RessourceLoader.get(self.texture)
         self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect()
@@ -25,6 +25,7 @@ class FlagGreen(pygame.sprite.Sprite):
             self.sound = RessourceLoader.get(self.sounds)
             self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
             self.sound.play()
+        self.spawn_flag = self
 
     def update(self):
         for i in Game.player_group:

@@ -74,7 +74,6 @@ def level_loop():
             Scenes.game_over()
 
     do_synch_anims()
-    TileManager.update_clouds()
     TileManager.out_of_window()
     TileManager.camera.update(Game.player_sprite)
     TileEditor.update()
@@ -119,7 +118,6 @@ def pause_loop():
                 item.kill()
 
     TileManager.camera.update(Game.player_sprite, True)
-    TileManager.clouds_group.draw(Game.surface)
 
     menu.main_loop()
 
@@ -430,7 +428,6 @@ def game_over_loop():
                 item.kill()
 
     TileManager.camera.update(Game.player_sprite, True)
-    TileManager.clouds_group.draw(Game.surface)
 
     menu.main_loop()
 

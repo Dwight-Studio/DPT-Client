@@ -209,9 +209,11 @@ class TileManager:
             if sf is not None:
                 player_x = sf.rect.x - sf.offset_x
                 player_y = sf.rect.y - sf.offset_y
+            else:
+                cls.log.warning("Can't find GreenFlag for spawn")
 
             if "last_checkpoint" in Game.temp:
-                cp = RessourceLoader.get("dpt.entities.FlagBlue").checkpoint_list[Game.temp["last_checkpoint"]]
+                cp = RessourceLoader.get("dpt.entities.flags.FlagBlue").checkpoint_list[Game.temp["last_checkpoint"]]
                 player_x = cp.rect.x - cp.offset_x
                 player_y = cp.rect.y - cp.offset_y
 
@@ -430,17 +432,7 @@ class TileManager:
                 self.sprite_count += 1
                 if Game.DISPLAY_DEBUG_RECTS:
                     pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
-        for sprite in TileManager.deadly_object_group:
-            if sprite.rect.colliderect(rect):
-                if not freeze:
-                    sprite.update()
-                Game.surface.blit(sprite.image, self.apply(sprite))
         for sprite in TileManager.foreground_blocks_group:
-            if sprite.rect.colliderect(rect):
-                if not freeze:
-                    sprite.update()
-                Game.surface.blit(sprite.image, self.apply(sprite))
-        for sprite in TileManager.interactible_blocks_group:
             if sprite.rect.colliderect(rect):
                 if not freeze:
                     sprite.update()
@@ -525,6 +517,10 @@ class Camera:
         self.sprite_count = 0
         self.target = target
         self.x = -target.rect.x + int(Game.surface.get_size()[0] / 2)
+
+        if not freeze:
+            TileManager.update_clouds()
+        TileManager.clouds_group.draw(Game.surface)
 
         calcul = (self.width * Game.TILESIZE) - Game.surface.get_size()[0]
         self.x = min(0, self.last_x, self.x)

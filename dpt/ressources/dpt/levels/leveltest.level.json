@@ -492,10 +492,6 @@
   "14, 11": {
     "class": "dpt.blocks.goop.gooplower"
   },
-  "878, 419": {
-    "class": "dpt.entities.trees.light_wood.trunk",
-    "customPlace": true
-  },
   "5, 1": {
     "backgroundClass": "dpt.blocks.grass.grassslopeconnectorl"
   },
@@ -1019,38 +1015,6 @@
   },
   "4, 6": {
     "backgroundClass": "dpt.blocks.grass.grasslower"
-  },
-  "934, 696": {
-    "class": "dpt.entities.interactible.spikeywheel",
-    "customPlace": true
-  },
-  "1000, 704": {
-    "class": "dpt.entities.interactible.spikeywheel",
-    "customPlace": true
-  },
-  "1061, 810": {
-    "class": "dpt.entities.interactible.spike",
-    "customPlace": true
-  },
-  "1054, 812": {
-    "class": "dpt.entities.interactible.spike",
-    "customPlace": true
-  },
-  "1041, 813": {
-    "class": "dpt.entities.interactible.spike",
-    "customPlace": true
-  },
-  "1230, 814": {
-    "class": "dpt.entities.interactible.spike",
-    "customPlace": true
-  },
-  "1227, 814": {
-    "class": "dpt.entities.interactible.spike",
-    "customPlace": true
-  },
-  "1218, 814": {
-    "class": "dpt.entities.interactible.spike",
-    "customPlace": true
   },
   "19, 8": {
     "backgroundClass": "dpt.blocks.sand.sandlower",
