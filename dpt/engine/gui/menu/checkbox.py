@@ -54,22 +54,8 @@ class Checkbox(pygame.sprite.Sprite):
 
         if self.value:
             self.image = self.true_image
-            self.update_rect()
-            self.rect.x = self.x
-            self.rect.y = math.floor(self.y - 5 * self.size * Game.DISPLAY_RATIO)
         else:
             self.image = self.false_image
-            self.update_rect()
-            self.rect.x = self.x
-            self.rect.y = self.y
-
-    def update_rect(self):
-        """Actualise le rectange"""
-        self.rect = self.image.get_rect()
-        self.width = self.rect.width
-        self.height = self.rect.height
-        self.image = pygame.transform.smoothscale(self.image, (
-        math.floor(self.width * Game.DISPLAY_RATIO), math.floor(self.height * Game.DISPLAY_RATIO)))
 
     @classmethod
     def main_loop(cls):
