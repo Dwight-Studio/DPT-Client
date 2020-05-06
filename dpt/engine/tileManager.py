@@ -1,5 +1,6 @@
 import math
 import pygame
+
 from dpt.engine.gui.editor.editorPanel import EditorPanel
 from dpt.engine.gui.editor.panelFakeEntities import PanelFakeEntity
 from dpt.engine.gui.editor.tileEditor import TileEditor
@@ -202,7 +203,7 @@ class TileManager:
 
         if not TileEditor.is_editing:
             player_x = 300
-            player_y = Game.surface.get_size()[1] - 500
+            player_y = Game.WINDOW_HEIGHT - 500
 
             sf = RessourceLoader.get("dpt.entities.flags.FlagGreen").spawn_flag
 
@@ -227,8 +228,8 @@ class TileManager:
             from dpt.engine.characters.PlayerSprite import PlayerSprite
             Game.player_sprite = PlayerSprite(player_x, player_y)
 
-            if TileManager.max_width_size < math.floor(Game.surface.get_size()[0] / Game.TILESIZE):
-                TileManager.max_width_size = math.floor(Game.surface.get_size()[0] / Game.TILESIZE) + 2
+            if TileManager.max_width_size < math.floor(Game.WINDOW_WIDTH / Game.TILESIZE):
+                TileManager.max_width_size = math.floor(Game.WINDOW_WIDTH / Game.TILESIZE) + 2
             cls.camera = Camera(TileManager.max_width_size, TileManager.max_height_size)
         elif TileEditor.is_editing:
             from dpt.engine.gui.editor.charEntity import CharEntity
@@ -305,12 +306,12 @@ class TileManager:
         EditorPanel.editor_tile_registry.clear()
         value = bool(cls.check_back)
         Checkbox.checkbox_group.empty()
-        cls.check_back = Checkbox(Game.surface.get_size()[0] // 4 * 3 + Game.TILESIZE // 4, Game.TILESIZE // 4, 1)
+        cls.check_back = Checkbox(Game.WINDOW_WIDTH // 4 * 3 + Game.TILESIZE // 4, Game.TILESIZE // 4, 1)
         cls.check_back.value = value
         cls.count = 0
-        panel = EditorPanel((255, 255, 255), Game.surface.get_size()[0] / 4 * 3, 0, Game.surface.get_size()[0] / 4, Game.surface.get_size()[1], 120)
+        panel = EditorPanel((255, 255, 255), Game.WINDOW_WIDTH / 4 * 3, 0, Game.WINDOW_WIDTH / 4, Game.WINDOW_HEIGHT, 120)
         TileManager.editor_panel_group.add(panel)
-        startx = Game.surface.get_size()[0] / 4 * 3 + Game.TILESIZE
+        startx = Game.WINDOW_WIDTH / 4 * 3 + Game.TILESIZE
         starty = 0 + Game.TILESIZE
         for element in Game.available_tiles:
             if cls.count == cls.nb_skip:
@@ -318,8 +319,8 @@ class TileManager:
                 EditorPanel.editor_tile_registry[str(math.floor(startx / Game.TILESIZE)) + ", " + str(math.floor(starty / Game.TILESIZE))] = {"class": element}
                 startx += Game.TILESIZE
                 cls.per_line_count += 1
-                if math.floor(startx) >= Game.surface.get_size()[0] - Game.TILESIZE:
-                    startx = Game.surface.get_size()[0] / 4 * 3 + Game.TILESIZE
+                if math.floor(startx) >= Game.WINDOW_WIDTH - Game.TILESIZE:
+                    startx = Game.WINDOW_WIDTH / 4 * 3 + Game.TILESIZE
                     starty += Game.TILESIZE
                     if not cls.already_defined:
                         cls.per_line = cls.per_line_count
@@ -474,7 +475,7 @@ class TileManager:
                 del cloud
                 speed = randrange(1, 6)
                 ypos = randrange(10, Game.TILESIZE + 11, Game.TILESIZE // 2)
-                Cloud(Game.surface.get_size()[0], ypos, speed)
+                Cloud(Game.WINDOW_WIDTH, ypos, speed)
 
         cls.clouds_last_x = cls.camera.last_x
 
@@ -521,13 +522,13 @@ class Camera:
         """
         self.sprite_count = 0
         self.target = target
-        self.x = -target.rect.x + int(Game.surface.get_size()[0] / 2)
+        self.x = -target.rect.x + int(Game.WINDOW_WIDTH / 2)
 
         if not freeze:
             TileManager.update_clouds()
         TileManager.clouds_group.draw(Game.surface)
 
-        calcul = (self.width * Game.TILESIZE) - Game.surface.get_size()[0]
+        calcul = (self.width * Game.TILESIZE) - Game.WINDOW_WIDTH
         self.x = min(0, self.last_x, self.x)
         self.x = max(-calcul, self.x)
         self.camera = pygame.Rect(self.x, 0, self.width, self.height)
@@ -577,7 +578,7 @@ class EditorCamera:
         """
         self.sprite_count = 0
         self.target = target
-        self.x = -target.rect.x + int(Game.surface.get_size()[0] / 2)
+        self.x = -target.rect.x + int(Game.WINDOW_WIDTH / 2)
         self.x = min(0, self.x)
         self.camera = pygame.Rect(self.x, 0, self.width, self.height)
         TileManager.display_sprites(self, freeze)
@@ -587,7 +588,7 @@ class EditorCamera:
 
     def enable_grid(self):
         """Ajoute la grille de placement"""
-        for x in range(self.last_x, Game.surface.get_size()[0], Game.TILESIZE):
-            pygame.draw.line(Game.surface, (220, 220, 220), (x, 0), (x, Game.surface.get_size()[1]))
-        for y in range(0, Game.surface.get_size()[1], Game.TILESIZE):
-            pygame.draw.line(Game.surface, (220, 220, 220), (0, y), (Game.surface.get_size()[0], y))
+        for x in range(self.last_x, Game.WINDOW_WIDTH, Game.TILESIZE):
+            pygame.draw.line(Game.surface, (220, 220, 220), (x, 0), (x, Game.WINDOW_HEIGHT))
+        for y in range(0, Game.WINDOW_HEIGHT, Game.TILESIZE):
+            pygame.draw.line(Game.surface, (220, 220, 220), (0, y), (Game.WINDOW_WIDTH, y))

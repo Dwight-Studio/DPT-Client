@@ -8,7 +8,7 @@ class Coin(pygame.sprite.Sprite):
     texture = "dpt.images.environment.coins.00"
     textures = "dpt.images.environment.coins.*"
     sounds = ["dpt.sounds.sfx.sfx_stone", "dpt.sounds.sfx.sfx_coin_picked"]
-    screen_width, screen_height = Game.surface.get_size()
+    screen_width, screen_height = (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)
     width = Game.TILESIZE // 2
     height = Game.TILESIZE // 2
     offset_x = Game.TILESIZE // 4

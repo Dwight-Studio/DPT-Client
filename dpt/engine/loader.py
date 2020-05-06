@@ -3,6 +3,7 @@ import os
 import sys
 import traceback
 import json
+
 import psutil
 import pygame
 import runpy
@@ -119,11 +120,11 @@ class RessourceLoader:
         pbar = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/gui/ui/UI_BARFRAME.png")
         bar = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/gui/ui/UI_COLORBAR_2.png")
         bg = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/environment/background/default_sky.png")
-        bg = pygame.transform.smoothscale(bg, Game.surface.get_size())
-        width = min(Game.surface.get_size()[0] - 50, 1115)
+        bg = pygame.transform.smoothscale(bg, (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT))
+        width = min(Game.WINDOW_WIDTH - 50, 1115)
         height = min(math.floor(52 / 1115 * width), 52)
-        pb = ProgressBar(math.floor(Game.surface.get_size()[0] / 2 - width / 2),
-                         math.floor(Game.surface.get_size()[1] - height), width, height, pbar, bar, total)
+        pb = ProgressBar(math.floor(Game.WINDOW_WIDTH / 2 - width / 2),
+                         math.floor(Game.WINDOW_HEIGHT - height), width, height, pbar, bar, total)
         font = pygame.font.SysFont("arial", math.floor(20 * Game.DISPLAY_RATIO))
 
         for entry in cls.pending_ressources:
@@ -178,8 +179,8 @@ class RessourceLoader:
 
             text = font.render(entry, True, (0, 0, 0))
             rect = text.get_rect()
-            rect.centerx = Game.surface.get_size()[0] // 2
-            rect.centery = math.floor(Game.surface.get_size()[1] - height / 2)
+            rect.centerx = Game.WINDOW_WIDTH // 2
+            rect.centery = math.floor(Game.WINDOW_HEIGHT - height / 2)
             Game.surface.blit(text, rect)
 
             Game.events = pygame.event.get()

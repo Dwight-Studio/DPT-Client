@@ -125,7 +125,7 @@ class TileEditor:
 
             if mouse_buttons[0] == 1 and not cls.mouse_pushed_l:
                 cls.mouse_pushed_l = True
-                if not cls.panel_open or cls.mouse_pos_x <= math.floor(((Game.surface.get_size()[
+                if not cls.panel_open or cls.mouse_pos_x <= math.floor((((Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)[
                                                                              0] / 4 * 3 - Game.TILESIZE) - TileManager.camera.last_x) / Game.TILESIZE):
                     cls.last_mouse_pos_x = cls.mouse_pos_x
                     cls.last_mouse_pos_y = cls.mouse_pos_y
@@ -201,7 +201,7 @@ class TileEditor:
                 cls.mouse_pushed_l = False
             if mouse_buttons[2] == 1 and not cls.mouse_pushed_r:
                 cls.mouse_pushed_r = True
-                if not cls.panel_open or cls.mouse_pos_x <= math.floor(((Game.surface.get_size()[
+                if not cls.panel_open or cls.mouse_pos_x <= math.floor((((Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)[
                                                                              0] / 4 * 3 - Game.TILESIZE) - TileManager.camera.last_x) / Game.TILESIZE):
                     cls.last_mouse_pos_x = cls.mouse_pos_x
                     cls.last_mouse_pos_y = cls.mouse_pos_y

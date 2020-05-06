@@ -52,7 +52,7 @@ class Timer:
         cls.semicolon_image = pygame.transform.smoothscale(RessourceLoader.get(Timer.texture_semi_colon), (cls.width_semicolon, cls.height_digits))
 
         cls.rect = pygame.rect.Rect(0, math.floor(20 * Game.DISPLAY_RATIO), 4 * cls.width_digits + cls.width_semicolon, cls.height_digits)
-        cls.rect.centerx = Game.surface.get_size()[0] // 2
+        cls.rect.centerx = Game.WINDOW_WIDTH // 2
 
         cls.digit1 = TextSpriteButton(cls.width_digits, cls.height_digits, cls.digits_images[0])
         cls.digit2 = TextSpriteButton(cls.width_digits, cls.height_digits, cls.digits_images[0])
@@ -62,7 +62,7 @@ class Timer:
 
         cls.digit1.rect.left = cls.rect.left
         cls.digit2.rect.left = cls.digit1.rect.right
-        cls.semicolon.rect.centerx = Game.surface.get_size()[0] // 2
+        cls.semicolon.rect.centerx = Game.WINDOW_WIDTH // 2
         cls.digit4.rect.right = cls.rect.right
         cls.digit3.rect.right = cls.digit4.rect.left
 

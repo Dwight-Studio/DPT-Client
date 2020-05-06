@@ -2,8 +2,9 @@ import math
 import dpt.engine.gui.menu as menu
 import pygame
 import tkinter as tk
-from tkinter import simpledialog
+import dpt.engine.gui.menu as Menu
 
+from tkinter import simpledialog
 from dpt.engine.fileManager import FileManager
 from dpt.engine.gui.editor.tileEditor import TileEditor
 from dpt.engine.gui.menu.button import Button
@@ -13,13 +14,12 @@ from dpt.engine.tileManager import TileManager
 from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 from dpt.engine.gui.menu import Timer
-import dpt.engine.gui.menu as Menu
 from dpt.engine.webCommunications import WebCommunication
 from dpt.engine.effectsManagement import EffectsManagement
 
 try:
     bg = RessourceLoader.get("dpt.images.environment.background.default_sky")
-    bg = pygame.transform.smoothscale(bg, Game.surface.get_size())
+    bg = pygame.transform.smoothscale(bg, (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT))
 except:
     pass
 
@@ -226,8 +226,8 @@ def main_menu_loop():
     image = pygame.transform.smoothscale(image,
                                          (math.floor(1480 * Game.DISPLAY_RATIO), math.floor(600 * Game.DISPLAY_RATIO)))
     rect = image.get_rect()
-    rect.centerx = Game.surface.get_size()[0] // 2
-    rect.bottom = (Game.surface.get_size()[1] // 4) * 3
+    rect.centerx = Game.WINDOW_WIDTH // 2
+    rect.bottom = (Game.WINDOW_HEIGHT // 4) * 3
     Game.surface.blit(image, rect)
 
     menu.main_loop()
@@ -263,7 +263,7 @@ def settings_menu_loop():
             Game.update_display()
             global bg
             bg = RessourceLoader.get("dpt.images.environment.background.default_sky")
-            bg = pygame.transform.smoothscale(bg, Game.surface.get_size())
+            bg = pygame.transform.smoothscale(bg, (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT))
             menu.delete_items()
             Game.save_profile()
             Game.temp = {}
@@ -313,7 +313,7 @@ def settings_menu_loop():
 
     rect1 = pygame.rect.Rect(0,
                              math.floor(600 * Game.DISPLAY_RATIO),
-                             math.floor(175 * (Game.surface.get_size()[0] / Game.surface.get_size()[1]) * Game.DISPLAY_RATIO),
+                             math.floor(175 * (Game.WINDOW_WIDTH / Game.WINDOW_HEIGHT) * Game.DISPLAY_RATIO),
                              math.floor(175 * Game.DISPLAY_RATIO))
     rect1.centerx = Game.gui["window_graphics"].rect.centerx
 

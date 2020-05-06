@@ -7,7 +7,7 @@ from dpt.game import Game
 class Lava(pygame.sprite.Sprite):
     texture = "dpt.images.environment.liquids.Lava_Tile"
     textures = "dpt.images.environment.liquids.Lava_Tile_*"
-    screen_width, screen_height = Game.surface.get_size()
+    screen_width, screen_height = (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)
     sounds = "dpt.sounds.sfx.sfx_snow"
     width = height = Game.TILESIZE
     offset_x = 0

@@ -133,7 +133,7 @@ class WebCommunication(object):
                             reply = cls.make_request("http://" + Game.settings["server_address"] + "/sessions.json", True)
 
                             if "wb_player_count" not in Game.gui:
-                                Game.gui["wb_player_count"]: Text(Game.surface.get_size()[0] - math.floor(Game.DISPLAY_RATIO * 220),
+                                Game.gui["wb_player_count"]: Text(Game.WINDOW_WIDTH - math.floor(Game.DISPLAY_RATIO * 220),
                                                                   0,
                                                                   "Connexion au serveur...",
                                                                   math.floor(25 * Game.DISPLAY_RATIO),
@@ -155,7 +155,7 @@ class WebCommunication(object):
                             Game.gui["wb_player_count"].color = (0, 0, 0)
 
                         else:
-                            Game.gui["wb_player_count"]: Text(Game.surface.get_size()[0] - math.floor(Game.DISPLAY_RATIO * 220),
+                            Game.gui["wb_player_count"]: Text(Game.WINDOW_WIDTH - math.floor(Game.DISPLAY_RATIO * 220),
                                                               0,
                                                               "Déconnecté du serveur",
                                                               math.floor(25 * Game.DISPLAY_RATIO),
