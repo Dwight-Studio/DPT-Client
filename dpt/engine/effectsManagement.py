@@ -42,9 +42,11 @@ class EffectsManagement:
             if event.type == Game.VOTE_RESULT_AVAILABLE_EVENT:
                 print(cls.mods)
                 print(WebCommunication.last_result)
+                print("Temp_list avant effacement : " + str(cls.temp_list))
                 for effects in cls.temp_list:
                     cls.dico_current_effects[effects] = False
-                    cls.temp_list.remove(effects)
+                    cls.temp_list = []
+                print("Temp_list après effacement : " + str(cls.temp_list))
                 if not WebCommunication.last_result == "Both":
                     if cls.dico_effects[WebCommunication.last_result] == "Temp":
                         cls.temp_list.append(WebCommunication.last_result)
@@ -63,9 +65,9 @@ class EffectsManagement:
     def vote(cls):
         mod1 = random.choice(cls.list_effects)
         mod2 = random.choice(cls.list_effects)
-        cls.mods = [mod1, mod2]
         while mod2 == mod1:
             mod2 = random.choice(cls.list_effects)
+        cls.mods = [mod1, mod2]
         WebCommunication.create_vote_event(mod1, mod2)
 
     @classmethod
