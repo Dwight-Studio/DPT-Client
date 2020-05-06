@@ -186,6 +186,7 @@ def main_menu_loop():
                 from dpt.engine.webCommunications import CommunicationError
 
                 reply = WebCommunication.init_connection()
+                WebCommunication.create_vote_event("Ice", "Slow")
 
                 if isinstance(reply, CommunicationError):
                     Scenes.return_error([str(reply),
@@ -239,7 +240,6 @@ def main_menu_loop():
 
 def settings_menu_loop():
     """Boucle du menu des paramètres"""
-    Game.surface.blit(bg, (0, 0))
 
     ds = Game.temp["display_size"]
     Game.gui["graphics_text"].text, w, h = Game.display_list[ds]
