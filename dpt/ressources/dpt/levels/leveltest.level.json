@@ -428,10 +428,6 @@
   "33, 10": {
     "class": "dpt.entities.liquids.lava"
   },
-  "0, 8": {
-    "class": "dpt.entities.flags.flagred",
-    "backgroundClass": "dpt.blocks.grass.grasslower"
-  },
   "20, 8": {
     "class": "dpt.entities.flags.flagblue",
     "backgroundClass": "dpt.blocks.sand.sandlower"
@@ -439,9 +435,6 @@
   "15, 8": {
     "class": "dpt.entities.flags.flagblue",
     "backgroundClass": "dpt.blocks.goop.gooplower"
-  },
-  "27, 8": {
-    "class": "dpt.entities.flags.flaggreen"
   },
   "2, 8": {
     "class": "dpt.blocks.grass.grassslopeu",
@@ -1033,10 +1026,6 @@
     "backgroundClass": "dpt.blocks.snow.snowlower",
     "class": "dpt.entities.coin"
   },
-  "10, 8": {
-    "backgroundClass": "dpt.blocks.snow.snowlower",
-    "class": "dpt.entities.flags.flagblue"
-  },
   "12, 8": {
     "backgroundClass": "dpt.blocks.snow.snowlower"
   },
@@ -1052,5 +1041,16 @@
   "14, 8": {
     "backgroundClass": "dpt.blocks.goop.gooplower",
     "class": "dpt.entities.coin"
+  },
+  "10, 8": {
+    "backgroundClass": "dpt.blocks.snow.snowlower",
+    "class": "dpt.entities.flags.flagblue"
+  },
+  "0, 8": {
+    "class": "dpt.entities.flags.flaggreen",
+    "backgroundClass": "dpt.blocks.grass.grasslower"
+  },
+  "27, 8": {
+    "class": "dpt.entities.flags.flagred"
   }
 }
