@@ -252,24 +252,36 @@ class TileEditor:
                             try:
                                 if cls.entitys.customPlacement:
                                     if cls.entitys.rect.left <= mouse[0] <= cls.entitys.rect.right and cls.entitys.rect.top <= mouse[1] <= cls.entitys.rect.bottom:
-                                        cls.mouse_pos_y = cls.entitys.rect.y - cls.entitys.offset_y
-                                        cls.mouse_pos_x = cls.entitys.rect.x - cls.entitys.offset_x
-                                        cls.entitys.kill()
-                                        del cls.entitys
+                                        if isinstance(cls.entitys, RessourceLoader.get("dpt.entities.interactible.SpikeyWheel")):
+                                            cls.mouse_pos_y = cls.entitys.y - cls.entitys.offset_y
+                                            cls.mouse_pos_x = cls.entitys.x - cls.entitys.offset_x
+                                            cls.entitys.kill()
+                                            del cls.entitys
+                                        else:
+                                            cls.mouse_pos_y = cls.entitys.rect.y - cls.entitys.offset_y
+                                            cls.mouse_pos_x = cls.entitys.rect.x - cls.entitys.offset_x
+                                            cls.entitys.kill()
+                                            del cls.entitys
                             except AttributeError:
                                 if math.floor(
                                         cls.entitys.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(
                                         cls.entitys.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
                                     cls.entitys.kill()
                                     del cls.entitys
-                        for cls.dead in TileManager.entity_group:
+                        for cls.dead in TileManager.deadly_object_group:
                             try:
                                 if cls.dead.customPlacement:
                                     if cls.dead.rect.left <= mouse[0] <= cls.entitys.rect.right and cls.entitys.rect.top <= mouse[1] <= cls.entitys.rect.bottom:
-                                        cls.mouse_pos_y = cls.dead.rect.y - cls.dead.offset_y
-                                        cls.mouse_pos_x = cls.dead.rect.x - cls.dead.offset_x
-                                        cls.dead.kill()
-                                        del cls.dead
+                                        if isinstance(cls.dead, RessourceLoader.get("dpt.entities.interactible.SpikeyWheel")):
+                                            cls.mouse_pos_y = cls.dead.y - cls.dead.offset_y
+                                            cls.mouse_pos_x = cls.dead.x - cls.dead.offset_x
+                                            cls.dead.kill()
+                                            del cls.dead
+                                        else:
+                                            cls.mouse_pos_y = cls.dead.rect.y - cls.dead.offset_y
+                                            cls.mouse_pos_x = cls.dead.rect.x - cls.dead.offset_x
+                                            cls.dead.kill()
+                                            del cls.dead
                             except AttributeError:
                                 if math.floor(
                                         cls.dead.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(

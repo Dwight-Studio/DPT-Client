@@ -186,7 +186,6 @@ def main_menu_loop():
                 from dpt.engine.webCommunications import CommunicationError
 
                 reply = WebCommunication.init_connection()
-                WebCommunication.create_vote_event("Ice", "Slow")
 
                 if isinstance(reply, CommunicationError):
                     Scenes.return_error([str(reply),
