@@ -36,7 +36,6 @@ class Game(object):
     DEFAULT_SERVER_ADDRESS = "join.dont-play-together.fr"
     TILESIZE = 90
     DISPLAY_RATIO = 1
-    DISPLAY_DEBUG_RECTS = False
     SCREEN_WIDTH = None
     SCREEN_HEIGHT = None
 

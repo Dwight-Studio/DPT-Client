@@ -407,36 +407,41 @@ class TileManager:
                     sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))
                 self.sprite_count += 1
-                if Game.DISPLAY_DEBUG_RECTS:
+                if Game.DEBUG:
                     pygame.draw.rect(Game.surface, (0, 0, 255), self.apply(sprite), width=2)
         for sprite in TileManager.entity_group:
-            if sprite.rect.colliderect(rect):
+            if sprite.rect.colliderect(rect) and sprite not in TileManager.foreground_blocks_group:
                 if not freeze:
                     sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))
                 self.sprite_count += 1
-                if Game.DISPLAY_DEBUG_RECTS:
+                if Game.DEBUG:
                     pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(sprite), width=2)
         for sprite in Game.player_group:
             self.sprite_count += 1
             if not freeze:
                 sprite.update()
             Game.surface.blit(sprite.image, self.apply(sprite))
-            if Game.DISPLAY_DEBUG_RECTS:
+            if Game.DEBUG:
                 pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(sprite), width=2)
         for sprite in TileManager.environment_group:
-            if sprite.rect.colliderect(rect):
+            if sprite.rect.colliderect(rect) and sprite not in TileManager.foreground_blocks_group:
                 if not freeze:
                     sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))
                 self.sprite_count += 1
-                if Game.DISPLAY_DEBUG_RECTS:
+                if Game.DEBUG:
                     pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
         for sprite in TileManager.foreground_blocks_group:
             if sprite.rect.colliderect(rect):
                 if not freeze:
                     sprite.update()
                 Game.surface.blit(sprite.image, self.apply(sprite))
+                if Game.DEBUG:
+                    if sprite in TileManager.environment_group:
+                        pygame.draw.rect(Game.surface, (255, 0, 0), self.apply(sprite), width=2)
+                    else:
+                        pygame.draw.rect(Game.surface, (0, 255, 0), self.apply(sprite), width=2)
 
     @classmethod
     def generate_clouds(cls):
