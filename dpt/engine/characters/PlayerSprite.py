@@ -85,7 +85,10 @@ class PlayerSprite(pygame.sprite.Sprite):
                     self.isJump = False
                 else:
                     self.frameCount += 1
-                    self.fallCount = 0
+                    if self.jumpCount > 0:
+                        self.fallCount = 0
+                    else:
+                        self.fallCount += 1
 
             if EffectsManagement.dico_current_effects["jumpBoost"]:
                 self.jumpModifier = 0.07
@@ -100,6 +103,7 @@ class PlayerSprite(pygame.sprite.Sprite):
             Game.add_debug_info("Player.yvel = " + str(self.yvel))
             Game.add_debug_info("Player.jumpCount = " + str(self.jumpCount))
             Game.add_debug_info("Player.isJump = " + str(self.isJump))
+            Game.add_debug_info("Player.fallCount = " + str(self.fallCount))
 
             if EffectsManagement.dico_current_effects["inversion"]:
                 left = pygame.K_RIGHT
@@ -177,6 +181,8 @@ class PlayerSprite(pygame.sprite.Sprite):
                     self.gravityCount += 1
                     self.gravity = math.floor((self.gravityCount ** 2) * (0.05 - self.gravityModifier) * Game.DISPLAY_RATIO) * -1
                     self.yvel = self.gravity
+                else:
+                    self.yvel = 0
 
             self.collide()
 
