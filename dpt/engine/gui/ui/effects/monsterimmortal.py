@@ -12,7 +12,7 @@ class Monsterimmortal(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, TileManager.effects_group)
         self.full_heart = pygame.transform.smoothscale(RessourceLoader.get(Monsterimmortal.monsterimmortal), (math.floor(100 * Game.DISPLAY_RATIO), math.floor(100 * Game.DISPLAY_RATIO)))
         self.image = self.full_heart
-        self.rect = [0, 980 * Game.DISPLAY_RATIO, 100 * Game.DISPLAY_RATIO, 100 * Game.DISPLAY_RATIO]
+        self.rect = [0, 970 * Game.DISPLAY_RATIO, 100 * Game.DISPLAY_RATIO, 100 * Game.DISPLAY_RATIO]
 
     def update(self):
         Game.surface.blit(self.image, self.rect)

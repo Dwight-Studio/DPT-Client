@@ -19,7 +19,7 @@ class Heart(pygame.sprite.Sprite):
                      2: self.half_heart,
                      3: self.empty_heart}
         self.image = self.full_heart
-        self.rect = [1820 * Game.DISPLAY_RATIO, 980 * Game.DISPLAY_RATIO, 100 * Game.DISPLAY_RATIO, 100 * Game.DISPLAY_RATIO]
+        self.rect = [1810 * Game.DISPLAY_RATIO, 970 * Game.DISPLAY_RATIO, 100 * Game.DISPLAY_RATIO, 100 * Game.DISPLAY_RATIO]
 
     def update(self):
         todraw = self.draw[Game.life]
