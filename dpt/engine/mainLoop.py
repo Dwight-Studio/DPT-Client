@@ -469,3 +469,74 @@ def game_over_loop():
     Game.display_debug_info()
     Game.draw_cursor()
     Game.window.update()
+
+
+def end_level_loop():
+    """Boucle de fin de niveau"""
+    Game.surface.blit(bg, (0, 0))
+
+    Game.gui["fade"].update()
+
+    if not Game.gui["fade"].done:
+        TileManager.camera.update(Game.player_sprite, True)
+        Game.gui["fade"].draw(Game.surface)
+    else:
+        Game.gui["fade"].draw(Game.surface)
+        menu.main_loop()
+
+        for event in Game.events:
+            if event.type == pygame.QUIT:
+                if WebCommunication.sessionName is not None:
+                    WebCommunication.close()
+                if TileEditor.is_editing:
+                    FileManager.save_file(TileEditor.created_level)
+                Game.run = False
+                return
+            if event.type == Game.BUTTON_EVENT:
+                if event.button == Game.gui["el_button_main_menu"]:
+                    if WebCommunication.sessionName is not None:
+                        try:
+                            del Game.temp["last_checkpoint"]
+                        except KeyError:
+                            pass
+                        WebCommunication.close()
+                    menu.delete_items()
+                    Scenes.main_menu()
+                    return
+                elif event.button == Game.gui["el_button_quit"]:
+                    if WebCommunication.sessionName is not None:
+                        try:
+                            del Game.temp["last_checkpoint"]
+                        except KeyError:
+                            pass
+                        WebCommunication.close()
+                    Game.run = False
+            if not pygame.mixer_music.get_busy():
+                if Game.temp["score_sound"]:
+                    Game.temp["score_sound"] = False
+                    sound = RessourceLoader.get("dpt.sounds.sfx.sfx_score_count")
+                    sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
+                    sound.play(-1)
+
+                if Game.temp["score_display"] < Game.temp["score"]:
+                    Game.temp["score_display"] += Game.temp["score"] // (2 * 60)
+                    if not Game.temp["1_done"]:
+                        Game.gui["star_1"].run = Game.temp["score_display"] >= 1000
+                        Game.temp["1_done"] = Game.temp["score_display"] >= 1000
+                    if not Game.temp["2_done"]:
+                        Game.gui["star_2"].run = Game.temp["score_display"] >= 2000
+                        Game.temp["2_done"] = Game.temp["score_display"] >= 2000
+                    if not Game.temp["3_done"]:
+                        Game.gui["star_3"].run = Game.temp["score_display"] >= 3000
+                        Game.temp["3_done"] = Game.temp["score_display"] >= 3000
+                else:
+                    pygame.mixer.stop()
+                Game.gui["el_title_score"].text = str(Game.temp["score_display"])
+
+        Game.gui["star_1"].update()
+        Game.gui["star_2"].update()
+        Game.gui["star_3"].update()
+
+    Game.display_debug_info()
+    Game.draw_cursor()
+    Game.window.update()

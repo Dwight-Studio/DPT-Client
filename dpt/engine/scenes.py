@@ -185,6 +185,7 @@ class Scenes:
 
         # Gestion des ressources
         if load:
+            Game.temp = {}
             RessourceLoader.unload()
             RessourceLoader.add_pending("dpt.images.environment.background.default_sky")
             RessourceLoader.add_pending("dpt.images.gui.*")
@@ -579,7 +580,86 @@ class Scenes:
         :return: True en cas de réussite, sinon False
         :rtype: bool
         """
-        pass
+        from dpt.engine.loader import RessourceLoader
+        from dpt.engine.gui.editor.tileEditor import TileEditor
+        from dpt.engine.gui.menu.timer import Timer
+
+        if TileEditor.enabled_editor:
+            return
+
+        cls.logger.info("Displaying END_LEVEL")
+
+        # Score
+        Game.temp["score"] = Game.temp["coins"] * 100 + Timer.time * 10
+        Game.temp["score_display"] = 0
+        Game.temp["score_sound"] = True
+        Game.temp["1_done"] = False
+        Game.temp["2_done"] = False
+        Game.temp["3_done"] = False
+
+        # Ajout du GUI
+        from dpt.engine.gui.menu.button import Button
+        from dpt.engine.gui.menu.textSpriteButton import TextSpriteButton
+        from dpt.engine.gui.menu import Window
+        from dpt.engine.gui.menu.text import Text
+        from dpt.engine.gui.menu.fade import FadeOut
+        from dpt.engine.gui.menu.score_stars import TransitionStar
+        button_width = math.floor(92 * Game.DISPLAY_RATIO)
+        button_height = math.floor(95 * Game.DISPLAY_RATIO)
+
+        buttons_gap_y = math.floor(15 * Game.DISPLAY_RATIO)
+        buttons_starting_y = math.floor((Game.WINDOW_HEIGHT / 2) - button_height * 2 - buttons_gap_y * 1.5) + math.floor(32 * Game.DISPLAY_RATIO)
+        buttons_x = (Game.WINDOW_WIDTH // 2) - (button_width // 2)
+
+        Game.gui.update({"el_window": Window(0, 0, 5, 9, centerx=Game.WINDOW_WIDTH // 2, centery=Game.WINDOW_HEIGHT // 2),
+                         "el_title": Text(0,
+                                          buttons_starting_y - math.floor(90 * Game.DISPLAY_RATIO),
+                                          "Victoire !",
+                                          math.floor(50 * Game.DISPLAY_RATIO),
+                                          (0, 0, 0),
+                                          "dpt.fonts.DINOT_CondBlack",
+                                          centerx=Game.WINDOW_WIDTH // 2),
+                         "el_title_1": Text(0,
+                                            buttons_starting_y + math.floor(40 * Game.DISPLAY_RATIO),
+                                            "Score :",
+                                            math.floor(30 * Game.DISPLAY_RATIO),
+                                            (0, 0, 0),
+                                            "dpt.fonts.DINOT_CondBlack",
+                                            centerx=Game.WINDOW_WIDTH // 2),
+                         "el_title_score": Text(0,
+                                                buttons_starting_y + math.floor(70 * Game.DISPLAY_RATIO),
+                                                "0",
+                                                math.floor(90 * Game.DISPLAY_RATIO),
+                                                (0, 0, 0),
+                                                "dpt.fonts.DINOT_CondBlack",
+                                                centerx=Game.WINDOW_WIDTH // 2),
+                         "el_button_main_menu": Button(buttons_x - button_width - buttons_gap_y, buttons_starting_y + (buttons_gap_y + button_height) * 3, button_width, button_height,
+                                                       RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_OUT"),
+                                                       pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_IN"),
+                                                       text_sprite=TextSpriteButton(math.floor(50 * Game.DISPLAY_RATIO),
+                                                                                    math.floor(38 * Game.DISPLAY_RATIO),
+                                                                                    RessourceLoader.get("dpt.images.gui.symbols.SYMB_MENU"))),
+                         "el_button_quit": Button(buttons_x + button_width + buttons_gap_y, buttons_starting_y + (buttons_gap_y + button_height) * 3,
+                                                  button_width,
+                                                  button_height,
+                                                  RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_OUT"),
+                                                  pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_IN"),
+                                                  text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                               math.floor(50 * Game.DISPLAY_RATIO),
+                                                                               RessourceLoader.get("dpt.images.gui.symbols.SYMB_X"))),
+                         "star_3": TransitionStar(Game.WINDOW_WIDTH // 2 + math.floor(Game.DISPLAY_RATIO * 85), buttons_starting_y + math.floor(200 * Game.DISPLAY_RATIO), Game.temp["score"] >= 1000, True, False),
+                         "star_2": TransitionStar(Game.WINDOW_WIDTH // 2, buttons_starting_y + math.floor(200 * Game.DISPLAY_RATIO), Game.temp["score"] >= 2000, True, False),
+                         "star_1": TransitionStar(Game.WINDOW_WIDTH // 2 - math.floor(Game.DISPLAY_RATIO * 85), buttons_starting_y + math.floor(200 * Game.DISPLAY_RATIO), Game.temp["score"] >= 3000, True, False),
+                         "fade": FadeOut(2000)})
+
+        # Sons
+        pygame.mixer_music.load(RessourceLoader.get("dpt.sounds.musics.flakey_a_major"))
+        pygame.mixer_music.play()
+
+        # Loops
+        from dpt.engine.mainLoop import end_level_loop
+        Game.loop = end_level_loop
+        return True
 
     @classmethod
     def game_over(cls):
