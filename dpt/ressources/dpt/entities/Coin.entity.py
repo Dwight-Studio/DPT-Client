@@ -44,5 +44,9 @@ class Coin(pygame.sprite.Sprite):
                 self.sound = RessourceLoader.get(Coin.sounds[1])
                 self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
                 self.sound.play()
+                if "coins" not in Game.temp:
+                    Game.temp.update({"coins": 1})
+                else:
+                    Game.temp["coins"] += 1
                 del self
                 return

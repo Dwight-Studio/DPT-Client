@@ -2,9 +2,10 @@ import math
 import random
 import pygame
 
+from dpt.engine.loader import RessourceLoader
 from dpt.engine.webCommunications import WebCommunication
 from dpt.game import Game
-
+from threading import Thread
 from dpt.engine.gui.ui.effects.Fast import Fast
 from dpt.engine.gui.ui.effects.Ice import Ice
 from dpt.engine.gui.ui.effects.inversion import Inversion
@@ -97,6 +98,17 @@ class EffectsManagement:
                 for mods in cls.temp_list:
                     cls.list_current_effects.append(mods)
                 pygame.time.set_timer(Game.WAIT_BETWEEN_VOTE_EVENT, 30000, True)
+
+                if cls.dico_current_effects["Slow"]:
+                    def sound_effect():
+                        pygame.mixer_music.fadeout(200)
+                        pygame.mixer_music.load(RessourceLoader.get("dpt.sounds.musics.time_stop"))
+                        pygame.mixer_music.play()
+                        pygame.time.wait(3000)
+                        pygame.mixer_music.fadeout(2000)
+
+                    Thread(target=sound_effect).start()
+
             elif event.type == Game.WAIT_BETWEEN_VOTE_EVENT:
                 cls.vote()
 

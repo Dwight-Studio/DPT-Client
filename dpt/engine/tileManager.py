@@ -120,7 +120,7 @@ class TileManager:
             RessourceLoader.load()
 
         if not TileEditor.is_editing:
-            cls.log.debug("Loading textures")
+            cls.log.debug("Loading textures and sounds")
             for keys in level:
                 try:
                     if "class" in level[keys]:
@@ -153,6 +153,7 @@ class TileManager:
             RessourceLoader.add_pending("dpt.images.environment.background.Cloud_full_*")
             RessourceLoader.add_pending("dpt.images.gui.ui.UI_HEART*")
             RessourceLoader.add_pending("dpt.images.effects.*")
+            RessourceLoader.add_pending("dpt.sounds.musics.time_stop")
             RessourceLoader.add_pending("dpt.images.not_found")
             RessourceLoader.load()
 
