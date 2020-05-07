@@ -75,7 +75,6 @@ class EffectsManagement:
         cls.display_update()
         for event in Game.events:
             if event.type == Game.VOTE_RESULT_AVAILABLE_EVENT:
-                cls.list_current_effects = []
                 for effects in cls.temp_list:
                     cls.dico_current_effects[effects] = False
                     cls.temp_list = []
@@ -93,6 +92,7 @@ class EffectsManagement:
                         else:
                             cls.perm_list.append(mods)
                         cls.dico_current_effects[mods] = True
+                cls.list_current_effects = []
                 for mods in cls.perm_list:
                     cls.list_current_effects.append(mods)
                 for mods in cls.temp_list:
@@ -114,9 +114,11 @@ class EffectsManagement:
 
     @classmethod
     def vote(cls):
-        mod1 = "Slow"
+        mod1 = random.choice(cls.list_effects)
+        while mod1 in cls.list_current_effects:
+            mod1 = random.choice(cls.list_current_effects)
         mod2 = random.choice(cls.list_effects)
-        while mod2 == mod1:
+        while mod2 == mod1 and mod2 in cls.list_current_effects:
             mod2 = random.choice(cls.list_effects)
         cls.mods = [mod1, mod2]
         WebCommunication.create_vote_event(mod1, mod2)
@@ -146,6 +148,7 @@ class EffectsManagement:
                                "jumpBoost": cls.image_jumpBoost,
                                "inversion": cls.image_inversion,
                                "lowGravity": cls.image_lowGravity}
+        print(cls.list_current_effects)
         for images in cls.list_current_effects:
             list_current_images_effects.append(dico_images_effects[images])
         for images in list_current_images_effects:

@@ -61,6 +61,7 @@ class Game(object):
     cursor1 = None  # Image 1 du curseur
     cursor2 = None  # Image 2 du curseur
     life = 1  # Variable indiquant la vie du joueur vis à vis de son affichage
+    upsidedown = True
 
     # Paramètres utilisateur
     settings = {
@@ -295,7 +296,15 @@ class Game(object):
                 Game.add_debug_info("----------")
 
                 cls.loop()
+
+                if cls.upsidedown:
+                    sc = pygame.transform.rotate(Game.surface, 180)
+                    Game.surface.blit(sc, (0, 0))
+
+                Game.display_debug_info()
                 Game.draw_cursor()
+                Game.window.update()
+
                 Game.clock.tick(60)
 
             cls.save_profile()

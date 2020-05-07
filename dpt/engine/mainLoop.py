@@ -102,12 +102,8 @@ def level_loop():
 
     WebCommunication.update()
 
-    Game.display_debug_info()
-    Game.draw_cursor()
     if not TileEditor.is_editing:
         TileManager.heart_group.update()
-    Game.window.update()
-
 
 def pause_loop():
     """Boucle de pause"""
@@ -165,10 +161,6 @@ def pause_loop():
                 Game.run = False
 
     WebCommunication.update()
-
-    Game.display_debug_info()
-    Game.draw_cursor()
-    Game.window.update()
 
 
 def main_menu_loop():
@@ -232,10 +224,6 @@ def main_menu_loop():
     Game.surface.blit(image, rect)
 
     menu.main_loop()
-
-    Game.display_debug_info()
-    Game.draw_cursor()
-    Game.window.update()
 
 
 def settings_menu_loop():
@@ -340,10 +328,6 @@ def settings_menu_loop():
     pygame.draw.rect(Game.surface, (255, 255, 255, 2), rect1)
     pygame.draw.rect(Game.surface, (0, 0, 0), rect2, width=3)
 
-    Game.display_debug_info()
-    Game.draw_cursor()
-    Game.window.update()
-
 
 def start_level_loop():
     """Boucle de début de niveau"""
@@ -372,10 +356,6 @@ def start_level_loop():
 
     WebCommunication.update()
 
-    Game.display_debug_info()
-    Game.draw_cursor()
-    Game.window.update()
-
 
 def loading_loop(kill=False):
     """Boucle de chargement. Boucle spécial car non executée dans game"""
@@ -384,10 +364,6 @@ def loading_loop(kill=False):
 
     for event in Game.events:
         if event.type == pygame.QUIT:
-            if WebCommunication.sessionName is not None:
-                WebCommunication.close()
-            if TileEditor.is_editing:
-                FileManager.save_file(TileEditor.created_level)
             Game.run = False
             return
 
@@ -467,10 +443,6 @@ def game_over_loop():
 
     WebCommunication.update()
 
-    Game.display_debug_info()
-    Game.draw_cursor()
-    Game.window.update()
-
 
 def end_level_loop():
     """Boucle de fin de niveau"""
@@ -521,7 +493,7 @@ def end_level_loop():
                 sound.play(-1)
 
             if Game.temp["score_display"] < Game.temp["score"]:
-                Game.temp["score_display"] += Game.temp["score"] // (2 * 60)
+                Game.temp["score_display"] += Game.temp["score"] // (3 * 60)
                 if not Game.temp["1_done"]:
                     Game.gui["star_1"].run = Game.temp["score_display"] >= 1000
                     Game.temp["1_done"] = Game.temp["score_display"] >= 1000
@@ -535,10 +507,19 @@ def end_level_loop():
                 pygame.mixer.stop()
             Game.gui["el_title_score"].text = str(Game.temp["score_display"])
 
-        Game.gui["star_1"].update()
-        Game.gui["star_2"].update()
-        Game.gui["star_3"].update()
-
-    Game.display_debug_info()
-    Game.draw_cursor()
-    Game.window.update()
+        if Game.temp["1_done"] and not Game.temp["2_done"] and not Game.temp["3_done"]:
+            Game.gui["star_3"].update()
+            Game.gui["star_2"].update()
+            Game.gui["star_1"].update()
+        elif Game.temp["2_done"] and Game.temp["1_done"] and not Game.temp["3_done"]:
+            Game.gui["star_1"].update()
+            Game.gui["star_3"].update()
+            Game.gui["star_2"].update()
+        elif Game.temp["2_done"] and Game.temp["1_done"] and Game.temp["3_done"]:
+            Game.gui["star_1"].update()
+            Game.gui["star_2"].update()
+            Game.gui["star_3"].update()
+        elif not Game.temp["1_done"] and not Game.temp["2_done"] and not Game.temp["3_done"]:
+            Game.gui["star_3"].update()
+            Game.gui["star_2"].update()
+            Game.gui["star_1"].update()
