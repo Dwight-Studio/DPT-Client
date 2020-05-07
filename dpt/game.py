@@ -344,7 +344,7 @@ class Game(object):
             font = pygame.font.SysFont("arial", math.floor(15 * Game.DISPLAY_RATIO))
             y = 0
             for text in cls._debug_infos:
-                debug_text = font.render(text, True, (0, 0, 0))
+                debug_text = font.render(text, True, (255, 255, 255))
                 rect = debug_text.get_rect()
                 rect.x = 0
                 rect.y = y

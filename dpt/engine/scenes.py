@@ -596,6 +596,7 @@ class Scenes:
         Game.temp["1_done"] = False
         Game.temp["2_done"] = False
         Game.temp["3_done"] = False
+        Game.temp["start"] = False
 
         # Ajout du GUI
         from dpt.engine.gui.menu.button import Button

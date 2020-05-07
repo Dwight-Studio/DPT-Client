@@ -511,27 +511,28 @@ def end_level_loop():
                             pass
                         WebCommunication.close()
                     Game.run = False
-            if not pygame.mixer_music.get_busy():
-                if Game.temp["score_sound"]:
-                    Game.temp["score_sound"] = False
-                    sound = RessourceLoader.get("dpt.sounds.sfx.sfx_score_count")
-                    sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
-                    sound.play(-1)
 
-                if Game.temp["score_display"] < Game.temp["score"]:
-                    Game.temp["score_display"] += Game.temp["score"] // (2 * 60)
-                    if not Game.temp["1_done"]:
-                        Game.gui["star_1"].run = Game.temp["score_display"] >= 1000
-                        Game.temp["1_done"] = Game.temp["score_display"] >= 1000
-                    if not Game.temp["2_done"]:
-                        Game.gui["star_2"].run = Game.temp["score_display"] >= 2000
-                        Game.temp["2_done"] = Game.temp["score_display"] >= 2000
-                    if not Game.temp["3_done"]:
-                        Game.gui["star_3"].run = Game.temp["score_display"] >= 3000
-                        Game.temp["3_done"] = Game.temp["score_display"] >= 3000
-                else:
-                    pygame.mixer.stop()
-                Game.gui["el_title_score"].text = str(Game.temp["score_display"])
+        if not pygame.mixer_music.get_busy():
+            if Game.temp["score_sound"]:
+                Game.temp["score_sound"] = False
+                sound = RessourceLoader.get("dpt.sounds.sfx.sfx_score_count")
+                sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
+                sound.play(-1)
+
+            if Game.temp["score_display"] < Game.temp["score"]:
+                Game.temp["score_display"] += Game.temp["score"] // (2 * 60)
+                if not Game.temp["1_done"]:
+                    Game.gui["star_1"].run = Game.temp["score_display"] >= 1000
+                    Game.temp["1_done"] = Game.temp["score_display"] >= 1000
+                if not Game.temp["2_done"]:
+                    Game.gui["star_2"].run = Game.temp["score_display"] >= 2000
+                    Game.temp["2_done"] = Game.temp["score_display"] >= 2000
+                if not Game.temp["3_done"]:
+                    Game.gui["star_3"].run = Game.temp["score_display"] >= 3000
+                    Game.temp["3_done"] = Game.temp["score_display"] >= 3000
+            else:
+                pygame.mixer.stop()
+            Game.gui["el_title_score"].text = str(Game.temp["score_display"])
 
         Game.gui["star_1"].update()
         Game.gui["star_2"].update()
