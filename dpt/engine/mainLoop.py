@@ -102,6 +102,8 @@ def level_loop():
 
     WebCommunication.update()
 
+    if not TileEditor.is_editing:
+        TileManager.heart_group.update()
 
 def pause_loop():
     """Boucle de pause"""

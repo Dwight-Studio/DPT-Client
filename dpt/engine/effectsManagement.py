@@ -114,7 +114,7 @@ class EffectsManagement:
 
     @classmethod
     def vote(cls):
-        mod1 = "Slow"
+        mod1 = random.choice(cls.list_effects)
         mod2 = random.choice(cls.list_effects)
         while mod2 == mod1:
             mod2 = random.choice(cls.list_effects)
