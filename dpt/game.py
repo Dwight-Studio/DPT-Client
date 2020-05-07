@@ -61,7 +61,7 @@ class Game(object):
     cursor1 = None  # Image 1 du curseur
     cursor2 = None  # Image 2 du curseur
     life = 1  # Variable indiquant la vie du joueur vis à vis de son affichage
-    upsidedown = True
+    upsidedown = False
 
     # Paramètres utilisateur
     settings = {

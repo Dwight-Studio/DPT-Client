@@ -148,7 +148,6 @@ class EffectsManagement:
                                "jumpBoost": cls.image_jumpBoost,
                                "inversion": cls.image_inversion,
                                "lowGravity": cls.image_lowGravity}
-        print(cls.list_current_effects)
         for images in cls.list_current_effects:
             list_current_images_effects.append(dico_images_effects[images])
         for images in list_current_images_effects:
