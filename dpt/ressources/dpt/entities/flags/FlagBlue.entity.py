@@ -1,4 +1,6 @@
 import pygame
+
+from dpt.engine.effectsManagement import EffectsManagement
 from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 
@@ -37,15 +39,24 @@ class FlagBlue(pygame.sprite.Sprite):
             if pygame.sprite.collide_mask(self, i) and not self.already_activated:
                 self.already_activated = True
                 if "last_checkpoint" in Game.temp:
+                    last = Game.temp["last_checkpoint"]
                     Game.temp["last_checkpoint"] = max(self.id, Game.temp["last_checkpoint"])
-                    if Game.temp["last_checkpoint"] == self.id:
+                    if Game.temp["last_checkpoint"] == self.id and Game.temp["last_checkpoint"] != last:
                         Game.temp["last_checkpoint_time"] = Timer.time
+                        Game.temp["last_checkpoint_life"] = Game.life
+                        Game.temp["last_checkpoint_effects"] = {}
+                        for key, value in EffectsManagement.__dict__.items():
+                            Game.temp["last_checkpoint_effects"].update({key: value})
                     else:
                         Game.get_logger(FlagBlue.__name__).warning("This checkpoint is not the last checkpoint")
 
                 else:
                     Game.temp["last_checkpoint"] = self.id
                     Game.temp["last_checkpoint_time"] = Timer.time
+                    Game.temp["last_checkpoint_life"] = Game.life
+                    Game.temp["last_checkpoint_effects"] = {}
+                    for key, value in EffectsManagement.__dict__.items():
+                        Game.temp["last_checkpoint_effects"].update({key: value})
 
     @classmethod
     def compute_ids(cls):

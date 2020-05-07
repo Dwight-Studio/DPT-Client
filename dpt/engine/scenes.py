@@ -92,7 +92,7 @@ class Scenes:
 
         # Timer
         from dpt.engine.gui.menu.timer import Timer
-        Timer.start(180)
+        Timer.start(Game.TIMER_LENGTH)
 
         # Loops
         from dpt.engine.mainLoop import level_loop

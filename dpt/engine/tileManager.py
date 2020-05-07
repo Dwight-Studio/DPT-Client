@@ -62,7 +62,7 @@ class TileManager:
         :return: True si le niveau est chargée sans problème, sinon False
         :rtype: bool
         """
-        from dpt.engine.scenes import Scenes
+        from dpt.engine.effectsManagement import EffectsManagement
         from dpt.engine.mainLoop import loading_loop
 
         cls.is_loading_level = True
@@ -219,12 +219,16 @@ class TileManager:
                 player_x = cp.rect.x - cp.offset_x
                 player_y = cp.rect.y - cp.offset_y
 
-                if "last_checkpoint_time" in Game.temp:
-                    Timer.time = Game.temp["last_checkpoint_time"]
-                    pygame.time.set_timer(Game.TIMER_EVENT, 0)
-                    pygame.time.set_timer(Game.TIMER_EVENT, 1000)
-                else:
-                    TileManager.log.warning("Can't find last checkpoint time")
+                Timer.time = Game.temp["last_checkpoint_time"] + 1
+                Game.life = Game.temp["last_checkpoint_life"]
+                for key, value in Game.temp["last_checkpoint_effects"].items():
+                    try:
+                        setattr(EffectsManagement, key, value)
+                    except AttributeError:
+                        continue
+                pygame.event.post(pygame.event.Event(Game.TIMER_EVENT, {}))
+                pygame.time.set_timer(Game.TIMER_EVENT, 0)
+                pygame.time.set_timer(Game.TIMER_EVENT, 1000)
 
             from dpt.engine.characters.PlayerSprite import PlayerSprite
             Game.player_sprite = PlayerSprite(player_x, player_y)
