@@ -24,6 +24,7 @@ class TransitionStar:
         if anim:
             for i in range(0, math.floor(500 * Game.DISPLAY_RATIO), math.floor((500 * Game.DISPLAY_RATIO) / 30)):
                 self.images.append(pygame.transform.smoothscale(self.star[1], (math.floor(550 * Game.DISPLAY_RATIO) - i, math.floor(550 * Game.DISPLAY_RATIO) - i)))
+            self.images.append(self.image)
 
         self.max = len(self.images) - 1
 
@@ -50,3 +51,4 @@ class TransitionStar:
             self.run = False
             self.anim = False
             self.filled = True
+            self.update()

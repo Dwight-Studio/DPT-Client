@@ -190,11 +190,6 @@ class RessourceLoader:
             Game.add_debug_info(str(math.floor(Game.clock.get_fps())) + " FPS")
             Game.add_debug_info("----------")
 
-            for event in Game.events:
-                if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
-                    pygame.quit()
-                    exit()
-
             WebCommunication.update()
 
             Game.display_debug_info()
