@@ -520,7 +520,7 @@ def end_level_loop():
                 sound.play(-1)
 
             if Game.temp["score_display"] < Game.temp["score"]:
-                Game.temp["score_display"] += Game.temp["score"] // (4 * 60)
+                Game.temp["score_display"] += Game.temp["score"] // (3 * 60)
                 if not Game.temp["1_done"]:
                     Game.gui["star_1"].run = Game.temp["score_display"] >= 1000
                     Game.temp["1_done"] = Game.temp["score_display"] >= 1000
