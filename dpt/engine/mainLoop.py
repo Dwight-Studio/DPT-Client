@@ -102,11 +102,6 @@ def level_loop():
 
     WebCommunication.update()
 
-    Game.display_debug_info()
-    Game.draw_cursor()
-    TileManager.heart_group.update()
-    Game.window.update()
-
 
 def pause_loop():
     """Boucle de pause"""
@@ -164,10 +159,6 @@ def pause_loop():
                 Game.run = False
 
     WebCommunication.update()
-
-    Game.display_debug_info()
-    Game.draw_cursor()
-    Game.window.update()
 
 
 def main_menu_loop():
@@ -231,10 +222,6 @@ def main_menu_loop():
     Game.surface.blit(image, rect)
 
     menu.main_loop()
-
-    Game.display_debug_info()
-    Game.draw_cursor()
-    Game.window.update()
 
 
 def settings_menu_loop():
@@ -339,10 +326,6 @@ def settings_menu_loop():
     pygame.draw.rect(Game.surface, (255, 255, 255, 2), rect1)
     pygame.draw.rect(Game.surface, (0, 0, 0), rect2, width=3)
 
-    Game.display_debug_info()
-    Game.draw_cursor()
-    Game.window.update()
-
 
 def start_level_loop():
     """Boucle de début de niveau"""
@@ -371,10 +354,6 @@ def start_level_loop():
 
     WebCommunication.update()
 
-    Game.display_debug_info()
-    Game.draw_cursor()
-    Game.window.update()
-
 
 def loading_loop(kill=False):
     """Boucle de chargement. Boucle spécial car non executée dans game"""
@@ -383,10 +362,6 @@ def loading_loop(kill=False):
 
     for event in Game.events:
         if event.type == pygame.QUIT:
-            if WebCommunication.sessionName is not None:
-                WebCommunication.close()
-            if TileEditor.is_editing:
-                FileManager.save_file(TileEditor.created_level)
             Game.run = False
             return
 
@@ -465,10 +440,6 @@ def game_over_loop():
                 Game.run = False
 
     WebCommunication.update()
-
-    Game.display_debug_info()
-    Game.draw_cursor()
-    Game.window.update()
 
 
 def end_level_loop():
@@ -550,7 +521,3 @@ def end_level_loop():
             Game.gui["star_3"].update()
             Game.gui["star_2"].update()
             Game.gui["star_1"].update()
-
-    Game.display_debug_info()
-    Game.draw_cursor()
-    Game.window.update()
