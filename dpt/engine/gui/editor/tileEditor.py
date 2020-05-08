@@ -62,11 +62,12 @@ class TileEditor:
                         cls.spushed = False
                     if keys[pygame.K_n] and not cls.npushed:
                         cls.npushed = True
-                        TileManager.environment_group.empty()
-                        TileManager.entity_group.empty()
-                        TileManager.background_blocks_group.empty()
-                        TileManager.deadly_object_group.empty()
-                        TileManager.interactible_blocks_group.empty()
+                        list = []
+                        list.extend(TileManager.environment_group)
+                        list.extend(TileManager.entity_group)
+                        list.extend(TileManager.background_blocks_group)
+                        for sprite in list:
+                            sprite.kill()
                         cls.created_level.clear()
                     elif not keys[pygame.K_n] and cls.npushed:
                         cls.npushed = False
