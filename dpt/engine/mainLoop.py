@@ -105,6 +105,7 @@ def level_loop():
     if not TileEditor.is_editing:
         TileManager.heart_group.update()
 
+
 def pause_loop():
     """Boucle de pause"""
     Game.surface.blit(bg, (0, 0))
@@ -181,11 +182,11 @@ def main_menu_loop():
                 reply = WebCommunication.init_connection()
 
                 if isinstance(reply, CommunicationError):
-                    Scenes.return_error([str(reply),
-                                         " ",
-                                         "Si le problème persiste, vous pouvez nous contacter sur Discord",
-                                         "Dwight Studio Hub: discord.gg/yZwuNqN",
-                                         "(Lien copié dans le presse-papier)"])
+                    Scenes.return_error(str(reply),
+                                        " ",
+                                        "Si le problème persiste, vous pouvez nous contacter sur Discord",
+                                        "Dwight Studio Hub: discord.gg/yZwuNqN",
+                                        "(Lien copié dans le presse-papier)")
 
                     from tkinter import Tk
                     root = Tk()

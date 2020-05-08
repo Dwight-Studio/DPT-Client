@@ -724,15 +724,18 @@ class Scenes:
         return True
 
     @classmethod
-    def return_error(cls, messages):
+    def return_error(cls, *messages):
         """Met en place les élèments du menu d'erreur
 
         :param messages: Messages d'erreur
-        :type messages: list
+        :type messages: str
 
         :return: True en cas de réussite, sinon False
         :rtype: bool
         """
+        import dpt.engine.gui.menu as menu
+
+        menu.delete_items()
         Scenes.main_menu(False)
 
         cls.logger.info("Displaying RETURN_ERROR")

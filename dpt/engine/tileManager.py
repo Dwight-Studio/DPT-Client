@@ -1,5 +1,7 @@
 import math
 import pygame
+import traceback
+import sys
 
 from dpt.engine.gui.editor.editorPanel import EditorPanel
 from dpt.engine.gui.editor.panelFakeEntities import PanelFakeEntity
@@ -62,200 +64,223 @@ class TileManager:
         :return: True si le niveau est chargée sans problème, sinon False
         :rtype: bool
         """
-        from dpt.engine.effectsManagement import EffectsManagement
-        from dpt.engine.mainLoop import loading_loop
+        try:
+            from dpt.engine.effectsManagement import EffectsManagement
+            from dpt.engine.mainLoop import loading_loop
 
-        cls.is_loading_level = True
-        if Game.player_sprite is not None:
-            Game.player_sprite.kill()
-            Game.player_sprite = None
-        Game.player_group.empty()
+            cls.is_loading_level = True
+            if Game.player_sprite is not None:
+                Game.player_sprite.kill()
+                Game.player_sprite = None
+            Game.player_group.empty()
 
-        TileManager.editor_panel_group.empty()
-        TileEditor.ghost_block_group.empty()
-        TileManager.interactible_blocks_group.empty()
-        TileManager.clouds_group.empty()
+            TileManager.editor_panel_group.empty()
+            TileEditor.ghost_block_group.empty()
+            TileManager.interactible_blocks_group.empty()
+            TileManager.clouds_group.empty()
 
-        Game.temp["coins"] = 0
+            Game.temp["coins"] = 0
 
-        for entity in TileManager.entity_group:
-            entity.kill()
+            for entity in TileManager.entity_group:
+                entity.kill()
 
-        for block in TileManager.environment_group:
-            block.kill()
+            for block in TileManager.environment_group:
+                block.kill()
 
-        for block in TileManager.background_blocks_group:
-            block.kill()
+            for block in TileManager.background_blocks_group:
+                block.kill()
 
-        if TileEditor.is_editing:
-            RessourceLoader.add_pending("dpt.blocks.*")
-            RessourceLoader.add_pending("dpt.entities.*")
-            RessourceLoader.add_pending("dpt.images.environment.*")
-            RessourceLoader.add_pending("dpt.images.characters.*")
-            RessourceLoader.add_pending("dpt.sounds.*")
-            RessourceLoader.add_pending("dpt.images.not_found")
-            RessourceLoader.load()
+            if TileEditor.is_editing:
+                RessourceLoader.add_pending("dpt.blocks.*")
+                RessourceLoader.add_pending("dpt.entities.*")
+                RessourceLoader.add_pending("dpt.images.environment.*")
+                RessourceLoader.add_pending("dpt.images.characters.*")
+                RessourceLoader.add_pending("dpt.sounds.*")
+                RessourceLoader.add_pending("dpt.images.not_found")
+                RessourceLoader.load()
 
-        if type(level_name) == str:
-            cls.log.info("Loading level " + level_name)
-            cls.log.debug("Loading level main file")
-            RessourceLoader.add_pending(level_name)
-            RessourceLoader.load()
-            level = RessourceLoader.get(level_name)
-        else:
-            cls.log.info("Loading unknown level")
-            level = level_name
-        cls.max_width_size = 0
-        cls.max_height_size = 0
-        if level is None:
-            cls.log.critical("The level can't be loaded")
-            return False
-
-        if not TileEditor.is_editing:
-            cls.log.debug("Loading level blocks and entities")
-            RessourceLoader.add_pending("dpt.entities.flags.*")
-            for keys in level["tiles"]:
-                if "class" in level["tiles"][keys]:
-                    RessourceLoader.add_pending(level["tiles"][keys]["class"])
-                if "backgroundClass" in level["tiles"][keys]:
-                    RessourceLoader.add_pending(level["tiles"][keys]["backgroundClass"])
-            RessourceLoader.load()
-
-        if not TileEditor.is_editing:
-            cls.log.debug("Loading textures and sounds")
-            for keys in level["tiles"]:
-                try:
-                    if "class" in level["tiles"][keys]:
-                        obj = RessourceLoader.get(level["tiles"][keys]["class"])
-                        RessourceLoader.add_pending(obj.texture)
-                        if hasattr(obj, "textures"):
-                            RessourceLoader.add_pending(obj.textures)
-                        if hasattr(obj, "sounds"):
-                            if isinstance(obj.sounds, list):
-                                for s in obj.sounds:
-                                    RessourceLoader.add_pending(s)
-                            else:
-                                RessourceLoader.add_pending(obj.sounds)
-                except UnreachableRessourceError:
-                    cls.log.warning("Invalid class name : " + level["tiles"][keys]["class"] + " for tile : " + keys)
-
-                try:
-                    if "backgroundClass" in level["tiles"][keys]:
-                        obj = RessourceLoader.get(level["tiles"][keys]["backgroundClass"])
-                        RessourceLoader.add_pending(obj.texture)
-                        if hasattr(obj, "textures"):
-                            RessourceLoader.add_pending(obj.textures)
-                        if hasattr(obj, "sounds"):
-                            RessourceLoader.add_pending(obj.sounds)
-                except UnreachableRessourceError:
-                    cls.log.warning("Invalid class name : " + level["tiles"][keys]["backgroundClass"] + " for tile : " + keys)
-
-            RessourceLoader.add_pending("dpt.images.characters.player.*")
-            RessourceLoader.add_pending("dpt.images.environment.flag.*")
-            RessourceLoader.add_pending("dpt.images.environment.background.Cloud_full_*")
-            RessourceLoader.add_pending("dpt.images.gui.ui.UI_HEART*")
-            RessourceLoader.add_pending("dpt.images.effects.*")
-            RessourceLoader.add_pending("dpt.images.gui.ui.UI_STAR*")
-            RessourceLoader.add_pending("dpt.sounds.musics.time_stop")
-            RessourceLoader.add_pending("dpt.sounds.musics.flakey_a_major")
-            RessourceLoader.add_pending("dpt.sounds.sfx.sfx_score_count")
-            RessourceLoader.add_pending("dpt.sounds.sfx.sfx_score_impact")
-            RessourceLoader.add_pending("dpt.images.not_found")
-            RessourceLoader.load()
-
-        from dpt.engine.scenes import Scenes
-        Scenes.loading()
-
-        RessourceLoader.get("dpt.entities.flags.FlagBlue").checkpoint_list = []
-
-        Scenes.loading()
-
-        for keys in level["tiles"]:
-            loading_loop()
-            cls.coords = tuple(map(int, keys.split(", ")))
-            if cls.coords[0] > cls.max_width_size:
-                cls.max_width_size = cls.coords[0]
-            elif cls.coords[1] > cls.max_height_size:
-                cls.max_height_size = cls.coords[1]
-            if cls.coords[0] < 0 or cls.coords[1] < 0:
-                cls.log.warning("The tile position can't be negative : " + keys)
-                continue
-            if "class" in level["tiles"][keys]:
-                if "customPlace" in level["tiles"][keys]:
-                    try:
-                        RessourceLoader.get(level["tiles"][keys]["class"])(cls.coords[0], cls.coords[1])
-                        cls.log.debug("Tile " + level["tiles"][keys]["class"] + " placed at " + keys)
-                    except UnreachableRessourceError:
-                        cls.log.warning("Invalid class name : " + level["tiles"][keys]["class"] + " for tile : " + keys)
-                else:
-                    try:
-                        RessourceLoader.get(level["tiles"][keys]["class"])(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE)
-                        cls.log.debug("Tile " + level["tiles"][keys]["class"] + " placed at " + keys)
-                    except UnreachableRessourceError:
-                        cls.log.warning("Invalid class name : " + level["tiles"][keys]["class"] + " for tile : " + keys)
-            if "backgroundClass" in level["tiles"][keys]:
-                if "customPlace" in level["tiles"][keys]:
-                    try:
-                        BackgroundFakeBlocks(cls.coords[0], cls.coords[1], level["tiles"][keys]["backgroundClass"])
-                        cls.log.debug("Background tile " + level["tiles"][keys]["backgroundClass"] + " placed at " + keys)
-                    except UnreachableRessourceError:
-                        cls.log.warning("Invalid class name : " + level["tiles"][keys]["backgroundClass"] + " for tile : " + keys)
-                else:
-                    try:
-                        BackgroundFakeBlocks(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE, level["tiles"][keys]["backgroundClass"])
-                        cls.log.debug("Background tile " + level["tiles"][keys]["backgroundClass"] + " placed at " + keys)
-                    except UnreachableRessourceError:
-                        cls.log.warning("Invalid class name : " + level["tiles"][keys]["backgroundClass"] + " for tile : " + keys)
-
-        RessourceLoader.get("dpt.entities.flags.FlagBlue").compute_ids()
-
-        if not TileEditor.is_editing:
-            player_x = 300
-            player_y = Game.WINDOW_HEIGHT - 500
-
-            sf = RessourceLoader.get("dpt.entities.flags.FlagGreen").spawn_flag
-
-            if sf is not None:
-                player_x = sf.rect.x - sf.offset_x
-                player_y = sf.rect.y - sf.offset_y
+            if type(level_name) == str:
+                cls.log.info("Loading level " + level_name)
+                cls.log.debug("Loading level main file")
+                RessourceLoader.add_pending(level_name)
+                RessourceLoader.load()
+                level = RessourceLoader.get(level_name)
             else:
-                cls.log.warning("Can't find FlagGreen for spawn")
+                cls.log.info("Loading unknown level")
+                level = level_name
+            cls.max_width_size = 0
+            cls.max_height_size = 0
+            if level is None:
+                cls.log.critical("The level can't be loaded:")
+                cls.log.critical("  (No futher informations)")
+                return False
 
-            if "last_checkpoint" in Game.temp:
-                cp = RessourceLoader.get("dpt.entities.flags.FlagBlue").checkpoint_list[Game.temp["last_checkpoint"]]
-                player_x = cp.rect.x - cp.offset_x
-                player_y = cp.rect.y - cp.offset_y
+            if not TileEditor.is_editing:
+                cls.log.debug("Loading level blocks and entities")
+                RessourceLoader.add_pending("dpt.entities.flags.*")
+                for keys in level["tiles"]:
+                    if "class" in level["tiles"][keys]:
+                        RessourceLoader.add_pending(level["tiles"][keys]["class"])
+                    if "backgroundClass" in level["tiles"][keys]:
+                        RessourceLoader.add_pending(level["tiles"][keys]["backgroundClass"])
+                RessourceLoader.load()
 
-                Timer.time = Game.temp["last_checkpoint_time"] + 1
-                Game.life = Game.temp["last_checkpoint_life"]
-                for key, value in Game.temp["last_checkpoint_effects"].items():
+            if not TileEditor.is_editing:
+                cls.log.debug("Loading textures and sounds")
+                for keys in level["tiles"]:
                     try:
-                        setattr(EffectsManagement, key, value)
-                    except AttributeError:
-                        continue
-                pygame.event.post(pygame.event.Event(Game.TIMER_EVENT, {}))
-                pygame.time.set_timer(Game.TIMER_EVENT, 0)
-                pygame.time.set_timer(Game.TIMER_EVENT, 1000)
+                        if "class" in level["tiles"][keys]:
+                            obj = RessourceLoader.get(level["tiles"][keys]["class"])
+                            RessourceLoader.add_pending(obj.texture)
+                            if hasattr(obj, "textures"):
+                                RessourceLoader.add_pending(obj.textures)
+                            if hasattr(obj, "sounds"):
+                                if isinstance(obj.sounds, list):
+                                    for s in obj.sounds:
+                                        RessourceLoader.add_pending(s)
+                                else:
+                                    RessourceLoader.add_pending(obj.sounds)
+                    except UnreachableRessourceError:
+                        cls.log.warning("Invalid class name : " + level["tiles"][keys]["class"] + " for tile : " + keys)
 
-            from dpt.engine.characters.PlayerSprite import PlayerSprite
-            Game.player_sprite = PlayerSprite(player_x, player_y)
+                    try:
+                        if "backgroundClass" in level["tiles"][keys]:
+                            obj = RessourceLoader.get(level["tiles"][keys]["backgroundClass"])
+                            RessourceLoader.add_pending(obj.texture)
+                            if hasattr(obj, "textures"):
+                                RessourceLoader.add_pending(obj.textures)
+                            if hasattr(obj, "sounds"):
+                                RessourceLoader.add_pending(obj.sounds)
+                    except UnreachableRessourceError:
+                        cls.log.warning("Invalid class name : " + level["tiles"][keys]["backgroundClass"] + " for tile : " + keys)
 
-            if TileManager.max_width_size < math.floor(Game.WINDOW_WIDTH / Game.TILESIZE):
-                TileManager.max_width_size = math.floor(Game.WINDOW_WIDTH / Game.TILESIZE) + 2
-            cls.camera = Camera(TileManager.max_width_size, TileManager.max_height_size)
-        elif TileEditor.is_editing:
-            from dpt.engine.gui.editor.charEntity import CharEntity
-            Game.player_sprite = CharEntity()
-            cls.camera = EditorCamera(TileManager.max_width_size, TileManager.max_height_size)
-        TileEditor.created_level = level
-        cls.levelName = level_name
-        Game.freeze_game = False
-        cls.is_loading_level = False
-        cls.clouds_last_x = 0
-        cls.generate_clouds()
-        cls.log.info("Done")
-        loading_loop(True)
-        return True
+                RessourceLoader.add_pending("dpt.images.characters.player.*")
+                RessourceLoader.add_pending("dpt.images.environment.flag.*")
+                RessourceLoader.add_pending("dpt.images.environment.background.Cloud_full_*")
+                RessourceLoader.add_pending("dpt.images.gui.ui.UI_HEART*")
+                RessourceLoader.add_pending("dpt.images.effects.*")
+                RessourceLoader.add_pending("dpt.images.gui.ui.UI_STAR*")
+                RessourceLoader.add_pending("dpt.sounds.musics.time_stop")
+                RessourceLoader.add_pending("dpt.sounds.musics.flakey_a_major")
+                RessourceLoader.add_pending("dpt.sounds.sfx.sfx_score_count")
+                RessourceLoader.add_pending("dpt.sounds.sfx.sfx_score_impact")
+                RessourceLoader.add_pending("dpt.images.not_found")
+                RessourceLoader.load()
+
+            from dpt.engine.scenes import Scenes
+            Scenes.loading()
+
+            RessourceLoader.get("dpt.entities.flags.FlagBlue").checkpoint_list = []
+
+            Scenes.loading()
+
+            for keys in level["tiles"]:
+                loading_loop()
+                cls.coords = tuple(map(int, keys.split(", ")))
+                if cls.coords[0] > cls.max_width_size:
+                    cls.max_width_size = cls.coords[0]
+                elif cls.coords[1] > cls.max_height_size:
+                    cls.max_height_size = cls.coords[1]
+                if cls.coords[0] < 0 or cls.coords[1] < 0:
+                    cls.log.warning("The tile position can't be negative : " + keys)
+                    continue
+                if "class" in level["tiles"][keys]:
+                    if "customPlace" in level["tiles"][keys]:
+                        try:
+                            RessourceLoader.get(level["tiles"][keys]["class"])(cls.coords[0], cls.coords[1])
+                            cls.log.debug("Tile " + level["tiles"][keys]["class"] + " placed at " + keys)
+                        except UnreachableRessourceError:
+                            cls.log.warning("Invalid class name : " + level["tiles"][keys]["class"] + " for tile : " + keys)
+                    else:
+                        try:
+                            RessourceLoader.get(level["tiles"][keys]["class"])(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE)
+                            cls.log.debug("Tile " + level["tiles"][keys]["class"] + " placed at " + keys)
+                        except UnreachableRessourceError:
+                            cls.log.warning("Invalid class name : " + level["tiles"][keys]["class"] + " for tile : " + keys)
+                if "backgroundClass" in level["tiles"][keys]:
+                    if "customPlace" in level["tiles"][keys]:
+                        try:
+                            BackgroundFakeBlocks(cls.coords[0], cls.coords[1], level["tiles"][keys]["backgroundClass"])
+                            cls.log.debug("Background tile " + level["tiles"][keys]["backgroundClass"] + " placed at " + keys)
+                        except UnreachableRessourceError:
+                            cls.log.warning("Invalid class name : " + level["tiles"][keys]["backgroundClass"] + " for tile : " + keys)
+                    else:
+                        try:
+                            BackgroundFakeBlocks(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE, level["tiles"][keys]["backgroundClass"])
+                            cls.log.debug("Background tile " + level["tiles"][keys]["backgroundClass"] + " placed at " + keys)
+                        except UnreachableRessourceError:
+                            cls.log.warning("Invalid class name : " + level["tiles"][keys]["backgroundClass"] + " for tile : " + keys)
+
+            RessourceLoader.get("dpt.entities.flags.FlagBlue").compute_ids()
+
+            if not TileEditor.is_editing:
+                player_x = 300
+                player_y = Game.WINDOW_HEIGHT - 500
+
+                sf = RessourceLoader.get("dpt.entities.flags.FlagGreen").spawn_flag
+
+                if sf is not None:
+                    player_x = sf.rect.x - sf.offset_x
+                    player_y = sf.rect.y - sf.offset_y
+                else:
+                    cls.log.warning("Can't find FlagGreen for spawn")
+
+                if "last_checkpoint" in Game.temp:
+                    cp = RessourceLoader.get("dpt.entities.flags.FlagBlue").checkpoint_list[Game.temp["last_checkpoint"]]
+                    player_x = cp.rect.x - cp.offset_x
+                    player_y = cp.rect.y - cp.offset_y
+
+                    Timer.time = Game.temp["last_checkpoint_time"] + 1
+                    Game.life = Game.temp["last_checkpoint_life"]
+                    for key, value in Game.temp["last_checkpoint_effects"].items():
+                        try:
+                            setattr(EffectsManagement, key, value)
+                        except AttributeError:
+                            continue
+                    pygame.event.post(pygame.event.Event(Game.TIMER_EVENT, {}))
+                    pygame.time.set_timer(Game.TIMER_EVENT, 0)
+                    pygame.time.set_timer(Game.TIMER_EVENT, 1000)
+
+                from dpt.engine.characters.PlayerSprite import PlayerSprite
+                Game.player_sprite = PlayerSprite(player_x, player_y)
+
+                if TileManager.max_width_size < math.floor(Game.WINDOW_WIDTH / Game.TILESIZE):
+                    TileManager.max_width_size = math.floor(Game.WINDOW_WIDTH / Game.TILESIZE) + 2
+                cls.camera = Camera(TileManager.max_width_size, TileManager.max_height_size)
+            elif TileEditor.is_editing:
+                from dpt.engine.gui.editor.charEntity import CharEntity
+                Game.player_sprite = CharEntity()
+                cls.camera = EditorCamera(TileManager.max_width_size, TileManager.max_height_size)
+            TileEditor.created_level = level
+            cls.levelName = level_name
+            Game.freeze_game = False
+            cls.is_loading_level = False
+            cls.clouds_last_x = 0
+            cls.generate_clouds()
+            cls.log.info("Done")
+            loading_loop(True)
+            return True
+        except Exception as ex:
+            from dpt.engine.scenes import Scenes
+            exc_type, exc_value, exc_tb = sys.exc_info()
+            trace = "".join(traceback.format_exception(exc_type, exc_value, exc_tb))
+            ms = trace.split("\n")
+            cls.log.critical("The level can't be loaded:")
+            for i in ms:
+                cls.log.critical(i)
+
+            def split(s):
+                if len(s) > 50:
+                    return s[:50], s[50:]
+                else:
+                    return [s]
+
+            Scenes.return_error("Impossible de charger le niveau : le niveau est peut être obsolète ou corrompu.",
+                                "Détails de l'erreur :",
+                                *split(ms[-4]),
+                                *split(ms[-3]),
+                                *split(ms[-2]))
+            return False
 
     @classmethod
     def ghost_block(cls, x_tile, y_tile, item):

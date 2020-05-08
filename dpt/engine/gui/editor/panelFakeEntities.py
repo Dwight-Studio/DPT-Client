@@ -16,10 +16,10 @@ class PanelFakeEntity(pygame.sprite.Sprite):
             self.block = RessourceLoader.get("dpt.blocks.NotFound")
             self.image = RessourceLoader.get(self.block.texture)
 
-        if self.block.height > Game.TILESIZE:
+        if self.block.height > Game.TILESIZE and self.block.height > self.block.width:
             self.height = Game.TILESIZE
             self.width = math.floor(self.height * (self.block.width / self.block.height))
-        elif self.block.width > Game.TILESIZE:
+        elif self.block.width > Game.TILESIZE and self.block.width > self.block.height:
             self.width = Game.TILESIZE
             self.height = math.floor(self.width * (self.block.height / self.block.width))
         else:
