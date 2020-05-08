@@ -138,6 +138,7 @@ def pause_loop():
             elif event.button == Game.gui["p_button_restart_save"] and not TileEditor.enabled_editor:
                 if "last_checkpoint" in Game.temp:
                     del Game.temp["last_checkpoint"]
+                    RessourceLoader.get("dpt.entities.Coin").coin_checkpoint_list = []
                 kill_menu()
                 TileManager.load_level(TileManager.levelName)
                 Game.loop = level_loop
@@ -151,6 +152,7 @@ def pause_loop():
                     WebCommunication.close()
                 if TileEditor.is_editing:
                     FileManager.save_file(TileEditor.created_level)
+                RessourceLoader.get("dpt.entities.Coin").coin_checkpoint_list = []
                 Menu.delete_items()
                 Scenes.main_menu()
                 return
@@ -421,6 +423,11 @@ def game_over_loop():
             if event.button == Game.gui["go_button_checkpoint"]:
                 kill_menu()
                 TileManager.load_level(TileManager.levelName)
+                Game.temp["coins"] = 0
+                if "respawn" in Game.temp:
+                    Game.temp["respawn"] += 1
+                else:
+                    Game.temp["respawn"] = 1
                 Game.loop = level_loop
                 return
             elif event.button == Game.gui["go_button_main_menu"]:
@@ -430,6 +437,7 @@ def game_over_loop():
                     except KeyError:
                         pass
                     WebCommunication.close()
+                RessourceLoader.get("dpt.entities.Coin").coin_checkpoint_list = []
                 menu.delete_items()
                 Scenes.main_menu()
                 return
@@ -471,6 +479,7 @@ def end_level_loop():
                     if WebCommunication.sessionName is not None:
                         try:
                             del Game.temp["last_checkpoint"]
+                            RessourceLoader.get("dpt.entities.Coin").coin_checkpoint_list = []
                         except KeyError:
                             pass
                         WebCommunication.close()
@@ -481,6 +490,7 @@ def end_level_loop():
                     if WebCommunication.sessionName is not None:
                         try:
                             del Game.temp["last_checkpoint"]
+                            RessourceLoader.get("dpt.entities.Coin").coin_checkpoint_list = []
                         except KeyError:
                             pass
                         WebCommunication.close()

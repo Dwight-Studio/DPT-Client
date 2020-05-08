@@ -1,4 +1,5 @@
 import pygame
+import random
 
 from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
@@ -14,7 +15,13 @@ class Coin(pygame.sprite.Sprite):
     offset_x = Game.TILESIZE // 4
     offset_y = Game.TILESIZE // 4
 
+    coin_checkpoint_list = []
+
     def __init__(self, x, y):
+        self.id = int(str(x) + str(y))
+        if self.id in Coin.coin_checkpoint_list:
+            del self
+            return
         from dpt.engine.tileManager import TileManager
         pygame.sprite.Sprite.__init__(self, TileManager.entity_group)  # Sprite's constructor called
         self.image = RessourceLoader.get(self.texture)
@@ -48,5 +55,6 @@ class Coin(pygame.sprite.Sprite):
                     Game.temp.update({"coins": 1})
                 else:
                     Game.temp["coins"] += 1
+                Coin.coin_checkpoint_list.append(self.id)
                 del self
                 return

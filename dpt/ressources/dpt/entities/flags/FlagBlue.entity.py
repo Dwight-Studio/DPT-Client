@@ -45,6 +45,7 @@ class FlagBlue(pygame.sprite.Sprite):
                         Game.temp["last_checkpoint_time"] = Timer.time
                         Game.temp["last_checkpoint_life"] = Game.life
                         Game.temp["last_checkpoint_effects"] = {}
+                        Game.temp["last_checkpoint_coins"] = RessourceLoader.get("dpt.entities.Coin").coin_checkpoint_list
                         for key, value in EffectsManagement.__dict__.items():
                             Game.temp["last_checkpoint_effects"].update({key: value})
                     else:

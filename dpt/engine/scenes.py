@@ -591,6 +591,9 @@ class Scenes:
 
         # Score
         Game.temp["score"] = Game.temp["coins"] * 100 + Timer.time * 10
+        if "respawn" in Game.temp:
+            Game.temp["score"] -= Game.temp["respawn"] * 500
+        Game.temp["score"] = max(Game.temp["score"], 0)
         Game.temp["score_display"] = 0
         Game.temp["score_sound"] = True
         Game.temp["1_done"] = False
