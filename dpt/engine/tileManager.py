@@ -225,6 +225,8 @@ class TileManager:
                 else:
                     cls.log.warning("Can't find FlagGreen for spawn")
 
+                EffectsManagement.reset()
+
                 if "last_checkpoint" in Game.temp:
                     cp = RessourceLoader.get("dpt.entities.flags.FlagBlue").checkpoint_list[Game.temp["last_checkpoint"]]
                     player_x = cp.rect.x - cp.offset_x

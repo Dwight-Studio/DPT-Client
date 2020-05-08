@@ -1,0 +1,306 @@
+{
+  "tiles": {
+    "9, 10": {
+      "class": "dpt.blocks.grass.grass"
+    },
+    "0, 10": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "1, 10": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "2, 10": {
+      "class": "dpt.blocks.grass.grassslopeconnectorr"
+    },
+    "3, 10": {
+      "class": "dpt.blocks.grass.grass"
+    },
+    "4, 11": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "5, 11": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "6, 11": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "7, 10": {
+      "class": "dpt.blocks.grass.grass"
+    },
+    "3, 7": {
+      "backgroundClass": "dpt.blocks.grass.grasslower"
+    },
+    "2, 6": {
+      "class": "dpt.blocks.grass.grassr"
+    },
+    "1, 5": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "0, 4": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "0, 5": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "0, 6": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "0, 7": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "0, 8": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "0, 9": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "0, 3": {
+      "class": "dpt.blocks.grass.grassslopeconnectorr"
+    },
+    "1, 4": {
+      "class": "dpt.blocks.grass.grassslopeconnectorr"
+    },
+    "2, 5": {
+      "class": "dpt.blocks.grass.grassr"
+    },
+    "2, 4": {
+      "class": "dpt.blocks.grass.grasssloped"
+    },
+    "1, 3": {
+      "class": "dpt.blocks.grass.grasssloped"
+    },
+    "0, 2": {
+      "class": "dpt.blocks.grass.grasssloped"
+    },
+    "0, 11": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "1, 11": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "1, 9": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "1, 8": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "1, 7": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "1, 6": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "2, 7": {
+      "class": "dpt.blocks.grass.grassr"
+    },
+    "2, 8": {
+      "class": "dpt.blocks.grass.grassr"
+    },
+    "2, 9": {
+      "class": "dpt.blocks.grass.grassr"
+    },
+    "2, 11": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "3, 9": {
+      "backgroundClass": "dpt.blocks.grass.grasslower"
+    },
+    "5, 9": {
+      "backgroundClass": "dpt.blocks.grass.grasslower"
+    },
+    "6, 9": {
+      "backgroundClass": "dpt.blocks.grass.grasslower"
+    },
+    "7, 9": {
+      "backgroundClass": "dpt.blocks.grass.grasslower"
+    },
+    "4, 9": {
+      "backgroundClass": "dpt.blocks.grass.grasslower",
+      "class": "dpt.entities.flags.flaggreen"
+    },
+    "3, 11": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "4, 10": {
+      "class": "dpt.blocks.grass.grass"
+    },
+    "5, 10": {
+      "class": "dpt.blocks.grass.grass"
+    },
+    "6, 10": {
+      "class": "dpt.blocks.grass.grass"
+    },
+    "7, 11": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "8, 10": {
+      "class": "dpt.blocks.grass.grass"
+    },
+    "8, 11": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "9, 11": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "10, 10": {
+      "class": "dpt.blocks.grass.grass"
+    },
+    "11, 10": {
+      "class": "dpt.blocks.grass.grass"
+    },
+    "10, 11": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "11, 11": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "12, 11": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "12, 10": {
+      "class": "dpt.blocks.grass.grass"
+    },
+    "13, 10": {
+      "class": "dpt.blocks.grass.grass"
+    },
+    "14, 10": {
+      "class": "dpt.blocks.grass.grass"
+    },
+    "15, 10": {
+      "class": "dpt.blocks.grass.grass"
+    },
+    "16, 10": {
+      "class": "dpt.blocks.grass.grass"
+    },
+    "15, 11": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "14, 11": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "13, 11": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "17, 10": {
+      "class": "dpt.blocks.grass.grass"
+    },
+    "16, 11": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "17, 11": {
+      "class": "dpt.blocks.grass.grasslower"
+    },
+    "6, 6": {
+      "backgroundClass": "dpt.blocks.grass.grasssloped"
+    },
+    "7, 7": {
+      "backgroundClass": "dpt.blocks.grass.grasssloped"
+    },
+    "8, 8": {
+      "backgroundClass": "dpt.blocks.grass.grasssloped"
+    },
+    "9, 9": {
+      "backgroundClass": "dpt.blocks.grass.grasssloped"
+    },
+    "8, 9": {
+      "backgroundClass": "dpt.blocks.grass.grassslopeconnectorr"
+    },
+    "7, 8": {
+      "backgroundClass": "dpt.blocks.grass.grassslopeconnectorr"
+    },
+    "6, 7": {
+      "backgroundClass": "dpt.blocks.grass.grassslopeconnectorr"
+    },
+    "6, 8": {
+      "backgroundClass": "dpt.blocks.grass.grasslower"
+    },
+    "5, 8": {
+      "backgroundClass": "dpt.blocks.grass.grasslower"
+    },
+    "4, 8": {
+      "backgroundClass": "dpt.blocks.grass.grasslower"
+    },
+    "3, 8": {
+      "backgroundClass": "dpt.blocks.grass.grasslower"
+    },
+    "5, 7": {
+      "backgroundClass": "dpt.blocks.grass.grasslower"
+    },
+    "4, 7": {
+      "backgroundClass": "dpt.blocks.grass.grasslower"
+    },
+    "4, 6": {
+      "backgroundClass": "dpt.blocks.grass.grass"
+    },
+    "5, 5": {},
+    "4, 4": {},
+    "3, 3": {},
+    "5, 6": {
+      "backgroundClass": "dpt.blocks.grass.grass"
+    },
+    "3, 6": {
+      "backgroundClass": "dpt.blocks.grass.grassslopeconnectorr"
+    },
+    "3, 5": {
+      "backgroundClass": "dpt.blocks.grass.grasssloped"
+    },
+    "325, 855": {
+      "class": "dpt.entities.props.plants.grass2",
+      "customPlace": true
+    },
+    "385, 862": {
+      "class": "dpt.entities.props.plants.grass1",
+      "customPlace": true
+    },
+    "440, 859": {
+      "class": "dpt.entities.props.plants.grass1",
+      "customPlace": true
+    },
+    "501, 895": {
+      "class": "dpt.entities.props.rocks.rock1",
+      "customPlace": true
+    },
+    "10, 9": {
+      "backgroundClass": "dpt.entities.props.fences.fencewoodconnector"
+    },
+    "11, 9": {
+      "backgroundClass": "dpt.entities.props.fences.fencewoodconnector"
+    },
+    "13, 9": {
+      "backgroundClass": "dpt.entities.props.fences.fencewoodconnector"
+    },
+    "12, 9": {
+      "backgroundClass": "dpt.entities.props.fences.fencewoodconnector"
+    },
+    "14, 9": {
+      "backgroundClass": "dpt.entities.props.fences.fencewoodconnector"
+    },
+    "15, 9": {
+      "backgroundClass": "dpt.entities.props.fences.fencewood"
+    },
+    "802, 728": {
+      "backgroundClass": "dpt.entities.props.others.snowpile",
+      "customPlace": true
+    },
+    "466, 876": {
+      "backgroundClass": "dpt.entities.props.mushrooms.big.mushroombig3",
+      "customPlace": true
+    },
+    "513, 884": {
+      "backgroundClass": "dpt.entities.props.mushrooms.big.mushroombig1",
+      "customPlace": true
+    },
+    "1013, 896": {
+      "backgroundClass": "dpt.entities.props.rocks.rock3",
+      "customPlace": true
+    },
+    "18, 9": {},
+    "18, 10": {
+      "class": "dpt.blocks.grass.grassslopeconnectorl"
+    },
+    "18, 11": {
+      "class": "dpt.blocks.grass.grasslower"
+    }
+  },
+  "infos": {}
+}

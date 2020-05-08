@@ -232,12 +232,12 @@ class TileEditor:
                                 try:
                                     if cls.entitys.customPlacement:
                                         if cls.entitys.rect.left <= mouse[0] <= cls.entitys.rect.right and cls.entitys.rect.top <= mouse[1] <= cls.entitys.rect.bottom:
-                                            if isinstance(cls.entitys, RessourceLoader.get("dpt.entities.SpikeyWheel")):
+                                            try:
                                                 cls.mouse_pos_y = cls.entitys.y - cls.entitys.offset_y
                                                 cls.mouse_pos_x = cls.entitys.x - cls.entitys.offset_x
                                                 cls.entitys.kill()
                                                 del cls.entitys
-                                            else:
+                                            except AttributeError:
                                                 cls.mouse_pos_y = cls.entitys.rect.y - cls.entitys.offset_y
                                                 cls.mouse_pos_x = cls.entitys.rect.x - cls.entitys.offset_x
                                                 cls.entitys.kill()
