@@ -423,10 +423,10 @@ class Game(object):
         cls.surface = cls.window.set_mode((cls.WINDOW_WIDTH, cls.WINDOW_HEIGHT), pygame.NOFRAME)
 
         if cls.WINDOW_WIDTH == 0:
-            cls.WINDOW_WIDTH = cls.SCREEN_WIDTH
+            cls.WINDOW_WIDTH = cls.surface.get_size()[0]
 
         if cls.WINDOW_HEIGHT == 0:
-            cls.WINDOW_HEIGHT = cls.SCREEN_HEIGHT
+            cls.WINDOW_HEIGHT = cls.surface.get_size()[1]
 
         w, h = cls.surface.get_size()
         cls.main_logger.debug("Window size: " + str(w) + "x" + str(h))
