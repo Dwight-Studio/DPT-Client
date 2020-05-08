@@ -590,7 +590,7 @@ class Scenes:
         cls.logger.info("Displaying END_LEVEL")
 
         # Score
-        Game.temp["score"] = Game.temp["coins"] * 100 + Timer.time * 10
+        Game.temp["score"] = Game.temp["coins"] * 50 + Timer.time * 10
         if "respawn" in Game.temp:
             Game.temp["score"] -= Game.temp["respawn"] * 500
         Game.temp["score"] = max(Game.temp["score"], 0)
@@ -600,6 +600,7 @@ class Scenes:
         Game.temp["2_done"] = False
         Game.temp["3_done"] = False
         Game.temp["start"] = False
+        Game.temp["chrono"] = 0
 
         # Ajout du GUI
         from dpt.engine.gui.menu.button import Button
@@ -624,14 +625,14 @@ class Scenes:
                                           "dpt.fonts.DINOT_CondBlack",
                                           centerx=Game.WINDOW_WIDTH // 2),
                          "el_title_1": Text(0,
-                                            buttons_starting_y + math.floor(40 * Game.DISPLAY_RATIO),
+                                            buttons_starting_y - math.floor(10 * Game.DISPLAY_RATIO),
                                             "Score :",
                                             math.floor(30 * Game.DISPLAY_RATIO),
                                             (0, 0, 0),
                                             "dpt.fonts.DINOT_CondBlack",
                                             centerx=Game.WINDOW_WIDTH // 2),
                          "el_title_score": Text(0,
-                                                buttons_starting_y + math.floor(70 * Game.DISPLAY_RATIO),
+                                                buttons_starting_y + math.floor(20 * Game.DISPLAY_RATIO),
                                                 "0",
                                                 math.floor(90 * Game.DISPLAY_RATIO),
                                                 (0, 0, 0),
@@ -651,9 +652,9 @@ class Scenes:
                                                   text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
                                                                                math.floor(50 * Game.DISPLAY_RATIO),
                                                                                RessourceLoader.get("dpt.images.gui.symbols.SYMB_X"))),
-                         "star_3": TransitionStar(Game.WINDOW_WIDTH // 2 + math.floor(Game.DISPLAY_RATIO * 85), buttons_starting_y + math.floor(200 * Game.DISPLAY_RATIO), Game.temp["score"] >= 1000, True, False),
-                         "star_2": TransitionStar(Game.WINDOW_WIDTH // 2, buttons_starting_y + math.floor(200 * Game.DISPLAY_RATIO), Game.temp["score"] >= 2000, True, False),
-                         "star_1": TransitionStar(Game.WINDOW_WIDTH // 2 - math.floor(Game.DISPLAY_RATIO * 85), buttons_starting_y + math.floor(200 * Game.DISPLAY_RATIO), Game.temp["score"] >= 3000, True, False),
+                         "star_3": TransitionStar(Game.WINDOW_WIDTH // 2 + math.floor(Game.DISPLAY_RATIO * 85), buttons_starting_y + math.floor(150 * Game.DISPLAY_RATIO), Game.temp["score"] >= 1000, True, False),
+                         "star_2": TransitionStar(Game.WINDOW_WIDTH // 2, buttons_starting_y + math.floor(150 * Game.DISPLAY_RATIO), Game.temp["score"] >= 2000, True, False),
+                         "star_1": TransitionStar(Game.WINDOW_WIDTH // 2 - math.floor(Game.DISPLAY_RATIO * 85), buttons_starting_y + math.floor(150 * Game.DISPLAY_RATIO), Game.temp["score"] >= 3000, True, False),
                          "fade": FadeOut(2000)})
 
         # Sons
@@ -705,7 +706,7 @@ class Scenes:
                                                         RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_OUT"),
                                                         pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_IN"),
                                                         text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
-                                                                                     math.floor(50 * Game.DISPLAY_RATIO),
+                                                                                     math.floor(40 * Game.DISPLAY_RATIO),
                                                                                      RessourceLoader.get("dpt.images.gui.symbols.SYMB_REPLAY"))),
                          "go_button_main_menu": Button(buttons_x, buttons_starting_y + (buttons_gap_y + button_height) * 2, button_width, button_height,
                                                        RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_OUT"),
@@ -760,7 +761,7 @@ class Scenes:
         for i in range(len(messages)):
             Game.gui["message_" + str(randint(1000, 9999))] = Text(0, 0, messages[i],
                                                                    math.floor(25 * Game.DISPLAY_RATIO),
-                                                                   (254, 0, 61),
+                                                                   (193, 39, 45),
                                                                    "dpt.fonts.DINOT_CondBlack",
                                                                    centerx=Game.WINDOW_WIDTH // 2,
                                                                    centery=(Game.WINDOW_HEIGHT // 2 + math.floor(30 * Game.DISPLAY_RATIO) - (math.floor(12.5 * Game.DISPLAY_RATIO) * len(messages)) + (math.floor((25 * i) * Game.DISPLAY_RATIO))))

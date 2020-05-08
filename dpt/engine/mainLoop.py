@@ -1,4 +1,6 @@
 import math
+
+from dpt.engine.gui.menu import Text
 import dpt.engine.gui.menu as menu
 import pygame
 import tkinter as tk
@@ -138,6 +140,7 @@ def pause_loop():
             elif event.button == Game.gui["p_button_restart_save"] and not TileEditor.enabled_editor:
                 if "last_checkpoint" in Game.temp:
                     del Game.temp["last_checkpoint"]
+                    del Game.temp["respawn"]
                     RessourceLoader.get("dpt.entities.Coin").coin_checkpoint_list = []
                 kill_menu()
                 TileManager.load_level(TileManager.levelName)
@@ -434,6 +437,7 @@ def game_over_loop():
                 if WebCommunication.sessionName is not None:
                     try:
                         del Game.temp["last_checkpoint"]
+                        del Game.temp["respawn"]
                     except KeyError:
                         pass
                     WebCommunication.close()
@@ -445,6 +449,7 @@ def game_over_loop():
                 if WebCommunication.sessionName is not None:
                     try:
                         del Game.temp["last_checkpoint"]
+                        del Game.temp["respawn"]
                     except KeyError:
                         pass
                     WebCommunication.close()
@@ -479,6 +484,7 @@ def end_level_loop():
                     if WebCommunication.sessionName is not None:
                         try:
                             del Game.temp["last_checkpoint"]
+                            del Game.temp["respawn"]
                             RessourceLoader.get("dpt.entities.Coin").coin_checkpoint_list = []
                         except KeyError:
                             pass
@@ -490,11 +496,83 @@ def end_level_loop():
                     if WebCommunication.sessionName is not None:
                         try:
                             del Game.temp["last_checkpoint"]
+                            del Game.temp["respawn"]
                             RessourceLoader.get("dpt.entities.Coin").coin_checkpoint_list = []
                         except KeyError:
                             pass
                         WebCommunication.close()
                     Game.run = False
+
+        if Game.temp["chrono"] == 30:
+            button_height = math.floor(95 * Game.DISPLAY_RATIO)
+            buttons_gap_y = math.floor(15 * Game.DISPLAY_RATIO)
+            buttons_starting_y = math.floor((Game.WINDOW_HEIGHT / 2) - button_height * 2 - buttons_gap_y * 1.5) + math.floor(32 * Game.DISPLAY_RATIO)
+
+            Game.gui["el_detail_title"] = Text(0,
+                                               buttons_starting_y + math.floor(190 * Game.DISPLAY_RATIO),
+                                               "Détails du score :",
+                                               math.floor(25 * Game.DISPLAY_RATIO),
+                                               (0, 0, 0),
+                                               "dpt.fonts.DINOT_CondBlack",
+                                               centerx=Game.WINDOW_WIDTH // 2),
+
+        elif Game.temp["chrono"] == 40:
+            button_height = math.floor(95 * Game.DISPLAY_RATIO)
+            buttons_gap_y = math.floor(15 * Game.DISPLAY_RATIO)
+            buttons_starting_y = math.floor((Game.WINDOW_HEIGHT / 2) - button_height * 2 - buttons_gap_y * 1.5) + math.floor(32 * Game.DISPLAY_RATIO)
+
+            nb = 0
+            if "respawn" in Game.temp:
+                nb = Game.temp["respawn"] * 500
+
+            Game.gui["el_detail_respawn_title"] = Text(Game.WINDOW_WIDTH // 2 - math.floor(100 * Game.DISPLAY_RATIO),
+                                                       buttons_starting_y + math.floor(220 * Game.DISPLAY_RATIO),
+                                                       "Réapparition(s)",
+                                                       math.floor(20 * Game.DISPLAY_RATIO),
+                                                       (0, 0, 0),
+                                                       "dpt.fonts.DINOT_CondBlack"),
+            Game.gui["el_detail_respawn_score"] = Text(Game.WINDOW_WIDTH // 2 + math.floor(50 * Game.DISPLAY_RATIO),
+                                                       buttons_starting_y + math.floor(220 * Game.DISPLAY_RATIO),
+                                                       "- " + str(nb),
+                                                       math.floor(20 * Game.DISPLAY_RATIO),
+                                                       (193, 39, 45),
+                                                       "dpt.fonts.DINOT_CondBlack"),
+
+        elif Game.temp["chrono"] == 50 and "coins" in Game.temp:
+            button_height = math.floor(95 * Game.DISPLAY_RATIO)
+            buttons_gap_y = math.floor(15 * Game.DISPLAY_RATIO)
+            buttons_starting_y = math.floor((Game.WINDOW_HEIGHT / 2) - button_height * 2 - buttons_gap_y * 1.5) + math.floor(32 * Game.DISPLAY_RATIO)
+
+            Game.gui["el_detail_coins_title"] = Text(Game.WINDOW_WIDTH // 2 - math.floor(100 * Game.DISPLAY_RATIO),
+                                                     buttons_starting_y + math.floor(240 * Game.DISPLAY_RATIO),
+                                                     "Pièces collectées",
+                                                     math.floor(20 * Game.DISPLAY_RATIO),
+                                                     (0, 0, 0),
+                                                     "dpt.fonts.DINOT_CondBlack"),
+            Game.gui["el_detail_coins_score"] = Text(Game.WINDOW_WIDTH // 2 + math.floor(50 * Game.DISPLAY_RATIO),
+                                                     buttons_starting_y + math.floor(240 * Game.DISPLAY_RATIO),
+                                                     "+ " + str(Game.temp["coins"] * 50),
+                                                     math.floor(20 * Game.DISPLAY_RATIO),
+                                                     (39, 193, 45),
+                                                     "dpt.fonts.DINOT_CondBlack"),
+
+        elif Game.temp["chrono"] == 60:
+            button_height = math.floor(95 * Game.DISPLAY_RATIO)
+            buttons_gap_y = math.floor(15 * Game.DISPLAY_RATIO)
+            buttons_starting_y = math.floor((Game.WINDOW_HEIGHT / 2) - button_height * 2 - buttons_gap_y * 1.5) + math.floor(32 * Game.DISPLAY_RATIO)
+
+            Game.gui["el_detail_coins_title"] = Text(Game.WINDOW_WIDTH // 2 - math.floor(100 * Game.DISPLAY_RATIO),
+                                                     buttons_starting_y + math.floor(260 * Game.DISPLAY_RATIO),
+                                                     "Bonus de temps",
+                                                     math.floor(20 * Game.DISPLAY_RATIO),
+                                                     (0, 0, 0),
+                                                     "dpt.fonts.DINOT_CondBlack"),
+            Game.gui["el_detail_coins_score"] = Text(Game.WINDOW_WIDTH // 2 + math.floor(50 * Game.DISPLAY_RATIO),
+                                                     buttons_starting_y + math.floor(260 * Game.DISPLAY_RATIO),
+                                                     "+ " + str(Timer.time * 10),
+                                                     math.floor(20 * Game.DISPLAY_RATIO),
+                                                     (39, 193, 45),
+                                                     "dpt.fonts.DINOT_CondBlack"),
 
         if not pygame.mixer_music.get_busy():
             if Game.temp["score_sound"]:
@@ -518,6 +596,7 @@ def end_level_loop():
             else:
                 pygame.mixer.stop()
                 Game.gui["el_title_score"].text = str(Game.temp["score"])
+                Game.temp["chrono"] += 1
 
         if Game.temp["1_done"] and not Game.temp["2_done"] and not Game.temp["3_done"]:
             Game.gui["star_3"].update()
