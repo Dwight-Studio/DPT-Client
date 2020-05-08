@@ -8,8 +8,8 @@ from dpt.game import Game
 class Bush1(pygame.sprite.Sprite):
     texture = "dpt.images.environment.plants.Bush_1"
     sounds = "dpt.sounds.sfx.sfx_stone"
-    width = Game.TILESIZE // 2
-    height = Game.TILESIZE // 2
+    width = Game.TILESIZE
+    height = Game.TILESIZE
     offset_x = -(Game.TILESIZE // 2)
     offset_y = -(Game.TILESIZE // 2)
     customPlacement = True
