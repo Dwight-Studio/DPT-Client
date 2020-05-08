@@ -114,19 +114,19 @@ class TileManager:
         if not TileEditor.is_editing:
             cls.log.debug("Loading level blocks and entities")
             RessourceLoader.add_pending("dpt.entities.flags.*")
-            for keys in level:
-                if "class" in level[keys]:
-                    RessourceLoader.add_pending(level[keys]["class"])
-                if "backgroundClass" in level[keys]:
-                    RessourceLoader.add_pending(level[keys]["backgroundClass"])
+            for keys in level["tiles"]:
+                if "class" in level["tiles"][keys]:
+                    RessourceLoader.add_pending(level["tiles"][keys]["class"])
+                if "backgroundClass" in level["tiles"][keys]:
+                    RessourceLoader.add_pending(level["tiles"][keys]["backgroundClass"])
             RessourceLoader.load()
 
         if not TileEditor.is_editing:
             cls.log.debug("Loading textures and sounds")
-            for keys in level:
+            for keys in level["tiles"]:
                 try:
-                    if "class" in level[keys]:
-                        obj = RessourceLoader.get(level[keys]["class"])
+                    if "class" in level["tiles"][keys]:
+                        obj = RessourceLoader.get(level["tiles"][keys]["class"])
                         RessourceLoader.add_pending(obj.texture)
                         if hasattr(obj, "textures"):
                             RessourceLoader.add_pending(obj.textures)
@@ -137,18 +137,18 @@ class TileManager:
                             else:
                                 RessourceLoader.add_pending(obj.sounds)
                 except UnreachableRessourceError:
-                    cls.log.warning("Invalid class name : " + level[keys]["class"] + " for tile : " + keys)
+                    cls.log.warning("Invalid class name : " + level["tiles"][keys]["class"] + " for tile : " + keys)
 
                 try:
-                    if "backgroundClass" in level[keys]:
-                        obj = RessourceLoader.get(level[keys]["backgroundClass"])
+                    if "backgroundClass" in level["tiles"][keys]:
+                        obj = RessourceLoader.get(level["tiles"][keys]["backgroundClass"])
                         RessourceLoader.add_pending(obj.texture)
                         if hasattr(obj, "textures"):
                             RessourceLoader.add_pending(obj.textures)
                         if hasattr(obj, "sounds"):
                             RessourceLoader.add_pending(obj.sounds)
                 except UnreachableRessourceError:
-                    cls.log.warning("Invalid class name : " + level[keys]["backgroundClass"] + " for tile : " + keys)
+                    cls.log.warning("Invalid class name : " + level["tiles"][keys]["backgroundClass"] + " for tile : " + keys)
 
             RessourceLoader.add_pending("dpt.images.characters.player.*")
             RessourceLoader.add_pending("dpt.images.environment.flag.*")
@@ -170,7 +170,7 @@ class TileManager:
 
         Scenes.loading()
 
-        for keys in level:
+        for keys in level["tiles"]:
             loading_loop()
             cls.coords = tuple(map(int, keys.split(", ")))
             if cls.coords[0] > cls.max_width_size:
@@ -180,32 +180,32 @@ class TileManager:
             if cls.coords[0] < 0 or cls.coords[1] < 0:
                 cls.log.warning("The tile position can't be negative : " + keys)
                 continue
-            if "class" in level[keys]:
-                if "customPlace" in level[keys]:
+            if "class" in level["tiles"][keys]:
+                if "customPlace" in level["tiles"][keys]:
                     try:
-                        RessourceLoader.get(level[keys]["class"])(cls.coords[0], cls.coords[1])
-                        cls.log.debug("Tile " + level[keys]["class"] + " placed at " + keys)
+                        RessourceLoader.get(level["tiles"][keys]["class"])(cls.coords[0], cls.coords[1])
+                        cls.log.debug("Tile " + level["tiles"][keys]["class"] + " placed at " + keys)
                     except UnreachableRessourceError:
-                        cls.log.warning("Invalid class name : " + level[keys]["class"] + " for tile : " + keys)
+                        cls.log.warning("Invalid class name : " + level["tiles"][keys]["class"] + " for tile : " + keys)
                 else:
                     try:
-                        RessourceLoader.get(level[keys]["class"])(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE)
-                        cls.log.debug("Tile " + level[keys]["class"] + " placed at " + keys)
+                        RessourceLoader.get(level["tiles"][keys]["class"])(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE)
+                        cls.log.debug("Tile " + level["tiles"][keys]["class"] + " placed at " + keys)
                     except UnreachableRessourceError:
-                        cls.log.warning("Invalid class name : " + level[keys]["class"] + " for tile : " + keys)
-            if "backgroundClass" in level[keys]:
-                if "customPlace" in level[keys]:
+                        cls.log.warning("Invalid class name : " + level["tiles"][keys]["class"] + " for tile : " + keys)
+            if "backgroundClass" in level["tiles"][keys]:
+                if "customPlace" in level["tiles"][keys]:
                     try:
-                        BackgroundFakeBlocks(cls.coords[0], cls.coords[1], level[keys]["backgroundClass"])
-                        cls.log.debug("Background tile " + level[keys]["backgroundClass"] + " placed at " + keys)
+                        BackgroundFakeBlocks(cls.coords[0], cls.coords[1], level["tiles"][keys]["backgroundClass"])
+                        cls.log.debug("Background tile " + level["tiles"][keys]["backgroundClass"] + " placed at " + keys)
                     except UnreachableRessourceError:
-                        cls.log.warning("Invalid class name : " + level[keys]["backgroundClass"] + " for tile : " + keys)
+                        cls.log.warning("Invalid class name : " + level["tiles"][keys]["backgroundClass"] + " for tile : " + keys)
                 else:
                     try:
-                        BackgroundFakeBlocks(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE, level[keys]["backgroundClass"])
-                        cls.log.debug("Background tile " + level[keys]["backgroundClass"] + " placed at " + keys)
+                        BackgroundFakeBlocks(cls.coords[0] * Game.TILESIZE, cls.coords[1] * Game.TILESIZE, level["tiles"][keys]["backgroundClass"])
+                        cls.log.debug("Background tile " + level["tiles"][keys]["backgroundClass"] + " placed at " + keys)
                     except UnreachableRessourceError:
-                        cls.log.warning("Invalid class name : " + level[keys]["backgroundClass"] + " for tile : " + keys)
+                        cls.log.warning("Invalid class name : " + level["tiles"][keys]["backgroundClass"] + " for tile : " + keys)
 
         RessourceLoader.get("dpt.entities.flags.FlagBlue").compute_ids()
 

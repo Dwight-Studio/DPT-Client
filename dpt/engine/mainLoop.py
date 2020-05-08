@@ -273,11 +273,11 @@ def settings_menu_loop():
             if event.button == Game.gui["left_button"]:
                 Game.temp["display_size"] -= 1
                 Game.temp["display_size"] = max(Game.temp["display_size"], 0)
-                Game.temp["display_size"] = min(Game.temp["display_size"], 5)
+                Game.temp["display_size"] = min(Game.temp["display_size"], len(Game.display_list) - 1)
             if event.button == Game.gui["right_button"]:
                 Game.temp["display_size"] += 1
                 Game.temp["display_size"] = max(Game.temp["display_size"], 0)
-                Game.temp["display_size"] = min(Game.temp["display_size"], 5)
+                Game.temp["display_size"] = min(Game.temp["display_size"], len(Game.display_list) - 1)
             if event.button == Game.gui["apply_button"]:
                 apply_settings()
             if event.button == Game.gui["cancel_button"]:

@@ -131,13 +131,13 @@ class TileEditor:
                     cls.last_mouse_pos_y_c = mouse[1]
                     if not cls.custom_tile_placement:
                         if not TileManager.check_back:
-                            if str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y) in cls.created_level:
-                                cls.created_level[str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)][
+                            if str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y) in cls.created_level["tiles"]:
+                                cls.created_level["tiles"][str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)][
                                     "class"] = TileEditor.selected_item
                                 for blocks in TileManager.environment_group:
                                     if math.floor(
                                             blocks.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(
-                                            blocks.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
+                                        blocks.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
                                         blocks.kill()
                                         del blocks
                                 for blocks in TileManager.interactible_blocks_group:
@@ -153,42 +153,42 @@ class TileEditor:
                                         entity.kill()
                                         del entity
                             else:
-                                cls.created_level[str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)] = {
+                                cls.created_level["tiles"][str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)] = {
                                     "class": TileEditor.selected_item}
 
                             TileManager.place_block(cls.mouse_pos_x, cls.mouse_pos_y, TileEditor.selected_item)
                         elif TileManager.check_back:
-                            if str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y) in cls.created_level:
-                                cls.created_level[str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)][
+                            if str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y) in cls.created_level["tiles"]:
+                                cls.created_level["tiles"][str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)][
                                     "backgroundClass"] = TileEditor.selected_item
                                 for blocks in TileManager.background_blocks_group:
                                     if math.floor(
                                             blocks.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(
-                                            blocks.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
+                                        blocks.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
                                         blocks.kill()
                                         del blocks
                             else:
-                                cls.created_level[str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)] = {
+                                cls.created_level["tiles"][str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)] = {
                                     "backgroundClass": TileEditor.selected_item}
                             TileManager.place_back_block(cls.mouse_pos_x, cls.mouse_pos_y, TileEditor.selected_item)
                     elif cls.custom_tile_placement:
                         if not TileManager.check_back:
-                            if str(mouse[0]) + ", " + str(mouse[1]) in cls.created_level:
-                                cls.created_level[str(mouse[0]) + ", " + str(mouse[1])][
+                            if str(mouse[0]) + ", " + str(mouse[1]) in cls.created_level["tiles"]:
+                                cls.created_level["tiles"][str(mouse[0]) + ", " + str(mouse[1])][
                                     "class"] = TileEditor.selected_item
-                                cls.created_level[str(mouse[0]) + ", " + str(mouse[1])]["customPlace"] = True
+                                cls.created_level["tiles"][str(mouse[0]) + ", " + str(mouse[1])]["customPlace"] = True
                             else:
-                                cls.created_level[str(mouse[0]) + ", " + str(mouse[1])] = {
+                                cls.created_level["tiles"][str(mouse[0]) + ", " + str(mouse[1])] = {
                                     "class": TileEditor.selected_item, "customPlace": True}
                             TileManager.place_block(mouse[0] - TileManager.camera.last_x, mouse[1],
                                                     TileEditor.selected_item)
                         elif TileManager.check_back:
-                            if str(mouse[0]) + ", " + str(mouse[1]) in cls.created_level:
-                                cls.created_level[str(mouse[0]) + ", " + str(mouse[1])][
+                            if str(mouse[0]) + ", " + str(mouse[1]) in cls.created_level["tiles"]:
+                                cls.created_level["tiles"][str(mouse[0]) + ", " + str(mouse[1])][
                                     "backgroundClass"] = TileEditor.selected_item
-                                cls.created_level[str(mouse[0]) + ", " + str(mouse[1])]["customPlace"] = True
+                                cls.created_level["tiles"][str(mouse[0]) + ", " + str(mouse[1])]["customPlace"] = True
                             else:
-                                cls.created_level[str(mouse[0]) + ", " + str(mouse[1])] = {
+                                cls.created_level["tiles"][str(mouse[0]) + ", " + str(mouse[1])] = {
                                     "backgroundClass": TileEditor.selected_item, "customPlace": True}
                             TileManager.place_back_block(mouse[0] - TileManager.camera.last_x, mouse[1],
                                                          TileEditor.selected_item)
@@ -281,7 +281,7 @@ class TileEditor:
                                         cls.dead.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
                                     cls.dead.kill()
                                     del cls.dead
-                        del cls.created_level[str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)]
+                        del cls.created_level["tiles"][str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)]
                     except KeyError:
                         pass
             elif mouse_buttons[1] != 1 and cls.mouse_pushed_r:
