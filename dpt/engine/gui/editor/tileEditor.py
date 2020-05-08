@@ -69,6 +69,8 @@ class TileEditor:
                         for sprite in list:
                             sprite.kill()
                         cls.created_level.clear()
+                        cls.created_level["tiles"] = {}
+                        cls.created_level["infos"] = {}
                     elif not keys[pygame.K_n] and cls.npushed:
                         cls.npushed = False
                     if keys[pygame.K_t] and not cls.tpushed and not cls.panel_open:
@@ -136,12 +138,6 @@ class TileEditor:
                                 cls.created_level["tiles"][str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)][
                                     "class"] = TileEditor.selected_item
                                 for blocks in TileManager.environment_group:
-                                    if math.floor(
-                                            blocks.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(
-                                        blocks.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
-                                        blocks.kill()
-                                        del blocks
-                                for blocks in TileManager.interactible_blocks_group:
                                     if math.floor(
                                             blocks.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(
                                         blocks.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:

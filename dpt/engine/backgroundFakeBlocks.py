@@ -1,5 +1,6 @@
 import pygame
 from dpt.engine.loader import RessourceLoader, UnreachableRessourceError
+from dpt.game import Game
 
 
 class BackgroundFakeBlocks(pygame.sprite.Sprite):
@@ -17,3 +18,13 @@ class BackgroundFakeBlocks(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x + self.block.offset_x
         self.rect.y = y + self.block.offset_y
+
+        if not TileManager.is_loading_level:
+            if isinstance(self.block.sounds, list):
+                self.sound = RessourceLoader.get(self.block.sounds[0])
+            elif isinstance(self.block.sounds, str):
+                self.sound = RessourceLoader.get(self.block.sounds)
+            else:
+                return
+            self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
+            self.sound.play()
