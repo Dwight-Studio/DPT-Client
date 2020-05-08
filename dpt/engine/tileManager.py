@@ -76,6 +76,8 @@ class TileManager:
         TileManager.interactible_blocks_group.empty()
         TileManager.clouds_group.empty()
 
+        Game.temp["coins"] = 0
+
         for entity in TileManager.entity_group:
             entity.kill()
 

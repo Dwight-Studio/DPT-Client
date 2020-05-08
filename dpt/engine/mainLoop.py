@@ -503,9 +503,10 @@ def end_level_loop():
                 if not Game.temp["3_done"]:
                     Game.gui["star_3"].run = Game.temp["score_display"] >= 3000
                     Game.temp["3_done"] = Game.temp["score_display"] >= 3000
+                Game.gui["el_title_score"].text = str(Game.temp["score_display"])
             else:
                 pygame.mixer.stop()
-            Game.gui["el_title_score"].text = str(Game.temp["score_display"])
+                Game.gui["el_title_score"].text = str(Game.temp["score"])
 
         if Game.temp["1_done"] and not Game.temp["2_done"] and not Game.temp["3_done"]:
             Game.gui["star_3"].update()

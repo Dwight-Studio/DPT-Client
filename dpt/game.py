@@ -78,6 +78,7 @@ class Game(object):
     display_list = [("Automatique", 0, 0),
                     ("480p (720 x 480)", 720, 480),
                     ("720p (1280 x 720)", 1280, 720),
+                    ("900p (1440 x 900)", 1440, 900),
                     ("1080p (1920 x 1080)", 1920, 1080),
                     ("4K (3840 x 2160)", 3840, 2160),
                     ("8K (7680 x 4320)", 7680, 4320)]
@@ -419,13 +420,13 @@ class Game(object):
             cls.WINDOW_WIDTH = 0
             cls.WINDOW_HEIGHT = 0
 
+        cls.surface = cls.window.set_mode((cls.WINDOW_WIDTH, cls.WINDOW_HEIGHT), pygame.NOFRAME)
+
         if cls.WINDOW_WIDTH == 0:
             cls.WINDOW_WIDTH = cls.SCREEN_WIDTH
 
         if cls.WINDOW_HEIGHT == 0:
             cls.WINDOW_HEIGHT = cls.SCREEN_HEIGHT
-
-        cls.surface = cls.window.set_mode((cls.WINDOW_WIDTH, cls.WINDOW_HEIGHT), pygame.NOFRAME)
 
         w, h = cls.surface.get_size()
         cls.main_logger.debug("Window size: " + str(w) + "x" + str(h))
