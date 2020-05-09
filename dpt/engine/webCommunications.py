@@ -155,12 +155,12 @@ class WebCommunication(object):
                             Game.gui["wb_player_count"].color = (0, 0, 0)
 
                         else:
-                            Game.gui["wb_player_count"]: Text(Game.WINDOW_WIDTH - math.floor(Game.DISPLAY_RATIO * 220),
-                                                              0,
-                                                              "Déconnecté du serveur",
-                                                              math.floor(25 * Game.DISPLAY_RATIO),
-                                                              (255, 0, 0),
-                                                              "dpt.fonts.DINOT_CondBlack")
+                            Game.gui["wb_player_count"] = Text(Game.WINDOW_WIDTH - math.floor(Game.DISPLAY_RATIO * 220),
+                                                               0,
+                                                               "Déconnecté du serveur",
+                                                               math.floor(25 * Game.DISPLAY_RATIO),
+                                                               (255, 0, 0),
+                                                               "dpt.fonts.DINOT_CondBlack")
 
                             Game.gui["wb_player_count"].text = "Déconnecté du serveur"
                             Game.gui["wb_player_count"].color = (255, 0, 0)
