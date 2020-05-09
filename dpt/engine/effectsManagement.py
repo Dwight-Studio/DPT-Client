@@ -14,6 +14,7 @@ from dpt.engine.gui.ui.effects.lowGravity import LowGravity
 from dpt.engine.gui.ui.effects.monsterimmortal import Monsterimmortal
 from dpt.engine.gui.ui.effects.Slow import Slow
 from dpt.engine.gui.ui.effects.star import Star
+from dpt.engine.gui.ui.effects.reverse import Reverse
 
 
 class EffectsManagement:
@@ -24,7 +25,8 @@ class EffectsManagement:
                     "star",
                     "jumpBoost",
                     "inversion",
-                    "lowGravity"]
+                    "lowGravity",
+                    "reverse"]
 
     list_current_effects = []
 
@@ -35,7 +37,8 @@ class EffectsManagement:
                     "star": "Temp",
                     "jumpBoost": "Temp",
                     "inversion": "Temp",
-                    "lowGravity": "Perm"}
+                    "lowGravity": "Perm",
+                    "reverse": "Temp"}
 
     dico_current_effects = {"Ice": False,
                             "Slow": False,
@@ -44,7 +47,8 @@ class EffectsManagement:
                             "star": False,
                             "jumpBoost": False,
                             "inversion": False,
-                            "lowGravity": False}
+                            "lowGravity": False,
+                            "reverse": False}
 
     temp_list = []
     perm_list = []
@@ -58,6 +62,7 @@ class EffectsManagement:
     image_monsterimmortal = None
     image_slow = None
     image_star = None
+    image_reverse = None
 
     @classmethod
     def create_effects_image(cls):
@@ -69,10 +74,15 @@ class EffectsManagement:
         cls.image_monsterimmortal = Monsterimmortal()
         cls.image_slow = Slow()
         cls.image_star = Star()
+        cls.image_reverse = Reverse()
 
     @classmethod
     def update(cls):
         cls.display_update()
+        if cls.dico_current_effects["reverse"]:
+            Game.upsidedown = True
+        else:
+            Game.upsidedown = False
         for event in Game.events:
             if event.type == Game.VOTE_RESULT_AVAILABLE_EVENT:
                 for effects in cls.temp_list:
@@ -118,7 +128,7 @@ class EffectsManagement:
         while mod1 in cls.list_current_effects:
             mod1 = random.choice(cls.list_current_effects)
         mod2 = random.choice(cls.list_effects)
-        while mod2 == mod1 and mod2 in cls.list_current_effects:
+        while mod2 == mod1 or mod2 in cls.list_current_effects:
             mod2 = random.choice(cls.list_effects)
         cls.mods = [mod1, mod2]
         WebCommunication.create_vote_event(mod1, mod2)
@@ -132,7 +142,8 @@ class EffectsManagement:
                                     "star": False,
                                     "jumpBoost": False,
                                     "inversion": False,
-                                    "lowGravity": False}
+                                    "lowGravity": False,
+                                    "reverse": False}
         cls.temp_list = []
         cls.perm_list = []
 
@@ -147,7 +158,8 @@ class EffectsManagement:
                                "star": cls.image_star,
                                "jumpBoost": cls.image_jumpBoost,
                                "inversion": cls.image_inversion,
-                               "lowGravity": cls.image_lowGravity}
+                               "lowGravity": cls.image_lowGravity,
+                               "reverse": cls.image_reverse}
         for images in cls.list_current_effects:
             list_current_images_effects.append(dico_images_effects[images])
         for images in list_current_images_effects:
