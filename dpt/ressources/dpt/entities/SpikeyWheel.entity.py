@@ -19,9 +19,9 @@ class SpikeyWheel(pygame.sprite.Sprite):
         self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect()
         self.rect.x = x + self.offset_x
-        self.x = x + self.offset_x
         self.rect.y = y + self.offset_y
-        self.y = y + self.offset_y
+        self.x = x
+        self.y = y
         self.rotate = 1
         if not TileManager.is_loading_level:
             self.sound = RessourceLoader.get(self.sounds)

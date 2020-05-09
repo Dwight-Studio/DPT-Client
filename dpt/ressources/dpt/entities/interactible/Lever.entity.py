@@ -13,7 +13,7 @@ class Lever(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
-        pygame.sprite.Sprite.__init__(self, TileManager.entity_group)
+        pygame.sprite.Sprite.__init__(self, TileManager.entity_group, TileManager.interactible_blocks_group)
         self.image = RessourceLoader.get(self.texture)
         self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect()
@@ -50,13 +50,21 @@ class Lever(pygame.sprite.Sprite):
                         self.rect = self.image.get_rect()
                         self.rect.x = self.x + self.offset_x
                         self.rect.y = self.y + self.offset_y
-                        for keys, data in TileEditor.created_level["tiles"].items():
-                            if keys == str(self.x) + ", " + str(self.y):
-                                for interact in TileManager.interactible_blocks_group:
-                                    pos = tuple(map(int, data["assignement"].split(", ")))
+                        data = TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]
+                        if "assignement" in data:
+                            print("1")
+                            for interact in TileManager.interactible_blocks_group:
+                                print("2")
+                                positions = [tuple(map(int, i.split(", "))) for i in data["assignement"]]
+                                for pos in positions:
+                                    print("3")
                                     try:
                                         if interact.x == pos[0] and interact.y == pos[1]:
-                                            interact.deactivate()
+                                            interact.activate()
+                                        elif interact.rect.x == pos[0] and interact.rect.y == pos[1]:
+                                            interact.activate()
+                                        elif interact.rect.x == pos[0] * Game.TILESIZE and interact.rect.y == pos[1] * Game.TILESIZE:
+                                            interact.activate()
                                     except AttributeError:
                                         continue
                     elif self.right:
@@ -68,12 +76,21 @@ class Lever(pygame.sprite.Sprite):
                         self.rect = self.image.get_rect()
                         self.rect.x = self.x + self.offset_x
                         self.rect.y = self.y + self.offset_y
-                        for keys, data in TileEditor.created_level["tiles"].items():
-                            if keys == str(self.x) + ", " + str(self.y):
-                                for interact in TileManager.interactible_blocks_group:
-                                    pos = tuple(map(int, data["assignement"].split(", ")))
-                                    if interact.x == pos[0] and interact.y == pos[1]:
-                                        interact.activate()
+                        data = TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]
+                        if "assignement" in data:
+                            for interact in TileManager.interactible_blocks_group:
+                                positions = [tuple(map(int, i.split(", "))) for i in data["assignement"]]
+                                for pos in positions:
+                                    try:
+                                        print("4")
+                                        if interact.x == pos[0] and interact.y == pos[1]:
+                                            interact.desactivate()
+                                        elif interact.rect.x == pos[0] and interact.rect.y == pos[1]:
+                                            interact.desactivate()
+                                        elif interact.rect.x == pos[0] * Game.TILESIZE and interact.rect.y == pos[1] * Game.TILESIZE:
+                                            interact.desactivate()
+                                    except AttributeError:
+                                        continue
                 elif TileEditor.is_editing:
                     self.attributing = True
             elif mouse_buttons[0] != 1 and self.clicked:
@@ -84,12 +101,29 @@ class Lever(pygame.sprite.Sprite):
                 self.clicked2 = True
                 for sprites in TileManager.interactible_blocks_group:
                     try:
-                        if hasattr(sprites, "activate") and hasattr(sprites, "desactivate"):
-                            if sprites.x + TileManager.camera.last_x <= mousePos[0] <= sprites.x + sprites.width and sprites.y + sprites.offset_y <= mousePos[1] <= sprites.y:
-                                TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"] = str(sprites.x) + ", " + str(sprites.y)
+                        if sprites.x + TileManager.camera.last_x <= mousePos[0] <= sprites.x + sprites.width and sprites.y + sprites.offset_y <= mousePos[1] <= sprites.y:
+                            if "assignement" not in TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]:
+                                TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"] = []
+                            TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"].append(str(sprites.x) + ", " + str(sprites.y))
                     except AttributeError:
                         continue
-            elif mouse_buttons[1] == 1:
+            elif mouse_buttons[2] == 1:
                 self.attributing = False
             elif mouse_buttons[0] != 1 and self.clicked2:
                 self.clicked2 = False
+
+        if TileEditor.is_editing:
+            if "assignement" in TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]:
+                for sprite in TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"]:
+                    if sprite == str(self.x) + ", " + str(self.y):
+                        continue
+                    if "customPlace" in TileEditor.created_level["tiles"][sprite]:
+                        def t(x):
+                            return int(x) + TileManager.camera.last_x
+
+                        pygame.draw.line(Game.surface, (0, 0, 0), (self.x + TileManager.camera.last_x, self.y + 30), tuple(map(t, sprite.split(", "))))
+                    else:
+                        def t(x):
+                            return (int(x) * Game.TILESIZE) + TileManager.camera.last_x
+
+                        pygame.draw.line(Game.surface, (0, 0, 0), (self.x + TileManager.camera.last_x, self.y + 30), tuple(map(t, sprite.split(", "))))

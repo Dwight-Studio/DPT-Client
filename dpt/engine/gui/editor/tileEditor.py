@@ -233,9 +233,10 @@ class TileEditor:
                                     if cls.entitys.customPlacement:
                                         if cls.entitys.rect.left <= mouse[0] <= cls.entitys.rect.right and cls.entitys.rect.top <= mouse[1] <= cls.entitys.rect.bottom:
                                             try:
-                                                cls.mouse_pos_y = cls.entitys.y - cls.entitys.offset_y
-                                                cls.mouse_pos_x = cls.entitys.x - cls.entitys.offset_x
+                                                cls.mouse_pos_y = cls.entitys.y
+                                                cls.mouse_pos_x = cls.entitys.x
                                                 cls.entitys.kill()
+                                                del cls.created_level["tiles"][str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)]["customPlace"]
                                                 del cls.entitys
                                             except AttributeError:
                                                 cls.mouse_pos_y = cls.entitys.rect.y - cls.entitys.offset_y

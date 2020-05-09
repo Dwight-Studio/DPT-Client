@@ -32,7 +32,7 @@ class Spike(pygame.sprite.Sprite):
             self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
             self.sound.play()
 
-    def activate(self):
+    def desactivate(self):
         self.down = False
         texture = "dpt.images.environment.traps.Obstacle_Spike_Up"
         self.image = RessourceLoader.get(texture)
@@ -41,7 +41,7 @@ class Spike(pygame.sprite.Sprite):
         self.rect.x = self.x + self.offset_x
         self.rect.y = self.y + self.offset_y
 
-    def deactivate(self):
+    def activate(self):
         self.up = False
         texture = "dpt.images.environment.traps.Obstacle_Spike_Down"
         self.image = RessourceLoader.get(texture)
