@@ -18,6 +18,7 @@ from dpt.engine.gui.ui.effects.reverse import Reverse
 
 
 class EffectsManagement:
+    """Gestion des effets (les activer/désactiver, lancer des votes, les afficher, communiquer avec le PlayerSprite...)"""
     list_effects = ["Ice",
                     "Slow",
                     "Fast",
@@ -66,6 +67,7 @@ class EffectsManagement:
 
     @classmethod
     def create_effects_image(cls):
+        """Crée les images des effets possibles"""
         cls.image_fast = Fast()
         cls.image_ice = Ice()
         cls.image_inversion = Inversion()
@@ -78,6 +80,7 @@ class EffectsManagement:
 
     @classmethod
     def update(cls):
+        """Décide de lancer des nouveaux votes, supprime ou active les effets et gére le fonctionnement de certains effets"""
         cls.display_update()
         if cls.dico_current_effects["reverse"]:
             Game.upsidedown = True
@@ -124,6 +127,7 @@ class EffectsManagement:
 
     @classmethod
     def vote(cls):
+        """Choisi les modificateurs et lance un vote"""
         mod1 = random.choice(cls.list_effects)
         while mod1 in cls.list_current_effects:
             mod1 = random.choice(cls.list_current_effects)
@@ -135,6 +139,7 @@ class EffectsManagement:
 
     @classmethod
     def reset(cls):
+        """Réinitialise tous les effets"""
         cls.dico_current_effects = {"Ice": False,
                                     "Slow": False,
                                     "Fast": False,
@@ -149,6 +154,7 @@ class EffectsManagement:
 
     @classmethod
     def display_update(cls):
+        """Affiche les effets actifs"""
         i = 0
         list_current_images_effects = []
         dico_images_effects = {"Ice": cls.image_ice,
