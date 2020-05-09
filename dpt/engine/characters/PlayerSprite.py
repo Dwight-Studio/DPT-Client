@@ -9,6 +9,7 @@ from dpt.engine.effectsManagement import EffectsManagement
 
 
 class PlayerSprite(pygame.sprite.Sprite):
+    """Gère le fonctionnement du joueur et sa physique plus particulièrement"""
     char = "dpt.images.characters.player.standing"
     walk_right_textures = "dpt.images.characters.player.R-*"
     walk_left_textures = "dpt.images.characters.player.L-*"
@@ -17,6 +18,15 @@ class PlayerSprite(pygame.sprite.Sprite):
     mask = "dpt.images.characters.player.mask"
 
     def __init__(self, x, y):
+        """Crée un joueur
+
+        :param x: Abscisse
+        :type x: int
+        :param y: Ordonnée
+        :type y: int
+
+        :rtype: PlayerSprite
+        """
         pygame.sprite.Sprite.__init__(self, Game.player_group)  # Sprite's constructor called
         self.width = math.floor(156 * Game.DISPLAY_RATIO)
         self.height = math.floor(117 * Game.DISPLAY_RATIO)
@@ -63,6 +73,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         Heart()
 
     def update(self):
+        """Actualise les effets, les déplacements, les collisions, sa santé"""
         if self.alive:
 
             if EffectsManagement.dico_current_effects["Fast"]:
@@ -203,6 +214,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.death_fall()
 
     def animation(self):
+        """Change l'image du joueur pour donner l'illusion de déplacement"""
         add = abs(math.floor(self.xvel / (self.maxvelocity // 4)))
         if self.walkCount + add >= 180:
             self.walkCount = 0
@@ -225,9 +237,9 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.image = self.jumpRight
             else:
                 self.image = self.jumpLeft
-        # pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
 
     def collide(self):
+        """Gère toute la partie physique du joueur, l'empêche de traverser les blocs"""
         for i in TileManager.environment_group:
             if i.rect.colliderect(Game.display_rect):
                 rx = i.rect.x - (self.rect.x + math.floor(self.xvel))
@@ -294,6 +306,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                     self.rect.x += dx
 
     def deadly_object_collision(self):
+        """Gère les collisions avec des objets physiques mortels"""
         for i in TileManager.deadly_object_group:
             if pygame.sprite.collide_rect(self, i):
                 if self.damaged:
@@ -314,6 +327,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                     self.gravityCount = 0
 
     def enemies_collision(self, yVelDelta, enemies):
+        """Gère les collisions avec des ennemis, permet de les tuer"""
         for i in enemies:
             if pygame.sprite.collide_rect(self, i):
                 if yVelDelta < 0 and not EffectsManagement.dico_current_effects["monsterimmortal"]:
@@ -342,6 +356,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                         self.gravityCount = 0
 
     def die(self):
+        """Animation de mort"""
         Game.life = 3
         self.alive = False
         if self.jumpCount > 0:
@@ -353,6 +368,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.rect.top -= self.yvel
 
     def death_fall(self):
+        """Tue le joueur s'il sort de l'écran"""
         if self.rect.top >= Game.WINDOW_HEIGHT:
             Game.get_logger("Player").info("Player sprite killed")
             Game.freeze_game = True
