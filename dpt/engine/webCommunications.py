@@ -133,12 +133,12 @@ class WebCommunication(object):
                             reply = cls.make_request("http://" + Game.settings["server_address"] + "/sessions.json", True)
 
                             if "wb_player_count" not in Game.gui:
-                                Game.gui["wb_player_count"]: Text(Game.WINDOW_WIDTH - math.floor(Game.DISPLAY_RATIO * 220),
-                                                                  0,
-                                                                  "Connexion au serveur...",
-                                                                  math.floor(25 * Game.DISPLAY_RATIO),
-                                                                  (0, 0, 0),
-                                                                  "dpt.fonts.DINOT_CondBlack")
+                                Game.gui["wb_player_count"] = Text(Game.WINDOW_WIDTH - math.floor(Game.DISPLAY_RATIO * 220),
+                                                                   0,
+                                                                   "Connexion au serveur...",
+                                                                   math.floor(25 * Game.DISPLAY_RATIO),
+                                                                   (0, 0, 0),
+                                                                   "dpt.fonts.DINOT_CondBlack")
 
                             if isinstance(reply, CommunicationError) or cls.sessionName not in reply:
                                 cls.log.warning("Can't get connected players count")

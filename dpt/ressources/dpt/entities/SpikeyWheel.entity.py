@@ -14,7 +14,7 @@ class SpikeyWheel(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
-        pygame.sprite.Sprite.__init__(self, TileManager.entity_group, TileManager.deadly_object_group)
+        pygame.sprite.Sprite.__init__(self, TileManager.entity_group, TileManager.deadly_object_group, TileManager.interactible_blocks_group)
         self.image = RessourceLoader.get(self.texture)
         self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect()
@@ -22,6 +22,7 @@ class SpikeyWheel(pygame.sprite.Sprite):
         self.rect.y = y + self.offset_y
         self.x = x
         self.y = y
+        self.active = True
         self.rotate = 1
         if not TileManager.is_loading_level:
             self.sound = RessourceLoader.get(self.sounds)
@@ -29,14 +30,21 @@ class SpikeyWheel(pygame.sprite.Sprite):
             self.sound.play()
 
     def update(self):
-        if self.i == 2:
-            self.i = 0
-            self.image = RessourceLoader.get(self.texture)
-            self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
-            self.image = pygame.transform.rotate(self.image, self.rotate)
-            if self.rotate == 360:
-                self.rotate = 0
-            self.rotate += 5
-            self.rect = self.image.get_rect(center=self.rect.center)
-        else:
-            self.i += 1
+        if self.active:
+            if self.i == 2:
+                self.i = 0
+                self.image = RessourceLoader.get(self.texture)
+                self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
+                self.image = pygame.transform.rotate(self.image, self.rotate)
+                if self.rotate == 360:
+                    self.rotate = 0
+                self.rotate += 5
+                self.rect = self.image.get_rect(center=self.rect.center)
+            else:
+                self.i += 1
+
+    def activate(self):
+        self.active = False
+
+    def desactivate(self):
+        self.active = True
