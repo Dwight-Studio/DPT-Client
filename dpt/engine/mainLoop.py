@@ -426,7 +426,8 @@ def game_over_loop():
             if event.button == Game.gui["go_button_checkpoint"]:
                 kill_menu()
                 TileManager.load_level(TileManager.levelName)
-                Game.temp["coins"] = 0
+                if "coins" in Game.temp:
+                    Game.temp["coins"] = Game.temp["coins"] // 2
                 if "respawn" in Game.temp:
                     Game.temp["respawn"] += 1
                 else:

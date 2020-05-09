@@ -84,7 +84,7 @@ class Lever(pygame.sprite.Sprite):
                 self.clicked2 = True
                 for sprites in TileManager.interactible_blocks_group:
                     try:
-                        if isinstance(sprites, RessourceLoader.get("dpt.entities.spike")):
+                        if hasattr(sprites, "activate") and hasattr(sprites, "desactivate"):
                             if sprites.x + TileManager.camera.last_x <= mousePos[0] <= sprites.x + sprites.width and sprites.y + sprites.offset_y <= mousePos[1] <= sprites.y:
                                 self.attributing = False
                                 TileEditor.created_level[str(self.x) + ", " + str(self.y)]["assignement"] = str(sprites.x) + ", " + str(sprites.y)
