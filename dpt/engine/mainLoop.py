@@ -180,29 +180,11 @@ def main_menu_loop():
             if event.button == Game.gui["button_play"]:
                 menu.delete_items()
 
-                # Initialisation de la session (dans un thread pour ne pas bloquer)
-                from dpt.engine.webCommunications import WebCommunication
-                from dpt.engine.webCommunications import CommunicationError
-
-                reply = WebCommunication.init_connection()
-
-                if isinstance(reply, CommunicationError):
-                    Scenes.return_error(str(reply),
-                                        " ",
-                                        "Si le problème persiste, vous pouvez nous contacter sur Discord",
-                                        "Dwight Studio Hub: discord.gg/yZwuNqN",
-                                        "(Lien copié dans le presse-papier)")
-
-                    from tkinter import Tk
-                    root = Tk()
-                    root.withdraw()
-                    root.clipboard_clear()
-                    root.clipboard_append("https://discord.gg/yZwuNqN")
-                    root.update()
-                    root.destroy()
-                    return
-
-                Scenes.start_level("dpt.levels.leveltest")
+                RessourceLoader.add_pending("dpt.levels.leveltest")
+                RessourceLoader.add_pending("dpt.images.environment.terrain.grass_tile_lower")
+                RessourceLoader.load()
+                Game.selected_level = "dpt.levels.leveltest"
+                Scenes.level_selector_detail()
                 return
             elif event.button == Game.gui["button_editor"]:
                 menu.delete_items()
@@ -348,9 +330,9 @@ def start_level_loop():
             return
         if event.type == Game.BUTTON_EVENT:
             menu.delete_items()
-            if event.button == Game.gui["button_main_menu"]:
+            if event.button == Game.gui["button_previous"]:
                 WebCommunication.close()
-                Scenes.main_menu(False)
+                Scenes.level_selector_detail()
                 return
             elif event.button == Game.gui["button_start"]:
                 Scenes.level(Game.temp["next_level"])
@@ -511,7 +493,7 @@ def end_level_loop():
 
             Game.gui["el_detail_title"] = Text(0,
                                                buttons_starting_y + math.floor(190 * Game.DISPLAY_RATIO),
-                                               "Détails du score :",
+                                               "Détails du score",
                                                math.floor(25 * Game.DISPLAY_RATIO),
                                                (0, 0, 0),
                                                "dpt.fonts.DINOT_CondBlack",
@@ -615,3 +597,46 @@ def end_level_loop():
             Game.gui["star_3"].update()
             Game.gui["star_2"].update()
             Game.gui["star_1"].update()
+
+
+def level_selector_detail_loop():
+    """Boucle de details de selection des niveaux"""
+    Game.surface.blit(bg, (0, 0))
+
+    for event in Game.events:
+        if event.type == pygame.QUIT:
+            Game.run = False
+        if event.type == Game.BUTTON_EVENT:
+            if event.button == Game.gui["button_start"]:
+                menu.delete_items()
+
+                # Initialisation de la session
+                from dpt.engine.webCommunications import WebCommunication
+                from dpt.engine.webCommunications import CommunicationError
+
+                reply = WebCommunication.init_connection()
+
+                if isinstance(reply, CommunicationError):
+                    Scenes.return_error(str(reply),
+                                        " ",
+                                        "Si le problème persiste, vous pouvez nous contacter sur Discord",
+                                        "Dwight Studio Hub: discord.gg/yZwuNqN",
+                                        "(Lien copié dans le presse-papier)")
+
+                    from tkinter import Tk
+                    root = Tk()
+                    root.withdraw()
+                    root.clipboard_clear()
+                    root.clipboard_append("https://discord.gg/yZwuNqN")
+                    root.update()
+                    root.destroy()
+                    return
+
+                Scenes.start_level()
+                return
+            elif event.button == Game.gui["button_main_menu"]:
+                menu.delete_items()
+                Scenes.main_menu(False)
+                return
+
+    menu.main_loop()

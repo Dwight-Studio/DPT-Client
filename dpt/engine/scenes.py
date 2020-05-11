@@ -2,6 +2,7 @@ import math
 import pygame
 
 from dpt.game import Game
+import time
 
 
 class Scenes:
@@ -112,7 +113,7 @@ class Scenes:
 
         # Ajout du GUI
         from dpt.engine.gui.menu.button import Button
-        from dpt.engine.gui.menu.textSpriteButton import TextSpriteButton
+        from dpt.engine.gui.menu.simpleSprite import SimpleSprite
         from dpt.engine.gui.menu import Window
         from dpt.engine.gui.menu.text import Text
         button_width = math.floor(92 * Game.DISPLAY_RATIO)
@@ -133,38 +134,38 @@ class Scenes:
                          "p_button_resume": Button(buttons_x, buttons_starting_y, button_width, button_height,
                                                    RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_OUT"),
                                                    pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_IN"),
-                                                   text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
-                                                                                math.floor(50 * Game.DISPLAY_RATIO),
-                                                                                RessourceLoader.get("dpt.images.gui.symbols.SYMB_PLAY"))),
+                                                   text_sprite=SimpleSprite(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                            math.floor(50 * Game.DISPLAY_RATIO),
+                                                                            RessourceLoader.get("dpt.images.gui.symbols.SYMB_PLAY"))),
                          "p_button_main_menu": Button(buttons_x, buttons_starting_y + (buttons_gap_y + button_height) * 2, button_width, button_height,
                                                       RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_OUT"),
                                                       pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_IN"),
-                                                      text_sprite=TextSpriteButton(math.floor(50 * Game.DISPLAY_RATIO),
-                                                                                   math.floor(38 * Game.DISPLAY_RATIO),
-                                                                                   RessourceLoader.get("dpt.images.gui.symbols.SYMB_MENU"))),
+                                                      text_sprite=SimpleSprite(math.floor(50 * Game.DISPLAY_RATIO),
+                                                                               math.floor(38 * Game.DISPLAY_RATIO),
+                                                                               RessourceLoader.get("dpt.images.gui.symbols.SYMB_MENU"))),
                          "p_button_quit": Button(buttons_x, buttons_starting_y + (buttons_gap_y + button_height) * 3,
                                                  button_width,
                                                  button_height,
                                                  RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_OUT"),
                                                  pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_IN"),
-                                                 text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
-                                                                              math.floor(50 * Game.DISPLAY_RATIO),
-                                                                              RessourceLoader.get("dpt.images.gui.symbols.SYMB_X")))})
+                                                 text_sprite=SimpleSprite(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                          math.floor(50 * Game.DISPLAY_RATIO),
+                                                                          RessourceLoader.get("dpt.images.gui.symbols.SYMB_X")))})
 
         if not TileEditor.enabled_editor:
             Game.gui["p_button_restart_save"] = Button(buttons_x, buttons_starting_y + (buttons_gap_y + button_height), button_width, button_height,
                                                        RessourceLoader.get("dpt.images.gui.buttons.BTN_BLUE_CIRCLE_OUT"),
                                                        pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_BLUE_CIRCLE_IN"),
-                                                       text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
-                                                                                    math.floor(40 * Game.DISPLAY_RATIO),
-                                                                                    RessourceLoader.get("dpt.images.gui.symbols.SYMB_REPLAY")))
+                                                       text_sprite=SimpleSprite(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                                math.floor(40 * Game.DISPLAY_RATIO),
+                                                                                RessourceLoader.get("dpt.images.gui.symbols.SYMB_REPLAY")))
         else:
             Game.gui["p_button_restart_save"] = Button(buttons_x, buttons_starting_y + (buttons_gap_y + button_height), button_width, button_height,
                                                        RessourceLoader.get("dpt.images.gui.buttons.BTN_BLUE_CIRCLE_OUT"),
                                                        pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_BLUE_CIRCLE_IN"),
-                                                       text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
-                                                                                    math.floor(47 * Game.DISPLAY_RATIO),
-                                                                                    RessourceLoader.get("dpt.images.gui.symbols.SYMB_STOP")))
+                                                       text_sprite=SimpleSprite(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                                math.floor(47 * Game.DISPLAY_RATIO),
+                                                                                RessourceLoader.get("dpt.images.gui.symbols.SYMB_STOP")))
 
         from dpt.engine.mainLoop import pause_loop
         Game.loop = pause_loop
@@ -193,6 +194,7 @@ class Scenes:
             RessourceLoader.add_pending("dpt.fonts.*")
             RessourceLoader.add_pending("dpt.sounds.musics.story_time")
             RessourceLoader.add_pending("dpt.sounds.sfx.switch6")
+            RessourceLoader.add_pending("dpt.images.not_found")
             RessourceLoader.load()
 
         # Gestion de la musique
@@ -202,7 +204,7 @@ class Scenes:
 
         # Ajout du GUI
         from dpt.engine.gui.menu.button import Button
-        from dpt.engine.gui.menu.textSpriteButton import TextSpriteButton
+        from dpt.engine.gui.menu.simpleSprite import SimpleSprite
         from dpt.engine.gui.menu import Window
         button_width = math.floor(92 * Game.DISPLAY_RATIO)
         button_height = math.floor(95 * Game.DISPLAY_RATIO)
@@ -212,33 +214,33 @@ class Scenes:
         Game.gui = {"button_play": Button(buttons_starting_x, buttons_y, button_width, button_height,
                                           RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_OUT"),
                                           pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_IN"),
-                                          text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
-                                                                       math.floor(50 * Game.DISPLAY_RATIO),
-                                                                       RessourceLoader.get("dpt.images.gui.symbols.SYMB_PLAY"))),
+                                          text_sprite=SimpleSprite(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                   math.floor(50 * Game.DISPLAY_RATIO),
+                                                                   RessourceLoader.get("dpt.images.gui.symbols.SYMB_PLAY"))),
                     "button_editor": Button(buttons_starting_x + (button_width + buttons_gap_x), buttons_y,
                                             button_width,
                                             button_height,
                                             RessourceLoader.get("dpt.images.gui.buttons.BTN_BLUE_CIRCLE_OUT"),
                                             pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_BLUE_CIRCLE_IN"),
-                                            text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
-                                                                         math.floor(50 * Game.DISPLAY_RATIO),
-                                                                         RessourceLoader.get("dpt.images.gui.symbols.SYMB_PLUS"))),
+                                            text_sprite=SimpleSprite(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                     math.floor(50 * Game.DISPLAY_RATIO),
+                                                                     RessourceLoader.get("dpt.images.gui.symbols.SYMB_PLUS"))),
                     "button_settings": Button(buttons_starting_x + (button_width + buttons_gap_x) * 2, buttons_y,
                                               button_width,
                                               button_height,
                                               RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_OUT"),
                                               pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_IN"),
-                                              text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
-                                                                           math.floor(50 * Game.DISPLAY_RATIO),
-                                                                           RessourceLoader.get("dpt.images.gui.symbols.SYMB_SETTINGS"))),
+                                              text_sprite=SimpleSprite(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                       math.floor(50 * Game.DISPLAY_RATIO),
+                                                                       RessourceLoader.get("dpt.images.gui.symbols.SYMB_SETTINGS"))),
                     "button_quit": Button(buttons_starting_x + (button_width + buttons_gap_x) * 3, buttons_y,
                                           button_width,
                                           button_height,
                                           RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_OUT"),
                                           pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_IN"),
-                                          text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
-                                                                       math.floor(50 * Game.DISPLAY_RATIO),
-                                                                       RessourceLoader.get("dpt.images.gui.symbols.SYMB_X"))),
+                                          text_sprite=SimpleSprite(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                   math.floor(50 * Game.DISPLAY_RATIO),
+                                                                   RessourceLoader.get("dpt.images.gui.symbols.SYMB_X"))),
                     "window": Window((Game.WINDOW_WIDTH // 2) - math.floor(122 * 3 * Game.DISPLAY_RATIO),
                                      buttons_y + button_height // 2 - math.floor(64 * 1.5 * Game.DISPLAY_RATIO), 6, 3)}
 
@@ -262,7 +264,7 @@ class Scenes:
         from dpt.engine.gui.menu.slider import Slider
         from dpt.engine.gui.menu import Window
         from dpt.engine.gui.menu.button import Button
-        from dpt.engine.gui.menu.textSpriteButton import TextSpriteButton
+        from dpt.engine.gui.menu.simpleSprite import SimpleSprite
         from dpt.engine.gui.menu.text import Text
         from dpt.engine.gui.menu.radioButton import RadioButton
 
@@ -393,9 +395,9 @@ class Scenes:
                                                         math.floor(69 * Game.DISPLAY_RATIO),
                                                         math.floor(52 * Game.DISPLAY_RATIO),
                                                         RessourceLoader.get("dpt.images.gui.buttons.BTN_PLAIN_2"),
-                                                        text_sprite=TextSpriteButton(math.floor(40 * Game.DISPLAY_RATIO),
-                                                                                     math.floor(30 * Game.DISPLAY_RATIO),
-                                                                                     RessourceLoader.get("dpt.images.gui.symbols.SYMB_MENU"))),
+                                                        text_sprite=SimpleSprite(math.floor(40 * Game.DISPLAY_RATIO),
+                                                                                 math.floor(30 * Game.DISPLAY_RATIO),
+                                                                                 RessourceLoader.get("dpt.images.gui.symbols.SYMB_MENU"))),
                     "custom_server_text_1": Text(math.floor(1100 * Game.DISPLAY_RATIO),
                                                  math.floor(710 * Game.DISPLAY_RATIO),
                                                  "Attention, cet option permet de se",
@@ -428,27 +430,27 @@ class Scenes:
                                            math.floor(95 * Game.DISPLAY_RATIO),
                                            RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_OUT"),
                                            pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_IN"),
-                                           text_sprite=TextSpriteButton(math.floor(50 * Game.DISPLAY_RATIO),
-                                                                        math.floor(47 * Game.DISPLAY_RATIO),
-                                                                        RessourceLoader.get("dpt.images.gui.symbols.SYMB_CHECK"))),
+                                           text_sprite=SimpleSprite(math.floor(50 * Game.DISPLAY_RATIO),
+                                                                    math.floor(47 * Game.DISPLAY_RATIO),
+                                                                    RessourceLoader.get("dpt.images.gui.symbols.SYMB_CHECK"))),
                     "cancel_button": Button(math.floor(125 * Game.DISPLAY_RATIO),
                                             math.floor(495 * Game.DISPLAY_RATIO),
                                             math.floor(92 * Game.DISPLAY_RATIO),
                                             math.floor(95 * Game.DISPLAY_RATIO),
                                             RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_OUT"),
                                             pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_IN"),
-                                            text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
-                                                                         math.floor(50 * Game.DISPLAY_RATIO),
-                                                                         RessourceLoader.get("dpt.images.gui.symbols.SYMB_BIGX"))),
+                                            text_sprite=SimpleSprite(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                     math.floor(50 * Game.DISPLAY_RATIO),
+                                                                     RessourceLoader.get("dpt.images.gui.symbols.SYMB_BIGX"))),
                     "return_button": Button(math.floor(125 * Game.DISPLAY_RATIO),
                                             math.floor(600 * Game.DISPLAY_RATIO),
                                             math.floor(92 * Game.DISPLAY_RATIO),
                                             math.floor(95 * Game.DISPLAY_RATIO),
                                             RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_OUT"),
                                             pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_IN"),
-                                            text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
-                                                                         math.floor(33 * Game.DISPLAY_RATIO),
-                                                                         RessourceLoader.get("dpt.images.gui.symbols.SYMB_LEFTARROW")))
+                                            text_sprite=SimpleSprite(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                     math.floor(33 * Game.DISPLAY_RATIO),
+                                                                     RessourceLoader.get("dpt.images.gui.symbols.SYMB_LEFTARROW")))
                     }
 
         if Game.settings["server_address"] == Game.DEFAULT_SERVER_ADDRESS:
@@ -473,10 +475,8 @@ class Scenes:
         """
 
     @classmethod
-    def start_level(cls, level):
+    def start_level(cls):
         """Met en place les élèments du menu de début de niveau
-
-        :param level: Niveau à charger
 
         :return: True en cas de réussite, sinon False
         :rtype: bool
@@ -486,7 +486,7 @@ class Scenes:
 
         # Ajout du GUI
         from dpt.engine.gui.menu.button import Button
-        from dpt.engine.gui.menu.textSpriteButton import TextSpriteButton
+        from dpt.engine.gui.menu.simpleSprite import SimpleSprite
         from dpt.engine.gui.menu import Window
         from dpt.engine.gui.menu.text import Text
         from dpt.engine.webCommunications import WebCommunication
@@ -540,18 +540,18 @@ class Scenes:
                                            math.floor(Game.DISPLAY_RATIO * 720), button_width, button_height,
                                            RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_OUT"),
                                            pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_IN"),
-                                           text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
-                                                                        math.floor(50 * Game.DISPLAY_RATIO),
-                                                                        RessourceLoader.get("dpt.images.gui.symbols.SYMB_PLAY"))),
-                    "button_main_menu": Button(math.floor(Game.WINDOW_WIDTH / 2 - button_width - 50 * Game.DISPLAY_RATIO),
-                                               math.floor(Game.DISPLAY_RATIO * 720),
-                                               button_width,
-                                               button_height,
-                                               RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_OUT"),
-                                               pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_IN"),
-                                               text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
-                                                                            math.floor(50 * Game.DISPLAY_RATIO),
-                                                                            RessourceLoader.get("dpt.images.gui.symbols.SYMB_X"))),
+                                           text_sprite=SimpleSprite(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                    math.floor(50 * Game.DISPLAY_RATIO),
+                                                                    RessourceLoader.get("dpt.images.gui.symbols.SYMB_PLAY"))),
+                    "button_previous": Button(math.floor(Game.WINDOW_WIDTH / 2 - button_width - 50 * Game.DISPLAY_RATIO),
+                                              math.floor(Game.DISPLAY_RATIO * 720),
+                                              button_width,
+                                              button_height,
+                                              RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_OUT"),
+                                              pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_IN"),
+                                              text_sprite=SimpleSprite(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                       math.floor(33 * Game.DISPLAY_RATIO),
+                                                                       RessourceLoader.get("dpt.images.gui.symbols.SYMB_LEFTARROW"))),
                     "wb_player_count": Text(Game.WINDOW_WIDTH - math.floor(Game.DISPLAY_RATIO * 220), 0,
                                             "Connexion au serveur...",
                                             math.floor(25 * Game.DISPLAY_RATIO),
@@ -566,7 +566,7 @@ class Scenes:
         root.update()
         root.destroy()
 
-        Game.temp["next_level"] = level
+        Game.temp["next_level"] = Game.selected_level
 
         # Loops
         from dpt.engine.mainLoop import start_level_loop
@@ -583,6 +583,8 @@ class Scenes:
         from dpt.engine.loader import RessourceLoader
         from dpt.engine.gui.editor.tileEditor import TileEditor
         from dpt.engine.gui.menu.timer import Timer
+        from dpt.engine.tileManager import TileManager
+        import time
 
         if TileEditor.enabled_editor:
             return
@@ -602,9 +604,13 @@ class Scenes:
         Game.temp["start"] = False
         Game.temp["chrono"] = 0
 
+        if TileManager.levelName not in Game.saves:
+            Game.saves[TileManager.levelName] = {}
+        Game.saves[TileManager.levelName].update({math.floor(time.time()): Game.temp["score"]})
+
         # Ajout du GUI
         from dpt.engine.gui.menu.button import Button
-        from dpt.engine.gui.menu.textSpriteButton import TextSpriteButton
+        from dpt.engine.gui.menu.simpleSprite import SimpleSprite
         from dpt.engine.gui.menu import Window
         from dpt.engine.gui.menu.text import Text
         from dpt.engine.gui.menu.fade import FadeOut
@@ -641,17 +647,17 @@ class Scenes:
                          "el_button_main_menu": Button(buttons_x - button_width - buttons_gap_y, buttons_starting_y + (buttons_gap_y + button_height) * 3, button_width, button_height,
                                                        RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_OUT"),
                                                        pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_IN"),
-                                                       text_sprite=TextSpriteButton(math.floor(50 * Game.DISPLAY_RATIO),
-                                                                                    math.floor(38 * Game.DISPLAY_RATIO),
-                                                                                    RessourceLoader.get("dpt.images.gui.symbols.SYMB_MENU"))),
+                                                       text_sprite=SimpleSprite(math.floor(50 * Game.DISPLAY_RATIO),
+                                                                                math.floor(38 * Game.DISPLAY_RATIO),
+                                                                                RessourceLoader.get("dpt.images.gui.symbols.SYMB_MENU"))),
                          "el_button_quit": Button(buttons_x + button_width + buttons_gap_y, buttons_starting_y + (buttons_gap_y + button_height) * 3,
                                                   button_width,
                                                   button_height,
                                                   RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_OUT"),
                                                   pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_IN"),
-                                                  text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
-                                                                               math.floor(50 * Game.DISPLAY_RATIO),
-                                                                               RessourceLoader.get("dpt.images.gui.symbols.SYMB_X"))),
+                                                  text_sprite=SimpleSprite(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                           math.floor(50 * Game.DISPLAY_RATIO),
+                                                                           RessourceLoader.get("dpt.images.gui.symbols.SYMB_X"))),
                          "star_3": TransitionStar(Game.WINDOW_WIDTH // 2 + math.floor(Game.DISPLAY_RATIO * 85), buttons_starting_y + math.floor(150 * Game.DISPLAY_RATIO), Game.temp["score"] >= 1000, True, False),
                          "star_2": TransitionStar(Game.WINDOW_WIDTH // 2, buttons_starting_y + math.floor(150 * Game.DISPLAY_RATIO), Game.temp["score"] >= 2000, True, False),
                          "star_1": TransitionStar(Game.WINDOW_WIDTH // 2 - math.floor(Game.DISPLAY_RATIO * 85), buttons_starting_y + math.floor(150 * Game.DISPLAY_RATIO), Game.temp["score"] >= 3000, True, False),
@@ -684,7 +690,7 @@ class Scenes:
 
         # Ajout du GUI
         from dpt.engine.gui.menu.button import Button
-        from dpt.engine.gui.menu.textSpriteButton import TextSpriteButton
+        from dpt.engine.gui.menu.simpleSprite import SimpleSprite
         from dpt.engine.gui.menu import Window
         from dpt.engine.gui.menu.text import Text
         button_width = math.floor(92 * Game.DISPLAY_RATIO)
@@ -705,23 +711,23 @@ class Scenes:
                          "go_button_checkpoint": Button(buttons_x, buttons_starting_y, button_width, button_height,
                                                         RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_OUT"),
                                                         pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_IN"),
-                                                        text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
-                                                                                     math.floor(40 * Game.DISPLAY_RATIO),
-                                                                                     RessourceLoader.get("dpt.images.gui.symbols.SYMB_REPLAY"))),
+                                                        text_sprite=SimpleSprite(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                                 math.floor(40 * Game.DISPLAY_RATIO),
+                                                                                 RessourceLoader.get("dpt.images.gui.symbols.SYMB_REPLAY"))),
                          "go_button_main_menu": Button(buttons_x, buttons_starting_y + (buttons_gap_y + button_height) * 2, button_width, button_height,
                                                        RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_OUT"),
                                                        pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_IN"),
-                                                       text_sprite=TextSpriteButton(math.floor(50 * Game.DISPLAY_RATIO),
-                                                                                    math.floor(38 * Game.DISPLAY_RATIO),
-                                                                                    RessourceLoader.get("dpt.images.gui.symbols.SYMB_MENU"))),
+                                                       text_sprite=SimpleSprite(math.floor(50 * Game.DISPLAY_RATIO),
+                                                                                math.floor(38 * Game.DISPLAY_RATIO),
+                                                                                RessourceLoader.get("dpt.images.gui.symbols.SYMB_MENU"))),
                          "go_button_quit": Button(buttons_x, buttons_starting_y + (buttons_gap_y + button_height) * 3,
                                                   button_width,
                                                   button_height,
                                                   RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_OUT"),
                                                   pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_IN"),
-                                                  text_sprite=TextSpriteButton(math.floor(47 * Game.DISPLAY_RATIO),
-                                                                               math.floor(50 * Game.DISPLAY_RATIO),
-                                                                               RessourceLoader.get("dpt.images.gui.symbols.SYMB_X")))})
+                                                  text_sprite=SimpleSprite(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                           math.floor(50 * Game.DISPLAY_RATIO),
+                                                                           RessourceLoader.get("dpt.images.gui.symbols.SYMB_X")))})
 
         from dpt.engine.mainLoop import game_over_loop
         Game.loop = game_over_loop
@@ -798,4 +804,168 @@ class Scenes:
         Game.temp["rect"] = Game.temp["text_rendered"].get_rect()
         Game.temp["rect"].centerx = Game.WINDOW_WIDTH // 2
         Game.temp["rect"].centery = math.floor(Game.WINDOW_HEIGHT - height / 2)
+        return True
+
+    @classmethod
+    def level_selector(cls):
+        """Met en place les élèments du menu de selection des niveaux
+
+        :return: True en cas de réussite, sinon False
+        :rtype: bool
+        """
+        from dpt.engine.loader import RessourceLoader
+        from dpt.engine.mainLoop import loading_loop
+
+        # Construction de la liste des niveaux
+        if Game.levels_list is None:
+            Game.levels_list = []
+
+            # Enregistrement des niveau et chargement
+            Scenes.loading()
+            for level in RessourceLoader.select_entries(Game.LEVELS_ENTRIES):
+                Game.levels_list.append(level)
+                RessourceLoader.add_pending(level)
+                loading_loop()
+            loading_loop(True)
+            RessourceLoader.load()
+
+            # Chargement des images
+            Scenes.loading()
+            for level in RessourceLoader.get(Game.LEVELS_ENTRIES):
+                try:
+                    RessourceLoader.add_pending(level["infos"]["image"])
+                except KeyError:
+                    RessourceLoader.add_pending("dpt.images.not_found")
+                loading_loop()
+            loading_loop(True)
+            RessourceLoader.load()
+
+        return True
+
+    @classmethod
+    def level_selector_detail(cls):
+        """Met en place les élèments du menu de details de selection des niveaux
+
+        :return: True en cas de réussite, sinon False
+        :rtype: bool
+        """
+        from dpt.engine.loader import RessourceLoader
+
+        cls.logger.info("Displaying LEVEL_SELECTOR_DETAIL")
+
+        # Déclaration des varibales
+        from dpt.engine.loader import UnreachableRessourceError
+        level = None
+        level_name = Game.selected_level
+        level_title = None
+        level_image = None
+        level_scores = None
+        level_scores_date = None
+
+        try:
+            level = RessourceLoader.get(level_name)
+        except UnreachableRessourceError:
+            return False
+
+        try:
+            level_title = level["infos"]["title"]
+        except KeyError:
+            level_title = "Sans nom"
+
+        try:
+            RessourceLoader.get(level["infos"]["image"])
+            level_image = RessourceLoader.get(level["infos"]["image"])
+        except UnreachableRessourceError:
+            level_image = RessourceLoader.get("dpt.images.not_found")
+            raise
+        except KeyError:
+            level_image = RessourceLoader.get("dpt.images.not_found")
+            raise
+
+        try:
+            level_scores_date = ["––/--/----" for i in range(5)]
+            level_scores = ["----" for i in range(5)]
+
+            temp = Game.saves[level_name].copy()
+            for i in range(5):
+                try:
+                    val = max(sorted(temp.items(), key=lambda v: v[1]))
+                    level_scores_date[i] = time.strftime("%d/%m/%Y", time.localtime(int(val[0])))
+                    level_scores[i] = str(val[1])
+                    del temp[val[0]]
+                except ValueError:
+                    continue
+        except KeyError:
+            pass
+
+        # Ajout du GUI
+        from dpt.engine.gui.menu.button import Button
+        from dpt.engine.gui.menu.simpleSprite import SimpleSprite
+        from dpt.engine.gui.menu import Window
+        from dpt.engine.gui.menu.text import Text
+        button_width = math.floor(92 * Game.DISPLAY_RATIO)
+        button_height = math.floor(95 * Game.DISPLAY_RATIO)
+
+        Game.gui = {"window": Window(0, 0, 5, 15, centerx=Game.WINDOW_WIDTH // 2, centery=Game.WINDOW_HEIGHT // 2),
+                    "title": Text(0,
+                                  math.floor(70 * Game.DISPLAY_RATIO),
+                                  "Selectionner un niveau",
+                                  math.floor(50 * Game.DISPLAY_RATIO),
+                                  (0, 0, 0),
+                                  "dpt.fonts.DINOT_CondBlack",
+                                  centerx=Game.WINDOW_WIDTH // 2),
+                    "level_image": SimpleSprite(math.floor(400 * Game.DISPLAY_RATIO),
+                                                math.floor(400 * Game.DISPLAY_RATIO),
+                                                level_image,
+                                                centerx=Game.WINDOW_WIDTH // 2,
+                                                y=math.floor(155 * Game.DISPLAY_RATIO)),
+                    "level_title": Text(0,
+                                        math.floor(555 * Game.DISPLAY_RATIO),
+                                        level_title,
+                                        math.floor(40 * Game.DISPLAY_RATIO),
+                                        (0, 0, 0),
+                                        "dpt.fonts.DINOT_CondBlack",
+                                        centerx=Game.WINDOW_WIDTH // 2),
+                    "score_title": Text(0,
+                                        math.floor(650 * Game.DISPLAY_RATIO),
+                                        "Meilleurs scores",
+                                        math.floor(30 * Game.DISPLAY_RATIO),
+                                        (0, 0, 0),
+                                        "dpt.fonts.DINOT_CondBlack",
+                                        centerx=Game.WINDOW_WIDTH // 2),
+                    "button_start": Button(math.floor(Game.WINDOW_WIDTH / 2 + 50 * Game.DISPLAY_RATIO),
+                                           math.floor(Game.DISPLAY_RATIO * 890), button_width, button_height,
+                                           RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_OUT"),
+                                           pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_CIRCLE_IN"),
+                                           text_sprite=SimpleSprite(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                    math.floor(50 * Game.DISPLAY_RATIO),
+                                                                    RessourceLoader.get("dpt.images.gui.symbols.SYMB_PLAY"))),
+                    "button_main_menu": Button(math.floor(Game.WINDOW_WIDTH / 2 - button_width - 50 * Game.DISPLAY_RATIO),
+                                               math.floor(Game.DISPLAY_RATIO * 890),
+                                               button_width,
+                                               button_height,
+                                               RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_OUT"),
+                                               pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_IN"),
+                                               text_sprite=SimpleSprite(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                        math.floor(33 * Game.DISPLAY_RATIO),
+                                                                        RessourceLoader.get("dpt.images.gui.symbols.SYMB_LEFTARROW")))}
+
+        # Ajout des scores
+        for i in range(5):
+            Game.gui.update({"score_" + str(i) + "_date": Text((Game.WINDOW_WIDTH // 2) - 90,
+                                                               math.floor((690 + i * 25) * Game.DISPLAY_RATIO),
+                                                               level_scores_date[i],
+                                                               math.floor(25 * Game.DISPLAY_RATIO),
+                                                               (0, 0, 0),
+                                                               "dpt.fonts.DINOT_CondBlack"),
+                             "score_" + str(i): Text((Game.WINDOW_WIDTH // 2) + 50,
+                                                     math.floor((690 + i * 25) * Game.DISPLAY_RATIO),
+                                                     level_scores[i],
+                                                     math.floor(25 * Game.DISPLAY_RATIO),
+                                                     (0, 0, 0),
+                                                     "dpt.fonts.DINOT_CondBlack")})
+
+        # Loops
+        from dpt.engine.mainLoop import level_selector_detail_loop
+        Game.loop = level_selector_detail_loop
         return True
