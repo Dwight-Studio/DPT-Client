@@ -6,11 +6,13 @@ from dpt.engine.tileManager import TileManager
 
 
 class Heart(pygame.sprite.Sprite):
+    """Vie du joueur"""
     full_heart = "dpt.images.gui.ui.UI_HEART_FULL"
     half_heart = "dpt.images.gui.ui.UI_HEART_HALF"
     empty_heart = "dpt.images.gui.ui.UI_HEART_EMPTY"
 
     def __init__(self):
+        """Crée un cœur qui se place en bas à droite"""
         pygame.sprite.Sprite.__init__(self, TileManager.heart_group)
         self.full_heart = pygame.transform.smoothscale(RessourceLoader.get(Heart.full_heart), (math.floor(100 * Game.DISPLAY_RATIO), math.floor(100 * Game.DISPLAY_RATIO)))
         self.half_heart = pygame.transform.smoothscale(RessourceLoader.get(Heart.half_heart), (math.floor(100 * Game.DISPLAY_RATIO), math.floor(100 * Game.DISPLAY_RATIO)))
@@ -22,6 +24,7 @@ class Heart(pygame.sprite.Sprite):
         self.rect = [1810 * Game.DISPLAY_RATIO, 970 * Game.DISPLAY_RATIO, 100 * Game.DISPLAY_RATIO, 100 * Game.DISPLAY_RATIO]
 
     def update(self):
+        """Change le cœur en fonction de la vie du joueur"""
         todraw = self.draw[Game.life]
         self.image = todraw
         Game.surface.blit(self.image, self.rect)
