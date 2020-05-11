@@ -883,16 +883,17 @@ class Scenes:
             raise
 
         try:
-            level_scores_date = ["––/--/----" for i in range(5)]
-            level_scores = ["----" for i in range(5)]
+            level_scores_date = ["––/––/––––" for i in range(5)]
+            level_scores = ["––––" for i in range(5)]
 
-            temp = Game.saves[level_name].copy()
+            temp = {int(k): int(v) for k, v in Game.saves[level_name].copy().items()}
+
             for i in range(5):
                 try:
-                    val = max(sorted(temp.items(), key=lambda v: v[1]))
-                    level_scores_date[i] = time.strftime("%d/%m/%Y", time.localtime(int(val[0])))
-                    level_scores[i] = str(val[1])
-                    del temp[val[0]]
+                    val = max(temp, key=lambda key: temp[key])
+                    level_scores_date[i] = time.strftime("%d/%m/%Y", time.localtime(int(val)))
+                    level_scores[i] = str(temp[val])
+                    del temp[val]
                 except ValueError:
                     continue
         except KeyError:
