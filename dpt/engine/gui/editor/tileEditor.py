@@ -45,8 +45,8 @@ class TileEditor:
             keys = pygame.key.get_pressed()
             keysmods = pygame.key.get_mods()
             for key in keys:
-                # Ouvrir un fichier
                 if keysmods == 4160 or keysmods == 4224:
+                    # Ouvrir un fichier
                     if keys[pygame.K_o] and not cls.opushed:
                         cls.opushed = True
                         from dpt.engine.fileManager import FileManager
@@ -60,6 +60,7 @@ class TileEditor:
                         FileManager.save_file(cls.created_level)
                     elif not keys[pygame.K_s] and cls.spushed:
                         cls.spushed = False
+                    # Générer un niveau vide
                     if keys[pygame.K_n] and not cls.npushed:
                         cls.npushed = True
                         list = []
@@ -73,6 +74,7 @@ class TileEditor:
                         cls.created_level["infos"] = {}
                     elif not keys[pygame.K_n] and cls.npushed:
                         cls.npushed = False
+                    # Ouvrir le panneau des blocs
                     if keys[pygame.K_t] and not cls.tpushed and not cls.panel_open:
                         cls.tpushed = True
                         cls.panel_open = True
