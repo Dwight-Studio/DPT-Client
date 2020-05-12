@@ -7,7 +7,7 @@ from dpt.engine.tileManager import TileManager
 
 class Reverse(pygame.sprite.Sprite):
     """Effet reverse"""
-    reverse = "dpt.images.effects.star"
+    reverse = "dpt.images.effects.reverse"
 
     def __init__(self):
         """Crée l'effet reverse"""
