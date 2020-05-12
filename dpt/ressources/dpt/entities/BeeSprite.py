@@ -70,14 +70,14 @@ class BeeSprite(pygame.sprite.Sprite):
                     self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
 
                 if self.left:
-                    if self.xvel > 0 and not EffectsManagement.dico_current_effects["Ice"]:
+                    if self.xvel > 0:
                         self.xvel = 0
                     if self.xvel > -self.maxvelocity * Game.DISPLAY_RATIO:
                         self.xvel -= (self.maxvelocity / 2) * Game.DISPLAY_RATIO
                     self.left = True
                     self.right = False
                 elif self.right:
-                    if self.xvel < 0 and not EffectsManagement.dico_current_effects["Ice"]:
+                    if self.xvel < 0:
                         self.xvel = 0
                     if self.xvel < self.maxvelocity * Game.DISPLAY_RATIO:
                         self.xvel += (self.maxvelocity / 2) * Game.DISPLAY_RATIO
@@ -88,7 +88,6 @@ class BeeSprite(pygame.sprite.Sprite):
 
             self.rect.left += math.floor(self.xvel)
             self.distance += abs(self.xvel)
-            self.rect.top -= math.floor(self.yvel)
 
             self.animation()
 

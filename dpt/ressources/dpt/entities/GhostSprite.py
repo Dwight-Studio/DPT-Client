@@ -70,24 +70,24 @@ class GhostSprite(pygame.sprite.Sprite):
                     self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
 
                 if self.up:
-                    if self.xvel > 0 and not EffectsManagement.dico_current_effects["Ice"]:
-                        self.xvel = 0
-                    if self.xvel > -self.maxvelocity * Game.DISPLAY_RATIO:
-                        self.xvel -= (self.maxvelocity / 2) * Game.DISPLAY_RATIO
+                    if self.yvel > 0:
+                        self.yvel = 0
+                    if self.yvel > -self.maxvelocity * Game.DISPLAY_RATIO:
+                        self.yvel -= (self.maxvelocity / 2) * Game.DISPLAY_RATIO
                     self.up = True
                     self.down = False
                 elif self.down:
-                    if self.xvel < 0 and not EffectsManagement.dico_current_effects["Ice"]:
-                        self.xvel = 0
-                    if self.xvel < self.maxvelocity * Game.DISPLAY_RATIO:
-                        self.xvel += (self.maxvelocity / 2) * Game.DISPLAY_RATIO
+                    if self.yvel < 0:
+                        self.yvel = 0
+                    if self.yvel < self.maxvelocity * Game.DISPLAY_RATIO:
+                        self.yvel += (self.maxvelocity / 2) * Game.DISPLAY_RATIO
                     self.up = False
                     self.down = True
                 else:
-                    self.xvel = 0
-            self.rect.left += math.floor(self.xvel)
-            self.distance += abs(self.xvel)
-            self.rect.top -= math.floor(self.yvel)
+                    self.yvel = 0
+
+            self.distance += abs(self.yvel)
+            self.rect.top += math.floor(self.yvel)
 
             self.animation()
 
