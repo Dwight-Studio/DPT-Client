@@ -8,7 +8,7 @@ from dpt.engine.effectsManagement import EffectsManagement
 from dpt.game import Game
 
 
-class EnemySprite(pygame.sprite.Sprite):
+class GhostSprite(pygame.sprite.Sprite):
     texture = "dpt.images.characters.player.standing"
     screen_width, screen_height = (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)
     width = math.floor(60 * Game.DISPLAY_RATIO)
@@ -23,10 +23,10 @@ class EnemySprite(pygame.sprite.Sprite):
         self.image = RessourceLoader.get(self.texture)
         self.xvel = 0
         self.yvel = 0
-        self.left = False
-        self.right = True
+        self.up = False
+        self.down = True
         self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
-        self.mask = pygame.mask.from_surface(pygame.transform.scale(RessourceLoader.get(EnemySprite.mask),
+        self.mask = pygame.mask.from_surface(pygame.transform.scale(RessourceLoader.get(GhostSprite.mask),
                                                                     (self.width, self.height)))
         self.CONSTHEIGT = self.height
         self.CONSTWIDTH = self.width
@@ -46,8 +46,8 @@ class EnemySprite(pygame.sprite.Sprite):
             from dpt.engine.tileManager import TileManager
             if not Game.freeze_game:
 
-                Game.add_debug_info("Enemy.left = " + str(self.left))
-                Game.add_debug_info("Enemy.right = " + str(self.right))
+                Game.add_debug_info("Enemy.left = " + str(self.up))
+                Game.add_debug_info("Enemy.right = " + str(self.down))
 
                 if EffectsManagement.dico_current_effects["Slow"]:
                     self.maxvelocity = 1
@@ -69,33 +69,32 @@ class EnemySprite(pygame.sprite.Sprite):
                     self.rect[3] = self.CONSTRECT3
                     self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
 
-                if self.left:
+                if self.up:
                     if self.xvel > 0 and not EffectsManagement.dico_current_effects["Ice"]:
                         self.xvel = 0
                     if self.xvel > -self.maxvelocity * Game.DISPLAY_RATIO:
                         self.xvel -= (self.maxvelocity / 2) * Game.DISPLAY_RATIO
-                    self.left = True
-                    self.right = False
-                elif self.right:
+                    self.up = True
+                    self.down = False
+                elif self.down:
                     if self.xvel < 0 and not EffectsManagement.dico_current_effects["Ice"]:
                         self.xvel = 0
                     if self.xvel < self.maxvelocity * Game.DISPLAY_RATIO:
                         self.xvel += (self.maxvelocity / 2) * Game.DISPLAY_RATIO
-                    self.left = False
-                    self.right = True
+                    self.up = False
+                    self.down = True
                 else:
                     self.xvel = 0
-
             self.rect.left += math.floor(self.xvel)
             self.distance += abs(self.xvel)
             self.rect.top -= math.floor(self.yvel)
 
             self.animation()
 
-            if self.distance > 1200 * Game.DISPLAY_RATIO:
+            if self.distance > 500 * Game.DISPLAY_RATIO:
                 self.distance = 0
-                self.left = not self.left
-                self.right = not self.right
+                self.up = not self.up
+                self.down = not self.down
 
     def animation(self):
         # pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
