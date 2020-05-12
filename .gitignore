@@ -132,3 +132,4 @@ dmypy.json
 dpt/logs/latest.log
 dpt/logs/
 docs/source/logs/
+dpt/ressources/user/profile.json
