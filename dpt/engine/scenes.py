@@ -114,7 +114,6 @@ class Scenes:
         :rtype: bool
         """
         cls.logger.info("Displaying LEVEL")
-        from dpt.engine.loader import RessourceLoader
         from dpt.engine.tileManager import TileManager
         from dpt.engine.gui.editor.tileEditor import TileEditor
         from dpt.engine.effectsManagement import EffectsManagement
