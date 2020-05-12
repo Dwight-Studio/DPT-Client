@@ -91,7 +91,7 @@ class EnemySprite(pygame.sprite.Sprite):
                     self.standing = True
 
             self.rect.left += math.floor(self.xvel)
-            self.distance += self.xvel
+            self.distance += abs(self.xvel)
             self.rect.top -= math.floor(self.yvel)
 
             self.animation()
