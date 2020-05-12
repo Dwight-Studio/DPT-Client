@@ -82,7 +82,6 @@ class Lever(pygame.sprite.Sprite):
                                 positions = [tuple(map(int, i.split(", "))) for i in data["assignement"]]
                                 for pos in positions:
                                     try:
-                                        print("4")
                                         if interact.x == pos[0] and interact.y == pos[1]:
                                             interact.deactivate()
                                         elif interact.rect.x == pos[0] and interact.rect.y == pos[1]:
