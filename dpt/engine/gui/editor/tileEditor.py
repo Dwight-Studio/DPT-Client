@@ -19,6 +19,7 @@ class TileEditor:
     spushed = False
     npushed = False
     tpushed = False
+    ipushed = False
     mouse_pushed_l = False
     mouse_pushed_r = False
     panel_open = False
@@ -91,9 +92,11 @@ class TileEditor:
                         TileManager.editor_panel_group.empty()
                         Checkbox.checkbox_group.empty()
                         cls.panel_open = False
-                    elif keys[pygame.K_i]:
+                    elif keys[pygame.K_i] and not cls.ipushed:
                         cls.level_infos_creation()
-
+                        cls.ipushed = True
+                    elif not keys[pygame.K_i] and cls.ipushed:
+                        cls.ipushed = False
                     elif not keys[pygame.K_t] and cls.tpushed:
                         cls.tpushed = False
             # Gestion de la position de la souris et du placement de blocks
