@@ -7,7 +7,7 @@ from dpt.engine.tileManager import TileManager
 
 class LowGravity(pygame.sprite.Sprite):
     """Effet LowGravity"""
-    lowGravity = "dpt.images.effects.star"
+    lowGravity = "dpt.images.effects.lowGravity"
 
     def __init__(self):
         """Crée l'effet LowGravity"""
