@@ -35,7 +35,7 @@ class Spike(pygame.sprite.Sprite):
             self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
             self.sound.play()
 
-    def desactivate(self):
+    def deactivate(self):
         self.down = False
         self.i = 0
         self.done = False
