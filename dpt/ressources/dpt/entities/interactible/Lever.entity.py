@@ -26,12 +26,14 @@ class Lever(pygame.sprite.Sprite):
         self.right = False
         self.left = True
         self.set = False
-        self.attributing = True
+        if TileManager.is_loading_level:
+            self.attributing = False
+        else:
+            self.attributing = True
         if not TileManager.is_loading_level:
             self.sound = RessourceLoader.get(self.sounds)
             self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
             self.sound.play()
-
 
     def update(self):
         mouse_buttons = pygame.mouse.get_pressed()
