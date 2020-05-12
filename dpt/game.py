@@ -65,6 +65,7 @@ class Game(object):
     upsidedown = False  # Retourner l'écran
     selected_level = 0  # Niveau selectionné
     levels_list = None  # Liste des niveaux
+    stars = 0  # Nombre d'étoiles débloquées
 
     # Paramètres utilisateur
     settings = {
@@ -84,7 +85,7 @@ class Game(object):
                     ("900p (1440 x 900)", 1440, 900),
                     ("900p (1600 x 900)", 1600, 900),
                     ("1080p (1920 x 1080)", 1920, 1080),
-                    ("1440p (2560 x 1440p)", 2560, 1440),
+                    ("1440p (2560 x 1440)", 2560, 1440),
                     ("4K (3840 x 2160)", 3840, 2160),
                     ("8K (7680 x 4320)", 7680, 4320)]
 

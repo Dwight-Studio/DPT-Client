@@ -40,4 +40,4 @@ class SimpleSprite(pygame.sprite.Sprite):
             self.rect.centerx = kwargs["centerx"]
 
         if "centery" in kwargs:
-            self.rect.centerx = kwargs["centery"]
+            self.rect.centery = kwargs["centery"]

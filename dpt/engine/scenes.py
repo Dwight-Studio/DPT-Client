@@ -831,7 +831,7 @@ class Scenes:
 
             # Chargement des images
             Scenes.loading()
-            for level in RessourceLoader.get(Game.LEVELS_ENTRIES):
+            for level in RessourceLoader.get_multiple(Game.LEVELS_ENTRIES):
                 try:
                     RessourceLoader.add_pending(level["infos"]["image"])
                 except KeyError:
@@ -840,6 +840,39 @@ class Scenes:
             loading_loop(True)
             RessourceLoader.load()
 
+        # Ajout du GUI
+        from dpt.engine.gui.menu.button import Button
+        from dpt.engine.gui.menu.simpleSprite import SimpleSprite
+        from dpt.engine.gui.menu import Window
+        from dpt.engine.gui.menu.text import Text
+        from dpt.engine.gui.menu.levelOverview import LevelOverview
+        button_width = math.floor(92 * Game.DISPLAY_RATIO)
+        button_height = math.floor(95 * Game.DISPLAY_RATIO)
+
+        Game.gui = {"window": Window(0, 0, 15, 15, centerx=Game.WINDOW_WIDTH // 2, centery=Game.WINDOW_HEIGHT // 2),
+                    "title": Text(0,
+                                  math.floor(70 * Game.DISPLAY_RATIO),
+                                  "Selectionner un niveau",
+                                  math.floor(50 * Game.DISPLAY_RATIO),
+                                  (0, 0, 0),
+                                  "dpt.fonts.DINOT_CondBlack",
+                                  centerx=Game.WINDOW_WIDTH // 2),
+                    "button_previous": Button(0,
+                                              math.floor(Game.DISPLAY_RATIO * 890),
+                                              button_width,
+                                              button_height,
+                                              RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_OUT"),
+                                              pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_IN"),
+                                              text_sprite=SimpleSprite(math.floor(47 * Game.DISPLAY_RATIO),
+                                                                       math.floor(33 * Game.DISPLAY_RATIO),
+                                                                       RessourceLoader.get("dpt.images.gui.symbols.SYMB_LEFTARROW")),
+                                              centerx=Game.WINDOW_WIDTH // 2)}
+
+        Game.gui["test"] = LevelOverview(90, 170, "dpt.levels.leveltest", 1)
+
+        # Loops
+        from dpt.engine.mainLoop import level_selector_loop
+        Game.loop = level_selector_loop
         return True
 
     @classmethod

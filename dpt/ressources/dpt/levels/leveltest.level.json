@@ -1057,6 +1057,7 @@
   },
   "infos": {
     "title": "Level for Testing",
-    "image": "dpt.images.environment.terrain.Grass_Tile_lower"
+    "image": "dpt.images.environment.terrain.Grass_Tile_lower",
+    "required_stars": 0
   }
 }

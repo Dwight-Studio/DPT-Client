@@ -9,6 +9,21 @@ class TransitionStar:
     textures = ("dpt.images.gui.ui.UI_STAR_EMTPY", "dpt.images.gui.ui.UI_STAR_NORMAL")
 
     def __init__(self, x, y, filled, anim, run=True):
+        """Crée une étoile
+
+        :param x: Abscisse
+        :type x: int
+        :param y: Ordonnée
+        :type y: int
+        :param filled: Étoile remplie
+        :type filled: bool
+        :param anim: Étoile animée
+        :type anim: bool
+        :param run: Animation en fonctionnement
+        :type run: bool
+
+        :rtype: TransitionStar
+        """
         self.anim = anim
         self.filled = filled
         self.star = (pygame.transform.smoothscale(RessourceLoader.get(self.textures[0]), (math.floor(50 * Game.DISPLAY_RATIO), math.floor(50 * Game.DISPLAY_RATIO))),
@@ -29,6 +44,7 @@ class TransitionStar:
         self.max = len(self.images) - 1
 
     def update(self):
+        """Actualise l'étoile"""
         if not self.anim:
             if self.filled:
                 Game.surface.blit(self.image, self.rect)

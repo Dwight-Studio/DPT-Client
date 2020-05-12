@@ -81,6 +81,13 @@ class Button(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+
+        if "centerx" in kwargs:
+            self.rect.centerx = kwargs["centerx"]
+
+        if "centery" in kwargs:
+            self.rect.centery = kwargs["centery"]
+
         self.pushed = False
         self.previous = 0
         self.locked = False

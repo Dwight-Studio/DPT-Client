@@ -180,11 +180,7 @@ def main_menu_loop():
             if event.button == Game.gui["button_play"]:
                 menu.delete_items()
 
-                RessourceLoader.add_pending("dpt.levels.leveltest")
-                RessourceLoader.add_pending("dpt.images.environment.terrain.grass_tile_lower")
-                RessourceLoader.load()
-                Game.selected_level = "dpt.levels.leveltest"
-                Scenes.level_selector_detail()
+                Scenes.level_selector()
                 return
             elif event.button == Game.gui["button_editor"]:
                 menu.delete_items()
@@ -597,6 +593,22 @@ def end_level_loop():
             Game.gui["star_3"].update()
             Game.gui["star_2"].update()
             Game.gui["star_1"].update()
+
+
+def level_selector_loop():
+    """Boucle de selection des niveaux"""
+    Game.surface.blit(bg, (0, 0))
+
+    for event in Game.events:
+        if event.type == pygame.QUIT:
+            Game.run = False
+        if event.type == Game.BUTTON_EVENT:
+            if event.button == Game.gui["button_previous"]:
+                menu.delete_items()
+                Scenes.main_menu(False)
+                return
+
+    menu.main_loop()
 
 
 def level_selector_detail_loop():

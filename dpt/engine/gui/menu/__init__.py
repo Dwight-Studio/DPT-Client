@@ -6,6 +6,7 @@ from dpt.engine.gui.menu.window import Window
 from dpt.engine.gui.menu.text import Text
 from dpt.engine.gui.menu.radioButton import RadioButton
 from dpt.engine.gui.menu.timer import Timer
+from dpt.engine.gui.menu.levelOverview import LevelOverview
 
 
 def delete_items():
@@ -13,6 +14,9 @@ def delete_items():
     Timer.kill()
     for win in Window.window_list:
         win.sprites.empty()
+    for lo in LevelOverview.level_overview_list:
+        lo.kill(False)
+    LevelOverview.level_overview_list.clear()
     Window.window_list = []
     Button.buttonsGroup.empty()
     Button.text_sprite_buttonsGroup.empty()
@@ -36,3 +40,4 @@ def main_loop():
     Slider.main_loop()
     Text.main_loop()
     RadioButton.main_loop()
+    LevelOverview.main_loop()
