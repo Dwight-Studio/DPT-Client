@@ -187,7 +187,14 @@ def main_menu_loop():
                 return
             elif event.button == Game.gui["button_editor"]:
                 menu.delete_items()
-                Scenes.editor("dpt.levels.leveltest")
+
+                Scenes.editor({
+                    "tiles": {},
+                    "infos": {}
+                })
+
+                TileEditor.level_infos_creation()
+
                 pygame.mixer_music.fadeout(1000)
                 pygame.mixer_music.unload()
                 return

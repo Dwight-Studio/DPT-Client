@@ -1,5 +1,8 @@
 import math
 import pygame
+import tkinter as tk
+
+from tkinter import simpledialog
 from dpt.engine.gui.menu.button import Button
 from dpt.engine.gui.menu.checkbox import Checkbox
 from dpt.engine.loader import RessourceLoader
@@ -82,6 +85,9 @@ class TileEditor:
                         TileManager.editor_panel_group.empty()
                         Checkbox.checkbox_group.empty()
                         cls.panel_open = False
+                    elif keys[pygame.K_i]:
+                        cls.level_infos_creation()
+
                     elif not keys[pygame.K_t] and cls.tpushed:
                         cls.tpushed = False
             # Gestion de la position de la souris et du placement de blocks
@@ -256,3 +262,46 @@ class TileEditor:
                 cls.mouse_pushed_r = False
             elif mouse_buttons[1] == 1 and cls.mouse_pos_x != cls.last_mouse_pos_x or cls.mouse_pos_y != cls.last_mouse_pos_y and cls.mouse_pushed_r:
                 cls.mouse_pushed_r = False
+
+    @classmethod
+    def level_infos_creation(cls):
+        root = tk.Tk()
+        root.withdraw()
+
+        if "infos" in cls.created_level:
+            if "title" in cls.created_level["infos"]:
+                level_title = cls.created_level["infos"]["title"]
+            else:
+                level_title = "Sans nom"
+
+            if "image" in cls.created_level["infos"]:
+                image = cls.created_level["infos"]["image"]
+            else:
+                image = "dpt.images.environment.terrain.Goop_Tile_Flat_Edge_a"
+
+            if "required_stars" in cls.created_level["infos"]:
+                required_stars = cls.created_level["infos"]["required_stars"]
+            else:
+                required_stars = 0
+        else:
+            level_title = "Sans nom"
+            image = "dpt.images.environment.terrain.Goop_Tile_Flat_Edge_a"
+            required_stars = 0
+
+        s = simpledialog.askstring(f"Titre du niveau (Annuler pour garder '{level_title}')", parent=root, )
+
+        if s is not None:
+            level_title = s
+        cls.created_level["infos"]["title"] = level_title
+
+        s = simpledialog.askstring(f"Image du niveau (Pour plus d'informations sur les ressources, RDV sur la documentation officiel) (Annuler pour garder '{image}')", parent=root, )
+
+        if s is not None:
+            image = s
+        cls.created_level["infos"]["image"] = image
+
+        s = simpledialog.askstring(f"Nombre d'étoiles requises pour jouer au niveau (Annuler pour garder '{required_stars}')", parent=root, )
+
+        if s is not None:
+            required_stars = s
+        cls.created_level["infos"]["required_stars"] = required_stars
