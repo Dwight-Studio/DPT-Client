@@ -32,6 +32,7 @@ class Lever(pygame.sprite.Sprite):
             self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
             self.sound.play()
 
+
     def update(self):
         mouse_buttons = pygame.mouse.get_pressed()
         mousePos = pygame.mouse.get_pos()
