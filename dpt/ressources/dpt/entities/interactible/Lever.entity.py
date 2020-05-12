@@ -52,12 +52,9 @@ class Lever(pygame.sprite.Sprite):
                         self.rect.y = self.y + self.offset_y
                         data = TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]
                         if "assignement" in data:
-                            print("1")
                             for interact in TileManager.interactible_blocks_group:
-                                print("2")
                                 positions = [tuple(map(int, i.split(", "))) for i in data["assignement"]]
                                 for pos in positions:
-                                    print("3")
                                     try:
                                         if interact.x == pos[0] and interact.y == pos[1]:
                                             interact.activate()
@@ -82,7 +79,6 @@ class Lever(pygame.sprite.Sprite):
                                 positions = [tuple(map(int, i.split(", "))) for i in data["assignement"]]
                                 for pos in positions:
                                     try:
-                                        print("4")
                                         if interact.x == pos[0] and interact.y == pos[1]:
                                             interact.desactivate()
                                         elif interact.rect.x == pos[0] and interact.rect.y == pos[1]:
