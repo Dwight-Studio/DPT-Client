@@ -9,7 +9,8 @@ from dpt.game import Game
 
 
 class BeeSprite(pygame.sprite.Sprite):
-    texture = "dpt.images.characters.player.standing"
+    texture = "dpt.images.characters.animals.Bee_1"
+    textures = "dpt.images.characters.animals.Bee*"
     width = math.floor(60 * Game.DISPLAY_RATIO)
     height = math.floor(90 * Game.DISPLAY_RATIO)
     offset_x = (Game.TILESIZE - width) // 2
@@ -19,6 +20,8 @@ class BeeSprite(pygame.sprite.Sprite):
         from dpt.engine.tileManager import TileManager
         pygame.sprite.Sprite.__init__(self, TileManager.enemy_group, TileManager.entity_group)  # Sprite's constructor called
         self.image = RessourceLoader.get(self.texture)
+        self.anim = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in RessourceLoader.get_multiple(self.textures)]
+        self.animReverse = [pygame.transform.flip(i, True, False) for i in self.anim]
         self.xvel = 0
         self.yvel = 0
         self.left = False
@@ -38,6 +41,7 @@ class BeeSprite(pygame.sprite.Sprite):
         self.distance = 0
         self.cosx = 0
         self.horizontalStart = self.rect.top
+        self.moveCount = 0
 
     def update(self):
         if not TileEditor.is_editing:
@@ -100,5 +104,10 @@ class BeeSprite(pygame.sprite.Sprite):
                 self.right = not self.right
 
     def animation(self):
-        # pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
-        pass
+        if self.moveCount >= 32:
+            self.moveCount = 0
+        if self.left:
+            self.image = self.anim[self.moveCount // 8]
+        elif self.right:
+            self.image = self.animReverse[self.moveCount // 8]
+        self.moveCount += 1
