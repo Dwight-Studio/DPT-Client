@@ -27,6 +27,9 @@ class Spike(pygame.sprite.Sprite):
         self.clicked = False
         self.is_clicked = False
         self.already = False
+        self.anim_texture = None
+        self.i = 0
+        self.done = True
         if not TileManager.is_loading_level:
             self.sound = RessourceLoader.get(self.sounds)
             self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
@@ -34,18 +37,33 @@ class Spike(pygame.sprite.Sprite):
 
     def desactivate(self):
         self.down = False
-        texture = "dpt.images.environment.traps.Obstacle_Spike_Up"
-        self.image = RessourceLoader.get(texture)
-        self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
-        self.rect = self.image.get_rect()
-        self.rect.x = self.x + self.offset_x
-        self.rect.y = self.y + self.offset_y
+        self.i = 0
+        self.done = False
+        self.anim_texture = RessourceLoader.get_multiple("dpt.images.environment.traps.Spike.Obstacle_Spike_Up_*")
 
     def activate(self):
         self.up = False
-        texture = "dpt.images.environment.traps.Obstacle_Spike_Down"
-        self.image = RessourceLoader.get(texture)
-        self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
-        self.rect = self.image.get_rect()
-        self.rect.x = self.x + self.offset_x
-        self.rect.y = self.y + self.offset_y
+        self.i = -1
+        self.done = False
+        self.anim_texture = RessourceLoader.get_multiple("dpt.images.environment.traps.Spike.Obstacle_Spike_Up_*")
+        self.anim_texture.reverse()
+
+    def update(self):
+        if not self.down and not self.done:
+            self.image = self.anim_texture[self.i]
+            self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
+            self.rect = self.image.get_rect()
+            self.rect.x = self.x + self.offset_x
+            self.rect.y = self.y + self.offset_y
+            self.i += 1
+            if self.i == len(self.anim_texture):
+                self.done = True
+        elif not self.up and not self.done:
+            self.image = self.anim_texture[self.i]
+            self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
+            self.rect = self.image.get_rect()
+            self.rect.x = self.x + self.offset_x
+            self.rect.y = self.y + self.offset_y
+            self.i -= 1
+            if self.i == -len(self.anim_texture):
+                self.done = True
