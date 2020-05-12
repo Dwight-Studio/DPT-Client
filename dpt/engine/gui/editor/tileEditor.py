@@ -1,8 +1,12 @@
 import math
 import pygame
 import tkinter as tk
+import shutil
+import os
 
+from random import randint
 from tkinter import simpledialog
+from tkinter import filedialog
 from dpt.engine.gui.menu.button import Button
 from dpt.engine.gui.menu.checkbox import Checkbox
 from dpt.engine.loader import RessourceLoader
@@ -288,19 +292,23 @@ class TileEditor:
             image = "dpt.images.environment.terrain.Goop_Tile_Flat_Edge_a"
             required_stars = 0
 
-        s = simpledialog.askstring(f"Titre du niveau (Annuler pour garder '{level_title}')", parent=root, )
+        s = simpledialog.askstring("Titre", f"Titre du niveau (Annuler pour garder '{level_title}')", parent=root, )
 
         if s is not None:
             level_title = s
         cls.created_level["infos"]["title"] = level_title
 
-        s = simpledialog.askstring(f"Image du niveau (Pour plus d'informations sur les ressources, RDV sur la documentation officiel) (Annuler pour garder '{image}')", parent=root, )
+        s = filedialog.askopenfilename(parent=root, title="Sélectionner une image (carrées de préférence) pour le niveau (Annuler pour garder l'ancienne image)", filetypes=[("Images", "*.png")])
 
-        if s is not None:
-            image = s
-        cls.created_level["infos"]["image"] = image
+        if s is not None and not s == "":
+            Game.get_logger(cls.__name__).info("Copying image for level creation")
+            filename = str(randint(11111, 99999))
+            shutil.copy(os.path.realpath(s), Game.ROOT_DIRECTORY + "/ressources/user/images/" + filename + ".png")
+            Game.get_logger(cls.__name__).info(os.path.realpath(s) + " --> " + Game.ROOT_DIRECTORY + "/ressources/user/images/" + filename + ".png")
+            Game.get_logger(cls.__name__).info("Created entry: " + "user.images." + filename)
+            cls.created_level["infos"]["image"] = "user.images." + filename
 
-        s = simpledialog.askstring(f"Nombre d'étoiles requises pour jouer au niveau (Annuler pour garder '{required_stars}')", parent=root, )
+        s = simpledialog.askinteger("Nombre d'étoiles", f"Nombre d'étoiles requises pour jouer au niveau (Annuler pour garder '{required_stars}')", parent=root, )
 
         if s is not None:
             required_stars = s

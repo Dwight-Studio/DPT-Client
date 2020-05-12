@@ -1,72 +1,8 @@
 {
-  "tiles": {
-    "537, 779": {},
-    "762, 646": {},
-    "857, 852": {},
-    "367, 456": {
-      "customPlace": true
-    },
-    "0, 7": {
-      "class": "dpt.blocks.snow.snowcorneredgel"
-    },
-    "1, 7": {
-      "class": "dpt.blocks.snow.snowcorneredgel"
-    },
-    "2, 7": {
-      "class": "dpt.blocks.snow.snowcorneredgel"
-    },
-    "3, 7": {
-      "class": "dpt.blocks.snow.snowcorneredgel"
-    },
-    "4, 7": {
-      "class": "dpt.blocks.snow.snowcorneredgel"
-    },
-    "0, 6": {
-      "class": "dpt.entities.flags.flaggreen"
-    },
-    "363, 476": {
-      "customPlace": true
-    },
-    "914, 861": {
-      "customPlace": true
-    },
-    "353, 490": {
-      "customPlace": true
-    },
-    "533, 785": {
-      "customPlace": true
-    },
-    "360, 517": {},
-    "430, 742": {},
-    "656, 386": {
-      "class": "dpt.entities.interactible.spike"
-    },
-    "541, 232": {},
-    "245, 460": {},
-    "705, 340": {},
-    "236, 467": {},
-    "578, 233": {},
-    "236, 489": {},
-    "439, 278": {
-      "class": "dpt.entities.interactible.spike",
-      "customPlace": true
-    },
-    "701, 397": {
-      "class": "dpt.entities.interactible.spike",
-      "customPlace": true
-    },
-    "602, 599": {
-      "class": "dpt.entities.interactible.spike",
-      "customPlace": true
-    },
-    "308, 504": {
-      "class": "dpt.entities.interactible.lever",
-      "customPlace": true,
-      "assignement": [
-        "308, 504",
-        "439, 278",
-        "701, 397",
-        "602, 599"
-      ]
-    }
+  "tiles": {},
+  "infos": {
+    "title": "Sans nom",
+    "image": "user.images.22525.png",
+    "required_stars": 0
+  }
 }
