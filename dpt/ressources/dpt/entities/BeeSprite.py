@@ -15,7 +15,6 @@ class BeeSprite(pygame.sprite.Sprite):
     height = math.floor(90 * Game.DISPLAY_RATIO)
     offset_x = (Game.TILESIZE - width) // 2
     offset_y = 0
-    mask = "dpt.images.characters.player.mask"
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
@@ -26,8 +25,6 @@ class BeeSprite(pygame.sprite.Sprite):
         self.left = False
         self.right = True
         self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
-        self.mask = pygame.mask.from_surface(pygame.transform.scale(RessourceLoader.get(BeeSprite.mask),
-                                                                    (self.width, self.height)))
         self.CONSTHEIGT = self.height
         self.CONSTWIDTH = self.width
         self.rect = self.image.get_rect()
