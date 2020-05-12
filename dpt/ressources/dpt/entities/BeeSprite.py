@@ -40,6 +40,7 @@ class BeeSprite(pygame.sprite.Sprite):
         self.maxvelocity = 2
         self.big = False
         self.distance = 0
+        self.cosx = 0
 
     def update(self):
         if not TileEditor.is_editing:
@@ -88,6 +89,8 @@ class BeeSprite(pygame.sprite.Sprite):
 
             self.rect.left += math.floor(self.xvel)
             self.distance += abs(self.xvel)
+            self.rect.top += math.floor(math.cos(self.cosx) * 20 * Game.DISPLAY_RATIO)
+            self.cosx += 0.05
 
             self.animation()
 
