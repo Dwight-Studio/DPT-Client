@@ -66,9 +66,10 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.gravityModifier = 0
         self.maxvelocity = 4
         self.jumpModifier = 0
-
         self.isReallyInJump = False
         self.fallCount = 0
+
+        self.blink = False
 
         Heart()
 
@@ -209,6 +210,15 @@ class PlayerSprite(pygame.sprite.Sprite):
             else:
                 self.imunityTime = 180
                 Game.life = 1
+
+            if self.imunityTime % 7 == 0 and self.imunityTime > 0 and self.damaged:
+                self.blink = not self.blink
+            elif self.imunityTime < 0:
+                self.blink = False
+
+            if self.blink:
+                self.image = pygame.Surface((self.rect.width, self.rect.height)).convert_alpha()
+                self.image.fill((0, 0, 0, 0))
         else:
             self.die()
         self.death_fall()
