@@ -648,7 +648,7 @@ def level_selector_detail_loop():
                 return
             elif event.button == Game.gui["button_main_menu"]:
                 menu.delete_items()
-                Scenes.main_menu(False)
+                Scenes.level_selector()
                 return
 
     menu.main_loop()

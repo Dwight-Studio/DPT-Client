@@ -29,8 +29,8 @@ class LevelOverview:
         self.x = x
         self.y = y
         self.size = size * Game.DISPLAY_RATIO
-        self.width = math.floor(200 * self.size)
-        self.height = math.floor(200 * self.size)
+        self.width = math.floor(130 * self.size)
+        self.height = math.floor(130 * self.size)
         self.rect = pygame.Rect(x, y, self.width, self.height)
 
         self.level_name = level_name
@@ -45,9 +45,9 @@ class LevelOverview:
         try:
             self.image = pygame.transform.smoothscale(RessourceLoader.get(self.level["image"]), (self.width, self.height))
         except UnreachableRessourceError:
-            self.image = RessourceLoader.get("dpt.images.not_found")
+            self.image = pygame.transform.smoothscale(RessourceLoader.get("dpt.images.not_found"), (self.width, self.height))
         except KeyError:
-            self.image = RessourceLoader.get("dpt.images.not_found")
+            self.image = pygame.transform.smoothscale(RessourceLoader.get("dpt.images.not_found"), (self.width, self.height))
 
         try:
             self.locked = not Game.stars >= self.level["required_stars"]
@@ -55,25 +55,27 @@ class LevelOverview:
             self.locked = False
 
         try:
-            scores = Game.saves[level_name]
-            self.score = int(scores[max(scores.items(), key=lambda key: scores[key])])
+            scores = {int(k): int(v) for k, v in Game.saves[level_name].items()}
+            k, v = max(scores.items(), key=lambda val: val[1])
+            self.score = v
         except KeyError:
             self.score = 0
 
-        self.star_1 = TransitionStar(self.rect.centerx - math.floor(60 * self.size),
-                                     self.rect.bottom - math.floor(30 * self.size),
+        self.star_1 = TransitionStar(self.rect.centerx - math.floor(40 * self.size),
+                                     self.rect.bottom,
                                      self.score >= 1000,
-                                     False, False)
+                                     False, False, math.floor(35))
 
         self.star_2 = TransitionStar(self.rect.centerx,
-                                     self.rect.bottom - math.floor(30 * self.size),
+                                     self.rect.bottom,
                                      self.score >= 2000,
-                                     False, False)
+                                     False, False, math.floor(35))
 
-        self.star_3 = TransitionStar(self.rect.centerx + math.floor(60 * self.size),
-                                     self.rect.bottom - math.floor(30 * self.size),
+        self.star_3 = TransitionStar(self.rect.centerx + math.floor(40 * self.size),
+                                     self.rect.bottom,
                                      self.score >= 3000,
-                                     False, False)
+                                     False, False, math.floor(35))
+        Game.stars += self.score // 1000
 
         if self.locked:
             self.lock = SimpleSprite(math.floor(48 * self.size),
@@ -81,7 +83,7 @@ class LevelOverview:
                                      RessourceLoader.get("dpt.images.gui.ui.ui_lock"),
                                      centerx=self.rect.right,
                                      centery=self.rect.top)
-        else:
+        elif level_name not in Game.saves:
             self.lock = SimpleSprite(math.floor(74 * self.size),
                                      math.floor(66 * self.size),
                                      RessourceLoader.get("dpt.images.gui.ui.ui_lock_open"),
@@ -94,24 +96,26 @@ class LevelOverview:
     def update(self):
         """Actualise le résumé de niveau"""
         Game.surface.blit(self.image, self.rect)
-        Game.surface.blit(self.lock.image, self.lock.rect)
-        print(self.lock.rect)
+        if hasattr(self, "lock"):
+            Game.surface.blit(self.lock.image, self.lock.rect)
+
         self.star_1.update()
         self.star_2.update()
         self.star_3.update()
 
         for event in Game.events:
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if self.rect.collidepoint(pygame.mouse.get_pos()):
+                if not self.locked and self.rect.collidepoint(pygame.mouse.get_pos()):
                     sound = RessourceLoader.get("dpt.sounds.sfx.switch6")
                     sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
                     sound.play()
 
                     menu.delete_items()
+                    Game.levels_list = None
                     Game.selected_level = self.level_name
                     Scenes.level_selector_detail()
 
-        if self.rect.collidepoint(pygame.mouse.get_pos()):
+        if not self.locked and self.rect.collidepoint(pygame.mouse.get_pos()):
             Game.cursor_on_button = True
 
     def kill(self, del_bool=True):
@@ -120,7 +124,8 @@ class LevelOverview:
         :param del_bool: Supprime de la liste
         :type del_bool: bool
         """
-        self.lock.kill()
+        if hasattr(self, "lock"):
+            self.lock.kill()
         if del_bool:
             LevelOverview.level_overview_list.remove(self)
             del self

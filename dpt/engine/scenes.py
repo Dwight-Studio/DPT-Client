@@ -607,6 +607,7 @@ class Scenes:
         if TileManager.levelName not in Game.saves:
             Game.saves[TileManager.levelName] = {}
         Game.saves[TileManager.levelName].update({math.floor(time.time()): Game.temp["score"]})
+        Game.save_profile()
 
         # Ajout du GUI
         from dpt.engine.gui.menu.button import Button
@@ -868,7 +869,19 @@ class Scenes:
                                                                        RessourceLoader.get("dpt.images.gui.symbols.SYMB_LEFTARROW")),
                                               centerx=Game.WINDOW_WIDTH // 2)}
 
-        Game.gui["test"] = LevelOverview(90, 170, "dpt.levels.leveltest", 1)
+        Game.stars = 0
+
+        x_count = 0
+        y_count = 0
+
+        for level_name in Game.levels_list:
+            Game.gui[level_name + "_overview"] = LevelOverview(math.floor((90 + (x_count * 180)) * Game.DISPLAY_RATIO),
+                                                               math.floor((170 + (y_count * 180)) * Game.DISPLAY_RATIO),
+                                                               level_name, 1)
+            x_count += 1
+            if x_count > 6:
+                x_count = 0
+                y_count += 1
 
         # Loops
         from dpt.engine.mainLoop import level_selector_loop
