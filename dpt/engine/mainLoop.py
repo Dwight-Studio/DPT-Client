@@ -55,6 +55,10 @@ def level_loop():
 
     for event in Game.events:
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+            TileManager.editor_panel_group.empty()
+            Checkbox.checkbox_group.empty()
+            TileEditor.panel_open = False
+            TileEditor.update()
             Scenes.pause()
         elif event.type == Game.BUTTON_EVENT and event.button == Game.gui["editor_button"]:
             TileEditor.is_editing = not TileEditor.is_editing
@@ -109,6 +113,7 @@ def level_loop():
     else:
         if Game.gui["window"].rect.collidepoint(pygame.mouse.get_pos()):
             menu.Button.main_loop()
+            menu.Checkbox.main_loop()
         else:
             Menu.main_loop()
 
