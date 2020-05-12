@@ -144,6 +144,9 @@ def pause_loop():
                     RessourceLoader.get("dpt.entities.Coin").coin_checkpoint_list = []
                 kill_menu()
                 TileManager.load_level(TileManager.levelName)
+                EffectsManagement.create_effects_image()
+                EffectsManagement.reset()
+                EffectsManagement.vote()
                 Game.loop = level_loop
                 return
             elif event.button == Game.gui["p_button_restart_save"] and TileEditor.enabled_editor:
@@ -410,6 +413,9 @@ def game_over_loop():
                     Game.temp["respawn"] += 1
                 else:
                     Game.temp["respawn"] = 1
+                EffectsManagement.create_effects_image()
+                EffectsManagement.reset()
+                EffectsManagement.vote()
                 Game.loop = level_loop
                 return
             elif event.button == Game.gui["go_button_main_menu"]:

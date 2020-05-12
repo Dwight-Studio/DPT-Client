@@ -6,5 +6,16 @@
     "display_size": 0,
     "server_address": "join.dont-play-together.fr"
   },
-  "saves": {}
+  "saves": {
+    "dpt.levels.00_leveltest": {
+      "1589295661": 3550,
+      "1589300970": 3070
+    },
+    "dpt.levels.01_let_s_start": {
+      "1589301133": 3350
+    },
+    "dpt.levels.02_something": {
+      "1589301185": 3580
+    }
+  }
 }

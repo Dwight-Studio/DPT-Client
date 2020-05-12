@@ -109,13 +109,16 @@ class Game(object):
 
     # Logs
     # Gère les fichiers de logs
-    if os.path.isfile(ROOT_DIRECTORY + "/logs/latest.log"):
-        file = tarfile.open(
-            ROOT_DIRECTORY + "/logs/" + datetime.datetime.today().strftime("%d-%m-%Y-%H-%M-%S") + ".tar.gz",
-            mode="x:gz", )
-        file.add(ROOT_DIRECTORY + "/logs/latest.log", arcname="latest.log")
-        file.close()
-        os.remove(ROOT_DIRECTORY + "/logs/latest.log")
+    try:
+        if os.path.isfile(ROOT_DIRECTORY + "/logs/latest.log"):
+            file = tarfile.open(
+                ROOT_DIRECTORY + "/logs/" + datetime.datetime.today().strftime("%d-%m-%Y-%H-%M-%S") + ".tar.gz",
+                mode="x:gz", )
+            file.add(ROOT_DIRECTORY + "/logs/latest.log", arcname="latest.log")
+            file.close()
+            os.remove(ROOT_DIRECTORY + "/logs/latest.log")
+    except PermissionError:
+        exit()
 
     # Initialisation des logs
     # Logs des autres modules

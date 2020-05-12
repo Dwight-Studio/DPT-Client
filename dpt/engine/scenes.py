@@ -662,7 +662,7 @@ class Scenes:
                          "star_3": TransitionStar(Game.WINDOW_WIDTH // 2 + math.floor(Game.DISPLAY_RATIO * 85), buttons_starting_y + math.floor(150 * Game.DISPLAY_RATIO), Game.temp["score"] >= 1000, True, False),
                          "star_2": TransitionStar(Game.WINDOW_WIDTH // 2, buttons_starting_y + math.floor(150 * Game.DISPLAY_RATIO), Game.temp["score"] >= 2000, True, False),
                          "star_1": TransitionStar(Game.WINDOW_WIDTH // 2 - math.floor(Game.DISPLAY_RATIO * 85), buttons_starting_y + math.floor(150 * Game.DISPLAY_RATIO), Game.temp["score"] >= 3000, True, False),
-                         "fade": FadeOut(2000)})
+                         "fade": FadeOut(4000)})
 
         # Sons
         pygame.mixer_music.load(RessourceLoader.get("dpt.sounds.musics.flakey_a_major"))
