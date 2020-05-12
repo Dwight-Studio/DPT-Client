@@ -47,7 +47,7 @@ class EnemySprite(pygame.sprite.Sprite):
             if not Game.freeze_game:
 
                 Game.add_debug_info("Enemy.left = " + str(self.up))
-                Game.add_debug_info("Enemy.right = " + str(self.right))
+                Game.add_debug_info("Enemy.right = " + str(self.down))
 
                 if EffectsManagement.dico_current_effects["Slow"]:
                     self.maxvelocity = 1
