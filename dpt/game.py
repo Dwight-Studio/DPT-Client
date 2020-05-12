@@ -41,7 +41,7 @@ class Game(object):
     SCREEN_HEIGHT = None
     WINDOW_WIDTH = None
     WINDOW_HEIGHT = None
-    LEVELS_ENTRIES = "dpt.levels.*"
+    LEVELS_ENTRIES = ["dpt.levels.*", "user.levels.*"]
 
     # Variable à définir
     temp = {}  # Variable temporaire pour stocker différentes données temporaires

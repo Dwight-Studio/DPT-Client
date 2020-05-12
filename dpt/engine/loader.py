@@ -218,11 +218,17 @@ class RessourceLoader:
         """Génère une liste d'entrées correspondantes à un chemin
 
         :param path: Chemin à utiliser
-        :type path: str
+        :type path: str, list
 
         :return: Liste d'entrées correspondantes au chemin
         :rtype: list
         """
+        if isinstance(path, list):
+            r = []
+            for i in path:
+                r.extend(cls.select_entries(i))
+            return r
+
         if path[-1] == "*":
             path = path[:-1]
         entries = []
@@ -237,7 +243,7 @@ class RessourceLoader:
         """Permet de récuper plusieurs ressources
 
         :param path: Chemin à utiliser
-        :type path: str
+        :type path: str, list
 
         :raise UnreachableRessourceError: Les ressources ne peuvent être atteintes (non chargée / manquante)
 
@@ -246,7 +252,14 @@ class RessourceLoader:
         """
         try:
             rlist = []
-            entries = cls.select_entries(path.lower())
+
+            if isinstance(path, list):
+                for i in range(len(path)):
+                    path[i] = path[i].lower()
+            else:
+                path.lower()
+
+            entries = cls.select_entries(path)
             for path in entries:
                 rlist.append(cls.loaded_ressources[path.lower()])
             return rlist
