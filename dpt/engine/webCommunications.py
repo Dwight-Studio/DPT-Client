@@ -221,7 +221,7 @@ class WebCommunication(object):
                     pygame.time.set_timer(Game.KEEP_ALIVE_EVENT, 0)
                     cls.reconnect()
             try:
-                Game.gui["wb_player_count"].update()
+                Game.gui["wb_player_count"].draw(Game.surface)
             except KeyError:
                 pass
 

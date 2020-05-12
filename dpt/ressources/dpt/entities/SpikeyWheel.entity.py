@@ -20,6 +20,7 @@ class SpikeyWheel(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x + self.offset_x
         self.rect.y = y + self.offset_y
+        self.original_rest = self.rect
         self.x = x
         self.y = y
         self.active = True
@@ -28,6 +29,7 @@ class SpikeyWheel(pygame.sprite.Sprite):
             self.sound = RessourceLoader.get(self.sounds)
             self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
             self.sound.play()
+        self.mask = pygame.mask.from_surface(self.image)
 
     def update(self):
         if self.active:

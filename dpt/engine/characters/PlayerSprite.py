@@ -308,7 +308,7 @@ class PlayerSprite(pygame.sprite.Sprite):
     def deadly_object_collision(self):
         """Gère les collisions avec des objets physiques mortels"""
         for i in TileManager.deadly_object_group:
-            if pygame.sprite.collide_rect(self, i):
+            if pygame.sprite.collide_mask(self, i):
                 if self.damaged:
                     if self.imunityTime < 0:
                         self.alive = False

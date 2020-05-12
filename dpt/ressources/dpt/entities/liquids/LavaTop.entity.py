@@ -27,6 +27,7 @@ class LavaTop(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x + self.offset_x
         self.rect.y = y + self.offset_y
+        self.mask = pygame.mask.from_surface(self.image)
 
     def update(self):
         self.animation()
