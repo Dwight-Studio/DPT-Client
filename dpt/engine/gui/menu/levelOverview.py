@@ -1,6 +1,7 @@
 import pygame
 import math
 
+from dpt.engine.gui.menu import Text
 from dpt.game import Game
 from dpt.engine.loader import RessourceLoader, UnreachableRessourceError
 from dpt.engine.gui.menu.score_stars import TransitionStar
@@ -51,8 +52,10 @@ class LevelOverview:
 
         try:
             self.locked = not Game.stars >= self.level["required_stars"]
+            self.required_stars = self.level["required_stars"]
         except KeyError:
             self.locked = False
+            self.required_stars = 0
 
         try:
             scores = {int(k): int(v) for k, v in Game.saves[level_name].items()}
@@ -83,6 +86,30 @@ class LevelOverview:
                                      RessourceLoader.get("dpt.images.gui.ui.ui_lock"),
                                      centerx=self.rect.right,
                                      centery=self.rect.top)
+
+            width, height = self.image.get_size()
+            for x in range(width):
+                for y in range(height):
+                    red, green, blue, alpha = self.image.get_at((x, y))
+                    average = (red + green + blue) // 3
+                    gs_color = (average, average, average, alpha)
+                    self.image.set_at((x, y), gs_color)
+
+            self.text = Text(self.rect.centerx - math.floor(35 * Game.DISPLAY_RATIO),
+                             0,
+                             str(self.required_stars) + "×",
+                             math.floor(40 * Game.DISPLAY_RATIO),
+                             (0, 0, 0),
+                             "dpt.fonts.DINOT_CondBlack",
+                             centery=self.rect.centery)
+
+            self.star_req = TransitionStar(self.rect.centerx + math.floor(20 * Game.DISPLAY_RATIO),
+                                           self.rect.centery,
+                                           True,
+                                           False, False, math.floor(35))
+
+
+
         elif level_name not in Game.saves:
             self.lock = SimpleSprite(math.floor(74 * self.size),
                                      math.floor(66 * self.size),
@@ -102,6 +129,10 @@ class LevelOverview:
         self.star_1.update()
         self.star_2.update()
         self.star_3.update()
+
+        if self.locked:
+            self.text.draw(Game.surface)
+            self.star_req.update()
 
         for event in Game.events:
             if event.type == pygame.MOUSEBUTTONDOWN:
