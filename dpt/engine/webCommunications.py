@@ -220,8 +220,10 @@ class WebCommunication(object):
                     cls.connected = False
                     pygame.time.set_timer(Game.KEEP_ALIVE_EVENT, 0)
                     cls.reconnect()
-
-        Text.main_loop()
+            try:
+                Game.gui["wb_player_count"].update()
+            except KeyError:
+                pass
 
     @classmethod
     def close(cls):

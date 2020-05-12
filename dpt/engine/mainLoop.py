@@ -102,12 +102,15 @@ def level_loop():
 
     TileEditor.ghost_block_group.draw(Game.surface)
 
-    if not TileEditor.enabled_editor:
+    if not TileEditor.is_editing:
         EffectsManagement.update()
         Button.main_loop()
         Timer.main_loop()
     else:
-        Menu.main_loop()
+        if Game.gui["window"].rect.collidepoint(pygame.mouse.get_pos()):
+            menu.Button.main_loop()
+        else:
+            Menu.main_loop()
 
     WebCommunication.update()
 
