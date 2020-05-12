@@ -11,7 +11,6 @@ from dpt.game import Game
 
 class EnemySprite(pygame.sprite.Sprite):
     texture = "dpt.images.characters.player.standing"
-    screen_width, screen_height = (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)
     width = math.floor(60 * Game.DISPLAY_RATIO)
     height = math.floor(90 * Game.DISPLAY_RATIO)
     offset_x = (Game.TILESIZE - width) // 2
