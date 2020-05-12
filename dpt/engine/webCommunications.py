@@ -124,46 +124,49 @@ class WebCommunication(object):
             for event in Game.events:
                 if event.type == Game.KEEP_ALIVE_EVENT:
                     def ka():
-                        if cls.connected:
-                            reply = cls.make_request("http://" + Game.settings["server_address"] + "/keepAlive.php?session=" + cls.sessionName, True)
+                        try:
+                            if cls.connected:
+                                reply = cls.make_request("http://" + Game.settings["server_address"] + "/keepAlive.php?session=" + cls.sessionName, True)
 
-                            if isinstance(reply, CommunicationError):
-                                return
+                                if isinstance(reply, CommunicationError):
+                                    return
 
-                            reply = cls.make_request("http://" + Game.settings["server_address"] + "/sessions.json", True)
+                                reply = cls.make_request("http://" + Game.settings["server_address"] + "/sessions.json", True)
 
-                            if "wb_player_count" not in Game.gui:
+                                if "wb_player_count" not in Game.gui:
+                                    Game.gui["wb_player_count"] = Text(Game.WINDOW_WIDTH - math.floor(Game.DISPLAY_RATIO * 220),
+                                                                       0,
+                                                                       "Connexion au serveur...",
+                                                                       math.floor(25 * Game.DISPLAY_RATIO),
+                                                                       (0, 0, 0),
+                                                                       "dpt.fonts.DINOT_CondBlack")
+
+                                if isinstance(reply, CommunicationError) or cls.sessionName not in reply:
+                                    cls.log.warning("Can't get connected players count")
+                                    Game.gui["wb_player_count"].text = "Déconnecté du serveur"
+                                    Game.gui["wb_player_count"].color = (255, 0, 0)
+                                    return
+
+                                nb = str(len(reply[cls.sessionName]))
+
+                                while len(nb) < 3:
+                                    nb = "0" + nb
+
+                                Game.gui["wb_player_count"].text = "Joueurs connectés : " + nb
+                                Game.gui["wb_player_count"].color = (0, 0, 0)
+
+                            else:
                                 Game.gui["wb_player_count"] = Text(Game.WINDOW_WIDTH - math.floor(Game.DISPLAY_RATIO * 220),
                                                                    0,
-                                                                   "Connexion au serveur...",
+                                                                   "Déconnecté du serveur",
                                                                    math.floor(25 * Game.DISPLAY_RATIO),
-                                                                   (0, 0, 0),
+                                                                   (255, 0, 0),
                                                                    "dpt.fonts.DINOT_CondBlack")
 
-                            if isinstance(reply, CommunicationError) or cls.sessionName not in reply:
-                                cls.log.warning("Can't get connected players count")
                                 Game.gui["wb_player_count"].text = "Déconnecté du serveur"
                                 Game.gui["wb_player_count"].color = (255, 0, 0)
-                                return
-
-                            nb = str(len(reply[cls.sessionName]))
-
-                            while len(nb) < 3:
-                                nb = "0" + nb
-
-                            Game.gui["wb_player_count"].text = "Joueurs connectés : " + nb
-                            Game.gui["wb_player_count"].color = (0, 0, 0)
-
-                        else:
-                            Game.gui["wb_player_count"] = Text(Game.WINDOW_WIDTH - math.floor(Game.DISPLAY_RATIO * 220),
-                                                               0,
-                                                               "Déconnecté du serveur",
-                                                               math.floor(25 * Game.DISPLAY_RATIO),
-                                                               (255, 0, 0),
-                                                               "dpt.fonts.DINOT_CondBlack")
-
-                            Game.gui["wb_player_count"].text = "Déconnecté du serveur"
-                            Game.gui["wb_player_count"].color = (255, 0, 0)
+                        except Exception:
+                            pass
 
                     Thread(target=ka).start()
                     continue

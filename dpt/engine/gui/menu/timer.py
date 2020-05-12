@@ -1,7 +1,7 @@
 import pygame
 import math
 
-from dpt.engine.gui.menu.textSpriteButton import TextSpriteButton
+from dpt.engine.gui.menu.simpleSprite import SimpleSprite
 from dpt.game import Game
 from dpt.engine.loader import RessourceLoader
 
@@ -54,11 +54,11 @@ class Timer:
         cls.rect = pygame.rect.Rect(0, math.floor(20 * Game.DISPLAY_RATIO), 4 * cls.width_digits + cls.width_semicolon, cls.height_digits)
         cls.rect.centerx = Game.WINDOW_WIDTH // 2
 
-        cls.digit1 = TextSpriteButton(cls.width_digits, cls.height_digits, cls.digits_images[0])
-        cls.digit2 = TextSpriteButton(cls.width_digits, cls.height_digits, cls.digits_images[0])
-        cls.semicolon = TextSpriteButton(cls.width_semicolon, cls.height_digits, cls.semicolon_image)
-        cls.digit3 = TextSpriteButton(cls.width_digits, cls.height_digits, cls.digits_images[0])
-        cls.digit4 = TextSpriteButton(cls.width_digits, cls.height_digits, cls.digits_images[0])
+        cls.digit1 = SimpleSprite(cls.width_digits, cls.height_digits, cls.digits_images[0])
+        cls.digit2 = SimpleSprite(cls.width_digits, cls.height_digits, cls.digits_images[0])
+        cls.semicolon = SimpleSprite(cls.width_semicolon, cls.height_digits, cls.semicolon_image)
+        cls.digit3 = SimpleSprite(cls.width_digits, cls.height_digits, cls.digits_images[0])
+        cls.digit4 = SimpleSprite(cls.width_digits, cls.height_digits, cls.digits_images[0])
 
         cls.digit1.rect.left = cls.rect.left
         cls.digit2.rect.left = cls.digit1.rect.right

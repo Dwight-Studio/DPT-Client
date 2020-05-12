@@ -41,6 +41,7 @@ class Game(object):
     SCREEN_HEIGHT = None
     WINDOW_WIDTH = None
     WINDOW_HEIGHT = None
+    LEVELS_ENTRIES = "dpt.levels.*"
 
     # Variable à définir
     temp = {}  # Variable temporaire pour stocker différentes données temporaires
@@ -61,7 +62,9 @@ class Game(object):
     cursor1 = None  # Image 1 du curseur
     cursor2 = None  # Image 2 du curseur
     life = 1  # Variable indiquant la vie du joueur vis à vis de son affichage
-    upsidedown = False
+    upsidedown = False  # Retourner l'écran
+    selected_level = 0  # Niveau selectionné
+    levels_list = None  # Liste des niveaux
 
     # Paramètres utilisateur
     settings = {
@@ -80,6 +83,7 @@ class Game(object):
                     ("720p (1280 x 720)", 1280, 720),
                     ("900p (1440 x 900)", 1440, 900),
                     ("1080p (1920 x 1080)", 1920, 1080),
+                    ("1440p (2560 x 1440)", 2560, 1440),
                     ("4K (3840 x 2160)", 3840, 2160),
                     ("8K (7680 x 4320)", 7680, 4320)]
 
@@ -299,7 +303,7 @@ class Game(object):
                 cls.loop()
 
                 if cls.upsidedown:
-                    sc = pygame.transform.rotate(Game.surface, 180)
+                    sc = pygame.transform.flip(Game.surface, False, True)
                     Game.surface.blit(sc, (0, 0))
 
                 Game.display_debug_info()

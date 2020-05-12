@@ -1054,5 +1054,9 @@
     "25, 7": {
       "class": "dpt.entities.flags.flagred"
     }
+  },
+  "infos": {
+    "title": "Level for Testing",
+    "image": "dpt.images.environment.terrain.Grass_Tile_lower"
   }
 }
