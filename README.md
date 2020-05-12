@@ -5,9 +5,12 @@
 Partie client de **Don't Play Together**.
 
 ## Prérequis
-Pour fonctionner, **Don't Play Together** requière :
+Pour fonctionner (pour éxecuter sans utiliser de builds), **Don't Play Together** requière :
 * `Python 3.8.x`
 * `PyGame 2.x` ou ultérieur
 * `psutil`
 * `tkinter`
 * `Un cerveau`
+
+## Documentation
+Cliquez : http://docs.dont-play-together.fr/
