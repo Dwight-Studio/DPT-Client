@@ -14,7 +14,7 @@ class Spike(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
-        pygame.sprite.Sprite.__init__(self, TileManager.interactible_blocks_group, TileManager.entity_group)
+        pygame.sprite.Sprite.__init__(self, TileManager.interactible_blocks_group, TileManager.entity_group, TileManager.deadly_object_group)
         self.image = RessourceLoader.get(self.texture)
         self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
         self.rect = self.image.get_rect()
@@ -45,6 +45,10 @@ class Spike(pygame.sprite.Sprite):
         self.up = False
         self.i = -1
         self.done = False
+        from dpt.engine.tileManager import TileManager
+        for spike in TileManager.deadly_object_group:
+            if spike.x == self.x and spike.y == self.y:
+                TileManager.deadly_object_group.remove(spike)
         self.anim_texture = RessourceLoader.get_multiple("dpt.images.environment.traps.Spike.Obstacle_Spike_Up_*")
         self.anim_texture.reverse()
 
