@@ -257,14 +257,14 @@ class RessourceLoader:
                 for i in range(len(path)):
                     path[i] = path[i].lower()
             else:
-                path.lower()
+                path = path.lower()
 
             entries = cls.select_entries(path)
             for path in entries:
-                rlist.append(cls.loaded_ressources[path.lower()])
+                rlist.append(cls.loaded_ressources[path])
             return rlist
         except KeyError:
-            cls.logger.critical(f"Ressources for path {path.lower()} can't be reached (Are ressources loaded ?)")
+            cls.logger.critical(f"Ressources for path {str(path)} can't be reached (Are ressources loaded ?)")
             raise UnreachableRessourceError(path.lower())
 
     @classmethod
