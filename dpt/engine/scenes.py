@@ -46,12 +46,58 @@ class Scenes:
 
         # Ajout du bouton d'éditeur
         from dpt.engine.gui.menu import Text
-        Game.gui = {"editor_button": Button(0, Game.WINDOW_HEIGHT - math.floor(50 * Game.DISPLAY_RATIO),
-                                            math.floor(127 * Game.DISPLAY_RATIO),
-                                            math.floor(46 * Game.DISPLAY_RATIO),
-                                            RessourceLoader.get("dpt.images.gui.buttons.BTN_GREEN_RECT_OUT"),
+        from dpt.engine.gui.menu import Window
+        from dpt.engine.gui.menu.simpleSprite import SimpleSprite
+
+        win = Window(0, Game.WINDOW_HEIGHT - math.floor(64 * 5 * Game.DISPLAY_RATIO), 2, 5)
+        Game.gui = {"window": win,
+                    "title": Text(0,
+                                  win.rect.y + math.floor(5 * Game.DISPLAY_RATIO),
+                                  "Éditeur",
+                                  math.floor(50 * Game.DISPLAY_RATIO),
+                                  (0, 0, 0),
+                                  "dpt.fonts.DINOT_CondBlack",
+                                  centerx=win.rect.centerx),
+                    "r1": Text(math.floor(15 * Game.DISPLAY_RATIO),
+                               win.rect.y + math.floor(80 * Game.DISPLAY_RATIO),
+                               "Ctrl + S → Sauvegarder",
+                               math.floor(25 * Game.DISPLAY_RATIO),
+                               (0, 0, 0),
+                               "dpt.fonts.DINOT_CondBlack"),
+                    "r2": Text(math.floor(15 * Game.DISPLAY_RATIO),
+                               win.rect.y + math.floor(105 * Game.DISPLAY_RATIO),
+                               "Ctrl + O → Ouvrir",
+                               math.floor(25 * Game.DISPLAY_RATIO),
+                               (0, 0, 0),
+                               "dpt.fonts.DINOT_CondBlack"),
+                    "r3": Text(math.floor(15 * Game.DISPLAY_RATIO),
+                               win.rect.y + math.floor(130 * Game.DISPLAY_RATIO),
+                               "Ctrl + N → Nouveau",
+                               math.floor(25 * Game.DISPLAY_RATIO),
+                               (0, 0, 0),
+                               "dpt.fonts.DINOT_CondBlack"),
+                    "r4": Text(math.floor(15 * Game.DISPLAY_RATIO),
+                               win.rect.y + math.floor(155 * Game.DISPLAY_RATIO),
+                               "Ctrl + T → Menu",
+                               math.floor(25 * Game.DISPLAY_RATIO),
+                               (0, 0, 0),
+                               "dpt.fonts.DINOT_CondBlack"),
+                    "r5": Text(math.floor(15 * Game.DISPLAY_RATIO),
+                               win.rect.y + math.floor(180 * Game.DISPLAY_RATIO),
+                               "Ctrl + I → Propriétés",
+                               math.floor(25 * Game.DISPLAY_RATIO),
+                               (0, 0, 0),
+                               "dpt.fonts.DINOT_CondBlack"),
+                    "editor_button": Button(math.floor(40 * Game.DISPLAY_RATIO),
+                                            Game.WINDOW_HEIGHT - math.floor(80 * Game.DISPLAY_RATIO),
+                                            math.floor(170 * Game.DISPLAY_RATIO),
+                                            math.floor(61 * Game.DISPLAY_RATIO),
+                                            RessourceLoader.get("dpt.images.gui.buttons.BTN_BLUE_RECT_OUT"),
                                             pushed_image=RessourceLoader.get(
-                                                "dpt.images.gui.buttons.BTN_GREEN_RECT_IN"), text="Jouer")}
+                                                "dpt.images.gui.buttons.BTN_BLUE_RECT_IN"),
+                                            text_sprite=SimpleSprite(math.floor(143 * Game.DISPLAY_RATIO),
+                                                                     math.floor(35 * Game.DISPLAY_RATIO),
+                                                                     RessourceLoader.get("dpt.images.gui.symbols.TEXT_START")))}
 
         # Loops
         from dpt.engine.mainLoop import level_loop

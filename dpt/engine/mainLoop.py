@@ -11,6 +11,7 @@ from dpt.engine.fileManager import FileManager
 from dpt.engine.gui.editor.tileEditor import TileEditor
 from dpt.engine.gui.menu.button import Button
 from dpt.engine.gui.menu.checkbox import Checkbox
+from dpt.engine.gui.menu.simpleSprite import SimpleSprite
 from dpt.engine.scenes import Scenes
 from dpt.engine.tileManager import TileManager
 from dpt.engine.loader import RessourceLoader
@@ -58,11 +59,17 @@ def level_loop():
         elif event.type == Game.BUTTON_EVENT and event.button == Game.gui["editor_button"]:
             TileEditor.is_editing = not TileEditor.is_editing
             if TileEditor.is_editing:
-                Game.gui["editor_button"].text = "Jouer"
+                Game.gui["editor_button"].text_sprite.kill()
+                Game.gui["editor_button"].text_sprite = SimpleSprite(math.floor(143 * Game.DISPLAY_RATIO),
+                                                                     math.floor(35 * Game.DISPLAY_RATIO),
+                                                                     RessourceLoader.get("dpt.images.gui.symbols.TEXT_START"))
                 for clouds in TileManager.clouds_group:
                     clouds.kill()
             else:
-                Game.gui["editor_button"].text = "Retour"
+                Game.gui["editor_button"].text_sprite.kill()
+                Game.gui["editor_button"].text_sprite = SimpleSprite(math.floor(148 * Game.DISPLAY_RATIO),
+                                                                     math.floor(35 * Game.DISPLAY_RATIO),
+                                                                     RessourceLoader.get("dpt.images.gui.symbols.TEXT_MENU"))
             TileEditor.panel_open = False
             Checkbox.checkbox_group.empty()
             TileManager.clouds_group.empty()
@@ -192,8 +199,6 @@ def main_menu_loop():
                     "tiles": {},
                     "infos": {}
                 })
-
-                TileEditor.level_infos_creation()
 
                 pygame.mixer_music.fadeout(1000)
                 pygame.mixer_music.unload()

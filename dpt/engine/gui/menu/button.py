@@ -56,7 +56,7 @@ class Button(pygame.sprite.Sprite):
             self.font = kwargs["font"]
             del kwargs["font"]
         else:
-            self.font = pygame.font.SysFont("arial", math.floor(15 * Game.DISPLAY_RATIO))
+            self.font = pygame.font.SysFont("arial", math.floor(30 * Game.DISPLAY_RATIO))
         if "font_color" in kwargs:
             self.font_color = kwargs["font_color"]
             del kwargs["font_color"]
