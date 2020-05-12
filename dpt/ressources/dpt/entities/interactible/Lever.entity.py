@@ -26,11 +26,12 @@ class Lever(pygame.sprite.Sprite):
         self.right = False
         self.left = True
         self.set = False
-        self.attributing = False
+        self.attributing = True
         if not TileManager.is_loading_level:
             self.sound = RessourceLoader.get(self.sounds)
             self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
             self.sound.play()
+
 
     def update(self):
         mouse_buttons = pygame.mouse.get_pressed()
@@ -80,11 +81,11 @@ class Lever(pygame.sprite.Sprite):
                                 for pos in positions:
                                     try:
                                         if interact.x == pos[0] and interact.y == pos[1]:
-                                            interact.desactivate()
+                                            interact.deactivate()
                                         elif interact.rect.x == pos[0] and interact.rect.y == pos[1]:
-                                            interact.desactivate()
+                                            interact.deactivate()
                                         elif interact.rect.x == pos[0] * Game.TILESIZE and interact.rect.y == pos[1] * Game.TILESIZE:
-                                            interact.desactivate()
+                                            interact.deactivate()
                                     except AttributeError:
                                         continue
                 elif TileEditor.is_editing:
@@ -92,7 +93,7 @@ class Lever(pygame.sprite.Sprite):
             elif mouse_buttons[0] != 1 and self.clicked:
                 self.clicked = False
         if TileEditor.is_editing and self.attributing:
-            pygame.draw.line(Game.surface, (0, 0, 0), (self.x + TileManager.camera.last_x, self.y + 30), (mousePos[0], mousePos[1]))
+            pygame.draw.line(Game.surface, (0, 0, 0), (self.x + TileManager.camera.last_x, self.y + 30), (mousePos[0], mousePos[1]), 1)
             if mouse_buttons[0] == 1 and not self.clicked2:
                 self.clicked2 = True
                 for sprites in TileManager.interactible_blocks_group:
