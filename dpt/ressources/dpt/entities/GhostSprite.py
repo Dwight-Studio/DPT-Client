@@ -25,7 +25,6 @@ class EnemySprite(pygame.sprite.Sprite):
         self.yvel = 0
         self.left = False
         self.right = True
-        self.standing = False
         self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
         self.mask = pygame.mask.from_surface(pygame.transform.scale(RessourceLoader.get(EnemySprite.mask),
                                                                     (self.width, self.height)))
@@ -77,7 +76,6 @@ class EnemySprite(pygame.sprite.Sprite):
                         self.xvel -= (self.maxvelocity / 2) * Game.DISPLAY_RATIO
                     self.left = True
                     self.right = False
-                    self.standing = False
                 elif self.right:
                     if self.xvel < 0 and not EffectsManagement.dico_current_effects["Ice"]:
                         self.xvel = 0
@@ -85,10 +83,8 @@ class EnemySprite(pygame.sprite.Sprite):
                         self.xvel += (self.maxvelocity / 2) * Game.DISPLAY_RATIO
                     self.left = False
                     self.right = True
-                    self.standing = False
                 else:
                     self.xvel = 0
-                    self.standing = True
 
             self.rect.left += math.floor(self.xvel)
             self.distance += abs(self.xvel)
@@ -96,7 +92,7 @@ class EnemySprite(pygame.sprite.Sprite):
 
             self.animation()
 
-            if self.distance > 500:
+            if self.distance > 1200 * Game.DISPLAY_RATIO:
                 self.distance = 0
                 self.left = not self.left
                 self.right = not self.right
