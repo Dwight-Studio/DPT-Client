@@ -8,8 +8,13 @@ from dpt.engine.effectsManagement import EffectsManagement
 from dpt.game import Game
 
 
+def pythagore(xa, ya, xb, yb):
+    return math.sqrt((xb-xa)**2 + (yb-ya)**2)
+
+
 class GhostSprite(pygame.sprite.Sprite):
-    texture = "dpt.images.characters.player.standing"
+    texture = "dpt.images.characters.ghosts.Ghost_Light_1"
+    textures = "dpt.images.characters.ghosts.Ghost_Light*"
     width = math.floor(60 * Game.DISPLAY_RATIO)
     height = math.floor(90 * Game.DISPLAY_RATIO)
     offset_x = (Game.TILESIZE - width) // 2
@@ -19,6 +24,8 @@ class GhostSprite(pygame.sprite.Sprite):
         from dpt.engine.tileManager import TileManager
         pygame.sprite.Sprite.__init__(self, TileManager.enemy_group, TileManager.entity_group)  # Sprite's constructor called
         self.image = RessourceLoader.get(self.texture)
+        self.boo = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in RessourceLoader.get_multiple(self.textures)]
+        self.booReverse = [pygame.transform.flip(i, True, False) for i in self.boo]
         self.xvel = 0
         self.yvel = 0
         self.up = False
@@ -93,5 +100,15 @@ class GhostSprite(pygame.sprite.Sprite):
                 self.down = not self.down
 
     def animation(self):
-        # pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
-        pass
+        xb = Game.player_sprite.rect.x
+        yb = Game.player_sprite.rect.y
+        if pythagore(self.rect.x, self.rect.y, xb, yb) < 400:
+            if self.rect.x - xb > 0:
+                self.image = self.boo[1]
+            else:
+                self.image = self.booReverse[1]
+        else:
+            if self.rect.x - xb > 0:
+                self.image = self.boo[0]
+            else:
+                self.image = self.booReverse[0]
