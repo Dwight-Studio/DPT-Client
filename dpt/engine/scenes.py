@@ -651,7 +651,8 @@ class Scenes:
 
         if TileManager.levelName not in Game.saves:
             Game.saves[TileManager.levelName] = {}
-        Game.saves[TileManager.levelName].update({math.floor(time.time()): Game.temp["score"]})
+        Game.temp["time"] = math.floor(time.time())
+        Game.saves[TileManager.levelName].update({Game.temp["time"]: Game.temp["score"]})
         Game.save_profile()
 
         # Ajout du GUI
@@ -690,6 +691,14 @@ class Scenes:
                                                 (0, 0, 0),
                                                 "dpt.fonts.DINOT_CondBlack",
                                                 centerx=Game.WINDOW_WIDTH // 2),
+                         "el_button_name": Button(math.floor(1185 * Game.DISPLAY_RATIO),
+                                                  math.floor(765 * Game.DISPLAY_RATIO),
+                                                  math.floor(69 * Game.DISPLAY_RATIO),
+                                                  math.floor(52 * Game.DISPLAY_RATIO),
+                                                  RessourceLoader.get("dpt.images.gui.buttons.BTN_PLAIN_2"),
+                                                  text_sprite=SimpleSprite(math.floor(40 * Game.DISPLAY_RATIO),
+                                                                           math.floor(30 * Game.DISPLAY_RATIO),
+                                                                           RessourceLoader.get("dpt.images.gui.symbols.SYMB_MENU"))),
                          "el_button_main_menu": Button(buttons_x - button_width - buttons_gap_y, buttons_starting_y + (buttons_gap_y + button_height) * 3, button_width, button_height,
                                                        RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_OUT"),
                                                        pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_IN"),
@@ -977,12 +986,15 @@ class Scenes:
             level_scores_date = ["––/––/––––" for i in range(5)]
             level_scores = ["––––" for i in range(5)]
 
-            temp = {int(k): int(v) for k, v in Game.saves[level_name].copy().items()}
+            temp = {k: int(v) for k, v in Game.saves[level_name].copy().items()}
 
             for i in range(5):
                 try:
                     val = max(temp, key=lambda key: temp[key])
-                    level_scores_date[i] = time.strftime("%d/%m/%Y", time.localtime(int(val)))
+                    try:
+                        level_scores_date[i] = time.strftime("%d/%m/%Y", time.localtime(int(val)))
+                    except ValueError:
+                        level_scores_date[i] = val
                     level_scores[i] = str(temp[val])
                     del temp[val]
                 except ValueError:
@@ -1044,9 +1056,12 @@ class Scenes:
 
         # Ajout des scores
         for i in range(5):
+            date_name = level_scores_date[i]
+            if len(date_name) > 10:
+                date_name = date_name[:10] + "..."
             Game.gui.update({"score_" + str(i) + "_date": Text((Game.WINDOW_WIDTH // 2) - 90,
                                                                math.floor((690 + i * 25) * Game.DISPLAY_RATIO),
-                                                               level_scores_date[i],
+                                                               date_name,
                                                                math.floor(25 * Game.DISPLAY_RATIO),
                                                                (0, 0, 0),
                                                                "dpt.fonts.DINOT_CondBlack"),

@@ -497,6 +497,18 @@ def end_level_loop():
                     menu.delete_items()
                     Scenes.main_menu()
                     return
+                elif event.button == Game.gui["el_button_name"]:
+                    root = tk.Tk()
+                    root.withdraw()
+                    s = simpledialog.askstring("Nom", "Entrez un nom personnalisé pour le tableau des scores (Annuler pour utiliser la date)", parent=root, )
+                    if s is not None:
+                        try:
+                            del Game.saves[TileManager.levelName][Game.temp["time"]]
+                        except KeyError:
+                            pass
+                        Game.saves[TileManager.levelName].update({s: Game.temp["score"]})
+                        Game.save_profile()
+                    return
                 elif event.button == Game.gui["el_button_quit"]:
                     if WebCommunication.sessionName is not None:
                         try:

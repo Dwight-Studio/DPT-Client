@@ -58,10 +58,12 @@ class LevelOverview:
             self.required_stars = 0
 
         try:
-            scores = {int(k): int(v) for k, v in Game.saves[level_name].items()}
+            scores = {k: int(v) for k, v in Game.saves[level_name].items()}
             k, v = max(scores.items(), key=lambda val: val[1])
             self.score = v
         except KeyError:
+            self.score = 0
+        except ValueError:
             self.score = 0
 
         self.star_1 = TransitionStar(self.rect.centerx - math.floor(40 * self.size),
