@@ -102,6 +102,8 @@ class BeeSprite(pygame.sprite.Sprite):
                 self.distance = 0
                 self.left = not self.left
                 self.right = not self.right
+        else:
+            self.preview()
 
     def animation(self):
         if self.moveCount >= 32:
@@ -111,3 +113,20 @@ class BeeSprite(pygame.sprite.Sprite):
         elif self.right:
             self.image = self.animReverse[self.moveCount // 8]
         self.moveCount += 1
+
+    def preview(self):
+        self.distance = 0
+        self.cosx = 0
+        x = self.rect[0] + BeeSprite.width // 2
+        y = self.rect[1] + BeeSprite.height // 2
+        while self.distance < 1200 * Game.DISPLAY_RATIO:
+            if self.xvel < self.maxvelocity * Game.DISPLAY_RATIO:
+                self.xvel += (self.maxvelocity / 2) * Game.DISPLAY_RATIO
+            self.distance += abs(self.xvel)
+            y += math.floor(math.cos(self.cosx) * 20 * Game.DISPLAY_RATIO) - math.floor(math.cos(self.cosx - 0.05) * 20 * Game.DISPLAY_RATIO)
+            x += math.floor(self.xvel)
+            self.cosx += 0.05
+            if self.cosx >= math.pi * 2:
+                self.cosx = 0
+                y = self.horizontalStart + BeeSprite.height // 2
+            pygame.draw.rect(Game.surface, (193, 39, 45), (x, y, 5, 5))
