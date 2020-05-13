@@ -12,6 +12,7 @@ from dpt.engine.gui.editor.tileEditor import TileEditor
 from dpt.engine.gui.menu.button import Button
 from dpt.engine.gui.menu.checkbox import Checkbox
 from dpt.engine.gui.menu.simpleSprite import SimpleSprite
+from dpt.engine.loader import UnreachableRessourceError
 from dpt.engine.scenes import Scenes
 from dpt.engine.tileManager import TileManager
 from dpt.engine.loader import RessourceLoader
@@ -169,7 +170,10 @@ def pause_loop():
                 if "last_checkpoint" in Game.temp:
                     del Game.temp["last_checkpoint"]
                     del Game.temp["respawn"]
-                    RessourceLoader.get("dpt.entities.interactible.Coin").coin_checkpoint_list = []
+                    try:
+                        RessourceLoader.get("dpt.entities.interactible.Coin").coin_checkpoint_list = []
+                    except UnreachableRessourceError:
+                        pass
                 kill_menu()
                 TileManager.load_level(TileManager.levelName)
                 EffectsManagement.create_effects_image()
@@ -186,7 +190,10 @@ def pause_loop():
                     WebCommunication.close()
                 if TileEditor.is_editing:
                     FileManager.save_file(TileEditor.created_level)
-                RessourceLoader.get("dpt.entities.interactible.Coin").coin_checkpoint_list = []
+                try:
+                    RessourceLoader.get("dpt.entities.interactible.Coin").coin_checkpoint_list = []
+                except UnreachableRessourceError:
+                    pass
                 Menu.delete_items()
                 Scenes.main_menu()
                 return
@@ -463,7 +470,10 @@ def game_over_loop():
                     except KeyError:
                         pass
                     WebCommunication.close()
-                RessourceLoader.get("dpt.entities.interactible.Coin").coin_checkpoint_list = []
+                try:
+                    RessourceLoader.get("dpt.entities.interactible.Coin").coin_checkpoint_list = []
+                except UnreachableRessourceError:
+                    pass
                 menu.delete_items()
                 Scenes.main_menu()
                 return

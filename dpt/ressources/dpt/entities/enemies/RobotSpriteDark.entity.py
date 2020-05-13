@@ -2,6 +2,7 @@ import math
 
 import pygame
 
+from dpt.engine.characters.DeadBody import DeadBody
 from dpt.engine.gui.editor.tileEditor import TileEditor
 from dpt.engine.loader import RessourceLoader
 from dpt.engine.effectsManagement import EffectsManagement
@@ -11,12 +12,14 @@ from dpt.game import Game
 
 class RobotSpriteDark(pygame.sprite.Sprite):
     texture = "dpt.images.characters.robots.Robot_Dark_0"
+    dead_texture = "dpt.images.characters.robots.Dead_Robot_Dark"
     textures = "dpt.images.characters.robots.Robot_Dark*"
     width = math.floor(90 * Game.DISPLAY_RATIO)
     height = math.floor(135 * Game.DISPLAY_RATIO)
     offset_x = 0
     offset_y = Game.TILESIZE - height
     mask = "dpt.images.characters.robots.mask"
+    dead_mask = "dpt.images.characters.robots.Dead_mask"
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
@@ -167,6 +170,11 @@ class RobotSpriteDark(pygame.sprite.Sprite):
     def check_void(self):
         if self.rect.top > 2000:
             self.kill()
+
+    def kill(self):
+        if not TileEditor.is_editing and not TileManager.is_loading_level:
+            DeadBody(self.rect.x, self.rect.y, self.rect.height, math.floor(self.height / 328 * 181), RobotSpriteDark.dead_texture, RobotSpriteDark.dead_mask)
+        pygame.sprite.Sprite.kill(self)
 
     def check_fall(self, platforms):
         if self.securityTime < 0:

@@ -130,9 +130,13 @@ class TileManager:
                         if "class" in level["tiles"][keys]:
                             obj = RessourceLoader.get(level["tiles"][keys]["class"])
                             RessourceLoader.add_pending(obj.texture)
+                            if hasattr(obj, "dead_texture"):
+                                RessourceLoader.add_pending(obj.mask)
                             if hasattr(obj, "textures"):
                                 RessourceLoader.add_pending(obj.textures)
                             if hasattr(obj, "mask"):
+                                RessourceLoader.add_pending(obj.mask)
+                            if hasattr(obj, "dead_mask"):
                                 RessourceLoader.add_pending(obj.mask)
                             if hasattr(obj, "sounds"):
                                 if isinstance(obj.sounds, list):
