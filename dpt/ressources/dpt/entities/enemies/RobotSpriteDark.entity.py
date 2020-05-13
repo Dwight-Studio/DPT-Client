@@ -10,8 +10,7 @@ from dpt.game import Game
 
 
 class RobotSpriteLight(pygame.sprite.Sprite):
-    texture = "dpt.images.characters.robots.Robot_Light_1"
-    textures = "dpt.images.characters.robots.Robot_Light*"
+    texture = "dpt.images.characters.player.standing"
     width = math.floor(60 * Game.DISPLAY_RATIO)
     height = math.floor(90 * Game.DISPLAY_RATIO)
     offset_x = (Game.TILESIZE - width) // 2

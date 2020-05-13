@@ -15,10 +15,10 @@ def pythagore(xa, ya, xb, yb):
 class GhostSpriteLight(pygame.sprite.Sprite):
     texture = "dpt.images.characters.ghosts.Ghost_Light_1"
     textures = "dpt.images.characters.ghosts.Ghost_Light*"
-    width = math.floor(60 * Game.DISPLAY_RATIO)
-    height = math.floor(90 * Game.DISPLAY_RATIO)
+    width = math.floor(92.4 * Game.DISPLAY_RATIO)
+    height = math.floor(76.8 * Game.DISPLAY_RATIO)
     offset_x = (Game.TILESIZE - width) // 2
-    offset_y = 0
+    offset_y = (Game.TILESIZE - height) // 2
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
