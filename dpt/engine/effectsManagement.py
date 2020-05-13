@@ -156,6 +156,8 @@ class EffectsManagement:
 
         cls.temp_list = []
         cls.perm_list = []
+        cls.list_current_effects = []
+        cls.mods = []
 
     @classmethod
     def display_update(cls):
