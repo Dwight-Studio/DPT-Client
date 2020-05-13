@@ -10,12 +10,12 @@ from dpt.game import Game
 
 
 class RobotSpriteLight(pygame.sprite.Sprite):
-    texture = "dpt.images.characters.robots.Robot_Light_1"
+    texture = "dpt.images.characters.robots.Robot_Light_0"
     textures = "dpt.images.characters.robots.Robot_Light*"
-    width = math.floor(60 * Game.DISPLAY_RATIO)
-    height = math.floor(90 * Game.DISPLAY_RATIO)
-    offset_x = (Game.TILESIZE - width) // 2
-    offset_y = (Game.TILESIZE - height) // 2
+    width = math.floor(90 * Game.DISPLAY_RATIO)
+    height = math.floor(135 * Game.DISPLAY_RATIO)
+    offset_x = 0
+    offset_y = Game.TILESIZE - height
     mask = "dpt.images.characters.robots.mask"
 
     def __init__(self, x, y):
@@ -147,7 +147,7 @@ class RobotSpriteLight(pygame.sprite.Sprite):
             self.check_void()
 
     def animation(self):
-        if self.moveCount >= 24:
+        if self.moveCount >= 48:
             self.moveCount = 0
         if self.left:
             self.mask = self.CONSTMASK
