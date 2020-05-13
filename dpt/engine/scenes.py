@@ -692,7 +692,7 @@ class Scenes:
                                                 "dpt.fonts.DINOT_CondBlack",
                                                 centerx=Game.WINDOW_WIDTH // 2),
                          "el_button_name": Button(math.floor(1185 * Game.DISPLAY_RATIO),
-                                                  math.floor(765 * Game.DISPLAY_RATIO),
+                                                  math.floor(755 * Game.DISPLAY_RATIO),
                                                   math.floor(69 * Game.DISPLAY_RATIO),
                                                   math.floor(52 * Game.DISPLAY_RATIO),
                                                   RessourceLoader.get("dpt.images.gui.buttons.BTN_PLAIN_2"),
