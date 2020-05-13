@@ -19,6 +19,7 @@ class GhostSpriteLight(pygame.sprite.Sprite):
     height = math.floor(76.8 * Game.DISPLAY_RATIO)
     offset_x = (Game.TILESIZE - width) // 2
     offset_y = (Game.TILESIZE - height) // 2
+    mask = "dpt.images.character.ghosts.mask"
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
@@ -43,6 +44,8 @@ class GhostSpriteLight(pygame.sprite.Sprite):
         self.maxvelocity = 2
         self.big = False
         self.distance = 0
+        self.mask = pygame.mask.from_surface(pygame.transform.scale(RessourceLoader.get(GhostSpriteLight.mask),
+                                                                    (self.width, self.height)))
 
     def update(self):
         if not TileEditor.is_editing:

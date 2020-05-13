@@ -16,12 +16,14 @@ class RobotSpriteLight(pygame.sprite.Sprite):
     height = math.floor(90 * Game.DISPLAY_RATIO)
     offset_x = (Game.TILESIZE - width) // 2
     offset_y = 0
-    mask = "dpt.images.characters.player.mask"
+    mask = "dpt.images.characters.robots.mask"
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
         pygame.sprite.Sprite.__init__(self, TileManager.enemy_group, TileManager.entity_group)  # Sprite's constructor called
         self.image = RessourceLoader.get(self.texture)
+        self.anim = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in RessourceLoader.get_multiple(self.textures)]
+        self.animReverse = [pygame.transform.flip(i, True, False) for i in self.anim]
         self.xvel = 0
         self.yvel = 0
         self.left = False
@@ -51,6 +53,7 @@ class RobotSpriteLight(pygame.sprite.Sprite):
         self.maxvelocity = 2
         self.gravityModifier = 0
         self.big = False
+        self.moveCount = 0
 
     def update(self):
         if not TileEditor.is_editing:
@@ -140,8 +143,13 @@ class RobotSpriteLight(pygame.sprite.Sprite):
             self.check_void()
 
     def animation(self):
-        # pygame.draw.rect(Game.surface, (255, 0, 0), self.rect, 2)
-        pass
+        if self.moveCount >= 24:
+            self.moveCount = 0
+        if self.left:
+            self.image = self.anim[self.moveCount // 8]
+        elif self.right:
+            self.image = self.animReverse[self.moveCount // 8]
+        self.moveCount += 1
 
     def check_void(self):
         if self.rect.top > 2000:
