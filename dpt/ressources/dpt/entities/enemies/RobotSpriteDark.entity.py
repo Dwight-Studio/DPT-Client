@@ -9,13 +9,13 @@ from dpt.engine.tileManager import TileManager
 from dpt.game import Game
 
 
-class RobotSpriteLight(pygame.sprite.Sprite):
+class RobotSpriteDark(pygame.sprite.Sprite):
     texture = "dpt.images.characters.robots.Robot_Dark_1"
     textures = "dpt.images.characters.robots.Robot_Dark*"
     width = math.floor(60 * Game.DISPLAY_RATIO)
     height = math.floor(90 * Game.DISPLAY_RATIO)
     offset_x = (Game.TILESIZE - width) // 2
-    offset_y = 0
+    offset_y = (Game.TILESIZE - height) // 2
     mask = "dpt.images.characters.robots.mask"
 
     def __init__(self, x, y):
@@ -30,7 +30,7 @@ class RobotSpriteLight(pygame.sprite.Sprite):
         self.right = True
         self.standing = False
         self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
-        self.mask = pygame.mask.from_surface(pygame.transform.scale(RessourceLoader.get(RobotSpriteLight.mask),
+        self.mask = pygame.mask.from_surface(pygame.transform.scale(RessourceLoader.get(RobotSpriteDark.mask),
                                                                     (self.width, self.height)))
         self.CONSTHEIGT = self.height
         self.CONSTWIDTH = self.width
