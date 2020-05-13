@@ -25,6 +25,7 @@ class FileManager:
                 with open(wfile, "w") as fw:
                     data2 = json.dumps(data, indent=4)
                     fw.write(data2)
+                RessourceLoader.RESSOURCES["user.levels." + str(os.path.basename(rfile)).split(".")[0]] = wfile
                 RessourceLoader.add_pending("user.levels." + str(os.path.basename(rfile)).split(".")[0])
                 RessourceLoader.load()
                 TileManager.load_level("user.levels." + str(os.path.basename(rfile)).split(".")[0])
@@ -45,7 +46,7 @@ class FileManager:
         root.withdraw()
 
         file = filedialog.asksaveasfilename(parent=root, title="Sauvegarder un niveau", filetypes=[("Fichier de niveau DPT", "*.level.json")], defaultextension=".level.json", initialdir=cls.defaultDir)
-
+        print(file)
         try:
             with open(file, "w") as f:
                 data = json.dumps(level, indent=4)

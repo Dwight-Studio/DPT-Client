@@ -312,7 +312,6 @@ class Game(object):
                     Game.surface.blit(sc, (0, 0))
 
                 Game.display_debug_info()
-                Game.draw_cursor()
                 Game.window.update()
 
                 Game.clock.tick(60)

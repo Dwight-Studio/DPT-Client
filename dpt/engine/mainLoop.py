@@ -122,6 +122,9 @@ def level_loop():
     if not TileEditor.is_editing:
         TileManager.heart_group.update()
 
+    if TileEditor.enabled_editor:
+        Game.draw_cursor()
+
 
 def pause_loop():
     """Boucle de pause"""
@@ -185,6 +188,7 @@ def pause_loop():
                 Game.run = False
 
     WebCommunication.update()
+    Game.draw_cursor()
 
 
 def main_menu_loop():
@@ -231,6 +235,7 @@ def main_menu_loop():
     Game.surface.blit(image, rect)
 
     menu.main_loop()
+    Game.draw_cursor()
 
 
 def settings_menu_loop():
@@ -335,6 +340,8 @@ def settings_menu_loop():
     pygame.draw.rect(Game.surface, (255, 255, 255, 2), rect1)
     pygame.draw.rect(Game.surface, (0, 0, 0), rect2, width=3)
 
+    Game.draw_cursor()
+
 
 def start_level_loop():
     """Boucle de début de niveau"""
@@ -362,6 +369,7 @@ def start_level_loop():
     menu.main_loop()
 
     WebCommunication.update()
+    Game.draw_cursor()
 
 
 def loading_loop(kill=False):
@@ -394,7 +402,6 @@ def loading_loop(kill=False):
     WebCommunication.update()
 
     Game.display_debug_info()
-    Game.draw_cursor()
     Game.window.update()
 
     if kill:
@@ -461,6 +468,7 @@ def game_over_loop():
                 Game.run = False
 
     WebCommunication.update()
+    Game.draw_cursor()
 
 
 def end_level_loop():
@@ -632,6 +640,8 @@ def end_level_loop():
             Game.gui["star_2"].update()
             Game.gui["star_1"].update()
 
+    Game.draw_cursor()
+
 
 def level_selector_loop():
     """Boucle de selection des niveaux"""
@@ -647,6 +657,7 @@ def level_selector_loop():
                 return
 
     menu.main_loop()
+    Game.draw_cursor()
 
 
 def level_selector_detail_loop():
@@ -690,3 +701,4 @@ def level_selector_detail_loop():
                 return
 
     menu.main_loop()
+    Game.draw_cursor()

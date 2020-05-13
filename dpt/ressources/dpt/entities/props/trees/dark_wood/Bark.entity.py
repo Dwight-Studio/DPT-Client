@@ -5,11 +5,10 @@ from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 
 
-class Trunk(pygame.sprite.Sprite):
-    texture = "dpt.images.environment.plants.trees.Tree_LightWood_Trunk"
+class Bark(pygame.sprite.Sprite):
+    texture = "dpt.images.environment.plants.trees.Tree_DarkWood_Bark"
     sounds = "dpt.sounds.sfx.sfx_stone"
-    width = Game.TILESIZE
-    height = math.floor(208 / 374 * Game.TILESIZE)
+    width = height = math.floor(208 / 374 * Game.TILESIZE)
     offset_x = -(Game.TILESIZE // 2)
     offset_y = -(Game.TILESIZE // 2)
     customPlacement = True

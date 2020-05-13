@@ -10,9 +10,8 @@ class Bush1(pygame.sprite.Sprite):
     sounds = "dpt.sounds.sfx.sfx_stone"
     width = Game.TILESIZE
     height = Game.TILESIZE
-    offset_x = -(Game.TILESIZE // 2)
-    offset_y = -(Game.TILESIZE // 2)
-    customPlacement = True
+    offset_x = 0
+    offset_y = 0
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager

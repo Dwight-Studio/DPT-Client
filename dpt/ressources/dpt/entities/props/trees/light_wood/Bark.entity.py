@@ -6,7 +6,7 @@ from dpt.game import Game
 
 
 class Bark(pygame.sprite.Sprite):
-    texture = "dpt.images.environment.plants.trees.Tree_DarkWood_Bark"
+    texture = "dpt.images.environment.plants.trees.Tree_LightWood_Bark"
     sounds = "dpt.sounds.sfx.sfx_stone"
     width = height = math.floor(208 / 374 * Game.TILESIZE)
     offset_x = -(Game.TILESIZE // 2)

@@ -102,6 +102,8 @@ class Timer:
             if sprite is not None:
                 sprite.kill()
                 sprite = None
+        pygame.time.set_timer(Game.TIMER_EVENT, 0)
+        pygame.time.set_timer(Game.TIMER_FINISHED_EVENT, 0)
 
     @classmethod
     def main_loop(cls):

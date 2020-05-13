@@ -6,7 +6,7 @@ from dpt.game import Game
 
 
 class Trunk(pygame.sprite.Sprite):
-    texture = "dpt.images.environment.plants.trees.Tree_LightWood_Trunk"
+    texture = "dpt.images.environment.plants.trees.Tree_DarkWood_Trunk"
     sounds = "dpt.sounds.sfx.sfx_stone"
     width = Game.TILESIZE
     height = math.floor(208 / 374 * Game.TILESIZE)
