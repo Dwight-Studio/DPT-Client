@@ -12,9 +12,9 @@ def pythagore(xa, ya, xb, yb):
     return math.sqrt((xb-xa)**2 + (yb-ya)**2)
 
 
-class GhostSprite(pygame.sprite.Sprite):
-    texture = "dpt.images.characters.ghosts.Ghost_Light_1"
-    textures = "dpt.images.characters.ghosts.Ghost_Light*"
+class GhostSpriteDark(pygame.sprite.Sprite):
+    texture = "dpt.images.characters.ghosts.Ghost_Dark_1"
+    textures = "dpt.images.characters.ghosts.Ghost_Dark*"
     width = math.floor(60 * Game.DISPLAY_RATIO)
     height = math.floor(90 * Game.DISPLAY_RATIO)
     offset_x = (Game.TILESIZE - width) // 2
