@@ -17,6 +17,9 @@ class SpikeyWheel(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self, TileManager.entity_group, TileManager.deadly_object_group, TileManager.interactible_blocks_group)
         self.image = RessourceLoader.get(self.texture)
         self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
+        self.images = []
+        for rotate in range(0, 360, 5):
+            self.images.append(pygame.transform.rotate(self.image, rotate))
         self.rect = self.image.get_rect()
         self.rect.x = x + self.offset_x
         self.rect.y = y + self.offset_y
@@ -35,12 +38,11 @@ class SpikeyWheel(pygame.sprite.Sprite):
         if self.active:
             if self.i == 2:
                 self.i = 0
-                self.image = RessourceLoader.get(self.texture)
-                self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
-                self.image = pygame.transform.rotate(self.image, self.rotate)
-                if self.rotate == 360:
+                if self.rotate == 72:
                     self.rotate = 0
-                self.rotate += 5
+                else:
+                    self.image = self.images[self.rotate]
+                    self.rotate += 1
                 self.rect = self.image.get_rect(center=self.rect.center)
             else:
                 self.i += 1

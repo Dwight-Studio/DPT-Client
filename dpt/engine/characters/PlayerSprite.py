@@ -339,7 +339,7 @@ class PlayerSprite(pygame.sprite.Sprite):
     def enemies_collision(self, yVelDelta, enemies):
         """Gère les collisions avec des ennemis, permet de les tuer"""
         for i in enemies:
-            if pygame.sprite.collide_rect(self, i):
+            if pygame.sprite.collide_mask(self, i):
                 if yVelDelta < 0 and not EffectsManagement.dico_current_effects["monsterimmortal"]:
                     if self.damaged and self.imunityTime < 150:
                         i.kill()
