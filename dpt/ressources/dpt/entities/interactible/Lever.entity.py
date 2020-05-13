@@ -123,6 +123,6 @@ class Lever(pygame.sprite.Sprite):
                         pygame.draw.line(Game.surface, (0, 0, 0), (self.x + TileManager.camera.last_x, self.y + 30), tuple(map(t, sprite.split(", "))))
                     else:
                         def t(x):
-                            return (int(x) * Game.TILESIZE) + TileManager.camera.last_x
+                            return (int(x) * Game.TILESIZE) + TileManager.camera.last_x + (Game.TILESIZE // 2)
 
                         pygame.draw.line(Game.surface, (0, 0, 0), (self.x + TileManager.camera.last_x, self.y + 30), tuple(map(t, sprite.split(", "))))
