@@ -19,7 +19,7 @@ class GhostSpriteDark(pygame.sprite.Sprite):
     height = math.floor(76.8 * Game.DISPLAY_RATIO)
     offset_x = (Game.TILESIZE - width) // 2
     offset_y = (Game.TILESIZE - height) // 2
-    mask = "dpt.images.character.ghosts.mask"
+    mask = "dpt.images.characters.ghosts.mask"
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
