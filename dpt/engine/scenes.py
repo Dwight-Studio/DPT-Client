@@ -977,10 +977,8 @@ class Scenes:
             level_image = RessourceLoader.get(level["infos"]["image"])
         except UnreachableRessourceError:
             level_image = RessourceLoader.get("dpt.images.not_found")
-            raise
         except KeyError:
             level_image = RessourceLoader.get("dpt.images.not_found")
-            raise
 
         try:
             level_scores_date = ["––/––/––––" for i in range(5)]

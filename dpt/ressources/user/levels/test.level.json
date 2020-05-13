@@ -1,0 +1,63 @@
+{
+  "tiles": {
+    "8, 8": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "8, 9": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "8, 10": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "10, 10": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "12, 10": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "9, 10": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "11, 10": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "14, 10": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "15, 10": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "13, 10": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "14, 9": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "14, 8": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "14, 7": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "6, 10": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "7, 10": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "5, 10": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "8, 7": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "5, 9": {
+      "class": "dpt.entities.flags.flaggreen"
+    },
+    "10, 9": {
+      "class": "dpt.entities.enemies.robotspritelight"
+    },
+    "0, 11": {}
+  },
+  "infos": {}
+}

@@ -138,11 +138,18 @@ class RobotSpriteLight(pygame.sprite.Sprite):
             self.rect.left += math.floor(self.xvel)
             self.rect.top -= math.floor(self.yvel)
 
-            self.animation()
-
             if self.lastx == self.rect.x:
                 self.left = not self.left
                 self.right = not self.right
+
+                if self.left:
+                    self.rect.x -= math.floor(31 * Game.DISPLAY_RATIO)
+                    self.xvel -= 1 * Game.DISPLAY_RATIO
+                elif self.right:
+                    self.rect.x += math.floor(31 * Game.DISPLAY_RATIO)
+                    self.xvel += 1 * Game.DISPLAY_RATIO
+
+            self.animation()
 
             self.check_void()
 
