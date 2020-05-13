@@ -131,19 +131,15 @@ class TileManager:
                             obj = RessourceLoader.get(level["tiles"][keys]["class"])
                             RessourceLoader.add_pending(obj.texture)
                             if hasattr(obj, "dead_texture"):
-                                RessourceLoader.add_pending(obj.mask)
+                                RessourceLoader.add_pending(obj.dead_texture)
                             if hasattr(obj, "textures"):
                                 RessourceLoader.add_pending(obj.textures)
                             if hasattr(obj, "mask"):
                                 RessourceLoader.add_pending(obj.mask)
                             if hasattr(obj, "dead_mask"):
-                                RessourceLoader.add_pending(obj.mask)
+                                RessourceLoader.add_pending(obj.dead_mask)
                             if hasattr(obj, "sounds"):
-                                if isinstance(obj.sounds, list):
-                                    for s in obj.sounds:
-                                        RessourceLoader.add_pending(s)
-                                else:
-                                    RessourceLoader.add_pending(obj.sounds)
+                                RessourceLoader.add_pending(obj.sounds)
                     except UnreachableRessourceError:
                         cls.log.warning("Invalid class name : " + level["tiles"][keys]["class"] + " for tile : " + keys)
 

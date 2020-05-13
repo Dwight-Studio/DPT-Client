@@ -294,7 +294,14 @@ class RessourceLoader:
         """
         try:
             rlist = []
-            entries = cls.select_entries(path.lower())
+
+            if isinstance(path, list):
+                for i in range(len(path)):
+                    path[i] = path[i].lower()
+            else:
+                path = path.lower()
+
+            entries = cls.select_entries(path)
             if len(entries) == 0:
                 cls.logger.warning("The requested selector (" + path + ") did not find any entries, it may cause exceptions but ignoring")
             for path in entries:

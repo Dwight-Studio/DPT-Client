@@ -87,16 +87,6 @@ def level_loop():
         elif event.type == Game.TIMER_FINISHED_EVENT:
             Scenes.game_over()
 
-    if not Game.player_sprite.alive and not TileEditor.is_editing:
-        TileEditor.is_editing = True
-        for clouds in TileManager.clouds_group:
-            clouds.kill()
-        TileEditor.panel_open = False
-        Checkbox.checkbox_group.empty()
-        TileManager.clouds_group.empty()
-        TileManager.load_level(TileManager.levelName)
-        return
-
     do_synch_anims()
     TileManager.out_of_window()
     TileManager.camera.update(Game.player_sprite)

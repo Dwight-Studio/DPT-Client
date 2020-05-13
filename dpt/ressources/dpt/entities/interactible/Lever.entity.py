@@ -7,7 +7,8 @@ from dpt.game import Game
 
 class Lever(pygame.sprite.Sprite):
     texture = "dpt.images.environment.lever.Lever_Left"
-    sounds = "dpt.sounds.sfx.sfx_stone"
+    textures = "dpt.images.environment.lever.Lever_*"
+    sounds = ["dpt.sounds.sfx.sfx_stone", "dpt.sounds.sfx.metal_button_press"]
     width = height = Game.TILESIZE
     offset_x = -(Game.TILESIZE // 2)
     offset_y = -(Game.TILESIZE // 2)
@@ -35,7 +36,7 @@ class Lever(pygame.sprite.Sprite):
             self.attributing = True
             TileEditor.attributing = True
         if not TileManager.is_loading_level:
-            self.sound = RessourceLoader.get(self.sounds)
+            self.sound = RessourceLoader.get(self.sounds[0])
             self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
             self.sound.play()
 
@@ -114,16 +115,18 @@ class Lever(pygame.sprite.Sprite):
                         for interact in TileManager.interactible_blocks_group:
                             positions = [tuple(map(int, i.split(", "))) for i in data["assignement"]]
                             for pos in positions:
-                                try:
-                                    if hasattr(interact, "x") and hasattr(interact, "y"):
-                                        if interact.x == pos[0] and interact.y == pos[1]:
-                                            interact.activate()
-                                    elif interact.rect.x - TileManager.camera.last_x == pos[0] and interact.rect.y == pos[1]:
+                                if hasattr(interact, "x") and hasattr(interact, "y"):
+                                    if interact.x == pos[0] and interact.y == pos[1]:
                                         interact.activate()
-                                    elif (interact.rect.x - TileManager.camera.last_x) // Game.TILESIZE == pos[0] and interact.rect.y // Game.TILESIZE == pos[1]:
-                                        interact.activate()
-                                except AttributeError:
-                                    continue
+                                elif interact.rect.x - TileManager.camera.last_x == pos[0] and interact.rect.y == pos[1]:
+                                    interact.activate()
+                                if isinstance(interact, RessourceLoader.get("dpt.blocks.box.BoxBlue")):
+                                    print(interact.rect.x, " ", interact.rect.x - TileManager.camera.last_x, " ", Game.TILESIZE, pos[0])
+                                elif (interact.rect.x - TileManager.camera.last_x) // Game.TILESIZE == pos[0] and interact.rect.y // Game.TILESIZE == pos[1]:
+                                    interact.activate()
+                    sound = RessourceLoader.get_multiple(self.sounds[1])[0]
+                    sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
+                    sound.play()
                 elif self.right:
                     self.right = False
                     self.left = True
@@ -138,15 +141,15 @@ class Lever(pygame.sprite.Sprite):
                         for interact in TileManager.interactible_blocks_group:
                             positions = [tuple(map(int, i.split(", "))) for i in data["assignement"]]
                             for pos in positions:
-                                try:
-                                    if hasattr(interact, "x") and hasattr(interact, "y"):
-                                        if interact.x == pos[0] and interact.y == pos[1]:
-                                            interact.deactivate()
-                                    elif interact.rect.x - TileManager.camera.last_x == pos[0] and interact.rect.y == pos[1]:
+                                if hasattr(interact, "x") and hasattr(interact, "y"):
+                                    if interact.x == pos[0] and interact.y == pos[1]:
                                         interact.deactivate()
-                                    elif (interact.rect.x - TileManager.camera.last_x) // Game.TILESIZE == pos[0] and interact.rect.y // Game.TILESIZE == pos[1]:
-                                        interact.deactivate()
-                                except AttributeError:
-                                    continue
+                                elif interact.rect.x - TileManager.camera.last_x == pos[0] and interact.rect.y == pos[1]:
+                                    interact.deactivate()
+                                elif (interact.rect.x - TileManager.camera.last_x) // Game.TILESIZE == pos[0] and interact.rect.y // Game.TILESIZE == pos[1]:
+                                    interact.deactivate()
+                    sound = RessourceLoader.get_multiple(self.sounds[1])[1]
+                    sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
+                    sound.play()
             elif self.clicked and not keys[pygame.K_e]:
                 self.clicked = False

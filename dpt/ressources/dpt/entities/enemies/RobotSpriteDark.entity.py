@@ -14,6 +14,7 @@ class RobotSpriteDark(pygame.sprite.Sprite):
     texture = "dpt.images.characters.robots.Robot_Dark_0"
     dead_texture = "dpt.images.characters.robots.Dead_Robot_Dark"
     textures = "dpt.images.characters.robots.Robot_Dark*"
+    sounds = ["dpt.sounds.sfx.sfx_robot_walk_*", "dpt.sounds.sfx.metal_interaction2"]
     width = math.floor(90 * Game.DISPLAY_RATIO)
     height = math.floor(135 * Game.DISPLAY_RATIO)
     offset_x = 0
@@ -165,6 +166,11 @@ class RobotSpriteDark(pygame.sprite.Sprite):
         elif self.right:
             self.mask = self.maskReverse
             self.image = self.animReverse[self.moveCount // 8]
+
+        if self.moveCount % 24 == 0:
+            sound = RessourceLoader.get_multiple(self.sounds[0])[self.moveCount // 24]
+            sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
+            sound.play()
         self.moveCount += 1
 
     def check_void(self):
@@ -174,6 +180,9 @@ class RobotSpriteDark(pygame.sprite.Sprite):
     def kill(self):
         if not TileEditor.is_editing and not TileManager.is_loading_level:
             DeadBody(self.rect.x, self.rect.y, self.rect.height, math.floor(self.height / 328 * 181), RobotSpriteDark.dead_texture, RobotSpriteDark.dead_mask)
+            sound = RessourceLoader.get(self.sounds[1])
+            sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
+            sound.play()
         pygame.sprite.Sprite.kill(self)
 
     def check_fall(self, platforms):
