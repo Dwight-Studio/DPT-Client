@@ -30,8 +30,12 @@ class RobotSpriteLight(pygame.sprite.Sprite):
         self.right = True
         self.standing = False
         self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
-        self.mask = pygame.mask.from_surface(pygame.transform.scale(RessourceLoader.get(RobotSpriteLight.mask),
-                                                                    (self.width, self.height)))
+        self.maskSurface = pygame.transform.scale(RessourceLoader.get(RobotSpriteLight.mask),
+                                                  (self.width, self.height))
+        self.mask = pygame.mask.from_surface(self.maskSurface)
+        self.CONSTMASK = self.mask
+        self.maskSurfaceReverse = pygame.transform.flip(self.maskSurface, True, False)
+        self.maskReverse = pygame.mask.from_surface(self.maskSurfaceReverse)
         self.CONSTHEIGT = self.height
         self.CONSTWIDTH = self.width
         self.rect = self.image.get_rect()
@@ -146,8 +150,10 @@ class RobotSpriteLight(pygame.sprite.Sprite):
         if self.moveCount >= 24:
             self.moveCount = 0
         if self.left:
+            self.mask = self.CONSTMASK
             self.image = self.anim[self.moveCount // 8]
         elif self.right:
+            self.mask = self.maskReverse
             self.image = self.animReverse[self.moveCount // 8]
         self.moveCount += 1
 
