@@ -5,6 +5,7 @@ import pygame
 from dpt.engine.gui.editor.tileEditor import TileEditor
 from dpt.engine.loader import RessourceLoader
 from dpt.engine.effectsManagement import EffectsManagement
+from dpt.engine.tileManager import TileManager
 from dpt.game import Game
 
 
@@ -15,6 +16,7 @@ class BeeSprite(pygame.sprite.Sprite):
     height = math.floor(72 * Game.DISPLAY_RATIO)
     offset_x = (Game.TILESIZE - width) // 2
     offset_y = (Game.TILESIZE - height) // 2
+    mask = "dpt.images.characters.animals.beeMask"
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
@@ -27,6 +29,9 @@ class BeeSprite(pygame.sprite.Sprite):
         self.left = False
         self.right = True
         self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
+        self.maskSurface = pygame.transform.scale(RessourceLoader.get(BeeSprite.mask),
+                                                  (self.width, self.height))
+        self.mask = pygame.mask.from_surface(self.maskSurface)
         self.CONSTHEIGT = self.height
         self.CONSTWIDTH = self.width
         self.rect = self.image.get_rect()
@@ -88,9 +93,15 @@ class BeeSprite(pygame.sprite.Sprite):
                 else:
                     self.xvel = 0
 
-            self.rect.left += math.floor(self.xvel)
+            self.lastx = self.rect.x
+
+            self.yvel = math.floor(math.cos(self.cosx) * 20 * Game.DISPLAY_RATIO) - math.floor(math.cos(self.cosx - 0.05) * 20 * Game.DISPLAY_RATIO)
+            self.maskcollide()
+
             self.distance += abs(self.xvel)
-            self.rect.top += math.floor(math.cos(self.cosx) * 20 * Game.DISPLAY_RATIO) - math.floor(math.cos(self.cosx - 0.05) * 20 * Game.DISPLAY_RATIO)
+            self.rect.top += self.yvel
+            self.rect.left += math.floor(self.xvel)
+
             self.cosx += 0.05
             if self.cosx >= math.pi * 2:
                 self.cosx = 0
@@ -98,10 +109,17 @@ class BeeSprite(pygame.sprite.Sprite):
 
             self.animation()
 
+            if self.lastx == self.rect.x:
+                self.left = not self.left
+                self.right = not self.right
+                self.distance = 1200 - self.distance
+
             if self.distance > 1200 * Game.DISPLAY_RATIO:
                 self.distance = 0
                 self.left = not self.left
                 self.right = not self.right
+        else:
+            self.preview()
 
     def animation(self):
         if self.moveCount >= 32:
@@ -111,3 +129,67 @@ class BeeSprite(pygame.sprite.Sprite):
         elif self.right:
             self.image = self.animReverse[self.moveCount // 8]
         self.moveCount += 1
+
+    def preview(self):
+        self.distance = 0
+        self.cosx = 0
+        x = self.rect[0] + BeeSprite.width // 2
+        y = self.rect[1] + BeeSprite.height // 2
+        while self.distance < 1200 * Game.DISPLAY_RATIO:
+            if self.xvel < self.maxvelocity * Game.DISPLAY_RATIO:
+                self.xvel += (self.maxvelocity / 2) * Game.DISPLAY_RATIO
+            self.distance += abs(self.xvel)
+            y += math.floor(math.cos(self.cosx) * 20 * Game.DISPLAY_RATIO) - math.floor(math.cos(self.cosx - 0.05) * 20 * Game.DISPLAY_RATIO)
+            x += math.floor(self.xvel)
+            self.cosx += 0.05
+            if self.cosx >= math.pi * 2:
+                self.cosx = 0
+                y = self.horizontalStart + BeeSprite.height // 2
+            pygame.draw.rect(Game.surface, (193, 39, 45), (x, y, 5, 5))
+
+    def maskcollide(self):
+        for i in TileManager.environment_group:
+            if i.rect.colliderect(Game.display_rect):
+                rx = i.rect.x - (self.rect.x + math.floor(self.xvel))
+                ry = i.rect.y - (self.rect.y - math.floor(self.yvel))
+
+                if self.mask.overlap(i.mask, (rx, ry)):
+                    dx = 0
+                    dy = 0
+
+                    if math.floor(self.yvel) == 0:
+                        mask = self.mask.overlap_mask(i.mask, (rx, ry))
+                        b_rects = mask.get_bounding_rects()
+                        for rect in b_rects:
+                            if -8 * Game.DISPLAY_RATIO <= rect.height <= 8 * Game.DISPLAY_RATIO:
+                                dy = rect.height
+                                self.yvel = 0
+                            break
+
+                    crx = i.rect.x - self.rect.x
+                    mask = self.mask.overlap_mask(i.mask, (crx, ry))
+                    b_rects = mask.get_bounding_rects()
+                    for rect in b_rects:
+                        if self.rect.y < i.rect.y:
+                            dy = rect.height + math.floor(self.yvel)
+                            self.yvel = 0
+                        elif self.rect.y > i.rect.y:
+                            dy = - rect.height + math.floor(self.yvel)
+                            self.yvel = 0
+                        break
+
+                    self.rect.y -= dy
+
+                    cry = (i.rect.y - self.rect.y)
+                    mask = self.mask.overlap_mask(i.mask, (rx, cry))
+                    b_rects = mask.get_bounding_rects()
+                    for rect in b_rects:
+                        if self.rect.x > i.rect.x:
+                            dx = rect.width + math.floor(self.xvel)
+                            self.xvel = 0
+                        elif self.rect.x < i.rect.x:
+                            dx = - rect.width + math.floor(self.xvel)
+                            self.xvel = 0
+                        break
+
+                    self.rect.x += dx
