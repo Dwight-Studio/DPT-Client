@@ -390,16 +390,5 @@ class PlayerSprite(pygame.sprite.Sprite):
             del self
 
     def kill(self):
-        from dpt.engine.gui.editor.tileEditor import TileEditor
-        from dpt.engine.gui.menu import Checkbox
-
-        if TileEditor.enabled_editor and not TileEditor.is_editing:
-            TileEditor.is_editing = True
-            for clouds in TileManager.clouds_group:
-                clouds.kill()
-            TileEditor.panel_open = False
-            Checkbox.checkbox_group.empty()
-            TileManager.clouds_group.empty()
-            TileManager.load_level(TileManager.levelName)
-
+        pygame.event.post(pygame.event.Event(Game.PLAYER_DEATH_EVENT, {}))
         pygame.sprite.Sprite.kill(self)

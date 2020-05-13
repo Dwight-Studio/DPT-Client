@@ -61,6 +61,16 @@ def level_loop():
             TileEditor.panel_open = False
             TileEditor.update()
             Scenes.pause()
+        elif event.type == Game.PLAYER_DEATH_EVENT:
+            if TileEditor.enabled_editor and not TileEditor.is_editing:
+                TileEditor.is_editing = True
+                for clouds in TileManager.clouds_group:
+                    clouds.kill()
+                TileEditor.panel_open = False
+                Checkbox.checkbox_group.empty()
+                TileManager.clouds_group.empty()
+                TileManager.load_level(TileManager.levelName)
+            return
         elif event.type == Game.BUTTON_EVENT and event.button == Game.gui["editor_button"]:
             TileEditor.is_editing = not TileEditor.is_editing
             if TileEditor.is_editing:

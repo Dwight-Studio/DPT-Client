@@ -59,17 +59,17 @@ class Lever(pygame.sprite.Sprite):
                 for sprites in TileManager.interactible_blocks_group:
                     if hasattr(sprites, "customPlacement"):
                         if hasattr(sprites, "x") and hasattr(sprites, "y"):
-                            if sprites.x + sprites.offset_x <= mousePos[0] <= sprites.x + sprites.offset_x + sprites.width and sprites.y + sprites.offset_y <= mousePos[1] <= sprites.y + sprites.offset_y:
+                            if sprites.x + sprites.offset_x <= mousePos[0] <= sprites.x + sprites.offset_x + sprites.width and sprites.y + sprites.offset_y <= mousePos[1] <= sprites.y + sprites.offset_y + sprites.height:
                                 if "assignement" not in TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]:
                                     TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"] = []
                                 TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"].append(str(sprites.x) + ", " + str(sprites.y))
                         else:
-                            if sprites.rect.x <= mousePos[0] <= sprites.rect.x + sprites.width and sprites.rect.y <= mousePos[1] <= sprites.y:
+                            if sprites.rect.x <= mousePos[0] <= sprites.rect.x + sprites.width and sprites.rect.y <= mousePos[1] <= sprites.rect.y + sprites.height:
                                 if "assignement" not in TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]:
                                     TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"] = []
                                 TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"].append(str(sprites.rect.x - sprites.offset_x) + ", " + str(sprites.rect.y - sprites.offset_y))
                     else:
-                        if sprites.rect.x - TileManager.camera.last_x <= mousePos[0] - TileManager.camera.last_x <= sprites.rect.x - TileManager.camera.last_x + sprites.width and sprites.rect.y <= mousePos[1] <= sprites.rect.y + sprites.width:
+                        if sprites.rect.x - TileManager.camera.last_x <= mousePos[0] - TileManager.camera.last_x <= sprites.rect.x - TileManager.camera.last_x + sprites.width and sprites.rect.y <= mousePos[1] <= sprites.rect.y + sprites.height:
                             if "assignement" not in TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]:
                                 TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"] = []
                             TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"].append(str((sprites.rect.x - TileManager.camera.last_x) // Game.TILESIZE) + ", " + str(sprites.rect.y // Game.TILESIZE))
@@ -117,13 +117,14 @@ class Lever(pygame.sprite.Sprite):
                             for pos in positions:
                                 if hasattr(interact, "x") and hasattr(interact, "y"):
                                     if interact.x == pos[0] and interact.y == pos[1]:
+                                        if hasattr(interact, "activate"):
+                                            interact.activate()
+                                if interact.rect.x == pos[0] and interact.rect.y == pos[1]:
+                                    if hasattr(interact, "activate"):
                                         interact.activate()
-                                elif interact.rect.x - TileManager.camera.last_x == pos[0] and interact.rect.y == pos[1]:
-                                    interact.activate()
-                                if isinstance(interact, RessourceLoader.get("dpt.blocks.box.BoxBlue")):
-                                    print(interact.rect.x, " ", interact.rect.x - TileManager.camera.last_x, " ", Game.TILESIZE, pos[0])
-                                elif (interact.rect.x - TileManager.camera.last_x) // Game.TILESIZE == pos[0] and interact.rect.y // Game.TILESIZE == pos[1]:
-                                    interact.activate()
+                                if interact.rect.x // Game.TILESIZE == pos[0] and interact.rect.y // Game.TILESIZE == pos[1]:
+                                    if hasattr(interact, "activate"):
+                                        interact.activate()
                     sound = RessourceLoader.get_multiple(self.sounds[1])[0]
                     sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
                     sound.play()
@@ -143,11 +144,14 @@ class Lever(pygame.sprite.Sprite):
                             for pos in positions:
                                 if hasattr(interact, "x") and hasattr(interact, "y"):
                                     if interact.x == pos[0] and interact.y == pos[1]:
+                                        if hasattr(interact, "deactivate"):
+                                            interact.deactivate()
+                                if interact.rect.x == pos[0] and interact.rect.y == pos[1]:
+                                    if hasattr(interact, "deactivate"):
                                         interact.deactivate()
-                                elif interact.rect.x - TileManager.camera.last_x == pos[0] and interact.rect.y == pos[1]:
-                                    interact.deactivate()
-                                elif (interact.rect.x - TileManager.camera.last_x) // Game.TILESIZE == pos[0] and interact.rect.y // Game.TILESIZE == pos[1]:
-                                    interact.deactivate()
+                                if interact.rect.x // Game.TILESIZE == pos[0] and interact.rect.y // Game.TILESIZE == pos[1]:
+                                    if hasattr(interact, "deactivate"):
+                                        interact.deactivate()
                     sound = RessourceLoader.get_multiple(self.sounds[1])[1]
                     sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
                     sound.play()

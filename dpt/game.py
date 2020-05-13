@@ -103,6 +103,7 @@ class Game(object):
     WAIT_BETWEEN_VOTE_EVENT = pygame.event.custom_type()
     WAIT_BETWEEN_RECONNECT_EVENT = pygame.event.custom_type()
     DISCONNECTED_EVENT = pygame.event.custom_type()
+    PLAYER_DEATH_EVENT = pygame.event.custom_type()
 
     # Variable privée pour l'affichage des infos de debug
     _debug_infos = None
