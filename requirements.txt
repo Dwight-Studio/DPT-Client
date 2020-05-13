@@ -1,0 +1,4 @@
+pygame~=2.0.0.dev6
+future~=0.18.2
+psutil~=5.7.0
+requests~=2.22.0

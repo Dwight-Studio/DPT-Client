@@ -71,6 +71,6 @@ class Spike(pygame.sprite.Sprite):
             self.rect = self.image.get_rect()
             self.rect.x = self.x + self.offset_x
             self.rect.y = self.y + self.offset_y
-            self.i -= 1
-            if self.i == -len(self.anim_texture):
+            self.i += 1
+            if self.i == len(self.anim_texture):
                 self.done = True
