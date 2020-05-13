@@ -48,5 +48,5 @@ class SpikeyWheel(pygame.sprite.Sprite):
     def activate(self):
         self.active = False
 
-    def desactivate(self):
+    def deactivate(self):
         self.active = True

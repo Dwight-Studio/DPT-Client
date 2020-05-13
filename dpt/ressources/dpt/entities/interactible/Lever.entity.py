@@ -1,4 +1,6 @@
 import pygame
+import math
+
 from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 
@@ -13,6 +15,7 @@ class Lever(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
+        from dpt.engine.gui.editor.tileEditor import TileEditor
         pygame.sprite.Sprite.__init__(self, TileManager.entity_group, TileManager.interactible_blocks_group)
         self.image = RessourceLoader.get(self.texture)
         self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
@@ -28,8 +31,10 @@ class Lever(pygame.sprite.Sprite):
         self.set = False
         if TileManager.is_loading_level:
             self.attributing = False
+            TileEditor.attributing = False
         else:
             self.attributing = True
+            TileEditor.attributing = True
         if not TileManager.is_loading_level:
             self.sound = RessourceLoader.get(self.sounds)
             self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
@@ -40,8 +45,8 @@ class Lever(pygame.sprite.Sprite):
         mousePos = pygame.mouse.get_pos()
         from dpt.engine.tileManager import TileManager
         from dpt.engine.gui.editor.tileEditor import TileEditor
-        if self.x + self.offset_x + TileManager.camera.last_x <= mousePos[0] <= self.x + self.offset_x + self.width and self.y + self.offset_y <= mousePos[1] <= self.y + self.offset_y + self.height:
-            if mouse_buttons[0] == 1 and not self.clicked and self.rect.left - 50 <= Game.player_sprite.rect.right <= self.rect.left + 300:
+        if self.x + self.offset_x <= mousePos[0] - TileManager.camera.last_x <= self.x + self.offset_x + self.width and self.y + self.offset_y <= mousePos[1] <= self.y + self.offset_y + self.height:
+            if mouse_buttons[0] == 1 and not self.clicked and self.rect.left - TileManager.camera.last_x - math.floor(50 * Game.DISPLAY_RATIO) <= Game.player_sprite.rect.right - TileManager.camera.last_x <= self.rect.left - TileManager.camera.last_x + math.floor(300 * Game.DISPLAY_RATIO):
                 self.clicked = True
                 if not TileEditor.is_editing:
                     if self.left:
@@ -59,11 +64,12 @@ class Lever(pygame.sprite.Sprite):
                                 positions = [tuple(map(int, i.split(", "))) for i in data["assignement"]]
                                 for pos in positions:
                                     try:
-                                        if interact.x == pos[0] and interact.y == pos[1]:
+                                        if hasattr(interact, "x") and hasattr(interact, "y"):
+                                            if interact.x == pos[0] and interact.y == pos[1]:
+                                                interact.activate()
+                                        elif interact.rect.x - TileManager.camera.last_x == pos[0] and interact.rect.y == pos[1]:
                                             interact.activate()
-                                        elif interact.rect.x == pos[0] and interact.rect.y == pos[1]:
-                                            interact.activate()
-                                        elif interact.rect.x == pos[0] * Game.TILESIZE and interact.rect.y == pos[1] * Game.TILESIZE:
+                                        elif (interact.rect.x - TileManager.camera.last_x) // Game.TILESIZE == pos[0] and interact.rect.y // Game.TILESIZE == pos[1]:
                                             interact.activate()
                                     except AttributeError:
                                         continue
@@ -82,16 +88,18 @@ class Lever(pygame.sprite.Sprite):
                                 positions = [tuple(map(int, i.split(", "))) for i in data["assignement"]]
                                 for pos in positions:
                                     try:
-                                        if interact.x == pos[0] and interact.y == pos[1]:
+                                        if hasattr(interact, "x") and hasattr(interact, "y"):
+                                            if interact.x == pos[0] and interact.y == pos[1]:
+                                                interact.deactivate()
+                                        elif interact.rect.x - TileManager.camera.last_x == pos[0] and interact.rect.y == pos[1]:
                                             interact.deactivate()
-                                        elif interact.rect.x == pos[0] and interact.rect.y == pos[1]:
-                                            interact.deactivate()
-                                        elif interact.rect.x == pos[0] * Game.TILESIZE and interact.rect.y == pos[1] * Game.TILESIZE:
+                                        elif (interact.rect.x - TileManager.camera.last_x) // Game.TILESIZE == pos[0] and interact.rect.y // Game.TILESIZE == pos[1]:
                                             interact.deactivate()
                                     except AttributeError:
                                         continue
                 elif TileEditor.is_editing:
                     self.attributing = True
+                    TileEditor.attributing = True
             elif mouse_buttons[0] != 1 and self.clicked:
                 self.clicked = False
         if TileEditor.is_editing and self.attributing:
@@ -99,15 +107,19 @@ class Lever(pygame.sprite.Sprite):
             if mouse_buttons[0] == 1 and not self.clicked2:
                 self.clicked2 = True
                 for sprites in TileManager.interactible_blocks_group:
-                    try:
-                        if sprites.x + TileManager.camera.last_x <= mousePos[0] <= sprites.x + sprites.width and sprites.y + sprites.offset_y <= mousePos[1] <= sprites.y:
+                    if hasattr(sprites, "customPlacement"):
+                        if sprites.rect.x <= mousePos[0] <= sprites.rect.x + sprites.width and sprites.rect.y <= mousePos[1] <= sprites.y:
                             if "assignement" not in TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]:
                                 TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"] = []
-                            TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"].append(str(sprites.x) + ", " + str(sprites.y))
-                    except AttributeError:
-                        continue
+                            TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"].append(str(sprites.rect.x - sprites.offset_x) + ", " + str(sprites.rect.y - sprites.offset_y))
+                    else:
+                        if sprites.rect.x - TileManager.camera.last_x <= mousePos[0] - TileManager.camera.last_x <= sprites.rect.x - TileManager.camera.last_x + sprites.width and sprites.rect.y <= mousePos[1] <= sprites.rect.y + sprites.width:
+                            if "assignement" not in TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]:
+                                TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"] = []
+                            TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"].append(str((sprites.rect.x - TileManager.camera.last_x) // Game.TILESIZE) + ", " + str(sprites.rect.y // Game.TILESIZE))
             elif mouse_buttons[2] == 1:
                 self.attributing = False
+                TileEditor.attributing = False
             elif mouse_buttons[0] != 1 and self.clicked2:
                 self.clicked2 = False
 
@@ -117,12 +129,12 @@ class Lever(pygame.sprite.Sprite):
                     if sprite == str(self.x) + ", " + str(self.y):
                         continue
                     if "customPlace" in TileEditor.created_level["tiles"][sprite]:
-                        def t(x):
-                            return int(x) + TileManager.camera.last_x
+                        x = int(sprite.split(", ")[0]) + Game.TILESIZE // 2
+                        y = int(sprite.split(", ")[1])
 
-                        pygame.draw.line(Game.surface, (0, 0, 0), (self.x + TileManager.camera.last_x, self.y + 30), tuple(map(t, sprite.split(", "))))
+                        pygame.draw.line(Game.surface, (0, 0, 0), (self.x + TileManager.camera.last_x, self.y + 30), (x + TileManager.camera.last_x, y))
                     else:
-                        def t(x):
-                            return (int(x) * Game.TILESIZE) + TileManager.camera.last_x + (Game.TILESIZE // 2)
+                        x = (int(sprite.split(", ")[0]) * Game.TILESIZE) + (Game.TILESIZE // 2)
+                        y = int(sprite.split(", ")[1]) * Game.TILESIZE
 
-                        pygame.draw.line(Game.surface, (0, 0, 0), (self.x + TileManager.camera.last_x, self.y + 30), tuple(map(t, sprite.split(", "))))
+                        pygame.draw.line(Game.surface, (0, 0, 0), (self.x + TileManager.camera.last_x, self.y + 30), (x + TileManager.camera.last_x, y))

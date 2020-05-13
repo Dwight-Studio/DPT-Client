@@ -6,6 +6,7 @@ from dpt.game import Game
 
 class SnowHalfEdgeR(pygame.sprite.Sprite):
     texture = "dpt.images.environment.terrain.Snow_Tile_Half_Round_R-01"
+    sounds = "dpt.sounds.sfx.sfx_snow"
     width = Game.TILESIZE
     height = Game.TILESIZE // 2
     offset_x = 0

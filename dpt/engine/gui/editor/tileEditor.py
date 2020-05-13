@@ -39,6 +39,7 @@ class TileEditor:
     env = None
     backnd = None
     dead = None
+    attributing = False
 
     @classmethod
     def update(cls):
@@ -132,11 +133,8 @@ class TileEditor:
                         return
             if mouse_buttons[0] == 1:
                 for interact in TileManager.interactible_blocks_group:
-                    if isinstance(interact, RessourceLoader.get(
-                            "dpt.entities.interactible.lever")) and interact.x + interact.offset_x + TileManager.camera.last_x <= mouse[0] <= interact.x + interact.offset_x + interact.width and interact.y + interact.offset_y <= \
-                            mouse[1] <= interact.y + interact.offset_y + interact.height:
-                        return
-                    if isinstance(interact, RessourceLoader.get("dpt.entities.interactible.spike")) and interact.x + TileManager.camera.last_x <= mouse[0] <= interact.x + interact.width and interact.y + interact.offset_y <= mouse[1] <= interact.y:
+                    if interact.rect.x - TileManager.camera.last_x <= mouse[0] - TileManager.camera.last_x <= interact.rect.x + interact.width - TileManager.camera.last_x and interact.rect.y <= \
+                            mouse[1] <= interact.rect.y + interact.height and cls.attributing:
                         return
 
             if mouse_buttons[0] == 1 and not cls.mouse_pushed_l:
@@ -185,22 +183,22 @@ class TileEditor:
                             TileManager.place_back_block(cls.mouse_pos_x, cls.mouse_pos_y, TileEditor.selected_item)
                     elif cls.custom_tile_placement:
                         if not TileManager.check_back:
-                            if str(mouse[0]) + ", " + str(mouse[1]) in cls.created_level["tiles"]:
-                                cls.created_level["tiles"][str(mouse[0]) + ", " + str(mouse[1])][
+                            if str(mouse[0] - TileManager.camera.last_x) + ", " + str(mouse[1]) in cls.created_level["tiles"]:
+                                cls.created_level["tiles"][str(mouse[0] - TileManager.camera.last_x) + ", " + str(mouse[1])][
                                     "class"] = TileEditor.selected_item
-                                cls.created_level["tiles"][str(mouse[0]) + ", " + str(mouse[1])]["customPlace"] = True
+                                cls.created_level["tiles"][str(mouse[0] - TileManager.camera.last_x) + ", " + str(mouse[1])]["customPlace"] = True
                             else:
-                                cls.created_level["tiles"][str(mouse[0]) + ", " + str(mouse[1])] = {
+                                cls.created_level["tiles"][str(mouse[0] - TileManager.camera.last_x) + ", " + str(mouse[1])] = {
                                     "class": TileEditor.selected_item, "customPlace": True}
                             TileManager.place_block(mouse[0] - TileManager.camera.last_x, mouse[1],
                                                     TileEditor.selected_item)
                         elif TileManager.check_back:
-                            if str(mouse[0]) + ", " + str(mouse[1]) in cls.created_level["tiles"]:
-                                cls.created_level["tiles"][str(mouse[0]) + ", " + str(mouse[1])][
+                            if str(mouse[0] - TileManager.camera.last_x) + ", " + str(mouse[1]) in cls.created_level["tiles"]:
+                                cls.created_level["tiles"][str(mouse[0] - TileManager.camera.last_x) + ", " + str(mouse[1])][
                                     "backgroundClass"] = TileEditor.selected_item
-                                cls.created_level["tiles"][str(mouse[0]) + ", " + str(mouse[1])]["customPlace"] = True
+                                cls.created_level["tiles"][str(mouse[0] - TileManager.camera.last_x) + ", " + str(mouse[1])]["customPlace"] = True
                             else:
-                                cls.created_level["tiles"][str(mouse[0]) + ", " + str(mouse[1])] = {
+                                cls.created_level["tiles"][str(mouse[0] - TileManager.camera.last_x) + ", " + str(mouse[1])] = {
                                     "backgroundClass": TileEditor.selected_item, "customPlace": True}
                             TileManager.place_back_block(mouse[0] - TileManager.camera.last_x, mouse[1],
                                                          TileEditor.selected_item)
@@ -246,16 +244,16 @@ class TileEditor:
                             for cls.entitys in TileManager.entity_group:
                                 try:
                                     if cls.entitys.customPlacement:
-                                        if cls.entitys.rect.left <= mouse[0] <= cls.entitys.rect.right and cls.entitys.rect.top <= mouse[1] <= cls.entitys.rect.bottom:
+                                        if cls.entitys.rect.left <= mouse[0] - TileManager.camera.last_x <= cls.entitys.rect.right and cls.entitys.rect.top <= mouse[1] <= cls.entitys.rect.bottom:
                                             try:
                                                 cls.mouse_pos_y = cls.entitys.y
                                                 cls.mouse_pos_x = cls.entitys.x
                                                 cls.entitys.kill()
-                                                del cls.created_level["tiles"][str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)]["customPlace"]
+                                                del cls.created_level["tiles"][str(cls.mouse_pos_x - TileManager.camera.last_x) + ", " + str(cls.mouse_pos_y)]["customPlace"]
                                                 del cls.entitys
                                             except AttributeError:
                                                 cls.mouse_pos_y = cls.entitys.rect.y - cls.entitys.offset_y
-                                                cls.mouse_pos_x = cls.entitys.rect.x - cls.entitys.offset_x
+                                                cls.mouse_pos_x = cls.entitys.rect.x - cls.entitys.offset_x - TileManager.camera.last_x
                                                 cls.entitys.kill()
                                                 del cls.entitys
                                 except AttributeError:
