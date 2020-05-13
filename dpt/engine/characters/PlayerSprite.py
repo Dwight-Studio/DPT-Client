@@ -341,7 +341,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         for i in enemies:
             if pygame.sprite.collide_mask(self, i):
                 if yVelDelta < 0 and not EffectsManagement.dico_current_effects["monsterimmortal"]:
-                    if self.damaged and self.imunityTime < 150:
+                    if self.damaged and self.imunityTime < 120:
                         i.kill()
                     elif not self.damaged:
                         i.kill()
