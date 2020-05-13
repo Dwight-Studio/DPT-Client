@@ -436,8 +436,11 @@ class TileManager:
         """
 
         rect = Game.surface.get_bounding_rect()
-        rect.width += 200
-        rect.x -= self.last_x + 100
+        rect.height += math.floor(400 * Game.DISPLAY_RATIO)
+        rect.width += math.floor(400 * Game.DISPLAY_RATIO)
+        rect.x -= self.last_x + math.floor(200 * Game.DISPLAY_RATIO)
+        rect.y -= math.floor(200 * Game.DISPLAY_RATIO)
+
         Game.display_rect = rect
         for sprite in TileManager.background_blocks_group:
             if sprite.rect.colliderect(rect):

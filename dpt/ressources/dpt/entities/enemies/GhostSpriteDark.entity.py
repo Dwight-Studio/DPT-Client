@@ -98,6 +98,8 @@ class GhostSpriteDark(pygame.sprite.Sprite):
                 self.distance = 0
                 self.up = not self.up
                 self.down = not self.down
+        else:
+            pygame.draw.line(Game.surface, (193, 39, 45), self.rect.center, (self.rect.centerx, self.rect.centery + math.floor(500 * Game.DISPLAY_RATIO)), 5)
 
     def animation(self):
         xb = Game.player_sprite.rect.x
