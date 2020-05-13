@@ -37,9 +37,11 @@ class Spike(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
 
     def deactivate(self):
+        from dpt.engine.tileManager import TileManager
         self.down = False
         self.i = 0
         self.done = False
+        TileManager.deadly_object_group.add(self)
         self.anim_texture = RessourceLoader.get_multiple("dpt.images.environment.traps.Spike.Obstacle_Spike_Up_*")
 
     def activate(self):
