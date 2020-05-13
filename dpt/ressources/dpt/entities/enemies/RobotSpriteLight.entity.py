@@ -9,7 +9,7 @@ from dpt.engine.tileManager import TileManager
 from dpt.game import Game
 
 
-class EnemySprite(pygame.sprite.Sprite):
+class RobotSpriteLight(pygame.sprite.Sprite):
     texture = "dpt.images.characters.player.standing"
     width = math.floor(60 * Game.DISPLAY_RATIO)
     height = math.floor(90 * Game.DISPLAY_RATIO)
@@ -27,7 +27,7 @@ class EnemySprite(pygame.sprite.Sprite):
         self.right = True
         self.standing = False
         self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
-        self.mask = pygame.mask.from_surface(pygame.transform.scale(RessourceLoader.get(EnemySprite.mask),
+        self.mask = pygame.mask.from_surface(pygame.transform.scale(RessourceLoader.get(RobotSpriteLight.mask),
                                                                     (self.width, self.height)))
         self.CONSTHEIGT = self.height
         self.CONSTWIDTH = self.width
