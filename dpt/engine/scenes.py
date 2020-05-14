@@ -1,4 +1,6 @@
 import math
+from threading import Thread
+
 import pygame
 
 from dpt.game import Game
@@ -156,6 +158,16 @@ class Scenes:
         from dpt.engine.gui.editor.tileEditor import TileEditor
         cls.logger.info("Displaying PAUSE")
 
+        # Musiques et sons
+        def music():
+            for i in range(0, 101):
+                pygame.time.wait(2)
+                pygame.mixer.music.set_volume(Game.settings["music_volume"] * Game.settings["general_volume"] * ((100 - i) / 100))
+            pygame.mixer.pause()
+            pygame.mixer.music.pause()
+
+        Thread(target=music).start()
+
         # Ajout du GUI
         from dpt.engine.gui.menu.button import Button
         from dpt.engine.gui.menu.simpleSprite import SimpleSprite
@@ -244,6 +256,7 @@ class Scenes:
 
         # Gestion de la musique
         if load:
+            pygame.mixer.music.set_volume(Game.settings["music_volume"] * Game.settings["general_volume"])
             pygame.mixer_music.load(RessourceLoader.get("dpt.sounds.musics.story_time"))
             pygame.mixer_music.play(-1)
 
@@ -740,6 +753,16 @@ class Scenes:
 
         if TileEditor.enabled_editor:
             return
+
+        # Musiques et sons
+        def music():
+            for i in range(0, 101):
+                pygame.time.wait(10)
+                pygame.mixer.music.set_volume(Game.settings["music_volume"] * Game.settings["general_volume"] * ((100 - i) / 100))
+            pygame.mixer.pause()
+            pygame.mixer.music.pause()
+
+        Thread(target=music).start()
 
         cls.logger.info("Displaying GAME_OVER")
 

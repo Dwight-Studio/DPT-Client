@@ -1,4 +1,5 @@
 import math
+from threading import Thread
 
 from dpt.engine.gui.menu import Text
 import dpt.engine.gui.menu as menu
@@ -66,6 +67,12 @@ def level_loop():
                 TileEditor.is_editing = True
                 for clouds in TileManager.clouds_group:
                     clouds.kill()
+
+                Game.gui["editor_button"].text_sprite.kill()
+                Game.gui["editor_button"].text_sprite = SimpleSprite(math.floor(143 * Game.DISPLAY_RATIO),
+                                                                     math.floor(35 * Game.DISPLAY_RATIO),
+                                                                     RessourceLoader.get("dpt.images.gui.symbols.TEXT_START"))
+
                 TileEditor.panel_open = False
                 Checkbox.checkbox_group.empty()
                 TileManager.clouds_group.empty()
@@ -159,12 +166,34 @@ def pause_loop():
             Game.run = False
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             kill_menu()
+
+            def music():
+                pygame.mixer.unpause()
+                pygame.mixer.music.unpause()
+                pygame.mixer.music.set_volume(0)
+
+                for i in range(0, 101):
+                    pygame.time.wait(2)
+                    pygame.mixer.music.set_volume(Game.settings["music_volume"] * Game.settings["general_volume"] * (i / 100))
+
+            Thread(target=music).start()
             Game.loop = Game.loop = level_loop
             return
         if event.type == Game.BUTTON_EVENT:
             if event.button == Game.gui["p_button_resume"]:
                 Game.loop = level_loop
                 kill_menu()
+
+                def music():
+                    pygame.mixer.unpause()
+                    pygame.mixer.music.unpause()
+                    pygame.mixer.music.set_volume(0)
+
+                    for i in range(0, 101):
+                        pygame.time.wait(10)
+                        pygame.mixer.music.set_volume(Game.settings["music_volume"] * Game.settings["general_volume"] * (i / 100))
+
+                Thread(target=music).start()
                 return
             elif event.button == Game.gui["p_button_restart_save"] and not TileEditor.enabled_editor:
                 if "last_checkpoint" in Game.temp:
@@ -218,19 +247,22 @@ def main_menu_loop():
         if event.type == Game.BUTTON_EVENT:
             if event.button == Game.gui["button_play"]:
                 menu.delete_items()
-
                 Scenes.level_selector()
                 return
             elif event.button == Game.gui["button_editor"]:
                 menu.delete_items()
 
+                # Musiques et sons
+                def music():
+                    pygame.mixer.fadeout(1000)
+                    pygame.mixer.music.fadeout(1000)
+
+                Thread(target=music).start()
+
                 Scenes.editor({
                     "tiles": {},
                     "infos": {}
                 })
-
-                pygame.mixer_music.fadeout(1000)
-                pygame.mixer_music.unload()
                 return
             elif event.button == Game.gui["button_settings"]:
                 menu.delete_items()
@@ -238,8 +270,13 @@ def main_menu_loop():
                 return
             elif event.button == Game.gui["button_quit"]:
                 menu.delete_items()
-                pygame.mixer_music.fadeout(1000)
-                pygame.mixer_music.unload()
+
+                # Musiques et sons
+                def music():
+                    pygame.mixer.fadeout(1000)
+                    pygame.mixer.music.fadeout(1000)
+
+                Thread(target=music).start()
                 Game.run = False
                 return
 
@@ -378,9 +415,13 @@ def start_level_loop():
                 Scenes.level_selector_detail()
                 return
             elif event.button == Game.gui["button_start"]:
+                # Musiques et sons
+                def music():
+                    pygame.mixer.fadeout(1000)
+                    pygame.mixer.music.fadeout(1000)
+
+                Thread(target=music).start()
                 Scenes.level(Game.temp["next_level"])
-                pygame.mixer_music.fadeout(1000)
-                pygame.mixer_music.unload()
                 return
 
     menu.main_loop()

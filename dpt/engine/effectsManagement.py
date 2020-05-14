@@ -114,11 +114,17 @@ class EffectsManagement:
 
                 if cls.dico_current_effects["Slow"]:
                     def sound_effect():
-                        pygame.mixer_music.fadeout(200)
-                        pygame.mixer_music.load(RessourceLoader.get("dpt.sounds.musics.time_stop"))
-                        pygame.mixer_music.play()
+                        for i in range(1, 81):
+                            pygame.time.wait(2)
+                            pygame.mixer.music.set_volume(Game.settings["music_volume"] * Game.settings["general_volume"] * ((100 - i) / 100))
+                        sound = RessourceLoader.get("dpt.sounds.sfx.time_stop")
+                        sound.set_volume(Game.settings["music_volume"] * Game.settings["general_volume"])
+                        sound.play()
                         pygame.time.wait(3000)
-                        pygame.mixer_music.fadeout(2000)
+                        sound.fadeout(2000)
+                        for i in range(20, 101):
+                            pygame.time.wait(2)
+                            pygame.mixer.music.set_volume(Game.settings["music_volume"] * Game.settings["general_volume"] * (i / 100))
 
                     Thread(target=sound_effect).start()
 

@@ -82,5 +82,7 @@
       "class": "dpt.blocks.grass.Grass"
     }
   },
-  "infos": {}
+  "infos": {
+    "music": "dpt.sounds.musics.Grasslands_Theme"
+  }
 }

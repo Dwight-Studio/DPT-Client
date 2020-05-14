@@ -1,4 +1,6 @@
 import math
+from threading import Thread
+
 import pygame
 import traceback
 import sys
@@ -160,11 +162,17 @@ class TileManager:
                 RessourceLoader.add_pending("dpt.images.gui.ui.UI_HEART*")
                 RessourceLoader.add_pending("dpt.images.effects.*")
                 RessourceLoader.add_pending("dpt.images.gui.ui.UI_STAR*")
-                RessourceLoader.add_pending("dpt.sounds.musics.time_stop")
+                RessourceLoader.add_pending("dpt.sounds.sounds.time_stop")
                 RessourceLoader.add_pending("dpt.sounds.musics.flakey_a_major")
                 RessourceLoader.add_pending("dpt.sounds.sfx.sfx_score_count")
                 RessourceLoader.add_pending("dpt.sounds.sfx.sfx_score_impact")
+                RessourceLoader.add_pending("dpt.sounds.musics.island_0")
                 RessourceLoader.add_pending("dpt.images.not_found")
+
+                if "infos" in level:
+                    if "music" in level["infos"]:
+                        RessourceLoader.add_pending(level["infos"]["music"])
+
                 RessourceLoader.load()
 
             from dpt.engine.scenes import Scenes
@@ -261,7 +269,26 @@ class TileManager:
             cls.generate_clouds()
             cls.log.info("Done")
             loading_loop(True)
+
+            if not TileEditor.is_editing:
+                if "infos" in TileEditor.created_level:
+                    if "music" in TileEditor.created_level["infos"]:
+
+                        def music():
+                            pygame.mixer.music.load(RessourceLoader.get(TileEditor.created_level["infos"]["music"]))
+                            pygame.mixer.music.set_volume(0)
+                            pygame.mixer.music.play(-1)
+
+                            for i in range(0, 101):
+                                pygame.time.wait(10)
+                                pygame.mixer.music.set_volume(Game.settings["music_volume"] * Game.settings["general_volume"] * i / 100)
+
+                        Thread(target=music).start()
+            else:
+                pygame.mixer.music.load(RessourceLoader.get("dpt.sounds.musics.island_0"))
+                pygame.mixer.music.play(-1)
             return True
+
         except Exception as ex:
             from dpt.engine.scenes import Scenes
             exc_type, exc_value, exc_tb = sys.exc_info()
