@@ -100,74 +100,19 @@ class ButtonBlue(pygame.sprite.Sprite):
                     except KeyError:
                         continue
         else:
+            if pygame.sprite.collide_mask(self, Game.player_sprite):
+                self.colliding = True
+            else:
+                self.colliding = False
             for enemy in TileManager.enemy_group:
-                if pygame.sprite.collide_mask(self, enemy) and not self.clicked2:
-                    self.clicked2 = True
-                    if self.up:
-                        self.up = False
-                        self.down = True
-                        texture = "dpt.images.environment.buttons.Button_Blue_Down"
-                        self.image = RessourceLoader.get(texture)
-                        self.image = pygame.transform.smoothscale(self.image, (self.width, self.height // 2))
-                        self.rect = self.image.get_rect()
-                        self.rect.x = self.x + self.offset_x
-                        self.rect.y = self.y + self.offset_y // 2
-                        data = TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]
-                        if "assignement" in data:
-                            for interact in TileManager.interactible_blocks_group:
-                                positions = [tuple(map(int, i.split(", "))) for i in data["assignement"]]
-                                for pos in positions:
-                                    if hasattr(interact, "x") and hasattr(interact, "y"):
-                                        if interact.x == pos[0] and interact.y == pos[1]:
-                                            if hasattr(interact, "activate"):
-                                                interact.activate()
-                                    if interact.rect.x == pos[0] and interact.rect.y == pos[1]:
-                                        if hasattr(interact, "activate"):
-                                            interact.activate()
-                                    if interact.rect.x // Game.TILESIZE == pos[
-                                        0] and interact.rect.y // Game.TILESIZE == pos[1]:
-                                        if hasattr(interact, "activate"):
-                                            interact.activate()
-                        sound = RessourceLoader.get_multiple(self.sounds[1])[0]
-                        sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
-                        sound.play()
-                else:
-                    if self.down and self.clicked2 and not pygame.sprite.collide_mask(self, enemy):
-                        self.clicked2 = False
-                        self.down = False
-                        self.up = True
-                        texture = "dpt.images.environment.buttons.Button_Blue_Up"
-                        self.image = RessourceLoader.get(texture)
-                        self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
-                        self.rect = self.image.get_rect()
-                        self.rect.x = self.x + self.offset_x
-                        self.rect.y = self.y + self.offset_y
-                        data = TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]
-                        if "assignement" in data:
-                            for interact in TileManager.interactible_blocks_group:
-                                positions = [tuple(map(int, i.split(", "))) for i in data["assignement"]]
-                                for pos in positions:
-                                    if hasattr(interact, "x") and hasattr(interact, "y"):
-                                        if interact.x == pos[0] and interact.y == pos[1]:
-                                            if hasattr(interact, "deactivate"):
-                                                interact.deactivate()
-                                    if interact.rect.x == pos[0] and interact.rect.y == pos[1]:
-                                        if hasattr(interact, "deactivate"):
-                                            interact.deactivate()
-                                    if interact.rect.x // Game.TILESIZE == pos[
-                                        0] and interact.rect.y // Game.TILESIZE == \
-                                            pos[1]:
-                                        if hasattr(interact, "deactivate"):
-                                            interact.deactivate()
-                        sound = RessourceLoader.get_multiple(self.sounds[1])[1]
-                        sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
-                        sound.play()
-            if pygame.sprite.collide_mask(self, Game.player_sprite) and self.rect.colliderect(Game.player_sprite.rect) and not self.clicked:
+                if pygame.sprite.collide_mask(self, enemy):
+                    self.colliding = True
+            if not self.clicked and self.colliding:
                 self.clicked = True
                 if self.up:
                     self.up = False
                     self.down = True
-                    texture = "dpt.images.environment.buttons.Button_Blue_Down"
+                    texture = "dpt.images.environment.buttons.Button_Yellow_Down"
                     self.image = RessourceLoader.get(texture)
                     self.image = pygame.transform.smoothscale(self.image, (self.width, self.height // 2))
                     self.rect = self.image.get_rect()
@@ -185,18 +130,19 @@ class ButtonBlue(pygame.sprite.Sprite):
                                 if interact.rect.x == pos[0] and interact.rect.y == pos[1]:
                                     if hasattr(interact, "activate"):
                                         interact.activate()
-                                if interact.rect.x // Game.TILESIZE == pos[0] and interact.rect.y // Game.TILESIZE == pos[1]:
+                                if interact.rect.x // Game.TILESIZE == pos[
+                                    0] and interact.rect.y // Game.TILESIZE == pos[1]:
                                     if hasattr(interact, "activate"):
                                         interact.activate()
                     sound = RessourceLoader.get_multiple(self.sounds[1])[0]
                     sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
                     sound.play()
             else:
-                if self.down and self.clicked and not pygame.sprite.collide_mask(self, Game.player_sprite):
+                if self.down and self.clicked and not self.colliding:
                     self.clicked = False
                     self.down = False
                     self.up = True
-                    texture = "dpt.images.environment.buttons.Button_Blue_Up"
+                    texture = "dpt.images.environment.buttons.Button_Yellow_Up"
                     self.image = RessourceLoader.get(texture)
                     self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
                     self.rect = self.image.get_rect()
@@ -214,7 +160,8 @@ class ButtonBlue(pygame.sprite.Sprite):
                                 if interact.rect.x == pos[0] and interact.rect.y == pos[1]:
                                     if hasattr(interact, "deactivate"):
                                         interact.deactivate()
-                                if interact.rect.x // Game.TILESIZE == pos[0] and interact.rect.y // Game.TILESIZE == \
+                                if interact.rect.x // Game.TILESIZE == pos[
+                                    0] and interact.rect.y // Game.TILESIZE == \
                                         pos[1]:
                                     if hasattr(interact, "deactivate"):
                                         interact.deactivate()
