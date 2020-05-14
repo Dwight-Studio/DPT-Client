@@ -65,6 +65,8 @@ class EffectsManagement:
     image_star = None
     image_reverse = None
 
+    upsidedown = False
+
     @classmethod
     def create_effects_image(cls):
         """Crée les images des effets possibles"""
@@ -83,9 +85,9 @@ class EffectsManagement:
         """Décide de lancer des nouveaux votes, supprime ou active les effets et gére le fonctionnement de certains effets"""
         cls.display_update()
         if cls.dico_current_effects["reverse"]:
-            Game.upsidedown = True
+            EffectsManagement.upsidedown = True
         else:
-            Game.upsidedown = False
+            EffectsManagement.upsidedown = False
         for event in Game.events:
             if event.type == Game.VOTE_RESULT_AVAILABLE_EVENT:
                 for effects in cls.temp_list:
