@@ -286,6 +286,11 @@ class TileEditor:
             else:
                 image = "dpt.images.environment.terrain.Goop_Tile_Flat_Edge_a"
 
+            if "music" in cls.created_level["infos"]:
+                music = cls.created_level["infos"]["music"]
+            else:
+                music = "dpt.sounds.musics.Grasslands_Theme"
+
             if "required_stars" in cls.created_level["infos"]:
                 required_stars = cls.created_level["infos"]["required_stars"]
             else:
@@ -310,6 +315,16 @@ class TileEditor:
             Game.get_logger(cls.__name__).info(os.path.realpath(s) + " --> " + Game.ROOT_DIRECTORY + "/ressources/user/images/" + filename + ".png")
             Game.get_logger(cls.__name__).info("Created entry: " + "user.images." + filename)
             cls.created_level["infos"]["image"] = "user.images." + filename
+
+        s = filedialog.askopenfilename(parent=root, title="Sélectionner une musique (boucle) pour le niveau (Annuler pour garder l'ancienne musique)", filetypes=[("Musique", "*.ogg")])
+
+        if s is not None and not s == "":
+            Game.get_logger(cls.__name__).info("Copying music for level creation")
+            filename = str(randint(11111, 99999))
+            shutil.copy(os.path.realpath(s), Game.ROOT_DIRECTORY + "/ressources/user/musics/" + filename + ".music.ogg")
+            Game.get_logger(cls.__name__).info(os.path.realpath(s) + " --> " + Game.ROOT_DIRECTORY + "/ressources/user/musics/" + filename + ".music.ogg")
+            Game.get_logger(cls.__name__).info("Created entry: " + "user.musics." + filename)
+            cls.created_level["infos"]["music"] = "user.musics." + filename
 
         s = simpledialog.askinteger("Nombre d'étoiles", f"Nombre d'étoiles requises pour jouer au niveau (Annuler pour garder '{required_stars}')", parent=root, )
 

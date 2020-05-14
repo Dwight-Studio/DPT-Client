@@ -243,8 +243,9 @@ class Scenes:
 
         # Gestion des ressources
         if load:
+            RessourceLoader.init()
+            Game.levels_list = None
             Game.temp = {}
-            RessourceLoader.unload()
             RessourceLoader.add_pending("dpt.images.environment.background.default_sky")
             RessourceLoader.add_pending("dpt.images.gui.*")
             RessourceLoader.add_pending("dpt.images.dpt")
@@ -909,7 +910,7 @@ class Scenes:
 
             # Chargement des images
             Scenes.loading()
-            for level in RessourceLoader.get_multiple(Game.LEVELS_ENTRIES):
+            for level in RessourceLoader.get_multiple(Game.levels_list):
                 try:
                     RessourceLoader.add_pending(level["infos"]["image"])
                 except KeyError:

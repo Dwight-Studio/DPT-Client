@@ -162,7 +162,7 @@ class TileManager:
                 RessourceLoader.add_pending("dpt.images.gui.ui.UI_HEART*")
                 RessourceLoader.add_pending("dpt.images.effects.*")
                 RessourceLoader.add_pending("dpt.images.gui.ui.UI_STAR*")
-                RessourceLoader.add_pending("dpt.sounds.sounds.time_stop")
+                RessourceLoader.add_pending("dpt.sounds.sfx.time_stop")
                 RessourceLoader.add_pending("dpt.sounds.musics.flakey_a_major")
                 RessourceLoader.add_pending("dpt.sounds.sfx.sfx_score_count")
                 RessourceLoader.add_pending("dpt.sounds.sfx.sfx_score_impact")
