@@ -112,7 +112,7 @@ class ButtonGreen(pygame.sprite.Sprite):
                 if self.up:
                     self.up = False
                     self.down = True
-                    texture = "dpt.images.environment.buttons.Button_Yellow_Down"
+                    texture = "dpt.images.environment.buttons.Button_Green_Down"
                     self.image = RessourceLoader.get(texture)
                     self.image = pygame.transform.smoothscale(self.image, (self.width, self.height // 2))
                     self.rect = self.image.get_rect()
@@ -142,7 +142,7 @@ class ButtonGreen(pygame.sprite.Sprite):
                     self.clicked = False
                     self.down = False
                     self.up = True
-                    texture = "dpt.images.environment.buttons.Button_Yellow_Up"
+                    texture = "dpt.images.environment.buttons.Button_Green_Up"
                     self.image = RessourceLoader.get(texture)
                     self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
                     self.rect = self.image.get_rect()
