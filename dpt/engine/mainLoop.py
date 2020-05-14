@@ -184,6 +184,8 @@ def pause_loop():
                 Game.loop = level_loop
                 kill_menu()
 
+                EffectsManagement.upsidedown = Game.temp["reversed"]
+
                 def music():
                     pygame.mixer.unpause()
                     pygame.mixer.music.unpause()

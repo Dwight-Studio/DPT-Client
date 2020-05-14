@@ -169,6 +169,11 @@ class Scenes:
 
         Thread(target=music).start()
 
+        from dpt.engine.effectsManagement import EffectsManagement
+
+        Game.temp["reversed"] = EffectsManagement.upsidedown
+        EffectsManagement.upsidedown = False
+
         # Ajout du GUI
         from dpt.engine.gui.menu.button import Button
         from dpt.engine.gui.menu.simpleSprite import SimpleSprite
@@ -631,6 +636,7 @@ class Scenes:
         root.destroy()
 
         Game.temp["next_level"] = Game.selected_level
+        Game.temp["coins"] = 0
 
         # Loops
         from dpt.engine.mainLoop import start_level_loop
@@ -654,6 +660,10 @@ class Scenes:
             return
 
         cls.logger.info("Displaying END_LEVEL")
+
+        from dpt.engine.effectsManagement import EffectsManagement
+
+        EffectsManagement.upsidedown = False
 
         # Score
         Game.temp["score"] = Game.temp["coins"] * 50 + Timer.time * 10
@@ -769,6 +779,10 @@ class Scenes:
             pygame.mixer.music.pause()
 
         Thread(target=music).start()
+
+        from dpt.engine.effectsManagement import EffectsManagement
+
+        EffectsManagement.upsidedown = False
 
         cls.logger.info("Displaying GAME_OVER")
 

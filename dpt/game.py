@@ -62,7 +62,6 @@ class Game(object):
     cursor1 = None  # Image 1 du curseur
     cursor2 = None  # Image 2 du curseur
     life = 1  # Variable indiquant la vie du joueur vis à vis de son affichage
-    upsidedown = False  # Retourner l'écran
     selected_level = 0  # Niveau selectionné
     levels_list = None  # Liste des niveaux
     stars = 0  # Nombre d'étoiles débloquées
@@ -293,6 +292,8 @@ class Game(object):
             from dpt.engine.scenes import Scenes
             Scenes.main_menu()
 
+            from dpt.engine.effectsManagement import EffectsManagement
+
             # MainLoop
             while cls.run:
                 Game.events = pygame.event.get()
@@ -308,7 +309,7 @@ class Game(object):
 
                 cls.loop()
 
-                if cls.upsidedown:
+                if EffectsManagement.upsidedown:
                     sc = pygame.transform.flip(Game.surface, False, True)
                     Game.surface.blit(sc, (0, 0))
 
