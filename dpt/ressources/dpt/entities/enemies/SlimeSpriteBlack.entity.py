@@ -1,4 +1,5 @@
 import math
+import random
 
 import pygame
 
@@ -10,17 +11,15 @@ from dpt.engine.tileManager import TileManager
 from dpt.game import Game
 
 
-class RobotSpriteDark(pygame.sprite.Sprite):
-    texture = "dpt.images.characters.robots.Robot_Dark_0"
-    dead_texture = "dpt.images.characters.robots.Dead_Robot_Dark"
-    textures = "dpt.images.characters.robots.Robot_Dark*"
-    sounds = ["dpt.sounds.sfx.sfx_robot_walk_*", "dpt.sounds.sfx.metal_interaction2"]
-    width = math.floor(90 * Game.DISPLAY_RATIO)
-    height = math.floor(135 * Game.DISPLAY_RATIO)
+class SlimeSpriteBlack(pygame.sprite.Sprite):
+    texture = "dpt.images.characters.slimes.Slime_Black_1"
+    dead_texture = "dpt.images.characters.slimes.Dead_Slime_Black"
+    textures = "dpt.images.characters.slimes.Slime_Black_*"
+    width = math.floor(84.25 * Game.DISPLAY_RATIO)
+    height = math.floor(43.5 * Game.DISPLAY_RATIO)
     offset_x = 0
     offset_y = Game.TILESIZE - height
-    mask = "dpt.images.characters.robots.mask"
-    dead_mask = "dpt.images.characters.robots.Dead_mask"
+    mask = "dpt.images.characters.slimes.SlimeMask"
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
@@ -34,7 +33,7 @@ class RobotSpriteDark(pygame.sprite.Sprite):
         self.right = True
         self.standing = False
         self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
-        self.maskSurface = pygame.transform.scale(RessourceLoader.get(RobotSpriteDark.mask),
+        self.maskSurface = pygame.transform.scale(RessourceLoader.get(SlimeSpriteBlack.mask),
                                                   (self.width, self.height))
         self.mask = pygame.mask.from_surface(self.maskSurface)
         self.CONSTMASK = self.mask
@@ -62,6 +61,8 @@ class RobotSpriteDark(pygame.sprite.Sprite):
         self.gravityModifier = 0
         self.big = False
         self.moveCount = 0
+        self.isReallyInJump = False
+        self.distance = 0
 
     def update(self):
         if not TileEditor.is_editing:
@@ -80,6 +81,12 @@ class RobotSpriteDark(pygame.sprite.Sprite):
                     self.gravityModifier = 0.02
                 else:
                     self.gravityModifier = 0
+
+                if EffectsManagement.dico_current_effects["Slow"]:
+                    if self.isJump:
+                        self.isReallyInJump = True
+                    if not self.isReallyInJump:
+                        self.isJump = False
 
                 if EffectsManagement.dico_current_effects["monsterimmortal"] and not self.big:
                     self.height = math.floor(self.height * 1.4)
@@ -118,6 +125,24 @@ class RobotSpriteDark(pygame.sprite.Sprite):
 
                 self.lastx = self.rect.x
 
+                if self.allowJump:
+                    if not self.isJump:
+                        if self.checkJump():
+                            self.isJump = True
+                            self.onPlatform = False
+                    else:
+                        if not self.onPlatform:
+                            if (self.jumpCount >= 0 and not EffectsManagement.dico_current_effects["Slow"]) or (EffectsManagement.dico_current_effects["Slow"] and self.frameCount % 3 == 0):
+                                self.yvel = math.floor((self.jumpCount ** 2) * (0.05 + self.gravityModifier) * Game.DISPLAY_RATIO)
+                                self.jumpCount -= 1
+                            elif self.jumpCount < 0:
+                                if self.isReallyInJump:
+                                    self.isJump = True
+                                else:
+                                    self.isJump = False
+                            else:
+                                self.yvel = 0
+
                 if not (self.isJump and not EffectsManagement.dico_current_effects["Slow"]) or (EffectsManagement.dico_current_effects["Slow"] and self.frameCount % 3 == 0):
                     self.allowJump = False
                     self.gravityCount += 1
@@ -128,17 +153,19 @@ class RobotSpriteDark(pygame.sprite.Sprite):
                     self.frameCount += 1
 
             self.securityTime -= 1
-            if self.check_fall(TileManager.environment_group):
-                self.left = not self.left
-                self.right = not self.right
+            if self.onPlatform:
+                if self.check_fall(TileManager.environment_group):
+                    self.left = not self.left
+                    self.right = not self.right
 
-                if self.left:
-                    self.xvel -= 1 * Game.DISPLAY_RATIO
-                elif self.right:
-                    self.xvel += 1 * Game.DISPLAY_RATIO
+                    if self.left:
+                        self.xvel -= 1 * Game.DISPLAY_RATIO
+                    elif self.right:
+                        self.xvel += 1 * Game.DISPLAY_RATIO
 
             self.maskcollide()
 
+            self.distance += abs(self.xvel)
             self.rect.left += math.floor(self.xvel)
             self.rect.top -= math.floor(self.yvel)
 
@@ -146,31 +173,28 @@ class RobotSpriteDark(pygame.sprite.Sprite):
                 self.left = not self.left
                 self.right = not self.right
 
-                if self.left:
-                    self.rect.x -= math.floor(35 * Game.DISPLAY_RATIO)
-                    self.xvel -= 1 * Game.DISPLAY_RATIO
-                elif self.right:
-                    self.rect.x += math.floor(35 * Game.DISPLAY_RATIO)
-                    self.xvel += 1 * Game.DISPLAY_RATIO
-
             self.animation()
 
             self.check_void()
 
     def animation(self):
-        if self.moveCount >= 48:
-            self.moveCount = 0
-        if self.left:
-            self.mask = self.CONSTMASK
-            self.image = self.anim[self.moveCount // 8]
-        elif self.right:
-            self.mask = self.maskReverse
-            self.image = self.animReverse[self.moveCount // 8]
+        if not self.onPlatform:
+            if self.jumpCount > 0:
+                if self.left:
+                    self.image = self.anim[1]
+                elif self.right:
+                    self.image = self.animReverse[1]
+            else:
+                if self.left:
+                    self.image = self.anim[2]
+                elif self.right:
+                    self.image = self.animReverse[2]
+        else:
+            if self.left:
+                self.image = self.anim[0]
+            elif self.right:
+                self.image = self.animReverse[0]
 
-        if self.moveCount % 24 == 0:
-            sound = RessourceLoader.get_multiple(self.sounds[0])[self.moveCount // 24]
-            sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
-            sound.play()
         self.moveCount += 1
 
     def check_void(self):
@@ -179,10 +203,7 @@ class RobotSpriteDark(pygame.sprite.Sprite):
 
     def kill(self):
         if not TileEditor.is_editing and not TileManager.is_loading_level:
-            DeadBody(self.rect.x, self.rect.y, self.rect.height, math.floor(self.height / 328 * 181), RobotSpriteDark.dead_texture, RobotSpriteDark.dead_mask)
-            sound = RessourceLoader.get(self.sounds[1])
-            sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
-            sound.play()
+            DeadBody(self.rect.x, self.rect.y, self.rect.width, self.rect.height, SlimeSpriteBlack.dead_texture, SlimeSpriteBlack.mask)
         pygame.sprite.Sprite.kill(self)
 
     def check_fall(self, platforms):
@@ -265,3 +286,13 @@ class RobotSpriteDark(pygame.sprite.Sprite):
                         break
 
                     self.rect.x += dx
+
+    def checkJump(self):
+        if self.distance > 400 * Game.DISPLAY_RATIO:
+            self.distance = random.random() * 100
+            if random.random() >= 0.5:
+                return True
+            else:
+                return False
+        else:
+            return False

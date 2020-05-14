@@ -342,8 +342,8 @@ class TileManager:
             RessourceLoader.get(item)(x_tile * Game.TILESIZE, y_tile * Game.TILESIZE)
             cls.log.debug("Tile " + item + " placed at " + str(x_tile) + ", " + str(y_tile))
         elif TileEditor.custom_tile_placement:
-            RessourceLoader.get(item)(x_tile, y_tile)
-            cls.log.debug("Tile " + item + " placed at " + str(x_tile) + ", " + str(y_tile))
+            RessourceLoader.get(item)(math.floor(x_tile * Game.DISPLAY_RATIO), math.floor(y_tile * Game.DISPLAY_RATIO))
+            cls.log.debug("Tile " + item + " placed at " + str(math.floor(x_tile * Game.DISPLAY_RATIO)) + ", " + str(math.floor(y_tile * Game.DISPLAY_RATIO)))
 
     @classmethod
     def place_back_block(cls, x_tile, y_tile, item):
