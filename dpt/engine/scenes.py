@@ -3,6 +3,7 @@ from threading import Thread
 
 import pygame
 
+from dpt.engine.loader import UnreachableRessourceError
 from dpt.game import Game
 import time
 
@@ -260,6 +261,10 @@ class Scenes:
             pygame.mixer.music.set_volume(Game.settings["music_volume"] * Game.settings["general_volume"])
             pygame.mixer_music.load(RessourceLoader.get("dpt.sounds.musics.story_time"))
             pygame.mixer_music.play(-1)
+
+        # Webcoms
+        from dpt.engine.webCommunications import WebCommunication
+        WebCommunication.close()
 
         # Ajout du GUI
         from dpt.engine.gui.menu.button import Button
@@ -909,15 +914,26 @@ class Scenes:
             RessourceLoader.load()
 
             # Chargement des images
+
+            to_del = []
+
             Scenes.loading()
-            for level in RessourceLoader.get_multiple(Game.levels_list):
+            for level in Game.levels_list:
                 try:
-                    RessourceLoader.add_pending(level["infos"]["image"])
-                except KeyError:
-                    RessourceLoader.add_pending("dpt.images.not_found")
-                loading_loop()
+                    level = RessourceLoader.get(level)
+                    try:
+                        RessourceLoader.add_pending(level["infos"]["image"])
+                    except KeyError:
+                        RessourceLoader.add_pending("dpt.images.not_found")
+                    loading_loop()
+                except UnreachableRessourceError:
+                    to_del.append(level)
+                    continue
             loading_loop(True)
             RessourceLoader.load()
+
+            for i in to_del:
+                Game.levels_list.remove(i)
 
         # Ajout du GUI
         from dpt.engine.gui.menu.button import Button

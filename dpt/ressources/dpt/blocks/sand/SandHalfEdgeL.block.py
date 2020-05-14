@@ -10,7 +10,7 @@ class SandHalfEdgeL(pygame.sprite.Sprite):
     width = Game.TILESIZE
     height = Game.TILESIZE // 2
     offset_x = 0
-    offset_y = height
+    offset_y = 0
 
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager

@@ -17,6 +17,26 @@ class PlayerSprite(pygame.sprite.Sprite):
     jump_left_texture = "dpt.images.characters.player.LJump"
     mask = "dpt.images.characters.player.mask"
 
+    accessories = {
+        "HappyLeft": "dpt.images.characters.player.accessories.Eye_L_Happy",
+        "HappyRight": "dpt.images.characters.player.accessories.Eye_R_Happy",
+        "MadLeft": "dpt.images.characters.player.accessories.Eye_L_Mad",
+        "MadRight": "dpt.images.characters.player.accessories.Eye_R_Mad",
+        "OpenLeft": "dpt.images.characters.player.accessories.Eye_L_Open",
+        "OpenRight": "dpt.images.characters.player.accessories.Eye_R_Open",
+        "SquintLeft": "dpt.images.characters.player.accessories.Eye_L_Squint",
+        "SquintRight": "dpt.images.characters.player.accessories.Eye_R_Squint",
+        "HatLeft": "dpt.images.characters.player.accessories.Hat_L",
+        "HatRight": "dpt.images.characters.player.accessories.Hat_R",
+    }
+
+    available_expressions = [
+        "Open",
+        "Squint",
+        "Mad",
+        "Happy"
+    ]
+
     def __init__(self, x, y):
         """Crée un joueur
 
@@ -29,7 +49,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         """
         pygame.sprite.Sprite.__init__(self, Game.player_group)  # Sprite's constructor called
         self.width = math.floor(156 * Game.DISPLAY_RATIO)
-        self.height = math.floor(117 * Game.DISPLAY_RATIO)
+        self.height = math.floor(156 * Game.DISPLAY_RATIO)
         self.CONSTWIDTH = self.width
         self.CONSTHEIGT = self.height
         self.image = pygame.transform.scale(RessourceLoader.get(self.char), (self.width, self.height))
@@ -41,6 +61,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                           RessourceLoader.get_multiple(self.walk_right_textures)]
         self.jumpRight = pygame.transform.smoothscale(RessourceLoader.get(self.jump_right_texture), (self.width, self.height))
 
+        self.accessories_images = {k: pygame.transform.smoothscale(RessourceLoader.get(v), (self.width, self.height)) for k, v in PlayerSprite.accessories.items()}
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -70,6 +91,12 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.fallCount = 0
 
         self.blink = False
+
+        self.hat = True
+        self.current_eye = "Open"
+        self.blink_eye = 0
+
+        self.eye_count = 0
 
         Heart()
 
@@ -230,6 +257,8 @@ class PlayerSprite(pygame.sprite.Sprite):
             self.walkCount = 0
 
         if self.onPlatform:
+            if self.current_eye == "Happy":
+                self.current_eye = "Open"
             if not self.standing:
                 if self.left:
                     self.image = self.walkLeft[self.walkCount // 12 + 1]
@@ -243,10 +272,36 @@ class PlayerSprite(pygame.sprite.Sprite):
                 else:
                     self.image = self.walkLeft[0]
         else:
+            self.current_eye = "Happy"
             if self.right:
                 self.image = self.jumpRight
             else:
                 self.image = self.jumpLeft
+
+        self.image = self.image.copy()
+
+        if self.hat:
+            if self.right:
+                self.image.blit(self.accessories_images["HatRight"], (0, 0))
+            else:
+                self.image.blit(self.accessories_images["HatLeft"], (0, 0))
+
+        direction = "Left"
+        if self.right:
+            direction = "Right"
+
+        if self.blink_eye < 0:
+            self.image.blit(self.accessories_images[self.current_eye + direction], (0, 0))
+        elif self.blink_eye > 8:
+            self.image.blit(self.accessories_images["Squint" + direction], (0, 0))
+        elif self.blink_eye < 2:
+            self.image.blit(self.accessories_images["Squint" + direction], (0, 0))
+
+        if self.blink_eye < -180:
+            self.blink_eye = 10
+
+        Game.add_debug_info(str(self.blink_eye))
+        self.blink_eye -= 1
 
     def collide(self):
         """Gère toute la partie physique du joueur, l'empêche de traverser les blocs"""
