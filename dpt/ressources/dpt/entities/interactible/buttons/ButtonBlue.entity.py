@@ -82,10 +82,11 @@ class ButtonBlue(pygame.sprite.Sprite):
                 self.clicked = False
 
         if TileEditor.is_editing:
-            if "assignement" in TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]:
-                for sprite in TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"]:
+            print(TileEditor.created_level)
+            if "assignement" in TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO)) + ", " + str(round(self.y / Game.DISPLAY_RATIO))]:
+                for sprite in TileEditor.created_level["tiles"][str(math.floor(self.x * Game.DISPLAY_RATIO)) + ", " + str(math.floor(self.y * Game.DISPLAY_RATIO))]["assignement"]:
                     try:
-                        if sprite == str(self.x) + ", " + str(self.y):
+                        if sprite == str(math.floor(self.x * Game.DISPLAY_RATIO)) + ", " + str(math.floor(self.y * Game.DISPLAY_RATIO)):
                             continue
                         if "customPlace" in TileEditor.created_level["tiles"][sprite]:
                             x = int(sprite.split(", ")[0]) + Game.TILESIZE // 2
@@ -118,6 +119,7 @@ class ButtonBlue(pygame.sprite.Sprite):
                     self.rect = self.image.get_rect()
                     self.rect.x = self.x + self.offset_x
                     self.rect.y = self.y + self.offset_y // 2
+                    print(TileEditor.created_level)
                     data = TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]
                     if "assignement" in data:
                         for interact in TileManager.interactible_blocks_group:

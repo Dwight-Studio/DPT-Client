@@ -12,12 +12,6 @@
         "3, 9": {
             "class": "dpt.blocks.grass.Grass"
         },
-        "3, 10": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "4, 10": {
-            "class": "dpt.blocks.grass.Grass"
-        },
         "4, 9": {
             "class": "dpt.blocks.grass.Grass"
         },
@@ -36,9 +30,6 @@
         "9, 9": {
             "class": "dpt.blocks.grass.Grass"
         },
-        "10, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
         "11, 9": {
             "class": "dpt.blocks.grass.Grass"
         },
@@ -48,16 +39,19 @@
         "13, 9": {
             "class": "dpt.blocks.grass.Grass"
         },
-        "14, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "15, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
         "16, 9": {
             "class": "dpt.blocks.grass.Grass"
         },
         "17, 9": {
+            "class": "dpt.blocks.grass.Grass"
+        },
+        "14, 9": {
+            "class": "dpt.blocks.grass.Grass"
+        },
+        "10, 9": {
+            "class": "dpt.blocks.grass.Grass"
+        },
+        "15, 9": {
             "class": "dpt.blocks.grass.Grass"
         },
         "18, 9": {
@@ -66,149 +60,27 @@
         "19, 9": {
             "class": "dpt.blocks.grass.Grass"
         },
-        "958, 534": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
+        "765, 813": {
+            "class": "dpt.entities.interactible.buttons.buttonblue",
+            "customPlace": true,
+            "assignement": [
+                "10, 8",
+                "10, 7",
+                "10, 6",
+                "10, 5"
+            ]
         },
-        "866, 433": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
+        "10, 8": {
+            "class": "dpt.blocks.box.boxblue"
         },
-        "742, 297": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
+        "10, 7": {
+            "class": "dpt.blocks.box.boxblue"
         },
-        "675, 193": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
+        "10, 6": {
+            "class": "dpt.blocks.box.boxblue"
         },
-        "662, 120": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "724, 59": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "851, 48": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "974, 71": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "1111, 111": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "1085, 213": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "953, 237": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "774, 253": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "594, 279": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "441, 312": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "308, 388": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "277, 520": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "312, 604": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "407, 672": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "576, 712": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "770, 724": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "948, 716": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "1089, 678": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "1182, 593": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "1239, 495": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "1252, 426": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "1117, 324": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "948, 287": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "799, 279": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "631, 316": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "537, 361": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "512, 495": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "623, 588": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "756, 637": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "906, 673": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "1078, 681": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
-        },
-        "1107, 672": {
-            "class": "dpt.entities.props.plants.trees.leaves.green13",
-            "customPlace": true
+        "10, 5": {
+            "class": "dpt.blocks.box.boxblue"
         }
     },
     "infos": {}
