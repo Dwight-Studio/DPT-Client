@@ -147,10 +147,10 @@ class RobotSpriteDark(pygame.sprite.Sprite):
                 self.right = not self.right
 
                 if self.left:
-                    self.rect.x -= math.floor(31 * Game.DISPLAY_RATIO)
+                    self.rect.x -= math.floor(35 * Game.DISPLAY_RATIO)
                     self.xvel -= 1 * Game.DISPLAY_RATIO
                 elif self.right:
-                    self.rect.x += math.floor(31 * Game.DISPLAY_RATIO)
+                    self.rect.x += math.floor(35 * Game.DISPLAY_RATIO)
                     self.xvel += 1 * Game.DISPLAY_RATIO
 
             self.animation()
