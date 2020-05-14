@@ -21,6 +21,7 @@ from dpt.game import Game
 from dpt.engine.gui.menu import Timer
 from dpt.engine.webCommunications import WebCommunication
 from dpt.engine.effectsManagement import EffectsManagement
+from dpt.engine.gui.ParallaxSky import ParallaxSky
 
 try:
     bg = RessourceLoader.get("dpt.images.environment.background.default_sky")
@@ -53,7 +54,7 @@ def do_synch_anims():
 # Mainloops
 def level_loop():
     """Boucle des niveaux"""
-    Game.surface.blit(bg, (0, 0))
+    ParallaxSky.update()
 
     for event in Game.events:
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
@@ -146,7 +147,7 @@ def level_loop():
 
 def pause_loop():
     """Boucle de pause"""
-    Game.surface.blit(bg, (0, 0))
+    ParallaxSky.update()
 
     def kill_menu():
         for key, item in Game.gui.items():
@@ -471,7 +472,7 @@ def loading_loop(kill=False):
 
 def game_over_loop():
     """Boucle de game over"""
-    Game.surface.blit(bg, (0, 0))
+    ParallaxSky.update()
 
     def kill_menu():
         for key, item in Game.gui.copy().items():
@@ -536,7 +537,7 @@ def game_over_loop():
 
 def end_level_loop():
     """Boucle de fin de niveau"""
-    Game.surface.blit(bg, (0, 0))
+    ParallaxSky.update()
 
     Game.gui["fade"].update()
 

@@ -119,7 +119,7 @@ class RessourceLoader:
         total = len(cls.pending_ressources)
         pbar = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/gui/ui/UI_BARFRAME.png")
         bar = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/gui/ui/UI_COLORBAR_2.png")
-        bg = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/environment/background/default_sky.png")
+        bg = pygame.image.load(Game.ROOT_DIRECTORY + "/ressources/dpt/images/environment/background/default_sky.png").convert_alpha()
         bg = pygame.transform.smoothscale(bg, (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT))
         width = min(Game.WINDOW_WIDTH - 50, 1115)
         height = min(math.floor(52 / 1115 * width), 52)

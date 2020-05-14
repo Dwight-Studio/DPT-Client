@@ -158,7 +158,7 @@ class TileManager:
 
                 RessourceLoader.add_pending("dpt.images.characters.player.*")
                 RessourceLoader.add_pending("dpt.images.environment.flag.*")
-                RessourceLoader.add_pending("dpt.images.environment.background.Cloud_full_*")
+                RessourceLoader.add_pending("dpt.images.environment.background.*")
                 RessourceLoader.add_pending("dpt.images.gui.ui.UI_HEART*")
                 RessourceLoader.add_pending("dpt.images.effects.*")
                 RessourceLoader.add_pending("dpt.images.gui.ui.UI_STAR*")
@@ -267,6 +267,10 @@ class TileManager:
             cls.is_loading_level = False
             cls.clouds_last_x = 0
             cls.generate_clouds()
+
+            from dpt.engine.gui.ParallaxSky import ParallaxSky
+            ParallaxSky.init()
+
             cls.log.info("Done")
             loading_loop(True)
 
