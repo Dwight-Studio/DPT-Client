@@ -62,14 +62,14 @@ class ButtonYellow(pygame.sprite.Sprite):
                     if hasattr(sprites, "customPlacement"):
                         if hasattr(sprites, "x") and hasattr(sprites, "y"):
                             if sprites.x + sprites.offset_x <= mousePos[0] <= sprites.x + sprites.offset_x + sprites.width and sprites.y + sprites.offset_y <= mousePos[1] <= sprites.y + sprites.offset_y + sprites.height:
-                                if "assignement" not in TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]:
-                                    TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"] = []
-                                TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"].append(str(sprites.x) + ", " + str(sprites.y))
+                                if "assignement" not in TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]:
+                                    TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"] = []
+                                TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"].append(str(sprites.x) + ", " + str(sprites.y))
                         else:
                             if sprites.rect.x <= mousePos[0] <= sprites.rect.x + sprites.width and sprites.rect.y <= mousePos[1] <= sprites.rect.y + sprites.height:
-                                if "assignement" not in TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]:
-                                    TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"] = []
-                                TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"].append(str(sprites.rect.x - sprites.offset_x) + ", " + str(sprites.rect.y - sprites.offset_y))
+                                if "assignement" not in TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]:
+                                    TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"] = []
+                                TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"].append(str(sprites.rect.x - sprites.offset_x) + ", " + str(sprites.rect.y - sprites.offset_y))
                     else:
                         if sprites.rect.x - TileManager.camera.last_x <= mousePos[0] - TileManager.camera.last_x <= sprites.rect.x - TileManager.camera.last_x + sprites.width and sprites.rect.y <= mousePos[1] <= sprites.rect.y + sprites.height:
                             if "assignement" not in TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]:
