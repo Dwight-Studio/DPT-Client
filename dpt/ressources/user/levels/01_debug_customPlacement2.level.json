@@ -30,47 +30,192 @@
         "5, 9": {
             "class": "dpt.blocks.grass.Grass"
         },
-        "10, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "11, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "12, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "765.0, 807.75": {
-            "class": "dpt.entities.interactible.buttons.buttonblue",
-            "customPlace": true
-        },
-        "9, 6": {},
-        "9, 5": {},
-        "9, 4": {},
-        "9, 3": {},
-        "9, 2": {},
-        "10, 7": {
-            "class": "dpt.blocks.box.boxblue"
-        },
-        "10, 6": {
-            "class": "dpt.blocks.box.boxblue"
-        },
-        "10, 5": {
-            "class": "dpt.blocks.box.boxblue"
-        },
-        "10, 4": {
-            "class": "dpt.blocks.box.boxblue"
-        },
-        "8, 8": {},
-        "769.5, 810.0": {
-            "class": "dpt.entities.interactible.buttons.buttonblue",
-            "customPlace": true,
-            "assignement": [
-                "10, 7",
-                "10, 6",
-                "10, 5",
-                "10, 4"
-            ]
-        }
+      "10, 9": {
+        "class": "dpt.blocks.grass.Grass"
+      },
+      "11, 9": {
+        "class": "dpt.blocks.grass.Grass"
+      },
+      "12, 9": {
+        "class": "dpt.blocks.grass.Grass"
+      },
+      "765.0, 807.75": {},
+      "9, 6": {},
+      "9, 5": {},
+      "9, 4": {},
+      "9, 3": {},
+      "9, 2": {},
+      "10, 7": {},
+      "10, 6": {},
+      "10, 5": {},
+      "10, 4": {},
+      "8, 8": {},
+      "769.5, 810.0": {
+        "assignement": [
+          "10, 7",
+          "10, 6",
+          "10, 5",
+          "10, 4"
+        ]
+      },
+      "13, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "14, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "15, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "16, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "17, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "18, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "19, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "20, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "21, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "22, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "23, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "24, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "25, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "26, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "27, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "28, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "29, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "30, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "31, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "32, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "33, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "34, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "35, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "36, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "37, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "38, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "39, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "40, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "41, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "42, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "43, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "44, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "45, 9": {
+        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      },
+      "3873.0, 579.0": {
+        "class": "dpt.entities.interactible.spike",
+        "customPlace": true
+      },
+      "2644.0, 570.0": {
+        "class": "dpt.entities.interactible.spike",
+        "customPlace": true
+      },
+      "1251.0, 560.0": {
+        "class": "dpt.entities.interactible.spike",
+        "customPlace": true
+      },
+      "749.0, 809.0": {
+        "class": "dpt.entities.interactible.buttons.buttonblue",
+        "customPlace": true,
+        "assignement": [
+          "1251.0, 560.0"
+        ]
+      },
+      "2431.0, 814.0": {
+        "class": "dpt.entities.interactible.buttons.buttonblue",
+        "customPlace": true,
+        "assignement": [
+          "2644.0, 570.0"
+        ]
+      },
+      "2706.0, 562.0": {
+        "class": "dpt.entities.interactible.buttons.buttonblue",
+        "customPlace": true,
+        "assignement": [
+          "2644.0, 570.0"
+        ]
+      },
+      "3539.0, 811.0": {
+        "class": "dpt.entities.interactible.buttons.buttonblue",
+        "customPlace": true,
+        "assignement": [
+          "3873.0, 579.0",
+          "3887.0, 572.0"
+        ]
+      },
+      "3912.0, 574.0": {
+        "class": "dpt.entities.interactible.buttons.buttonblue",
+        "customPlace": true,
+        "assignement": [
+          "3873.0, 579.0"
+        ]
+      },
+      "3887.0, 572.0": {
+        "class": "dpt.entities.interactible.spike",
+        "customPlace": true
+      },
+      "3953.0, 561.0": {
+        "class": "dpt.entities.interactible.buttons.buttonblue",
+        "customPlace": true,
+        "assignement": [
+          "3887.0, 572.0"
+        ]
+      }
     },
     "infos": {}
 }

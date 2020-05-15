@@ -18,6 +18,10 @@ class BackgroundFakeBlocks(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x + self.block.offset_x
         self.rect.y = y + self.block.offset_y
+        self.offset_x = self.block.offset_x
+        self.offset_y = self.block.offset_y
+        if hasattr(self.block, "customPlacement"):
+            self.customPlacement = True
 
         if not TileManager.is_loading_level:
             if isinstance(self.block.sounds, list):

@@ -131,11 +131,6 @@ class TileEditor:
                 for btn in Button.buttonsGroup:
                     if btn.rect.collidepoint(mouse[0], mouse[1]):
                         return
-            if mouse_buttons[0] == 1:
-                for interact in TileManager.interactible_blocks_group:
-                    if interact.rect.x - TileManager.camera.last_x <= mouse[0] - TileManager.camera.last_x <= interact.rect.x + interact.width - TileManager.camera.last_x and interact.rect.y <= \
-                            mouse[1] <= interact.rect.y + interact.height and cls.attributing:
-                        return
 
             if mouse_buttons[0] == 1 and not cls.mouse_pushed_l:
                 cls.mouse_pushed_l = True
@@ -145,23 +140,24 @@ class TileEditor:
                     cls.last_mouse_pos_y = cls.mouse_pos_y
                     cls.last_mouse_pos_x_c = mouse[0]
                     cls.last_mouse_pos_y_c = mouse[1]
+
+                    for sprites in TileManager.interactible_blocks_group:
+                        if sprites.rect.collidepoint(mouse[0], mouse[1]):
+                            return
+
                     if not cls.custom_tile_placement:
                         if not TileManager.check_back:
                             if str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y) in cls.created_level["tiles"]:
                                 cls.created_level["tiles"][str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)][
                                     "class"] = TileEditor.selected_item
-                                for blocks in TileManager.environment_group:
-                                    if math.floor(
-                                            blocks.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(
-                                        blocks.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
-                                        blocks.kill()
-                                        del blocks
-                                for entity in TileManager.entity_group:
-                                    if math.floor(
-                                            entity.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(
-                                        entity.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
-                                        entity.kill()
-                                        del entity
+                                for sprites in TileManager.environment_group:
+                                    if sprites.rect.collidepoint(mouse[0] - TileManager.camera.last_x, mouse[1]):
+                                        sprites.kill()
+                                        del sprites
+                                for sprites in TileManager.entity_group:
+                                    if sprites.rect.collidepoint(mouse[0] - TileManager.camera.last_x, mouse[1]):
+                                        sprites.kill()
+                                        del sprites
                             else:
                                 cls.created_level["tiles"][str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)] = {
                                     "class": TileEditor.selected_item}
@@ -171,12 +167,10 @@ class TileEditor:
                             if str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y) in cls.created_level["tiles"]:
                                 cls.created_level["tiles"][str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)][
                                     "backgroundClass"] = TileEditor.selected_item
-                                for blocks in TileManager.background_blocks_group:
-                                    if math.floor(
-                                            blocks.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(
-                                        blocks.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
-                                        blocks.kill()
-                                        del blocks
+                                for sprites in TileManager.background_blocks_group:
+                                    if sprites.rect.collidepoint(mouse[0] - TileManager.camera.last_x, mouse[1]):
+                                        sprites.kill()
+                                        del sprites
                             else:
                                 cls.created_level["tiles"][str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)] = {
                                     "backgroundClass": TileEditor.selected_item}
@@ -194,11 +188,11 @@ class TileEditor:
                                                     TileEditor.selected_item)
                         elif TileManager.check_back:
                             if str(mouse[0] - TileManager.camera.last_x) + ", " + str(mouse[1]) in cls.created_level["tiles"]:
-                                cls.created_level["tiles"][str(mouse[0] - TileManager.camera.last_x) + ", " + str(mouse[1])][
+                                cls.created_level["tiles"][str((mouse[0] / Game.DISPLAY_RATIO) - TileManager.camera.last_x) + ", " + str(mouse[1] / Game.DISPLAY_RATIO)][
                                     "backgroundClass"] = TileEditor.selected_item
-                                cls.created_level["tiles"][str(mouse[0] - TileManager.camera.last_x) + ", " + str(mouse[1])]["customPlace"] = True
+                                cls.created_level["tiles"][str((mouse[0] / Game.DISPLAY_RATIO) - TileManager.camera.last_x) + ", " + str(mouse[1] / Game.DISPLAY_RATIO)]["customPlace"] = True
                             else:
-                                cls.created_level["tiles"][str(mouse[0] - TileManager.camera.last_x) + ", " + str(mouse[1])] = {
+                                cls.created_level["tiles"][str((mouse[0] / Game.DISPLAY_RATIO) - TileManager.camera.last_x) + ", " + str(mouse[1] / Game.DISPLAY_RATIO)] = {
                                     "backgroundClass": TileEditor.selected_item, "customPlace": True}
                             TileManager.place_back_block(mouse[0] - TileManager.camera.last_x, mouse[1],
                                                          TileEditor.selected_item)
@@ -212,59 +206,66 @@ class TileEditor:
                                                                              0] / 4 * 3 - Game.TILESIZE) - TileManager.camera.last_x) / Game.TILESIZE):
                     cls.last_mouse_pos_x = cls.mouse_pos_x
                     cls.last_mouse_pos_y = cls.mouse_pos_y
-                    try:
-                        if TileManager.check_back:
-                            for cls.backnd in TileManager.background_blocks_group:
+                    if TileManager.check_back:
+                        for sprites in TileManager.background_blocks_group:
+                            if sprites.rect.collidepoint(mouse[0] - TileManager.camera.last_x, mouse[1]):
+                                if hasattr(sprites, "customPlacement"):
+                                    if hasattr(sprites, "x") and hasattr(sprites, "y"):
+                                        cls.mouse_pos_y = sprites.y / Game.DISPLAY_RATIO
+                                        cls.mouse_pos_x = sprites.x / Game.DISPLAY_RATIO
+                                    else:
+                                        cls.mouse_pos_y = (sprites.rect.y - sprites.offset_y) / Game.DISPLAY_RATIO
+                                        cls.mouse_pos_x = (sprites.rect.x - sprites.offset_x) / Game.DISPLAY_RATIO
+                                    sprites.kill()
+                                    del sprites
+                                else:
+                                    sprites.kill()
+                                    del sprites
                                 try:
-                                    if cls.backnd.customPlacement:
-                                        if cls.backnd.rect.left <= mouse[0] <= cls.backnd.rect.right and cls.backnd.rect.top <= mouse[1] <= cls.backnd.rect.bottom:
-                                            cls.mouse_pos_y = cls.backnd.rect.y - cls.backnd.offset_y
-                                            cls.mouse_pos_x = cls.backnd.rect.x - cls.backnd.offset_x
-                                            cls.backnd.kill()
-                                            del cls.backnd
-                                except AttributeError:
-                                    if math.floor(cls.backnd.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(cls.backnd.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
-                                        cls.backnd.kill()
-                                        del cls.backnd
-                            del cls.created_level["tiles"][str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)]["backgroundClass"]
-                        else:
-                            for cls.env in TileManager.environment_group:
+                                    del cls.created_level["tiles"][str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)]["backgroundClass"]
+                                except KeyError:
+                                    pass
+                    else:
+                        for sprites in TileManager.environment_group:
+                            if sprites.rect.collidepoint(mouse[0] - TileManager.camera.last_x, mouse[1]):
+                                if hasattr(sprites, "customPlacement"):
+                                    if hasattr(sprites, "x") and hasattr(sprites, "y"):
+                                        cls.mouse_pos_y = sprites.y / Game.DISPLAY_RATIO
+                                        cls.mouse_pos_x = sprites.x / Game.DISPLAY_RATIO
+                                    else:
+                                        cls.mouse_pos_y = (sprites.rect.y - sprites.offset_y) / Game.DISPLAY_RATIO
+                                        cls.mouse_pos_x = (sprites.rect.x - sprites.offset_x) / Game.DISPLAY_RATIO
+                                    sprites.kill()
+                                    del sprites
+                                else:
+                                    sprites.kill()
+                                    del sprites
                                 try:
-                                    if cls.env.customPlacement:
-                                        if cls.env.rect.left <= mouse[0] <= cls.env.rect.right and cls.env.rect.top <= mouse[1] <= cls.env.rect.bottom:
-                                            cls.mouse_pos_y = cls.env.rect.y - cls.env.offset_y
-                                            cls.mouse_pos_x = cls.env.rect.x - cls.env.offset_x
-                                            cls.env.kill()
-                                            del cls.env
-                                except AttributeError:
-                                    if math.floor(
-                                            cls.env.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(cls.env.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
-                                        cls.env.kill()
-                                        del cls.env
-                            for cls.entitys in TileManager.entity_group:
+                                    print(cls.created_level)
+                                    print(cls.mouse_pos_x, cls.mouse_pos_y)
+                                    del cls.created_level["tiles"][str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)]["class"]
+                                except KeyError:
+                                    pass
+                        for sprites in TileManager.entity_group:
+                            if sprites.rect.collidepoint(mouse[0] - TileManager.camera.last_x, mouse[1]):
+                                if hasattr(sprites, "customPlacement"):
+                                    if hasattr(sprites, "x") and hasattr(sprites, "y"):
+                                        cls.mouse_pos_y = sprites.y / Game.DISPLAY_RATIO
+                                        cls.mouse_pos_x = sprites.x / Game.DISPLAY_RATIO
+                                    else:
+                                        cls.mouse_pos_y = (sprites.rect.y - sprites.offset_y) / Game.DISPLAY_RATIO
+                                        cls.mouse_pos_x = (sprites.rect.x - sprites.offset_x) / Game.DISPLAY_RATIO
+                                    sprites.kill()
+                                    del sprites
+                                else:
+                                    sprites.kill()
+                                    del sprites
                                 try:
-                                    if cls.entitys.customPlacement:
-                                        if cls.entitys.rect.left <= mouse[0] - TileManager.camera.last_x <= cls.entitys.rect.right and cls.entitys.rect.top <= mouse[1] <= cls.entitys.rect.bottom:
-                                            try:
-                                                cls.mouse_pos_y = cls.entitys.y
-                                                cls.mouse_pos_x = cls.entitys.x
-                                                cls.entitys.kill()
-                                                del cls.created_level["tiles"][str(cls.mouse_pos_x - TileManager.camera.last_x) + ", " + str(cls.mouse_pos_y)]["customPlace"]
-                                                del cls.entitys
-                                            except AttributeError:
-                                                cls.mouse_pos_y = cls.entitys.rect.y - cls.entitys.offset_y
-                                                cls.mouse_pos_x = cls.entitys.rect.x - cls.entitys.offset_x - TileManager.camera.last_x
-                                                cls.entitys.kill()
-                                                del cls.entitys
-                                except AttributeError:
-                                    if math.floor(
-                                            cls.entitys.rect.centerx / Game.TILESIZE) == cls.mouse_pos_x and math.floor(
-                                        cls.entitys.rect.centery / Game.TILESIZE) == cls.mouse_pos_y:
-                                        cls.entitys.kill()
-                                        del cls.entitys
-                            del cls.created_level["tiles"][str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)]["class"]
-                    except KeyError:
-                        pass
+                                    print(cls.created_level)
+                                    print(cls.mouse_pos_x, cls.mouse_pos_y)
+                                    del cls.created_level["tiles"][str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)]["class"]
+                                except KeyError:
+                                    pass
             elif mouse_buttons[1] != 1 and cls.mouse_pushed_r:
                 cls.mouse_pushed_r = False
             elif mouse_buttons[1] == 1 and cls.mouse_pos_x != cls.last_mouse_pos_x or cls.mouse_pos_y != cls.last_mouse_pos_y and cls.mouse_pushed_r:

@@ -63,16 +63,25 @@ class Lever(pygame.sprite.Sprite):
                                 if "assignement" not in TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]:
                                     TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"] = []
                                 TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"].append(str(sprites.x / Game.DISPLAY_RATIO) + ", " + str(sprites.y / Game.DISPLAY_RATIO))
+                                sound = RessourceLoader.get_multiple(self.sounds[1])[0]
+                                sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
+                                sound.play()
                         else:
                             if sprites.rect.x <= mousePos[0] <= sprites.rect.x + sprites.width and sprites.rect.y <= mousePos[1] <= sprites.rect.y + sprites.height:
                                 if "assignement" not in TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]:
                                     TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"] = []
                                 TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"].append(str(sprites.rect.x - sprites.offset_x) + ", " + str(sprites.rect.y - sprites.offset_y))
+                                sound = RessourceLoader.get_multiple(self.sounds[1])[0]
+                                sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
+                                sound.play()
                     else:
                         if sprites.rect.x <= mousePos[0] - TileManager.camera.last_x <= sprites.rect.x + sprites.width and sprites.rect.y <= mousePos[1] <= sprites.rect.y + sprites.height:
                             if "assignement" not in TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]:
                                 TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"] = []
                             TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"].append(str((sprites.rect.x - sprites.offset_x) // Game.TILESIZE) + ", " + str((sprites.rect.y - sprites.offset_y) // Game.TILESIZE))
+                            sound = RessourceLoader.get_multiple(self.sounds[1])[0]
+                            sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
+                            sound.play()
             elif mouse_buttons[2] == 1:
                 self.attributing = False
                 TileEditor.attributing = False
@@ -92,7 +101,7 @@ class Lever(pygame.sprite.Sprite):
                             pygame.draw.line(Game.surface, (0, 0, 0), (self.x + TileManager.camera.last_x, self.y + 30), (x + TileManager.camera.last_x, y))
                         else:
                             x = (int(sprite.split(", ")[0]) * Game.TILESIZE) + (Game.TILESIZE // 2)
-                            y = int(sprite.split(", ")[1]) * Game.TILESIZE
+                            y = (int(sprite.split(", ")[1]) * Game.TILESIZE) + (Game.TILESIZE // 2)
 
                             pygame.draw.line(Game.surface, (0, 0, 0), (self.x + TileManager.camera.last_x, self.y + 30), (x + TileManager.camera.last_x, y))
                     except KeyError:
