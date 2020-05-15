@@ -21,7 +21,7 @@ class Heart(pygame.sprite.Sprite):
                      2: self.half_heart,
                      3: self.empty_heart}
         self.image = self.full_heart
-        self.rect = [1810 * Game.DISPLAY_RATIO, 970 * Game.DISPLAY_RATIO, 100 * Game.DISPLAY_RATIO, 100 * Game.DISPLAY_RATIO]
+        self.rect = [Game.WINDOW_WIDTH - 100 * Game.DISPLAY_RATIO, Game.WINDOW_HEIGHT - 100 * Game.DISPLAY_RATIO, 100 * Game.DISPLAY_RATIO, 100 * Game.DISPLAY_RATIO]
 
     def update(self):
         """Change le cœur en fonction de la vie du joueur"""

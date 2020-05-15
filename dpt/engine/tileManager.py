@@ -80,6 +80,7 @@ class TileManager:
             TileEditor.ghost_block_group.empty()
             TileManager.interactible_blocks_group.empty()
             TileManager.clouds_group.empty()
+            TileManager.heart_group.empty()
 
             for entity in TileManager.entity_group:
                 entity.kill()
