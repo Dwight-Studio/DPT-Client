@@ -62,6 +62,7 @@ class RobotSpriteLight(pygame.sprite.Sprite):
         self.gravityModifier = 0
         self.big = False
         self.moveCount = 0
+        self.stuck_count = 0
 
     def update(self):
         if not TileEditor.is_editing:
@@ -116,8 +117,6 @@ class RobotSpriteLight(pygame.sprite.Sprite):
                     self.xvel = 0
                     self.standing = True
 
-                self.lastx = self.rect.x
-
                 if not (self.isJump and not EffectsManagement.dico_current_effects["Slow"]) or (EffectsManagement.dico_current_effects["Slow"] and self.frameCount % 3 == 0):
                     self.allowJump = False
                     self.gravityCount += 1
@@ -137,21 +136,29 @@ class RobotSpriteLight(pygame.sprite.Sprite):
                 elif self.right:
                     self.xvel += 1 * Game.DISPLAY_RATIO
 
+            self.lastx = self.rect.x
+
             self.maskcollide()
 
             self.rect.left += math.floor(self.xvel)
             self.rect.top -= math.floor(self.yvel)
 
             if self.lastx == self.rect.x:
+                self.stuck_count += 1
+
+            if self.stuck_count > 3:
+                print("ok")
                 self.left = not self.left
                 self.right = not self.right
 
                 if self.left:
-                    self.rect.x -= math.floor(31 * Game.DISPLAY_RATIO)
-                    self.xvel -= 1 * Game.DISPLAY_RATIO
+                    self.rect.x -= math.floor(36 * Game.DISPLAY_RATIO)
+                    self.xvel -= 1
                 elif self.right:
-                    self.rect.x += math.floor(31 * Game.DISPLAY_RATIO)
-                    self.xvel += 1 * Game.DISPLAY_RATIO
+                    self.rect.x += math.floor(36 * Game.DISPLAY_RATIO)
+                    self.xvel += 1
+
+                self.stuck_count = 0
 
             self.animation()
 
