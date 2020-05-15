@@ -106,7 +106,7 @@ class BeeSprite(pygame.sprite.Sprite):
             self.yvel = math.floor(math.cos(self.cosx) * 20 * Game.DISPLAY_RATIO) - math.floor(math.cos(self.cosx - 0.05) * 20 * Game.DISPLAY_RATIO)
             self.maskcollide()
 
-            self.distance += abs(self.xvel)
+            self.distance += abs(self.xvel) * Game.settings["30_FPS"]
             self.rect.top += self.yvel * Game.settings["30_FPS"]
             self.rect.left += math.floor(self.xvel) * Game.settings["30_FPS"]
 

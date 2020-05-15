@@ -26,7 +26,7 @@ class WormLavaSprite(pygame.sprite.Sprite):
         self.image = RessourceLoader.get(self.texture)
         self.anim = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in RessourceLoader.get_multiple(self.textures)]
         self.animReverse = [pygame.transform.flip(i, True, False) for i in self.anim]
-        self.lenAnim = len(self.anim) // Game.settings["30_FPS"]
+        self.lenAnim = len(self.anim)
         self.animFrameTime = 24 // Game.settings["30_FPS"]
         self.xvel = 0
         self.yvel = 0

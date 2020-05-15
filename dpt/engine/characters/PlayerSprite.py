@@ -225,7 +225,7 @@ class PlayerSprite(pygame.sprite.Sprite):
             self.collide()
 
             self.rect.left += math.floor(self.xvel) * Game.settings["30_FPS"]
-            self.rect.top -= math.floor(self.yvel) * Game.settings["30_FPS"]
+            self.rect.top -= math.floor(self.yvel)
 
             self.animation()
             self.enemies_collision(self.yvel, TileManager.enemy_group)
@@ -308,7 +308,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         for i in TileManager.environment_group:
             if i.rect.colliderect(Game.display_rect):
                 rx = i.rect.x - (self.rect.x + math.floor(self.xvel) * Game.settings["30_FPS"])
-                ry = i.rect.y - (self.rect.y - math.floor(self.yvel) * Game.settings["30_FPS"])
+                ry = i.rect.y - (self.rect.y - math.floor(self.yvel))
 
                 if self.mask.overlap(i.mask, (rx, ry)):
                     dx = 0
@@ -335,7 +335,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                     b_rects = mask.get_bounding_rects()
                     for rect in b_rects:
                         if self.rect.centery < i.rect.y:
-                            dy = rect.height + math.floor(self.yvel) * Game.settings["30_FPS"]
+                            dy = rect.height + math.floor(self.yvel)
                             self.yvel = 0
                             self.onPlatform = True
                             self.gravityCount = 0
@@ -345,7 +345,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                             self.jumpCount = self.CONSTJUMPCOUNT
                             self.frameCount = 0
                         elif self.rect.centery > i.rect.y:
-                            dy = - rect.height + math.floor(self.yvel) * Game.settings["30_FPS"]
+                            dy = - rect.height + math.floor(self.yvel)
                             self.yvel = 0
                             self.isJump = False
                             self.isReallyInJump = False
