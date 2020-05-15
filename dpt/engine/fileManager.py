@@ -5,7 +5,7 @@ from tkinter import filedialog
 
 from dpt.engine.scenes import Scenes
 from dpt.engine.tileManager import TileManager
-from dpt.engine.loader import RessourceLoader
+from dpt.engine.loader import RessourceLoader, RESSOURCES_DIRECTORY
 from dpt.game import Game
 from dpt.engine.loader import UnreachableRessourceError
 
@@ -21,6 +21,15 @@ class FileManager:
             root = tk.Tk()
             root.withdraw()
             rfile = filedialog.askopenfilename(parent=root, title="Sélectionner un niveau", filetypes=[("Fichier de niveau DPT", "*.level.json"), ("Tous les fichiers", "*")], initialdir=cls.defaultDir)
+            if os.path.realpath(rfile) == os.path.realpath(RESSOURCES_DIRECTORY + "dpt/levels/" + os.path.basename(rfile)):
+                try:
+                    TileManager.load_level("dpt.levels." + str(os.path.basename(rfile)).split(".")[0])
+                except UnreachableRessourceError and FileNotFoundError:
+                    cls.log.warning("Unable to load file : " + str(rfile))
+                    root.destroy()
+                except json.decoder.JSONDecodeError as ex:
+                    Scenes.return_error("Impossible de charger le niveau", "Détails :", "json.decoder.JSONDecodeError: ", str(ex))
+                return
             try:
                 with open(rfile) as f:
                     data = json.load(f)
