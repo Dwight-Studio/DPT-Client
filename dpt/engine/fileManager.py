@@ -38,7 +38,7 @@ class FileManager:
                 cls.log.warning("Unable to load file : " + str(rfile))
                 root.destroy()
         except json.decoder.JSONDecodeError as ex:
-            Scenes.return_error("Impossible de charger le niveau", "Détails :", "json.decoder.JSONDecodeError: " + str(ex))
+            Scenes.return_error("Impossible de charger le niveau", "Détails :", "json.decoder.JSONDecodeError: ", str(ex))
 
     @classmethod
     def save_file(cls, level):
