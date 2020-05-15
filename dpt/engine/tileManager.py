@@ -184,7 +184,7 @@ class TileManager:
 
             for keys in level["tiles"]:
                 loading_loop()
-                cls.coords = tuple(map(int, keys.split(", ")))
+                cls.coords = tuple(map(float, keys.split(", ")))
                 if cls.coords[0] > cls.max_width_size:
                     cls.max_width_size = cls.coords[0]
                 elif cls.coords[1] > cls.max_height_size:
@@ -195,8 +195,8 @@ class TileManager:
                 if "class" in level["tiles"][keys]:
                     if "customPlace" in level["tiles"][keys]:
                         try:
-                            RessourceLoader.get(level["tiles"][keys]["class"])(round(cls.coords[0] * Game.DISPLAY_RATIO), round(cls.coords[1] * Game.DISPLAY_RATIO))
-                            cls.log.debug("Tile " + level["tiles"][keys]["class"] + " placed at " + keys)
+                            RessourceLoader.get(level["tiles"][keys]["class"])(cls.coords[0] * Game.DISPLAY_RATIO, cls.coords[1] * Game.DISPLAY_RATIO)
+                            cls.log.debug("Tile " + level["tiles"][keys]["class"] + " placed at " + str(cls.coords[0] * Game.DISPLAY_RATIO) + ", " + str(cls.coords[1] * Game.DISPLAY_RATIO))
                         except UnreachableRessourceError:
                             cls.log.warning("Invalid class name : " + level["tiles"][keys]["class"] + " for tile : " + keys)
                     else:
@@ -208,7 +208,7 @@ class TileManager:
                 if "backgroundClass" in level["tiles"][keys]:
                     if "customPlace" in level["tiles"][keys]:
                         try:
-                            BackgroundFakeBlocks(round(cls.coords[0] * Game.DISPLAY_RATIO), round(cls.coords[1] * Game.DISPLAY_RATIO), level["tiles"][keys]["backgroundClass"])
+                            BackgroundFakeBlocks(cls.coords[0] * Game.DISPLAY_RATIO, cls.coords[1] * Game.DISPLAY_RATIO, level["tiles"][keys]["backgroundClass"])
                             cls.log.debug("Background tile " + level["tiles"][keys]["backgroundClass"] + " placed at " + keys)
                         except UnreachableRessourceError:
                             cls.log.warning("Invalid class name : " + level["tiles"][keys]["backgroundClass"] + " for tile : " + keys)

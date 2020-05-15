@@ -27,59 +27,26 @@
         "8, 9": {
             "class": "dpt.blocks.grass.Grass"
         },
-        "9, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "11, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "12, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "13, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "16, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "17, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "14, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "10, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "15, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "18, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "19, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "765, 813": {
+        "766.0, 813.0": {
             "class": "dpt.entities.interactible.buttons.buttonblue",
             "customPlace": true,
             "assignement": [
-                "10, 8",
-                "10, 7",
-                "10, 6",
-                "10, 5"
+                "11, 6",
+                "11, 5",
+                "11, 4",
+                "11, 3"
             ]
         },
-        "10, 8": {
+        "11, 6": {
             "class": "dpt.blocks.box.boxblue"
         },
-        "10, 7": {
+        "11, 5": {
             "class": "dpt.blocks.box.boxblue"
         },
-        "10, 6": {
+        "11, 4": {
             "class": "dpt.blocks.box.boxblue"
         },
-        "10, 5": {
+        "11, 3": {
             "class": "dpt.blocks.box.boxblue"
         }
     },
