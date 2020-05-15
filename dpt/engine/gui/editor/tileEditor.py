@@ -183,14 +183,14 @@ class TileEditor:
                             TileManager.place_back_block(cls.mouse_pos_x, cls.mouse_pos_y, TileEditor.selected_item)
                     elif cls.custom_tile_placement:
                         if not TileManager.check_back:
-                            if str(mouse[0] - TileManager.camera.last_x) + ", " + str(mouse[1]) in cls.created_level["tiles"]:
-                                cls.created_level["tiles"][str(mouse[0] - TileManager.camera.last_x) + ", " + str(mouse[1])][
+                            if str(round(mouse[0] / Game.DISPLAY_RATIO) - TileManager.camera.last_x) + ", " + str(round(mouse[1] / Game.DISPLAY_RATIO)) in cls.created_level["tiles"]:
+                                cls.created_level["tiles"][str(round(mouse[0] / Game.DISPLAY_RATIO) - TileManager.camera.last_x) + ", " + str(round(mouse[1] / Game.DISPLAY_RATIO))][
                                     "class"] = TileEditor.selected_item
-                                cls.created_level["tiles"][str(mouse[0] - TileManager.camera.last_x) + ", " + str(mouse[1])]["customPlace"] = True
+                                cls.created_level["tiles"][str(round(mouse[0] / Game.DISPLAY_RATIO) - TileManager.camera.last_x) + ", " + str(round(mouse[1] / Game.DISPLAY_RATIO))]["customPlace"] = True
                             else:
-                                cls.created_level["tiles"][str(mouse[0] - TileManager.camera.last_x) + ", " + str(mouse[1])] = {
+                                cls.created_level["tiles"][str(round(mouse[0] / Game.DISPLAY_RATIO) - TileManager.camera.last_x) + ", " + str(round(mouse[1] / Game.DISPLAY_RATIO))] = {
                                     "class": TileEditor.selected_item, "customPlace": True}
-                            TileManager.place_block(mouse[0] - TileManager.camera.last_x, mouse[1],
+                            TileManager.place_block(round(mouse[0] / Game.DISPLAY_RATIO) - TileManager.camera.last_x, round(mouse[1] / Game.DISPLAY_RATIO),
                                                     TileEditor.selected_item)
                         elif TileManager.check_back:
                             if str(mouse[0] - TileManager.camera.last_x) + ", " + str(mouse[1]) in cls.created_level["tiles"]:

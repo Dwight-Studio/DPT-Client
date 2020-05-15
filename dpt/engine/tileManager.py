@@ -195,7 +195,7 @@ class TileManager:
                 if "class" in level["tiles"][keys]:
                     if "customPlace" in level["tiles"][keys]:
                         try:
-                            RessourceLoader.get(level["tiles"][keys]["class"])(cls.coords[0] * Game.DISPLAY_RATIO, cls.coords[1] * Game.DISPLAY_RATIO)
+                            RessourceLoader.get(level["tiles"][keys]["class"])(round(cls.coords[0] * Game.DISPLAY_RATIO), round(cls.coords[1] * Game.DISPLAY_RATIO))
                             cls.log.debug("Tile " + level["tiles"][keys]["class"] + " placed at " + keys)
                         except UnreachableRessourceError:
                             cls.log.warning("Invalid class name : " + level["tiles"][keys]["class"] + " for tile : " + keys)
@@ -208,7 +208,7 @@ class TileManager:
                 if "backgroundClass" in level["tiles"][keys]:
                     if "customPlace" in level["tiles"][keys]:
                         try:
-                            BackgroundFakeBlocks(cls.coords[0] * Game.DISPLAY_RATIO, cls.coords[1] * Game.DISPLAY_RATIO, level["tiles"][keys]["backgroundClass"])
+                            BackgroundFakeBlocks(round(cls.coords[0] * Game.DISPLAY_RATIO), round(cls.coords[1] * Game.DISPLAY_RATIO), level["tiles"][keys]["backgroundClass"])
                             cls.log.debug("Background tile " + level["tiles"][keys]["backgroundClass"] + " placed at " + keys)
                         except UnreachableRessourceError:
                             cls.log.warning("Invalid class name : " + level["tiles"][keys]["backgroundClass"] + " for tile : " + keys)
@@ -346,8 +346,8 @@ class TileManager:
             RessourceLoader.get(item)(x_tile * Game.TILESIZE, y_tile * Game.TILESIZE)
             cls.log.debug("Tile " + item + " placed at " + str(x_tile) + ", " + str(y_tile))
         elif TileEditor.custom_tile_placement:
-            RessourceLoader.get(item)(math.floor(x_tile * Game.DISPLAY_RATIO), math.floor(y_tile * Game.DISPLAY_RATIO))
-            cls.log.debug("Tile " + item + " placed at " + str(math.floor(x_tile * Game.DISPLAY_RATIO)) + ", " + str(math.floor(y_tile * Game.DISPLAY_RATIO)))
+            RessourceLoader.get(item)(x_tile, y_tile)
+            cls.log.debug("Tile " + item + " placed at " + str(x_tile) + ", " + str(y_tile))
 
     @classmethod
     def place_back_block(cls, x_tile, y_tile, item):
