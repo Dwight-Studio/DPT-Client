@@ -69,8 +69,9 @@ class RobotSpriteLight(pygame.sprite.Sprite):
             from dpt.engine.tileManager import TileManager
             if not Game.freeze_game:
 
-                Game.add_debug_info("Enemy.left = " + str(self.left))
+                Game.add_debug_info("ENEMY.HORIZONTAL.VELOCITY = " + str(self.xvel))
                 Game.add_debug_info("Enemy.right = " + str(self.right))
+                Game.add_debug_info("Enemy.left = " + str(self.left))
 
                 if EffectsManagement.dico_current_effects["Slow"]:
                     self.maxvelocity = 1
