@@ -1,115 +1,97 @@
 {
   "tiles": {
-    "8, 8": {
-      "class": "dpt.blocks.box.boxblue"
-    },
-    "8, 9": {
-      "class": "dpt.blocks.box.boxblue"
-    },
-    "8, 10": {
+    "3, 9": {
       "class": "dpt.blocks.grass.Grass"
     },
-    "10, 10": {
+    "4, 9": {
       "class": "dpt.blocks.grass.Grass"
-    },
-    "12, 10": {
-      "class": "dpt.blocks.grass.Grass"
-    },
-    "9, 10": {
-      "class": "dpt.blocks.grass.Grass"
-    },
-    "11, 10": {
-      "class": "dpt.blocks.grass.Grass"
-    },
-    "14, 10": {
-      "class": "dpt.blocks.grass.Grass"
-    },
-    "15, 10": {
-      "class": "dpt.blocks.grass.Grass"
-    },
-    "13, 10": {
-      "class": "dpt.blocks.grass.Grass"
-    },
-    "14, 9": {
-      "class": "dpt.blocks.grass.Grass"
-    },
-    "14, 8": {},
-    "14, 7": {},
-    "6, 10": {
-      "class": "dpt.blocks.grass.Grass"
-    },
-    "7, 10": {
-      "class": "dpt.blocks.grass.Grass"
-    },
-    "5, 10": {
-      "class": "dpt.blocks.grass.Grass"
-    },
-    "8, 7": {
-      "class": "dpt.blocks.box.boxblue"
     },
     "5, 9": {
-      "class": "dpt.entities.flags.flaggreen"
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "6, 9": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "7, 9": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "8, 9": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "9, 9": {
+      "class": "dpt.blocks.grass.Grass"
     },
     "10, 9": {
-      "class": "dpt.entities.enemies.robotspritelight"
+      "class": "dpt.blocks.grass.Grass"
     },
-    "0, 11": {},
-    "607, 853": {
+    "11, 9": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "12, 9": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "13, 9": {},
+    "14, 9": {},
+    "15, 9": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "16, 9": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "17, 9": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "18, 9": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "19, 9": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "20, 9": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "21, 9": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "22, 9": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "23, 9": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "24, 9": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "25, 9": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "26, 9": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "7, 8": {
+      "class": "dpt.blocks.box.boxblue"
+    },
+    "7, 7": {
+      "class": "dpt.blocks.box.boxblue"
+    },
+    "7, 6": {
+      "class": "dpt.blocks.box.boxblue"
+    },
+    "487.5, 763.5": {
       "class": "dpt.entities.interactible.lever",
       "customPlace": true,
       "assignement": [
-        "8, 9",
-        "8, 8",
-        "8, 7"
+        "7, 8",
+        "7, 7",
+        "7, 6"
       ]
     },
-    "16, 10": {
-      "class": "dpt.blocks.grass.Grass"
+    "9, 8": {
+      "class": "dpt.entities.enemies.robotspritelight"
     },
-    "17, 10": {
-      "class": "dpt.blocks.grass.Grass"
-    },
-    "18, 10": {
-      "class": "dpt.blocks.grass.Grass"
-    },
-    "19, 10": {
-      "class": "dpt.blocks.grass.Grass"
-    },
-    "20, 10": {
-      "class": "dpt.blocks.grass.Grass"
-    },
-    "21, 10": {
-      "class": "dpt.blocks.grass.Grass"
-    },
-    "22, 10": {
-      "class": "dpt.blocks.grass.Grass"
-    },
-    "23, 10": {
-      "class": "dpt.blocks.grass.Grass"
-    },
-    "24, 10": {
-      "class": "dpt.blocks.grass.Grass"
-    },
-    "25, 10": {
-      "class": "dpt.blocks.grass.Grass"
-    },
-    "26, 10": {
-      "class": "dpt.blocks.grass.Grass"
-    },
-    "27, 10": {
-      "class": "dpt.blocks.grass.Grass"
-    },
-    "28, 10": {
-      "class": "dpt.blocks.grass.Grass"
-    },
-    "28, 9": {
-      "class": "dpt.entities.flags.flagred"
-    },
-    "21, 7": {},
-    "20, 7": {},
-    "19, 7": {}
+    "11, 8": {
+      "class": "dpt.entities.enemies.robotspritedark"
+    }
   },
-  "infos": {
-    "music": "dpt.sounds.musics.Grasslands_Theme"
-  }
+  "infos": {}
 }

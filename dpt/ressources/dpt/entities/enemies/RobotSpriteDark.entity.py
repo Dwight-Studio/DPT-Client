@@ -145,6 +145,8 @@ class RobotSpriteDark(pygame.sprite.Sprite):
 
             if self.lastx == self.rect.x:
                 self.stuck_count += 1
+            else:
+                self.stuck_count = 0
 
             if self.stuck_count > 3:
                 self.left = not self.left
@@ -156,7 +158,6 @@ class RobotSpriteDark(pygame.sprite.Sprite):
                 elif self.right:
                     self.rect.x += math.floor(36 * Game.DISPLAY_RATIO)
                     self.xvel += 1
-
                 self.stuck_count = 0
 
             self.animation()
