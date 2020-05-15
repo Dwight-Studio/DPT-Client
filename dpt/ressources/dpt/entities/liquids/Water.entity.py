@@ -32,4 +32,4 @@ class Water(pygame.sprite.Sprite):
         self.animation()
 
     def animation(self):
-        self.image = self.frames[Game.anim_count_water // 4]
+        self.image = self.frames[Game.anim_count_water // (4 // Game.settings["30_FPS"])]

@@ -57,20 +57,20 @@ class Spike(pygame.sprite.Sprite):
 
     def update(self):
         if not self.down and not self.done:
-            self.image = self.anim_texture[self.i]
+            self.image = self.anim_texture[self.i * Game.settings["30_FPS"]]
             self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
             self.rect = self.image.get_rect()
             self.rect.x = self.x + self.offset_x
             self.rect.y = self.y + self.offset_y
             self.i += 1
-            if self.i == len(self.anim_texture):
+            if self.i == len(self.anim_texture) // Game.settings["30_FPS"]:
                 self.done = True
         elif not self.up and not self.done:
-            self.image = self.anim_texture[self.i]
+            self.image = self.anim_texture[self.i * Game.settings["30_FPS"]]
             self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
             self.rect = self.image.get_rect()
             self.rect.x = self.x + self.offset_x
             self.rect.y = self.y + self.offset_y
             self.i += 1
-            if self.i == len(self.anim_texture):
+            if self.i == len(self.anim_texture) // Game.settings["30_FPS"]:
                 self.done = True

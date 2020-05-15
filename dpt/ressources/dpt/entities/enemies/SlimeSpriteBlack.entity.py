@@ -166,8 +166,8 @@ class SlimeSpriteBlack(pygame.sprite.Sprite):
             self.maskcollide()
 
             self.distance += abs(self.xvel)
-            self.rect.left += math.floor(self.xvel)
-            self.rect.top -= math.floor(self.yvel)
+            self.rect.left += math.floor(self.xvel) * Game.settings["30_FPS"]
+            self.rect.top -= math.floor(self.yvel) * Game.settings["30_FPS"]
 
             if self.lastx == self.rect.x:
                 self.left = not self.left
@@ -227,8 +227,8 @@ class SlimeSpriteBlack(pygame.sprite.Sprite):
     def maskcollide(self):
         for i in TileManager.environment_group:
             if i.rect.colliderect(Game.display_rect):
-                rx = i.rect.x - (self.rect.x + math.floor(self.xvel))
-                ry = i.rect.y - (self.rect.y - math.floor(self.yvel))
+                rx = i.rect.x - (self.rect.x + math.floor(self.xvel) * Game.settings["30_FPS"])
+                ry = i.rect.y - (self.rect.y - math.floor(self.yvel) * Game.settings["30_FPS"])
 
                 if self.mask.overlap(i.mask, (rx, ry)):
                     dx = 0
@@ -254,7 +254,7 @@ class SlimeSpriteBlack(pygame.sprite.Sprite):
                     b_rects = mask.get_bounding_rects()
                     for rect in b_rects:
                         if self.rect.y < i.rect.y:
-                            dy = rect.height + math.floor(self.yvel)
+                            dy = rect.height + math.floor(self.yvel) * Game.settings["30_FPS"]
                             self.yvel = 0
                             self.onPlatform = True
                             self.gravityCount = 0
@@ -263,7 +263,7 @@ class SlimeSpriteBlack(pygame.sprite.Sprite):
                             self.jumpCount = self.CONSTJUMPCOUNT
                             self.frameCount = 0
                         elif self.rect.y > i.rect.y:
-                            dy = - rect.height + math.floor(self.yvel)
+                            dy = - rect.height + math.floor(self.yvel) * Game.settings["30_FPS"]
                             self.yvel = 0
                             self.isJump = False
                             self.allowJump = False
@@ -278,10 +278,10 @@ class SlimeSpriteBlack(pygame.sprite.Sprite):
                     for rect in b_rects:
                         Game.add_debug_info("dx = " + str(dx))
                         if self.rect.x > i.rect.x:
-                            dx = rect.width + math.floor(self.xvel)
+                            dx = rect.width + math.floor(self.xvel) * Game.settings["30_FPS"]
                             self.xvel = 0
                         elif self.rect.x < i.rect.x:
-                            dx = - rect.width + math.floor(self.xvel)
+                            dx = - rect.width + math.floor(self.xvel) * Game.settings["30_FPS"]
                             self.xvel = 0
                         break
 

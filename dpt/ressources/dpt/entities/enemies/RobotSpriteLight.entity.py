@@ -141,8 +141,8 @@ class RobotSpriteLight(pygame.sprite.Sprite):
 
             self.maskcollide()
 
-            self.rect.left += math.floor(self.xvel)
-            self.rect.top -= math.floor(self.yvel)
+            self.rect.left += math.floor(self.xvel) * Game.settings["30_FPS"]
+            self.rect.top -= math.floor(self.yvel) * Game.settings["30_FPS"]
 
             if self.lastx == self.rect.x:
                 self.stuck_count += 1
@@ -166,17 +166,17 @@ class RobotSpriteLight(pygame.sprite.Sprite):
             self.check_void()
 
     def animation(self):
-        if self.moveCount >= 48:
+        if self.moveCount >= 48 // Game.settings["30_FPS"]:
             self.moveCount = 0
         if self.left:
             self.mask = self.CONSTMASK
-            self.image = self.anim[self.moveCount // 8]
+            self.image = self.anim[self.moveCount // (8 // Game.settings["30_FPS"])]
         elif self.right:
             self.mask = self.maskReverse
-            self.image = self.animReverse[self.moveCount // 8]
+            self.image = self.animReverse[self.moveCount // (8 // Game.settings["30_FPS"])]
 
         if self.moveCount % 24 == 0:
-            sound = RessourceLoader.get_multiple(self.sounds[0])[self.moveCount // 24]
+            sound = RessourceLoader.get_multiple(self.sounds[0])[self.moveCount // (24 // Game.settings["30_FPS"])]
             sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
             sound.play()
 
@@ -215,8 +215,8 @@ class RobotSpriteLight(pygame.sprite.Sprite):
     def maskcollide(self):
         for i in TileManager.environment_group:
             if i.rect.colliderect(Game.display_rect):
-                rx = i.rect.x - (self.rect.x + math.floor(self.xvel))
-                ry = i.rect.y - (self.rect.y - math.floor(self.yvel))
+                rx = i.rect.x - (self.rect.x + math.floor(self.xvel) * Game.settings["30_FPS"])
+                ry = i.rect.y - (self.rect.y - math.floor(self.yvel) * Game.settings["30_FPS"])
 
                 if self.mask.overlap(i.mask, (rx, ry)):
                     dx = 0
@@ -242,7 +242,7 @@ class RobotSpriteLight(pygame.sprite.Sprite):
                     b_rects = mask.get_bounding_rects()
                     for rect in b_rects:
                         if self.rect.y < i.rect.y:
-                            dy = rect.height + math.floor(self.yvel)
+                            dy = rect.height + math.floor(self.yvel) // Game.settings["30_FPS"]
                             self.yvel = 0
                             self.onPlatform = True
                             self.gravityCount = 0
@@ -251,7 +251,7 @@ class RobotSpriteLight(pygame.sprite.Sprite):
                             self.jumpCount = self.CONSTJUMPCOUNT
                             self.frameCount = 0
                         elif self.rect.y > i.rect.y:
-                            dy = - rect.height + math.floor(self.yvel)
+                            dy = - rect.height + math.floor(self.yvel) // Game.settings["30_FPS"]
                             self.yvel = 0
                             self.isJump = False
                             self.allowJump = False
@@ -266,10 +266,10 @@ class RobotSpriteLight(pygame.sprite.Sprite):
                     for rect in b_rects:
                         Game.add_debug_info("dx = " + str(dx))
                         if self.rect.x > i.rect.x:
-                            dx = rect.width + math.floor(self.xvel)
+                            dx = rect.width + math.floor(self.xvel) * Game.settings["30_FPS"]
                             self.xvel = 0
                         elif self.rect.x < i.rect.x:
-                            dx = - rect.width + math.floor(self.xvel)
+                            dx = - rect.width + math.floor(self.xvel) * Game.settings["30_FPS"]
                             self.xvel = 0
                         break
 

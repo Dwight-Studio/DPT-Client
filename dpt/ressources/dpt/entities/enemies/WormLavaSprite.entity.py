@@ -27,7 +27,7 @@ class WormLavaSprite(pygame.sprite.Sprite):
         self.anim = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in RessourceLoader.get_multiple(self.textures)]
         self.animReverse = [pygame.transform.flip(i, True, False) for i in self.anim]
         self.lenAnim = len(self.anim)
-        self.animFrameTime = 24
+        self.animFrameTime = 24 // Game.settings["30_FPS"]
         self.xvel = 0
         self.yvel = 0
         self.left = False
@@ -130,8 +130,8 @@ class WormLavaSprite(pygame.sprite.Sprite):
 
             self.maskcollide()
 
-            self.rect.left += math.floor(self.xvel)
-            self.rect.top -= math.floor(self.yvel)
+            self.rect.left += math.floor(self.xvel) * Game.settings["30_FPS"]
+            self.rect.top -= math.floor(self.yvel) * Game.settings["30_FPS"]
 
             if self.lastx == self.rect.x:
                 self.left = not self.left
@@ -183,8 +183,8 @@ class WormLavaSprite(pygame.sprite.Sprite):
     def maskcollide(self):
         for i in TileManager.environment_group:
             if i.rect.colliderect(Game.display_rect):
-                rx = i.rect.x - (self.rect.x + math.floor(self.xvel))
-                ry = i.rect.y - (self.rect.y - math.floor(self.yvel))
+                rx = i.rect.x - (self.rect.x + math.floor(self.xvel) * Game.settings["30_FPS"])
+                ry = i.rect.y - (self.rect.y - math.floor(self.yvel) * Game.settings["30_FPS"])
 
                 if self.mask.overlap(i.mask, (rx, ry)):
                     dx = 0
@@ -207,13 +207,13 @@ class WormLavaSprite(pygame.sprite.Sprite):
                     b_rects = mask.get_bounding_rects()
                     for rect in b_rects:
                         if self.rect.y < i.rect.y:
-                            dy = rect.height + math.floor(self.yvel)
+                            dy = rect.height + math.floor(self.yvel) * Game.settings["30_FPS"]
                             self.yvel = 0
                             self.gravityCount = 0
                             self.isJump = False
                             self.frameCount = 0
                         elif self.rect.y > i.rect.y:
-                            dy = - rect.height + math.floor(self.yvel)
+                            dy = - rect.height + math.floor(self.yvel) * Game.settings["30_FPS"]
                             self.yvel = 0
                             self.isJump = False
                         break
@@ -226,10 +226,10 @@ class WormLavaSprite(pygame.sprite.Sprite):
                     for rect in b_rects:
                         Game.add_debug_info("dx = " + str(dx))
                         if self.rect.x > i.rect.x:
-                            dx = rect.width + math.floor(self.xvel)
+                            dx = rect.width + math.floor(self.xvel) * Game.settings["30_FPS"]
                             self.xvel = 0
                         elif self.rect.x < i.rect.x:
-                            dx = - rect.width + math.floor(self.xvel)
+                            dx = - rect.width + math.floor(self.xvel) * Game.settings["30_FPS"]
                             self.xvel = 0
                         break
 

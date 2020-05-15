@@ -334,6 +334,7 @@ class Scenes:
         from dpt.engine.gui.menu.simpleSprite import SimpleSprite
         from dpt.engine.gui.menu.text import Text
         from dpt.engine.gui.menu.radioButton import RadioButton
+        from dpt.engine.gui.menu.checkbox import Checkbox
 
         btn_list = []
 
@@ -409,19 +410,19 @@ class Scenes:
                                            math.floor(50 * Game.DISPLAY_RATIO),
                                            (0, 0, 0),
                                            "dpt.fonts.DINOT_CondBlack"),
-                    "left_button": Button(math.floor(490 * Game.DISPLAY_RATIO),
+                    "left_button": Button(math.floor(440 * Game.DISPLAY_RATIO),
                                           math.floor(800 * Game.DISPLAY_RATIO),
                                           math.floor(43 * Game.DISPLAY_RATIO),
                                           math.floor(50 * Game.DISPLAY_RATIO),
                                           RessourceLoader.get("dpt.images.gui.buttons.BTN_HORIZ_SINGLE_19"),
                                           pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_HORIZ_SINGLE_7")),
-                    "right_button": Button(math.floor(890 * Game.DISPLAY_RATIO),
+                    "right_button": Button(math.floor(840 * Game.DISPLAY_RATIO),
                                            math.floor(800 * Game.DISPLAY_RATIO),
                                            math.floor(43 * Game.DISPLAY_RATIO),
                                            math.floor(50 * Game.DISPLAY_RATIO),
                                            RessourceLoader.get("dpt.images.gui.buttons.BTN_HORIZ_SINGLE_1"),
                                            pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_HORIZ_SINGLE_13")),
-                    "graphics_text": Text(math.floor(550 * Game.DISPLAY_RATIO),
+                    "graphics_text": Text(math.floor(500 * Game.DISPLAY_RATIO),
                                           math.floor(800 * Game.DISPLAY_RATIO),
                                           "Par défaut",
                                           math.floor(30 * Game.DISPLAY_RATIO),
@@ -429,6 +430,15 @@ class Scenes:
                                           "dpt.fonts.DINOT_CondBlack",
                                           centerx=math.floor(711 * Game.DISPLAY_RATIO),
                                           centery=math.floor(825 * Game.DISPLAY_RATIO)),
+                    "graphics_checkbox": Checkbox(math.floor(840 * Game.DISPLAY_RATIO),
+                                                  math.floor(675 * Game.DISPLAY_RATIO),
+                                                  0.7),
+                    "graphics_checkbox_text": Text(math.floor(890 * Game.DISPLAY_RATIO),
+                                                   math.floor(675 * Game.DISPLAY_RATIO),
+                                                   "60 FPS",
+                                                   math.floor(30 * Game.DISPLAY_RATIO),
+                                                   (0, 0, 0),
+                                                   "dpt.fonts.DINOT_CondBlack"),
 
                     "window_server": Window(math.floor(1022 * Game.DISPLAY_RATIO), math.floor(505 * Game.DISPLAY_RATIO), 4, 6),
                     "server_title": Text(math.floor(1080 * Game.DISPLAY_RATIO),
@@ -527,6 +537,8 @@ class Scenes:
 
         Game.temp["display_size"] = Game.settings["display_size"]
         Game.temp["prev"] = Game.settings.copy()
+
+        Game.gui["graphics_checkbox"].value = Game.settings["30_FPS"] == 1
 
         # Loops
         from dpt.engine.mainLoop import settings_menu_loop
