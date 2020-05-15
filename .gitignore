@@ -6,6 +6,8 @@ __pycache__/
 # C extensions
 *.so
 
+dpt/ressources/user/profile.json
+
 # Distribution / packaging
 .Python
 build/
@@ -132,4 +134,3 @@ dmypy.json
 dpt/logs/latest.log
 dpt/logs/
 docs/source/logs/
-dpt/ressources/user/profile.json
