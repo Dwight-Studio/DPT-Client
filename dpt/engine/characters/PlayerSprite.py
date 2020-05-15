@@ -203,7 +203,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                     if not self.onPlatform:
                         if (self.jumpCount >= 0 and not EffectsManagement.dico_current_effects["Slow"]) or (EffectsManagement.dico_current_effects["Slow"] and self.frameCount % 3 == 0):
                             self.yvel = math.floor((self.jumpCount ** 2) * (0.05 + self.gravityModifier + self.jumpModifier) * Game.DISPLAY_RATIO)
-                            self.jumpCount -= 1 * Game.settings["30_FPS"]
+                            self.jumpCount -= 1
                         elif self.jumpCount < 0:
                             if self.isReallyInJump:
                                 self.isJump = True
@@ -216,7 +216,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                 if (EffectsManagement.dico_current_effects["Slow"] and self.fallCount % 3 == 0) or not EffectsManagement.dico_current_effects["Slow"]:
                     Game.add_debug_info("GRAVITY")
                     self.allowJump = False
-                    self.gravityCount += 1 * Game.settings["30_FPS"]
+                    self.gravityCount += 1
                     self.gravity = math.floor((self.gravityCount ** 2) * (0.05 - self.gravityModifier) * Game.DISPLAY_RATIO) * -1
                     self.yvel = self.gravity
                 else:
@@ -238,7 +238,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.imunityTime = 180
                 Game.life = 1
 
-            if self.imunityTime % 7 == 0 and self.imunityTime > 0 and self.damaged:
+            if self.imunityTime % (6 // Game.settings["30_FPS"]) == 0 and self.imunityTime > 0 and self.damaged:
                 self.blink = not self.blink
             elif self.imunityTime < 0:
                 self.blink = False
@@ -308,7 +308,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         for i in TileManager.environment_group:
             if i.rect.colliderect(Game.display_rect):
                 rx = i.rect.x - (self.rect.x + math.floor(self.xvel) * Game.settings["30_FPS"])
-                ry = i.rect.y - (self.rect.y - math.floor(self.yvel))
+                ry = i.rect.y - (self.rect.y - math.floor(self.yvel) * Game.settings["30_FPS"])
 
                 if self.mask.overlap(i.mask, (rx, ry)):
                     dx = 0
@@ -335,7 +335,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                     b_rects = mask.get_bounding_rects()
                     for rect in b_rects:
                         if self.rect.centery < i.rect.y:
-                            dy = rect.height + math.floor(self.yvel)
+                            dy = rect.height + math.floor(self.yvel) * Game.settings["30_FPS"]
                             self.yvel = 0
                             self.onPlatform = True
                             self.gravityCount = 0
@@ -345,7 +345,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                             self.jumpCount = self.CONSTJUMPCOUNT
                             self.frameCount = 0
                         elif self.rect.centery > i.rect.y:
-                            dy = - rect.height + math.floor(self.yvel)
+                            dy = - rect.height + math.floor(self.yvel) * Game.settings["30_FPS"]
                             self.yvel = 0
                             self.isJump = False
                             self.isReallyInJump = False
@@ -429,7 +429,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         else:
             neg = -1
         self.yvel = math.floor((self.jumpCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * neg
-        self.jumpCount -= 1 * Game.settings["30_FPS"]
+        self.jumpCount -= 1
         self.rect.top -= self.yvel
 
     def death_fall(self):

@@ -5,6 +5,7 @@ from dpt.game import Game
 
 class Spike(pygame.sprite.Sprite):
     texture = "dpt.images.environment.traps.Obstacle_Spike_Up"
+    textures = ["dpt.images.environment.traps.Obstacle_Spike_*", "dpt.images.environment.traps.spike"]
     sounds = "dpt.sounds.sfx.sfx_stone"
     width = Game.TILESIZE
     height = Game.TILESIZE // 2
@@ -42,7 +43,7 @@ class Spike(pygame.sprite.Sprite):
         self.i = 0
         self.done = False
         TileManager.deadly_object_group.add(self)
-        self.anim_texture = RessourceLoader.get_multiple("dpt.images.environment.traps.Spike.Obstacle_Spike_Up_*")
+        self.anim_texture = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in RessourceLoader.get_multiple("dpt.images.environment.traps.Spike.Obstacle_Spike_Up_*")]
 
     def activate(self):
         self.up = False
@@ -50,13 +51,12 @@ class Spike(pygame.sprite.Sprite):
         self.done = False
         from dpt.engine.tileManager import TileManager
         TileManager.deadly_object_group.remove(self)
-        self.anim_texture = RessourceLoader.get_multiple("dpt.images.environment.traps.Spike.Obstacle_Spike_Up_*")
+        self.anim_texture = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in RessourceLoader.get_multiple("dpt.images.environment.traps.Spike.Obstacle_Spike_Up_*")]
         self.anim_texture.reverse()
 
     def update(self):
         if not self.down and not self.done:
             self.image = self.anim_texture[self.i * Game.settings["30_FPS"]]
-            self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
             self.rect = self.image.get_rect()
             self.rect.x = self.x + self.offset_x
             self.rect.y = self.y + self.offset_y
@@ -65,7 +65,6 @@ class Spike(pygame.sprite.Sprite):
                 self.done = True
         elif not self.up and not self.done:
             self.image = self.anim_texture[self.i * Game.settings["30_FPS"]]
-            self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
             self.rect = self.image.get_rect()
             self.rect.x = self.x + self.offset_x
             self.rect.y = self.y + self.offset_y

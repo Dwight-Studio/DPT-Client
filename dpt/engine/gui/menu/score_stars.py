@@ -71,7 +71,7 @@ class TransitionStar:
             self.rect = self.image.get_rect()
             self.rect.centerx = self.x
             self.rect.centery = self.y
-            self.i += 1
+            self.i += 1 * Game.settings["30_FPS"]
             Game.surface.blit(self.image, self.rect)
         elif not self.i < self.max and self.run:
             sound = RessourceLoader.get("dpt.sounds.sfx.sfx_score_impact")
