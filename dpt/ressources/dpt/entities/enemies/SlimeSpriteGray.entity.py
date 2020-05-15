@@ -288,8 +288,8 @@ class SlimeSpriteGray(pygame.sprite.Sprite):
                     self.rect.x += dx
 
     def checkJump(self):
-        if self.distance > 400 * Game.DISPLAY_RATIO:
-            self.distance = random.random() * 100
+        if self.distance > 150 * Game.DISPLAY_RATIO:
+            self.distance = random.random() * 40
             if random.random() >= 0.5:
                 return True
             else:
