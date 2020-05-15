@@ -1,219 +1,118 @@
 {
     "tiles": {
-        "0, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "1, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "2, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "3, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "4, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "6, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "7, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "8, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "9, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-        "5, 9": {
-            "class": "dpt.blocks.grass.Grass"
-        },
-      "10, 9": {
-        "class": "dpt.blocks.grass.Grass"
+      "3, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "11, 9": {
-        "class": "dpt.blocks.grass.Grass"
+      "4, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "12, 9": {
-        "class": "dpt.blocks.grass.Grass"
+      "5, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "765.0, 807.75": {},
-      "9, 6": {},
-      "9, 5": {},
-      "9, 4": {},
-      "9, 3": {},
-      "9, 2": {},
-      "10, 7": {},
-      "10, 6": {},
-      "10, 5": {},
-      "10, 4": {},
-      "8, 8": {},
-      "769.5, 810.0": {
-        "assignement": [
-          "10, 7",
-          "10, 6",
-          "10, 5",
-          "10, 4"
-        ]
+      "6, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "13, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "7, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "14, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "8, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "15, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "9, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "16, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "10, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "17, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "11, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "18, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "12, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "19, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "13, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "20, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "14, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "21, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "15, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "22, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "16, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "23, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "17, 11": {},
+      "18, 11": {},
+      "18, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "24, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "19, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "25, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "20, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "26, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "17, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "27, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "21, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "28, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "22, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "29, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "23, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "30, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "24, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "31, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "25, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "32, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "26, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "33, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "27, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "34, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "28, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "35, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "29, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "36, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
+      "30, 10": {
+        "class": "dpt.blocks.box.boxblue"
       },
-      "37, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
-      },
-      "38, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
-      },
-      "39, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
-      },
-      "40, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
-      },
-      "41, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
-      },
-      "42, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
-      },
-      "43, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
-      },
-      "44, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
-      },
-      "45, 9": {
-        "class": "dpt.blocks.snow.snowslopeconnectorr"
-      },
-      "3873.0, 579.0": {
-        "class": "dpt.entities.interactible.spike",
-        "customPlace": true
-      },
-      "2644.0, 570.0": {
-        "class": "dpt.entities.interactible.spike",
-        "customPlace": true
-      },
-      "1251.0, 560.0": {
-        "class": "dpt.entities.interactible.spike",
-        "customPlace": true
-      },
-      "749.0, 809.0": {
+      "390.0, 883.0": {
         "class": "dpt.entities.interactible.buttons.buttonblue",
         "customPlace": true,
         "assignement": [
-          "1251.0, 560.0"
+          "3, 10",
+          "4, 10",
+          "5, 10",
+          "6, 10",
+          "7, 10",
+          "8, 10",
+          "9, 10",
+          "10, 10",
+          "11, 10",
+          "12, 10",
+          "13, 10"
         ]
       },
-      "2431.0, 814.0": {
+      "2227.0, 896.0": {
         "class": "dpt.entities.interactible.buttons.buttonblue",
         "customPlace": true,
         "assignement": [
-          "2644.0, 570.0"
-        ]
-      },
-      "2706.0, 562.0": {
-        "class": "dpt.entities.interactible.buttons.buttonblue",
-        "customPlace": true,
-        "assignement": [
-          "2644.0, 570.0"
-        ]
-      },
-      "3539.0, 811.0": {
-        "class": "dpt.entities.interactible.buttons.buttonblue",
-        "customPlace": true,
-        "assignement": [
-          "3873.0, 579.0",
-          "3887.0, 572.0"
-        ]
-      },
-      "3912.0, 574.0": {
-        "class": "dpt.entities.interactible.buttons.buttonblue",
-        "customPlace": true,
-        "assignement": [
-          "3873.0, 579.0"
-        ]
-      },
-      "3887.0, 572.0": {
-        "class": "dpt.entities.interactible.spike",
-        "customPlace": true
-      },
-      "3953.0, 561.0": {
-        "class": "dpt.entities.interactible.buttons.buttonblue",
-        "customPlace": true,
-        "assignement": [
-          "3887.0, 572.0"
+          "24, 10",
+          "25, 10",
+          "26, 10",
+          "27, 10",
+          "28, 10",
+          "29, 10"
         ]
       }
     },
