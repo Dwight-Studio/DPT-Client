@@ -69,8 +69,9 @@ class RobotSpriteDark(pygame.sprite.Sprite):
             from dpt.engine.tileManager import TileManager
             if not Game.freeze_game:
 
-                Game.add_debug_info("Enemy.left = " + str(self.left))
+                Game.add_debug_info("ENEMY.HORIZONTAL.VELOCITY = " + str(self.xvel))
                 Game.add_debug_info("Enemy.right = " + str(self.right))
+                Game.add_debug_info("Enemy.left = " + str(self.left))
 
                 if EffectsManagement.dico_current_effects["Slow"]:
                     self.maxvelocity = 1
@@ -182,7 +183,7 @@ class RobotSpriteDark(pygame.sprite.Sprite):
         self.moveCount += 1
 
     def check_void(self):
-        if self.rect.top > 2000:
+        if self.rect.top > 2000 * Game.DISPLAY_RATIO:
             self.kill()
 
     def kill(self):
