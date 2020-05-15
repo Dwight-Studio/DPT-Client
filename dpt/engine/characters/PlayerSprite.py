@@ -122,11 +122,11 @@ class PlayerSprite(pygame.sprite.Sprite):
                     self.fallCount += 1
                     self.isJump = False
                 else:
-                    self.frameCount += 1
+                    self.frameCount += 1 * Game.settings["30_FPS"]
                     if self.jumpCount > 0:
                         self.fallCount = 0
                     else:
-                        self.fallCount += 1
+                        self.fallCount += 1 * Game.settings["30_FPS"]
 
             if EffectsManagement.dico_current_effects["jumpBoost"]:
                 self.jumpModifier = 0.07
@@ -203,7 +203,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                     if not self.onPlatform:
                         if (self.jumpCount >= 0 and not EffectsManagement.dico_current_effects["Slow"]) or (EffectsManagement.dico_current_effects["Slow"] and self.frameCount % 3 == 0):
                             self.yvel = math.floor((self.jumpCount ** 2) * (0.05 + self.gravityModifier + self.jumpModifier) * Game.DISPLAY_RATIO)
-                            self.jumpCount -= 1
+                            self.jumpCount -= 1 * Game.settings["30_FPS"]
                         elif self.jumpCount < 0:
                             if self.isReallyInJump:
                                 self.isJump = True
@@ -216,7 +216,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                 if (EffectsManagement.dico_current_effects["Slow"] and self.fallCount % 3 == 0) or not EffectsManagement.dico_current_effects["Slow"]:
                     Game.add_debug_info("GRAVITY")
                     self.allowJump = False
-                    self.gravityCount += 1
+                    self.gravityCount += 1 * Game.settings["30_FPS"]
                     self.gravity = math.floor((self.gravityCount ** 2) * (0.05 - self.gravityModifier) * Game.DISPLAY_RATIO) * -1
                     self.yvel = self.gravity
                 else:
@@ -429,7 +429,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         else:
             neg = -1
         self.yvel = math.floor((self.jumpCount ** 2) * 0.05 * Game.DISPLAY_RATIO) * neg
-        self.jumpCount -= 1
+        self.jumpCount -= 1 * Game.settings["30_FPS"]
         self.rect.top -= self.yvel
 
     def death_fall(self):

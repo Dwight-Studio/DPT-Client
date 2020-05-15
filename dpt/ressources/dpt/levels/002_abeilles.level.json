@@ -126,7 +126,7 @@
       "class": "dpt.blocks.grass.grass"
     },
     "3, 6": {
-      "class": "dpt.blocks.grass.grasssloped"
+      "class": "dpt.blocks.grass.grasscorneredger"
     },
     "1, 5": {
       "class": "dpt.blocks.grass.grasssloped"
