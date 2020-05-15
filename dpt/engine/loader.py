@@ -303,7 +303,10 @@ class RessourceLoader:
 
             entries = cls.select_entries(path)
             if len(entries) == 0:
-                cls.logger.warning("The requested selector (" + path + ") did not find any entries, it may cause exceptions but ignoring")
+                if isinstance(path, list):
+                    cls.logger.warning("The requested selector (" + ", ".join(path) + ") did not find any entries, it may cause exceptions but ignoring")
+                else:
+                    cls.logger.warning("The requested selector (" + path + ") did not find any entries, it may cause exceptions but ignoring")
             for path in entries:
                 cls.pending_ressources[path] = cls.RESSOURCES[path]
         except KeyError:

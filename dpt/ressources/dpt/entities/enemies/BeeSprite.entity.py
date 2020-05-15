@@ -134,7 +134,7 @@ class BeeSprite(pygame.sprite.Sprite):
 
     def preview(self):
         if BeeSprite.preview_surface is not None:
-            Game.surface.blit(BeeSprite.preview_surface, (self.rect.x, self.rect.y - math.floor(50 * Game.DISPLAY_RATIO)))
+            Game.surface.blit(BeeSprite.preview_surface, (self.rect.x - TileManager.camera.last_x, self.rect.y - math.floor(50 * Game.DISPLAY_RATIO)))
         else:
             BeeSprite.preview_surface = pygame.surface.Surface((1200, 100)).convert_alpha()
             BeeSprite.preview_surface.fill((0, 0, 0, 0))
@@ -155,7 +155,7 @@ class BeeSprite(pygame.sprite.Sprite):
                     y = 50 + BeeSprite.height // 2
                 pygame.draw.rect(BeeSprite.preview_surface, (193, 39, 45), (x, y, 5, 5))
                 BeeSprite.preview_surface = pygame.transform.scale(BeeSprite.preview_surface, (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT))
-                Game.surface.blit(BeeSprite.preview_surface, (self.rect.x, self.rect.y - math.floor(50 * Game.DISPLAY_RATIO)))
+                Game.surface.blit(BeeSprite.preview_surface, (self.rect.x - TileManager.camera.last_x, self.rect.y - math.floor(50 * Game.DISPLAY_RATIO)))
 
     def maskcollide(self):
         for i in TileManager.environment_group:

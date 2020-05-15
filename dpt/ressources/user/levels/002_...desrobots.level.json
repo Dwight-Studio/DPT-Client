@@ -33,8 +33,7 @@
       "class": "dpt.blocks.grass.grass"
     },
     "11, 10": {
-      "class": "dpt.blocks.grass.grasscorneredger",
-      "backgroundClass": "dpt.blocks.grass.grasscorneredger"
+      "class": "dpt.blocks.grass.grass"
     },
     "2, 11": {
       "class": "dpt.blocks.grass.grassslopeconnectorl",
@@ -65,8 +64,7 @@
       "class": "dpt.blocks.grass.grasslower"
     },
     "11, 11": {
-      "class": "dpt.blocks.grass.grassr",
-      "backgroundClass": "dpt.blocks.grass.grassr"
+      "class": "dpt.blocks.grass.grasslower"
     },
     "0, 11": {
       "backgroundClass": "dpt.blocks.grass.grasslower",
@@ -191,10 +189,10 @@
       "backgroundClass": "dpt.entities.props.fences.fencemetal"
     },
     "14, 10": {
-      "class": "dpt.blocks.grass.grasscorneredgel"
+      "class": "dpt.blocks.grass.grass"
     },
     "14, 11": {
-      "class": "dpt.blocks.grass.grassl"
+      "class": "dpt.blocks.grass.grasslower"
     },
     "15, 10": {
       "class": "dpt.blocks.grass.grass"
@@ -225,8 +223,7 @@
       "backgroundClass": "dpt.entities.props.bushes.bush1"
     },
     "10, 6": {
-      "backgroundClass": "dpt.entities.props.bushes.bush3",
-      "class": "dpt.entities.interactible.coin"
+      "backgroundClass": "dpt.entities.props.bushes.bush3"
     },
     "9, 6": {
       "backgroundClass": "dpt.entities.props.bushes.bush2"
@@ -245,71 +242,6 @@
     },
     "15, 8": {
       "class": "dpt.blocks.grass.grasshalfedgea"
-    },
-    "1258.0, 538.0": {
-      "customPlace": true
-    },
-    "7, 6": {},
-    "8, 6": {
-      "class": "dpt.entities.interactible.coin"
-    },
-    "12, 6": {
-      "class": "dpt.entities.interactible.coin"
-    },
-    "868.0, 854.0": {
-      "class": "dpt.entities.props.plants.grass2",
-      "customPlace": true
-    },
-    "1364.0, 705.0": {
-      "class": "dpt.entities.props.plants.flowers.flowerstargreen",
-      "customPlace": true
-    },
-    "1713.0, 1079.0": {
-      "class": "dpt.entities.interactible.traps.spike",
-      "customPlace": true
-    },
-    "1805.0, 1077.0": {
-      "class": "dpt.entities.interactible.traps.spike",
-      "customPlace": true
-    },
-    "1891.0, 1077.0": {
-      "class": "dpt.entities.interactible.traps.spike",
-      "customPlace": true
-    },
-    "1982.0, 1074.0": {
-      "customPlace": true
-    },
-    "1983.0, 1076.0": {
-      "class": "dpt.entities.interactible.traps.spike",
-      "customPlace": true
-    },
-    "19, 10": {
-      "backgroundClass": "dpt.blocks.grass.grass"
-    },
-    "20, 10": {
-      "backgroundClass": "dpt.blocks.grass.grass"
-    },
-    "20, 11": {
-      "backgroundClass": "dpt.blocks.grass.grasslower"
-    },
-    "19, 11": {
-      "backgroundClass": "dpt.blocks.grass.grasslower"
-    },
-    "21, 11": {
-      "backgroundClass": "dpt.blocks.grass.grasslower"
-    },
-    "22, 11": {
-      "backgroundClass": "dpt.blocks.grass.grasslower"
-    },
-    "22, 10": {
-      "backgroundClass": "dpt.blocks.grass.grass"
-    },
-    "21, 10": {
-      "backgroundClass": "dpt.blocks.grass.grass"
-    },
-    "5, 6": {},
-    "4, 6": {
-      "class": "dpt.entities.enemies.beesprite"
     }
   },
   "infos": {

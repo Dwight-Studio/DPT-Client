@@ -334,7 +334,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                     mask = self.mask.overlap_mask(i.mask, (crx, ry))
                     b_rects = mask.get_bounding_rects()
                     for rect in b_rects:
-                        if self.rect.y < i.rect.y:
+                        if self.rect.centery < i.rect.y:
                             dy = rect.height + math.floor(self.yvel)
                             self.yvel = 0
                             self.onPlatform = True
@@ -344,7 +344,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                             self.allowJump = True
                             self.jumpCount = self.CONSTJUMPCOUNT
                             self.frameCount = 0
-                        elif self.rect.y > i.rect.y:
+                        elif self.rect.centery > i.rect.y:
                             dy = - rect.height + math.floor(self.yvel)
                             self.yvel = 0
                             self.isJump = False
