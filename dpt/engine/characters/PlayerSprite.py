@@ -72,7 +72,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.standing = False
         self.walkCount = 0
         self.isJump = False
-        self.jumpCount = 21
+        self.jumpCount = 23
         self.CONSTJUMPCOUNT = self.jumpCount
         self.onPlatform = False
         self.allowJump = True

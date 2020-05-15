@@ -44,7 +44,7 @@ class Scenes:
         # Initialisation du TileManager
         TileEditor.is_editing = True
         if not TileManager.load_level(level):
-            return False
+            Scenes.return_error("Impossible de charger le niveau.", "Détails :", "Aucune information supplémentaire")
 
         # Ajout du bouton d'éditeur
         from dpt.engine.gui.menu import Text
@@ -137,10 +137,6 @@ class Scenes:
                                             math.floor(25 * Game.DISPLAY_RATIO),
                                             (0, 0, 0),
                                             "dpt.fonts.DINOT_CondBlack")}
-
-        # Timer
-        from dpt.engine.gui.menu.timer import Timer
-        Timer.start(Game.TIMER_LENGTH)
 
         # Loops
         from dpt.engine.mainLoop import level_loop

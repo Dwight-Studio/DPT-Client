@@ -18,7 +18,7 @@ class Coin(pygame.sprite.Sprite):
     coin_checkpoint_list = []
 
     def __init__(self, x, y):
-        self.id = int(str(x) + str(y))
+        self.id = int(str(int(x)) + str(int(y)))
         if self.id in Coin.coin_checkpoint_list:
             del self
             return

@@ -24,11 +24,14 @@ class BackgroundFakeBlocks(pygame.sprite.Sprite):
             self.customPlacement = True
 
         if not TileManager.is_loading_level:
-            if isinstance(self.block.sounds, list):
-                self.sound = RessourceLoader.get(self.block.sounds[0])
-            elif isinstance(self.block.sounds, str):
-                self.sound = RessourceLoader.get(self.block.sounds)
-            else:
-                return
-            self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
-            self.sound.play()
+            try:
+                if isinstance(self.block.sounds, list):
+                    self.sound = RessourceLoader.get(self.block.sounds[0])
+                elif isinstance(self.block.sounds, str):
+                    self.sound = RessourceLoader.get(self.block.sounds)
+                else:
+                    return
+                self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
+                self.sound.play()
+            except Exception:
+                pass

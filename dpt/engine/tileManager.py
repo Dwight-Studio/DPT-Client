@@ -251,6 +251,8 @@ class TileManager:
                     pygame.event.post(pygame.event.Event(Game.TIMER_EVENT, {}))
                     pygame.time.set_timer(Game.TIMER_EVENT, 0)
                     pygame.time.set_timer(Game.TIMER_EVENT, 1000)
+                else:
+                    Timer.start(Game.TIMER_LENGTH)
 
                 from dpt.engine.characters.PlayerSprite import PlayerSprite
                 Game.player_sprite = PlayerSprite(player_x, player_y)
@@ -258,6 +260,7 @@ class TileManager:
                 if TileManager.max_width_size < math.floor(Game.WINDOW_WIDTH / Game.TILESIZE):
                     TileManager.max_width_size = math.floor(Game.WINDOW_WIDTH / Game.TILESIZE) + 2
                 cls.camera = Camera(TileManager.max_width_size, TileManager.max_height_size)
+
             elif TileEditor.is_editing:
                 from dpt.engine.gui.editor.charEntity import CharEntity
                 Game.player_sprite = CharEntity()
@@ -603,7 +606,7 @@ class Camera:
         TileManager.clouds_group.draw(Game.surface)
 
         calcul = (self.width * Game.TILESIZE) - Game.WINDOW_WIDTH
-        self.x = min(0, self.last_x, self.x)
+        self.x = min(0, self.x)
         self.x = max(-calcul, self.x)
         self.camera = pygame.Rect(self.x, 0, self.width, self.height)
         TileManager.display_sprites(self, freeze)

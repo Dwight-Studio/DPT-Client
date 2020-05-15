@@ -128,7 +128,8 @@ def level_loop():
     if not TileEditor.is_editing:
         EffectsManagement.update()
         Button.main_loop()
-        Timer.main_loop()
+        if not TileEditor.enabled_editor:
+            Timer.main_loop()
     else:
         if Game.gui["window"].rect.collidepoint(pygame.mouse.get_pos()):
             menu.Button.main_loop()

@@ -12,6 +12,7 @@ from dpt.game import Game
 class BeeSprite(pygame.sprite.Sprite):
     texture = "dpt.images.characters.animals.Bee_1"
     textures = "dpt.images.characters.animals.Bee*"
+    sounds = "dpt.sounds.sfx.sfx_bee"
     width = math.floor(112.8 * Game.DISPLAY_RATIO)
     height = math.floor(72 * Game.DISPLAY_RATIO)
     offset_x = (Game.TILESIZE - width) // 2
@@ -49,11 +50,16 @@ class BeeSprite(pygame.sprite.Sprite):
         self.cosx = 0
         self.horizontalStart = self.rect.top
         self.moveCount = 0
+        self.sound = RessourceLoader.get(self.sounds)
+        self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"] * 1.5)
 
     def update(self):
         if not TileEditor.is_editing:
             from dpt.engine.tileManager import TileManager
             if not Game.freeze_game:
+
+                if self.sound.get_num_channels() == 0:
+                    self.sound.play()
 
                 Game.add_debug_info("Enemy.left = " + str(self.left))
                 Game.add_debug_info("Enemy.right = " + str(self.right))
@@ -134,7 +140,7 @@ class BeeSprite(pygame.sprite.Sprite):
 
     def preview(self):
         if BeeSprite.preview_surface is not None:
-            Game.surface.blit(BeeSprite.preview_surface, (self.rect.x - TileManager.camera.last_x, self.rect.y - math.floor(50 * Game.DISPLAY_RATIO)))
+            Game.surface.blit(BeeSprite.preview_surface, (self.rect.x + TileManager.camera.last_x, self.rect.y - math.floor(50 * Game.DISPLAY_RATIO)))
         else:
             BeeSprite.preview_surface = pygame.surface.Surface((1200, 100)).convert_alpha()
             BeeSprite.preview_surface.fill((0, 0, 0, 0))
@@ -155,7 +161,7 @@ class BeeSprite(pygame.sprite.Sprite):
                     y = 50 + BeeSprite.height // 2
                 pygame.draw.rect(BeeSprite.preview_surface, (193, 39, 45), (x, y, 5, 5))
                 BeeSprite.preview_surface = pygame.transform.scale(BeeSprite.preview_surface, (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT))
-                Game.surface.blit(BeeSprite.preview_surface, (self.rect.x - TileManager.camera.last_x, self.rect.y - math.floor(50 * Game.DISPLAY_RATIO)))
+                Game.surface.blit(BeeSprite.preview_surface, (self.rect.x + TileManager.camera.last_x, self.rect.y - math.floor(50 * Game.DISPLAY_RATIO)))
 
     def maskcollide(self):
         for i in TileManager.environment_group:
