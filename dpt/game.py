@@ -73,7 +73,7 @@ class Game(object):
         "sound_volume": 1,
         "display_size": 0,
         "server_address": DEFAULT_SERVER_ADDRESS,
-        "30_FPS": 2
+        "30_FPS": 1
     }
 
     # Sauvegarde utilisateur
