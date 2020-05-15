@@ -1,6 +1,7 @@
 import pygame
 import random
 
+from dpt.engine.gui.editor.tileEditor import TileEditor
 from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 
@@ -19,7 +20,7 @@ class Coin(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
         self.id = int(str(int(x)) + str(int(y)))
-        if self.id in Coin.coin_checkpoint_list:
+        if self.id in Coin.coin_checkpoint_list and not TileEditor.enabled_editor:
             del self
             return
         from dpt.engine.tileManager import TileManager

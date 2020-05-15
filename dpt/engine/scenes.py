@@ -42,7 +42,7 @@ class Scenes:
         RessourceLoader.add_pending("dpt.images.gui.buttons.btn_checkbox_in")
 
         # Initialisation du TileManager
-        TileEditor.is_editing = True
+        TileEditor.is_editing = TileEditor.enabled_editor = True
         if not TileManager.load_level(level):
             Scenes.return_error("Impossible de charger le niveau.", "Détails :", "Aucune information supplémentaire")
 

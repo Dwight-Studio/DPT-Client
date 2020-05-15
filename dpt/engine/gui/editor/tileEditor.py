@@ -301,6 +301,8 @@ class TileEditor:
             level_title = "Sans nom"
             image = "dpt.images.environment.terrain.Goop_Tile_Flat_Edge_a"
             required_stars = 0
+            background = "Plains"
+            music = "dpt.sounds.musics.Grasslands_Theme"
 
         s = simpledialog.askstring("Titre", f"Titre du niveau (Annuler pour garder '{level_title}')", parent=root, )
 
@@ -338,7 +340,7 @@ class TileEditor:
             required_stars = s
         cls.created_level["infos"]["required_stars"] = required_stars
 
-        s = simpledialog.askinteger("Fond", f"Fond à utiliser ('Plains', 'Desert', 'Ice', 'Goop' uniquement) (Annuler pour garder '{required_stars}')", parent=root, )
+        s = simpledialog.askstring("Fond", f"Fond à utiliser ('Plains', 'Desert', 'Ice', 'Goop' uniquement) (Annuler pour garder '{background}')", parent=root, )
 
         if s is not None and (s == "Plains" or s == "Desert" or s == "Ice" or s == "Goop"):
             background = s

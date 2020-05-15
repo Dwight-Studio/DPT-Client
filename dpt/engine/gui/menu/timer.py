@@ -43,6 +43,8 @@ class Timer:
 
         :rtype: Timer
         """
+        cls.kill()
+
         cls.height_digits = math.floor(60 * Game.DISPLAY_RATIO)
         cls.width_digits = math.floor(48 * Game.DISPLAY_RATIO)
         cls.width_semicolon = math.floor(24 * Game.DISPLAY_RATIO)

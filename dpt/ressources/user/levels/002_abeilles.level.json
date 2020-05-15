@@ -2659,9 +2659,6 @@
   },
   "infos": {
     "title": "Monde 1 - ...des abeilles, de tr\u00e8s grosses abeilles...",
-    "required_stars": 3,
-    "image": "dpt.images.levels.002",
-    "music": "dpt.sounds.musics.Grasslands_Theme",
-    "background": "Plains"
+    "required_stars": 3
   }
 }
