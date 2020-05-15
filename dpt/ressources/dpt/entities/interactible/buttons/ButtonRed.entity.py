@@ -72,9 +72,9 @@ class ButtonRed(pygame.sprite.Sprite):
                                 TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"].append(str(sprites.rect.x - sprites.offset_x) + ", " + str(sprites.rect.y - sprites.offset_y))
                     else:
                         if sprites.rect.x - TileManager.camera.last_x <= mousePos[0] - TileManager.camera.last_x <= sprites.rect.x - TileManager.camera.last_x + sprites.width and sprites.rect.y <= mousePos[1] <= sprites.rect.y + sprites.height:
-                            if "assignement" not in TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]:
-                                TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"] = []
-                            TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"].append(str((sprites.rect.x - TileManager.camera.last_x) // Game.TILESIZE) + ", " + str(sprites.rect.y // Game.TILESIZE))
+                            if "assignement" not in TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]:
+                                TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"] = []
+                            TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"].append(str((sprites.rect.x - TileManager.camera.last_x) // Game.TILESIZE) + ", " + str(sprites.rect.y // Game.TILESIZE))
             elif mouse_buttons[2] == 1:
                 self.attributing = False
                 TileEditor.attributing = False
@@ -82,10 +82,10 @@ class ButtonRed(pygame.sprite.Sprite):
                 self.clicked = False
 
         if TileEditor.is_editing:
-            if "assignement" in TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]:
-                for sprite in TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]["assignement"]:
+            if "assignement" in TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]:
+                for sprite in TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"]:
                     try:
-                        if sprite == str(self.x) + ", " + str(self.y):
+                        if sprite == str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4)):
                             continue
                         if "customPlace" in TileEditor.created_level["tiles"][sprite]:
                             x = int(sprite.split(", ")[0]) + Game.TILESIZE // 2
@@ -118,7 +118,7 @@ class ButtonRed(pygame.sprite.Sprite):
                     self.rect = self.image.get_rect()
                     self.rect.x = self.x + self.offset_x
                     self.rect.y = self.y + self.offset_y // 2
-                    data = TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]
+                    data = TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]
                     if "assignement" in data:
                         for interact in TileManager.interactible_blocks_group:
                             positions = [tuple(map(int, i.split(", "))) for i in data["assignement"]]
@@ -148,7 +148,7 @@ class ButtonRed(pygame.sprite.Sprite):
                     self.rect = self.image.get_rect()
                     self.rect.x = self.x + self.offset_x
                     self.rect.y = self.y + self.offset_y
-                    data = TileEditor.created_level["tiles"][str(self.x) + ", " + str(self.y)]
+                    data = TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]
                     if "assignement" in data:
                         for interact in TileManager.interactible_blocks_group:
                             positions = [tuple(map(int, i.split(", "))) for i in data["assignement"]]
