@@ -43,7 +43,7 @@ class Coin(pygame.sprite.Sprite):
         self.collide()
 
     def animation(self):
-        self.image = self.frames[Game.anim_count_coins // 4]
+        self.image = self.frames[Game.anim_count_coins // (4 // Game.settings["30_FPS"])]
 
     def collide(self):
         for i in Game.player_group:

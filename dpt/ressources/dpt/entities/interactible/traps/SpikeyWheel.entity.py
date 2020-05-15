@@ -36,7 +36,7 @@ class SpikeyWheel(pygame.sprite.Sprite):
 
     def update(self):
         if self.active:
-            if self.i == 2:
+            if self.i == 2 // Game.settings["30_FPS"]:
                 self.i = 0
                 if self.rotate == 72:
                     self.rotate = 0

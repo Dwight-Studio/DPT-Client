@@ -224,8 +224,8 @@ class PlayerSprite(pygame.sprite.Sprite):
 
             self.collide()
 
-            self.rect.left += math.floor(self.xvel)
-            self.rect.top -= math.floor(self.yvel)
+            self.rect.left += math.floor(self.xvel) * Game.settings["30_FPS"]
+            self.rect.top -= math.floor(self.yvel) * Game.settings["30_FPS"]
 
             self.animation()
             self.enemies_collision(self.yvel, TileManager.enemy_group)
@@ -252,8 +252,8 @@ class PlayerSprite(pygame.sprite.Sprite):
 
     def animation(self):
         """Change l'image du joueur pour donner l'illusion de déplacement"""
-        add = abs(math.floor(self.xvel / (self.maxvelocity // 4)))
-        if self.walkCount + add >= 180:
+        add = abs(math.floor(self.xvel / (self.maxvelocity // 4))) // Game.settings["30_FPS"]
+        if self.walkCount + add >= 180 // Game.settings["30_FPS"]:
             self.walkCount = 0
 
         if self.onPlatform:
@@ -261,10 +261,10 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.current_eye = "Open"
             if not self.standing:
                 if self.left:
-                    self.image = self.walkLeft[self.walkCount // 12 + 1]
+                    self.image = self.walkLeft[self.walkCount // (12 // Game.settings["30_FPS"]) + 1]
                     self.walkCount += add
                 elif self.right:
-                    self.image = self.walkRight[self.walkCount // 12 + 1]
+                    self.image = self.walkRight[self.walkCount // (12 // Game.settings["30_FPS"]) + 1]
                     self.walkCount += add
             else:
                 if self.right:
@@ -292,13 +292,13 @@ class PlayerSprite(pygame.sprite.Sprite):
 
         if self.blink_eye < 0:
             self.image.blit(self.accessories_images[self.current_eye + direction], (0, 0))
-        elif self.blink_eye > 8:
+        elif self.blink_eye > 8 // Game.settings["30_FPS"]:
             self.image.blit(self.accessories_images["Squint" + direction], (0, 0))
-        elif self.blink_eye < 2:
+        elif self.blink_eye < 2 // Game.settings["30_FPS"]:
             self.image.blit(self.accessories_images["Squint" + direction], (0, 0))
 
-        if self.blink_eye < -180:
-            self.blink_eye = 10
+        if self.blink_eye < -180 // Game.settings["30_FPS"]:
+            self.blink_eye = 10 // Game.settings["30_FPS"]
 
         Game.add_debug_info(str(self.blink_eye))
         self.blink_eye -= 1
@@ -307,8 +307,8 @@ class PlayerSprite(pygame.sprite.Sprite):
         """Gère toute la partie physique du joueur, l'empêche de traverser les blocs"""
         for i in TileManager.environment_group:
             if i.rect.colliderect(Game.display_rect):
-                rx = i.rect.x - (self.rect.x + math.floor(self.xvel))
-                ry = i.rect.y - (self.rect.y - math.floor(self.yvel))
+                rx = i.rect.x - (self.rect.x + math.floor(self.xvel) * Game.settings["30_FPS"])
+                ry = i.rect.y - (self.rect.y - math.floor(self.yvel) * Game.settings["30_FPS"])
 
                 if self.mask.overlap(i.mask, (rx, ry)):
                     dx = 0
@@ -335,7 +335,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                     b_rects = mask.get_bounding_rects()
                     for rect in b_rects:
                         if self.rect.centery < i.rect.y:
-                            dy = rect.height + math.floor(self.yvel)
+                            dy = rect.height + math.floor(self.yvel) * Game.settings["30_FPS"]
                             self.yvel = 0
                             self.onPlatform = True
                             self.gravityCount = 0
@@ -345,7 +345,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                             self.jumpCount = self.CONSTJUMPCOUNT
                             self.frameCount = 0
                         elif self.rect.centery > i.rect.y:
-                            dy = - rect.height + math.floor(self.yvel)
+                            dy = - rect.height + math.floor(self.yvel) * Game.settings["30_FPS"]
                             self.yvel = 0
                             self.isJump = False
                             self.isReallyInJump = False
@@ -361,10 +361,10 @@ class PlayerSprite(pygame.sprite.Sprite):
                     for rect in b_rects:
                         Game.add_debug_info("dx = " + str(dx))
                         if self.rect.x > i.rect.x:
-                            dx = rect.width + math.floor(self.xvel)
+                            dx = rect.width + math.floor(self.xvel) * Game.settings["30_FPS"]
                             self.xvel = 0
                         elif self.rect.x < i.rect.x:
-                            dx = - rect.width + math.floor(self.xvel)
+                            dx = - rect.width + math.floor(self.xvel) * Game.settings["30_FPS"]
                             self.xvel = 0
                         break
 

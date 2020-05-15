@@ -72,7 +72,8 @@ class Game(object):
         "music_volume": 1,
         "sound_volume": 1,
         "display_size": 0,
-        "server_address": DEFAULT_SERVER_ADDRESS
+        "server_address": DEFAULT_SERVER_ADDRESS,
+        "30_FPS": 2
     }
 
     # Sauvegarde utilisateur
@@ -315,7 +316,7 @@ class Game(object):
                 Game.display_debug_info()
                 Game.window.update()
 
-                Game.clock.tick(60)
+                Game.clock.tick(60 // Game.settings["30_FPS"])
 
             cls.save_profile()
             pygame.quit()

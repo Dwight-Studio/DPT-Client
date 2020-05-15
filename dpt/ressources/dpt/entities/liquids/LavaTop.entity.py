@@ -34,4 +34,4 @@ class LavaTop(pygame.sprite.Sprite):
         self.animation()
 
     def animation(self):
-        self.image = self.frames[Game.anim_count_lava // 4]
+        self.image = self.frames[Game.anim_count_lava // (4 // Game.settings["30_FPS"])]

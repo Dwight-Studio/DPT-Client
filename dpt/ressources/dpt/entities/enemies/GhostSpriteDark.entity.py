@@ -92,8 +92,8 @@ class GhostSpriteDark(pygame.sprite.Sprite):
                 else:
                     self.yvel = 0
 
-            self.distance += abs(self.yvel)
-            self.rect.top += math.floor(self.yvel)
+            self.distance += abs(self.yvel) * Game.settings["30_FPS"]
+            self.rect.top += math.floor(self.yvel) * Game.settings["30_FPS"]
 
             self.animation()
 

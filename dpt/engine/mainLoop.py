@@ -33,19 +33,19 @@ except:
 def do_synch_anims():
     """Gère les annimations synchronisées"""
     # Lava
-    if Game.anim_count_lava + 1 >= 208:
+    if Game.anim_count_lava + 1 >= 208 // Game.settings["30_FPS"]:
         Game.anim_count_lava = 0
     else:
         Game.anim_count_lava += 1
 
     # Water
-    if Game.anim_count_water + 1 >= 104:
+    if Game.anim_count_water + 1 >= 104 // Game.settings["30_FPS"]:
         Game.anim_count_water = 0
     else:
         Game.anim_count_water += 1
 
     # Coins
-    if Game.anim_count_coins + 1 >= 144:
+    if Game.anim_count_coins + 1 >= 144 // Game.settings["30_FPS"]:
         Game.anim_count_coins = 0
     else:
         Game.anim_count_coins += 1
