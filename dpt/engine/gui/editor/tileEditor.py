@@ -142,7 +142,7 @@ class TileEditor:
                     cls.last_mouse_pos_y_c = mouse[1]
 
                     for sprites in TileManager.interactible_blocks_group:
-                        if sprites.rect.collidepoint(mouse[0], mouse[1]):
+                        if sprites.rect.collidepoint(mouse[0] - TileManager.camera.last_x, mouse[1]):
                             return
 
                     if not cls.custom_tile_placement:
@@ -241,8 +241,6 @@ class TileEditor:
                                     sprites.kill()
                                     del sprites
                                 try:
-                                    print(cls.created_level)
-                                    print(cls.mouse_pos_x, cls.mouse_pos_y)
                                     del cls.created_level["tiles"][str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)]["class"]
                                 except KeyError:
                                     pass
@@ -261,8 +259,6 @@ class TileEditor:
                                     sprites.kill()
                                     del sprites
                                 try:
-                                    print(cls.created_level)
-                                    print(cls.mouse_pos_x, cls.mouse_pos_y)
                                     del cls.created_level["tiles"][str(cls.mouse_pos_x) + ", " + str(cls.mouse_pos_y)]["class"]
                                 except KeyError:
                                     pass
