@@ -63,6 +63,7 @@ def level_loop():
             TileEditor.panel_open = False
             TileEditor.update()
             Scenes.pause()
+            return
         elif event.type == Game.PLAYER_DEATH_EVENT:
             if TileEditor.enabled_editor and not TileEditor.is_editing:
                 TileEditor.is_editing = True
@@ -97,6 +98,7 @@ def level_loop():
             Checkbox.checkbox_group.empty()
             TileManager.clouds_group.empty()
             TileManager.load_level(TileManager.levelName)
+            return
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 4 and TileEditor.is_editing:
                 TileManager.scroll_up()
@@ -105,6 +107,7 @@ def level_loop():
         elif event.type == Game.TIMER_FINISHED_EVENT:
             if not TileEditor.enabled_editor:
                 Scenes.game_over()
+                return
 
     do_synch_anims()
     TileManager.out_of_window()

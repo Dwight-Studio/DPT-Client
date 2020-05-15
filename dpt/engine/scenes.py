@@ -166,7 +166,6 @@ class Scenes:
 
         from dpt.engine.effectsManagement import EffectsManagement
 
-        Game.temp["reversed"] = EffectsManagement.upsidedown
         EffectsManagement.upsidedown = False
 
         # Ajout du GUI
@@ -672,7 +671,7 @@ class Scenes:
         cls.logger.info("Displaying END_LEVEL")
 
         from dpt.engine.effectsManagement import EffectsManagement
-
+        EffectsManagement.reset()
         EffectsManagement.upsidedown = False
 
         # Score
@@ -791,7 +790,7 @@ class Scenes:
         Thread(target=music).start()
 
         from dpt.engine.effectsManagement import EffectsManagement
-
+        EffectsManagement.reset()
         EffectsManagement.upsidedown = False
 
         cls.logger.info("Displaying GAME_OVER")

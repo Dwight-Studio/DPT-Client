@@ -49,7 +49,7 @@ class EffectsManagement:
                             "jumpBoost": False,
                             "inversion": False,
                             "lowGravity": False,
-                            "reverse": False}
+                            "reverse": True}
 
     temp_list = []
     perm_list = []
@@ -161,6 +161,8 @@ class EffectsManagement:
         # Suppression des évènements en attente
         pygame.time.set_timer(Game.WAIT_BETWEEN_VOTE_EVENT, 0)
         pygame.time.set_timer(Game.VOTE_RESULT_AVAILABLE_EVENT, 0)
+
+        EffectsManagement.upsidedown = False
 
         cls.temp_list = []
         cls.perm_list = []
