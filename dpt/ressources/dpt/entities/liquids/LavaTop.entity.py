@@ -9,6 +9,7 @@ from dpt.game import Game
 class LavaTop(pygame.sprite.Sprite):
     texture = "dpt.images.environment.liquids.Lava_Tile_Top"
     textures = "dpt.images.environment.liquids.Lava_Tile_Top_*"
+    sounds = []
     screen_width, screen_height = (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)
     width = Game.TILESIZE
     height = math.floor(Game.TILESIZE * (116 / 208))
