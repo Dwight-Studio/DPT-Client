@@ -14,6 +14,7 @@ class ParallaxSky:
     gap_0 = 0
     gap_1 = 0
     gap_2 = 0
+    enable_reversed = False
 
     @classmethod
     def init(cls):
@@ -41,60 +42,87 @@ class ParallaxSky:
         cls.gap_2 = abs(math.ceil((TileManager.camera.last_x // 3) / Game.SCREEN_WIDTH) * Game.SCREEN_WIDTH)
         cls.gap_2_rel = abs(math.ceil((TileManager.camera.last_x // 3) / Game.SCREEN_WIDTH))
 
-        if -TileManager.camera.last_x > 0:
-            if cls.gap_0_rel % 2 == 0:
-                Game.surface.blit(cls.images[0], ((TileManager.camera.last_x // 9) + cls.gap_0, 0))
-                Game.surface.blit(cls.reversed_images[0], ((TileManager.camera.last_x // 9) + Game.SCREEN_WIDTH + cls.gap_0, 0))
+        if cls.enable_reversed:
+            if -TileManager.camera.last_x > 0:
+                if cls.gap_0_rel % 2 == 0:
+                    Game.surface.blit(cls.images[0], ((TileManager.camera.last_x // 9) + cls.gap_0, 0))
+                    Game.surface.blit(cls.reversed_images[0], ((TileManager.camera.last_x // 9) + Game.SCREEN_WIDTH + cls.gap_0, 0))
+                else:
+                    Game.surface.blit(cls.reversed_images[0], ((TileManager.camera.last_x // 9) + cls.gap_0, 0))
+                    Game.surface.blit(cls.images[0], ((TileManager.camera.last_x // 9) + Game.SCREEN_WIDTH + cls.gap_0, 0))
+
+                if cls.gap_1_rel % 2 == 0:
+                    Game.surface.blit(cls.images[1], ((TileManager.camera.last_x // 6) + cls.gap_1, 0))
+                    Game.surface.blit(cls.reversed_images[1], ((TileManager.camera.last_x // 6) + Game.SCREEN_WIDTH + cls.gap_1, 0))
+                else:
+                    Game.surface.blit(cls.reversed_images[1], ((TileManager.camera.last_x // 6) + cls.gap_1, 0))
+                    Game.surface.blit(cls.images[1], ((TileManager.camera.last_x // 6) + Game.SCREEN_WIDTH + cls.gap_1, 0))
+
+                if cls.gap_2_rel % 2 == 0:
+                    Game.surface.blit(cls.images[2], ((TileManager.camera.last_x // 3) + cls.gap_2, 0))
+                    Game.surface.blit(cls.reversed_images[2], ((TileManager.camera.last_x // 3) + Game.SCREEN_WIDTH + cls.gap_2, 0))
+                else:
+                    Game.surface.blit(cls.reversed_images[2], ((TileManager.camera.last_x // 3) + cls.gap_2, 0))
+                    Game.surface.blit(cls.images[2], ((TileManager.camera.last_x // 3) + Game.SCREEN_WIDTH + cls.gap_2, 0))
+            elif -TileManager.camera.last_x < 0:
+                if cls.gap_0_rel % 2 == 0:
+                    Game.surface.blit(cls.images[0], ((TileManager.camera.last_x // 9) + cls.gap_0, 0))
+                    Game.surface.blit(cls.reversed_images[0], ((TileManager.camera.last_x // 9) - Game.SCREEN_WIDTH + cls.gap_0, 0))
+                else:
+                    Game.surface.blit(cls.reversed_images[0], ((TileManager.camera.last_x // 9) + cls.gap_0, 0))
+                    Game.surface.blit(cls.images[0], ((TileManager.camera.last_x // 9) - Game.SCREEN_WIDTH + cls.gap_0, 0))
+
+                if cls.gap_1_rel % 2 == 0:
+                    Game.surface.blit(cls.images[1], ((TileManager.camera.last_x // 6) + cls.gap_1, 0))
+                    Game.surface.blit(cls.reversed_images[1], ((TileManager.camera.last_x // 6) - Game.SCREEN_WIDTH + cls.gap_1, 0))
+                else:
+                    Game.surface.blit(cls.reversed_images[1], ((TileManager.camera.last_x // 6) + cls.gap_1, 0))
+                    Game.surface.blit(cls.images[1], ((TileManager.camera.last_x // 6) - Game.SCREEN_WIDTH + cls.gap_1, 0))
+
+                if cls.gap_2_rel % 2 == 0:
+                    Game.surface.blit(cls.images[2], ((TileManager.camera.last_x // 3) + cls.gap_2, 0))
+                    Game.surface.blit(cls.reversed_images[2], ((TileManager.camera.last_x // 3) - Game.SCREEN_WIDTH + cls.gap_2, 0))
+                else:
+                    Game.surface.blit(cls.reversed_images[2], ((TileManager.camera.last_x // 3) + cls.gap_2, 0))
+                    Game.surface.blit(cls.images[2], ((TileManager.camera.last_x // 3) - Game.SCREEN_WIDTH + cls.gap_2, 0))
             else:
-                Game.surface.blit(cls.reversed_images[0], ((TileManager.camera.last_x // 9) + cls.gap_0, 0))
+                if cls.gap_0_rel % 2 == 0:
+                    Game.surface.blit(cls.images[0], ((TileManager.camera.last_x // 9) + cls.gap_0, 0))
+                else:
+                    Game.surface.blit(cls.reversed_images[0], ((TileManager.camera.last_x // 9) + cls.gap_0, 0))
+
+                if cls.gap_1_rel % 2 == 0:
+                    Game.surface.blit(cls.images[1], ((TileManager.camera.last_x // 6) + cls.gap_1, 0))
+                else:
+                    Game.surface.blit(cls.reversed_images[1], ((TileManager.camera.last_x // 6) + cls.gap_1, 0))
+
+                if cls.gap_2_rel % 2 == 0:
+                    Game.surface.blit(cls.images[2], ((TileManager.camera.last_x // 3) + cls.gap_2, 0))
+                else:
+                    Game.surface.blit(cls.reversed_images[2], ((TileManager.camera.last_x // 3) + cls.gap_2, 0))
+        else:
+            if -TileManager.camera.last_x > 0:
+                Game.surface.blit(cls.images[0], ((TileManager.camera.last_x // 9) + cls.gap_0, 0))
                 Game.surface.blit(cls.images[0], ((TileManager.camera.last_x // 9) + Game.SCREEN_WIDTH + cls.gap_0, 0))
 
-            if cls.gap_1_rel % 2 == 0:
                 Game.surface.blit(cls.images[1], ((TileManager.camera.last_x // 6) + cls.gap_1, 0))
-                Game.surface.blit(cls.reversed_images[1], ((TileManager.camera.last_x // 6) + Game.SCREEN_WIDTH + cls.gap_1, 0))
-            else:
-                Game.surface.blit(cls.reversed_images[1], ((TileManager.camera.last_x // 6) + cls.gap_1, 0))
                 Game.surface.blit(cls.images[1], ((TileManager.camera.last_x // 6) + Game.SCREEN_WIDTH + cls.gap_1, 0))
 
-            if cls.gap_2_rel % 2 == 0:
                 Game.surface.blit(cls.images[2], ((TileManager.camera.last_x // 3) + cls.gap_2, 0))
-                Game.surface.blit(cls.reversed_images[2], ((TileManager.camera.last_x // 3) + Game.SCREEN_WIDTH + cls.gap_2, 0))
-            else:
-                Game.surface.blit(cls.reversed_images[2], ((TileManager.camera.last_x // 3) + cls.gap_2, 0))
                 Game.surface.blit(cls.images[2], ((TileManager.camera.last_x // 3) + Game.SCREEN_WIDTH + cls.gap_2, 0))
-        elif -TileManager.camera.last_x < 0:
-            if cls.gap_0_rel % 2 == 0:
+
+            elif -TileManager.camera.last_x < 0:
                 Game.surface.blit(cls.images[0], ((TileManager.camera.last_x // 9) + cls.gap_0, 0))
-                Game.surface.blit(cls.reversed_images[0], ((TileManager.camera.last_x // 9) - Game.SCREEN_WIDTH + cls.gap_0, 0))
-            else:
-                Game.surface.blit(cls.reversed_images[0], ((TileManager.camera.last_x // 9) + cls.gap_0, 0))
                 Game.surface.blit(cls.images[0], ((TileManager.camera.last_x // 9) - Game.SCREEN_WIDTH + cls.gap_0, 0))
 
-            if cls.gap_1_rel % 2 == 0:
                 Game.surface.blit(cls.images[1], ((TileManager.camera.last_x // 6) + cls.gap_1, 0))
-                Game.surface.blit(cls.reversed_images[1], ((TileManager.camera.last_x // 6) - Game.SCREEN_WIDTH + cls.gap_1, 0))
-            else:
-                Game.surface.blit(cls.reversed_images[1], ((TileManager.camera.last_x // 6) + cls.gap_1, 0))
                 Game.surface.blit(cls.images[1], ((TileManager.camera.last_x // 6) - Game.SCREEN_WIDTH + cls.gap_1, 0))
 
-            if cls.gap_2_rel % 2 == 0:
                 Game.surface.blit(cls.images[2], ((TileManager.camera.last_x // 3) + cls.gap_2, 0))
-                Game.surface.blit(cls.reversed_images[2], ((TileManager.camera.last_x // 3) - Game.SCREEN_WIDTH + cls.gap_2, 0))
-            else:
-                Game.surface.blit(cls.reversed_images[2], ((TileManager.camera.last_x // 3) + cls.gap_2, 0))
                 Game.surface.blit(cls.images[2], ((TileManager.camera.last_x // 3) - Game.SCREEN_WIDTH + cls.gap_2, 0))
-        else:
-            if cls.gap_0_rel % 2 == 0:
+            else:
                 Game.surface.blit(cls.images[0], ((TileManager.camera.last_x // 9) + cls.gap_0, 0))
-            else:
-                Game.surface.blit(cls.reversed_images[0], ((TileManager.camera.last_x // 9) + cls.gap_0, 0))
 
-            if cls.gap_1_rel % 2 == 0:
                 Game.surface.blit(cls.images[1], ((TileManager.camera.last_x // 6) + cls.gap_1, 0))
-            else:
-                Game.surface.blit(cls.reversed_images[1], ((TileManager.camera.last_x // 6) + cls.gap_1, 0))
 
-            if cls.gap_2_rel % 2 == 0:
                 Game.surface.blit(cls.images[2], ((TileManager.camera.last_x // 3) + cls.gap_2, 0))
-            else:
-                Game.surface.blit(cls.reversed_images[2], ((TileManager.camera.last_x // 3) + cls.gap_2, 0))
