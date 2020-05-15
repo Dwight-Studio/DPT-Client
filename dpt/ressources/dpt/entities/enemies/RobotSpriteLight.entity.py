@@ -147,7 +147,6 @@ class RobotSpriteLight(pygame.sprite.Sprite):
                 self.stuck_count += 1
 
             if self.stuck_count > 3:
-                print("ok")
                 self.left = not self.left
                 self.right = not self.right
 

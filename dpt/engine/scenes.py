@@ -1,11 +1,10 @@
 import math
-from threading import Thread
-
 import pygame
+import time
 
+from threading import Thread
 from dpt.engine.loader import UnreachableRessourceError
 from dpt.game import Game
-import time
 
 
 class Scenes:
@@ -246,6 +245,9 @@ class Scenes:
         """
         cls.logger.info("Displaying MAIN_MENU")
         from dpt.engine.loader import RessourceLoader
+        from dpt.engine.effectsManagement import EffectsManagement
+
+        EffectsManagement.upsidedown = False
 
         # Gestion des ressources
         if load:
