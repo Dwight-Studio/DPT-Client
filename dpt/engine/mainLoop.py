@@ -328,6 +328,11 @@ def settings_menu_loop():
             Game.temp = {}
             Scenes.settings_menu()
 
+        if Game.gui["graphics_checkbox"].value:
+            Game.settings["30_FPS"] = 1
+        else:
+            Game.settings["30_FPS"] = 2
+
         Game.save_profile()
 
     for event in Game.events:
@@ -374,7 +379,7 @@ def settings_menu_loop():
                              math.floor(600 * Game.DISPLAY_RATIO),
                              math.floor(175 * (Game.WINDOW_WIDTH / Game.WINDOW_HEIGHT) * Game.DISPLAY_RATIO),
                              math.floor(175 * Game.DISPLAY_RATIO))
-    rect1.centerx = Game.gui["window_graphics"].rect.centerx
+    rect1.centerx = Game.gui["window_graphics"].rect.centerx - math.floor(Game.DISPLAY_RATIO * 50)
 
     if w == 0:
         w = Game.SCREEN_WIDTH
