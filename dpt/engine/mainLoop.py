@@ -103,7 +103,8 @@ def level_loop():
             elif event.button == 5 and TileEditor.is_editing:
                 TileManager.scroll_down()
         elif event.type == Game.TIMER_FINISHED_EVENT:
-            Scenes.game_over()
+            if not TileEditor.enabled_editor:
+                Scenes.game_over()
 
     do_synch_anims()
     TileManager.out_of_window()
@@ -128,8 +129,7 @@ def level_loop():
     if not TileEditor.is_editing:
         EffectsManagement.update()
         Button.main_loop()
-        if not TileEditor.enabled_editor:
-            Timer.main_loop()
+        Timer.main_loop()
     else:
         if Game.gui["window"].rect.collidepoint(pygame.mouse.get_pos()):
             menu.Button.main_loop()

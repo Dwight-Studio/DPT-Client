@@ -292,6 +292,11 @@ class TileEditor:
                 required_stars = cls.created_level["infos"]["required_stars"]
             else:
                 required_stars = 0
+
+            if "background" in cls.created_level["infos"]:
+                background = cls.created_level["infos"]["background"]
+            else:
+                background = "Plains"
         else:
             level_title = "Sans nom"
             image = "dpt.images.environment.terrain.Goop_Tile_Flat_Edge_a"
@@ -312,6 +317,8 @@ class TileEditor:
             Game.get_logger(cls.__name__).info(os.path.realpath(s) + " --> " + Game.ROOT_DIRECTORY + "/ressources/user/images/" + filename + ".png")
             Game.get_logger(cls.__name__).info("Created entry: " + "user.images." + filename)
             cls.created_level["infos"]["image"] = "user.images." + filename
+        else:
+            cls.created_level["infos"]["image"] = image
 
         s = filedialog.askopenfilename(parent=root, title="Sélectionner une musique (boucle) pour le niveau (Annuler pour garder l'ancienne musique)", filetypes=[("Musique", "*.ogg")])
 
@@ -322,9 +329,17 @@ class TileEditor:
             Game.get_logger(cls.__name__).info(os.path.realpath(s) + " --> " + Game.ROOT_DIRECTORY + "/ressources/user/musics/" + filename + ".music.ogg")
             Game.get_logger(cls.__name__).info("Created entry: " + "user.musics." + filename)
             cls.created_level["infos"]["music"] = "user.musics." + filename
+        else:
+            cls.created_level["infos"]["music"] = music
 
         s = simpledialog.askinteger("Nombre d'étoiles", f"Nombre d'étoiles requises pour jouer au niveau (Annuler pour garder '{required_stars}')", parent=root, )
 
         if s is not None:
             required_stars = s
         cls.created_level["infos"]["required_stars"] = required_stars
+
+        s = simpledialog.askinteger("Fond", f"Fond à utiliser ('Plains', 'Desert', 'Ice', 'Goop' uniquement) (Annuler pour garder '{required_stars}')", parent=root, )
+
+        if s is not None and (s == "Plains" or s == "Desert" or s == "Ice" or s == "Goop"):
+            background = s
+        cls.created_level["infos"]["background"] = background
