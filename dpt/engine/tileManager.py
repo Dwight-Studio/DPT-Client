@@ -206,6 +206,7 @@ class TileManager:
                             cls.log.debug("Tile " + level["tiles"][keys]["class"] + " placed at " + keys)
                         except UnreachableRessourceError:
                             cls.log.warning("Invalid class name : " + level["tiles"][keys]["class"] + " for tile : " + keys)
+
                 if "backgroundClass" in level["tiles"][keys]:
                     if "customPlace" in level["tiles"][keys]:
                         try:
