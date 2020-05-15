@@ -59,20 +59,20 @@ class Lever(pygame.sprite.Sprite):
                 for sprites in TileManager.interactible_blocks_group:
                     if hasattr(sprites, "customPlacement"):
                         if hasattr(sprites, "x") and hasattr(sprites, "y"):
-                            if sprites.x + sprites.offset_x <= mousePos[0] <= sprites.x + sprites.offset_x + sprites.width and sprites.y + sprites.offset_y <= mousePos[1] <= sprites.y + sprites.offset_y + sprites.height:
+                            if sprites.x + sprites.offset_x <= mousePos[0] - TileManager.camera.last_x <= sprites.x + sprites.offset_x + sprites.width and sprites.y + sprites.offset_y <= mousePos[1] <= sprites.y + sprites.offset_y + sprites.height:
                                 if "assignement" not in TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]:
                                     TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"] = []
-                                TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"].append(str(sprites.x) + ", " + str(sprites.y))
+                                TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"].append(str(sprites.x / Game.DISPLAY_RATIO) + ", " + str(sprites.y / Game.DISPLAY_RATIO))
                         else:
                             if sprites.rect.x <= mousePos[0] <= sprites.rect.x + sprites.width and sprites.rect.y <= mousePos[1] <= sprites.rect.y + sprites.height:
                                 if "assignement" not in TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]:
                                     TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"] = []
                                 TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"].append(str(sprites.rect.x - sprites.offset_x) + ", " + str(sprites.rect.y - sprites.offset_y))
                     else:
-                        if sprites.rect.x - TileManager.camera.last_x <= mousePos[0] - TileManager.camera.last_x <= sprites.rect.x - TileManager.camera.last_x + sprites.width and sprites.rect.y <= mousePos[1] <= sprites.rect.y + sprites.height:
+                        if sprites.rect.x <= mousePos[0] - TileManager.camera.last_x <= sprites.rect.x + sprites.width and sprites.rect.y <= mousePos[1] <= sprites.rect.y + sprites.height:
                             if "assignement" not in TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]:
                                 TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"] = []
-                            TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"].append(str((sprites.rect.x - TileManager.camera.last_x) // Game.TILESIZE) + ", " + str(sprites.rect.y // Game.TILESIZE))
+                            TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"].append(str((sprites.rect.x - sprites.offset_x) // Game.TILESIZE) + ", " + str((sprites.rect.y - sprites.offset_y) // Game.TILESIZE))
             elif mouse_buttons[2] == 1:
                 self.attributing = False
                 TileEditor.attributing = False
@@ -86,8 +86,8 @@ class Lever(pygame.sprite.Sprite):
                         if sprite == str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4)):
                             continue
                         if "customPlace" in TileEditor.created_level["tiles"][sprite]:
-                            x = int(sprite.split(", ")[0]) + Game.TILESIZE // 2
-                            y = int(sprite.split(", ")[1])
+                            x = round(float(sprite.split(", ")[0]), 4) + Game.TILESIZE // 2
+                            y = round(float(sprite.split(", ")[1]), 4)
 
                             pygame.draw.line(Game.surface, (0, 0, 0), (self.x + TileManager.camera.last_x, self.y + 30), (x + TileManager.camera.last_x, y))
                         else:
@@ -113,7 +113,7 @@ class Lever(pygame.sprite.Sprite):
                     data = TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]
                     if "assignement" in data:
                         for interact in TileManager.interactible_blocks_group:
-                            positions = [tuple(map(int, i.split(", "))) for i in data["assignement"]]
+                            positions = [tuple(map(float, i.split(", "))) for i in data["assignement"]]
                             for pos in positions:
                                 if hasattr(interact, "x") and hasattr(interact, "y"):
                                     if interact.x == pos[0] and interact.y == pos[1]:
@@ -140,7 +140,7 @@ class Lever(pygame.sprite.Sprite):
                     data = TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]
                     if "assignement" in data:
                         for interact in TileManager.interactible_blocks_group:
-                            positions = [tuple(map(int, i.split(", "))) for i in data["assignement"]]
+                            positions = [tuple(map(float, i.split(", "))) for i in data["assignement"]]
                             for pos in positions:
                                 if hasattr(interact, "x") and hasattr(interact, "y"):
                                     if interact.x == pos[0] and interact.y == pos[1]:
