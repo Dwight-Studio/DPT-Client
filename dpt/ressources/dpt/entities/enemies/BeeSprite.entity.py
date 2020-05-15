@@ -18,6 +18,8 @@ class BeeSprite(pygame.sprite.Sprite):
     offset_y = (Game.TILESIZE - height) // 2
     mask = "dpt.images.characters.animals.beeMask"
 
+    preview_surface = None
+
     def __init__(self, x, y):
         from dpt.engine.tileManager import TileManager
         pygame.sprite.Sprite.__init__(self, TileManager.enemy_group, TileManager.entity_group)  # Sprite's constructor called
@@ -131,21 +133,29 @@ class BeeSprite(pygame.sprite.Sprite):
         self.moveCount += 1
 
     def preview(self):
-        self.distance = 0
-        self.cosx = 0
-        x = self.rect[0] + BeeSprite.width // 2
-        y = self.rect[1] + BeeSprite.height // 2
-        while self.distance < 1200 * Game.DISPLAY_RATIO:
-            if self.xvel < self.maxvelocity * Game.DISPLAY_RATIO:
-                self.xvel += (self.maxvelocity / 2) * Game.DISPLAY_RATIO
-            self.distance += abs(self.xvel)
-            y += math.floor(math.cos(self.cosx) * 20 * Game.DISPLAY_RATIO) - math.floor(math.cos(self.cosx - 0.05) * 20 * Game.DISPLAY_RATIO)
-            x += math.floor(self.xvel)
-            self.cosx += 0.05
-            if self.cosx >= math.pi * 2:
-                self.cosx = 0
-                y = self.horizontalStart + BeeSprite.height // 2
-            pygame.draw.rect(Game.surface, (193, 39, 45), (x, y, 5, 5))
+        if BeeSprite.preview_surface is not None:
+            Game.surface.blit(BeeSprite.preview_surface, (self.rect.x, self.rect.y - math.floor(50 * Game.DISPLAY_RATIO)))
+        else:
+            BeeSprite.preview_surface = pygame.surface.Surface((1200, 100)).convert_alpha()
+            BeeSprite.preview_surface.fill((0, 0, 0, 0))
+
+            self.distance = 0
+            self.cosx = 0
+            x = BeeSprite.width // 2
+            y = BeeSprite.height // 2 + 50
+            while self.distance < 1200 * Game.DISPLAY_RATIO:
+                if self.xvel < self.maxvelocity * Game.DISPLAY_RATIO:
+                    self.xvel += (self.maxvelocity / 2) * Game.DISPLAY_RATIO
+                self.distance += abs(self.xvel)
+                y += math.floor(math.cos(self.cosx) * 20 * Game.DISPLAY_RATIO) - math.floor(math.cos(self.cosx - 0.05) * 20 * Game.DISPLAY_RATIO)
+                x += math.floor(self.xvel)
+                self.cosx += 0.05
+                if self.cosx >= math.pi * 2:
+                    self.cosx = 0
+                    y = 50 + BeeSprite.height // 2
+                pygame.draw.rect(BeeSprite.preview_surface, (193, 39, 45), (x, y, 5, 5))
+                BeeSprite.preview_surface = pygame.transform.scale(BeeSprite.preview_surface, (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT))
+                Game.surface.blit(BeeSprite.preview_surface, (self.rect.x, self.rect.y - math.floor(50 * Game.DISPLAY_RATIO)))
 
     def maskcollide(self):
         for i in TileManager.environment_group:
