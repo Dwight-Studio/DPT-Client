@@ -49,7 +49,7 @@ class EffectsManagement:
                             "jumpBoost": False,
                             "inversion": False,
                             "lowGravity": False,
-                            "reverse": True}
+                            "reverse": False}
 
     temp_list = []
     perm_list = []

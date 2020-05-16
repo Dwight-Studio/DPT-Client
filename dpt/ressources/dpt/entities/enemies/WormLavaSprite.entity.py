@@ -12,7 +12,7 @@ from dpt.game import Game
 
 class WormLavaSprite(pygame.sprite.Sprite):
     texture = "dpt.images.characters.animals.Worm_Lava_1"
-    dead_texture = "dpt.images.characters.animals.Dead_Worm_Grass"
+    dead_texture = "dpt.images.characters.animals.Dead_Worm_Lava"
     textures = "dpt.images.characters.animals.Worm_Lava_*"
     width = math.floor(77.2 * Game.DISPLAY_RATIO)
     height = math.floor(21.2 * Game.DISPLAY_RATIO)
