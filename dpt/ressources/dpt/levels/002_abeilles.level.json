@@ -126,7 +126,7 @@
       "class": "dpt.blocks.grass.grass"
     },
     "3, 6": {
-      "class": "dpt.blocks.grass.grasscorneredger"
+      "class": "dpt.blocks.grass.grasssloped"
     },
     "1, 5": {
       "class": "dpt.blocks.grass.grasssloped"
@@ -1087,7 +1087,7 @@
       "class": "dpt.blocks.grass.grasslower"
     },
     "52, 4": {
-      "class": "dpt.blocks.grass.grasslower"
+      "class": "dpt.blocks.grass.grassr"
     },
     "52, 3": {
       "class": "dpt.blocks.grass.grasssloped"
@@ -1760,9 +1760,7 @@
     },
     "69, 3": {},
     "69, 4": {},
-    "53, 4": {
-      "class": "dpt.blocks.grass.grasshalfedger"
-    },
+    "53, 4": {},
     "54, 2": {
       "class": "dpt.entities.interactible.coin"
     },
@@ -2476,7 +2474,9 @@
     "90, 1": {
       "class": "dpt.blocks.grass.grassslopeu"
     },
-    "90, 0": {},
+    "90, 0": {
+      "class": "dpt.blocks.invisible"
+    },
     "90, 3": {
       "class": "dpt.blocks.grass.grassl"
     },
@@ -2655,6 +2655,24 @@
     },
     "83, 7": {
       "class": "dpt.entities.interactible.coin"
+    },
+    "3, 5": {
+      "class": "dpt.blocks.invisible"
+    },
+    "72, 7": {
+      "class": "dpt.blocks.invisible"
+    },
+    "76, 7": {
+      "class": "dpt.blocks.invisible"
+    },
+    "89, 0": {
+      "class": "dpt.blocks.invisible"
+    },
+    "88, 0": {
+      "class": "dpt.blocks.invisible"
+    },
+    "87, 0": {
+      "class": "dpt.blocks.invisible"
     }
   },
   "infos": {

@@ -5,7 +5,7 @@ from dpt.game import Game
 from dpt.engine.gui.editor.tileEditor import TileEditor
 
 
-class Grass(pygame.sprite.Sprite):
+class Invisible(pygame.sprite.Sprite):
     texture = "dpt.images.environment.invisible"
     sounds = "dpt.sounds.sfx.sfx_stone"
     width = height = Game.TILESIZE
@@ -18,13 +18,14 @@ class Grass(pygame.sprite.Sprite):
         if TileEditor.is_editing:
             self.image = RessourceLoader.get(self.texture)
             self.image = pygame.transform.smoothscale(self.image, (self.width, self.height))
-            self.rect = self.image.get_rect()
         else:
-            self.image = pygame.surface.Surface()
+            self.image = pygame.surface.Surface((Game.TILESIZE, Game.TILESIZE)).convert_alpha()
+            self.image.fill((0, 0, 0, 0))
+        self.rect = self.image.get_rect()
         self.rect.x = x + self.offset_x
         self.rect.y = y + self.offset_y
         if not TileManager.is_loading_level:
             self.sound = RessourceLoader.get(self.sounds)
             self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
             self.sound.play()
-        self.mask = pygame.mask.from_surface(self.image)
+        self.mask = pygame.mask.Mask((Game.TILESIZE, Game.TILESIZE), Tr)

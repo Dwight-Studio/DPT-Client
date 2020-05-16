@@ -429,7 +429,7 @@ class Scenes:
                                           math.floor(30 * Game.DISPLAY_RATIO),
                                           (0, 0, 0),
                                           "dpt.fonts.DINOT_CondBlack",
-                                          centerx=math.floor(711 * Game.DISPLAY_RATIO),
+                                          centerx=math.floor(660 * Game.DISPLAY_RATIO),
                                           centery=math.floor(825 * Game.DISPLAY_RATIO)),
                     "graphics_checkbox": Checkbox(math.floor(840 * Game.DISPLAY_RATIO),
                                                   math.floor(675 * Game.DISPLAY_RATIO),
@@ -853,6 +853,13 @@ class Scenes:
         :rtype: bool
         """
         import dpt.engine.gui.menu as menu
+        from dpt.engine.loader import RessourceLoader
+
+        pygame.mixer.music.stop()
+        pygame.mixer.stop()
+        pygame.mixer.music.set_volume(Game.settings["music_volume"] * Game.settings["general_volume"])
+        pygame.mixer_music.load(RessourceLoader.get("dpt.sounds.musics.story_time"))
+        pygame.mixer_music.play(-1)
 
         menu.delete_items()
         Scenes.main_menu(False)

@@ -143,7 +143,7 @@ class RessourceLoader:
                     try:
                         cls.loaded_ressources[entry] = module[ext[-3]]
                     except KeyError:
-                        cls.logger.warning("Can't find class " + module[ext[-3]])
+                        cls.logger.warning("Can't find class " + ext[-3])
                         cls.logger.warning("Can't load entry " + entry)
                         continue
                 elif ext[-2] == "entity" and ext[-1] == "py":
@@ -304,9 +304,9 @@ class RessourceLoader:
             entries = cls.select_entries(path)
             if len(entries) == 0:
                 if isinstance(path, list):
-                    cls.logger.warning("The requested selector (" + ", ".join(path) + ") did not find any entries, it may cause exceptions but ignoring")
+                    cls.logger.warning("The requested selector '" + ", ".join(path) + "' did not find any entries, it may cause exceptions but ignoring")
                 else:
-                    cls.logger.warning("The requested selector (" + path + ") did not find any entries, it may cause exceptions but ignoring")
+                    cls.logger.warning("The requested selector '" + path + "' did not find any entries, it may cause exceptions but ignoring")
             for path in entries:
                 cls.pending_ressources[path] = cls.RESSOURCES[path]
         except KeyError:
