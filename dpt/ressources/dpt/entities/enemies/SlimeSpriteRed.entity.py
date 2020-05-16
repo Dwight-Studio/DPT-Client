@@ -12,6 +12,7 @@ from dpt.game import Game
 
 
 class SlimeSpriteRed(pygame.sprite.Sprite):
+    """Classe sur les slimes rouges et leur physique"""
     texture = "dpt.images.characters.slimes.Slime_Red_1"
     dead_texture = "dpt.images.characters.slimes.Dead_Slime_Red"
     textures = "dpt.images.characters.slimes.Slime_Red_*"
@@ -22,6 +23,15 @@ class SlimeSpriteRed(pygame.sprite.Sprite):
     mask = "dpt.images.characters.slimes.SlimeMask"
 
     def __init__(self, x, y):
+        """Crée un slime rouge
+
+        :param x: Abscisse
+        :type x: int
+        :param y: Ordonnée
+        :type y: int
+
+        :rtype: SlimeSpriteRed
+        """
         from dpt.engine.tileManager import TileManager
         pygame.sprite.Sprite.__init__(self, TileManager.enemy_group, TileManager.entity_group)  # Sprite's constructor called
         self.image = RessourceLoader.get(self.texture)
@@ -66,6 +76,7 @@ class SlimeSpriteRed(pygame.sprite.Sprite):
         self.stuck_count = 0
 
     def update(self):
+        """Actualise le déplacement, les effets, les collisions"""
         if not TileEditor.is_editing:
             from dpt.engine.tileManager import TileManager
             if not Game.freeze_game:
@@ -191,6 +202,7 @@ class SlimeSpriteRed(pygame.sprite.Sprite):
             self.check_void()
 
     def animation(self):
+        """Donne l'illusion de déplacement"""
         if not self.onPlatform:
             if self.jumpCount > 0:
                 if self.left:
@@ -211,15 +223,18 @@ class SlimeSpriteRed(pygame.sprite.Sprite):
         self.moveCount += 1
 
     def check_void(self):
+        """Tue le robot s'il sort de l'écran"""
         if self.rect.top > 2000:
             self.kill()
 
     def kill(self):
+        """Override de la méthode kill de pygame et affiche un cadavre"""
         if not TileEditor.is_editing and not TileManager.is_loading_level:
             DeadBody(self.rect.x, self.rect.y, self.rect.width, self.rect.height, SlimeSpriteRed.dead_texture, SlimeSpriteRed.mask)
         pygame.sprite.Sprite.kill(self)
 
     def check_fall(self, platforms):
+        """Vérifie si le slime va tomber"""
         if self.securityTime < 0:
             if self.right:
                 neg = 1
@@ -238,6 +253,7 @@ class SlimeSpriteRed(pygame.sprite.Sprite):
             return True
 
     def maskcollide(self):
+        """Permet de modifier les vélocités de l'abeille en fonction des collisions"""
         for i in TileManager.environment_group:
             if i.rect.colliderect(Game.display_rect):
                 rx = i.rect.x - (self.rect.x + math.floor(self.xvel) * Game.settings["30_FPS"])
@@ -301,6 +317,7 @@ class SlimeSpriteRed(pygame.sprite.Sprite):
                     self.rect.x += dx
 
     def checkJump(self):
+        """Décide si le slime va sauter ou pas"""
         if self.distance > 150 * Game.DISPLAY_RATIO:
             self.distance = random.random() * 40
             if random.random() >= 0.5:
