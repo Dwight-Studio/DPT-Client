@@ -260,6 +260,8 @@ class Scenes:
 
         # Gestion de la musique
         if load:
+            pygame.mixer.music.stop()
+            pygame.mixer.stop()
             pygame.mixer.music.set_volume(Game.settings["music_volume"] * Game.settings["general_volume"])
             pygame.mixer_music.load(RessourceLoader.get("dpt.sounds.musics.story_time"))
             pygame.mixer_music.play(-1)
