@@ -28,4 +28,4 @@ class Invisible(pygame.sprite.Sprite):
             self.sound = RessourceLoader.get(self.sounds)
             self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
             self.sound.play()
-        self.mask = pygame.mask.Mask((Game.TILESIZE, Game.TILESIZE), Tr)
+        self.mask = pygame.mask.Mask((Game.TILESIZE, Game.TILESIZE), True)

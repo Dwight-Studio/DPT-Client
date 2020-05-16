@@ -202,8 +202,8 @@ class PlayerSprite(pygame.sprite.Sprite):
                 else:
                     if not self.onPlatform:
                         if (self.jumpCount >= 0 and not EffectsManagement.dico_current_effects["Slow"]) or (EffectsManagement.dico_current_effects["Slow"] and self.frameCount % 3 == 0):
-                            self.yvel = math.floor((self.jumpCount ** 2) * (0.05 + self.gravityModifier + self.jumpModifier) * Game.DISPLAY_RATIO)
-                            self.jumpCount -= 1
+                            self.yvel = math.floor((self.jumpCount ** 2) * (0.05 + self.gravityModifier + self.jumpModifier * Game.settings["30_FPS"]) * Game.DISPLAY_RATIO)
+                            self.jumpCount -= 1 * Game.settings["30_FPS"]
                         elif self.jumpCount < 0:
                             if self.isReallyInJump:
                                 self.isJump = True
@@ -216,8 +216,8 @@ class PlayerSprite(pygame.sprite.Sprite):
                 if (EffectsManagement.dico_current_effects["Slow"] and self.fallCount % 3 == 0) or not EffectsManagement.dico_current_effects["Slow"]:
                     Game.add_debug_info("GRAVITY")
                     self.allowJump = False
-                    self.gravityCount += 1
-                    self.gravity = math.floor((self.gravityCount ** 2) * (0.05 - self.gravityModifier) * Game.DISPLAY_RATIO) * -1
+                    self.gravityCount += 1 * Game.settings["30_FPS"]
+                    self.gravity = math.floor((self.gravityCount ** 2) * (0.05 - self.gravityModifier * Game.settings["30_FPS"]) * Game.DISPLAY_RATIO) * -1
                     self.yvel = self.gravity
                 else:
                     self.yvel = 0
