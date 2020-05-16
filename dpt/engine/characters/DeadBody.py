@@ -12,6 +12,23 @@ from dpt.game import Game
 class DeadBody(pygame.sprite.Sprite):
 
     def __init__(self, x, y, width, height, texture, mask):
+        """Créé un ragdoll
+
+        :param x: Abscisse
+        :type x: int
+        :param y: Ordonnée
+        :type x: int
+        :param width: Largeur
+        :type width: int
+        :param height: Hauteur
+        :type height: int
+        :param texture: Texture de l'objet
+        :type texture: str
+        :param mask: Texture du mask
+        :type mask: str
+
+        :rtype: DeadBody
+        """
         self.frameCount = 0
         from dpt.engine.tileManager import TileManager
         pygame.sprite.Sprite.__init__(self, TileManager.entity_group)  # Sprite's constructor called
@@ -32,6 +49,7 @@ class DeadBody(pygame.sprite.Sprite):
         self.blink = False
 
     def update(self):
+        """Actualise l'objet"""
         if not TileEditor.is_editing:
             from dpt.engine.tileManager import TileManager
             if not Game.freeze_game:
@@ -62,10 +80,12 @@ class DeadBody(pygame.sprite.Sprite):
             self.image = self.o_image
 
     def check_void(self):
-        if self.rect.top > 2000:
+        """Supprime l'objet si quittant l'écran par le bas"""
+        if self.rect.top > 2000 * Game.DISPLAY_RATIO:
             self.kill()
 
     def maskcollide(self):
+        """Effectue les collisions"""
         for i in TileManager.environment_group:
             if i.rect.colliderect(Game.display_rect):
                 rx = i.rect.x - self.rect.x
