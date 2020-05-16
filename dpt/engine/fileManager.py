@@ -37,8 +37,8 @@ class FileManager:
                     with open(wfile, "w") as fw:
                         data2 = json.dumps(data, indent=4)
                         fw.write(data2)
-                    RessourceLoader.RESSOURCES["user.levels." + str(os.path.basename(rfile)).split(".")[0]] = wfile
-                    RessourceLoader.add_pending("user.levels." + str(os.path.basename(rfile)).split(".")[0])
+                    RessourceLoader.RESSOURCES["user.levels." + str(os.path.basename(rfile)).split(".")[0].lower()] = wfile
+                    RessourceLoader.add_pending("user.levels." + str(os.path.basename(rfile)).split(".")[0].lower())
                     RessourceLoader.load()
                     TileManager.load_level("user.levels." + str(os.path.basename(rfile)).split(".")[0])
                     cls.log.info("Successfully loaded : " + str(rfile))
