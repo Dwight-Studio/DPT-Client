@@ -11,6 +11,7 @@ from dpt.game import Game
 
 
 class RobotSpriteDark(pygame.sprite.Sprite):
+    """Classe sur les robots sombres et leur physique"""
     texture = "dpt.images.characters.robots.Robot_Dark_0"
     dead_texture = "dpt.images.characters.robots.Dead_Robot_Dark"
     textures = "dpt.images.characters.robots.Robot_Dark*"
@@ -23,6 +24,15 @@ class RobotSpriteDark(pygame.sprite.Sprite):
     dead_mask = "dpt.images.characters.robots.Dead_mask"
 
     def __init__(self, x, y):
+        """Crée un fantôme sombre
+
+        :param x: Abscisse
+        :type x: int
+        :param y: Ordonnée
+        :type y: int
+
+        :rtype: GhostSpriteDark
+        """
         from dpt.engine.tileManager import TileManager
         pygame.sprite.Sprite.__init__(self, TileManager.enemy_group, TileManager.entity_group)  # Sprite's constructor called
         self.image = RessourceLoader.get(self.texture)
@@ -65,6 +75,7 @@ class RobotSpriteDark(pygame.sprite.Sprite):
         self.stuck_count = 0
 
     def update(self):
+        """Actualise le déplacement, les effets, les collisions"""
         if not TileEditor.is_editing:
             from dpt.engine.tileManager import TileManager
             if not Game.freeze_game:
@@ -166,6 +177,7 @@ class RobotSpriteDark(pygame.sprite.Sprite):
             self.check_void()
 
     def animation(self):
+        """Donne l'illusion de déplacement"""
         if self.moveCount >= 48:
             self.moveCount = 0
         if self.left:
@@ -183,10 +195,12 @@ class RobotSpriteDark(pygame.sprite.Sprite):
         self.moveCount += 1
 
     def check_void(self):
+        """Tue le robot s'il sort de l'écran"""
         if self.rect.top > 2000 * Game.DISPLAY_RATIO:
             self.kill()
 
     def kill(self):
+        """Override de la méthode kill de pygame et affiche un cadavre"""
         if not TileEditor.is_editing and not TileManager.is_loading_level:
             DeadBody(self.rect.x, self.rect.y, self.rect.height, math.floor(self.height / 328 * 181), RobotSpriteDark.dead_texture, RobotSpriteDark.dead_mask)
             sound = RessourceLoader.get(self.sounds[1])
@@ -195,6 +209,7 @@ class RobotSpriteDark(pygame.sprite.Sprite):
         pygame.sprite.Sprite.kill(self)
 
     def check_fall(self, platforms):
+        """Vérifie si le robot va tomber"""
         if self.securityTime < 0:
             if self.right:
                 neg = 1
@@ -213,6 +228,7 @@ class RobotSpriteDark(pygame.sprite.Sprite):
             return True
 
     def maskcollide(self):
+        """Permet de modifier les vélocités de l'abeille en fonction des collisions"""
         for i in TileManager.environment_group:
             if i.rect.colliderect(Game.display_rect):
                 rx = i.rect.x - (self.rect.x + math.floor(self.xvel) * Game.settings["30_FPS"])
