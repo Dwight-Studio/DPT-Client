@@ -11,17 +11,28 @@ class ParallaxSky:
     images = None
     reversed_images = None
     plains = "dpt.images.environment.background.plains.*"
+    ice = "dpt.images.environment.background.ice.*"
+    goop = "dpt.images.environment.background.goop.*"
+    desert = "dpt.images.environment.background.desert.*"
     gap_0 = 0
     gap_1 = 0
     gap_2 = 0
     enable_reversed = False
 
     @classmethod
-    def init(cls):
-        cls.plains_surfaces = [pygame.transform.smoothscale(i, (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)) for i in RessourceLoader.get_multiple(ParallaxSky.plains)]
-
-        cls.images = cls.plains_surfaces
-        cls.reversed_images = [pygame.transform.flip(i, True, False) for i in cls.images]
+    def init(cls, texture):
+        if texture == "Ice":
+            cls.images = [pygame.transform.smoothscale(i, (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)) for i in RessourceLoader.get_multiple(ParallaxSky.ice)]
+            cls.reversed_images = [pygame.transform.flip(i, True, False) for i in cls.images]
+        elif texture == "Desert":
+            cls.images = [pygame.transform.smoothscale(i, (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)) for i in RessourceLoader.get_multiple(ParallaxSky.desert)]
+            cls.reversed_images = [pygame.transform.flip(i, True, False) for i in cls.images]
+        elif texture == "Goop":
+            cls.images = [pygame.transform.smoothscale(i, (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)) for i in RessourceLoader.get_multiple(ParallaxSky.goop)]
+            cls.reversed_images = [pygame.transform.flip(i, True, False) for i in cls.images]
+        else:
+            cls.images = [pygame.transform.smoothscale(i, (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)) for i in RessourceLoader.get_multiple(ParallaxSky.plains)]
+            cls.reversed_images = [pygame.transform.flip(i, True, False) for i in cls.images]
         cls.bg = RessourceLoader.get("dpt.images.environment.background.default_sky")
         cls.bg = pygame.transform.smoothscale(cls.bg, (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT))
 

@@ -274,7 +274,13 @@ class TileManager:
             cls.generate_clouds()
 
             from dpt.engine.gui.ParallaxSky import ParallaxSky
-            ParallaxSky.init()
+            if "infos" in level:
+                if "background" in level["infos"]:
+                    ParallaxSky.init(level["infos"]["background"])
+                else:
+                    ParallaxSky.init("Plains")
+            else:
+                ParallaxSky.init("Plains")
 
             cls.log.info("Done")
             loading_loop(True)
