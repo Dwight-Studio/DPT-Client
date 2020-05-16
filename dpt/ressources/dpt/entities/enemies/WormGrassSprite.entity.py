@@ -11,6 +11,7 @@ from dpt.game import Game
 
 
 class WormGrassSprite(pygame.sprite.Sprite):
+    """Classe sur les vers de terre et leur physique"""
     texture = "dpt.images.characters.animals.Worm_Grass_1"
     dead_texture = "dpt.images.characters.animals.Dead_Worm_Grass"
     textures = "dpt.images.characters.animals.Worm_Grass_*"
@@ -21,6 +22,15 @@ class WormGrassSprite(pygame.sprite.Sprite):
     mask = "dpt.images.characters.animals.wormMask"
 
     def __init__(self, x, y):
+        """Crée un ver de terre
+
+        :param x: Abscisse
+        :type x: int
+        :param y: Ordonnée
+        :type y: int
+
+        :rtype: WormGrassSprite
+        """
         from dpt.engine.tileManager import TileManager
         pygame.sprite.Sprite.__init__(self, TileManager.enemy_group, TileManager.entity_group)  # Sprite's constructor called
         self.image = RessourceLoader.get(self.texture)
@@ -60,6 +70,7 @@ class WormGrassSprite(pygame.sprite.Sprite):
         self.stuck_count = 0
 
     def update(self):
+        """Actualise le déplacement, les effets, les collisions"""
         if not TileEditor.is_editing:
             from dpt.engine.tileManager import TileManager
             if not Game.freeze_game:
@@ -156,6 +167,7 @@ class WormGrassSprite(pygame.sprite.Sprite):
             self.check_void()
 
     def animation(self):
+        """Donne l'illusion de déplacement"""
         if self.moveCount >= self.animFrameTime * self.lenAnim:
             self.moveCount = 0
         if self.left:
@@ -168,15 +180,18 @@ class WormGrassSprite(pygame.sprite.Sprite):
         self.moveCount += 1
 
     def check_void(self):
+        """Tue le robot s'il sort de l'écran"""
         if self.rect.top > 2000:
             self.kill()
 
     def kill(self):
+        """Override de la méthode kill de pygame et affiche un cadavre"""
         if not TileEditor.is_editing and not TileManager.is_loading_level:
             DeadBody(self.rect.x, self.rect.y, self.rect.width, self.rect.height, WormGrassSprite.dead_texture, WormGrassSprite.mask)
         pygame.sprite.Sprite.kill(self)
 
     def check_fall(self, platforms):
+        """Vérifie si le slime va tomber"""
         if self.securityTime < 0:
             if self.right:
                 neg = 1
@@ -195,6 +210,7 @@ class WormGrassSprite(pygame.sprite.Sprite):
             return True
 
     def maskcollide(self):
+        """Permet de modifier les vélocités de l'abeille en fonction des collisions"""
         for i in TileManager.environment_group:
             if i.rect.colliderect(Game.display_rect):
                 rx = i.rect.x - (self.rect.x + math.floor(self.xvel) * Game.settings["30_FPS"])
