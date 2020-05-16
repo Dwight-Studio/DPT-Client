@@ -9,10 +9,24 @@ from dpt.game import Game
 
 
 def pythagore(xa, ya, xb, yb):
+    """Permet d'avoir la distance entre deux points
+
+        :param xa: Abscisse du premier point
+        :type xa: int
+        :param ya: Ordonnée du premier point
+        :type ya: int
+        :param xb: Abscisse du second point
+        :type xb: int
+        :param yb: Ordonnée du second point
+        :type yb: int
+
+        :rtype: float
+        """
     return math.sqrt((xb-xa)**2 + (yb-ya)**2)
 
 
 class GhostSpriteLight(pygame.sprite.Sprite):
+    """Classe sur les fantômes clairs et leur physique"""
     texture = "dpt.images.characters.ghosts.Ghost_Light_1"
     textures = "dpt.images.characters.ghosts.Ghost_Light*"
     width = math.floor(92.4 * Game.DISPLAY_RATIO)
@@ -22,6 +36,15 @@ class GhostSpriteLight(pygame.sprite.Sprite):
     mask = "dpt.images.characters.ghosts.mask"
 
     def __init__(self, x, y):
+        """Crée un fantôme clair
+
+        :param x: Abscisse
+        :type x: int
+        :param y: Ordonnée
+        :type y: int
+
+        :rtype: GhostSpriteLight
+        """
         from dpt.engine.tileManager import TileManager
         pygame.sprite.Sprite.__init__(self, TileManager.enemy_group, TileManager.entity_group)  # Sprite's constructor called
         self.image = RessourceLoader.get(self.texture)
@@ -48,6 +71,7 @@ class GhostSpriteLight(pygame.sprite.Sprite):
                                                                     (self.width, self.height)))
 
     def update(self):
+        """Actualise le déplacement, les effets, les collisions"""
         if not TileEditor.is_editing:
             from dpt.engine.tileManager import TileManager
             if not Game.freeze_game:
@@ -105,6 +129,7 @@ class GhostSpriteLight(pygame.sprite.Sprite):
             pygame.draw.line(Game.surface, (193, 39, 45), self.rect.center, (self.rect.centerx, self.rect.centery + math.floor(500 * Game.DISPLAY_RATIO)), 5)
 
     def animation(self):
+        """Donne l'illusion de déplacement"""
         xb = Game.player_sprite.rect.x
         yb = Game.player_sprite.rect.y
         if pythagore(self.rect.x, self.rect.y, xb, yb) < 400:

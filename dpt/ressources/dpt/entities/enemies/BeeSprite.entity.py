@@ -10,6 +10,7 @@ from dpt.game import Game
 
 
 class BeeSprite(pygame.sprite.Sprite):
+    """Classe sur les abeilles et leur physique"""
     texture = "dpt.images.characters.animals.Bee_1"
     textures = "dpt.images.characters.animals.Bee*"
     sounds = "dpt.sounds.sfx.sfx_bee"
@@ -22,6 +23,15 @@ class BeeSprite(pygame.sprite.Sprite):
     preview_surface = None
 
     def __init__(self, x, y):
+        """Crée une abeille
+
+        :param x: Abscisse
+        :type x: int
+        :param y: Ordonnée
+        :type y: int
+
+        :rtype: BeeSprite
+        """
         from dpt.engine.tileManager import TileManager
         pygame.sprite.Sprite.__init__(self, TileManager.enemy_group, TileManager.entity_group)  # Sprite's constructor called
         self.image = RessourceLoader.get(self.texture)
@@ -55,6 +65,7 @@ class BeeSprite(pygame.sprite.Sprite):
         self.stuck_count = 0
 
     def update(self):
+        """Actualise le déplacement, les effets, les collisions"""
         if not TileEditor.is_editing:
             from dpt.engine.tileManager import TileManager
             if not Game.freeze_game:
@@ -144,6 +155,7 @@ class BeeSprite(pygame.sprite.Sprite):
             self.preview()
 
     def animation(self):
+        """Donne l'illusion de déplacement"""
         if self.moveCount >= 32:
             self.moveCount = 0
         if self.left:
@@ -153,6 +165,7 @@ class BeeSprite(pygame.sprite.Sprite):
         self.moveCount += 1
 
     def preview(self):
+        """Affiche le déplacement futur de l'abeille"""
         if BeeSprite.preview_surface is not None:
             Game.surface.blit(BeeSprite.preview_surface, (self.rect.x + TileManager.camera.last_x, self.rect.y - math.floor(50 * Game.DISPLAY_RATIO)))
         else:
@@ -178,6 +191,7 @@ class BeeSprite(pygame.sprite.Sprite):
                 Game.surface.blit(BeeSprite.preview_surface, (self.rect.x + TileManager.camera.last_x, self.rect.y - math.floor(50 * Game.DISPLAY_RATIO)))
 
     def maskcollide(self):
+        """Permet de modifier les vélocités de l'abeille en fonction des collisions"""
         for i in TileManager.environment_group:
             if i.rect.colliderect(Game.display_rect):
                 rx = i.rect.x - (self.rect.x + math.floor(self.xvel) * Game.settings["30_FPS"])

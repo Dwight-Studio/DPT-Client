@@ -53,8 +53,9 @@ class TileEditor:
             mouse_buttons = pygame.mouse.get_pressed()
             keys = pygame.key.get_pressed()
             keysmods = pygame.key.get_mods()
+            print(keysmods)
             for key in keys:
-                if keysmods == 4160 or keysmods == 4224:
+                if keysmods == 4160 or keysmods == 4224 or keysmods == 64:
                     # Ouvrir un fichier
                     if keys[pygame.K_o] and not cls.opushed:
                         cls.opushed = True
@@ -100,6 +101,16 @@ class TileEditor:
                         cls.ipushed = False
                     elif not keys[pygame.K_t] and cls.tpushed:
                         cls.tpushed = False
+                if keysmods == 4097 or keysmods == 4098:
+                    if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+                        pygame.mouse.set_pos((pygame.mouse.get_pos()[0] + 1, pygame.mouse.get_pos()[1]))
+                    elif keys[pygame.K_LEFT] or keys[pygame.K_q]:
+                        pygame.mouse.set_pos((pygame.mouse.get_pos()[0] - 1, pygame.mouse.get_pos()[1]))
+                    elif keys[pygame.K_UP] or keys[pygame.K_z]:
+                        pygame.mouse.set_pos((pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1] - 1))
+                    elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
+                        pygame.mouse.set_pos((pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1] + 1))
+
             # Gestion de la position de la souris et du placement de blocks
             mouse = pygame.mouse.get_pos()
             cls.mouse_pos_x = math.floor((mouse[0] - TileManager.camera.last_x) / Game.TILESIZE)
