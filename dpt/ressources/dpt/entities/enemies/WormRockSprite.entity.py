@@ -14,8 +14,8 @@ class WormRockSprite(pygame.sprite.Sprite):
     texture = "dpt.images.characters.animals.Worm_Rock_1"
     dead_texture = "dpt.images.characters.animals.Dead_Worm_Rock"
     textures = "dpt.images.characters.animals.Worm_Rock_*"
-    width = math.floor(77.2 * Game.DISPLAY_RATIO)
-    height = math.floor(21.2 * Game.DISPLAY_RATIO)
+    width = math.floor(115.8 * Game.DISPLAY_RATIO)
+    height = math.floor(36 * Game.DISPLAY_RATIO)
     offset_x = (Game.TILESIZE - width) // 2
     offset_y = Game.TILESIZE - height
     mask = "dpt.images.characters.animals.wormMask"
