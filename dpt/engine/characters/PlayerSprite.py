@@ -225,7 +225,7 @@ class PlayerSprite(pygame.sprite.Sprite):
             self.collide()
 
             self.rect.left += math.floor(self.xvel) * Game.settings["30_FPS"]
-            self.rect.top -= math.floor(self.yvel)
+            self.rect.top -= math.floor(self.yvel) * Game.settings["30_FPS"]
 
             self.animation()
             self.enemies_collision(self.yvel, TileManager.enemy_group)
