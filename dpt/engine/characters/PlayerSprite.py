@@ -445,5 +445,6 @@ class PlayerSprite(pygame.sprite.Sprite):
             del self
 
     def kill(self):
+        """Override de la méthode kill de pygame"""
         pygame.event.post(pygame.event.Event(Game.PLAYER_DEATH_EVENT, {}))
         pygame.sprite.Sprite.kill(self)
