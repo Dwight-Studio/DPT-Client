@@ -630,19 +630,19 @@
             "customPlace": true
         },
         "34, 9": {
-            "class": "dpt.blocks.grass.grasssloped"
+            "class": "dpt.blocks.grass.Grass"
         },
         "36, 9": {
-            "class": "dpt.blocks.grass.grassslopeu"
+            "class": "dpt.blocks.grass.Grass"
         },
         "36, 10": {
-            "class": "dpt.blocks.grass.grassslopeconnectorl"
+            "class": "dpt.blocks.grass.grasslower"
         },
         "34, 10": {
-            "class": "dpt.blocks.grass.grassslopeconnectorr"
+            "class": "dpt.blocks.grass.grasslower"
         },
         "35, 10": {
-            "class": "dpt.blocks.grass.grass"
+            "class": "dpt.blocks.grass.grasslower"
         },
         "37, 9": {
             "class": "dpt.blocks.grass.grass"
@@ -762,7 +762,6 @@
             "customPlace": true
         },
         "3201.0, 855.0": {
-            "class": "dpt.entities.interactible.lever",
             "customPlace": true,
             "assignement": [
                 "44, 5",
@@ -778,9 +777,11 @@
             "class": "dpt.blocks.box.boxred"
         },
         "44, 9": {
+            "backgroundClass": "dpt.blocks.grass.grass",
             "class": "dpt.blocks.box.boxredr"
         },
         "45, 9": {
+            "backgroundClass": "dpt.blocks.grass.grass",
             "class": "dpt.blocks.box.boxredr"
         },
         "44, 11": {
@@ -790,10 +791,12 @@
             "class": "dpt.entities.liquids.lava"
         },
         "44, 10": {
-            "class": "dpt.entities.liquids.lavatop"
+            "class": "dpt.entities.liquids.lavatop",
+            "backgroundClass": "dpt.blocks.grass.grasslower"
         },
         "45, 10": {
-            "class": "dpt.entities.liquids.lavatop"
+            "class": "dpt.entities.liquids.lavatop",
+            "backgroundClass": "dpt.blocks.grass.grasslower"
         },
         "46, 11": {
             "class": "dpt.blocks.grass.grassl"
@@ -907,8 +910,7 @@
             "backgroundClass": "dpt.blocks.grass.grasslower"
         },
         "49, 8": {
-            "backgroundClass": "dpt.blocks.grass.grasslower",
-            "class": "dpt.entities.flags.flagblue"
+            "backgroundClass": "dpt.blocks.grass.grasslower"
         },
         "48, 8": {
             "backgroundClass": "dpt.blocks.grass.grasslower",
@@ -1002,16 +1004,12 @@
         "19, 5": {},
         "19, 6": {},
         "22, 4": {},
-        "15, 6": {},
-        "16, 7": {
+        "15, 6": {
             "class": "dpt.entities.enemies.wormgrasssprite"
         },
-        "43, 4": {
-            "class": "dpt.entities.enemies.wormgrasssprite"
-        },
-        "33, 8": {
-            "class": "dpt.entities.enemies.wormgrasssprite"
-        },
+        "16, 7": {},
+        "43, 4": {},
+        "33, 8": {},
         "53, 9": {
             "class": "dpt.blocks.grass.Grass"
         },
@@ -1140,7 +1138,8 @@
             "backgroundClass": "dpt.blocks.grass.grasslower"
         },
         "58, 7": {
-            "backgroundClass": "dpt.blocks.grass.grasslower"
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.entities.enemies.wormgrasssprite"
         },
         "57, 7": {
             "backgroundClass": "dpt.blocks.grass.grassslopeconnectorl"
@@ -1152,7 +1151,9 @@
         "51, 4": {
             "class": "dpt.entities.interactible.coin"
         },
-        "53, 8": {},
+        "53, 8": {
+            "class": "dpt.entities.flags.flagblue"
+        },
         "54, 8": {},
         "52, 4": {},
         "53, 4": {},
@@ -1162,9 +1163,7 @@
             "class": "dpt.entities.props.rocks.rock2",
             "customPlace": true
         },
-        "53, 3": {
-            "class": "dpt.entities.flags.flagyellow"
-        },
+        "53, 3": {},
         "54, 3": {},
         "55, 3": {},
         "52, 2": {},
@@ -1172,17 +1171,13 @@
         "54, 5": {},
         "55, 2": {},
         "52, 3": {},
-        "52, 5": {
-            "class": "dpt.entities.flags.flagyellow"
-        },
+        "52, 5": {},
         "54, 2": {},
         "53, 2": {},
         "55, 5": {},
         "52, 1": {},
         "54, 1": {},
-        "51, 3": {
-            "class": "dpt.entities.flags.flagyellow"
-        },
+        "51, 3": {},
         "53, 6": {},
         "60, 9": {
             "class": "dpt.blocks.grass.grass"
@@ -1251,25 +1246,32 @@
             "class": "dpt.entities.liquids.lava"
         },
         "65, 9": {
-            "class": "dpt.entities.liquids.lavatop"
+            "class": "dpt.entities.liquids.lavatop",
+            "backgroundClass": "dpt.blocks.grass.grass"
         },
         "66, 9": {
-            "class": "dpt.entities.liquids.lavatop"
+            "class": "dpt.entities.liquids.lavatop",
+            "backgroundClass": "dpt.blocks.grass.grass"
         },
         "67, 9": {
-            "class": "dpt.entities.liquids.lavatop"
+            "class": "dpt.entities.liquids.lavatop",
+            "backgroundClass": "dpt.blocks.grass.grass"
         },
         "68, 9": {
-            "class": "dpt.entities.liquids.lavatop"
+            "class": "dpt.entities.liquids.lavatop",
+            "backgroundClass": "dpt.blocks.grass.grass"
         },
         "69, 9": {
-            "class": "dpt.entities.liquids.lavatop"
+            "class": "dpt.entities.liquids.lavatop",
+            "backgroundClass": "dpt.blocks.grass.grass"
         },
         "70, 9": {
-            "class": "dpt.entities.liquids.lavatop"
+            "class": "dpt.entities.liquids.lavatop",
+            "backgroundClass": "dpt.blocks.grass.grass"
         },
         "71, 9": {
-            "class": "dpt.entities.liquids.lavatop"
+            "class": "dpt.entities.liquids.lavatop",
+            "backgroundClass": "dpt.blocks.grass.grass"
         },
         "71, 11": {
             "class": "dpt.entities.liquids.lava"
@@ -1332,16 +1334,19 @@
             "backgroundClass": "dpt.blocks.grass.grasssloped"
         },
         "64, 8": {
-            "backgroundClass": "dpt.blocks.grass.grasssloped"
+            "backgroundClass": "dpt.blocks.grass.grasssloped",
+            "class": "dpt.entities.props.fences.fencemetal"
         },
         "63, 8": {
-            "backgroundClass": "dpt.blocks.grass.grassslopeconnectorr"
+            "backgroundClass": "dpt.blocks.grass.grassslopeconnectorr",
+            "class": "dpt.entities.props.fences.fencemetalconnector"
         },
         "62, 7": {
             "backgroundClass": "dpt.blocks.grass.grassslopeconnectorr"
         },
         "62, 8": {
-            "backgroundClass": "dpt.blocks.grass.grasslower"
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.entities.props.fences.fencemetalconnector"
         },
         "61, 8": {
             "backgroundClass": "dpt.blocks.grass.grasslower"
@@ -1390,6 +1395,1514 @@
         },
         "72, 2": {
             "backgroundClass": "dpt.blocks.grass.grassl"
+        },
+        "49, 0": {
+            "class": "dpt.blocks.invisible"
+        },
+        "50, 0": {
+            "class": "dpt.blocks.invisible"
+        },
+        "51, 0": {},
+        "51, 1": {},
+        "55, 1": {},
+        "56, 1": {},
+        "56, 0": {},
+        "57, 0": {
+            "class": "dpt.blocks.invisible"
+        },
+        "52, 0": {},
+        "45, 0": {
+            "class": "dpt.blocks.invisible"
+        },
+        "44, 0": {
+            "class": "dpt.blocks.invisible"
+        },
+        "58, 0": {
+            "class": "dpt.blocks.invisible"
+        },
+        "61, 0": {
+            "class": "dpt.blocks.invisible"
+        },
+        "62, 0": {
+            "class": "dpt.blocks.invisible"
+        },
+        "74, 0": {
+            "class": "dpt.entities.liquids.lavatop"
+        },
+        "73, 0": {
+            "class": "dpt.blocks.grass.grasscorneredger"
+        },
+        "74, 1": {
+            "class": "dpt.blocks.grass.grasscorneredger"
+        },
+        "75, 2": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "74, 2": {
+            "backgroundClass": "dpt.blocks.grass.grassslopeconnectorr"
+        },
+        "73, 1": {
+            "backgroundClass": "dpt.blocks.grass.grassslopeconnectorr"
+        },
+        "73, 3": {
+            "class": "dpt.blocks.grass.grasssloped",
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "74, 4": {
+            "class": "dpt.blocks.grass.grasssloped",
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "75, 5": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "76, 5": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "77, 5": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "76, 2": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "77, 2": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "74, 5": {
+            "class": "dpt.blocks.grass.grassslopeconnectorr"
+        },
+        "73, 4": {
+            "class": "dpt.blocks.grass.grassslopeconnectorr"
+        },
+        "73, 5": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "73, 6": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "73, 7": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "73, 8": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "73, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "73, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "73, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "74, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "75, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "76, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "77, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "77, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "77, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "77, 8": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "77, 7": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "77, 6": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "76, 6": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "75, 6": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "74, 6": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "74, 7": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "74, 8": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "74, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "74, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "75, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "76, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "76, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "76, 8": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "76, 7": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "75, 7": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "75, 8": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "75, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "75, 0": {
+            "class": "dpt.entities.liquids.lavatop"
+        },
+        "76, 0": {
+            "class": "dpt.entities.liquids.lavatop"
+        },
+        "77, 0": {
+            "class": "dpt.entities.liquids.lavatop"
+        },
+        "77, 1": {
+            "class": "dpt.entities.liquids.lava"
+        },
+        "76, 1": {
+            "class": "dpt.entities.liquids.lava"
+        },
+        "75, 1": {
+            "class": "dpt.entities.liquids.lava"
+        },
+        "73, 2": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "74, 3": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "75, 4": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "76, 4": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.entities.flags.flagblue"
+        },
+        "77, 4": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "77, 3": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "76, 3": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "75, 3": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "63, 1": {},
+        "63, 2": {},
+        "63, 3": {},
+        "63, 4": {},
+        "63, 5": {},
+        "64, 5": {},
+        "65, 5": {},
+        "66, 5": {},
+        "67, 5": {},
+        "67, 4": {},
+        "67, 3": {},
+        "67, 2": {},
+        "67, 1": {},
+        "66, 1": {},
+        "65, 1": {},
+        "64, 1": {},
+        "64, 2": {},
+        "64, 3": {
+            "class": "dpt.entities.interactible.coin"
+        },
+        "64, 4": {
+            "class": "dpt.blocks.grass.grasshalfedgel"
+        },
+        "65, 4": {
+            "class": "dpt.blocks.grass.grasshalfedger"
+        },
+        "66, 4": {},
+        "66, 3": {},
+        "66, 2": {},
+        "65, 2": {},
+        "65, 3": {},
+        "68, 4": {},
+        "68, 3": {},
+        "68, 2": {
+            "class": "dpt.blocks.grass.grasshalfedgel"
+        },
+        "68, 1": {},
+        "69, 1": {},
+        "69, 2": {
+            "class": "dpt.blocks.grass.grasshalf"
+        },
+        "69, 3": {},
+        "69, 4": {},
+        "69, 0": {
+            "class": "dpt.entities.enemies.wormgrasssprite"
+        },
+        "66, 7": {
+            "class": "dpt.blocks.grass.grasshalfedgel"
+        },
+        "67, 7": {
+            "class": "dpt.blocks.grass.grasshalfedger"
+        },
+        "71, 6": {
+            "class": "dpt.blocks.grass.grasshalfedger"
+        },
+        "70, 6": {
+            "class": "dpt.blocks.grass.grasshalfedgel"
+        },
+        "70, 2": {
+            "class": "dpt.blocks.grass.grasshalfedger"
+        },
+        "70, 5": {
+            "class": "dpt.entities.interactible.coin"
+        },
+        "66, 6": {
+            "class": "dpt.entities.interactible.coin"
+        },
+        "78, 5": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.blocks.box.boxred"
+        },
+        "79, 5": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.blocks.box.boxred"
+        },
+        "80, 5": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.blocks.box.boxred"
+        },
+        "81, 5": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.blocks.box.boxred"
+        },
+        "78, 9": {
+            "backgroundClass": "dpt.blocks.grass.grass",
+            "class": "dpt.blocks.box.boxredr"
+        },
+        "79, 9": {
+            "backgroundClass": "dpt.blocks.grass.grass",
+            "class": "dpt.blocks.box.boxredr"
+        },
+        "80, 9": {
+            "backgroundClass": "dpt.blocks.grass.grass",
+            "class": "dpt.blocks.box.boxredr"
+        },
+        "81, 9": {
+            "backgroundClass": "dpt.blocks.grass.grass",
+            "class": "dpt.blocks.box.boxredr"
+        },
+        "81, 10": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.entities.liquids.lavatop"
+        },
+        "81, 11": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.entities.liquids.lava"
+        },
+        "80, 11": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.entities.liquids.lava"
+        },
+        "80, 10": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.entities.liquids.lavatop"
+        },
+        "79, 10": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.entities.liquids.lavatop"
+        },
+        "78, 10": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.entities.liquids.lavatop"
+        },
+        "78, 11": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.entities.liquids.lava"
+        },
+        "79, 11": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.entities.liquids.lava"
+        },
+        "6979.0, 406.0": {
+            "class": "dpt.entities.interactible.lever",
+            "customPlace": true,
+            "assignement": [
+                "78, 5",
+                "79, 5",
+                "80, 5",
+                "81, 5",
+                "78, 9",
+                "79, 9",
+                "80, 9",
+                "81, 9"
+            ]
+        },
+        "35, 9": {
+            "class": "dpt.blocks.grass.Grass"
+        },
+        "34, 7": {
+            "class": "dpt.entities.enemies.wormgrasssprite"
+        },
+        "43, 3": {},
+        "44, 3": {
+            "class": "dpt.entities.enemies.wormgrasssprite"
+        },
+        "3639.0, 641.0": {
+            "class": "dpt.entities.props.plants.flowers.flowerstarred",
+            "customPlace": true
+        },
+        "82, 9": {
+            "class": "dpt.blocks.grass.grasscorneredgel"
+        },
+        "83, 9": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "84, 9": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "85, 9": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "82, 10": {
+            "class": "dpt.blocks.grass.grassl"
+        },
+        "82, 11": {
+            "class": "dpt.blocks.grass.grassl"
+        },
+        "78, 2": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "79, 2": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "80, 2": {
+            "class": "dpt.blocks.grass.grassslopeconnectorl"
+        },
+        "81, 2": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "82, 2": {
+            "class": "dpt.blocks.grass.grassr"
+        },
+        "82, 6": {
+            "class": "dpt.blocks.grass.grassr"
+        },
+        "82, 5": {
+            "class": "dpt.blocks.grass.grassr"
+        },
+        "82, 4": {
+            "class": "dpt.blocks.grass.grassr"
+        },
+        "82, 3": {
+            "class": "dpt.blocks.grass.grassr"
+        },
+        "80, 1": {
+            "class": "dpt.blocks.grass.grassl"
+        },
+        "79, 1": {
+            "class": "dpt.entities.liquids.lava"
+        },
+        "80, 0": {
+            "class": "dpt.blocks.grass.grasscorneredgel"
+        },
+        "78, 1": {
+            "class": "dpt.entities.liquids.lava"
+        },
+        "79, 0": {
+            "class": "dpt.entities.liquids.lavatop"
+        },
+        "78, 0": {
+            "class": "dpt.entities.liquids.lavatop"
+        },
+        "81, 0": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "82, 0": {
+            "class": "dpt.blocks.grass.grasscorneredger"
+        },
+        "82, 1": {
+            "class": "dpt.blocks.grass.grassr"
+        },
+        "81, 1": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "78, 3": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "78, 4": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "79, 4": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "79, 3": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "80, 3": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "80, 4": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "81, 4": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "81, 3": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "81, 6": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "81, 7": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "81, 8": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "80, 8": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "79, 8": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "78, 8": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "78, 7": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "78, 6": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "79, 6": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "79, 7": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "80, 7": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "80, 6": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "82, 7": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "82, 8": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "83, 0": {
+            "class": "dpt.blocks.invisible"
+        },
+        "84, 0": {
+            "class": "dpt.blocks.invisible"
+        },
+        "84, 8": {
+            "class": "dpt.entities.props.fences.fencewoodconnector"
+        },
+        "85, 8": {
+            "class": "dpt.entities.props.fences.fencewoodconnector"
+        },
+        "86, 8": {
+            "class": "dpt.entities.props.fences.fencewood"
+        },
+        "90, 7": {
+            "class": "dpt.entities.props.bushes.bush2"
+        },
+        "91, 7": {
+            "class": "dpt.entities.props.bushes.bush3"
+        },
+        "92, 7": {
+            "class": "dpt.entities.props.bushes.bush1"
+        },
+        "88, 8": {
+            "class": "dpt.blocks.grass.grassslopeu"
+        },
+        "89, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "90, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "91, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "92, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "87, 9": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "86, 9": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "88, 9": {
+            "class": "dpt.blocks.grass.grassslopeconnectorl"
+        },
+        "92, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "92, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "92, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "91, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "90, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "89, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "88, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "87, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "86, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "85, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "84, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "83, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "83, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "84, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "85, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "86, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "87, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "88, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "89, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "90, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "91, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "91, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "90, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "89, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "8178.0, 673.0": {
+            "class": "dpt.entities.props.bushes.berries.berry3",
+            "customPlace": true
+        },
+        "8264.0, 706.0": {
+            "class": "dpt.entities.props.bushes.berries.berry3",
+            "customPlace": true
+        },
+        "8327.0, 698.0": {
+            "customPlace": true
+        },
+        "8337.0, 680.0": {
+            "class": "dpt.entities.props.bushes.berries.berry3",
+            "customPlace": true
+        },
+        "7856.0, 777.0": {
+            "class": "dpt.entities.props.plants.flowers.flowerstarblue",
+            "customPlace": true
+        },
+        "93, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "94, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "95, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "96, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "97, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "98, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "99, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "100, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "101, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "102, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "103, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "104, 8": {
+            "class": "dpt.blocks.grass.grasscorneredger"
+        },
+        "8865.0, 722.0": {
+            "customPlace": true,
+            "assignement": [
+                "105, 8",
+                "106, 8",
+                "107, 8",
+                "108, 8",
+                "105, 8"
+            ]
+        },
+        "105, 8": {
+            "backgroundClass": "dpt.blocks.grass.grass",
+            "class": "dpt.entities.liquids.watertop"
+        },
+        "106, 8": {
+            "backgroundClass": "dpt.blocks.grass.grass",
+            "class": "dpt.entities.liquids.watertop"
+        },
+        "107, 8": {
+            "backgroundClass": "dpt.blocks.grass.grass",
+            "class": "dpt.entities.liquids.watertop"
+        },
+        "108, 8": {
+            "backgroundClass": "dpt.blocks.grass.grass",
+            "class": "dpt.entities.liquids.watertop"
+        },
+        "109, 8": {
+            "class": "dpt.blocks.grass.grasscorneredgel"
+        },
+        "109, 9": {
+            "class": "dpt.blocks.grass.grassl"
+        },
+        "109, 10": {
+            "class": "dpt.blocks.grass.grassl"
+        },
+        "109, 11": {
+            "class": "dpt.blocks.grass.grassl"
+        },
+        "104, 9": {
+            "class": "dpt.blocks.grass.grassr"
+        },
+        "104, 10": {
+            "class": "dpt.blocks.grass.grassr"
+        },
+        "104, 11": {
+            "class": "dpt.blocks.grass.grassr"
+        },
+        "103, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "103, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "103, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "102, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "101, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "100, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "99, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "98, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "97, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "96, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "95, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "94, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "93, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "93, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "93, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "94, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "95, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "96, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "97, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "98, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "99, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "100, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "101, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "102, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "102, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "101, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "100, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "99, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "98, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "97, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "96, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "95, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "94, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "8864.0, 723.0": {
+            "customPlace": true,
+            "assignement": [
+                "105, 8",
+                "106, 8",
+                "107, 8",
+                "108, 8"
+            ]
+        },
+        "108, 9": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.entities.liquids.water"
+        },
+        "108, 10": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.entities.liquids.water"
+        },
+        "108, 11": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.entities.liquids.water"
+        },
+        "107, 11": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.entities.liquids.water"
+        },
+        "106, 11": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.entities.liquids.water"
+        },
+        "105, 11": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.entities.liquids.water"
+        },
+        "105, 10": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.entities.liquids.water"
+        },
+        "105, 9": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.entities.liquids.water"
+        },
+        "106, 9": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.entities.liquids.water"
+        },
+        "107, 9": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.entities.liquids.water"
+        },
+        "107, 10": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.entities.liquids.water"
+        },
+        "106, 10": {
+            "backgroundClass": "dpt.blocks.grass.grasslower",
+            "class": "dpt.entities.liquids.water"
+        },
+        "106, 7": {
+            "class": "dpt.blocks.box.boxgreen"
+        },
+        "107, 7": {
+            "class": "dpt.blocks.box.boxgreen"
+        },
+        "108, 7": {
+            "class": "dpt.blocks.box.boxgreen"
+        },
+        "105, 7": {
+            "class": "dpt.blocks.box.boxgreen"
+        },
+        "8821.0, 722.0": {
+            "class": "dpt.entities.interactible.buttons.buttongreen",
+            "customPlace": true,
+            "assignement": [
+                "105, 7",
+                "106, 7",
+                "107, 7",
+                "108, 7"
+            ]
+        },
+        "94, 6": {
+            "class": "dpt.entities.enemies.wormgrasssprite"
+        },
+        "102, 6": {
+            "class": "dpt.entities.enemies.wormgrasssprite"
+        },
+        "9152.0, 706.0": {
+            "class": "dpt.entities.props.plants.mushrooms.big.mushroombig1",
+            "customPlace": true
+        },
+        "9392.0, 706.0": {
+            "class": "dpt.entities.props.plants.mushrooms.big.mushroombig1",
+            "customPlace": true
+        },
+        "110, 7": {},
+        "111, 7": {},
+        "112, 7": {
+            "class": "dpt.entities.props.fences.fencewoodconnector"
+        },
+        "113, 7": {
+            "class": "dpt.entities.props.fences.fencewoodconnector"
+        },
+        "114, 7": {
+            "class": "dpt.entities.props.fences.fencewood"
+        },
+        "110, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "111, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "112, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "113, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "114, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "115, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "116, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "117, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "118, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "119, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "120, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "121, 8": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "122, 8": {
+            "class": "dpt.blocks.grass.grasssloped",
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "123, 8": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "124, 8": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "125, 8": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "126, 8": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "127, 8": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "128, 8": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "129, 8": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "130, 8": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "131, 8": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "110, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "110, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "110, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "111, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "112, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "113, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "114, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "115, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "116, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "117, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "118, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "119, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "120, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "121, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "122, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "123, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "124, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "125, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "126, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "127, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "128, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "129, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "130, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "131, 11": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "131, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "131, 9": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "130, 9": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "129, 9": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "128, 9": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "127, 9": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "126, 9": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "125, 9": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "124, 9": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "123, 9": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "122, 9": {
+            "class": "dpt.blocks.grass.grassslopeconnectorr"
+        },
+        "121, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "120, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "119, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "118, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "117, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "116, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "115, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "114, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "113, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "112, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "112, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "111, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "111, 9": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "113, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "114, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "115, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "116, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "117, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "118, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "119, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "120, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "121, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "122, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "123, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "124, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "125, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "126, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "127, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "128, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "129, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "130, 10": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "118, 7": {
+            "class": "dpt.entities.flags.flagred"
+        },
+        "123, 7": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "124, 7": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "125, 7": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "122, 7": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "11051.0, 671.0": {
+            "customPlace": true
+        },
+        "11118.0, 697.0": {
+            "customPlace": true
+        },
+        "11213.0, 686.0": {
+            "customPlace": true
+        },
+        "126, 7": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "127, 7": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "128, 7": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "10613.0, 684.0": {
+            "customPlace": true
+        },
+        "10717.0, 687.0": {
+            "customPlace": true
+        },
+        "10564.0, 682.0": {
+            "customPlace": true
+        },
+        "10562.0, 688.0": {
+            "class": "dpt.entities.props.plants.flowers.flowerstaryellow",
+            "customPlace": true
+        },
+        "10780.0, 691.0": {
+            "customPlace": true
+        },
+        "10013.0, 702.0": {
+            "class": "dpt.entities.props.plants.mushrooms.small.mushroomsmall2",
+            "customPlace": true
+        },
+        "10332.0, 698.0": {
+            "class": "dpt.entities.props.plants.mushrooms.small.mushroomsmall3",
+            "customPlace": true
+        },
+        "11580.0, 704.0": {
+            "customPlace": true
+        },
+        "10226.0, 584.0": {
+            "customPlace": true
+        },
+        "10389.0, 410.0": {
+            "class": "dpt.entities.props.plants.mushrooms.small.mushroomsmall4",
+            "customPlace": true
+        },
+        "83, 7": {
+            "class": "dpt.entities.interactible.coin"
+        },
+        "97, 6": {
+            "class": "dpt.entities.interactible.coin"
+        },
+        "98, 6": {
+            "class": "dpt.entities.interactible.coin"
+        },
+        "109, 5": {
+            "class": "dpt.entities.interactible.coin"
+        },
+        "107, 4": {
+            "class": "dpt.entities.interactible.coin"
+        },
+        "119, 7": {
+            "backgroundClass": "dpt.blocks.grass.grassslopeu"
+        },
+        "120, 6": {
+            "backgroundClass": "dpt.blocks.grass.grassslopeu"
+        },
+        "121, 5": {
+            "backgroundClass": "dpt.blocks.grass.grassl"
+        },
+        "121, 6": {
+            "backgroundClass": "dpt.blocks.grass.grassslopeconnectorl"
+        },
+        "121, 4": {
+            "class": "dpt.blocks.grass.grassslopeu"
+        },
+        "122, 4": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "123, 3": {
+            "class": "dpt.blocks.grass.grassslopeu"
+        },
+        "124, 2": {
+            "class": "dpt.blocks.grass.grassslopeu"
+        },
+        "125, 1": {
+            "class": "dpt.blocks.grass.grassslopeu"
+        },
+        "126, 1": {
+            "class": "dpt.blocks.grass.grass"
+        },
+        "127, 0": {
+            "class": "dpt.blocks.grass.grassslopeu"
+        },
+        "127, 1": {
+            "class": "dpt.blocks.grass.grassslopeconnectorl"
+        },
+        "125, 2": {
+            "class": "dpt.blocks.grass.grassslopeconnectorl"
+        },
+        "124, 3": {
+            "class": "dpt.blocks.grass.grassslopeconnectorl"
+        },
+        "123, 4": {
+            "class": "dpt.blocks.grass.grassslopeconnectorl"
+        },
+        "128, 0": {
+            "class": "dpt.blocks.grass.grassslopeconnectorl"
+        },
+        "131, 0": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "130, 0": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "129, 0": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "129, 1": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "129, 2": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "129, 3": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "129, 4": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "129, 5": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "129, 6": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "128, 6": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "127, 6": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "126, 6": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "125, 6": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "124, 6": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "123, 6": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "122, 6": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "122, 5": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "123, 5": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "124, 5": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "124, 4": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "125, 4": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "125, 5": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "125, 3": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "126, 3": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "126, 2": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "127, 2": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "128, 1": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "128, 2": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "128, 3": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "128, 4": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "126, 4": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "127, 4": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "127, 3": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "130, 2": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "130, 1": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "131, 1": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "131, 2": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "131, 3": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "131, 4": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "130, 4": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "130, 3": {
+            "class": "dpt.blocks.grass.grasslower"
+        },
+        "129, 7": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "130, 7": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "130, 6": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "131, 6": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "131, 5": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "131, 7": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "130, 5": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "128, 5": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "127, 5": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "126, 5": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "120, 7": {
+            "backgroundClass": "dpt.blocks.grass.grassslopeconnectorl"
+        },
+        "121, 7": {
+            "backgroundClass": "dpt.blocks.grass.grasslower"
+        },
+        "11113.0, 766.0": {
+            "class": "dpt.entities.props.plants.grass1",
+            "customPlace": true
+        },
+        "11681.0, 767.0": {
+            "class": "dpt.entities.props.plants.grass2",
+            "customPlace": true
+        },
+        "10889.0, 703.0": {
+            "class": "dpt.entities.props.plants.mushrooms.big.mushroombig1",
+            "customPlace": true
+        },
+        "11336.0, 794.0": {
+            "class": "dpt.entities.props.plants.mushrooms.big.mushroombig2",
+            "customPlace": true
         }
     },
     "infos": {

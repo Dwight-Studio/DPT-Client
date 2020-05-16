@@ -155,10 +155,8 @@ class WormGrassSprite(pygame.sprite.Sprite):
                 self.right = not self.right
 
                 if self.left:
-                    self.rect.x -= math.floor(36 * Game.DISPLAY_RATIO)
                     self.xvel -= 1
                 elif self.right:
-                    self.rect.x += math.floor(36 * Game.DISPLAY_RATIO)
                     self.xvel += 1
                 self.stuck_count = 0
 
