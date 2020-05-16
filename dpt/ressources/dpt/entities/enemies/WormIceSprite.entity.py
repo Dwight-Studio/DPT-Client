@@ -57,6 +57,7 @@ class WormIceSprite(pygame.sprite.Sprite):
         self.gravityModifier = 0
         self.big = False
         self.moveCount = 0
+        self.stuck_count = 0
 
     def update(self):
         if not TileEditor.is_editing:
@@ -134,8 +135,21 @@ class WormIceSprite(pygame.sprite.Sprite):
             self.rect.top -= math.floor(self.yvel) * Game.settings["30_FPS"]
 
             if self.lastx == self.rect.x:
+                self.stuck_count += 1
+            else:
+                self.stuck_count = 0
+
+            if self.stuck_count > 3:
                 self.left = not self.left
                 self.right = not self.right
+
+                if self.left:
+                    self.rect.x -= math.floor(36 * Game.DISPLAY_RATIO)
+                    self.xvel -= 1
+                elif self.right:
+                    self.rect.x += math.floor(36 * Game.DISPLAY_RATIO)
+                    self.xvel += 1
+                self.stuck_count = 0
 
             self.animation()
 

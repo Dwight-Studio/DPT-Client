@@ -189,8 +189,6 @@ def pause_loop():
                 Game.loop = level_loop
                 kill_menu()
 
-                EffectsManagement.upsidedown = Game.temp["reversed"]
-
                 def music():
                     pygame.mixer.unpause()
                     pygame.mixer.music.unpause()
@@ -205,7 +203,8 @@ def pause_loop():
             elif event.button == Game.gui["p_button_restart_save"] and not TileEditor.enabled_editor:
                 if "last_checkpoint" in Game.temp:
                     del Game.temp["last_checkpoint"]
-                    del Game.temp["respawn"]
+                    if "respawn" in Game.temp:
+                        del Game.temp["respawn"]
                     try:
                         RessourceLoader.get("dpt.entities.interactible.Coin").coin_checkpoint_list = []
                     except UnreachableRessourceError:

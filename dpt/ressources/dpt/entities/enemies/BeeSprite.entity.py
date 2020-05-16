@@ -52,6 +52,7 @@ class BeeSprite(pygame.sprite.Sprite):
         self.moveCount = 0
         self.sound = RessourceLoader.get(self.sounds)
         self.sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"] * 1.5)
+        self.stuck_count = 0
 
     def update(self):
         if not TileEditor.is_editing:
@@ -118,9 +119,22 @@ class BeeSprite(pygame.sprite.Sprite):
             self.animation()
 
             if self.lastx == self.rect.x:
+                self.stuck_count += 1
+            else:
+                self.stuck_count = 0
+
+            if self.stuck_count > 3:
                 self.left = not self.left
                 self.right = not self.right
-                self.distance = 1200 - self.distance
+                self.distance = 1200 * Game.DISPLAY_RATIO - self.distance
+
+                if self.left:
+                    self.rect.x -= math.floor(36 * Game.DISPLAY_RATIO)
+                    self.xvel -= 1
+                elif self.right:
+                    self.rect.x += math.floor(36 * Game.DISPLAY_RATIO)
+                    self.xvel += 1
+                self.stuck_count = 0
 
             if self.distance > 1200 * Game.DISPLAY_RATIO:
                 self.distance = 0

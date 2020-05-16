@@ -675,7 +675,7 @@
             "customPlace": true
         },
         "16, 8": {
-            "class": "dpt.entities.enemies.wormrocksprite"
+            "class": "dpt.entities.enemies.wormgrasssprite"
         },
         "27, 9": {
             "class": "dpt.blocks.grass.grass"
@@ -1716,8 +1716,8 @@
             "customPlace": true
         },
         "44, 8": {
-            "class": "dpt.entities.enemies.wormicesprite",
-            "backgroundClass": "dpt.entities.flags.flagblue"
+            "backgroundClass": "dpt.entities.flags.flagblue",
+            "class": "dpt.entities.enemies.wormgrasssprite"
         },
         "47, 9": {
             "class": "dpt.entities.liquids.watertop",
@@ -2210,9 +2210,7 @@
                 "63, 8"
             ]
         },
-        "60, 1": {
-            "class": "dpt.entities.enemies.wormgrasssprite"
-        },
+        "60, 1": {},
         "52, 7": {
             "class": "dpt.entities.interactible.coin"
         },
@@ -3109,6 +3107,9 @@
         "6385.0, 803.0": {
             "class": "dpt.entities.props.plants.mushrooms.small.mushroomsmall4",
             "customPlace": true
+        },
+        "59, 0": {
+            "class": "dpt.entities.enemies.wormgrasssprite"
         }
     },
     "infos": {
