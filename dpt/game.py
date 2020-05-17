@@ -52,7 +52,7 @@ class Game(object):
     window = None  # Variable contenant l'écran
     clock = None  # Variable contenant l'horloge
     player_group = None  # Groupe du joueur
-    available_tiles = None  # Liste de tous les tiles disponnibles
+    available_tiles = None  # Liste de tous les tiles disponible
     surface = None  # Surface principale
     player_sprite = None  # Variable contenant le sprite du joueur
     gui = {}  # Dict contenant le GUI

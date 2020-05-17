@@ -137,7 +137,7 @@ class Scenes:
                                             (0, 0, 0),
                                             "dpt.fonts.DINOT_CondBlack"),
                     "wb_session": Text(0, math.floor(25 * Game.DISPLAY_RATIO),
-                                       "Connexion au serveur...",
+                                       "Session non disponnible",
                                        math.floor(25 * Game.DISPLAY_RATIO),
                                        (0, 0, 0),
                                        "dpt.fonts.DINOT_CondBlack")}
@@ -692,7 +692,8 @@ class Scenes:
         EffectsManagement.upsidedown = False
 
         # Score
-        Game.temp["score"] = Game.temp["coins"] * 50 + Timer.time * 10
+        Game.temp["score"] = (Game.temp["coins"] * 50) + (Timer.time * 10)
+        Game.temp["time_temp"] = Timer.time
         if "respawn" in Game.temp:
             Game.temp["score"] -= Game.temp["respawn"] * 500
         Game.temp["score"] = max(Game.temp["score"], 0)

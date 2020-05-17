@@ -130,7 +130,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                         self.fallCount += 1 * Game.settings["30_FPS"]
 
             if EffectsManagement.dico_current_effects["jumpBoost"]:
-                self.jumpModifier = 0.07
+                self.jumpModifier = 0.07 // Game.settings["30_FPS"]
             else:
                 self.jumpModifier = 0
 
@@ -321,12 +321,12 @@ class PlayerSprite(pygame.sprite.Sprite):
                     dx = 0
                     dy = 0
 
-                    if math.floor(self.yvel) == 0:
+                    if math.floor(self.yvel) == 0 and not self.isJump:
                         mask = self.mask.overlap_mask(i.mask, (rx, ry))
                         b_rects = mask.get_bounding_rects()
                         for rect in b_rects:
                             if -8 * Game.DISPLAY_RATIO * Game.settings["30_FPS"] <= rect.height <= 8 * Game.DISPLAY_RATIO * Game.settings["30_FPS"]:
-                                dy = rect.height
+                                self.rect.y -= rect.height
                                 self.yvel = 0
                                 self.onPlatform = True
                                 self.gravityCount = 0
@@ -338,46 +338,48 @@ class PlayerSprite(pygame.sprite.Sprite):
                                 self.delay = 1
                             break
 
-                    crx = i.rect.x - self.rect.x
-                    mask = self.mask.overlap_mask(i.mask, (crx, ry))
-                    b_rects = mask.get_bounding_rects()
-                    for rect in b_rects:
-                        if self.rect.centery < i.rect.y:
-                            dy = rect.height + math.floor(self.yvel) * Game.settings["30_FPS"]
-                            self.yvel = 0
-                            self.onPlatform = True
-                            self.gravityCount = 0
-                            self.isJump = False
-                            self.isReallyInJump = False
-                            self.allowJump = True
-                            self.jumpCount = self.CONSTJUMPCOUNT
-                            self.frameCount = 0
-                            self.delay = 1
-                        elif self.rect.centery > i.rect.y:
-                            dy = - rect.height + math.floor(self.yvel) * Game.settings["30_FPS"]
-                            self.yvel = 0
-                            self.isJump = False
-                            self.isReallyInJump = False
-                            self.allowJump = False
-                            self.jumpCount = self.CONSTJUMPCOUNT
-                        break
+                    if self.yvel != 0:
+                        crx = i.rect.x - self.rect.x
+                        mask = self.mask.overlap_mask(i.mask, (crx, ry))
+                        b_rects = mask.get_bounding_rects()
+                        for rect in b_rects:
+                            if self.rect.centery < i.rect.y:
+                                dy = rect.height + math.floor(self.yvel) * Game.settings["30_FPS"]
+                                self.yvel = 0
+                                self.onPlatform = True
+                                self.gravityCount = 0
+                                self.isJump = False
+                                self.isReallyInJump = False
+                                self.allowJump = True
+                                self.jumpCount = self.CONSTJUMPCOUNT
+                                self.frameCount = 0
+                                self.delay = 1
+                            elif self.rect.centery > i.rect.y:
+                                dy = - rect.height + math.floor(self.yvel) * Game.settings["30_FPS"]
+                                self.yvel = 0
+                                self.isJump = False
+                                self.isReallyInJump = False
+                                self.allowJump = False
+                                self.jumpCount = self.CONSTJUMPCOUNT
+                            break
 
-                    self.rect.y -= dy
+                        self.rect.y -= dy
 
-                    cry = (i.rect.y - self.rect.y)
-                    mask = self.mask.overlap_mask(i.mask, (rx, cry))
-                    b_rects = mask.get_bounding_rects()
-                    for rect in b_rects:
-                        Game.add_debug_info("dx = " + str(dx))
-                        if self.rect.x > i.rect.x:
-                            dx = rect.width + math.floor(self.xvel) * Game.settings["30_FPS"]
-                            self.xvel = 0
-                        elif self.rect.x < i.rect.x:
-                            dx = - rect.width + math.floor(self.xvel) * Game.settings["30_FPS"]
-                            self.xvel = 0
-                        break
+                    if self.xvel != 0:
+                        cry = (i.rect.y - self.rect.y)
+                        mask = self.mask.overlap_mask(i.mask, (rx, cry))
+                        b_rects = mask.get_bounding_rects()
+                        for rect in b_rects:
+                            Game.add_debug_info("dx = " + str(dx))
+                            if self.rect.x > i.rect.x:
+                                dx = rect.width + math.floor(self.xvel) * Game.settings["30_FPS"]
+                                self.xvel = 0
+                            elif self.rect.x < i.rect.x:
+                                dx = - rect.width + math.floor(self.xvel) * Game.settings["30_FPS"]
+                                self.xvel = 0
+                            break
 
-                    self.rect.x += dx
+                        self.rect.x += dx
 
     def deadly_object_collision(self):
         """Gère les collisions avec des objets physiques mortels"""

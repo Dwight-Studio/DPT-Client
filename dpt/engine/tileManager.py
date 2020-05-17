@@ -548,7 +548,7 @@ class TileManager:
 
         from dpt.engine.gui.Cloud import Cloud
         for cloud in cls.clouds_group:
-            cloud.rect.x += cls.camera.last_x - cls.clouds_last_x
+            cloud.rect.x += (cls.camera.last_x - cls.clouds_last_x) // 2
             if cloud.rect.midright[0] <= 0:
                 cloud.kill()
                 del cloud

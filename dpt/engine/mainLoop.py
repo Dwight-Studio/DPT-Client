@@ -666,7 +666,7 @@ def end_level_loop():
                                                      "dpt.fonts.DINOT_CondBlack"),
             Game.gui["el_detail_coins_score"] = Text(Game.WINDOW_WIDTH // 2 + math.floor(50 * Game.DISPLAY_RATIO),
                                                      buttons_starting_y + math.floor(260 * Game.DISPLAY_RATIO),
-                                                     "+ " + str(Timer.time * 10),
+                                                     "+ " + str(Game.temp["time_temp"] * 10),
                                                      math.floor(20 * Game.DISPLAY_RATIO),
                                                      (39, 193, 45),
                                                      "dpt.fonts.DINOT_CondBlack"),
