@@ -2677,7 +2677,7 @@
   },
   "infos": {
     "title": "Monde 1 - Des abeilles !",
-    "required_stars": 3,
+    "required_stars": 4,
     "image": "dpt.images.levels.002",
     "music": "dpt.sounds.musics.Grasslands_Theme",
     "background": "Plains"
