@@ -1695,19 +1695,19 @@
             "class": "dpt.blocks.box.boxred"
         },
         "78, 9": {
-            "backgroundClass": "dpt.blocks.grass.grass",
+            "backgroundClass": "dpt.blocks.grass.Grass",
             "class": "dpt.blocks.box.boxredr"
         },
         "79, 9": {
-            "backgroundClass": "dpt.blocks.grass.grass",
+            "backgroundClass": "dpt.blocks.grass.Grass",
             "class": "dpt.blocks.box.boxredr"
         },
         "80, 9": {
-            "backgroundClass": "dpt.blocks.grass.grass",
+            "backgroundClass": "dpt.blocks.grass.Grass",
             "class": "dpt.blocks.box.boxredr"
         },
         "81, 9": {
-            "backgroundClass": "dpt.blocks.grass.grass",
+            "backgroundClass": "dpt.blocks.grass.Grass",
             "class": "dpt.blocks.box.boxredr"
         },
         "81, 10": {
