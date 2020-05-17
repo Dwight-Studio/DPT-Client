@@ -163,7 +163,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                 if self.xvel > 0 and not EffectsManagement.dico_current_effects["Ice"]:
                     self.xvel = 0
                 if -self.maxvelocity * Game.DISPLAY_RATIO > self.xvel > -self.maxvelocity * 2 * Game.DISPLAY_RATIO and self.onPlatform:
-                    self.xvel += self.xvel * 0.01 * Game.settings["30_FPS"]
+                    self.xvel += self.xvel * 0.02 * Game.settings["30_FPS"]
                 if self.xvel >= -self.maxvelocity * Game.DISPLAY_RATIO:
                     self.xvel -= 0.25 * Game.DISPLAY_RATIO * Game.settings["30_FPS"]
                 self.left = True
@@ -173,7 +173,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                 if self.xvel < 0 and not EffectsManagement.dico_current_effects["Ice"]:
                     self.xvel = 0
                 if self.maxvelocity * Game.DISPLAY_RATIO < self.xvel < self.maxvelocity * 2 * Game.DISPLAY_RATIO and self.onPlatform:
-                    self.xvel += self.xvel * 0.01 * Game.settings["30_FPS"]
+                    self.xvel += self.xvel * 0.02 * Game.settings["30_FPS"]
                 if self.xvel <= self.maxvelocity * Game.DISPLAY_RATIO:
                     self.xvel += 0.25 * Game.DISPLAY_RATIO * Game.settings["30_FPS"]
                 self.left = False
