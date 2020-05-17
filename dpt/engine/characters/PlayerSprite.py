@@ -200,6 +200,8 @@ class PlayerSprite(pygame.sprite.Sprite):
                         self.isJump = True
                         self.walkCount = 0
                         self.onPlatform = False
+                        if self.delay == 1:
+                            self.delay = 0
                 else:
                     if not self.onPlatform:
                         if (self.jumpCount >= 0 and not EffectsManagement.dico_current_effects["Slow"]) or (EffectsManagement.dico_current_effects["Slow"] and self.frameCount % 3 == 0):
