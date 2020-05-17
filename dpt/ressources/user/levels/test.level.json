@@ -1,0 +1,44 @@
+{
+  "tiles": {
+    "8, 9": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "8, 8": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "8, 7": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "9, 7": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "10, 7": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "10, 8": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "10, 9": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "9, 9": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "9, 8": {
+      "class": "dpt.blocks.grass.Grass"
+    },
+    "9, 2": {
+      "class": "dpt.entities.flags.flaggreen"
+    },
+    "9, 5": {
+      "class": "dpt.entities.flags.flaggreen"
+    }
+  },
+  "infos": {
+    "level_title": "Sans nom",
+    "image": "dpt.images.environment.terrain.Goop_Tile_Flat_Edge_a",
+    "required_stars": 0,
+    "background": "Plains",
+    "music": "dpt.sounds.musics.Grasslands_Theme"
+  }
+}

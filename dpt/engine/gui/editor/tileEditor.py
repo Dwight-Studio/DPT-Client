@@ -78,9 +78,16 @@ class TileEditor:
                         list.extend(TileManager.background_blocks_group)
                         for sprite in list:
                             sprite.kill()
-                        cls.created_level.clear()
-                        cls.created_level["tiles"] = {}
-                        cls.created_level["infos"] = {}
+                        cls.created_level = {
+                            "tiles": {},
+                            "infos": {
+                                "level_title": "Sans nom",
+                                "image": "dpt.images.environment.terrain.Goop_Tile_Flat_Edge_a",
+                                "required_stars": 0,
+                                "background": "Plains",
+                                "music": "dpt.sounds.musics.Grasslands_Theme"
+                            }
+                        }
                     elif not keys[pygame.K_n] and cls.npushed:
                         cls.npushed = False
                     # Ouvrir le panneau des blocs
