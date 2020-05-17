@@ -89,6 +89,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.jumpModifier = 0
         self.isReallyInJump = False
         self.fallCount = 0
+        self.delay = 0
 
         self.blink = False
 
@@ -228,7 +229,11 @@ class PlayerSprite(pygame.sprite.Sprite):
             self.rect.top -= math.floor(self.yvel) * Game.settings["30_FPS"]
 
             self.animation()
-            self.enemies_collision(self.yvel, TileManager.enemy_group)
+            self.enemies_collision(self.yvel, TileManager.enemy_group, self.delay)
+
+            if self.delay == 1:
+                self.delay = 0
+
             if not EffectsManagement.dico_current_effects["star"]:
                 self.deadly_object_collision()
             if self.damaged:
@@ -328,6 +333,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                                 self.isReallyInJump = False
                                 self.jumpCount = self.CONSTJUMPCOUNT
                                 self.frameCount = 0
+                                self.delay = 1
                             break
 
                     crx = i.rect.x - self.rect.x
@@ -344,6 +350,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                             self.allowJump = True
                             self.jumpCount = self.CONSTJUMPCOUNT
                             self.frameCount = 0
+                            self.delay = 1
                         elif self.rect.centery > i.rect.y:
                             dy = - rect.height + math.floor(self.yvel) * Game.settings["30_FPS"]
                             self.yvel = 0
@@ -391,11 +398,11 @@ class PlayerSprite(pygame.sprite.Sprite):
                     self.allowJump = True
                     self.gravityCount = 0
 
-    def enemies_collision(self, yVelDelta, enemies):
+    def enemies_collision(self, yVelDelta, enemies, delay):
         """Gère les collisions avec des ennemis, permet de les tuer"""
         for i in enemies:
             if pygame.sprite.collide_mask(self, i):
-                if yVelDelta < 0 and not EffectsManagement.dico_current_effects["monsterimmortal"]:
+                if (yVelDelta < 0 and not EffectsManagement.dico_current_effects["monsterimmortal"]) or (delay == 1 and not EffectsManagement.dico_current_effects["monsterimmortal"]):
                     if self.damaged and self.imunityTime < 120:
                         i.kill()
                     elif not self.damaged:
