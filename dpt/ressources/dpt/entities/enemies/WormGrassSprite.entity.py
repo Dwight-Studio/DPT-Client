@@ -11,7 +11,7 @@ from dpt.game import Game
 
 
 class WormGrassSprite(pygame.sprite.Sprite):
-    """Classe sur les vers de terre et leur physique"""
+    """Classe sur les vers des plaines et leur physique"""
     texture = "dpt.images.characters.animals.Worm_Grass_1"
     dead_texture = "dpt.images.characters.animals.Dead_Worm_Grass"
     textures = "dpt.images.characters.animals.Worm_Grass_*"
@@ -22,7 +22,7 @@ class WormGrassSprite(pygame.sprite.Sprite):
     mask = "dpt.images.characters.animals.wormMask"
 
     def __init__(self, x, y):
-        """Crée un ver de terre
+        """Crée un ver des plaines
 
         :param x: Abscisse
         :type x: int

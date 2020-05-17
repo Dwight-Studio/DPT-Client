@@ -131,12 +131,19 @@ class Scenes:
         EffectsManagement.vote()
 
         from dpt.engine.gui.menu import Text
-        Game.gui = {"wb_player_count": Text(Game.WINDOW_WIDTH - math.floor(Game.DISPLAY_RATIO * 220),
-                                            0,
+        Game.gui = {"wb_player_count": Text(0, 0,
                                             "Connexion au serveur...",
                                             math.floor(25 * Game.DISPLAY_RATIO),
                                             (0, 0, 0),
-                                            "dpt.fonts.DINOT_CondBlack")}
+                                            "dpt.fonts.DINOT_CondBlack"),
+                    "wb_session": Text(0, math.floor(25 * Game.DISPLAY_RATIO),
+                                       "Connexion au serveur...",
+                                       math.floor(25 * Game.DISPLAY_RATIO),
+                                       (0, 0, 0),
+                                       "dpt.fonts.DINOT_CondBlack")}
+
+        Game.gui["wb_player_count"].rect.right = Game.WINDOW_WIDTH - math.floor(10 * Game.DISPLAY_RATIO)
+        Game.gui["wb_session"].rect.right = Game.WINDOW_WIDTH - math.floor(10 * Game.DISPLAY_RATIO)
 
         # Loops
         from dpt.engine.mainLoop import level_loop
@@ -632,11 +639,19 @@ class Scenes:
                                               text_sprite=SimpleSprite(math.floor(47 * Game.DISPLAY_RATIO),
                                                                        math.floor(33 * Game.DISPLAY_RATIO),
                                                                        RessourceLoader.get("dpt.images.gui.symbols.SYMB_LEFTARROW"))),
-                    "wb_player_count": Text(Game.WINDOW_WIDTH - math.floor(Game.DISPLAY_RATIO * 220), 0,
+                    "wb_player_count": Text(0, 0,
                                             "Connexion au serveur...",
                                             math.floor(25 * Game.DISPLAY_RATIO),
                                             (0, 0, 0),
-                                            "dpt.fonts.DINOT_CondBlack")}
+                                            "dpt.fonts.DINOT_CondBlack"),
+                    "wb_session": Text(0, math.floor(25 * Game.DISPLAY_RATIO),
+                                       "Session non disponnible",
+                                       math.floor(25 * Game.DISPLAY_RATIO),
+                                       (0, 0, 0),
+                                       "dpt.fonts.DINOT_CondBlack")}
+
+        Game.gui["wb_player_count"].rect.right = Game.WINDOW_WIDTH - math.floor(10 * Game.DISPLAY_RATIO)
+        Game.gui["wb_session"].rect.right = Game.WINDOW_WIDTH - math.floor(10 * Game.DISPLAY_RATIO)
 
         from tkinter import Tk
         root = Tk()

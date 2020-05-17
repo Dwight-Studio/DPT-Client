@@ -43,15 +43,17 @@ class Text:
         self.x = x
         self.y = y
         self.font = pygame.font.Font(RessourceLoader.get(font), size)
+        self.rect = pygame.Rect((x, y), (size, size))
         Text.text_list.append(self)
         Game.get_logger(__name__).debug("Text created")
 
     def draw(self, surface):
         """Dessine le texte"""
         self.text_rendered = self.font.render(self.text, True, self.color)
+        prev_rect = self.rect
         self.rect = self.text_rendered.get_rect()
-        self.rect.x = self.x
-        self.rect.y = self.y
+        self.rect.x = prev_rect.x
+        self.rect.y = prev_rect.y
         if self.centerx is not None:
             self.rect.centerx = self.centerx
 

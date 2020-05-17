@@ -134,17 +134,25 @@ class WebCommunication(object):
                                 reply = cls.make_request("http://" + Game.settings["server_address"] + "/sessions.json", True)
 
                                 if "wb_player_count" not in Game.gui:
-                                    Game.gui["wb_player_count"] = Text(Game.WINDOW_WIDTH - math.floor(Game.DISPLAY_RATIO * 220),
+                                    Game.gui["wb_player_count"] = Text(0,
                                                                        0,
                                                                        "Connexion au serveur...",
                                                                        math.floor(25 * Game.DISPLAY_RATIO),
                                                                        (0, 0, 0),
                                                                        "dpt.fonts.DINOT_CondBlack")
+                                if "wb_session" not in Game.gui:
+                                    Game.gui["wb_session"]: Text(0, math.floor(25 * Game.DISPLAY_RATIO),
+                                                                 "Connexion au serveur...",
+                                                                 math.floor(25 * Game.DISPLAY_RATIO),
+                                                                 (0, 0, 0),
+                                                                 "dpt.fonts.DINOT_CondBlack")
 
                                 if isinstance(reply, CommunicationError) or cls.sessionName not in reply:
                                     cls.log.warning("Can't get connected players count")
                                     Game.gui["wb_player_count"].text = "Déconnecté du serveur"
-                                    Game.gui["wb_player_count"].color = (255, 0, 0)
+                                    Game.gui["wb_player_count"].color = (193, 39, 45)
+                                    Game.gui["wb_session"].text = "Session non disponnible"
+                                    Game.gui["wb_session"].color = (193, 39, 45)
                                     return
 
                                 nb = str(len(reply[cls.sessionName]))
@@ -154,17 +162,28 @@ class WebCommunication(object):
 
                                 Game.gui["wb_player_count"].text = "Joueurs connectés : " + nb
                                 Game.gui["wb_player_count"].color = (0, 0, 0)
+                                Game.gui["wb_session"].text = "Session : " + cls.sessionName
+                                Game.gui["wb_session"].color = (0, 0, 0)
 
                             else:
-                                Game.gui["wb_player_count"] = Text(Game.WINDOW_WIDTH - math.floor(Game.DISPLAY_RATIO * 220),
-                                                                   0,
-                                                                   "Déconnecté du serveur",
-                                                                   math.floor(25 * Game.DISPLAY_RATIO),
-                                                                   (255, 0, 0),
-                                                                   "dpt.fonts.DINOT_CondBlack")
+                                if "wb_player_count" not in Game.gui:
+                                    Game.gui["wb_player_count"] = Text(0,
+                                                                       0,
+                                                                       "Déconnecté du serveur",
+                                                                       math.floor(25 * Game.DISPLAY_RATIO),
+                                                                       (193, 39, 45),
+                                                                       "dpt.fonts.DINOT_CondBlack")
+                                if "wb_session" not in Game.gui:
+                                    Game.gui["wb_session"]: Text(0, math.floor(25 * Game.DISPLAY_RATIO),
+                                                                 "Session non disponnible",
+                                                                 math.floor(25 * Game.DISPLAY_RATIO),
+                                                                 (193, 39, 45),
+                                                                 "dpt.fonts.DINOT_CondBlack")
 
                                 Game.gui["wb_player_count"].text = "Déconnecté du serveur"
-                                Game.gui["wb_player_count"].color = (255, 0, 0)
+                                Game.gui["wb_player_count"].color = (193, 39, 45)
+                                Game.gui["wb_session"].text = "Session non disponnible"
+                                Game.gui["wb_session"].color = (193, 39, 45)
                         except Exception:
                             pass
 
@@ -220,10 +239,13 @@ class WebCommunication(object):
                     cls.connected = False
                     pygame.time.set_timer(Game.KEEP_ALIVE_EVENT, 0)
                     cls.reconnect()
-            try:
-                Game.gui["wb_player_count"].draw(Game.surface)
-            except KeyError:
-                pass
+        try:
+            Game.gui["wb_player_count"].rect.right = Game.WINDOW_WIDTH - math.floor(10 * Game.DISPLAY_RATIO)
+            Game.gui["wb_player_count"].draw(Game.surface)
+            Game.gui["wb_session"].rect.right = Game.WINDOW_WIDTH - math.floor(10 * Game.DISPLAY_RATIO)
+            Game.gui["wb_session"].draw(Game.surface)
+        except KeyError:
+            pass
 
     @classmethod
     def close(cls):
