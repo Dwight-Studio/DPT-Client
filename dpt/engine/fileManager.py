@@ -60,7 +60,6 @@ class FileManager:
         root.withdraw()
 
         file = filedialog.asksaveasfilename(parent=root, title="Sauvegarder un niveau", filetypes=[("Fichier de niveau DPT", "*.level.json")], defaultextension=".level.json", initialdir=cls.defaultDir)
-        print(file)
         try:
             with open(file, "w") as f:
                 data = json.dumps(level, indent=4)

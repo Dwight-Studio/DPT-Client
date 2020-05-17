@@ -5,13 +5,13 @@ from dpt.engine.loader import RessourceLoader
 from dpt.game import Game
 
 
-class LeverMechanic1(pygame.sprite.Sprite):
-    texture = "dpt.images.text.lever_mechanic_1"
+class LeverMechanic(pygame.sprite.Sprite):
+    texture = "dpt.images.text.000_lever_mechanic"
     sounds = "dpt.sounds.sfx.sfx_stone"
-    width = Game.TILESIZE
-    height = Game.TILESIZE
-    offset_x = -(Game.TILESIZE // 2)
-    offset_y = -(Game.TILESIZE // 2)
+    width = math.floor(488 * Game.DISPLAY_RATIO)
+    height = math.floor(436 * Game.DISPLAY_RATIO)
+    offset_x = -(width // 2)
+    offset_y = -(height // 2)
     customPlacement = True
 
     def __init__(self, x, y):

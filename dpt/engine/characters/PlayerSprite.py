@@ -162,9 +162,9 @@ class PlayerSprite(pygame.sprite.Sprite):
                 if self.xvel > 0 and not EffectsManagement.dico_current_effects["Ice"]:
                     self.xvel = 0
                 if -self.maxvelocity * Game.DISPLAY_RATIO > self.xvel > -self.maxvelocity * 2 * Game.DISPLAY_RATIO and self.onPlatform:
-                    self.xvel += self.xvel * 0.01
+                    self.xvel += self.xvel * 0.01 * Game.settings["30_FPS"]
                 if self.xvel >= -self.maxvelocity * Game.DISPLAY_RATIO:
-                    self.xvel -= 0.25 * Game.DISPLAY_RATIO
+                    self.xvel -= 0.25 * Game.DISPLAY_RATIO * Game.settings["30_FPS"]
                 self.left = True
                 self.right = False
                 self.standing = False
@@ -172,9 +172,9 @@ class PlayerSprite(pygame.sprite.Sprite):
                 if self.xvel < 0 and not EffectsManagement.dico_current_effects["Ice"]:
                     self.xvel = 0
                 if self.maxvelocity * Game.DISPLAY_RATIO < self.xvel < self.maxvelocity * 2 * Game.DISPLAY_RATIO and self.onPlatform:
-                    self.xvel += self.xvel * 0.01
+                    self.xvel += self.xvel * 0.01 * Game.settings["30_FPS"]
                 if self.xvel <= self.maxvelocity * Game.DISPLAY_RATIO:
-                    self.xvel += 0.25 * Game.DISPLAY_RATIO
+                    self.xvel += 0.25 * Game.DISPLAY_RATIO * Game.settings["30_FPS"]
                 self.left = False
                 self.right = True
                 self.standing = False
@@ -182,11 +182,11 @@ class PlayerSprite(pygame.sprite.Sprite):
                 if not EffectsManagement.dico_current_effects["Ice"]:
                     self.xvel = 0
                 else:
-                    if self.xvel > 0.05 * Game.DISPLAY_RATIO:
-                        self.xvel -= 0.05 * Game.DISPLAY_RATIO
-                    elif self.xvel < -0.05 * Game.DISPLAY_RATIO:
-                        if self.rect.x - self.xvel - 1 > mur:
-                            self.xvel += 0.05 * Game.DISPLAY_RATIO
+                    if self.xvel > 0.05 * Game.DISPLAY_RATIO * Game.settings["30_FPS"]:
+                        self.xvel -= 0.05 * Game.DISPLAY_RATIO * Game.settings["30_FPS"]
+                    elif self.xvel < -0.05 * Game.DISPLAY_RATIO * Game.settings["30_FPS"]:
+                        if self.rect.x - (self.xvel * Game.settings["30_FPS"]) - 1 > mur:
+                            self.xvel += 0.05 * Game.DISPLAY_RATIO * Game.settings["30_FPS"]
                         else:
                             self.xvel = 0
                     else:
@@ -318,7 +318,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                         mask = self.mask.overlap_mask(i.mask, (rx, ry))
                         b_rects = mask.get_bounding_rects()
                         for rect in b_rects:
-                            if -8 * Game.DISPLAY_RATIO <= rect.height <= 8 * Game.DISPLAY_RATIO:
+                            if -8 * Game.DISPLAY_RATIO * Game.settings["30_FPS"] <= rect.height <= 8 * Game.DISPLAY_RATIO * Game.settings["30_FPS"]:
                                 dy = rect.height
                                 self.yvel = 0
                                 self.onPlatform = True

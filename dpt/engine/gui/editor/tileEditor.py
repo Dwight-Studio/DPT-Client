@@ -53,7 +53,6 @@ class TileEditor:
             mouse_buttons = pygame.mouse.get_pressed()
             keys = pygame.key.get_pressed()
             keysmods = pygame.key.get_mods()
-            print(keysmods)
             for key in keys:
                 if keysmods == 4160 or keysmods == 4224 or keysmods == 64:
                     # Ouvrir un fichier

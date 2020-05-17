@@ -679,7 +679,7 @@ def end_level_loop():
                 sound.play(-1)
 
             if Game.temp["score_display"] < Game.temp["score"]:
-                Game.temp["score_display"] += Game.temp["score"] // (3 * 60)
+                Game.temp["score_display"] += (Game.temp["score"] // (3 * 60)) * Game.settings["30_FPS"]
                 if not Game.temp["1_done"]:
                     Game.gui["star_1"].run = Game.temp["score_display"] >= 1000
                     Game.temp["1_done"] = Game.temp["score_display"] >= 1000
@@ -693,7 +693,7 @@ def end_level_loop():
             else:
                 pygame.mixer.stop()
                 Game.gui["el_title_score"].text = str(Game.temp["score"])
-                Game.temp["chrono"] += 1
+                Game.temp["chrono"] += 1 * Game.settings["30_FPS"]
 
         if Game.temp["1_done"] and not Game.temp["2_done"] and not Game.temp["3_done"]:
             Game.gui["star_3"].update()

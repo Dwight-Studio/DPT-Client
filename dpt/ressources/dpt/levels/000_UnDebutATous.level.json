@@ -283,7 +283,8 @@
             "backgroundClass": "dpt.entities.props.fences.fencewoodconnector"
         },
         "11, 8": {
-            "backgroundClass": "dpt.entities.props.fences.fencewoodconnector"
+          "backgroundClass": "dpt.entities.props.fences.fencewoodconnector",
+          "class": "dpt.entities.enemies.wormgrasssprite"
         },
         "12, 8": {
             "backgroundClass": "dpt.entities.props.fences.fencewood",
@@ -664,29 +665,27 @@
         },
         "1438.0, 639.0": {
             "class": "dpt.entities.props.plants.trees.leaves.green10",
-            "customPlace": true
+          "customPlace": true
         },
-        "1418.0, 652.0": {
-            "class": "dpt.entities.props.plants.trees.leaves.green10",
-            "customPlace": true
-        },
-        "1414.0, 657.0": {
-            "class": "dpt.entities.props.plants.trees.leaves.green10",
-            "customPlace": true
-        },
-        "16, 8": {
-            "class": "dpt.entities.enemies.wormgrasssprite"
-        },
-        "27, 9": {
-            "class": "dpt.blocks.grass.grass"
-        },
-        "28, 9": {
-            "class": "dpt.blocks.grass.grass"
-        },
-        "29, 9": {
-            "class": "dpt.blocks.grass.grass"
-        },
-        "30, 9": {
+      "1418.0, 652.0": {
+        "class": "dpt.entities.props.plants.trees.leaves.green10",
+        "customPlace": true
+      },
+      "1414.0, 657.0": {
+        "class": "dpt.entities.props.plants.trees.leaves.green10",
+        "customPlace": true
+      },
+      "16, 8": {},
+      "27, 9": {
+        "class": "dpt.blocks.grass.grass"
+      },
+      "28, 9": {
+        "class": "dpt.blocks.grass.grass"
+      },
+      "29, 9": {
+        "class": "dpt.blocks.grass.grass"
+      },
+      "30, 9": {
             "class": "dpt.blocks.grass.grass"
         },
         "31, 9": {
@@ -3327,17 +3326,83 @@
             "backgroundClass": "dpt.blocks.grass.grasslower"
         },
         "79, 3": {
-            "backgroundClass": "dpt.blocks.grass.grasslower"
+          "backgroundClass": "dpt.blocks.grass.grasslower"
         },
-        "79, 4": {
-            "backgroundClass": "dpt.blocks.grass.grasslower"
-        },
-        "79, 5": {
-            "backgroundClass": "dpt.blocks.grass.grasslower"
-        },
-        "78, 7": {
-            "backgroundClass": "dpt.blocks.grass.grasslower"
-        }
+      "79, 4": {
+        "backgroundClass": "dpt.blocks.grass.grasslower"
+      },
+      "79, 5": {
+        "backgroundClass": "dpt.blocks.grass.grasslower"
+      },
+      "78, 7": {
+        "backgroundClass": "dpt.blocks.grass.grasslower"
+      },
+      "72, 4": {
+        "class": "dpt.blocks.invisible"
+      },
+      "72, 3": {
+        "class": "dpt.blocks.invisible"
+      },
+      "72, 2": {
+        "class": "dpt.blocks.invisible"
+      },
+      "72, 1": {
+        "class": "dpt.blocks.invisible"
+      },
+      "72, 0": {
+        "class": "dpt.blocks.invisible"
+      },
+      "63, 0": {
+        "class": "dpt.blocks.invisible"
+      },
+      "53, 0": {
+        "class": "dpt.blocks.invisible"
+      },
+      "22, 2": {},
+      "23, 2": {
+        "class": "dpt.blocks.invisible"
+      },
+      "23, 1": {
+        "class": "dpt.blocks.invisible"
+      },
+      "23, 0": {
+        "class": "dpt.blocks.invisible"
+      },
+      "31, 2": {
+        "class": "dpt.blocks.invisible"
+      },
+      "31, 1": {
+        "class": "dpt.blocks.invisible"
+      },
+      "31, 0": {
+        "class": "dpt.blocks.invisible"
+      },
+      "739.0, 293.0": {
+        "customPlace": true
+      },
+      "2481.0, 221.0": {
+        "class": "dpt.entities.props.texts.levermechanic",
+        "customPlace": true
+      },
+      "1261.0, 293.0": {
+        "class": "dpt.entities.props.texts.killenemy",
+        "customPlace": true
+      },
+      "4575.0, 239.0": {
+        "customPlace": true
+      },
+      "251.0, 294.0": {
+        "class": "dpt.entities.props.texts.welcome",
+        "customPlace": true
+      },
+      "5929.0, 288.0": {
+        "class": "dpt.entities.props.texts.buttonmechanic",
+        "customPlace": true
+      },
+      "3726.0, 303.0": {
+        "class": "dpt.entities.props.texts.vote",
+        "customPlace": true
+      }
     },
     "infos": {
         "title": "Un d\u00e9but \u00e0 tout",

@@ -96,8 +96,6 @@ class ButtonRed(pygame.sprite.Sprite):
                     try:
                         if sprite == str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4)):
                             continue
-                        print(sprite)
-                        print(TileEditor.created_level)
                         if "customPlace" in TileEditor.created_level["tiles"][sprite]:
                             x = round(float(sprite.split(", ")[0]), 4) + Game.TILESIZE // 2
                             y = round(float(sprite.split(", ")[1]), 4)

@@ -92,12 +92,7 @@ class TileManager:
                 block.kill()
 
             if TileEditor.is_editing:
-                RessourceLoader.add_pending("dpt.blocks.*")
-                RessourceLoader.add_pending("dpt.entities.*")
-                RessourceLoader.add_pending("dpt.images.environment.*")
-                RessourceLoader.add_pending("dpt.images.characters.*")
-                RessourceLoader.add_pending("dpt.sounds.*")
-                RessourceLoader.add_pending("dpt.images.not_found")
+                RessourceLoader.add_pending("dpt.*")
                 RessourceLoader.load()
 
             if type(level_name) == str:
