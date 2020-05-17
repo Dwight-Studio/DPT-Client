@@ -1459,7 +1459,7 @@
             "class": "dpt.blocks.grass.grass"
         },
         "77, 5": {
-            "class": "dpt.blocks.grass.grass"
+            "class": "dpt.blocks.grass.grasscorneredger"
         },
         "76, 2": {
             "class": "dpt.blocks.grass.grass"
@@ -1504,22 +1504,22 @@
             "class": "dpt.blocks.grass.grasslower"
         },
         "77, 11": {
-            "class": "dpt.blocks.grass.grasslower"
+            "class": "dpt.blocks.grass.grassr"
         },
         "77, 10": {
-            "class": "dpt.blocks.grass.grasslower"
+            "class": "dpt.blocks.grass.grassr"
         },
         "77, 9": {
-            "class": "dpt.blocks.grass.grasslower"
+            "class": "dpt.blocks.grass.grassr"
         },
         "77, 8": {
-            "class": "dpt.blocks.grass.grasslower"
+            "class": "dpt.blocks.grass.grassr"
         },
         "77, 7": {
-            "class": "dpt.blocks.grass.grasslower"
+            "class": "dpt.blocks.grass.grassr"
         },
         "77, 6": {
-            "class": "dpt.blocks.grass.grasslower"
+            "class": "dpt.blocks.grass.grassr"
         },
         "76, 6": {
             "class": "dpt.blocks.grass.grasslower"
@@ -1620,7 +1620,9 @@
         "67, 5": {},
         "67, 4": {},
         "67, 3": {},
-        "67, 2": {},
+        "67, 2": {
+            "class": "dpt.blocks.grass.grasshalfedgel"
+        },
         "67, 1": {},
         "66, 1": {},
         "65, 1": {},
@@ -1643,7 +1645,7 @@
         "68, 4": {},
         "68, 3": {},
         "68, 2": {
-            "class": "dpt.blocks.grass.grasshalfedgel"
+            "class": "dpt.blocks.grass.grasshalf"
         },
         "68, 1": {},
         "69, 1": {},
@@ -1761,9 +1763,7 @@
             "class": "dpt.entities.enemies.wormgrasssprite"
         },
         "43, 3": {},
-        "44, 3": {
-            "class": "dpt.entities.enemies.wormgrasssprite"
-        },
+        "44, 3": {},
         "3639.0, 641.0": {
             "class": "dpt.entities.props.plants.flowers.flowerstarred",
             "customPlace": true
@@ -1802,7 +1802,7 @@
             "class": "dpt.blocks.grass.grassr"
         },
         "82, 6": {
-            "class": "dpt.blocks.grass.grassr"
+            "class": "dpt.blocks.grass.grassslopeconnectorr"
         },
         "82, 5": {
             "class": "dpt.blocks.grass.grassr"
@@ -2049,13 +2049,13 @@
             "customPlace": true
         },
         "93, 8": {
-            "class": "dpt.blocks.grass.grass"
+            "class": "dpt.blocks.grass.grassslopeconnectorl"
         },
         "94, 8": {
-            "class": "dpt.blocks.grass.grass"
+            "class": "dpt.blocks.grass.grasslower"
         },
         "95, 8": {
-            "class": "dpt.blocks.grass.grass"
+            "class": "dpt.blocks.grass.grassslopeconnectorr"
         },
         "96, 8": {
             "class": "dpt.blocks.grass.grass"
@@ -2300,7 +2300,6 @@
             "class": "dpt.blocks.box.boxgreen"
         },
         "8821.0, 722.0": {
-            "class": "dpt.entities.interactible.buttons.buttongreen",
             "customPlace": true,
             "assignement": [
                 "105, 7",
@@ -2310,7 +2309,7 @@
             ]
         },
         "94, 6": {
-            "class": "dpt.entities.enemies.wormgrasssprite"
+            "class": "dpt.blocks.grass.grassslopeu"
         },
         "102, 6": {
             "class": "dpt.entities.enemies.wormgrasssprite"
@@ -2663,7 +2662,6 @@
             "customPlace": true
         },
         "10389.0, 410.0": {
-            "class": "dpt.entities.props.plants.mushrooms.small.mushroomsmall4",
             "customPlace": true
         },
         "83, 7": {
@@ -2893,31 +2891,62 @@
             "customPlace": true
         },
         "11681.0, 767.0": {
-          "class": "dpt.entities.props.plants.grass2",
-          "customPlace": true
+            "class": "dpt.entities.props.plants.grass2",
+            "customPlace": true
         },
-      "10889.0, 703.0": {
-        "class": "dpt.entities.props.plants.mushrooms.big.mushroombig1",
-        "customPlace": true
-      },
-      "11336.0, 794.0": {
-        "class": "dpt.entities.props.plants.mushrooms.big.mushroombig2",
-        "customPlace": true
-      },
-      "3207.0, 765.0": {
-        "class": "dpt.entities.interactible.lever",
-        "customPlace": true,
-        "assignement": [
-          "44, 5",
-          "45, 5",
-          "44, 9",
-          "45, 9"
-        ]
-      }
+        "10889.0, 703.0": {
+            "class": "dpt.entities.props.plants.mushrooms.big.mushroombig1",
+            "customPlace": true
+        },
+        "11336.0, 794.0": {
+            "class": "dpt.entities.props.plants.mushrooms.big.mushroombig2",
+            "customPlace": true
+        },
+        "3207.0, 765.0": {
+            "class": "dpt.entities.interactible.lever",
+            "customPlace": true,
+            "assignement": [
+                "44, 5",
+                "45, 5",
+                "44, 9",
+                "45, 9"
+            ]
+        },
+        "93, 7": {
+            "class": "dpt.blocks.grass.grassslopeu"
+        },
+        "95, 6": {
+            "class": "dpt.blocks.grass.grasscorneredger"
+        },
+        "94, 7": {
+            "class": "dpt.blocks.grass.grassslopeconnectorl"
+        },
+        "95, 7": {
+            "class": "dpt.blocks.grass.grassr"
+        },
+        "89, 6": {},
+        "9088.0, 723.0": {
+            "class": "dpt.entities.interactible.buttons.buttongreen",
+            "customPlace": true,
+            "assignement": [
+                "105, 7",
+                "106, 7",
+                "107, 7",
+                "108, 7"
+            ]
+        },
+        "86, 6": {
+            "class": "dpt.entities.enemies.wormgrasssprite"
+        },
+        "43, 2": {
+            "class": "dpt.entities.enemies.wormgrasssprite"
+        }
     },
     "infos": {
         "title": "Monde 1 - Au commencement, il fut...",
         "required_stars": 2,
+        "image": "dpt.images.levels.001",
+        "music": "dpt.sounds.musics.Grasslands_Theme",
         "background": "Plains"
     }
 }
