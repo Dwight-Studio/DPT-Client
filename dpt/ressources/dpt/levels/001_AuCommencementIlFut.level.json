@@ -2893,17 +2893,27 @@
             "customPlace": true
         },
         "11681.0, 767.0": {
-            "class": "dpt.entities.props.plants.grass2",
-            "customPlace": true
+          "class": "dpt.entities.props.plants.grass2",
+          "customPlace": true
         },
-        "10889.0, 703.0": {
-            "class": "dpt.entities.props.plants.mushrooms.big.mushroombig1",
-            "customPlace": true
-        },
-        "11336.0, 794.0": {
-            "class": "dpt.entities.props.plants.mushrooms.big.mushroombig2",
-            "customPlace": true
-        }
+      "10889.0, 703.0": {
+        "class": "dpt.entities.props.plants.mushrooms.big.mushroombig1",
+        "customPlace": true
+      },
+      "11336.0, 794.0": {
+        "class": "dpt.entities.props.plants.mushrooms.big.mushroombig2",
+        "customPlace": true
+      },
+      "3207.0, 765.0": {
+        "class": "dpt.entities.interactible.lever",
+        "customPlace": true,
+        "assignement": [
+          "44, 5",
+          "45, 5",
+          "44, 9",
+          "45, 9"
+        ]
+      }
     },
     "infos": {
         "title": "Monde 1 - Au commencement, il fut...",

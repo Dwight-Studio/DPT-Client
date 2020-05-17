@@ -138,7 +138,7 @@ class EffectsManagement:
         """Choisi les modificateurs et lance un vote"""
         mod1 = random.choice(cls.list_effects)
         while mod1 in cls.list_current_effects:
-            mod1 = random.choice(cls.list_current_effects)
+            mod1 = random.choice(cls.list_effects)
         mod2 = random.choice(cls.list_effects)
         while mod2 == mod1 or mod2 in cls.list_current_effects:
             mod2 = random.choice(cls.list_effects)

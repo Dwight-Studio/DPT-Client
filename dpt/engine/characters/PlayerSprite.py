@@ -217,7 +217,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                     Game.add_debug_info("GRAVITY")
                     self.allowJump = False
                     self.gravityCount += 1 * Game.settings["30_FPS"]
-                    self.gravity = math.floor((self.gravityCount ** 2) * (0.05 - self.gravityModifier * Game.settings["30_FPS"]) * Game.DISPLAY_RATIO) * -1
+                    self.gravity = math.floor((self.gravityCount ** 2) * (0.05 - self.gravityModifier) * Game.settings["30_FPS"] * Game.DISPLAY_RATIO) * -1
                     self.yvel = self.gravity
                 else:
                     self.yvel = 0
