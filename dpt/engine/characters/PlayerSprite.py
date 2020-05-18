@@ -323,7 +323,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         for i in TileManager.environment_group:
             if i.rect.colliderect(collide_rect):
                 rx = i.rect.x - (self.rect.x + math.floor(self.xvel) * Game.settings["30_FPS"])
-                ry = i.rect.y - (self.rect.y - math.floor(self.yvel) * Game.settings["30_FPS"])
+                ry = i.rect.y - (self.rect.y - math.floor(self.yvel))
 
                 if self.mask.overlap(i.mask, (rx, ry)):
                     if (math.floor(self.yvel) != 0) and i.rect.centery > self.rect.centery:
@@ -337,8 +337,11 @@ class PlayerSprite(pygame.sprite.Sprite):
 
         if math.floor(self.yvel) != 0:
             b_rects = y_mask_down.get_bounding_rects()
+            c_rect = self.mask.get_bounding_rects()[0]
             for rect in b_rects:
-                dy = rect.height + math.floor(self.yvel) * Game.settings["30_FPS"]
+                dy = rect.height + math.floor(self.yvel)
+                if c_rect.bottom > rect.bottom:
+                    dy += c_rect.bottom - rect.bottom
                 self.yvel = 0
                 self.onPlatform = True
                 self.gravityCount = 0
@@ -351,7 +354,9 @@ class PlayerSprite(pygame.sprite.Sprite):
 
             b_rects = y_mask_up.get_bounding_rects()
             for rect in b_rects:
-                dy = - rect.height + math.floor(self.yvel) * Game.settings["30_FPS"]
+                dy = - rect.height + math.floor(self.yvel)
+                if c_rect.top < rect.top:
+                    dy -= c_rect.top - rect.top
                 self.yvel = 0
                 self.isJump = False
                 self.isReallyInJump = False
@@ -363,7 +368,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         for i in TileManager.environment_group:
             if i.rect.colliderect(collide_rect):
                 rx = i.rect.x - (self.rect.x + math.floor(self.xvel) * Game.settings["30_FPS"])
-                ry = i.rect.y - (self.rect.y - math.floor(self.yvel) * Game.settings["30_FPS"])
+                ry = i.rect.y - (self.rect.y - math.floor(self.yvel))
 
                 if self.mask.overlap(i.mask, (rx, ry)):
                     if math.floor(self.yvel) == 0 and not self.isJump and i.rect.bottom > self.rect.centery:
