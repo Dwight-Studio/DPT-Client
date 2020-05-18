@@ -29,6 +29,8 @@ class DeadBody(pygame.sprite.Sprite):
 
         :rtype: DeadBody
         """
+        if Game.freeze_game:
+            return
         self.frameCount = 0
         from dpt.engine.tileManager import TileManager
         pygame.sprite.Sprite.__init__(self, TileManager.entity_group)  # Sprite's constructor called

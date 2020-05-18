@@ -242,11 +242,35 @@ class Scenes:
         cls.logger.info("Displaying MAIN_MENU")
         from dpt.engine.loader import RessourceLoader
         from dpt.engine.effectsManagement import EffectsManagement
+        from dpt.engine.tileManager import TileManager, Camera
+        from dpt.engine.gui.editor.tileEditor import TileEditor
+        from dpt.engine.gui.menu.checkbox import Checkbox
 
         EffectsManagement.upsidedown = False
 
         # Gestion des ressources
         if load:
+            if Game.player_sprite is not None:
+                Game.player_sprite.kill()
+                Game.player_sprite = None
+            Game.player_group.empty()
+
+            TileManager.editor_panel_group.empty()
+            TileEditor.ghost_block_group.empty()
+            TileManager.interactible_blocks_group.empty()
+            TileManager.clouds_group.empty()
+            TileManager.heart_group.empty()
+            Checkbox.checkbox_group.empty()
+
+            for entity in TileManager.entity_group:
+                entity.kill()
+
+            for block in TileManager.environment_group:
+                block.kill()
+
+            for block in TileManager.background_blocks_group:
+                block.kill()
+
             RessourceLoader.init()
             Game.levels_list = None
             Game.temp = {}
@@ -272,12 +296,12 @@ class Scenes:
         WebCommunication.close()
 
         # Fond
-        from dpt.engine.gui.ParallaxSky import ParallaxSky
-        from dpt.engine.tileManager import TileManager, Camera
-        from dpt.engine.gui.mainMenuEntity import MainMenuEntity
-        Game.player_sprite = MainMenuEntity()
-        TileManager.camera = Camera(Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)
-        ParallaxSky.init(choice(ParallaxSky.available_backgrounds))
+        if load:
+            from dpt.engine.gui.ParallaxSky import ParallaxSky
+            from dpt.engine.gui.mainMenuEntity import MainMenuEntity
+            Game.player_sprite = MainMenuEntity()
+            TileManager.camera = Camera(Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)
+            ParallaxSky.init(choice(ParallaxSky.available_backgrounds))
 
         # Ajout du GUI
         from dpt.engine.gui.menu.button import Button

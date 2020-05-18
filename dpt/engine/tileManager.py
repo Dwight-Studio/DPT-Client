@@ -69,6 +69,7 @@ class TileManager:
         try:
             from dpt.engine.effectsManagement import EffectsManagement
             from dpt.engine.mainLoop import loading_loop
+            from dpt.engine.gui.menu.checkbox import Checkbox
 
             cls.is_loading_level = True
             if Game.player_sprite is not None:
@@ -81,6 +82,7 @@ class TileManager:
             TileManager.interactible_blocks_group.empty()
             TileManager.clouds_group.empty()
             TileManager.heart_group.empty()
+            Checkbox.checkbox_group.empty()
 
             for entity in TileManager.entity_group:
                 entity.kill()
