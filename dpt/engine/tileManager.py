@@ -47,14 +47,15 @@ class TileManager:
     coords = None
     camera = None
     clouds_last_x = None
-    try:
+    is_loading_level = False
+
+    @classmethod
+    def build_registry(cls):
+        Game.get_logger(__name__).info("Building available_tile registry")
         Game.available_tiles = []
         Game.available_tiles.extend(RessourceLoader.select_entries("dpt.blocks.*"))
         Game.available_tiles.remove("dpt.blocks.notfound")
         Game.available_tiles.extend(RessourceLoader.select_entries("dpt.entities.*"))
-    except:
-        pass
-    is_loading_level = False
 
     @classmethod
     def load_level(cls, level_name):
@@ -67,6 +68,7 @@ class TileManager:
         :rtype: bool
         """
         try:
+            cls.build_registry()
             from dpt.engine.effectsManagement import EffectsManagement
             from dpt.engine.mainLoop import loading_loop
             from dpt.engine.gui.menu.checkbox import Checkbox
