@@ -233,6 +233,10 @@ class TileManager:
                 EffectsManagement.reset()
 
                 if "last_checkpoint" in Game.temp and not TileEditor.enabled_editor:
+                    if "respawn" in Game.temp:
+                        Game.temp["respawn"] += 1
+                    else:
+                        Game.temp["respawn"] = 1
                     cp = RessourceLoader.get("dpt.entities.flags.FlagBlue").checkpoint_list[Game.temp["last_checkpoint"]]
                     player_x = cp.rect.x - cp.offset_x
                     player_y = cp.rect.y - cp.offset_y

@@ -188,10 +188,6 @@ class Game(object):
             # Groupes Pygame
             cls.player_group = pygame.sprite.Group()
 
-            # Initialisation du RessourceLoader
-            from dpt.engine.loader import RessourceLoader
-            RessourceLoader.init()
-
             # Séquence d'intro
             pygame.mixer_music.set_volume(Game.settings["general_volume"] * Game.settings["music_volume"])
             pygame.mouse.set_visible(False)

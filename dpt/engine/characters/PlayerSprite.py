@@ -326,22 +326,6 @@ class PlayerSprite(pygame.sprite.Sprite):
                 ry = i.rect.y - (self.rect.y - math.floor(self.yvel) * Game.settings["30_FPS"])
 
                 if self.mask.overlap(i.mask, (rx, ry)):
-                    if math.floor(self.yvel) == 0 and not self.isJump and i.rect.bottom > self.rect.centery:
-                        mask = self.mask.overlap_mask(i.mask, (rx, ry))
-                        b_rects = mask.get_bounding_rects()
-                        for rect in b_rects:
-                            if -8 * Game.DISPLAY_RATIO * Game.settings["30_FPS"] <= rect.height <= 8 * Game.DISPLAY_RATIO * Game.settings["30_FPS"]:
-                                self.rect.y -= rect.height
-                                self.yvel = 0
-                                self.onPlatform = True
-                                self.gravityCount = 0
-                                self.isJump = False
-                                self.allowJump = True
-                                self.isReallyInJump = False
-                                self.jumpCount = self.CONSTJUMPCOUNT
-                                self.frameCount = 0
-                                self.delay += 1
-
                     if (math.floor(self.yvel) != 0) and i.rect.centery > self.rect.centery:
                         crx = i.rect.x - self.rect.x
                         mask = self.mask.overlap_mask(i.mask, (crx, ry))
@@ -382,6 +366,22 @@ class PlayerSprite(pygame.sprite.Sprite):
                 ry = i.rect.y - (self.rect.y - math.floor(self.yvel) * Game.settings["30_FPS"])
 
                 if self.mask.overlap(i.mask, (rx, ry)):
+                    if math.floor(self.yvel) == 0 and not self.isJump and i.rect.bottom > self.rect.centery:
+                        cry = (i.rect.y - self.rect.y)
+                        mask = self.mask.overlap_mask(i.mask, (rx, cry))
+                        b_rects = mask.get_bounding_rects()
+                        for rect in b_rects:
+                            if -8 * Game.DISPLAY_RATIO * Game.settings["30_FPS"] <= rect.height <= 8 * Game.DISPLAY_RATIO * Game.settings["30_FPS"]:
+                                self.rect.y -= rect.height
+                                self.yvel = 0
+                                self.onPlatform = True
+                                self.gravityCount = 0
+                                self.isJump = False
+                                self.allowJump = True
+                                self.isReallyInJump = False
+                                self.jumpCount = self.CONSTJUMPCOUNT
+                                self.frameCount = 0
+                                self.delay += 1
 
                     if math.floor(self.xvel) != 0 and i.rect.centerx > self.rect.centerx:
                         cry = (i.rect.y - self.rect.y)

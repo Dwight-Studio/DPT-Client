@@ -18,6 +18,7 @@ class ParallaxSky:
     gap_1 = 0
     gap_2 = 0
     enable_reversed = False
+    available_backgrounds = ["Plains", "Ice", "Goop", "Desert"]
 
     @classmethod
     def init(cls, texture):

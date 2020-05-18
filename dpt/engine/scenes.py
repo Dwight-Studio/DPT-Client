@@ -1,4 +1,6 @@
 import math
+from random import choice
+
 import pygame
 import time
 
@@ -184,10 +186,10 @@ class Scenes:
         button_height = math.floor(95 * Game.DISPLAY_RATIO)
 
         buttons_gap_y = math.floor(15 * Game.DISPLAY_RATIO)
-        buttons_starting_y = math.floor((Game.WINDOW_HEIGHT / 2) - button_height * 2 - buttons_gap_y * 1.5) + math.floor(32 * Game.DISPLAY_RATIO)
+        buttons_starting_y = math.floor((Game.WINDOW_HEIGHT / 2) - button_height * 1.5 - buttons_gap_y) + math.floor(32 * Game.DISPLAY_RATIO)
         buttons_x = (Game.WINDOW_WIDTH // 2) - (button_width // 2)
 
-        Game.gui.update({"p_window": Window(0, 0, 3, 9, centerx=Game.WINDOW_WIDTH // 2, centery=Game.WINDOW_HEIGHT // 2),
+        Game.gui.update({"p_window": Window(0, 0, 3, 7, centerx=Game.WINDOW_WIDTH // 2, centery=Game.WINDOW_HEIGHT // 2),
                          "p_title": Text(0,
                                          buttons_starting_y - math.floor(90 * Game.DISPLAY_RATIO),
                                          "Pause",
@@ -206,15 +208,7 @@ class Scenes:
                                                       pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_IN"),
                                                       text_sprite=SimpleSprite(math.floor(50 * Game.DISPLAY_RATIO),
                                                                                math.floor(38 * Game.DISPLAY_RATIO),
-                                                                               RessourceLoader.get("dpt.images.gui.symbols.SYMB_MENU"))),
-                         "p_button_quit": Button(buttons_x, buttons_starting_y + (buttons_gap_y + button_height) * 3,
-                                                 button_width,
-                                                 button_height,
-                                                 RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_OUT"),
-                                                 pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_IN"),
-                                                 text_sprite=SimpleSprite(math.floor(47 * Game.DISPLAY_RATIO),
-                                                                          math.floor(50 * Game.DISPLAY_RATIO),
-                                                                          RessourceLoader.get("dpt.images.gui.symbols.SYMB_X")))})
+                                                                               RessourceLoader.get("dpt.images.gui.symbols.SYMB_MENU")))})
 
         if not TileEditor.enabled_editor:
             Game.gui["p_button_restart_save"] = Button(buttons_x, buttons_starting_y + (buttons_gap_y + button_height), button_width, button_height,
@@ -256,7 +250,7 @@ class Scenes:
             RessourceLoader.init()
             Game.levels_list = None
             Game.temp = {}
-            RessourceLoader.add_pending("dpt.images.environment.background.default_sky")
+            RessourceLoader.add_pending("dpt.images.environment.background.*")
             RessourceLoader.add_pending("dpt.images.gui.*")
             RessourceLoader.add_pending("dpt.images.dpt")
             RessourceLoader.add_pending("dpt.fonts.*")
@@ -276,6 +270,14 @@ class Scenes:
         # Webcoms
         from dpt.engine.webCommunications import WebCommunication
         WebCommunication.close()
+
+        # Fond
+        from dpt.engine.gui.ParallaxSky import ParallaxSky
+        from dpt.engine.tileManager import TileManager, Camera
+        from dpt.engine.gui.mainMenuEntity import MainMenuEntity
+        Game.player_sprite = MainMenuEntity()
+        TileManager.camera = Camera(Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)
+        ParallaxSky.init(choice(ParallaxSky.available_backgrounds))
 
         # Ajout du GUI
         from dpt.engine.gui.menu.button import Button
@@ -755,20 +757,13 @@ class Scenes:
                                                   text_sprite=SimpleSprite(math.floor(40 * Game.DISPLAY_RATIO),
                                                                            math.floor(30 * Game.DISPLAY_RATIO),
                                                                            RessourceLoader.get("dpt.images.gui.symbols.SYMB_MENU"))),
-                         "el_button_main_menu": Button(buttons_x - button_width - buttons_gap_y, buttons_starting_y + (buttons_gap_y + button_height) * 3, button_width, button_height,
+                         "el_button_main_menu": Button(0, buttons_starting_y + (buttons_gap_y + button_height) * 3, button_width, button_height,
                                                        RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_OUT"),
                                                        pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_IN"),
                                                        text_sprite=SimpleSprite(math.floor(50 * Game.DISPLAY_RATIO),
                                                                                 math.floor(38 * Game.DISPLAY_RATIO),
-                                                                                RessourceLoader.get("dpt.images.gui.symbols.SYMB_MENU"))),
-                         "el_button_quit": Button(buttons_x + button_width + buttons_gap_y, buttons_starting_y + (buttons_gap_y + button_height) * 3,
-                                                  button_width,
-                                                  button_height,
-                                                  RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_OUT"),
-                                                  pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_IN"),
-                                                  text_sprite=SimpleSprite(math.floor(47 * Game.DISPLAY_RATIO),
-                                                                           math.floor(50 * Game.DISPLAY_RATIO),
-                                                                           RessourceLoader.get("dpt.images.gui.symbols.SYMB_X"))),
+                                                                                RessourceLoader.get("dpt.images.gui.symbols.SYMB_MENU")),
+                                                       centerx=Game.WINDOW_WIDTH // 2),
                          "star_3": TransitionStar(Game.WINDOW_WIDTH // 2 + math.floor(Game.DISPLAY_RATIO * 85), buttons_starting_y + math.floor(150 * Game.DISPLAY_RATIO), Game.temp["score"] >= 1000, True, False),
                          "star_2": TransitionStar(Game.WINDOW_WIDTH // 2, buttons_starting_y + math.floor(150 * Game.DISPLAY_RATIO), Game.temp["score"] >= 2000, True, False),
                          "star_1": TransitionStar(Game.WINDOW_WIDTH // 2 - math.floor(Game.DISPLAY_RATIO * 85), buttons_starting_y + math.floor(150 * Game.DISPLAY_RATIO), Game.temp["score"] >= 3000, True, False),
@@ -822,10 +817,10 @@ class Scenes:
         button_height = math.floor(95 * Game.DISPLAY_RATIO)
 
         buttons_gap_y = math.floor(15 * Game.DISPLAY_RATIO)
-        buttons_starting_y = math.floor((Game.WINDOW_HEIGHT / 2) - button_height * 2 - buttons_gap_y * 1.5) + math.floor(32 * Game.DISPLAY_RATIO)
+        buttons_starting_y = math.floor((Game.WINDOW_HEIGHT / 2) - button_height * 1.5 - buttons_gap_y) + math.floor(32 * Game.DISPLAY_RATIO)
         buttons_x = (Game.WINDOW_WIDTH // 2) - (button_width // 2)
 
-        Game.gui.update({"go_window": Window(0, 0, 3, 9, centerx=Game.WINDOW_WIDTH // 2, centery=Game.WINDOW_HEIGHT // 2),
+        Game.gui.update({"go_window": Window(0, 0, 3, 7, centerx=Game.WINDOW_WIDTH // 2, centery=Game.WINDOW_HEIGHT // 2),
                          "go_title": Text(0,
                                           buttons_starting_y - math.floor(90 * Game.DISPLAY_RATIO),
                                           "Échec",
@@ -844,15 +839,7 @@ class Scenes:
                                                        pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_GRAY_CIRCLE_IN"),
                                                        text_sprite=SimpleSprite(math.floor(50 * Game.DISPLAY_RATIO),
                                                                                 math.floor(38 * Game.DISPLAY_RATIO),
-                                                                                RessourceLoader.get("dpt.images.gui.symbols.SYMB_MENU"))),
-                         "go_button_quit": Button(buttons_x, buttons_starting_y + (buttons_gap_y + button_height) * 3,
-                                                  button_width,
-                                                  button_height,
-                                                  RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_OUT"),
-                                                  pushed_image=RessourceLoader.get("dpt.images.gui.buttons.BTN_RED_CIRCLE_IN"),
-                                                  text_sprite=SimpleSprite(math.floor(47 * Game.DISPLAY_RATIO),
-                                                                           math.floor(50 * Game.DISPLAY_RATIO),
-                                                                           RessourceLoader.get("dpt.images.gui.symbols.SYMB_X")))})
+                                                                                RessourceLoader.get("dpt.images.gui.symbols.SYMB_MENU")))})
 
         from dpt.engine.mainLoop import game_over_loop
         Game.loop = game_over_loop

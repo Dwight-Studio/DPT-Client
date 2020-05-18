@@ -232,12 +232,6 @@ def pause_loop():
                 Menu.delete_items()
                 Scenes.main_menu()
                 return
-            elif event.button == Game.gui["p_button_quit"]:
-                if WebCommunication.sessionName is not None:
-                    WebCommunication.close()
-                if TileEditor.is_editing:
-                    FileManager.save_file(TileEditor.created_level)
-                Game.run = False
 
     WebCommunication.update()
     Game.draw_cursor()
@@ -245,7 +239,8 @@ def pause_loop():
 
 def main_menu_loop():
     """Boucle du menu principale"""
-    Game.surface.blit(bg, (0, 0))
+    ParallaxSky.update()
+    TileManager.camera.update(Game.player_sprite)
 
     for event in Game.events:
         if event.type == pygame.QUIT:
@@ -306,7 +301,8 @@ def main_menu_loop():
 
 def settings_menu_loop():
     """Boucle du menu des paramètres"""
-    Game.surface.blit(bg, (0, 0))
+    ParallaxSky.update()
+    TileManager.camera.update(Game.player_sprite)
 
     ds = Game.temp["display_size"]
     Game.gui["graphics_text"].text, w, h = Game.display_list[ds]
@@ -416,7 +412,8 @@ def settings_menu_loop():
 
 def start_level_loop():
     """Boucle de début de niveau"""
-    Game.surface.blit(bg, (0, 0))
+    ParallaxSky.update()
+    TileManager.camera.update(Game.player_sprite)
 
     menu.main_loop()
 
@@ -511,10 +508,6 @@ def game_over_loop():
                 TileManager.load_level(TileManager.levelName)
                 if "coins" in Game.temp:
                     Game.temp["coins"] = Game.temp["coins"] // 2
-                if "respawn" in Game.temp:
-                    Game.temp["respawn"] += 1
-                else:
-                    Game.temp["respawn"] = 1
                 EffectsManagement.create_effects_image()
                 EffectsManagement.reset()
                 EffectsManagement.vote()
@@ -535,15 +528,6 @@ def game_over_loop():
                 menu.delete_items()
                 Scenes.main_menu()
                 return
-            elif event.button == Game.gui["go_button_quit"]:
-                if WebCommunication.sessionName is not None:
-                    try:
-                        del Game.temp["last_checkpoint"]
-                        del Game.temp["respawn"]
-                    except KeyError:
-                        pass
-                    WebCommunication.close()
-                Game.run = False
 
     WebCommunication.update()
     Game.draw_cursor()
@@ -723,7 +707,8 @@ def end_level_loop():
 
 def level_selector_loop():
     """Boucle de selection des niveaux"""
-    Game.surface.blit(bg, (0, 0))
+    ParallaxSky.update()
+    TileManager.camera.update(Game.player_sprite)
 
     for event in Game.events:
         if event.type == pygame.QUIT:
@@ -740,7 +725,8 @@ def level_selector_loop():
 
 def level_selector_detail_loop():
     """Boucle de details de selection des niveaux"""
-    Game.surface.blit(bg, (0, 0))
+    ParallaxSky.update()
+    TileManager.camera.update(Game.player_sprite)
 
     for event in Game.events:
         if event.type == pygame.QUIT:
