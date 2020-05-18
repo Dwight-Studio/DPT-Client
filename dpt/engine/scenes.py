@@ -254,21 +254,19 @@ class Scenes:
                 Game.player_sprite = None
             Game.player_group.empty()
 
-            TileManager.editor_panel_group.empty()
-            TileEditor.ghost_block_group.empty()
-            TileManager.interactible_blocks_group.empty()
-            TileManager.clouds_group.empty()
-            TileManager.heart_group.empty()
-            Checkbox.checkbox_group.empty()
-
-            for entity in TileManager.entity_group:
-                entity.kill()
-
-            for block in TileManager.environment_group:
-                block.kill()
-
-            for block in TileManager.background_blocks_group:
-                block.kill()
+            for i in range(2):
+                TileManager.editor_panel_group.empty()
+                TileEditor.ghost_block_group.empty()
+                TileManager.interactible_blocks_group.empty()
+                TileManager.clouds_group.empty()
+                TileManager.heart_group.empty()
+                TileManager.environment_group.empty()
+                TileManager.entity_group.empty()
+                TileManager.foreground_blocks_group.empty()
+                TileManager.enemy_group.empty()
+                TileManager.deadly_object_group.empty()
+                TileManager.background_blocks_group.empty()
+                Checkbox.checkbox_group.empty()
 
             RessourceLoader.init()
             Game.levels_list = None
