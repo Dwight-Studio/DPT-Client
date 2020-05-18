@@ -130,7 +130,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                         self.fallCount += 1 * Game.settings["30_FPS"]
 
             if EffectsManagement.dico_current_effects["jumpBoost"]:
-                self.jumpModifier = 0.07 // Game.settings["30_FPS"]
+                self.jumpModifier = 0.07
             else:
                 self.jumpModifier = 0
 
