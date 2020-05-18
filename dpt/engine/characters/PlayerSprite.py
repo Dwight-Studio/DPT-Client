@@ -62,6 +62,10 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.jumpRight = pygame.transform.smoothscale(RessourceLoader.get(self.jump_right_texture), (self.width, self.height))
 
         self.accessories_images = {k: pygame.transform.smoothscale(RessourceLoader.get(v), (self.width, self.height)) for k, v in PlayerSprite.accessories.items()}
+        self.star_images = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in RessourceLoader.get_multiple("dpt.images.characters.player.accessories.star.*")]
+        tmp = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in RessourceLoader.get_multiple("dpt.images.characters.player.accessories.star.*")]
+        tmp.reverse()
+        self.star_images.extend(tmp)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -98,6 +102,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.blink_eye = 0
 
         self.eye_count = 0
+        self.star_count = 0
 
         Heart()
 
@@ -130,7 +135,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                         self.fallCount += 1 * Game.settings["30_FPS"]
 
             if EffectsManagement.dico_current_effects["jumpBoost"]:
-                self.jumpModifier = 0.07 // Game.settings["30_FPS"]
+                self.jumpModifier = 0.07
             else:
                 self.jumpModifier = 0
 
@@ -163,7 +168,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                 if self.xvel > 0 and not EffectsManagement.dico_current_effects["Ice"]:
                     self.xvel = 0
                 if -self.maxvelocity * Game.DISPLAY_RATIO > self.xvel > -self.maxvelocity * 2 * Game.DISPLAY_RATIO and self.onPlatform:
-                    self.xvel += self.xvel * 0.01 * Game.settings["30_FPS"]
+                    self.xvel += self.xvel * 0.02 * Game.settings["30_FPS"]
                 if self.xvel >= -self.maxvelocity * Game.DISPLAY_RATIO:
                     self.xvel -= 0.25 * Game.DISPLAY_RATIO * Game.settings["30_FPS"]
                 self.left = True
@@ -173,7 +178,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                 if self.xvel < 0 and not EffectsManagement.dico_current_effects["Ice"]:
                     self.xvel = 0
                 if self.maxvelocity * Game.DISPLAY_RATIO < self.xvel < self.maxvelocity * 2 * Game.DISPLAY_RATIO and self.onPlatform:
-                    self.xvel += self.xvel * 0.01 * Game.settings["30_FPS"]
+                    self.xvel += self.xvel * 0.02 * Game.settings["30_FPS"]
                 if self.xvel <= self.maxvelocity * Game.DISPLAY_RATIO:
                     self.xvel += 0.25 * Game.DISPLAY_RATIO * Game.settings["30_FPS"]
                 self.left = False
@@ -205,7 +210,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                 else:
                     if not self.onPlatform:
                         if (self.jumpCount >= 0 and not EffectsManagement.dico_current_effects["Slow"]) or (EffectsManagement.dico_current_effects["Slow"] and self.frameCount % 3 == 0):
-                            self.yvel = math.floor((self.jumpCount ** 2) * (0.05 + self.gravityModifier + self.jumpModifier * Game.settings["30_FPS"]) * Game.DISPLAY_RATIO)
+                            self.yvel = math.floor((self.jumpCount ** 2) * ((0.05 + self.gravityModifier + self.jumpModifier) * Game.settings["30_FPS"]) * Game.DISPLAY_RATIO)
                             self.jumpCount -= 1 * Game.settings["30_FPS"]
                         elif self.jumpCount < 0:
                             if self.isReallyInJump:
@@ -228,7 +233,7 @@ class PlayerSprite(pygame.sprite.Sprite):
             self.collide()
 
             self.rect.left += math.floor(self.xvel) * Game.settings["30_FPS"]
-            self.rect.top -= math.floor(self.yvel) * Game.settings["30_FPS"]
+            self.rect.top -= math.floor(self.yvel)
 
             self.animation()
             self.enemies_collision(self.yvel, TileManager.enemy_group, self.delay)
@@ -284,6 +289,13 @@ class PlayerSprite(pygame.sprite.Sprite):
 
         self.image = self.image.copy()
 
+        if EffectsManagement.dico_current_effects["star"]:
+            if self.star_count + 1 < 56 // Game.settings["30_FPS"]:
+                self.star_count += 1
+                self.image.blit(self.star_images[self.star_count // (4 // Game.settings["30_FPS"])], (0, 0))
+            else:
+                self.star_count = 0
+
         if self.hat:
             if self.right:
                 self.image.blit(self.accessories_images["HatRight"], (0, 0))
@@ -309,19 +321,71 @@ class PlayerSprite(pygame.sprite.Sprite):
 
     def collide(self):
         """Gère toute la partie physique du joueur, l'empêche de traverser les blocs"""
+
+        y_mask_down = pygame.mask.Mask((self.width, self.height))
+        y_mask_up = pygame.mask.Mask((self.width, self.height))
+        x_mask_left = pygame.mask.Mask((self.width, self.height))
+        x_mask_right = pygame.mask.Mask((self.width, self.height))
+
+        collide_rect = pygame.Rect(self.rect.x - self.width, self.rect.y - self.height, self.width * 3, self.height * 3)
+
+        dx = 0
+        dy = 0
+
         for i in TileManager.environment_group:
-            if i.rect.colliderect(Game.display_rect):
+            if i.rect.colliderect(collide_rect):
                 rx = i.rect.x - (self.rect.x + math.floor(self.xvel) * Game.settings["30_FPS"])
-                ry = i.rect.y - (self.rect.y - math.floor(self.yvel) * Game.settings["30_FPS"])
+                ry = i.rect.y - (self.rect.y - math.floor(self.yvel))
 
                 if self.mask.overlap(i.mask, (rx, ry)):
-                    dx = 0
-                    dy = 0
+                    if (math.floor(self.yvel) != 0) and i.rect.centery > self.rect.centery:
+                        crx = i.rect.x - self.rect.x
+                        mask = self.mask.overlap_mask(i.mask, (crx, ry))
+                        y_mask_down.draw(mask, (0, 0))
+                    elif (math.floor(self.yvel) != 0) and i.rect.centery < self.rect.centery:
+                        crx = i.rect.x - self.rect.x
+                        mask = self.mask.overlap_mask(i.mask, (crx, ry))
+                        y_mask_up.draw(mask, (0, 0))
 
-                    check = False
+        if math.floor(self.yvel) != 0:
+            b_rects = y_mask_down.get_bounding_rects()
+            c_rect = self.mask.get_bounding_rects()[0]
+            for rect in b_rects:
+                dy = rect.height + math.floor(self.yvel)
+                if c_rect.bottom > rect.bottom:
+                    dy += c_rect.bottom - rect.bottom
+                self.yvel = 0
+                self.onPlatform = True
+                self.gravityCount = 0
+                self.isJump = False
+                self.isReallyInJump = False
+                self.allowJump = True
+                self.jumpCount = self.CONSTJUMPCOUNT
+                self.frameCount = 0
+                self.delay += 1
 
-                    if math.floor(self.yvel) == 0 and not self.isJump:
-                        mask = self.mask.overlap_mask(i.mask, (rx, ry))
+            b_rects = y_mask_up.get_bounding_rects()
+            for rect in b_rects:
+                dy = - rect.height + math.floor(self.yvel)
+                if c_rect.top < rect.top:
+                    dy -= c_rect.top - rect.top
+                self.yvel = 0
+                self.isJump = False
+                self.isReallyInJump = False
+                self.allowJump = False
+                self.jumpCount = self.CONSTJUMPCOUNT
+
+            self.rect.y -= dy
+
+        for i in TileManager.environment_group:
+            if i.rect.colliderect(collide_rect):
+                rx = i.rect.x - (self.rect.x + math.floor(self.xvel) * Game.settings["30_FPS"])
+                ry = i.rect.y - (self.rect.y - math.floor(self.yvel))
+
+                if self.mask.overlap(i.mask, (rx, ry)):
+                    if math.floor(self.yvel) == 0 and not self.isJump and i.rect.bottom > self.rect.centery:
+                        cry = (i.rect.y - self.rect.y)
+                        mask = self.mask.overlap_mask(i.mask, (rx, cry))
                         b_rects = mask.get_bounding_rects()
                         for rect in b_rects:
                             if -8 * Game.DISPLAY_RATIO * Game.settings["30_FPS"] <= rect.height <= 8 * Game.DISPLAY_RATIO * Game.settings["30_FPS"]:
@@ -335,51 +399,28 @@ class PlayerSprite(pygame.sprite.Sprite):
                                 self.jumpCount = self.CONSTJUMPCOUNT
                                 self.frameCount = 0
                                 self.delay += 1
-                                check = True
-                            break
 
-                    if self.yvel != 0 or check:
-                        crx = i.rect.x - self.rect.x
-                        mask = self.mask.overlap_mask(i.mask, (crx, ry))
-                        b_rects = mask.get_bounding_rects()
-                        for rect in b_rects:
-                            if self.rect.centery < i.rect.y:
-                                dy = rect.height + math.floor(self.yvel) * Game.settings["30_FPS"]
-                                self.yvel = 0
-                                self.onPlatform = True
-                                self.gravityCount = 0
-                                self.isJump = False
-                                self.isReallyInJump = False
-                                self.allowJump = True
-                                self.jumpCount = self.CONSTJUMPCOUNT
-                                self.frameCount = 0
-                                self.delay += 1
-                            elif self.rect.centery > i.rect.y:
-                                dy = - rect.height + math.floor(self.yvel) * Game.settings["30_FPS"]
-                                self.yvel = 0
-                                self.isJump = False
-                                self.isReallyInJump = False
-                                self.allowJump = False
-                                self.jumpCount = self.CONSTJUMPCOUNT
-                            break
-
-                        self.rect.y -= dy
-
-                    if self.xvel != 0 or check:
+                    if math.floor(self.xvel) != 0 and i.rect.centerx > self.rect.centerx:
                         cry = (i.rect.y - self.rect.y)
                         mask = self.mask.overlap_mask(i.mask, (rx, cry))
-                        b_rects = mask.get_bounding_rects()
-                        for rect in b_rects:
-                            Game.add_debug_info("dx = " + str(dx))
-                            if self.rect.x > i.rect.x:
-                                dx = rect.width + math.floor(self.xvel) * Game.settings["30_FPS"]
-                                self.xvel = 0
-                            elif self.rect.x < i.rect.x:
-                                dx = - rect.width + math.floor(self.xvel) * Game.settings["30_FPS"]
-                                self.xvel = 0
-                            break
+                        x_mask_left.draw(mask, (0, 0))
+                    elif math.floor(self.xvel) != 0 and i.rect.centerx < self.rect.centerx:
+                        cry = (i.rect.y - self.rect.y)
+                        mask = self.mask.overlap_mask(i.mask, (rx, cry))
+                        x_mask_right.draw(mask, (0, 0))
 
-                        self.rect.x += dx
+        if math.floor(self.xvel) != 0:
+            b_rects = x_mask_right.get_bounding_rects()
+            for rect in b_rects:
+                dx = rect.width + math.floor(self.xvel) * Game.settings["30_FPS"]
+                self.xvel = 0
+
+            b_rects = x_mask_left.get_bounding_rects()
+            for rect in b_rects:
+                dx = - rect.width + math.floor(self.xvel) * Game.settings["30_FPS"]
+                self.xvel = 0
+
+            self.rect.x += dx
 
     def deadly_object_collision(self):
         """Gère les collisions avec des objets physiques mortels"""

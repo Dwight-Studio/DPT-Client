@@ -144,6 +144,7 @@ class EffectsManagement:
             mod2 = random.choice(cls.list_effects)
         cls.mods = [mod1, mod2]
         WebCommunication.create_vote_event(mod1, mod2)
+        pygame.event.post(pygame.event.Event(Game.SEND_VOTE_EVENT, {}))
 
     @classmethod
     def reset(cls):

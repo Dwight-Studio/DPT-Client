@@ -233,6 +233,8 @@ def pause_loop():
                 Scenes.main_menu()
                 return
 
+    Timer.pause_update()
+
     WebCommunication.update()
     Game.draw_cursor()
 

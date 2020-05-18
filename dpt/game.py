@@ -104,6 +104,7 @@ class Game(object):
     WAIT_BETWEEN_RECONNECT_EVENT = pygame.event.custom_type()
     DISCONNECTED_EVENT = pygame.event.custom_type()
     PLAYER_DEATH_EVENT = pygame.event.custom_type()
+    SEND_VOTE_EVENT = pygame.event.custom_type()
 
     # Variable privée pour l'affichage des infos de debug
     _debug_infos = None
@@ -133,6 +134,7 @@ class Game(object):
         os.mkdir(ROOT_DIRECTORY + "/logs")
     file_handler = logging.FileHandler(ROOT_DIRECTORY + "/logs/latest.log")
     file_handler.setFormatter(logging_format)
+    file_handler.setLevel(logging.DEBUG)
 
     # Stream handler
     stream_handler = logging.StreamHandler(sys.stdout)
@@ -152,10 +154,8 @@ class Game(object):
             cls.DEBUG = debug
 
             if cls.DEBUG:
-                cls.file_handler.setLevel(logging.DEBUG)
                 cls.stream_handler.setLevel(logging.DEBUG)
             else:
-                cls.file_handler.setLevel(logging.INFO)
                 cls.stream_handler.setLevel(logging.INFO)
 
             main_logger = cls.get_logger(None)
