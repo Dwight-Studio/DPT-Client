@@ -4,6 +4,7 @@ import math
 from dpt.engine.gui.menu.simpleSprite import SimpleSprite
 from dpt.game import Game
 from dpt.engine.loader import RessourceLoader
+from dpt.engine.gui.menu.text import Text
 
 
 class Timer:
@@ -25,6 +26,10 @@ class Timer:
     digit3 = None
     digit4 = None
 
+    effects_text = None
+
+    rect = None
+
     digits_images = None
     semicolon_image = None
 
@@ -33,6 +38,8 @@ class Timer:
     width_semicolon = math.floor(24 * Game.DISPLAY_RATIO)
 
     time = 0
+
+    e_time = 0
 
     @classmethod
     def start(cls, time):
@@ -68,10 +75,18 @@ class Timer:
         cls.digit4.rect.right = cls.rect.right
         cls.digit3.rect.right = cls.digit4.rect.left
 
+        cls.effects_text = Text(cls.rect.centerx, cls.rect.bottom,
+                                " ",
+                                math.floor(25 * Game.DISPLAY_RATIO),
+                                (255, 255, 255),
+                                "dpt.fonts.DINOT_CondBlack")
+
         for sprite in [cls.digit1, cls.digit2, cls.semicolon, cls.digit3, cls.digit4]:
             sprite.rect.centery = cls.rect.centery
 
+        pygame.time.set_timer(Game.TIMER_EVENT, 0)
         pygame.time.set_timer(Game.TIMER_EVENT, 1000)
+
         pygame.event.post(pygame.event.Event(Game.TIMER_EVENT))
 
         Game.get_logger(Timer.__name__).info("Timer created")
@@ -80,6 +95,9 @@ class Timer:
     def update(cls):
         """Actualise le timer"""
         for event in Game.events:
+            if event.type == Game.VOTE_RESULT_AVAILABLE_EVENT:
+                cls.effects_text.text = " "
+                cls.e_time = 0
             if event.type == Game.TIMER_EVENT:
                 cls.time -= 1
 
@@ -93,17 +111,33 @@ class Timer:
                 cls.digit3.image = cls.digits_images[(cls.time % 60) // 10]
                 cls.digit4.image = cls.digits_images[(cls.time % 60) % 10]
 
+                if cls.effects_text.text != " ":
+                    cls.e_time -= 1
+                    if cls.e_time < 0:
+                        cls.effects_text.text = "Application des nouveaux effets..."
+                    else:
+                        cls.effects_text.text = "Nouveaux effets dans " + str(cls.e_time) + " secondes"
+
+            if event.type == Game.SEND_VOTE_EVENT:
+                cls.e_time = (Game.VOTE_TIMEOUT + 2)
+                cls.effects_text.text = "Nouveaux effets dans " + str(cls.e_time) + " secondes"
+
         Game.add_debug_info("TIMER INFORMATIONS")
         Game.add_debug_info("Time: " + str(cls.time))
         Game.add_debug_info("----------")
 
+        if cls.effects_text is not None:
+            cls.effects_text.rect.centerx = cls.rect.centerx
+            cls.effects_text.draw(Game.surface)
+
     @classmethod
     def kill(cls):
         """Supprime le timer"""
-        for sprite in [cls.digit1, cls.digit2, cls.semicolon, cls.digit3, cls.digit4]:
+        for sprite in [cls.digit1, cls.digit2, cls.semicolon, cls.digit3, cls.digit4, cls.effects_text]:
             if sprite is not None:
                 sprite.kill()
                 sprite = None
+        cls.digit1 = cls.digit2 = cls.semicolon = cls.digit3 = cls.digit4 = cls.effects_text = None
         pygame.time.set_timer(Game.TIMER_EVENT, 0)
         pygame.time.set_timer(Game.TIMER_FINISHED_EVENT, 0)
 

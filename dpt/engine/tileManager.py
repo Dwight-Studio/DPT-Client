@@ -86,6 +86,8 @@ class TileManager:
             TileManager.heart_group.empty()
             Checkbox.checkbox_group.empty()
 
+            Timer.kill()
+
             for entity in TileManager.entity_group:
                 entity.kill()
 
@@ -245,6 +247,7 @@ class TileManager:
                     player_x = cp.rect.x - cp.offset_x
                     player_y = cp.rect.y - cp.offset_y
 
+                    Timer.start(Game.TIMER_LENGTH)
                     Timer.time = Game.temp["last_checkpoint_time"] + 1
                     Game.life = Game.temp["last_checkpoint_life"]
                     for key, value in Game.temp["last_checkpoint_effects"].items():
@@ -252,9 +255,6 @@ class TileManager:
                             setattr(EffectsManagement, key, value)
                         except AttributeError:
                             continue
-                    pygame.event.post(pygame.event.Event(Game.TIMER_EVENT, {}))
-                    pygame.time.set_timer(Game.TIMER_EVENT, 0)
-                    pygame.time.set_timer(Game.TIMER_EVENT, 1000)
                 else:
                     Timer.start(Game.TIMER_LENGTH)
 
