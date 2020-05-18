@@ -85,9 +85,9 @@ class EffectsManagement:
         """Décide de lancer des nouveaux votes, supprime ou active les effets et gére le fonctionnement de certains effets"""
         cls.display_update()
         if cls.dico_current_effects["reverse"]:
-            EffectsManagement.upsidedown = True
+            Game.upsidedown = True
         else:
-            EffectsManagement.upsidedown = False
+            Game.upsidedown = False
         for event in Game.events:
             if event.type == Game.VOTE_RESULT_AVAILABLE_EVENT:
                 for effects in cls.temp_list:
@@ -162,7 +162,7 @@ class EffectsManagement:
         pygame.time.set_timer(Game.WAIT_BETWEEN_VOTE_EVENT, 0)
         pygame.time.set_timer(Game.VOTE_RESULT_AVAILABLE_EVENT, 0)
 
-        EffectsManagement.upsidedown = False
+        Game.upsidedown = False
 
         cls.temp_list = []
         cls.perm_list = []

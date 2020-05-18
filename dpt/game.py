@@ -65,6 +65,7 @@ class Game(object):
     selected_level = 0  # Niveau selectionné
     levels_list = None  # Liste des niveaux
     stars = 0  # Nombre d'étoiles débloquées
+    upsidedown = False  # Retourner l'écran
 
     # Paramètres utilisateur
     settings = {
@@ -305,7 +306,7 @@ class Game(object):
 
                 cls.loop()
 
-                if EffectsManagement.upsidedown:
+                if Game.upsidedown:
                     sc = pygame.transform.flip(Game.surface, False, True)
                     Game.surface.blit(sc, (0, 0))
 

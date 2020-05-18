@@ -175,7 +175,7 @@ class Scenes:
 
         from dpt.engine.effectsManagement import EffectsManagement
 
-        EffectsManagement.upsidedown = False
+        Game.upsidedown = False
 
         # Ajout du GUI
         from dpt.engine.gui.menu.button import Button
@@ -241,12 +241,11 @@ class Scenes:
         """
         cls.logger.info("Displaying MAIN_MENU")
         from dpt.engine.loader import RessourceLoader
-        from dpt.engine.effectsManagement import EffectsManagement
         from dpt.engine.tileManager import TileManager, Camera
         from dpt.engine.gui.editor.tileEditor import TileEditor
         from dpt.engine.gui.menu.checkbox import Checkbox
 
-        EffectsManagement.upsidedown = False
+        Game.upsidedown = False
 
         # Gestion des ressources
         if load:
@@ -715,7 +714,7 @@ class Scenes:
 
         from dpt.engine.effectsManagement import EffectsManagement
         EffectsManagement.reset()
-        EffectsManagement.upsidedown = False
+        Game.upsidedown = False
 
         # Score
         Game.temp["score"] = (Game.temp["coins"] * 50) + (Timer.time * 10)
@@ -828,7 +827,7 @@ class Scenes:
 
         from dpt.engine.effectsManagement import EffectsManagement
         EffectsManagement.reset()
-        EffectsManagement.upsidedown = False
+        Game.upsidedown = False
 
         cls.logger.info("Displaying GAME_OVER")
 
