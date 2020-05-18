@@ -262,13 +262,7 @@ def main_menu_loop():
 
                 Scenes.editor({
                     "tiles": {},
-                    "infos": {
-                        "level_title": "Sans nom",
-                        "image": "dpt.images.environment.terrain.Goop_Tile_Flat_Edge_a",
-                        "required_stars": 0,
-                        "background": "Plains",
-                        "music": "dpt.sounds.musics.Grasslands_Theme"
-                    }
+                    "infos": {}
                 })
                 return
             elif event.button == Game.gui["button_settings"]:
