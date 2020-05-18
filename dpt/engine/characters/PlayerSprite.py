@@ -205,7 +205,7 @@ class PlayerSprite(pygame.sprite.Sprite):
                 else:
                     if not self.onPlatform:
                         if (self.jumpCount >= 0 and not EffectsManagement.dico_current_effects["Slow"]) or (EffectsManagement.dico_current_effects["Slow"] and self.frameCount % 3 == 0):
-                            self.yvel = math.floor((self.jumpCount ** 2) * (0.05 + self.gravityModifier + self.jumpModifier * Game.settings["30_FPS"]) * Game.DISPLAY_RATIO)
+                            self.yvel = math.floor((self.jumpCount ** 2) * ((0.05 + self.gravityModifier + self.jumpModifier) * Game.settings["30_FPS"]) * Game.DISPLAY_RATIO)
                             self.jumpCount -= 1 * Game.settings["30_FPS"]
                         elif self.jumpCount < 0:
                             if self.isReallyInJump:
@@ -228,7 +228,7 @@ class PlayerSprite(pygame.sprite.Sprite):
             self.collide()
 
             self.rect.left += math.floor(self.xvel) * Game.settings["30_FPS"]
-            self.rect.top -= math.floor(self.yvel) * Game.settings["30_FPS"]
+            self.rect.top -= math.floor(self.yvel)
 
             self.animation()
             self.enemies_collision(self.yvel, TileManager.enemy_group, self.delay)
