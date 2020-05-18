@@ -62,6 +62,10 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.jumpRight = pygame.transform.smoothscale(RessourceLoader.get(self.jump_right_texture), (self.width, self.height))
 
         self.accessories_images = {k: pygame.transform.smoothscale(RessourceLoader.get(v), (self.width, self.height)) for k, v in PlayerSprite.accessories.items()}
+        self.star_images = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in RessourceLoader.get_multiple("dpt.images.characters.player.accessories.star.*")]
+        tmp = [pygame.transform.smoothscale(i, (self.width, self.height)) for i in RessourceLoader.get_multiple("dpt.images.characters.player.accessories.star.*")]
+        tmp.reverse()
+        self.star_images.extend(tmp)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -98,6 +102,7 @@ class PlayerSprite(pygame.sprite.Sprite):
         self.blink_eye = 0
 
         self.eye_count = 0
+        self.star_count = 0
 
         Heart()
 
@@ -283,6 +288,13 @@ class PlayerSprite(pygame.sprite.Sprite):
                 self.image = self.jumpLeft
 
         self.image = self.image.copy()
+
+        if EffectsManagement.dico_current_effects["star"]:
+            if self.star_count + 1 < 56 // Game.settings["30_FPS"]:
+                self.star_count += 1
+                self.image.blit(self.star_images[self.star_count // (4 // Game.settings["30_FPS"])], (0, 0))
+            else:
+                self.star_count = 0
 
         if self.hat:
             if self.right:

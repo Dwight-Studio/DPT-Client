@@ -131,6 +131,33 @@ class Timer:
             cls.effects_text.draw(Game.surface)
 
     @classmethod
+    def pause_update(cls):
+        """Actualise le timer durant la pause"""
+        for event in Game.events:
+            if event.type == Game.VOTE_RESULT_AVAILABLE_EVENT:
+                cls.effects_text.text = " "
+                cls.e_time = 0
+            if event.type == Game.TIMER_EVENT:
+                if cls.effects_text.text != " ":
+                    cls.e_time -= 1
+                    if cls.e_time < 0:
+                        cls.effects_text.text = "Application des nouveaux effets..."
+                    else:
+                        cls.effects_text.text = "Nouveaux effets dans " + str(cls.e_time) + " secondes"
+
+            if event.type == Game.SEND_VOTE_EVENT:
+                cls.e_time = (Game.VOTE_TIMEOUT + 2)
+                cls.effects_text.text = "Nouveaux effets dans " + str(cls.e_time) + " secondes"
+
+        Game.add_debug_info("TIMER INFORMATIONS")
+        Game.add_debug_info("Time: " + str(cls.time))
+        Game.add_debug_info("----------")
+
+        if cls.effects_text is not None:
+            cls.effects_text.rect.centerx = cls.rect.centerx
+            cls.effects_text.draw(Game.surface)
+
+    @classmethod
     def kill(cls):
         """Supprime le timer"""
         for sprite in [cls.digit1, cls.digit2, cls.semicolon, cls.digit3, cls.digit4, cls.effects_text]:
