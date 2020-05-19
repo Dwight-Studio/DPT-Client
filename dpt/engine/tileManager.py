@@ -385,7 +385,7 @@ class TileManager:
     @classmethod
     def open_tile_panel(cls):
         """Génère le panneau d'édition"""
-
+        print("hey")
         TileManager.editor_panel_group.empty()
         EditorPanel.editor_tile_registry.clear()
         value = bool(cls.check_back)
