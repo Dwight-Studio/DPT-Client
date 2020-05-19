@@ -70,7 +70,7 @@ if sys.platform == "win32":
     options["include_msvcr"] = True
 
 #############################################################################
-# preparation des cibles
+# préparation des cibles
 base = None
 if sys.platform == "win32":
     base = "Win32GUI"  # pour application graphique sous Windows  # base = "Console" # pour application en console
