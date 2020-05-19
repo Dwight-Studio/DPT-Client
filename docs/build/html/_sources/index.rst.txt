@@ -6,7 +6,7 @@
 Documentation officiel de Don't Play Together (Client)
 ======================================================
 
-Cette documentation contient de nombreuses informations qui vous permettrons d'améliorer le jeu, créer des addons ou bien simplement comprendre comment le jeu à été réalisé.
+Cette documentation contient de nombreuses informations qui vous permettront d'améliorer le jeu, créer des addons ou bien simplement comprendre comment le jeu à été réalisé.
 
 .. toctree::
    :caption: Sommaire

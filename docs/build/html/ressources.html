@@ -920,38 +920,35 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <p>sphinx-quickstart on Fri May  1 15:21:13 2020.
-You can adapt this file completely to your liking, but it should at least
-contain the root <cite>toctree</cite> directive.</p>
-<div class="section" id="ressources">
+  <div class="section" id="ressources">
 <h1>Ressources<a class="headerlink" href="#ressources" title="Lien permanent vers ce titre">¶</a></h1>
 <div class="section" id="principe">
 <h2>Principe<a class="headerlink" href="#principe" title="Lien permanent vers ce titre">¶</a></h2>
-<p>Les <cite>ressources</cite> sont la deuxième partie importante du jeu avec le package <code class="docutils literal notranslate"><span class="pre">dpt</span></code>. En effet, elles représentent tous les objets modifiables du jeu (textures, blocks, entitées…) ainsi que tous les différents niveaux.</p>
+<p>Les <cite>ressources</cite> sont la deuxième partie importante du jeu avec le package <code class="docutils literal notranslate"><span class="pre">dpt</span></code>. En effet, elles représentent tous les objets modifiables du jeu (textures, blocs, entitées…) ainsi que tous les différents niveaux.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>Si les <cite>ressources</cite> sont modifiables et extensibles, elle font tout de même partie de la base du jeu et une modification érronée peut rendre le jeu inutilisable.</p>
 </div>
 <div class="admonition danger">
 <p class="admonition-title">Danger</p>
-<p>De plus, il n’y a aucune sécurité lors de l’execution de <cite>ressources</cite>, ainsi n’installez pas de <cite>ressources</cite> sans être sûr de la source de celle-ci. (Les <cite>ressources</cite> peuvent executer toutes les fonctions inclues dans les packages figée lors du build du jeu, et donc peuvent être très dangeureuses). Nous ne pouvons pas garantir que les <cite>ressources</cite> distribuées par des tiers soient de confiance.</p>
+<p>Il n’y a aucune sécurité lors de l’exécution de <cite>ressources</cite>, ainsi n’installez pas de <cite>ressources</cite> sans être sûr de la source de celle-ci. (Les <cite>ressources</cite> peuvent exécuter toutes les fonctions inclues dans les packages figés lors du build du jeu, et donc peuvent être très dangeureuses). Nous ne pouvons pas garantir que les <cite>ressources</cite> distribuées par des tiers soient de confiance.</p>
 </div>
-<p>Notre gestionnaire de ressources <a class="reference internal" href="autoapi/dpt/engine/loader/index.html#module-dpt.engine.loader" title="dpt.engine.loader"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dpt.engine.loader</span></code></a> se base sur des <cite>entrées</cite> pour charger les ressources. Cette clé correspond à son chemin d’accès depuis le dossier <code class="file docutils literal notranslate"><span class="pre">%Dossier</span> <span class="pre">D'installation%/dpt/ressources</span></code>. Ce système permet de rajouter très simplement des ressources vu que dès qu’un nouveau fichier compatible est placé dans les sous dossiers de <code class="file docutils literal notranslate"><span class="pre">%Dossier</span> <span class="pre">D'installation%/dpt/ressources</span></code>, il est automatiquement repertorié.</p>
-<p>Ensuite, il suffit d’ajouter la ressource à la liste de ressources à chargé (avec <code class="docutils literal notranslate"><span class="pre">RessourceLoader.add_pending()</span></code>) et elle sera chargée lorsque que la fonction <code class="docutils literal notranslate"><span class="pre">RessourceLoader.load()</span></code> sera executée.</p>
+<p>Notre gestionnaire de ressources <a class="reference internal" href="autoapi/dpt/engine/loader/index.html#module-dpt.engine.loader" title="dpt.engine.loader"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dpt.engine.loader</span></code></a> se base sur des <cite>entrées</cite> pour charger les ressources. Cette clé correspond à son chemin d’accès depuis le dossier <code class="file docutils literal notranslate"><span class="pre">%Dossier</span> <span class="pre">D'installation%/dpt/ressources</span></code>. Ce système permet de rajouter très simplement des ressources car dès lorsqu’un nouveau fichier compatible est placé dans les sous-dossiers de <code class="file docutils literal notranslate"><span class="pre">%Dossier</span> <span class="pre">D'installation%/dpt/ressources</span></code>, il est automatiquement repertorié.</p>
+<p>Ensuite, il suffit d’ajouter la ressource à la liste de ressources à charger (avec <code class="docutils literal notranslate"><span class="pre">RessourceLoader.add_pending()</span></code>) et elle sera chargée lorsque que la fonction <code class="docutils literal notranslate"><span class="pre">RessourceLoader.load()</span></code> sera exécutée.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Si vous créez un addon, vous n’avez pas besoin d’executer <code class="docutils literal notranslate"><span class="pre">RessourceLoader.load()</span></code> car cela est directement géré lors du chargement du niveau (pour les blocs et entitées <strong>uniquement</strong>)</p>
+<p>Si vous créez un addon, vous n’avez pas besoin d’exécuter <code class="docutils literal notranslate"><span class="pre">RessourceLoader.load()</span></code> car cela est directement géré lors du chargement du niveau (pour les blocs et entitées <strong>uniquement</strong>)</p>
 </div>
 </div>
 <div class="section" id="creation-d-addons">
 <h2>Création d’addons<a class="headerlink" href="#creation-d-addons" title="Lien permanent vers ce titre">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>La création d’addons requière d’avoir des connaissances de base dans la création de jeux avec Pygame. Cette documentation va simplement vous expliquer comment vous pouvez integrer vos addons au jeu.</p>
+<p>La création d’addons requière d’avoir des connaissances de base dans la création de jeux avec Pygame. Cette documentation va simplement vous expliquer comment vous pouvez intégrer vos addons au jeu.</p>
 </div>
 <div class="section" id="structure-des-ressources">
 <span id="structure-ressources"></span><h3>Structure des ressources<a class="headerlink" href="#structure-des-ressources" title="Lien permanent vers ce titre">¶</a></h3>
-<p>Tout d’abord, vous devez créer un dossier qui sera la racine de votre addon. Il devra être placer dans le dossier des ressources (<code class="file docutils literal notranslate"><span class="pre">%Dossier</span> <span class="pre">D'installation%/dpt/ressources</span></code>). Il doit porter un nom ne contenant pas d’espaces et indiquant le nom d’une organisation/personne (dans ce cas, créer un sous dossier specifique à votre addon dans ce dossier) ou simplement le nom de votre addon.</p>
+<p>Tout d’abord, vous devez créer un dossier qui sera la racine de votre addon. Il devra être placé dans le dossier des ressources (<code class="file docutils literal notranslate"><span class="pre">%Dossier</span> <span class="pre">D'installation%/dpt/ressources</span></code>). Il doit porter un nom ne contenant pas d’espaces et indiquant le nom d’une organisation/personne (dans ce cas, créez un sous dossier specifique à votre addon dans ce dossier) ou simplement le nom de votre addon.</p>
 <dl class="simple">
 <dt>Exemple :</dt><dd><ul class="simple">
 <li><p><code class="file docutils literal notranslate"><span class="pre">addon1</span></code></p></li>
@@ -959,10 +956,10 @@ contain the root <cite>toctree</cite> directive.</p>
 </ul>
 </dd>
 </dl>
-<p>Ensuite, l’organisation interne au dossier est libre, vous pouvez l’organiser comme vous le souhaitez tant que vous respectez le sytème de nommage des fichiers (permet à notre gestionnaire de ressources de reconnaitre les ressources, voir <a class="reference internal" href="autoapi/dpt/engine/loader/index.html#module-dpt.engine.loader" title="dpt.engine.loader"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dpt.engine.loader</span></code></a>) :</p>
+<p>Ensuite, l’organisation interne au dossier est libre, vous pouvez l’organiser comme vous le souhaitez tant que vous respectez le système de nommage des fichiers (permet à notre gestionnaire de ressources de reconnaitre les ressources, voir <a class="reference internal" href="autoapi/dpt/engine/loader/index.html#module-dpt.engine.loader" title="dpt.engine.loader"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dpt.engine.loader</span></code></a>) :</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>Si vous ne respectez pas la structure necessaire, notre gestionnaire de ressources ne sera pas capable de reconnaitre et charger vos ressources. Ainsi, prêtez attention à cette partie.</p>
+<p>Si vous ne respectez pas la structure nécessaire, notre gestionnaire de ressources ne pourra ni reconnaitre ni charger vos ressources. Ainsi, prêtez attention à cette partie.</p>
 </div>
 <table class="docutils align-default">
 <colgroup>
@@ -980,7 +977,7 @@ contain the root <cite>toctree</cite> directive.</p>
 <tr class="row-even"><td><p>Texture</p></td>
 <td colspan="2"><p>Image (<a href="#id1"><span class="problematic" id="id2">*</span></a>.png)</p></td>
 </tr>
-<tr class="row-odd"><td><p>Son (Effets)</p></td>
+<tr class="row-odd"><td><p>Son (Effet)</p></td>
 <td colspan="2"><p>Son (<a href="#id3"><span class="problematic" id="id4">*</span></a>.ogg)</p></td>
 </tr>
 <tr class="row-even"><td><p>Son (Musique)</p></td>
@@ -991,7 +988,7 @@ contain the root <cite>toctree</cite> directive.</p>
 <td><p>Document JSON (<a href="#id9"><span class="problematic" id="id10">*</span></a>.json)</p></td>
 <td><p><a href="#id11"><span class="problematic" id="id12">*</span></a>.level.json</p></td>
 </tr>
-<tr class="row-even"><td><p>Block</p></td>
+<tr class="row-even"><td><p>Bloc</p></td>
 <td><p>Script Python (<a href="#id13"><span class="problematic" id="id14">*</span></a>.py)</p></td>
 <td><p><a href="#id15"><span class="problematic" id="id16">*</span></a>.block.py</p></td>
 </tr>
@@ -1012,9 +1009,9 @@ contain the root <cite>toctree</cite> directive.</p>
 <h4>Blocs<a class="headerlink" href="#blocs" title="Lien permanent vers ce titre">¶</a></h4>
 <div class="admonition tip">
 <p class="admonition-title">Astuce</p>
-<p>Pensez à aller regarder la <a class="reference internal" href="#liste-ressources"><span class="std std-ref">Liste des ressources</span></a> et notre page GitHub (<a class="reference external" href="https://github.com/Deleranax/DPT-Client/tree/master/dpt/ressources/dpt">https://github.com/Deleranax/DPT-Client/tree/master/dpt/ressources/dpt</a>) pour vous inspirer de notre travail, et donc pouvoir respecter la structure du programme (notment pour des collisions).</p>
+<p>Pensez à aller regarder la <a class="reference internal" href="#liste-ressources"><span class="std std-ref">Liste des ressources</span></a> et notre page GitHub (<a class="reference external" href="https://github.com/Deleranax/DPT-Client/tree/master/dpt/ressources/dpt">https://github.com/Deleranax/DPT-Client/tree/master/dpt/ressources/dpt</a>) pour vous inspirer de notre travail, et donc pouvoir respecter la structure du programme (notamment pour les collisions).</p>
 </div>
-<p>Tout d’abord, vous devez créer un fichier qui portera le même nom de que la classe de votre bloc (sans l’extension). Le nom du fichier Ce nom doit respecter la structure des noms (voir <a class="reference internal" href="#structure-ressources"><span class="std std-ref">Structure des ressources</span></a>).</p>
+<p>Tout d’abord, vous devez créer un fichier qui portera le même nom que la classe de votre bloc (sans l’extension). Le nom du fichier doit respecter la structure des noms (voir <a class="reference internal" href="#structure-ressources"><span class="std std-ref">Structure des ressources</span></a>).</p>
 <p>Cette classe devra comporter les éléments suivants :</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Block</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
    <span class="n">texture</span> <span class="o">=</span> <span class="s2">&quot;your.ressource.entry&quot;</span> <span class="c1"># La clé d&#39;entrée de la ressource de la texture</span>
@@ -1061,20 +1058,20 @@ contain the root <cite>toctree</cite> directive.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Avertissement</p>
-<p>Si vous utilisez une annimation, vous devez vous même ajouter la gestion de cette annimation en définissant la fonction <code class="docutils literal notranslate"><span class="pre">update(self)</span></code></p>
+<p>Si vous utilisez une animation, vous devez vous-même ajouter la gestion de cette animation en définissant la fonction <code class="docutils literal notranslate"><span class="pre">update(self)</span></code></p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Astuce</p>
-<p>Lorsque vous importez un module propre au jeu, pensez à faire une importation locale pour éviter les boucles d’importation. (Notament lorsque vous devez importer <code class="xref py py-mod docutils literal notranslate"><span class="pre">dpt.loader.tileManager</span></code>)</p>
+<p>Lorsque vous importez un module propre au jeu, pensez à faire une importation locale pour éviter les boucles d’importation. (Notamment lorsque vous devez importer <code class="xref py py-mod docutils literal notranslate"><span class="pre">dpt.loader.tileManager</span></code>)</p>
 </div>
 </div>
 <div class="section" id="entitees">
 <h4>Entitées<a class="headerlink" href="#entitees" title="Lien permanent vers ce titre">¶</a></h4>
 <div class="admonition tip">
 <p class="admonition-title">Astuce</p>
-<p>Pensez à aller regarder la <a class="reference internal" href="#liste-ressources"><span class="std std-ref">Liste des ressources</span></a> et notre page GitHub (<a class="reference external" href="https://github.com/Deleranax/DPT-Client/tree/master/dpt/ressources/dpt">https://github.com/Deleranax/DPT-Client/tree/master/dpt/ressources/dpt</a>) pour vous inspirer de notre travail, et donc pouvoir respecter la structure du programme (notment pour des collisions).</p>
+<p>Pensez à aller regarder la <a class="reference internal" href="#liste-ressources"><span class="std std-ref">Liste des ressources</span></a> et notre page GitHub (<a class="reference external" href="https://github.com/Deleranax/DPT-Client/tree/master/dpt/ressources/dpt">https://github.com/Deleranax/DPT-Client/tree/master/dpt/ressources/dpt</a>) pour vous inspirer de notre travail, et donc pouvoir respecter la structure du programme (notamment pour les collisions).</p>
 </div>
-<p>Tout d’abord, vous devez créer un fichier qui portera le même nom de que la classe de votre entitée (sans l’extension). Le nom du fichier doit respecter la structure des noms (voir <a class="reference internal" href="#structure-ressources"><span class="std std-ref">Structure des ressources</span></a>).</p>
+<p>Tout d’abord, vous devez créer un fichier qui portera le même nom que la classe de votre entitée (sans l’extension). Le nom du fichier doit respecter la structure des noms (voir <a class="reference internal" href="#structure-ressources"><span class="std std-ref">Structure des ressources</span></a>).</p>
 <p>Cette classe devra comporter les éléments suivants :</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Entity</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
    <span class="n">texture</span> <span class="o">=</span> <span class="s2">&quot;your.ressource.entry&quot;</span> <span class="c1"># La clé d&#39;entrée de la ressource de la texture</span>
@@ -1129,11 +1126,11 @@ contain the root <cite>toctree</cite> directive.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Avertissement</p>
-<p>Si vous utilisez une annimation, vous devez vous même ajouter la gestion de cette annimation en définissant la fonction <code class="docutils literal notranslate"><span class="pre">update(self)</span></code>. De plus, contrairement au blocs, vous devez gérer les collision vous même dans cette même fonction.</p>
+<p>Si vous utilisez une animation, vous devez vous-même ajouter la gestion de cette animation en définissant la fonction <code class="docutils literal notranslate"><span class="pre">update(self)</span></code>. De plus, contrairement aux blocs, vous devez gérer les collisions vous-même dans cette même fonction.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Astuce</p>
-<p>Lorsque vous importez un module propre au jeu, pensez à faire une importation locale pour éviter les boucles d’importation. (Notament lorsque vous devez importer <code class="xref py py-mod docutils literal notranslate"><span class="pre">dpt.loader.tileManager</span></code>)</p>
+<p>Lorsque vous importez un module propre au jeu, pensez à faire une importation locale pour éviter les boucles d’importation. (Notamment lorsque vous devez importer <code class="xref py py-mod docutils literal notranslate"><span class="pre">dpt.loader.tileManager</span></code>)</p>
 </div>
 </div>
 </div>

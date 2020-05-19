@@ -1,7 +1,7 @@
 .. DPT-Client documentation master file, created by
-sphinx-quickstart on Fri May  1 15:21:13 2020.
-You can adapt this file completely to your liking, but it should at least
-contain the root `toctree` directive.
+   sphinx-quickstart on Fri May  1 15:21:13 2020.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
 
 Ressources
 ==========
@@ -9,55 +9,55 @@ Ressources
 Principe
 ++++++++
 
-Les `ressources` sont la deuxième partie importante du jeu avec le package ``dpt``. En effet, elles représentent tous les objets modifiables du jeu (textures, blocks, entitées...) ainsi que tous les différents niveaux.
+Les `ressources` sont la deuxième partie importante du jeu avec le package ``dpt``. En effet, elles représentent tous les objets modifiables du jeu (textures, blocs, entitées...) ainsi que tous les différents niveaux.
 
 .. important::
         Si les `ressources` sont modifiables et extensibles, elle font tout de même partie de la base du jeu et une modification érronée peut rendre le jeu inutilisable.
 
 .. danger::
-        De plus, il n'y a aucune sécurité lors de l'execution de `ressources`, ainsi n'installez pas de `ressources` sans être sûr de la source de celle-ci. (Les `ressources` peuvent executer toutes les fonctions inclues dans les packages figée lors du build du jeu, et donc peuvent être très dangeureuses). Nous ne pouvons pas garantir que les `ressources` distribuées par des tiers soient de confiance.
+        Il n'y a aucune sécurité lors de l'exécution de `ressources`, ainsi n'installez pas de `ressources` sans être sûr de la source de celle-ci. (Les `ressources` peuvent exécuter toutes les fonctions inclues dans les packages figés lors du build du jeu, et donc peuvent être très dangeureuses). Nous ne pouvons pas garantir que les `ressources` distribuées par des tiers soient de confiance.
         
-Notre gestionnaire de ressources :py:mod:`dpt.engine.loader` se base sur des `entrées` pour charger les ressources. Cette clé correspond à son chemin d'accès depuis le dossier :file:`%Dossier D'installation%/dpt/ressources`. Ce système permet de rajouter très simplement des ressources vu que dès qu'un nouveau fichier compatible est placé dans les sous dossiers de :file:`%Dossier D'installation%/dpt/ressources`, il est automatiquement repertorié.
+Notre gestionnaire de ressources :py:mod:`dpt.engine.loader` se base sur des `entrées` pour charger les ressources. Cette clé correspond à son chemin d'accès depuis le dossier :file:`%Dossier D'installation%/dpt/ressources`. Ce système permet de rajouter très simplement des ressources car dès lorsqu'un nouveau fichier compatible est placé dans les sous-dossiers de :file:`%Dossier D'installation%/dpt/ressources`, il est automatiquement repertorié.
 
-Ensuite, il suffit d'ajouter la ressource à la liste de ressources à chargé (avec ``RessourceLoader.add_pending()``) et elle sera chargée lorsque que la fonction ``RessourceLoader.load()`` sera executée.
+Ensuite, il suffit d'ajouter la ressource à la liste de ressources à charger (avec ``RessourceLoader.add_pending()``) et elle sera chargée lorsque que la fonction ``RessourceLoader.load()`` sera exécutée.
 
 .. note::
-        Si vous créez un addon, vous n'avez pas besoin d'executer ``RessourceLoader.load()`` car cela est directement géré lors du chargement du niveau (pour les blocs et entitées **uniquement**)
+        Si vous créez un addon, vous n'avez pas besoin d'exécuter ``RessourceLoader.load()`` car cela est directement géré lors du chargement du niveau (pour les blocs et entitées **uniquement**)
 
 Création d'addons
 +++++++++++++++++
 
 .. note::
-        La création d'addons requière d'avoir des connaissances de base dans la création de jeux avec Pygame. Cette documentation va simplement vous expliquer comment vous pouvez integrer vos addons au jeu.
+        La création d'addons requière d'avoir des connaissances de base dans la création de jeux avec Pygame. Cette documentation va simplement vous expliquer comment vous pouvez intégrer vos addons au jeu.
 
 ..  _structure_ressources:
 
 Structure des ressources
 ************************
 
-Tout d'abord, vous devez créer un dossier qui sera la racine de votre addon. Il devra être placer dans le dossier des ressources (:file:`%Dossier D'installation%/dpt/ressources`). Il doit porter un nom ne contenant pas d'espaces et indiquant le nom d'une organisation/personne (dans ce cas, créer un sous dossier specifique à votre addon dans ce dossier) ou simplement le nom de votre addon.
+Tout d'abord, vous devez créer un dossier qui sera la racine de votre addon. Il devra être placé dans le dossier des ressources (:file:`%Dossier D'installation%/dpt/ressources`). Il doit porter un nom ne contenant pas d'espaces et indiquant le nom d'une organisation/personne (dans ce cas, créez un sous dossier specifique à votre addon dans ce dossier) ou simplement le nom de votre addon.
 
 Exemple :
    - :file:`addon1`
    - :file:`dwStd/addon1`
 
-Ensuite, l'organisation interne au dossier est libre, vous pouvez l'organiser comme vous le souhaitez tant que vous respectez le sytème de nommage des fichiers (permet à notre gestionnaire de ressources de reconnaitre les ressources, voir :py:mod:`dpt.engine.loader`) :
+Ensuite, l'organisation interne au dossier est libre, vous pouvez l'organiser comme vous le souhaitez tant que vous respectez le système de nommage des fichiers (permet à notre gestionnaire de ressources de reconnaitre les ressources, voir :py:mod:`dpt.engine.loader`) :
 
 .. important::
-        Si vous ne respectez pas la structure necessaire, notre gestionnaire de ressources ne sera pas capable de reconnaitre et charger vos ressources. Ainsi, prêtez attention à cette partie.
+        Si vous ne respectez pas la structure nécessaire, notre gestionnaire de ressources ne pourra ni reconnaitre ni charger vos ressources. Ainsi, prêtez attention à cette partie.
 
 +----------------+--------------------------+------------------+
 | Type d'objet   | Type de fichier          | Nom nécessaire   |
 +================+==========================+==================+
 | Texture        | Image (*.png)                               |
 +----------------+---------------------------------------------+
-| Son (Effets)   | Son (*.ogg)                                 |
+| Son (Effet)    | Son (*.ogg)                                 |
 +----------------+--------------------------+------------------+
 | Son (Musique)  | Son (*.ogg)              | *.music.ogg      |
 +----------------+--------------------------+------------------+
 | Niveau         | Document JSON (*.json)   | *.level.json     |
 +----------------+--------------------------+------------------+
-| Block          | Script Python (*.py)     | *.block.py       |
+| Bloc           | Script Python (*.py)     | *.block.py       |
 +----------------+--------------------------+------------------+
 | Entitée        | Script Python (*.py)     | *.entity.py      |
 +----------------+--------------------------+------------------+
@@ -71,9 +71,9 @@ Blocs
 -----
 
 .. tip::
-        Pensez à aller regarder la :ref:`liste_ressources` et notre page GitHub (https://github.com/Deleranax/DPT-Client/tree/master/dpt/ressources/dpt) pour vous inspirer de notre travail, et donc pouvoir respecter la structure du programme (notment pour des collisions).
+        Pensez à aller regarder la :ref:`liste_ressources` et notre page GitHub (https://github.com/Deleranax/DPT-Client/tree/master/dpt/ressources/dpt) pour vous inspirer de notre travail, et donc pouvoir respecter la structure du programme (notamment pour les collisions).
 
-Tout d'abord, vous devez créer un fichier qui portera le même nom de que la classe de votre bloc (sans l'extension). Le nom du fichier Ce nom doit respecter la structure des noms (voir :ref:`structure_ressources`).
+Tout d'abord, vous devez créer un fichier qui portera le même nom que la classe de votre bloc (sans l'extension). Le nom du fichier doit respecter la structure des noms (voir :ref:`structure_ressources`).
 
 Cette classe devra comporter les éléments suivants :
 
@@ -123,20 +123,20 @@ Cette classe devra comporter les éléments suivants :
 		
 
 .. warning::
-        Si vous utilisez une annimation, vous devez vous même ajouter la gestion de cette annimation en définissant la fonction ``update(self)``
+        Si vous utilisez une animation, vous devez vous-même ajouter la gestion de cette animation en définissant la fonction ``update(self)``
 
       
 .. tip::
-        Lorsque vous importez un module propre au jeu, pensez à faire une importation locale pour éviter les boucles d'importation. (Notament lorsque vous devez importer :py:mod:`dpt.loader.tileManager`)
+        Lorsque vous importez un module propre au jeu, pensez à faire une importation locale pour éviter les boucles d'importation. (Notamment lorsque vous devez importer :py:mod:`dpt.loader.tileManager`)
 
 
 Entitées
 --------
 
 .. tip::
-        Pensez à aller regarder la :ref:`liste_ressources` et notre page GitHub (https://github.com/Deleranax/DPT-Client/tree/master/dpt/ressources/dpt) pour vous inspirer de notre travail, et donc pouvoir respecter la structure du programme (notment pour des collisions).
+        Pensez à aller regarder la :ref:`liste_ressources` et notre page GitHub (https://github.com/Deleranax/DPT-Client/tree/master/dpt/ressources/dpt) pour vous inspirer de notre travail, et donc pouvoir respecter la structure du programme (notamment pour les collisions).
 
-Tout d'abord, vous devez créer un fichier qui portera le même nom de que la classe de votre entitée (sans l'extension). Le nom du fichier doit respecter la structure des noms (voir :ref:`structure_ressources`).
+Tout d'abord, vous devez créer un fichier qui portera le même nom que la classe de votre entitée (sans l'extension). Le nom du fichier doit respecter la structure des noms (voir :ref:`structure_ressources`).
 
 Cette classe devra comporter les éléments suivants :
 
@@ -194,11 +194,11 @@ Cette classe devra comporter les éléments suivants :
 		
 
 .. warning::
-        Si vous utilisez une annimation, vous devez vous même ajouter la gestion de cette annimation en définissant la fonction ``update(self)``. De plus, contrairement au blocs, vous devez gérer les collision vous même dans cette même fonction.
+        Si vous utilisez une animation, vous devez vous-même ajouter la gestion de cette animation en définissant la fonction ``update(self)``. De plus, contrairement aux blocs, vous devez gérer les collisions vous-même dans cette même fonction.
 
       
 .. tip::
-        Lorsque vous importez un module propre au jeu, pensez à faire une importation locale pour éviter les boucles d'importation. (Notament lorsque vous devez importer :py:mod:`dpt.loader.tileManager`)
+        Lorsque vous importez un module propre au jeu, pensez à faire une importation locale pour éviter les boucles d'importation. (Notamment lorsque vous devez importer :py:mod:`dpt.loader.tileManager`)
         
 
 .. _liste_ressources:
