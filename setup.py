@@ -21,7 +21,7 @@ from cx_Freeze import setup, Executable
 path = sys.path + [os.path.abspath(".")]
 
 # options d'inclusion/exclusion des modules
-includes = ["pygame", "json", "requests", "tkinter", "psutil", "math"]  # nommer les modules non trouves par cx_freeze
+includes = ["pygame", "json", "requests", "tkinter", "psutil", "math", "tkinter.simpledialog", "tkinter.filedialog"]  # nommer les modules non trouves par cx_freeze
 excludes = ["dpt"]
 packages = []  # nommer les packages utilises
 
