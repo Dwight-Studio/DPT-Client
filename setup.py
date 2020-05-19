@@ -22,7 +22,7 @@ path = sys.path + [os.path.abspath(".")]
 
 # options d'inclusion/exclusion des modules
 includes = ["pygame", "json", "requests", "tkinter", "psutil", "math"]  # nommer les modules non trouves par cx_freeze
-excludes = []
+excludes = ["dpt"]
 packages = []  # nommer les packages utilises
 
 # copier les fichiers non-Python et/ou repertoires et leur contenu:
