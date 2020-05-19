@@ -1,0 +1,15 @@
+:mod:`dpt.engine.gui.editor.panelFakeEntities`
+==============================================
+
+.. py:module:: dpt.engine.gui.editor.panelFakeEntities
+
+
+Module Contents
+---------------
+
+
+.. py:class:: PanelFakeEntity(x, y, alpha, block)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+

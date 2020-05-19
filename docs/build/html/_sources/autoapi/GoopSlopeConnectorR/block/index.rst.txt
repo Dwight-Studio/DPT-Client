@@ -1,0 +1,35 @@
+:mod:`GoopSlopeConnectorR.block`
+================================
+
+.. py:module:: GoopSlopeConnectorR.block
+
+
+Module Contents
+---------------
+
+
+.. py:class:: GoopSlopeConnectorR(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.terrain.Goop_Tile_Slope_Connector_r
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_goop
+
+      
+
+   .. attribute:: offset_x
+      :annotation: = 0
+
+      
+
+   .. attribute:: offset_y
+      :annotation: = 0
+
+      
+
+

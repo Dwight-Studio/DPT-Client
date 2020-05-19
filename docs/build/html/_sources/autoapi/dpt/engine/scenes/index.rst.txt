@@ -1,0 +1,160 @@
+:mod:`dpt.engine.scenes`
+========================
+
+.. py:module:: dpt.engine.scenes
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Scenes
+
+   Gestionnaire des scènes
+
+   .. attribute:: logger
+      
+
+      
+
+   .. method:: editor(cls, level)
+      :classmethod:
+
+
+      Met en place les élèments d'éditeur
+
+      :param level: Niveau à charger
+
+      :return: True en cas de réussite, sinon False
+      :rtype: bool
+
+
+   .. method:: level(cls, level)
+      :classmethod:
+
+
+      Met en place les élèments de niveau
+
+      :param level: Niveau à charger
+
+      :return: True en cas de réussite, sinon False
+      :rtype: bool
+
+
+   .. method:: pause(cls)
+      :classmethod:
+
+
+      Met en place les élèments du menu pause
+
+      :return: True en cas de réussite, sinon False
+      :rtype: bool
+
+
+   .. method:: main_menu(cls, load=True)
+      :classmethod:
+
+
+      Met en place les élèments du menu principale
+
+      :param load: (Re)Charge les ressources
+      :type load: bool
+
+      :return: True en cas de réussite, sinon False
+      :rtype: bool
+
+
+   .. method:: settings_menu(cls)
+      :classmethod:
+
+
+      Met en place les élèments du menu des paramètres
+
+      :return: True en cas de réussite, sinon False
+      :rtype: bool
+
+
+   .. method:: levels_menu(cls)
+      :classmethod:
+
+
+      Met en place les élèments du menu de choix de niveau
+
+      :return: True en cas de réussite, sinon False
+      :rtype: bool
+
+
+   .. method:: start_level(cls)
+      :classmethod:
+
+
+      Met en place les élèments du menu de début de niveau
+
+      :return: True en cas de réussite, sinon False
+      :rtype: bool
+
+
+   .. method:: end_level(cls)
+      :classmethod:
+
+
+      Met en place les élèments du menu de fin de niveau
+
+      :return: True en cas de réussite, sinon False
+      :rtype: bool
+
+
+   .. method:: game_over(cls)
+      :classmethod:
+
+
+      Met en place les élèments du menu d'échec
+
+      :return: True en cas de réussite, sinon False
+      :rtype: bool
+
+
+   .. method:: return_error(cls, *messages)
+      :classmethod:
+
+
+      Met en place les élèments du menu d'erreur
+
+      :param messages: Messages d'erreur
+      :type messages: str
+
+      :return: True en cas de réussite, sinon False
+      :rtype: bool
+
+
+   .. method:: loading(cls)
+      :classmethod:
+
+
+      Met en place les élèments du menu des paramètres
+
+      :return: True en cas de réussite, sinon False
+      :rtype: bool
+
+
+   .. method:: level_selector(cls)
+      :classmethod:
+
+
+      Met en place les élèments du menu de selection des niveaux
+
+      :return: True en cas de réussite, sinon False
+      :rtype: bool
+
+
+   .. method:: level_selector_detail(cls)
+      :classmethod:
+
+
+      Met en place les élèments du menu de details de selection des niveaux
+
+      :return: True en cas de réussite, sinon False
+      :rtype: bool
+
+
+

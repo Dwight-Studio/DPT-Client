@@ -1,0 +1,95 @@
+:mod:`BeeSprite.entity`
+=======================
+
+.. py:module:: BeeSprite.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: BeeSprite(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Classe sur les abeilles et leur physique
+
+   Crée une abeille
+
+   :param x: Abscisse
+   :type x: int
+   :param y: Ordonnée
+   :type y: int
+
+   :rtype: BeeSprite
+
+   .. attribute:: texture
+      :annotation: = dpt.images.characters.animals.Bee_1
+
+      
+
+   .. attribute:: textures
+      :annotation: = dpt.images.characters.animals.Bee*
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_bee
+
+      
+
+   .. attribute:: width
+      
+
+      
+
+   .. attribute:: height
+      
+
+      
+
+   .. attribute:: offset_x
+      
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: mask
+      :annotation: = dpt.images.characters.animals.beeMask
+
+      
+
+   .. attribute:: preview_surface
+      
+
+      
+
+   .. method:: update(self)
+
+
+      Actualise le déplacement, les effets, les collisions
+
+
+   .. method:: animation(self)
+
+
+      Donne l'illusion de déplacement
+
+
+   .. method:: preview(self)
+
+
+      Affiche le déplacement futur de l'abeille
+
+
+   .. method:: maskcollide(self)
+
+
+      Permet de modifier les vélocités de l'abeille en fonction des collisions
+
+
+

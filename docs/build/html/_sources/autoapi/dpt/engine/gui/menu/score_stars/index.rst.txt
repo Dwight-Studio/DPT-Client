@@ -1,0 +1,41 @@
+:mod:`dpt.engine.gui.menu.score_stars`
+======================================
+
+.. py:module:: dpt.engine.gui.menu.score_stars
+
+
+Module Contents
+---------------
+
+
+.. py:class:: TransitionStar(x, y, filled, anim, run=True, size=50)
+
+   Crée une étoile
+
+   :param x: Abscisse
+   :type x: int
+   :param y: Ordonnée
+   :type y: int
+   :param filled: Étoile remplie
+   :type filled: bool
+   :param anim: Étoile animée
+   :type anim: bool
+   :param run: Animation en fonctionnement
+   :type run: bool
+   :param size: Taille absolue
+   :type size: int
+
+   :rtype: TransitionStar
+
+   .. attribute:: textures
+      :annotation: = ['dpt.images.gui.ui.UI_STAR_EMTPY', 'dpt.images.gui.ui.UI_STAR_NORMAL']
+
+      
+
+   .. method:: update(self)
+
+
+      Actualise l'étoile
+
+
+

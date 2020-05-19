@@ -1,0 +1,34 @@
+:mod:`dpt.engine`
+=================
+
+.. py:module:: dpt.engine
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   characters/index.rst
+   gui/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   backgroundFakeBlocks/index.rst
+   effectsManagement/index.rst
+   fileManager/index.rst
+   ghostFakeEntities/index.rst
+   loader/index.rst
+   mainLoop/index.rst
+   scenes/index.rst
+   tileManager/index.rst
+   tiles/index.rst
+   webCommunications/index.rst
+
+

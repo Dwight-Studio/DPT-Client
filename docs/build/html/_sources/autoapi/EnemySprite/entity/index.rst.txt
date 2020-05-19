@@ -1,0 +1,60 @@
+:mod:`EnemySprite.entity`
+=========================
+
+.. py:module:: EnemySprite.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: EnemySprite(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.characters.player.standing
+
+      
+
+   .. attribute:: width
+      
+
+      
+
+   .. attribute:: height
+      
+
+      
+
+   .. attribute:: offset_x
+      
+
+      
+
+   .. attribute:: offset_y
+      :annotation: = 0
+
+      
+
+   .. method:: update(self)
+
+
+
+   .. method:: animation(self)
+
+
+
+   .. method:: collide(self, x_vel_delta, y_vel_delta, platforms)
+
+
+
+   .. method:: check_void(self)
+
+
+
+   .. method:: check_fall(self, platforms)
+
+
+
+

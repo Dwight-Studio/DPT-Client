@@ -1,0 +1,70 @@
+:mod:`dpt.engine.mainLoop`
+==========================
+
+.. py:module:: dpt.engine.mainLoop
+
+
+Module Contents
+---------------
+
+
+.. data:: bg
+   
+
+   
+
+.. function:: do_synch_anims()
+
+   Gère les annimations synchronisées
+
+
+.. function:: level_loop()
+
+   Boucle des niveaux
+
+
+.. function:: pause_loop()
+
+   Boucle de pause
+
+
+.. function:: main_menu_loop()
+
+   Boucle du menu principale
+
+
+.. function:: settings_menu_loop()
+
+   Boucle du menu des paramètres
+
+
+.. function:: start_level_loop()
+
+   Boucle de début de niveau
+
+
+.. function:: loading_loop(kill=False)
+
+   Boucle de chargement. Boucle spécial car non executée dans game
+
+
+.. function:: game_over_loop()
+
+   Boucle de game over
+
+
+.. function:: end_level_loop()
+
+   Boucle de fin de niveau
+
+
+.. function:: level_selector_loop()
+
+   Boucle de selection des niveaux
+
+
+.. function:: level_selector_detail_loop()
+
+   Boucle de details de selection des niveaux
+
+

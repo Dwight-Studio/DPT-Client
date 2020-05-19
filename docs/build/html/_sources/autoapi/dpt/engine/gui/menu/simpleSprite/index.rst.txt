@@ -1,0 +1,31 @@
+:mod:`dpt.engine.gui.menu.simpleSprite`
+=======================================
+
+.. py:module:: dpt.engine.gui.menu.simpleSprite
+
+
+Module Contents
+---------------
+
+
+.. py:class:: SimpleSprite(width, height, image, **kwargs)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Crée un sprite (simple image dessinée)
+
+   :param width: Largeur
+   :type width: int
+   :param height: Hauteur
+   :type height: int
+   :param image: Image
+   :type image: pygame.Surface
+
+   :keyword x: Abscisse
+   :keyword y: Ordonnée
+   :keyword centerx: Abscisse centrée
+   :keyword centery: Ordonnée centrée
+
+   :rtype: SimpleSprite
+
+

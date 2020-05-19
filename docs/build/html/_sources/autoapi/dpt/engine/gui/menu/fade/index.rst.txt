@@ -1,0 +1,32 @@
+:mod:`dpt.engine.gui.menu.fade`
+===============================
+
+.. py:module:: dpt.engine.gui.menu.fade
+
+
+Module Contents
+---------------
+
+
+.. py:class:: FadeOut(time_in_millis)
+
+   .. method:: update(self)
+
+
+
+   .. method:: draw(self, sur)
+
+
+
+
+.. py:class:: FadeIn(time_in_millis)
+
+   .. method:: update(self)
+
+
+
+   .. method:: draw(self, sur)
+
+
+
+

@@ -1,0 +1,67 @@
+:mod:`Spike.entity`
+===================
+
+.. py:module:: Spike.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Spike(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.traps.Obstacle_Spike_Up
+
+      
+
+   .. attribute:: textures
+      :annotation: = ['dpt.images.environment.traps.Obstacle_Spike_*', 'dpt.images.environment.traps.spike']
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_stone
+
+      
+
+   .. attribute:: width
+      
+
+      
+
+   .. attribute:: height
+      
+
+      
+
+   .. attribute:: offset_x
+      :annotation: = 0
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: customPlacement
+      :annotation: = True
+
+      
+
+   .. method:: deactivate(self)
+
+
+
+   .. method:: activate(self)
+
+
+
+   .. method:: update(self)
+
+
+
+

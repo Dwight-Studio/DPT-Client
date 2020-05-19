@@ -1,0 +1,40 @@
+:mod:`Grass1.entity`
+====================
+
+.. py:module:: Grass1.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Grass1(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.plants.Grass_1
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_snow
+
+      
+
+   .. attribute:: offset_x
+      
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: customPlacement
+      :annotation: = True
+
+      
+
+

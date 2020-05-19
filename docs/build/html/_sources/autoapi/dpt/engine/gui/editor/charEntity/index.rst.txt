@@ -1,0 +1,19 @@
+:mod:`dpt.engine.gui.editor.charEntity`
+=======================================
+
+.. py:module:: dpt.engine.gui.editor.charEntity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: CharEntity
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. method:: update(self)
+
+
+
+

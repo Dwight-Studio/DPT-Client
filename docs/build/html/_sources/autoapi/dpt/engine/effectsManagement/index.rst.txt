@@ -1,0 +1,135 @@
+:mod:`dpt.engine.effectsManagement`
+===================================
+
+.. py:module:: dpt.engine.effectsManagement
+
+
+Module Contents
+---------------
+
+
+.. py:class:: EffectsManagement
+
+   Gestion des effets (les activer/désactiver, lancer des votes, les afficher, communiquer avec le PlayerSprite...)
+
+   .. attribute:: list_effects
+      :annotation: = ['Ice', 'Slow', 'Fast', 'monsterimmortal', 'star', 'jumpBoost', 'inversion', 'lowGravity', 'reverse']
+
+      
+
+   .. attribute:: list_current_effects
+      :annotation: = []
+
+      
+
+   .. attribute:: dico_effects
+      
+
+      
+
+   .. attribute:: dico_current_effects
+      
+
+      
+
+   .. attribute:: temp_list
+      :annotation: = []
+
+      
+
+   .. attribute:: perm_list
+      :annotation: = []
+
+      
+
+   .. attribute:: mods
+      :annotation: = []
+
+      
+
+   .. attribute:: image_fast
+      
+
+      
+
+   .. attribute:: image_ice
+      
+
+      
+
+   .. attribute:: image_inversion
+      
+
+      
+
+   .. attribute:: image_jumpBoost
+      
+
+      
+
+   .. attribute:: image_lowGravity
+      
+
+      
+
+   .. attribute:: image_monsterimmortal
+      
+
+      
+
+   .. attribute:: image_slow
+      
+
+      
+
+   .. attribute:: image_star
+      
+
+      
+
+   .. attribute:: image_reverse
+      
+
+      
+
+   .. attribute:: upsidedown
+      :annotation: = False
+
+      
+
+   .. method:: create_effects_image(cls)
+      :classmethod:
+
+
+      Crée les images des effets possibles
+
+
+   .. method:: update(cls)
+      :classmethod:
+
+
+      Décide de lancer des nouveaux votes, supprime ou active les effets et gére le fonctionnement de certains effets
+
+
+   .. method:: vote(cls)
+      :classmethod:
+
+
+      Choisi les modificateurs et lance un vote
+
+
+   .. method:: reset(cls)
+      :classmethod:
+
+
+      Réinitialise tous les effets
+
+
+   .. method:: display_update(cls)
+      :classmethod:
+
+
+      Affiche les effets actifs
+
+
+

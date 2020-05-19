@@ -1,0 +1,50 @@
+:mod:`Icicle3.entity`
+=====================
+
+.. py:module:: Icicle3.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Icicle3(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.props.Icicle_3
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_stone
+
+      
+
+   .. attribute:: width
+      
+
+      
+
+   .. attribute:: height
+      
+
+      
+
+   .. attribute:: offset_x
+      
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: customPlacement
+      :annotation: = True
+
+      
+
+

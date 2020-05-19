@@ -1,0 +1,36 @@
+:mod:`dpt.engine.gui.menu.slide`
+================================
+
+.. py:module:: dpt.engine.gui.menu.slide
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Slide(slider, normal_image, pushed_image)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Crée un bouton de glissière
+
+   :param slider: Glissière parente
+   :type slider: dpt.engine.gui.menu.Slider
+   :param normal_image: Image
+   :type normal_image: pygame.Surface
+   :param pushed_image: Image utilisée lorque le bouton est pressé
+   :type pushed_image: pygame.Surface
+
+   .. method:: update(self)
+
+
+      Actualise le bouton de glissière
+
+
+   .. method:: apply_x(self)
+
+
+      Applique de modification en abscisse pour limiter son déplacement
+
+
+

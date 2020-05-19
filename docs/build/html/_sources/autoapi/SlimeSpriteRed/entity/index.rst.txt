@@ -1,0 +1,108 @@
+:mod:`SlimeSpriteRed.entity`
+============================
+
+.. py:module:: SlimeSpriteRed.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: SlimeSpriteRed(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Classe sur les slimes rouges et leur physique
+
+   Crée un slime rouge
+
+   :param x: Abscisse
+   :type x: int
+   :param y: Ordonnée
+   :type y: int
+
+   :rtype: SlimeSpriteRed
+
+   .. attribute:: texture
+      :annotation: = dpt.images.characters.slimes.Slime_Red_1
+
+      
+
+   .. attribute:: dead_texture
+      :annotation: = dpt.images.characters.slimes.Dead_Slime_Red
+
+      
+
+   .. attribute:: textures
+      :annotation: = dpt.images.characters.slimes.Slime_Red_*
+
+      
+
+   .. attribute:: width
+      
+
+      
+
+   .. attribute:: height
+      
+
+      
+
+   .. attribute:: offset_x
+      :annotation: = 0
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: mask
+      :annotation: = dpt.images.characters.slimes.SlimeMask
+
+      
+
+   .. method:: update(self)
+
+
+      Actualise le déplacement, les effets, les collisions
+
+
+   .. method:: animation(self)
+
+
+      Donne l'illusion de déplacement
+
+
+   .. method:: check_void(self)
+
+
+      Tue le robot s'il sort de l'écran
+
+
+   .. method:: kill(self)
+
+
+      Override de la méthode kill de pygame et affiche un cadavre
+
+
+   .. method:: check_fall(self, platforms)
+
+
+      Vérifie si le slime va tomber
+
+
+   .. method:: maskcollide(self)
+
+
+      Permet de modifier les vélocités de l'abeille en fonction des collisions
+
+
+   .. method:: checkJump(self)
+
+
+      Décide si le slime va sauter ou pas
+
+
+

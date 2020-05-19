@@ -1,0 +1,35 @@
+:mod:`NotFound.block`
+=====================
+
+.. py:module:: NotFound.block
+
+
+Module Contents
+---------------
+
+
+.. py:class:: NotFound(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.not_found
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_snow
+
+      
+
+   .. attribute:: offset_x
+      :annotation: = 0
+
+      
+
+   .. attribute:: offset_y
+      :annotation: = 0
+
+      
+
+

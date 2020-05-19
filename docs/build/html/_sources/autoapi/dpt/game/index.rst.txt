@@ -1,0 +1,382 @@
+:mod:`dpt.game`
+===============
+
+.. py:module:: dpt.game
+
+
+Module Contents
+---------------
+
+
+.. function:: void()
+
+
+.. function:: get_root()
+
+
+.. py:class:: Game
+
+   Bases: :class:`object`
+
+   Classe principale du jeu
+
+   .. attribute:: DEBUG
+      :annotation: = False
+
+      
+
+   .. attribute:: VERSION
+      :annotation: = BETA-1.0.0
+
+      
+
+   .. attribute:: PYTHON_VERSION
+      
+
+      
+
+   .. attribute:: PYGAME_VERSION
+      
+
+      
+
+   .. attribute:: PLATFORM
+      
+
+      
+
+   .. attribute:: ROOT_DIRECTORY
+      
+
+      
+
+   .. attribute:: VOTE_TIMEOUT
+      :annotation: = 20
+
+      
+
+   .. attribute:: DEFAULT_SERVER_ADDRESS
+      :annotation: = join.dont-play-together.fr
+
+      
+
+   .. attribute:: TILESIZE
+      :annotation: = 90
+
+      
+
+   .. attribute:: DISPLAY_RATIO
+      :annotation: = 1
+
+      
+
+   .. attribute:: TIMER_LENGTH
+      :annotation: = 300
+
+      
+
+   .. attribute:: SCREEN_WIDTH
+      
+
+      
+
+   .. attribute:: SCREEN_HEIGHT
+      
+
+      
+
+   .. attribute:: WINDOW_WIDTH
+      
+
+      
+
+   .. attribute:: WINDOW_HEIGHT
+      
+
+      
+
+   .. attribute:: LEVELS_ENTRIES
+      :annotation: = ['dpt.levels.*', 'user.levels.*']
+
+      
+
+   .. attribute:: temp
+      
+
+      
+
+   .. attribute:: main_logger
+      
+
+      
+
+   .. attribute:: run
+      :annotation: = True
+
+      
+
+   .. attribute:: display_rect
+      
+
+      
+
+   .. attribute:: freeze_game
+      :annotation: = False
+
+      
+
+   .. attribute:: window
+      
+
+      
+
+   .. attribute:: clock
+      
+
+      
+
+   .. attribute:: player_group
+      
+
+      
+
+   .. attribute:: available_tiles
+      
+
+      
+
+   .. attribute:: surface
+      
+
+      
+
+   .. attribute:: player_sprite
+      
+
+      
+
+   .. attribute:: gui
+      
+
+      
+
+   .. attribute:: events
+      :annotation: = []
+
+      
+
+   .. attribute:: loop
+      
+
+      
+
+   .. attribute:: cursor_on_button
+      :annotation: = False
+
+      
+
+   .. attribute:: cursor1
+      
+
+      
+
+   .. attribute:: cursor2
+      
+
+      
+
+   .. attribute:: life
+      :annotation: = 1
+
+      
+
+   .. attribute:: selected_level
+      :annotation: = 0
+
+      
+
+   .. attribute:: levels_list
+      
+
+      
+
+   .. attribute:: stars
+      :annotation: = 0
+
+      
+
+   .. attribute:: upsidedown
+      :annotation: = False
+
+      
+
+   .. attribute:: settings
+      
+
+      
+
+   .. attribute:: saves
+      
+
+      
+
+   .. attribute:: display_list
+      :annotation: = [['Automatique', 0, 0], ['720p (1280 x 720)', 1280, 720], ['900p (1440 x 900)', 1440, 900], ['900p (1600 x 900)', 1600, 900], ['1080p (1920 x 1080)', 1920, 1080], ['1440p (2560 x 1440)', 2560, 1440], ['4K (3840 x 2160)', 3840, 2160], ['8K (7680 x 4320)', 7680, 4320]]
+
+      
+
+   .. attribute:: anim_count_lava
+      :annotation: = 0
+
+      
+
+   .. attribute:: anim_count_water
+      :annotation: = 0
+
+      
+
+   .. attribute:: anim_count_coins
+      :annotation: = 0
+
+      
+
+   .. attribute:: BUTTON_EVENT
+      
+
+      
+
+   .. attribute:: VOTE_FINISHED_EVENT
+      
+
+      
+
+   .. attribute:: VOTE_RESULT_AVAILABLE_EVENT
+      
+
+      
+
+   .. attribute:: KEEP_ALIVE_EVENT
+      
+
+      
+
+   .. attribute:: TIMER_EVENT
+      
+
+      
+
+   .. attribute:: TIMER_FINISHED_EVENT
+      
+
+      
+
+   .. attribute:: WAIT_BETWEEN_VOTE_EVENT
+      
+
+      
+
+   .. attribute:: WAIT_BETWEEN_RECONNECT_EVENT
+      
+
+      
+
+   .. attribute:: DISCONNECTED_EVENT
+      
+
+      
+
+   .. attribute:: PLAYER_DEATH_EVENT
+      
+
+      
+
+   .. attribute:: SEND_VOTE_EVENT
+      
+
+      
+
+   .. attribute:: logging_format
+      
+
+      
+
+   .. attribute:: file_handler
+      
+
+      
+
+   .. attribute:: stream_handler
+      
+
+      
+
+   .. method:: play(cls, debug, skip_intro)
+      :classmethod:
+
+
+      Lance le jeu
+
+      :param debug: Activation du déboggage
+      :type debug: bool
+      :param skip_intro: Ignorer l'introduction
+      :type skip_intro: bool
+
+
+   .. method:: get_logger(cls, name)
+      :classmethod:
+
+
+      Retourne un logger
+
+      :param name: Nom du module
+      :type name str
+
+      :return: Logger specifique au module
+
+
+   .. method:: add_debug_info(cls, str)
+      :classmethod:
+
+
+      Ajoute une information de déboggage à afficher (pendant une frame)
+
+      :param str: Message
+      :type str: str
+
+
+   .. method:: display_debug_info(cls)
+      :classmethod:
+
+
+      Affiche les informations de déboggage
+
+
+   .. method:: draw_cursor(cls)
+      :classmethod:
+
+
+      Affiche le curseur
+
+
+   .. method:: load_profile(cls)
+      :classmethod:
+
+
+      Charge les paramètres
+
+
+   .. method:: save_profile(cls)
+      :classmethod:
+
+
+      Sauvegarde les paramètres
+
+
+   .. method:: update_display(cls)
+      :classmethod:
+
+
+      Actualise l'affichage (paramètres)
+
+
+

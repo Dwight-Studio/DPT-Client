@@ -1,0 +1,30 @@
+:mod:`dpt.engine.gui.ui.effects.Ice`
+====================================
+
+.. py:module:: dpt.engine.gui.ui.effects.Ice
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Ice
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Effet Ice
+
+   Crée l'effet Ice
+
+   .. attribute:: ice
+      :annotation: = dpt.images.effects.ice
+
+      
+
+   .. method:: update(self)
+
+
+      Affiche l'effet
+
+
+

@@ -1,0 +1,30 @@
+:mod:`dpt.engine.gui.ui.effects.reverse`
+========================================
+
+.. py:module:: dpt.engine.gui.ui.effects.reverse
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Reverse
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Effet reverse
+
+   Crée l'effet reverse
+
+   .. attribute:: reverse
+      :annotation: = dpt.images.effects.reverse
+
+      
+
+   .. method:: update(self)
+
+
+      Affiche l'effet
+
+
+

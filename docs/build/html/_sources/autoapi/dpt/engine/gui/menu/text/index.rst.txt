@@ -1,0 +1,57 @@
+:mod:`dpt.engine.gui.menu.text`
+===============================
+
+.. py:module:: dpt.engine.gui.menu.text
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Text(x, y, text, size, color, font, **kwargs)
+
+   Crée un texte
+
+   :param x: Abscisse
+   :type x: int
+   :param y: Ordonnée
+   :type x: int
+   :param text: Texte
+   :type text: str
+   :param size: Taille de la police d'écriture
+   :type size: int
+   :param color: Couleur du texte
+   :type color: (int, int, int, int)
+   :param font: Police d'écriture
+   :type font: str
+
+   :keyword centerx: Abscisse du centre, si specifié, ignore le paramètre x original
+   :keyword centery: ordonnée du centre, si specifié, ignore le paramètre y original
+
+   :rtype: Text
+
+   .. attribute:: text_list
+      :annotation: = []
+
+      
+
+   .. method:: draw(self, surface)
+
+
+      Dessine le texte
+
+
+   .. method:: kill(self)
+
+
+      Supprime le texte
+
+
+   .. method:: main_loop(cls)
+      :classmethod:
+
+
+      Dessine tous les textes
+
+
+

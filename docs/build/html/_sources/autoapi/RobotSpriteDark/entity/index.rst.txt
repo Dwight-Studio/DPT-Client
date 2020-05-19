@@ -1,0 +1,112 @@
+:mod:`RobotSpriteDark.entity`
+=============================
+
+.. py:module:: RobotSpriteDark.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: RobotSpriteDark(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Classe sur les robots sombres et leur physique
+
+   Crée un fantôme sombre
+
+   :param x: Abscisse
+   :type x: int
+   :param y: Ordonnée
+   :type y: int
+
+   :rtype: GhostSpriteDark
+
+   .. attribute:: texture
+      :annotation: = dpt.images.characters.robots.Robot_Dark_0
+
+      
+
+   .. attribute:: dead_texture
+      :annotation: = dpt.images.characters.robots.Dead_Robot_Dark
+
+      
+
+   .. attribute:: textures
+      :annotation: = dpt.images.characters.robots.Robot_Dark*
+
+      
+
+   .. attribute:: sounds
+      :annotation: = ['dpt.sounds.sfx.sfx_robot_walk_*', 'dpt.sounds.sfx.metal_interaction2']
+
+      
+
+   .. attribute:: width
+      
+
+      
+
+   .. attribute:: height
+      
+
+      
+
+   .. attribute:: offset_x
+      :annotation: = 0
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: mask
+      :annotation: = dpt.images.characters.robots.mask
+
+      
+
+   .. attribute:: dead_mask
+      :annotation: = dpt.images.characters.robots.Dead_mask
+
+      
+
+   .. method:: update(self)
+
+
+      Actualise le déplacement, les effets, les collisions
+
+
+   .. method:: animation(self)
+
+
+      Donne l'illusion de déplacement
+
+
+   .. method:: check_void(self)
+
+
+      Tue le robot s'il sort de l'écran
+
+
+   .. method:: kill(self)
+
+
+      Override de la méthode kill de pygame et affiche un cadavre
+
+
+   .. method:: check_fall(self, platforms)
+
+
+      Vérifie si le robot va tomber
+
+
+   .. method:: maskcollide(self)
+
+
+      Permet de modifier les vélocités de l'abeille en fonction des collisions
+
+
+

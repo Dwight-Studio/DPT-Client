@@ -1,0 +1,155 @@
+:mod:`dpt.engine.gui.editor.tileEditor`
+=======================================
+
+.. py:module:: dpt.engine.gui.editor.tileEditor
+
+
+Module Contents
+---------------
+
+
+.. py:class:: TileEditor
+
+   .. attribute:: selected_item
+      :annotation: = dpt.blocks.grass.Grass
+
+      
+
+   .. attribute:: opushed
+      :annotation: = False
+
+      
+
+   .. attribute:: spushed
+      :annotation: = False
+
+      
+
+   .. attribute:: npushed
+      :annotation: = False
+
+      
+
+   .. attribute:: tpushed
+      :annotation: = False
+
+      
+
+   .. attribute:: ipushed
+      :annotation: = False
+
+      
+
+   .. attribute:: mouse_pushed_l
+      :annotation: = False
+
+      
+
+   .. attribute:: mouse_pushed_r
+      :annotation: = False
+
+      
+
+   .. attribute:: panel_open
+      :annotation: = False
+
+      
+
+   .. attribute:: is_editing
+      :annotation: = False
+
+      
+
+   .. attribute:: enabled_editor
+      :annotation: = False
+
+      
+
+   .. attribute:: mouse_pos_x
+      
+
+      
+
+   .. attribute:: mouse_pos_y
+      
+
+      
+
+   .. attribute:: last_mouse_pos_x
+      
+
+      
+
+   .. attribute:: last_mouse_pos_y
+      
+
+      
+
+   .. attribute:: last_mouse_pos_x_c
+      :annotation: = 0
+
+      
+
+   .. attribute:: last_mouse_pos_y_c
+      :annotation: = 0
+
+      
+
+   .. attribute:: ghost_block_group
+      
+
+      
+
+   .. attribute:: created_level
+      
+
+      
+
+   .. attribute:: custom_tile_placement
+      :annotation: = False
+
+      
+
+   .. attribute:: intera
+      
+
+      
+
+   .. attribute:: entitys
+      
+
+      
+
+   .. attribute:: env
+      
+
+      
+
+   .. attribute:: backnd
+      
+
+      
+
+   .. attribute:: dead
+      
+
+      
+
+   .. attribute:: attributing
+      :annotation: = False
+
+      
+
+   .. method:: update(cls)
+      :classmethod:
+
+
+      S'occupe de toutes la parties placement/suppression de blocs de l'éditeur de niveau
+
+
+   .. method:: level_infos_creation(cls)
+      :classmethod:
+
+
+
+

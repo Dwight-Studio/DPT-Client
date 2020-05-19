@@ -1,0 +1,612 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="fr" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fr" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>dpt.engine.gui.menu.textSpriteButton &mdash; Documentation DPT-Client ALPHA-0.1.6</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../" src="../../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../../_static/jquery.js"></script>
+        <script src="../../../../../../_static/underscore.js"></script>
+        <script src="../../../../../../_static/doctools.js"></script>
+        <script src="../../../../../../_static/language_data.js"></script>
+        <script src="../../../../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Recherche" href="../../../../../../search.html" />
+    <link rel="next" title="dpt.engine.gui.menu.window" href="../window/index.html" />
+    <link rel="prev" title="dpt.engine.gui.menu.text" href="../text/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../../index.html" class="icon icon-home"> DPT-Client
+          
+
+          
+            
+            <img src="../../../../../../_static/dpt.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Sommaire</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../../dpt.html">Package DPT</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../dpt.html#base-du-jeu">Base du jeu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../dpt.html#participer-au-developpement">Participer au développement</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../../../dpt.html#index-du-package-dpt">Index du package DPT</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../../../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dpt</span></code></a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="../../../../index.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../index.html#submodules">Submodules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../ressources.html">Ressources</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../ressources.html#principe">Principe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../ressources.html#creation-d-addons">Création d’addons</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../ressources.html#structure-des-ressources">Structure des ressources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../../ressources.html#creation-d-objets">Création d’objets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../../ressources.html#blocs">Blocs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../../ressources.html#entitees">Entitées</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../../../ressources.html#liste-des-ressources">Liste des ressources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../BoxBlue/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">BoxBlue.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../BoxBlue/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../BoxGreen/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">BoxGreen.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../BoxGreen/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../BoxRed/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">BoxRed.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../BoxRed/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../BoxYellow/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">BoxYellow.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../BoxYellow/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../Goop/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Goop.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../Goop/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GoopCornerEdgeL/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GoopCornerEdgeL.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GoopCornerEdgeL/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GoopCornerEdgeR/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GoopCornerEdgeR.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GoopCornerEdgeR/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GoopEdge/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GoopEdge.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GoopEdge/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GoopEdgeL/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GoopEdgeL.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GoopEdgeL/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GoopEdgeR/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GoopEdgeR.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GoopEdgeR/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GoopHalf/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GoopHalf.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GoopHalf/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GoopHalfEdgeA/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GoopHalfEdgeA.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GoopHalfEdgeA/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GoopHalfEdgeL/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GoopHalfEdgeL.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GoopHalfEdgeL/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GoopHalfEdgeR/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GoopHalfEdgeR.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GoopHalfEdgeR/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GoopL/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GoopL.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GoopL/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GoopR/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GoopR.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GoopR/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GoopSlopeConnectorL/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GoopSlopeConnectorL.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GoopSlopeConnectorL/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GoopSlopeConnectorR/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GoopSlopeConnectorR.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GoopSlopeConnectorR/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GoopSlopeD/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GoopSlopeD.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GoopSlopeD/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GoopSlopeU/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GoopSlopeU.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GoopSlopeU/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../Grass/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Grass.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../Grass/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GrassCornerEdgeL/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GrassCornerEdgeL.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GrassCornerEdgeL/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GrassCornerEdgeR/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GrassCornerEdgeR.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GrassCornerEdgeR/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GrassEdge/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GrassEdge.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GrassEdge/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GrassEdgeL/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GrassEdgeL.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GrassEdgeL/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GrassEdgeR/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GrassEdgeR.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GrassEdgeR/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GrassHalf/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GrassHalf.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GrassHalf/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GrassHalfEdgeA/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GrassHalfEdgeA.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GrassHalfEdgeA/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GrassHalfEdgeL/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GrassHalfEdgeL.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GrassHalfEdgeL/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GrassHalfEdgeR/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GrassHalfEdgeR.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GrassHalfEdgeR/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GrassL/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GrassL.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GrassL/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GrassLower/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GrassLower.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GrassLower/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GrassR/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GrassR.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GrassR/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GrassSlopeConnectorL/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GrassSlopeConnectorL.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GrassSlopeConnectorL/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GrassSlopeConnectorR/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GrassSlopeConnectorR.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GrassSlopeConnectorR/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GrassSlopeD/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GrassSlopeD.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GrassSlopeD/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../GrassSlopeU/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GrassSlopeU.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../GrassSlopeU/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../NotFound/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">NotFound.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../NotFound/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../Sand/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Sand.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../Sand/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SandCornerEdgeL/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SandCornerEdgeL.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SandCornerEdgeL/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SandCornerEdgeR/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SandCornerEdgeR.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SandCornerEdgeR/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SandEdge/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SandEdge.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SandEdge/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SandEdgeL/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SandEdgeL.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SandEdgeL/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SandEdgeR/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SandEdgeR.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SandEdgeR/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SandHalf/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SandHalf.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SandHalf/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SandHalfEdgeA/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SandHalfEdgeA.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SandHalfEdgeA/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SandHalfEdgeL/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SandHalfEdgeL.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SandHalfEdgeL/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SandHalfEdgeR/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SandHalfEdgeR.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SandHalfEdgeR/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SandL/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SandL.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SandL/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SandLower/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SandLower.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SandLower/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SandR/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SandR.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SandR/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SandSlopeConnectorL/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SandSlopeConnectorL.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SandSlopeConnectorL/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SandSlopeConnectorR/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SandSlopeConnectorR.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SandSlopeConnectorR/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SandSlopeD/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SandSlopeD.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SandSlopeD/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SandSlopeU/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SandSlopeU.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SandSlopeU/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../Snow/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Snow.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../Snow/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SnowCornerEdgeL/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SnowCornerEdgeL.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SnowCornerEdgeL/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SnowCornerEdgeR/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SnowCornerEdgeR.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SnowCornerEdgeR/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SnowEdge/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SnowEdge.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SnowEdge/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SnowEdgeL/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SnowEdgeL.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SnowEdgeL/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SnowEdgeR/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SnowEdgeR.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SnowEdgeR/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SnowHalf/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SnowHalf.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SnowHalf/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SnowHalfEdgeA/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SnowHalfEdgeA.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SnowHalfEdgeA/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SnowHalfEdgeL/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SnowHalfEdgeL.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SnowHalfEdgeL/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SnowHalfEdgeR/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SnowHalfEdgeR.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SnowHalfEdgeR/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SnowL/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SnowL.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SnowL/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SnowLower/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SnowLower.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SnowLower/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SnowR/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SnowR.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SnowR/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SnowSlopeConnectorL/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SnowSlopeConnectorL.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SnowSlopeConnectorL/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SnowSlopeConnectorR/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SnowSlopeConnectorR.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SnowSlopeConnectorR/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SnowSlopeD/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SnowSlopeD.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SnowSlopeD/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SnowSlopeU/block/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SnowSlopeU.block</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SnowSlopeU/block/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../Coin/entity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Coin.entity</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../Coin/entity/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../EnemySprite/entity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">EnemySprite.entity</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../EnemySprite/entity/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../FlagBlue/entity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">FlagBlue.entity</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../FlagBlue/entity/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../FlagGreen/entity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">FlagGreen.entity</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../FlagGreen/entity/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../FlagRed/entity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">FlagRed.entity</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../FlagRed/entity/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../FlagYellow/entity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">FlagYellow.entity</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../FlagYellow/entity/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../Grass1/entity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Grass1.entity</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../Grass1/entity/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../Lava/entity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Lava.entity</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../Lava/entity/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../LavaTop/entity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">LavaTop.entity</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../LavaTop/entity/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../Lever/entity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Lever.entity</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../Lever/entity/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../Spike/entity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Spike.entity</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../Spike/entity/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../SpikeyWheel/entity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">SpikeyWheel.entity</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../SpikeyWheel/entity/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../Water/entity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Water.entity</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../Water/entity/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../WaterTop/entity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">WaterTop.entity</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../WaterTop/entity/index.html#module-contents">Module Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">DPT-Client</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../../../../dpt.html">Package DPT</a> &raquo;</li>
+        
+          <li><a href="../../../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dpt</span></code></a> &raquo;</li>
+        
+          <li><a href="../../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dpt.engine</span></code></a> &raquo;</li>
+        
+          <li><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dpt.engine.gui</span></code></a> &raquo;</li>
+        
+          <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dpt.engine.gui.menu</span></code></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">dpt.engine.gui.menu.textSpriteButton</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../../../_sources/autoapi/dpt/engine/gui/menu/textSpriteButton/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-dpt.engine.gui.menu.textSpriteButton">
+<span id="dpt-engine-gui-menu-textspritebutton"></span><h1><a class="reference internal" href="#module-dpt.engine.gui.menu.textSpriteButton" title="dpt.engine.gui.menu.textSpriteButton"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dpt.engine.gui.menu.textSpriteButton</span></code></a><a class="headerlink" href="#module-dpt.engine.gui.menu.textSpriteButton" title="Lien permanent vers ce titre">¶</a></h1>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Lien permanent vers ce titre">¶</a></h2>
+<dl class="py class">
+<dt id="dpt.engine.gui.menu.textSpriteButton.TextSpriteButton">
+<em class="property">class </em><code class="sig-prename descclassname">dpt.engine.gui.menu.textSpriteButton.</code><code class="sig-name descname">TextSpriteButton</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em>, <em class="sig-param"><span class="n">image</span></em><span class="sig-paren">)</span><a class="headerlink" href="#dpt.engine.gui.menu.textSpriteButton.TextSpriteButton" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pygame.sprite.Sprite</span></code></p>
+<p>Crée un sprite (simple image dessinée)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>width</strong> (<em>int</em>) – Largeur</p></li>
+<li><p><strong>height</strong> (<em>int</em>) – Hauteur</p></li>
+<li><p><strong>image</strong> (<em>pygame.Surface</em>) – Image</p></li>
+</ul>
+</dd>
+<dt class="field-even">Type renvoyé</dt>
+<dd class="field-even"><p><a class="reference internal" href="#dpt.engine.gui.menu.textSpriteButton.TextSpriteButton" title="dpt.engine.gui.menu.textSpriteButton.TextSpriteButton">TextSpriteButton</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../window/index.html" class="btn btn-neutral float-right" title="dpt.engine.gui.menu.window" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../text/index.html" class="btn btn-neutral float-left" title="dpt.engine.gui.menu.text" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Dwight Studio (GamerMine, WhiteRed &amp; Deleranax)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

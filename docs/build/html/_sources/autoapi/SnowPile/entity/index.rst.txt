@@ -1,0 +1,50 @@
+:mod:`SnowPile.entity`
+======================
+
+.. py:module:: SnowPile.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: SnowPile(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.props.SnowPile
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_stone
+
+      
+
+   .. attribute:: width
+      
+
+      
+
+   .. attribute:: height
+      
+
+      
+
+   .. attribute:: offset_x
+      
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: customPlacement
+      :annotation: = True
+
+      
+
+

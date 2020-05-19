@@ -1,0 +1,108 @@
+:mod:`SlimeSpriteBlue.entity`
+=============================
+
+.. py:module:: SlimeSpriteBlue.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: SlimeSpriteBlue(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Classe sur les slimes bleus et leur physique
+
+   Crée un slime bleu
+
+   :param x: Abscisse
+   :type x: int
+   :param y: Ordonnée
+   :type y: int
+
+   :rtype: SlimeSpriteBlue
+
+   .. attribute:: texture
+      :annotation: = dpt.images.characters.slimes.Slime_Blue_1
+
+      
+
+   .. attribute:: dead_texture
+      :annotation: = dpt.images.characters.slimes.Dead_Slime_Blue
+
+      
+
+   .. attribute:: textures
+      :annotation: = dpt.images.characters.slimes.Slime_Blue_*
+
+      
+
+   .. attribute:: width
+      
+
+      
+
+   .. attribute:: height
+      
+
+      
+
+   .. attribute:: offset_x
+      :annotation: = 0
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: mask
+      :annotation: = dpt.images.characters.slimes.SlimeMask
+
+      
+
+   .. method:: update(self)
+
+
+      Actualise le déplacement, les effets, les collisions
+
+
+   .. method:: animation(self)
+
+
+      Donne l'illusion de déplacement
+
+
+   .. method:: check_void(self)
+
+
+      Tue le robot s'il sort de l'écran
+
+
+   .. method:: kill(self)
+
+
+      Override de la méthode kill de pygame et affiche un cadavre
+
+
+   .. method:: check_fall(self, platforms)
+
+
+      Vérifie si le slime va tomber
+
+
+   .. method:: maskcollide(self)
+
+
+      Permet de modifier les vélocités de l'abeille en fonction des collisions
+
+
+   .. method:: checkJump(self)
+
+
+      Décide si le slime va sauter ou pas
+
+
+

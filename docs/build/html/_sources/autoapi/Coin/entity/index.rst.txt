@@ -1,0 +1,67 @@
+:mod:`Coin.entity`
+==================
+
+.. py:module:: Coin.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Coin(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.coins.00
+
+      
+
+   .. attribute:: textures
+      :annotation: = dpt.images.environment.coins.*
+
+      
+
+   .. attribute:: sounds
+      :annotation: = ['dpt.sounds.sfx.sfx_stone', 'dpt.sounds.sfx.sfx_coin_picked']
+
+      
+
+   .. attribute:: width
+      
+
+      
+
+   .. attribute:: height
+      
+
+      
+
+   .. attribute:: offset_x
+      
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: coin_checkpoint_list
+      :annotation: = []
+
+      
+
+   .. method:: update(self)
+
+
+
+   .. method:: animation(self)
+
+
+
+   .. method:: collide(self)
+
+
+
+

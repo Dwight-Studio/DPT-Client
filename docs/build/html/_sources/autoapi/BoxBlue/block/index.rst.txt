@@ -1,0 +1,48 @@
+:mod:`BoxBlue.block`
+====================
+
+.. py:module:: BoxBlue.block
+
+
+Module Contents
+---------------
+
+
+.. py:class:: BoxBlue(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.blocks.Block_Blue
+
+      
+
+   .. attribute:: textures
+      :annotation: = dpt.images.environment.blocks.Block_empty_Blue
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_stone
+
+      
+
+   .. attribute:: offset_x
+      :annotation: = 0
+
+      
+
+   .. attribute:: offset_y
+      :annotation: = 0
+
+      
+
+   .. method:: activate(self)
+
+
+
+   .. method:: deactivate(self)
+
+
+
+

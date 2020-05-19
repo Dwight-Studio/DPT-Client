@@ -1,0 +1,23 @@
+:mod:`dpt.engine.gui.ui.effects`
+================================
+
+.. py:module:: dpt.engine.gui.ui.effects
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   Fast/index.rst
+   Ice/index.rst
+   Slow/index.rst
+   inversion/index.rst
+   jumpBoost/index.rst
+   lowGravity/index.rst
+   monsterimmortal/index.rst
+   reverse/index.rst
+   star/index.rst
+
+

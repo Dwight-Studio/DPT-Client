@@ -1,0 +1,15 @@
+:mod:`dpt.engine.backgroundFakeBlocks`
+======================================
+
+.. py:module:: dpt.engine.backgroundFakeBlocks
+
+
+Module Contents
+---------------
+
+
+.. py:class:: BackgroundFakeBlocks(x, y, block)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+

@@ -1,0 +1,154 @@
+:mod:`dpt.engine.loader`
+========================
+
+.. py:module:: dpt.engine.loader
+
+
+Module Contents
+---------------
+
+
+.. data:: RESSOURCES_DIRECTORY
+   
+
+   
+
+.. py:exception:: UnreachableRessourceError(val)
+
+   Bases: :class:`Exception`
+
+   Create and return a new object.  See help(type) for accurate signature.
+
+   .. py:class:: args
+
+
+   .. method:: with_traceback()
+
+
+      Exception.with_traceback(tb) --
+      set self.__traceback__ to tb and return self.
+
+
+
+.. function:: make_entries(path)
+
+   Génère une liste formatée des fichiers et sous-dossiers d'un dossier.
+
+   :param path: Chemin à utiliser
+   :type path: str
+   :return: Liste des fichiers et dossiers formatés
+   :rtype: list
+
+
+.. py:class:: RessourceLoader
+
+   Gestionnaire des ressources
+
+   .. attribute:: RESSOURCES
+      
+
+      
+
+   .. attribute:: pending_ressources
+      
+
+      
+
+   .. attribute:: loaded_ressources_entries
+      
+
+      
+
+   .. attribute:: loaded_ressources
+      
+
+      
+
+   .. attribute:: logger
+      
+
+      
+
+   .. method:: init(cls)
+      :classmethod:
+
+
+      Initialise le module RessourceLoader
+
+
+   .. method:: reload(cls)
+      :classmethod:
+
+
+      Recharge les ressources
+
+
+   .. method:: load(cls)
+      :classmethod:
+
+
+      Charge toutes les ressources préalablement ajouté avec `RessourceLoader.add_pending()`
+
+
+   .. method:: unload(cls)
+      :classmethod:
+
+
+      Décharge toutes les ressources actuellement chargées
+
+
+   .. method:: select_entries(cls, path)
+      :classmethod:
+
+
+      Génère une liste d'entrées correspondantes à un chemin
+
+      :param path: Chemin à utiliser
+      :type path: str, list
+
+      :return: Liste d'entrées correspondantes au chemin
+      :rtype: list
+
+
+   .. method:: get_multiple(cls, path)
+      :classmethod:
+
+
+      Permet de récuper plusieurs ressources
+
+      :param path: Chemin à utiliser
+      :type path: str, list
+
+      :raise UnreachableRessourceError: Les ressources ne peuvent être atteintes (non chargée / manquante)
+
+      :return: Liste de ressources correspondantes sans arrangement particulier
+      :rtype: list
+
+
+   .. method:: get(cls, entry)
+      :classmethod:
+
+
+      Permet de récuper plusieurs ressources
+
+      :param entry: Nom de l'entrée
+      :type entry: str
+
+      :raise UnreachableRessourceError: La ressource ne peut être atteinte (non chargée / manquante)
+
+      :return: Ressource correspondante
+
+
+   .. method:: add_pending(cls, path)
+      :classmethod:
+
+
+      Ajoute une entrée (ou plusieurs, selon le chemin donné)
+
+      :param path: Chemin à utiliser
+      :type path: str
+
+      :raise UnreachableRessourceError: Le chemin ne renvois aucune entrée
+
+
+

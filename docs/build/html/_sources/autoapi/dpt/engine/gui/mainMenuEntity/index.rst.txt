@@ -1,0 +1,19 @@
+:mod:`dpt.engine.gui.mainMenuEntity`
+====================================
+
+.. py:module:: dpt.engine.gui.mainMenuEntity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: MainMenuEntity
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. method:: update(self)
+
+
+
+

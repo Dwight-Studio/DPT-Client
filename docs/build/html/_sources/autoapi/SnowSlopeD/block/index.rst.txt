@@ -1,0 +1,35 @@
+:mod:`SnowSlopeD.block`
+=======================
+
+.. py:module:: SnowSlopeD.block
+
+
+Module Contents
+---------------
+
+
+.. py:class:: SnowSlopeD(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.terrain.Snow_Tile_Slope_down
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_snow
+
+      
+
+   .. attribute:: offset_x
+      :annotation: = 0
+
+      
+
+   .. attribute:: offset_y
+      :annotation: = 0
+
+      
+
+

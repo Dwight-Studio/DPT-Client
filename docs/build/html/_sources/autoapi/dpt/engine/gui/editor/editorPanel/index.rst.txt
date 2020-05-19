@@ -1,0 +1,24 @@
+:mod:`dpt.engine.gui.editor.editorPanel`
+========================================
+
+.. py:module:: dpt.engine.gui.editor.editorPanel
+
+
+Module Contents
+---------------
+
+
+.. py:class:: EditorPanel(color, x, y, width, height, alpha)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: editor_tile_registry
+      
+
+      
+
+   .. method:: update(self)
+
+
+
+

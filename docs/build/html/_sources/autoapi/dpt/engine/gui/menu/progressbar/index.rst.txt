@@ -1,0 +1,57 @@
+:mod:`dpt.engine.gui.menu.progressbar`
+======================================
+
+.. py:module:: dpt.engine.gui.menu.progressbar
+
+
+Module Contents
+---------------
+
+
+.. py:class:: ProgressBar(x, y, width, height, image, image2, max_value)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Crée une barre de progression
+
+   :param x: Abscisse
+   :type x: int
+   :param y: Ordonnée
+   :type y: int
+   :param width: Largeur
+   :type width: int
+   :param height: Hauteur
+   :type height: int
+   :param image: Image du cadre
+   :type image: pygame.Surface
+   :param image2: Image de la barre
+   :type image2: pygame.Surface
+   :param max_value: Valeur maximale de la barre
+   :type max_value: float
+
+   :rtype: ProgressBar
+
+   .. attribute:: progress_bar_group
+      
+
+      
+
+   .. attribute:: bar_group
+      
+
+      
+
+   .. method:: update(self)
+
+
+      Actualise la barre de progression
+
+
+   .. method:: main_loop(cls)
+      :classmethod:
+
+
+      Actualise toutes les barres de progression
+
+
+

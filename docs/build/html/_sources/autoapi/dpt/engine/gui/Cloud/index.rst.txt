@@ -1,0 +1,40 @@
+:mod:`dpt.engine.gui.Cloud`
+===========================
+
+.. py:module:: dpt.engine.gui.Cloud
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Cloud(x, y, speed)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Crée un nuage
+
+   :param x: Abscice
+   :type x: int
+   :param y: Ordonnée
+   :type y: int
+   :param speed: Vitesse
+   :type speed: int
+
+   .. attribute:: textures
+      :annotation: = dpt.images.environment.background.Cloud_full_*
+
+      
+
+   .. attribute:: i
+      :annotation: = 0
+
+      
+
+   .. method:: update(self)
+
+
+      Déplace le nuage
+
+
+

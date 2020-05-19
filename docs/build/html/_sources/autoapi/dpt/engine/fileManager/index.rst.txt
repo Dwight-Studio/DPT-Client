@@ -1,0 +1,40 @@
+:mod:`dpt.engine.fileManager`
+=============================
+
+.. py:module:: dpt.engine.fileManager
+
+
+Module Contents
+---------------
+
+
+.. py:class:: FileManager
+
+   .. attribute:: log
+      
+
+      
+
+   .. attribute:: defaultDir
+      
+
+      
+
+   .. method:: import_file(cls)
+      :classmethod:
+
+
+      Permet de charger un fichier .level.json
+
+
+   .. method:: save_file(cls, level)
+      :classmethod:
+
+
+      Permet de sauvegarder un niveau
+
+      :param level: Niveau
+      :type level: dict
+
+
+

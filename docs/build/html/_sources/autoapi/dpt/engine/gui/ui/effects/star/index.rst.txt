@@ -1,0 +1,30 @@
+:mod:`dpt.engine.gui.ui.effects.star`
+=====================================
+
+.. py:module:: dpt.engine.gui.ui.effects.star
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Star
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Effet star
+
+   Crée l'effet star
+
+   .. attribute:: star
+      :annotation: = dpt.images.effects.star
+
+      
+
+   .. method:: update(self)
+
+
+      Affiche l'effet
+
+
+

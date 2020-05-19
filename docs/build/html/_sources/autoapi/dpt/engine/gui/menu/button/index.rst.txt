@@ -1,0 +1,82 @@
+:mod:`dpt.engine.gui.menu.button`
+=================================
+
+.. py:module:: dpt.engine.gui.menu.button
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Button(x, y, width, height, normal_image, **kwargs)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Crée un bouton
+
+   :param x: Abscisse
+   :type x: int
+   :param y: Ordonnée
+   :type x: int
+   :param width: Largeur
+   :type width: int
+   :param height: Hauteur
+   :type height: int
+   :param normal_image: Image
+   :type normal_image: pygame.Surface
+
+   :keyword pushed_image: Image utilisé lorsque le bouton est pressé
+   :keyword locked_image: Image utilisé lorque le bouton est verrouillé
+   :keyword hover_image: Image utilisé lorsque le bouton est survolé
+   :keyword font: Police d'écriture
+   :keyword font_color: Couleur du texte
+   :keyword text: Texte du bouton
+   :keyword text_sprite: Image à afficher sur le bouton (Utilise l'objet 'TextSpriteButton')
+
+   :rtype: Button
+
+   .. attribute:: buttonsGroup
+      
+
+      
+
+   .. attribute:: text_sprite_buttonsGroup
+      
+
+      
+
+   .. attribute:: text_buttonsList
+      :annotation: = []
+
+      
+
+   .. method:: update(self)
+
+
+      Actualise le bouton
+
+
+   .. method:: lock(self)
+
+
+      Verrouille le bouton
+
+
+   .. method:: unlock(self)
+
+
+      Déverrouille 
+
+
+   .. method:: kill(self)
+
+
+
+   .. method:: main_loop(cls)
+      :classmethod:
+
+
+      Actualise tous les boutons
+
+
+

@@ -1,0 +1,114 @@
+:mod:`dpt.engine.characters.PlayerSprite`
+=========================================
+
+.. py:module:: dpt.engine.characters.PlayerSprite
+
+
+Module Contents
+---------------
+
+
+.. py:class:: PlayerSprite(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Gère le fonctionnement du joueur et sa physique plus particulièrement
+
+   Crée un joueur
+
+   :param x: Abscisse
+   :type x: int
+   :param y: Ordonnée
+   :type y: int
+
+   :rtype: PlayerSprite
+
+   .. attribute:: char
+      :annotation: = dpt.images.characters.player.standing
+
+      
+
+   .. attribute:: walk_right_textures
+      :annotation: = dpt.images.characters.player.R-*
+
+      
+
+   .. attribute:: walk_left_textures
+      :annotation: = dpt.images.characters.player.L-*
+
+      
+
+   .. attribute:: jump_right_texture
+      :annotation: = dpt.images.characters.player.RJump
+
+      
+
+   .. attribute:: jump_left_texture
+      :annotation: = dpt.images.characters.player.LJump
+
+      
+
+   .. attribute:: mask
+      :annotation: = dpt.images.characters.player.mask
+
+      
+
+   .. attribute:: accessories
+      
+
+      
+
+   .. attribute:: available_expressions
+      :annotation: = ['Open', 'Squint', 'Mad', 'Happy']
+
+      
+
+   .. method:: update(self)
+
+
+      Actualise les effets, les déplacements, les collisions, sa santé
+
+
+   .. method:: animation(self)
+
+
+      Change l'image du joueur pour donner l'illusion de déplacement
+
+
+   .. method:: collide(self)
+
+
+      Gère toute la partie physique du joueur, l'empêche de traverser les blocs
+
+
+   .. method:: deadly_object_collision(self)
+
+
+      Gère les collisions avec des objets physiques mortels
+
+
+   .. method:: enemies_collision(self, yVelDelta, enemies, delay)
+
+
+      Gère les collisions avec des ennemis, permet de les tuer
+
+
+   .. method:: die(self)
+
+
+      Animation de mort
+
+
+   .. method:: death_fall(self)
+
+
+      Tue le joueur s'il sort de l'écran
+
+
+   .. method:: kill(self)
+
+
+      Override de la méthode kill de pygame
+
+
+

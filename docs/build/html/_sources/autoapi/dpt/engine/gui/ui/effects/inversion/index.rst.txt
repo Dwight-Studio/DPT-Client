@@ -1,0 +1,30 @@
+:mod:`dpt.engine.gui.ui.effects.inversion`
+==========================================
+
+.. py:module:: dpt.engine.gui.ui.effects.inversion
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Inversion
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Effet inversion
+
+   Crée l'effet inversion
+
+   .. attribute:: inversion
+      :annotation: = dpt.images.effects.inversion
+
+      
+
+   .. method:: update(self)
+
+
+      Affiche l'effet
+
+
+

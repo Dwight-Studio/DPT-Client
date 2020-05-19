@@ -1,0 +1,57 @@
+:mod:`SpikeyWheel.entity`
+=========================
+
+.. py:module:: SpikeyWheel.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: SpikeyWheel(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.traps.SpikeyWheel
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_stone
+
+      
+
+   .. attribute:: offset_x
+      
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: customPlacement
+      :annotation: = True
+
+      
+
+   .. attribute:: i
+      :annotation: = 0
+
+      
+
+   .. method:: update(self)
+
+
+
+   .. method:: activate(self)
+
+
+
+   .. method:: deactivate(self)
+
+
+
+

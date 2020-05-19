@@ -1,0 +1,40 @@
+:mod:`Green3.entity`
+====================
+
+.. py:module:: Green3.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Green3(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.plants.trees.Tree_Leaves_Green_3
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_leaves
+
+      
+
+   .. attribute:: offset_x
+      
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: customPlacement
+      :annotation: = True
+
+      
+
+

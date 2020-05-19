@@ -1,0 +1,74 @@
+:mod:`dpt.engine.gui.menu.slider`
+=================================
+
+.. py:module:: dpt.engine.gui.menu.slider
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Slider(x, y, width, height, value, **kwargs)
+
+   Bases: :class:`object`
+
+   Crée une glissière
+
+   :param x: Abscisse
+   :type x: int
+   :param y: Ordonnée
+   :type x: int
+   :param width: Largeur
+   :type width: int
+   :param height: Hauteur
+   :type height: int
+   :param value: Valeur par défaut (relative)
+   :type value: float
+
+   :keyword image_left: Image du bouton de gauche
+   :keyword image_left_pushed: Image du bouton de gauche une fois pressé
+   :keyword image_right: Image du bouton de gauche
+   :keyword image_right_pushed: Image du bouton de gauche une fois pressé
+   :keyword image_slide: Image du bouton de glissière
+   :keyword image_slide_pushed: Image du bouton de glissière une fois pressé
+   :keyword image_progress_bar_frame: Image du cadre de la bar de progression
+   :keyword image_progress_bar_bar: Image de la bar de progression
+
+   :rtype: Slider
+
+   .. attribute:: slide_group
+      
+
+      
+
+   .. attribute:: slider_list
+      :annotation: = []
+
+      
+
+   .. method:: update(self)
+
+
+      Actualise la glissière
+
+
+   .. method:: main_loop(cls)
+      :classmethod:
+
+
+      Actualise toutes les glissières
+
+
+   .. method:: kill(self)
+
+
+      Supprime la glissière
+
+
+   .. method:: draw(self, surface)
+
+
+      Dessine la glissière
+
+
+

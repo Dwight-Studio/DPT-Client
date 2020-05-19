@@ -1,0 +1,30 @@
+:mod:`dpt.engine.gui.ui.effects.monsterimmortal`
+================================================
+
+.. py:module:: dpt.engine.gui.ui.effects.monsterimmortal
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Monsterimmortal
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Effet monsterimmortal
+
+   Crée l'effet monsterimmortal
+
+   .. attribute:: monsterimmortal
+      :annotation: = dpt.images.effects.monsterimmortal
+
+      
+
+   .. method:: update(self)
+
+
+      Affiche l'effet
+
+
+

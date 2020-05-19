@@ -1,0 +1,102 @@
+:mod:`WormIceSprite.entity`
+===========================
+
+.. py:module:: WormIceSprite.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: WormIceSprite(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Classe sur les vers de glace et leur physique
+
+   Crée un ver de glace
+
+   :param x: Abscisse
+   :type x: int
+   :param y: Ordonnée
+   :type y: int
+
+   :rtype: WormIceSprite
+
+   .. attribute:: texture
+      :annotation: = dpt.images.characters.animals.Worm_Ice_1
+
+      
+
+   .. attribute:: dead_texture
+      :annotation: = dpt.images.characters.animals.Dead_Worm_Ice
+
+      
+
+   .. attribute:: textures
+      :annotation: = dpt.images.characters.animals.Worm_Ice_*
+
+      
+
+   .. attribute:: width
+      
+
+      
+
+   .. attribute:: height
+      
+
+      
+
+   .. attribute:: offset_x
+      
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: mask
+      :annotation: = dpt.images.characters.animals.wormMask
+
+      
+
+   .. method:: update(self)
+
+
+      Actualise le déplacement, les effets, les collisions
+
+
+   .. method:: animation(self)
+
+
+      Donne l'illusion de déplacement
+
+
+   .. method:: check_void(self)
+
+
+      Tue le robot s'il sort de l'écran
+
+
+   .. method:: kill(self)
+
+
+      Override de la méthode kill de pygame et affiche un cadavre
+
+
+   .. method:: check_fall(self, platforms)
+
+
+      Vérifie si le slime va tomber
+
+
+   .. method:: maskcollide(self)
+
+
+      Permet de modifier les vélocités de l'abeille en fonction des collisions
+
+
+

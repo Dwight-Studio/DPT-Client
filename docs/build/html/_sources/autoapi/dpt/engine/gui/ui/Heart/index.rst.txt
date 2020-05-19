@@ -1,0 +1,40 @@
+:mod:`dpt.engine.gui.ui.Heart`
+==============================
+
+.. py:module:: dpt.engine.gui.ui.Heart
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Heart
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Vie du joueur
+
+   Crée un cœur qui se place en bas à droite
+
+   .. attribute:: full_heart
+      :annotation: = dpt.images.gui.ui.UI_HEART_FULL
+
+      
+
+   .. attribute:: half_heart
+      :annotation: = dpt.images.gui.ui.UI_HEART_HALF
+
+      
+
+   .. attribute:: empty_heart
+      :annotation: = dpt.images.gui.ui.UI_HEART_EMPTY
+
+      
+
+   .. method:: update(self)
+
+
+      Change le cœur en fonction de la vie du joueur
+
+
+

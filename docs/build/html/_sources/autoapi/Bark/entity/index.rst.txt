@@ -1,0 +1,40 @@
+:mod:`Bark.entity`
+==================
+
+.. py:module:: Bark.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Bark(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.plants.trees.Tree_LightWood_Bark
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_stone
+
+      
+
+   .. attribute:: offset_x
+      
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: customPlacement
+      :annotation: = True
+
+      
+
+

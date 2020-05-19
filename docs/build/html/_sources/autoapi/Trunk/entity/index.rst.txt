@@ -1,0 +1,50 @@
+:mod:`Trunk.entity`
+===================
+
+.. py:module:: Trunk.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Trunk(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.plants.trees.Tree_LightWood_Trunk
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_stone
+
+      
+
+   .. attribute:: width
+      
+
+      
+
+   .. attribute:: height
+      
+
+      
+
+   .. attribute:: offset_x
+      
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: customPlacement
+      :annotation: = True
+
+      
+
+

@@ -1,0 +1,40 @@
+:mod:`Orange5.entity`
+=====================
+
+.. py:module:: Orange5.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Orange5(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.plants.trees.Tree_Leaves_Orange_5
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_leaves
+
+      
+
+   .. attribute:: offset_x
+      
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: customPlacement
+      :annotation: = True
+
+      
+
+

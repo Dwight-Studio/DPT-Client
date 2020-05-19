@@ -1,0 +1,49 @@
+:mod:`Lever.entity`
+===================
+
+.. py:module:: Lever.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Lever(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.lever.Lever_Left
+
+      
+
+   .. attribute:: textures
+      :annotation: = dpt.images.environment.lever.Lever_*
+
+      
+
+   .. attribute:: sounds
+      :annotation: = ['dpt.sounds.sfx.sfx_stone', 'dpt.sounds.sfx.metal_button_press']
+
+      
+
+   .. attribute:: offset_x
+      
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: customPlacement
+      :annotation: = True
+
+      
+
+   .. method:: update(self)
+
+
+
+

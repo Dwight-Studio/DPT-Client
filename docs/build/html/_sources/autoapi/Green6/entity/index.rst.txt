@@ -1,0 +1,40 @@
+:mod:`Green6.entity`
+====================
+
+.. py:module:: Green6.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Green6(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.plants.trees.Tree_Leaves_Green_6
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_leaves
+
+      
+
+   .. attribute:: offset_x
+      
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: customPlacement
+      :annotation: = True
+
+      
+
+

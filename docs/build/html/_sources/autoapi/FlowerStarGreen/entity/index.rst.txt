@@ -1,0 +1,50 @@
+:mod:`FlowerStarGreen.entity`
+=============================
+
+.. py:module:: FlowerStarGreen.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: FlowerStarGreen(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.plants.flowers.Flower_Star_Green
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_leaves
+
+      
+
+   .. attribute:: width
+      
+
+      
+
+   .. attribute:: height
+      
+
+      
+
+   .. attribute:: offset_x
+      
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: customPlacement
+      :annotation: = True
+
+      
+
+

@@ -1,0 +1,30 @@
+:mod:`dpt.engine.gui.ui.effects.Slow`
+=====================================
+
+.. py:module:: dpt.engine.gui.ui.effects.Slow
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Slow
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Effet Slow
+
+   Crée l'effet Slow
+
+   .. attribute:: slow
+      :annotation: = dpt.images.effects.slow
+
+      
+
+   .. method:: update(self)
+
+
+      Affiche l'effet
+
+
+

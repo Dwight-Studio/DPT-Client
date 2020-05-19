@@ -1,0 +1,48 @@
+:mod:`Lava.entity`
+==================
+
+.. py:module:: Lava.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Lava(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.liquids.Lava_Tile
+
+      
+
+   .. attribute:: textures
+      :annotation: = dpt.images.environment.liquids.Lava_Tile_*
+
+      
+
+   .. attribute:: sounds
+      :annotation: = []
+
+      
+
+   .. attribute:: offset_x
+      :annotation: = 0
+
+      
+
+   .. attribute:: offset_y
+      :annotation: = 0
+
+      
+
+   .. method:: update(self)
+
+
+
+   .. method:: animation(self)
+
+
+
+

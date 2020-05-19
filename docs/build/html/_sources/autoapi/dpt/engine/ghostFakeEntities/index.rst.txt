@@ -1,0 +1,26 @@
+:mod:`dpt.engine.ghostFakeEntities`
+===================================
+
+.. py:module:: dpt.engine.ghostFakeEntities
+
+
+Module Contents
+---------------
+
+
+.. py:class:: GhostFakeEntity(x, y, alpha, block)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Crée un "faux" sprite
+
+   :param x: Abscisse
+   :type x: int
+   :param y: Ordonnée
+   :type y: int
+   :param alpha: Entier entre 0 et 255
+   :type alpha: int
+   :param block: Classe du block
+   :type block: class
+
+

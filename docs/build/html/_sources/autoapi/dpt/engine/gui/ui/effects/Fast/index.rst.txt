@@ -1,0 +1,30 @@
+:mod:`dpt.engine.gui.ui.effects.Fast`
+=====================================
+
+.. py:module:: dpt.engine.gui.ui.effects.Fast
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Fast
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Effet Fast
+
+   Crée l'effet Fast
+
+   .. attribute:: fast
+      :annotation: = dpt.images.effects.fast
+
+      
+
+   .. method:: update(self)
+
+
+      Affiche l'effet
+
+
+

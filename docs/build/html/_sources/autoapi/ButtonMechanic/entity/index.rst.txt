@@ -1,0 +1,50 @@
+:mod:`ButtonMechanic.entity`
+============================
+
+.. py:module:: ButtonMechanic.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: ButtonMechanic(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.text.000_button_mechanic
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_stone
+
+      
+
+   .. attribute:: width
+      
+
+      
+
+   .. attribute:: height
+      
+
+      
+
+   .. attribute:: offset_x
+      
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: customPlacement
+      :annotation: = True
+
+      
+
+

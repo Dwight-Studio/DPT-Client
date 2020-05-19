@@ -1,0 +1,24 @@
+:mod:`dpt.engine.gui.ui`
+========================
+
+.. py:module:: dpt.engine.gui.ui
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   effects/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   Heart/index.rst
+
+

@@ -1,0 +1,36 @@
+:mod:`dpt.engine.gui.menu.bar`
+==============================
+
+.. py:module:: dpt.engine.gui.menu.bar
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Bar(x, y, width, height, image)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Crée une barre
+
+   :param x: Abscisse
+   :type x: int
+   :param y: Ordonnée
+   :type y: int
+   :param width: Largeur
+   :type width: int
+   :param height: Hauteur
+   :type height: int
+   :param image: Image
+   :type image: pygame.Surface
+
+   :rtype: Bar
+
+   .. method:: update(self)
+
+
+      Actualise la barre
+
+
+

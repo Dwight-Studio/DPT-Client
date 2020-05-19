@@ -1,0 +1,30 @@
+:mod:`dpt.engine.gui.ui.effects.jumpBoost`
+==========================================
+
+.. py:module:: dpt.engine.gui.ui.effects.jumpBoost
+
+
+Module Contents
+---------------
+
+
+.. py:class:: JumpBoost
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Effet jumpBoost
+
+   Crée l'effet jumpBoost
+
+   .. attribute:: jumpBoost
+      :annotation: = dpt.images.effects.jumpBoost
+
+      
+
+   .. method:: update(self)
+
+
+      Affiche l'effet
+
+
+

@@ -1,0 +1,28 @@
+:mod:`dpt.engine.gui`
+=====================
+
+.. py:module:: dpt.engine.gui
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   editor/index.rst
+   menu/index.rst
+   ui/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   Cloud/index.rst
+   ParallaxSky/index.rst
+   mainMenuEntity/index.rst
+
+

@@ -1,0 +1,30 @@
+:mod:`dpt.engine.gui.ui.effects.lowGravity`
+===========================================
+
+.. py:module:: dpt.engine.gui.ui.effects.lowGravity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: LowGravity
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Effet LowGravity
+
+   Crée l'effet LowGravity
+
+   .. attribute:: lowGravity
+      :annotation: = dpt.images.effects.lowGravity
+
+      
+
+   .. method:: update(self)
+
+
+      Affiche l'effet
+
+
+

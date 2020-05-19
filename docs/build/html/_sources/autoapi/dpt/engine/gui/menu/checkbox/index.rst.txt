@@ -1,0 +1,44 @@
+:mod:`dpt.engine.gui.menu.checkbox`
+===================================
+
+.. py:module:: dpt.engine.gui.menu.checkbox
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Checkbox(x, y, size)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Crée une case à cocher
+
+   :param x: Abscisse
+   :type x: int
+   :param y: Ordonnée
+   :type y: int
+   :param size: Taille (relative)
+   :type size: float
+
+   :rtype: Checkbox
+
+   .. attribute:: checkbox_group
+      
+
+      
+
+   .. method:: update(self)
+
+
+      Actualise la case à cocher
+
+
+   .. method:: main_loop(cls)
+      :classmethod:
+
+
+      Actualise toutes les cases à cocher
+
+
+

@@ -1,0 +1,102 @@
+:mod:`WormGrassSprite.entity`
+=============================
+
+.. py:module:: WormGrassSprite.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: WormGrassSprite(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Classe sur les vers des plaines et leur physique
+
+   Crée un ver des plaines
+
+   :param x: Abscisse
+   :type x: int
+   :param y: Ordonnée
+   :type y: int
+
+   :rtype: WormGrassSprite
+
+   .. attribute:: texture
+      :annotation: = dpt.images.characters.animals.Worm_Grass_1
+
+      
+
+   .. attribute:: dead_texture
+      :annotation: = dpt.images.characters.animals.Dead_Worm_Grass
+
+      
+
+   .. attribute:: textures
+      :annotation: = dpt.images.characters.animals.Worm_Grass_*
+
+      
+
+   .. attribute:: width
+      
+
+      
+
+   .. attribute:: height
+      
+
+      
+
+   .. attribute:: offset_x
+      
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: mask
+      :annotation: = dpt.images.characters.animals.wormMask
+
+      
+
+   .. method:: update(self)
+
+
+      Actualise le déplacement, les effets, les collisions
+
+
+   .. method:: animation(self)
+
+
+      Donne l'illusion de déplacement
+
+
+   .. method:: check_void(self)
+
+
+      Tue le robot s'il sort de l'écran
+
+
+   .. method:: kill(self)
+
+
+      Override de la méthode kill de pygame et affiche un cadavre
+
+
+   .. method:: check_fall(self, platforms)
+
+
+      Vérifie si le slime va tomber
+
+
+   .. method:: maskcollide(self)
+
+
+      Permet de modifier les vélocités de l'abeille en fonction des collisions
+
+
+

@@ -1,0 +1,83 @@
+:mod:`dpt.engine.gui.ParallaxSky`
+=================================
+
+.. py:module:: dpt.engine.gui.ParallaxSky
+
+
+Module Contents
+---------------
+
+
+.. py:class:: ParallaxSky
+
+   .. attribute:: bg
+      
+
+      
+
+   .. attribute:: images
+      
+
+      
+
+   .. attribute:: reversed_images
+      
+
+      
+
+   .. attribute:: plains
+      :annotation: = dpt.images.environment.background.plains.*
+
+      
+
+   .. attribute:: ice
+      :annotation: = dpt.images.environment.background.ice.*
+
+      
+
+   .. attribute:: goop
+      :annotation: = dpt.images.environment.background.goop.*
+
+      
+
+   .. attribute:: desert
+      :annotation: = dpt.images.environment.background.desert.*
+
+      
+
+   .. attribute:: gap_0
+      :annotation: = 0
+
+      
+
+   .. attribute:: gap_1
+      :annotation: = 0
+
+      
+
+   .. attribute:: gap_2
+      :annotation: = 0
+
+      
+
+   .. attribute:: enable_reversed
+      :annotation: = False
+
+      
+
+   .. attribute:: available_backgrounds
+      :annotation: = ['Plains', 'Ice', 'Goop', 'Desert']
+
+      
+
+   .. method:: init(cls, texture)
+      :classmethod:
+
+
+
+   .. method:: update(cls)
+      :classmethod:
+
+
+
+

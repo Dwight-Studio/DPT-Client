@@ -1,0 +1,133 @@
+:mod:`dpt.engine.gui.menu.timer`
+================================
+
+.. py:module:: dpt.engine.gui.menu.timer
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Timer
+
+   .. attribute:: texture_semi_colon
+      :annotation: = dpt.images.gui.symbols.SYMB_SEMICOLON
+
+      
+
+   .. attribute:: textures
+      :annotation: = ['dpt.images.gui.symbols.SYMB_0', 'dpt.images.gui.symbols.SYMB_1', 'dpt.images.gui.symbols.SYMB_2', 'dpt.images.gui.symbols.SYMB_3', 'dpt.images.gui.symbols.SYMB_4', 'dpt.images.gui.symbols.SYMB_5', 'dpt.images.gui.symbols.SYMB_6', 'dpt.images.gui.symbols.SYMB_7', 'dpt.images.gui.symbols.SYMB_8', 'dpt.images.gui.symbols.SYMB_9']
+
+      
+
+   .. attribute:: digit1
+      
+
+      
+
+   .. attribute:: digit2
+      
+
+      
+
+   .. attribute:: semicolon
+      
+
+      
+
+   .. attribute:: digit3
+      
+
+      
+
+   .. attribute:: digit4
+      
+
+      
+
+   .. attribute:: effects_text
+      
+
+      
+
+   .. attribute:: rect
+      
+
+      
+
+   .. attribute:: digits_images
+      
+
+      
+
+   .. attribute:: semicolon_image
+      
+
+      
+
+   .. attribute:: height_digits
+      
+
+      
+
+   .. attribute:: width_digits
+      
+
+      
+
+   .. attribute:: width_semicolon
+      
+
+      
+
+   .. attribute:: time
+      :annotation: = 0
+
+      
+
+   .. attribute:: e_time
+      :annotation: = 0
+
+      
+
+   .. method:: start(cls, time)
+      :classmethod:
+
+
+      Crée un chronomètre
+
+      :param time: Temps en secondes
+      :type time: int
+
+      :rtype: Timer
+
+
+   .. method:: update(cls)
+      :classmethod:
+
+
+      Actualise le timer
+
+
+   .. method:: pause_update(cls)
+      :classmethod:
+
+
+      Actualise le timer durant la pause
+
+
+   .. method:: kill(cls)
+      :classmethod:
+
+
+      Supprime le timer
+
+
+   .. method:: main_loop(cls)
+      :classmethod:
+
+
+      Actualise le timer
+
+
+

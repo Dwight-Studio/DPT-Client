@@ -1,0 +1,49 @@
+:mod:`FlagRed.entity`
+=====================
+
+.. py:module:: FlagRed.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: FlagRed(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.flag.Flag_Red
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_stone
+
+      
+
+   .. attribute:: width
+      
+
+      
+
+   .. attribute:: height
+      
+
+      
+
+   .. attribute:: offset_x
+      :annotation: = 0
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. method:: update(self)
+
+
+
+

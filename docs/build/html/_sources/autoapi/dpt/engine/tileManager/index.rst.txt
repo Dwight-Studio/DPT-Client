@@ -1,0 +1,342 @@
+:mod:`dpt.engine.tileManager`
+=============================
+
+.. py:module:: dpt.engine.tileManager
+
+
+Module Contents
+---------------
+
+
+.. py:class:: TileManager
+
+   Gestionnaire des tiles
+
+   .. attribute:: deadly_object_group
+      
+
+      
+
+   .. attribute:: enemy_group
+      
+
+      
+
+   .. attribute:: environment_group
+      
+
+      
+
+   .. attribute:: entity_group
+      
+
+      
+
+   .. attribute:: editor_panel_group
+      
+
+      
+
+   .. attribute:: background_blocks_group
+      
+
+      
+
+   .. attribute:: foreground_blocks_group
+      
+
+      
+
+   .. attribute:: interactible_blocks_group
+      
+
+      
+
+   .. attribute:: heart_group
+      
+
+      
+
+   .. attribute:: effects_group
+      
+
+      
+
+   .. attribute:: clouds_group
+      
+
+      
+
+   .. attribute:: log
+      
+
+      
+
+   .. attribute:: levelName
+      
+
+      
+
+   .. attribute:: max_width_size
+      :annotation: = 0
+
+      
+
+   .. attribute:: max_height_size
+      :annotation: = 0
+
+      
+
+   .. attribute:: count
+      :annotation: = 0
+
+      
+
+   .. attribute:: already_defined
+      :annotation: = False
+
+      
+
+   .. attribute:: per_line_count
+      :annotation: = 0
+
+      
+
+   .. attribute:: per_line
+      :annotation: = 0
+
+      
+
+   .. attribute:: nb_skip
+      :annotation: = 0
+
+      
+
+   .. attribute:: check_back
+      :annotation: = False
+
+      
+
+   .. attribute:: used_resources
+      :annotation: = []
+
+      
+
+   .. attribute:: coords
+      
+
+      
+
+   .. attribute:: camera
+      
+
+      
+
+   .. attribute:: clouds_last_x
+      
+
+      
+
+   .. attribute:: is_loading_level
+      :annotation: = False
+
+      
+
+   .. method:: build_registry(cls)
+      :classmethod:
+
+
+
+   .. method:: load_level(cls, level_name)
+      :classmethod:
+
+
+      Charge un niveau
+
+      :param level_name: Niveau à charger
+      :type level_name: str, dict
+
+      :return: True si le niveau est chargée sans problème, sinon False
+      :rtype: bool
+
+
+   .. method:: ghost_block(cls, x_tile, y_tile, item)
+      :classmethod:
+
+
+      Crée un faux block / fausse entitée
+
+      :param x_tile: Abscisse (Tile)
+      :type x_tile: int
+      :param y_tile: Ordonnée (Tile)
+      :type y_tile: int
+      :param item: Type d'entitée à utiliser
+      :type item: str
+
+
+   .. method:: place_block(cls, x_tile, y_tile, item)
+      :classmethod:
+
+
+      Crée un bloc
+
+      :param x_tile: Abscisse (Tile)
+      :type x_tile: int
+      :param y_tile: Ordonnée (Tile)
+      :type y_tile: int
+      :param item: Type d'entitée à utiliser
+      :type item: str
+
+
+   .. method:: place_back_block(cls, x_tile, y_tile, item)
+      :classmethod:
+
+
+      Crée un bloc d'arrière plan
+
+      :param x_tile: Abscisse (Tile)
+      :type x_tile: int
+      :param y_tile: Ordonnée (Tile)
+      :type y_tile: int
+      :param item: Type d'entitée à utiliser
+      :type item: str
+
+
+   .. method:: open_tile_panel(cls)
+      :classmethod:
+
+
+      Génère le panneau d'édition
+
+
+   .. method:: scroll_down(cls)
+      :classmethod:
+
+
+      Gère le déroulement du panneau d'édition vers le bas
+
+
+   .. method:: scroll_up(cls)
+      :classmethod:
+
+
+      Gère le déroulement du panneau d'édition vers le haut
+
+
+   .. method:: out_of_window(cls)
+      :classmethod:
+
+
+      Tue les ennemis sorties de la carte
+
+
+   .. method:: display_cam_info(cls)
+      :classmethod:
+
+
+      Affiche les informations de déboggage de la caméra
+
+
+   .. method:: display_sprites(cls, self, freeze)
+      :classmethod:
+
+
+      Affiche les sprites en utilisant une caméra
+
+      :param self: Caméra à utiliser
+      :type self: Camera, EditorCamera
+      :param freeze: Désactiver l'actualisation des sprites
+      :type freeze: bool
+
+
+   .. method:: generate_clouds(cls)
+      :classmethod:
+
+
+      Génère les nuages
+
+
+   .. method:: update_clouds(cls)
+      :classmethod:
+
+
+      Actualise les nuages
+
+
+
+.. py:class:: Camera(width, height)
+
+   Crée une nouvelle caméra
+
+   :param width: Largeur de l'écran (Tile)
+   :type width: int
+   :param height: Hauteur de l'écran (Tile)
+   :type height: int
+
+   :rtype: Camera
+
+   .. method:: apply(self, entity)
+
+
+      Applique la translation de défilement
+
+      :param entity: Surface à déplacer
+      :type entity: pygame.Surface
+
+      :return: Surface déplacée
+      :rtype: pygame.Surface
+
+
+   .. method:: update(self, target, freeze=False)
+
+
+      Actualisation de la caméra
+
+      :param target: Objectif
+      :type target: pygame.sprite.Sprite
+      :param freeze: Désactiver l'actualisation des sprites
+      :type freeze: bool
+
+
+
+.. py:class:: EditorCamera(width, height)
+
+   Crée une nouvelle caméra d'éditeur
+
+   :param width: Largeur de l'écran (Tile)
+   :type width: int
+   :param height: Hauteur de l'écran (Tile)
+   :type height: int
+
+   :rtype: EditorCamera
+
+   .. method:: apply(self, entity)
+
+
+      Applique la translation de défilement
+
+      :param entity: Surface à déplacer
+      :type entity: pygame.Surface
+
+      :return: Surface déplacée
+      :rtype: pygame.Surface
+
+
+   .. method:: update(self, target, freeze=False)
+
+
+      Actualisation de la caméra
+
+      :param target: Objectif
+      :type target: pygame.sprite.Sprite
+      :param freeze: Désactiver l'actualisation des sprites
+      :type freeze: bool
+
+
+   .. method:: enable_grid(self)
+
+
+      Ajoute la grille de placement
+
+
+

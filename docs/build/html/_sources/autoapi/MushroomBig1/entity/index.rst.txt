@@ -1,0 +1,50 @@
+:mod:`MushroomBig1.entity`
+==========================
+
+.. py:module:: MushroomBig1.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: MushroomBig1(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.plants.mushrooms.Mushroom_Big_Blue
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_stone
+
+      
+
+   .. attribute:: width
+      
+
+      
+
+   .. attribute:: height
+      
+
+      
+
+   .. attribute:: offset_x
+      
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: customPlacement
+      :annotation: = True
+
+      
+
+

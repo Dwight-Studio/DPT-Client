@@ -1,0 +1,40 @@
+:mod:`Orange11.entity`
+======================
+
+.. py:module:: Orange11.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Orange11(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.plants.trees.Tree_Leaves_Orange_11
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_leaves
+
+      
+
+   .. attribute:: offset_x
+      
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: customPlacement
+      :annotation: = True
+
+      
+
+

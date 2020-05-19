@@ -1,0 +1,53 @@
+:mod:`dpt.engine.gui.menu.levelOverview`
+========================================
+
+.. py:module:: dpt.engine.gui.menu.levelOverview
+
+
+Module Contents
+---------------
+
+
+.. py:class:: LevelOverview(x, y, level_name, size)
+
+   Crée un résumé de niveau
+
+   :param x: Abscisse
+   :type x: int
+   :param y: Ordonnée
+   :type y: int
+   :param level_name: Nom du niveau
+   :type level_name: str
+   :param size: Taille (relative)
+   :type size: float
+
+   :rtype: LevelOverview
+
+   .. attribute:: level_overview_list
+      :annotation: = []
+
+      
+
+   .. method:: update(self)
+
+
+      Actualise le résumé de niveau
+
+
+   .. method:: kill(self, del_bool=True)
+
+
+      Tue le résumé de niveau
+
+      :param del_bool: Supprime de la liste
+      :type del_bool: bool
+
+
+   .. method:: main_loop(cls)
+      :classmethod:
+
+
+      Actualise tous les résumés de niveau
+
+
+

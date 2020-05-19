@@ -1,0 +1,35 @@
+:mod:`SandSlopeConnectorR.block`
+================================
+
+.. py:module:: SandSlopeConnectorR.block
+
+
+Module Contents
+---------------
+
+
+.. py:class:: SandSlopeConnectorR(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.terrain.Sand_Tile_Slope_Connector_r
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_sand
+
+      
+
+   .. attribute:: offset_x
+      :annotation: = 0
+
+      
+
+   .. attribute:: offset_y
+      :annotation: = 0
+
+      
+
+

@@ -1,0 +1,35 @@
+:mod:`SnowEdgeL.block`
+======================
+
+.. py:module:: SnowEdgeL.block
+
+
+Module Contents
+---------------
+
+
+.. py:class:: SnowEdgeL(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.terrain.Snow_Tile_Flat_Edge_l
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_snow
+
+      
+
+   .. attribute:: offset_x
+      :annotation: = 0
+
+      
+
+   .. attribute:: offset_y
+      :annotation: = 0
+
+      
+
+

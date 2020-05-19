@@ -1,0 +1,45 @@
+:mod:`GoopHalfEdgeR.block`
+==========================
+
+.. py:module:: GoopHalfEdgeR.block
+
+
+Module Contents
+---------------
+
+
+.. py:class:: GoopHalfEdgeR(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.terrain.Goop_Tile_Half_Round_R-01
+
+      
+
+   .. attribute:: width
+      
+
+      
+
+   .. attribute:: height
+      
+
+      
+
+   .. attribute:: offset_x
+      :annotation: = 0
+
+      
+
+   .. attribute:: offset_y
+      :annotation: = 0
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_goop
+
+      
+
+

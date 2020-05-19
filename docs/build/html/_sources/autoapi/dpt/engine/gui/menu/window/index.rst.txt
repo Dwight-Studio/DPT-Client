@@ -1,0 +1,45 @@
+:mod:`dpt.engine.gui.menu.window`
+=================================
+
+.. py:module:: dpt.engine.gui.menu.window
+
+
+Module Contents
+---------------
+
+
+.. py:class:: Window(x, y, width_number, height_number, **kwargs)
+
+   Crée une fenêtre
+
+   :param x: Abscisse
+   :type x: int
+   :param y: Ordonnée
+   :type x: int
+   :param width_number: Largeur (en nombre de sprites)
+   :type width_number: int
+   :param height_number: Hauteur (en nombre de sprites)
+   :type height_number: int
+
+   :keyword centerx: Abscisse du centre, si specifié, ignore le paramètre x original
+   :keyword centery: ordonnée du centre, si specifié, ignore le paramètre y original
+
+   :rtype: Window
+
+   .. attribute:: window_list
+      :annotation: = []
+
+      
+
+   .. method:: kill(self)
+
+
+
+   .. method:: main_loop(cls)
+      :classmethod:
+
+
+      Actualise toutes les fenêtres
+
+
+

@@ -1,0 +1,36 @@
+:mod:`dpt.engine.gui.editor`
+============================
+
+.. py:module:: dpt.engine.gui.editor
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   charEntity/index.rst
+   editorPanel/index.rst
+   panelFakeEntities/index.rst
+   tileEditor/index.rst
+
+
+Package Contents
+----------------
+
+
+.. py:class:: EditorPanel(color, x, y, width, height, alpha)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: editor_tile_registry
+      
+
+      
+
+   .. method:: update(self)
+
+
+
+

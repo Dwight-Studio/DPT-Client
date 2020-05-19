@@ -1,0 +1,16 @@
+:mod:`dpt.engine.characters`
+============================
+
+.. py:module:: dpt.engine.characters
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   DeadBody/index.rst
+   PlayerSprite/index.rst
+
+

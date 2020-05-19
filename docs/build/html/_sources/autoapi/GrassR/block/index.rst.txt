@@ -1,0 +1,35 @@
+:mod:`GrassR.block`
+===================
+
+.. py:module:: GrassR.block
+
+
+Module Contents
+---------------
+
+
+.. py:class:: GrassR(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.terrain.Grass_Tile_Flat_r
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_grass
+
+      
+
+   .. attribute:: offset_x
+      :annotation: = 0
+
+      
+
+   .. attribute:: offset_y
+      :annotation: = 0
+
+      
+
+

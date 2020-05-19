@@ -1,0 +1,107 @@
+:mod:`dpt.engine.webCommunications`
+===================================
+
+.. py:module:: dpt.engine.webCommunications
+
+
+Module Contents
+---------------
+
+
+.. py:class:: CommunicationError(message)
+
+   Bases: :class:`object`
+
+
+.. py:class:: WebCommunication
+
+   Bases: :class:`object`
+
+   Gestionnaire des communication webs
+
+   .. attribute:: log
+      
+
+      
+
+   .. attribute:: sessionName
+      
+
+      
+
+   .. attribute:: connected
+      :annotation: = False
+
+      
+
+   .. attribute:: connected_players_count
+      :annotation: = 0
+
+      
+
+   .. attribute:: last_result
+      
+
+      
+
+   .. attribute:: last_vote
+      
+
+      
+
+   .. method:: make_request(cls, url, silent=False)
+      :classmethod:
+
+
+      Crée une requète vers un serveur
+
+      :param url: URL à atteindre
+      :type url: str
+      :param silent: Parallèlisation
+      :return: Erreur ou page parsé en JSON
+      :rtype: dict, CommunicationError
+
+
+   .. method:: init_connection(cls)
+      :classmethod:
+
+
+      Crée la session sur le serveur
+
+
+   .. method:: reconnect(cls)
+      :classmethod:
+
+
+      Recrée la session sur le serveur, avec la même ID
+
+
+   .. method:: update(cls)
+      :classmethod:
+
+
+      Actualise les communications
+
+
+   .. method:: close(cls)
+      :classmethod:
+
+
+      Ferme la session actuelle
+
+
+   .. method:: create_vote_event(cls, mod1, mod2)
+      :classmethod:
+
+
+      Crée un évènement de vote
+
+      :param mod1: Modificateur 1
+      :type mod1: str
+      :param mod2: Modificateur 2
+      :type mod2: str
+      :rtype: bool
+      :return: Retourne True si le vote est correctement créé sinon False
+
+
+

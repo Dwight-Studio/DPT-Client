@@ -1,0 +1,26 @@
+:mod:`dpt.engine.gui.menu.textSpriteButton`
+===========================================
+
+.. py:module:: dpt.engine.gui.menu.textSpriteButton
+
+
+Module Contents
+---------------
+
+
+.. py:class:: TextSpriteButton(width, height, image)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Crée un sprite (simple image dessinée)
+
+   :param width: Largeur
+   :type width: int
+   :param height: Hauteur
+   :type height: int
+   :param image: Image
+   :type image: pygame.Surface
+
+   :rtype: TextSpriteButton
+
+

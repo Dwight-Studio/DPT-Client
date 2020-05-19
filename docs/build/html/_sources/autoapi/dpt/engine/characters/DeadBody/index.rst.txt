@@ -1,0 +1,50 @@
+:mod:`dpt.engine.characters.DeadBody`
+=====================================
+
+.. py:module:: dpt.engine.characters.DeadBody
+
+
+Module Contents
+---------------
+
+
+.. py:class:: DeadBody(x, y, width, height, texture, mask)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Créé un ragdoll
+
+   :param x: Abscisse
+   :type x: int
+   :param y: Ordonnée
+   :type x: int
+   :param width: Largeur
+   :type width: int
+   :param height: Hauteur
+   :type height: int
+   :param texture: Texture de l'objet
+   :type texture: str
+   :param mask: Texture du mask
+   :type mask: str
+
+   :rtype: DeadBody
+
+   .. method:: update(self)
+
+
+      Actualise l'objet
+
+
+   .. method:: check_void(self)
+
+
+      Supprime l'objet si quittant l'écran par le bas
+
+
+   .. method:: maskcollide(self)
+
+
+      Effectue les collisions
+
+
+

@@ -1,0 +1,35 @@
+:mod:`dpt.engine.gui.menu.window_item`
+======================================
+
+.. py:module:: dpt.engine.gui.menu.window_item
+
+
+Module Contents
+---------------
+
+
+.. py:class:: WindowItem(x, y, item_type)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Crée une partie de fenêtre
+
+   :param x: Abscisse
+   :type x: int
+   :param y: Ordonnée
+   :type x: int
+   :param item_type: Type
+   :type item_type: str
+
+   :rtype: WindowItem
+
+   .. attribute:: type
+      
+
+      
+
+   .. method:: update(self)
+
+
+
+

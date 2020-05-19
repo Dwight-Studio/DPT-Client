@@ -1,0 +1,59 @@
+:mod:`ButtonBlue.entity`
+========================
+
+.. py:module:: ButtonBlue.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: ButtonBlue(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.environment.buttons.Button_Blue_Up
+
+      
+
+   .. attribute:: textures
+      :annotation: = dpt.images.environment.buttons.Button_Blue_*
+
+      
+
+   .. attribute:: sounds
+      :annotation: = ['dpt.sounds.sfx.sfx_stone', 'dpt.sounds.sfx.metal_button_press']
+
+      
+
+   .. attribute:: width
+      
+
+      
+
+   .. attribute:: height
+      
+
+      
+
+   .. attribute:: offset_x
+      
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: customPlacement
+      :annotation: = True
+
+      
+
+   .. method:: update(self)
+
+
+
+

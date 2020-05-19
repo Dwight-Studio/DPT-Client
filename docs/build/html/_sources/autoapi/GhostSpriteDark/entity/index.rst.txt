@@ -1,0 +1,89 @@
+:mod:`GhostSpriteDark.entity`
+=============================
+
+.. py:module:: GhostSpriteDark.entity
+
+
+Module Contents
+---------------
+
+
+.. function:: pythagore(xa, ya, xb, yb)
+
+   Permet d'avoir la distance entre deux points
+
+   :param xa: Abscisse du premier point
+   :type xa: int
+   :param ya: Ordonnée du premier point
+   :type ya: int
+   :param xb: Abscisse du second point
+   :type xb: int
+   :param yb: Ordonnée du second point
+   :type yb: int
+
+   :rtype: float
+
+
+.. py:class:: GhostSpriteDark(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   Classe sur les fantômes sombres et leur physique
+
+   Crée un fantôme noir
+
+   :param x: Abscisse
+   :type x: int
+   :param y: Ordonnée
+   :type y: int
+
+   :rtype: GhostSpriteDark
+
+   .. attribute:: texture
+      :annotation: = dpt.images.characters.ghosts.Ghost_Dark_1
+
+      
+
+   .. attribute:: textures
+      :annotation: = dpt.images.characters.ghosts.Ghost_Dark*
+
+      
+
+   .. attribute:: width
+      
+
+      
+
+   .. attribute:: height
+      
+
+      
+
+   .. attribute:: offset_x
+      
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: mask
+      :annotation: = dpt.images.characters.ghosts.mask
+
+      
+
+   .. method:: update(self)
+
+
+      Actualise le déplacement, les effets, les collisions
+
+
+   .. method:: animation(self)
+
+
+      Donne l'illusion de déplacement
+
+
+

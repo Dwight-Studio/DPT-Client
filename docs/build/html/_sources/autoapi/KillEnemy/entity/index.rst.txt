@@ -1,0 +1,50 @@
+:mod:`KillEnemy.entity`
+=======================
+
+.. py:module:: KillEnemy.entity
+
+
+Module Contents
+---------------
+
+
+.. py:class:: KillEnemy(x, y)
+
+   Bases: :class:`pygame.sprite.Sprite`
+
+   .. attribute:: texture
+      :annotation: = dpt.images.text.000_kill_enemy
+
+      
+
+   .. attribute:: sounds
+      :annotation: = dpt.sounds.sfx.sfx_stone
+
+      
+
+   .. attribute:: width
+      
+
+      
+
+   .. attribute:: height
+      
+
+      
+
+   .. attribute:: offset_x
+      
+
+      
+
+   .. attribute:: offset_y
+      
+
+      
+
+   .. attribute:: customPlacement
+      :annotation: = True
+
+      
+
+
