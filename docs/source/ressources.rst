@@ -71,7 +71,7 @@ Blocs
 -----
 
 .. tip::
-        Pensez à aller regarder la :ref:`liste_ressources` et notre page GitHub (https://github.com/Deleranax/DPT-Client/tree/master/dpt/ressources/dpt) pour vous inspirer de notre travail, et donc pouvoir respecter la structure du programme (notamment pour les collisions).
+        Pensez à aller regarder la :ref:`liste_ressources` et notre page GitHub (https://github.com/Dwight-Studio/DPT-Client/tree/master/dpt/ressources/dpt) pour vous inspirer de notre travail, et donc pouvoir respecter la structure du programme (notamment pour les collisions).
 
 Tout d'abord, vous devez créer un fichier qui portera le même nom que la classe de votre bloc (sans l'extension). Le nom du fichier doit respecter la structure des noms (voir :ref:`structure_ressources`).
 
@@ -134,7 +134,7 @@ Entitées
 --------
 
 .. tip::
-        Pensez à aller regarder la :ref:`liste_ressources` et notre page GitHub (https://github.com/Deleranax/DPT-Client/tree/master/dpt/ressources/dpt) pour vous inspirer de notre travail, et donc pouvoir respecter la structure du programme (notamment pour les collisions).
+        Pensez à aller regarder la :ref:`liste_ressources` et notre page GitHub (https://github.com/Dwight-Studio/DPT-Client/tree/master/dpt/ressources/dpt) pour vous inspirer de notre travail, et donc pouvoir respecter la structure du programme (notamment pour les collisions).
 
 Tout d'abord, vous devez créer un fichier qui portera le même nom que la classe de votre entitée (sans l'extension). Le nom du fichier doit respecter la structure des noms (voir :ref:`structure_ressources`).
 
