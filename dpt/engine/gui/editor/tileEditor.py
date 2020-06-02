@@ -359,3 +359,12 @@ class TileEditor:
         if s is not None and (s == "Plains" or s == "Desert" or s == "Ice" or s == "Goop"):
             background = s
         cls.created_level["infos"]["background"] = background
+
+        from dpt.engine.gui.ParallaxSky import ParallaxSky
+        if "infos" in cls.created_level:
+            if "background" in cls.created_level["infos"]:
+                ParallaxSky.init(cls.created_level["infos"]["background"])
+            else:
+                ParallaxSky.init("Plains")
+        else:
+            ParallaxSky.init("Plains")
