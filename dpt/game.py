@@ -172,6 +172,7 @@ class Game(object):
             main_logger.debug("CWD: " + cls.ROOT_DIRECTORY)
 
             # Chargement des réglages
+            cls.build_folder_skeleton()
             cls.load_profile()
 
             pygame.init()
@@ -418,6 +419,22 @@ class Game(object):
         file.write(json.dumps({"settings": Game.settings, "saves": Game.saves}))
         file.close()
         cls.get_logger("ProfileManager").info("Profile saved")
+
+    @classmethod
+    def build_folder_skeleton(cls):
+        """Créer les dossiers du joueur pour éviter tout problèmes"""
+        cls.get_logger("ProfileManager").info("Building folder skeleton")
+
+        dir_list = ["/ressources/user",
+                    "/ressources/user/levels",
+                    "/ressources/user/images",
+                    "/ressources/user/musics",
+                    "/logs"]
+
+        for dr in dir_list:
+            if not os.path.exists(cls.ROOT_DIRECTORY + dr):
+                cls.get_logger("ProfileManager").warning("Can't find " + dr + ", creating folder")
+                os.mkdir(os.path.realpath(cls.ROOT_DIRECTORY + dr))
 
     @classmethod
     def update_display(cls):

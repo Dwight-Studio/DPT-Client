@@ -21,23 +21,28 @@ class FileManager:
     @classmethod
     def import_file(cls):
         """Permet de charger un fichier .level.json"""
-        try:
-            root = tk.Tk()
-            root.withdraw()
-            rfile = filedialog.askopenfilename(parent=root, title="Sélectionner un niveau", filetypes=[("Fichier de niveau DPT", "*.level.json"), ("Tous les fichiers", "*")], initialdir=cls.defaultDir)
-            if os.path.realpath(rfile) == os.path.realpath(RESSOURCES_DIRECTORY + "dpt/levels/" + os.path.basename(rfile)):
-                try:
-                    TileManager.load_level("dpt.levels." + str(os.path.basename(rfile)).split(".")[0])
-                except UnreachableRessourceError and FileNotFoundError:
-                    cls.log.warning("Unable to load file : " + str(rfile))
-                    root.destroy()
-                except json.decoder.JSONDecodeError as ex:
-                    Scenes.return_error("Impossible de charger le niveau", "Détails :", "json.decoder.JSONDecodeError: ", str(ex))
-                return
+        root = tk.Tk()
+        root.withdraw()
+        rfile = filedialog.askopenfilename(parent=root, title="Sélectionner un niveau", filetypes=[("Fichier de niveau DPT", "*.level.json"), ("Tous les fichiers", "*")], initialdir=cls.defaultDir)
+        if os.path.realpath(rfile) == os.path.realpath(RESSOURCES_DIRECTORY + "dpt/levels/" + os.path.basename(rfile)):
+            cls.log.debug("Loading an already copied file")
+            try:
+                TileManager.load_level("dpt.levels." + str(os.path.basename(rfile)).split(".")[0])
+            except UnreachableRessourceError and FileNotFoundError as ex:
+                cls.log.warning("Unable to load file : " + str(rfile))
+                root.destroy()
+                if str(rfile) != "":
+                    Scenes.return_error("Impossible de charger le niveau", "Détails :", str(ex.__class__.__name__) + ": ", str(ex))
+            except json.decoder.JSONDecodeError as ex:
+                Scenes.return_error("Impossible de charger le niveau", "Détails :", "json.decoder.JSONDecodeError: ", str(ex))
+        else:
+            cls.log.debug("Copying file")
             try:
                 with open(rfile) as f:
                     data = json.load(f)
                     wfile = str(cls.defaultDir) + "/" + str(os.path.basename(rfile))
+                    cls.log.debug("Level successfully loaded")
+                    cls.log.debug("Writing copy file at " + wfile)
                     with open(wfile, "w") as fw:
                         data2 = json.dumps(data, indent=4)
                         fw.write(data2)
@@ -47,11 +52,13 @@ class FileManager:
                     TileManager.load_level("user.levels." + str(os.path.basename(rfile)).split(".")[0])
                     cls.log.info("Successfully loaded : " + str(rfile))
                     root.destroy()
-            except UnreachableRessourceError and FileNotFoundError:
+            except UnreachableRessourceError and FileNotFoundError as ex:
                 cls.log.warning("Unable to load file : " + str(rfile))
                 root.destroy()
-        except json.decoder.JSONDecodeError as ex:
-            Scenes.return_error("Impossible de charger le niveau", "Détails :", "json.decoder.JSONDecodeError: ", str(ex))
+                if str(rfile) != "":
+                    Scenes.return_error("Impossible de charger le niveau", "Détails :", str(ex.__class__.__name__) + ": ", str(ex))
+            except json.decoder.JSONDecodeError as ex:
+                Scenes.return_error("Impossible de charger le niveau", "Détails :", "json.decoder.JSONDecodeError: ", str(ex))
 
     @classmethod
     def save_file(cls, level):
