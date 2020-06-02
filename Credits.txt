@@ -66,3 +66,6 @@ https://www.gamedevmarket.net/asset/parallax-desert-background/
 Background Elements Redux
 By Kenney (www.kenney.nl)
 https://www.kenney.nl/assets/background-elements-redux
+
+Bêta testeurs
+Lydia Michon, Alexandre Leconte, Tollemer Kévin, Savary Maxime et Leconte Noëmie.

@@ -261,6 +261,7 @@ class Game(object):
                 rect2 = game_by.get_rect()
                 rect2.width *= 0.3 * cls.DISPLAY_RATIO
                 rect2.height *= 0.3 * cls.DISPLAY_RATIO
+
                 game_by = pygame.transform.smoothscale(game_by, (rect2.width, rect2.height))
                 rect2.x = rect.left + math.floor(500 * Game.DISPLAY_RATIO)
                 rect2.y = rect.bottom - math.floor(80 * Game.DISPLAY_RATIO)
