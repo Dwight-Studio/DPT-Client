@@ -26,7 +26,7 @@ Module Contents
       
 
    .. attribute:: VERSION
-      :annotation: = BETA-1.0.0
+      :annotation: = BETA-1.0.1
 
       
 
@@ -370,6 +370,13 @@ Module Contents
 
 
       Sauvegarde les paramètres
+
+
+   .. method:: build_folder_skeleton(cls)
+      :classmethod:
+
+
+      Créer les dossiers du joueur pour éviter tout problèmes
 
 
    .. method:: update_display(cls)
