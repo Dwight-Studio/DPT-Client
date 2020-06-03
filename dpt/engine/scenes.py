@@ -308,6 +308,7 @@ class Scenes:
         from dpt.engine.gui.menu.button import Button
         from dpt.engine.gui.menu.simpleSprite import SimpleSprite
         from dpt.engine.gui.menu import Window
+        from dpt.engine.gui.menu import Text
         button_width = math.floor(92 * Game.DISPLAY_RATIO)
         button_height = math.floor(95 * Game.DISPLAY_RATIO)
         buttons_gap_x = math.floor(80 * Game.DISPLAY_RATIO)
@@ -344,7 +345,12 @@ class Scenes:
                                                                    math.floor(50 * Game.DISPLAY_RATIO),
                                                                    RessourceLoader.get("dpt.images.gui.symbols.SYMB_X"))),
                     "window": Window((Game.WINDOW_WIDTH // 2) - math.floor(122 * 3 * Game.DISPLAY_RATIO),
-                                     buttons_y + button_height // 2 - math.floor(64 * 1.5 * Game.DISPLAY_RATIO), 6, 3)}
+                                     buttons_y + button_height // 2 - math.floor(64 * 1.5 * Game.DISPLAY_RATIO), 6, 3),
+                    "version_text": Text(0, 0,
+                                         "DPT v" + Game.VERSION + " (PyGame v" + Game.PYTHON_VERSION + ") on " + Game.PLATFORM,
+                                         math.floor(Game.DISPLAY_RATIO * 15),
+                                         (0, 0, 0),
+                                         "dpt.fonts.DINOT_CondBlack")}
 
         # Loops
         from dpt.engine.mainLoop import main_menu_loop

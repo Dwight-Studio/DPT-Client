@@ -248,6 +248,9 @@ def main_menu_loop():
     ParallaxSky.update()
     TileManager.camera.update(Game.player_sprite)
 
+    Game.gui["version_text"].rect.bottom = Game.WINDOW_HEIGHT
+    Game.gui["version_text"].rect.right = Game.WINDOW_WIDTH - (math.floor(5 * Game.DISPLAY_RATIO))
+
     for event in Game.events:
         if event.type == pygame.QUIT:
             Game.run = False
