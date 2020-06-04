@@ -341,6 +341,7 @@ def settings_menu_loop():
             Game.settings["30_FPS"] = 2
 
         Game.save_profile()
+        ParallaxSky.init(ParallaxSky.current_texture)
 
     for event in Game.events:
         if event.type == pygame.QUIT:

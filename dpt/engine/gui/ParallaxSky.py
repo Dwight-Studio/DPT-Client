@@ -14,10 +14,14 @@ class ParallaxSky:
     bg = None
     images = None
     reversed_images = None
+
     plains = "dpt.images.environment.background.plains.*"
     ice = "dpt.images.environment.background.ice.*"
     goop = "dpt.images.environment.background.goop.*"
     desert = "dpt.images.environment.background.desert.*"
+
+    current_texture = None
+
     gap_0 = 0
     gap_1 = 0
     gap_2 = 0
@@ -26,6 +30,8 @@ class ParallaxSky:
 
     @classmethod
     def init(cls, texture):
+        cls.current_texture = texture
+
         if texture == "Ice":
             cls.images = [pygame.transform.smoothscale(i.copy(), (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)) for i in RessourceLoader.get_multiple(ParallaxSky.ice)]
             cls.reversed_images = [pygame.transform.flip(i, True, False) for i in cls.images]
