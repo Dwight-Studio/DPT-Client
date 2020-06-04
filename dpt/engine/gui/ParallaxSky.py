@@ -27,16 +27,16 @@ class ParallaxSky:
     @classmethod
     def init(cls, texture):
         if texture == "Ice":
-            cls.images = [pygame.transform.smoothscale(i, (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)) for i in RessourceLoader.get_multiple(ParallaxSky.ice)]
+            cls.images = [pygame.transform.smoothscale(i.copy(), (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)) for i in RessourceLoader.get_multiple(ParallaxSky.ice)]
             cls.reversed_images = [pygame.transform.flip(i, True, False) for i in cls.images]
         elif texture == "Desert":
-            cls.images = [pygame.transform.smoothscale(i, (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)) for i in RessourceLoader.get_multiple(ParallaxSky.desert)]
+            cls.images = [pygame.transform.smoothscale(i.copy(), (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)) for i in RessourceLoader.get_multiple(ParallaxSky.desert)]
             cls.reversed_images = [pygame.transform.flip(i, True, False) for i in cls.images]
         elif texture == "Goop":
-            cls.images = [pygame.transform.smoothscale(i, (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)) for i in RessourceLoader.get_multiple(ParallaxSky.goop)]
+            cls.images = [pygame.transform.smoothscale(i.copy(), (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)) for i in RessourceLoader.get_multiple(ParallaxSky.goop)]
             cls.reversed_images = [pygame.transform.flip(i, True, False) for i in cls.images]
         else:
-            cls.images = [pygame.transform.smoothscale(i, (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)) for i in RessourceLoader.get_multiple(ParallaxSky.plains)]
+            cls.images = [pygame.transform.smoothscale(i.copy(), (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT)) for i in RessourceLoader.get_multiple(ParallaxSky.plains)]
             cls.reversed_images = [pygame.transform.flip(i, True, False) for i in cls.images]
         cls.bg = RessourceLoader.get("dpt.images.environment.background.default_sky")
         cls.bg = pygame.transform.smoothscale(cls.bg, (Game.WINDOW_WIDTH, Game.WINDOW_HEIGHT))

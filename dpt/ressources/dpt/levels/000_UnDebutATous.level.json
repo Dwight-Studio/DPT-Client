@@ -657,16 +657,16 @@
         },
         "1435.0, 609.0": {
             "class": "dpt.entities.props.plants.trees.leaves.green10",
-            "customPlace": true
-        },
-        "1437.0, 619.0": {
-            "class": "dpt.entities.props.plants.trees.leaves.green10",
-            "customPlace": true
-        },
-        "1438.0, 639.0": {
-            "class": "dpt.entities.props.plants.trees.leaves.green10",
           "customPlace": true
         },
+      "1437.0, 619.0": {
+        "class": "dpt.entities.props.plants.trees.leaves.green10",
+        "customPlace": true
+      },
+      "1438.0, 639.0": {
+        "class": "dpt.entities.props.plants.trees.leaves.green10",
+        "customPlace": true
+      },
       "1418.0, 652.0": {
         "class": "dpt.entities.props.plants.trees.leaves.green10",
         "customPlace": true
@@ -686,16 +686,16 @@
         "class": "dpt.blocks.grass.grass"
       },
       "30, 9": {
-            "class": "dpt.blocks.grass.grass"
-        },
-        "31, 9": {
-            "class": "dpt.blocks.grass.grass"
-        },
-        "32, 9": {
-            "class": "dpt.blocks.grass.grass"
-        },
-        "33, 9": {
-            "class": "dpt.blocks.grass.grass"
+        "class": "dpt.blocks.grass.grass"
+      },
+      "31, 9": {
+        "class": "dpt.blocks.grass.grass"
+      },
+      "32, 9": {
+        "class": "dpt.blocks.grass.grass"
+      },
+      "33, 9": {
+        "class": "dpt.blocks.grass.grass"
         },
         "34, 9": {
             "class": "dpt.blocks.grass.grass"
@@ -866,15 +866,12 @@
             ]
         },
         "2249.0, 719.0": {
-            "class": "dpt.entities.interactible.traps.spike",
             "customPlace": true
         },
         "2340.0, 719.0": {
-            "class": "dpt.entities.interactible.traps.spike",
             "customPlace": true
         },
         "2430.0, 718.0": {
-            "class": "dpt.entities.interactible.traps.spike",
             "customPlace": true
         },
         "2656.0, 674.0": {
@@ -997,7 +994,6 @@
             "class": "dpt.entities.interactible.coin"
         },
         "2121.0, 673.0": {
-            "class": "dpt.entities.interactible.lever",
             "customPlace": true,
             "assignement": [
                 "2249.0, 719.0",
@@ -1006,7 +1002,6 @@
             ]
         },
         "2656.0, 675.0": {
-            "class": "dpt.entities.interactible.lever",
             "customPlace": true,
             "assignement": [
                 "31, 7",
@@ -3319,15 +3314,15 @@
         "79, 0": {
             "backgroundClass": "dpt.blocks.grass.grassl"
         },
-        "80, 0": {
-            "backgroundClass": "dpt.blocks.grass.grasslower"
-        },
-        "79, 2": {
-            "backgroundClass": "dpt.blocks.grass.grasslower"
-        },
-        "79, 3": {
-          "backgroundClass": "dpt.blocks.grass.grasslower"
-        },
+      "80, 0": {
+        "backgroundClass": "dpt.blocks.grass.grasslower"
+      },
+      "79, 2": {
+        "backgroundClass": "dpt.blocks.grass.grasslower"
+      },
+      "79, 3": {
+        "backgroundClass": "dpt.blocks.grass.grasslower"
+      },
       "79, 4": {
         "backgroundClass": "dpt.blocks.grass.grasslower"
       },
@@ -3401,6 +3396,31 @@
       },
       "3726.0, 303.0": {
         "class": "dpt.entities.props.texts.vote",
+        "customPlace": true
+      },
+      "2120.0, 674.0": {
+        "class": "dpt.entities.interactible.lever",
+        "customPlace": true,
+        "assignement": [
+          "2251.0, 719.0",
+          "2341.0, 719.0",
+          "2251.0, 719.0",
+          "2341.0, 719.0",
+          "2431.0, 718.0",
+          "31, 7",
+          "31, 6"
+        ]
+      },
+      "2251.0, 719.0": {
+        "class": "dpt.entities.interactible.traps.spike",
+        "customPlace": true
+      },
+      "2341.0, 719.0": {
+        "class": "dpt.entities.interactible.traps.spike",
+        "customPlace": true
+      },
+      "2431.0, 718.0": {
+        "class": "dpt.entities.interactible.traps.spike",
         "customPlace": true
       }
     },
