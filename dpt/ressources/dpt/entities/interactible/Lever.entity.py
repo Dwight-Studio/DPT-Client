@@ -62,19 +62,20 @@ class Lever(pygame.sprite.Sprite):
                 self.clicked = True
                 for sprites in TileManager.interactible_blocks_group:
                     if hasattr(sprites, "customPlacement"):
+                        print(TileEditor.created_level)
                         if hasattr(sprites, "x") and hasattr(sprites, "y"):
                             if sprites.x + sprites.offset_x <= mousePos[0] - TileManager.camera.last_x <= sprites.x + sprites.offset_x + sprites.width and sprites.y + sprites.offset_y <= mousePos[1] <= sprites.y + sprites.offset_y + sprites.height:
-                                if "assignement" not in TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]:
-                                    TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"] = []
-                                TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"].append(str(sprites.x / Game.DISPLAY_RATIO) + ", " + str(sprites.y / Game.DISPLAY_RATIO))
+                                if "assignement" not in TileEditor.created_level["tiles"][str(self.x / Game.DISPLAY_RATIO) + ", " + str(self.y / Game.DISPLAY_RATIO)]:
+                                    TileEditor.created_level["tiles"][str(self.x / Game.DISPLAY_RATIO) + ", " + str(self.y / Game.DISPLAY_RATIO)]["assignement"] = []
+                                TileEditor.created_level["tiles"][str(self.x / Game.DISPLAY_RATIO) + ", " + str(self.y / Game.DISPLAY_RATIO)]["assignement"].append(str(sprites.x / Game.DISPLAY_RATIO) + ", " + str(sprites.y / Game.DISPLAY_RATIO))
                                 sound = RessourceLoader.get_multiple(self.sounds[1])[0]
                                 sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
                                 sound.play()
                         else:
                             if sprites.rect.x <= mousePos[0] <= sprites.rect.x + sprites.width and sprites.rect.y <= mousePos[1] <= sprites.rect.y + sprites.height:
-                                if "assignement" not in TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]:
-                                    TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"] = []
-                                TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]["assignement"].append(str(sprites.rect.x - sprites.offset_x) + ", " + str(sprites.rect.y - sprites.offset_y))
+                                if "assignement" not in TileEditor.created_level["tiles"][str(self.x / Game.DISPLAY_RATIO) + ", " + str(self.y / Game.DISPLAY_RATIO)]:
+                                    TileEditor.created_level["tiles"][str(self.x / Game.DISPLAY_RATIO) + ", " + str(self.y / Game.DISPLAY_RATIO)]["assignement"] = []
+                                TileEditor.created_level["tiles"][str(self.x / Game.DISPLAY_RATIO) + ", " + str(self.y / Game.DISPLAY_RATIO)]["assignement"].append(str(sprites.rect.x - sprites.offset_x) + ", " + str(sprites.rect.y - sprites.offset_y))
                                 sound = RessourceLoader.get_multiple(self.sounds[1])[0]
                                 sound.set_volume(Game.settings["sound_volume"] * Game.settings["general_volume"])
                                 sound.play()
@@ -123,13 +124,13 @@ class Lever(pygame.sprite.Sprite):
                     self.rect = self.image.get_rect()
                     self.rect.x = self.x + self.offset_x
                     self.rect.y = self.y + self.offset_y
-                    data = TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]
+                    data = TileEditor.created_level["tiles"][str(self.x / Game.DISPLAY_RATIO) + ", " + str(self.y / Game.DISPLAY_RATIO)]
                     if "assignement" in data:
                         for interact in TileManager.interactible_blocks_group:
                             positions = [tuple(map(float, i.split(", "))) for i in data["assignement"]]
                             for pos in positions:
                                 if hasattr(interact, "x") and hasattr(interact, "y"):
-                                    if interact.x == pos[0] and interact.y == pos[1]:
+                                    if (interact.x / Game.DISPLAY_RATIO) == pos[0] and (interact.y / Game.DISPLAY_RATIO) == pos[1]:
                                         if hasattr(interact, "activate"):
                                             interact.activate()
                                 if interact.rect.x == pos[0] and interact.rect.y == pos[1]:
@@ -150,13 +151,13 @@ class Lever(pygame.sprite.Sprite):
                     self.rect = self.image.get_rect()
                     self.rect.x = self.x + self.offset_x
                     self.rect.y = self.y + self.offset_y
-                    data = TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]
+                    data = TileEditor.created_level["tiles"][str(self.x / Game.DISPLAY_RATIO) + ", " + str(self.y / Game.DISPLAY_RATIO)]
                     if "assignement" in data:
                         for interact in TileManager.interactible_blocks_group:
                             positions = [tuple(map(float, i.split(", "))) for i in data["assignement"]]
                             for pos in positions:
                                 if hasattr(interact, "x") and hasattr(interact, "y"):
-                                    if interact.x == pos[0] and interact.y == pos[1]:
+                                    if (interact.x / Game.DISPLAY_RATIO) == pos[0] and (interact.y / Game.DISPLAY_RATIO) == pos[1]:
                                         if hasattr(interact, "deactivate"):
                                             interact.deactivate()
                                 if interact.rect.x == pos[0] and interact.rect.y == pos[1]:

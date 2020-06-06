@@ -131,13 +131,13 @@ class ButtonBlue(pygame.sprite.Sprite):
                     self.rect = self.image.get_rect()
                     self.rect.x = self.x + self.offset_x
                     self.rect.y = self.y + self.offset_y // 2
-                    data = TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]
+                    data = TileEditor.created_level["tiles"][str(self.x / Game.DISPLAY_RATIO) + ", " + str(self.y / Game.DISPLAY_RATIO)]
                     if "assignement" in data:
                         for interact in TileManager.interactible_blocks_group:
                             positions = [tuple(map(float, i.split(", "))) for i in data["assignement"]]
                             for pos in positions:
                                 if hasattr(interact, "x") and hasattr(interact, "y"):
-                                    if interact.x == pos[0] and interact.y == pos[1]:
+                                    if (interact.x / Game.DISPLAY_RATIO) == pos[0] and (interact.y / Game.DISPLAY_RATIO) == pos[1]:
                                         if hasattr(interact, "activate"):
                                             interact.activate()
                                 if interact.rect.x == pos[0] and interact.rect.y == pos[1]:
@@ -161,13 +161,13 @@ class ButtonBlue(pygame.sprite.Sprite):
                     self.rect = self.image.get_rect()
                     self.rect.x = self.x + self.offset_x
                     self.rect.y = self.y + self.offset_y
-                    data = TileEditor.created_level["tiles"][str(round(self.x / Game.DISPLAY_RATIO, 4)) + ", " + str(round(self.y / Game.DISPLAY_RATIO, 4))]
+                    data = TileEditor.created_level["tiles"][str(self.x / Game.DISPLAY_RATIO) + ", " + str(self.y / Game.DISPLAY_RATIO)]
                     if "assignement" in data:
                         for interact in TileManager.interactible_blocks_group:
                             positions = [tuple(map(float, i.split(", "))) for i in data["assignement"]]
                             for pos in positions:
                                 if hasattr(interact, "x") and hasattr(interact, "y"):
-                                    if interact.x == pos[0] and interact.y == pos[1]:
+                                    if (interact.x / Game.DISPLAY_RATIO) == pos[0] and (interact.y / Game.DISPLAY_RATIO) == pos[1]:
                                         if hasattr(interact, "deactivate"):
                                             interact.deactivate()
                                 if interact.rect.x == pos[0] and interact.rect.y == pos[1]:
