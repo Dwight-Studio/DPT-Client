@@ -347,7 +347,7 @@ class Scenes:
                     "window": Window((Game.WINDOW_WIDTH // 2) - math.floor(122 * 3 * Game.DISPLAY_RATIO),
                                      buttons_y + button_height // 2 - math.floor(64 * 1.5 * Game.DISPLAY_RATIO), 6, 3),
                     "version_text": Text(0, 0,
-                                         "DPT v" + Game.VERSION + " (PyGame v" + Game.PYTHON_VERSION + ") on " + Game.PLATFORM,
+                                         "DPT v" + Game.VERSION + " (Python v" + Game.PYTHON_VERSION + " & PyGame v" + Game.PYGAME_VERSION + ") on " + Game.PLATFORM,
                                          math.floor(Game.DISPLAY_RATIO * 15),
                                          (0, 0, 0),
                                          "dpt.fonts.DINOT_CondBlack")}
