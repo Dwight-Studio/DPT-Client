@@ -1,14 +1,14 @@
 package fr.dwightstudio.dpt;
 
-import fr.dwightstudio.dpt.engine.graphics.VideoInit;
+import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
 
 public class dpt {
 
-    public VideoInit video = new VideoInit(300, 300);
+    public GLFWWindow window = new GLFWWindow(1280, 720);
 
     public void run(){
 
-        video.init();
+        window.init();
 
     }
 

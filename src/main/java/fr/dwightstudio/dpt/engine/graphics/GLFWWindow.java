@@ -12,13 +12,13 @@ import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.system.MemoryUtil.NULL;
 import static org.lwjgl.opengl.GL11.*;
 
-public class VideoInit {
+public class GLFWWindow {
 
     private long window;
     int v_WIDTH;
     int v_HEIGHT;
 
-    public VideoInit(int WIDTH, int HEIGHT) {
+    public GLFWWindow(int WIDTH, int HEIGHT) {
         v_WIDTH = WIDTH;
         v_HEIGHT = HEIGHT;
     }
@@ -45,7 +45,7 @@ public class VideoInit {
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // the window will be resizable
 
         // Create the window. Throw a RuntimeException if failed
-        window = glfwCreateWindow(300, 300, "Hello World!", NULL, NULL);
+        window = glfwCreateWindow(v_WIDTH, v_HEIGHT, "Don't Play Together Java Edition", NULL, NULL);
         if ( window == NULL )
             throw new RuntimeException("Failed to create the GLFW window");
 
