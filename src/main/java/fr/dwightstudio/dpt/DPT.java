@@ -4,7 +4,7 @@ import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
 
 public class DPT {
 
-    public GLFWWindow window = new GLFWWindow(1280, 720);
+    public GLFWWindow window = new GLFWWindow(1920, 1080);
 
     public void run(){
 
