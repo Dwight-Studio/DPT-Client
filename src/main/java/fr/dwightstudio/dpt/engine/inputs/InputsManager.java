@@ -1,18 +1,30 @@
 package fr.dwightstudio.dpt.engine.inputs;
 
+import org.lwjgl.glfw.GLFWCharCallbackI;
+import org.lwjgl.glfw.GLFWCharModsCallbackI;
 import org.lwjgl.glfw.GLFWKeyCallbackI;
 
 import static org.lwjgl.glfw.GLFW.*;
 
 public class InputsManager {
 
-    public GLFWKeyCallbackI key_callback = (window, key, scancode, action, mods) -> {
-        if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE ) {
-            glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
+    public GLFWCharModsCallbackI keyCallback = (window, codepoint, mods) -> {
+        if (codepoint == GameInputs.MOVE_RIGHT.getKey()) {
+            System.out.println("MOVE_RIGHT");
+        }
+        if (codepoint == GameInputs.MOVE_LEFT.getKey()) {
+            System.out.println("MOVE_LEFT");
+        }
+        if (codepoint == GameInputs.JUMP.getKey()) {
+            System.out.println("JUMP");
+        }
+        if (codepoint == GameInputs.INTERACT.getKey()) {
+            System.out.println("INTERACT");
         }
     };
 
-    private InputsManager(){}
+    // Default Singleton class
+    private InputsManager() {}
 
     private static final InputsManager instance = new InputsManager();
 

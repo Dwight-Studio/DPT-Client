@@ -48,11 +48,11 @@ public class GLFWWindow {
         }
 
         // Create a key callback. It will be called every time a key is pressed, repeated or released.
-        glfwSetKeyCallback(window, InputsManager.getInstance().key_callback);
+        glfwSetCharModsCallback(window, InputsManager.getInstance().keyCallback);
 
         // Make the OpenGL context current
         glfwMakeContextCurrent(window);
-        // Enable v-sync
+
         glfwSwapInterval(1);
 
         // Make the window visible
