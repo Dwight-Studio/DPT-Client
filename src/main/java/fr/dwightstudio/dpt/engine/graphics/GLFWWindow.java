@@ -1,5 +1,6 @@
 package fr.dwightstudio.dpt.engine.graphics;
 
+import fr.dwightstudio.dpt.engine.inputs.InputsManager;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 
@@ -41,17 +42,13 @@ public class GLFWWindow {
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // the window will be resizable
 
         // Create the window. Throw a RuntimeException if failed
-        window = glfwCreateWindow(WIDTH, HEIGHT, "Don't Play Together Java Edition", NULL, NULL);
+        window = glfwCreateWindow(WIDTH, HEIGHT, "Don't Play Together 2.0", NULL, NULL);
         if ( window == NULL ) {
             throw new RuntimeException("Failed to create the GLFW window");
         }
 
         // Create a key callback. It will be called every time a key is pressed, repeated or released.
-        glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
-            if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE ) {
-                glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
-            }
-        });
+        glfwSetKeyCallback(window, InputsManager.getInstance().key_callback);
 
         // Make the OpenGL context current
         glfwMakeContextCurrent(window);
