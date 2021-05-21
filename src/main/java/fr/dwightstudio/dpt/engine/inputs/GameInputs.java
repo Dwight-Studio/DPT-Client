@@ -1,24 +1,25 @@
 package fr.dwightstudio.dpt.engine.inputs;
 
-import static org.lwjgl.glfw.GLFW.*;
-
 public enum GameInputs {
     MOVE_RIGHT('d'),
     MOVE_LEFT('q'),
     JUMP(' '),
-    INTERACT('e');
+    INTERACT('e'),
+    LEFT_CLICK(0),
+    RIGHT_CLICK(1),
+    MIDDLE_CLICK(2);
 
-    private int glfwKey;
+    private int button;
 
-    GameInputs(int glfwKey) {
-        this.glfwKey = glfwKey;
+    GameInputs(int button) {
+        this.button = button;
     }
 
     public int getKey() {
-        return this.glfwKey;
+        return this.button;
     }
 
-    public void setKey(int key) {
-        this.glfwKey = key;
+    public void setKey(int button) {
+        this.button = button;
     }
 }
