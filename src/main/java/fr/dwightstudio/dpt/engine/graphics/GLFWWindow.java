@@ -2,10 +2,12 @@ package fr.dwightstudio.dpt.engine.graphics;
 
 import fr.dwightstudio.dpt.engine.inputs.KeyboardListener;
 import fr.dwightstudio.dpt.engine.inputs.MouseListener;
+import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 
 import java.util.Objects;
+import java.util.logging.Level;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -37,6 +39,7 @@ public class GLFWWindow {
 
         // Initialize GLFW. Throw an IllegalStateException if failed
         if ( !glfwInit() ) {
+            GameLogger.logger.log(Level.SEVERE, "");
             throw new IllegalStateException("Unable to initialize GLFW");
         }
 
@@ -48,6 +51,7 @@ public class GLFWWindow {
         // Create the window. Throw a RuntimeException if failed
         window = glfwCreateWindow(WIDTH, HEIGHT, "Don't Play Together 2.0", NULL, NULL);
         if ( window == NULL ) {
+            GameLogger.logger.log(Level.SEVERE, "");
             throw new RuntimeException("Failed to create the GLFW window");
         }
 
@@ -65,6 +69,7 @@ public class GLFWWindow {
 
         // Make the window visible
         glfwShowWindow(window);
+        GameLogger.logger.log(Level.INFO, "Window initialized");
         loop();
     }
 
@@ -80,6 +85,7 @@ public class GLFWWindow {
 
             glfwSwapBuffers(window); // swap the color buffers
         }
+        GameLogger.logger.log(Level.INFO, "Terminated");
         glfwFreeCallbacks(window);
         glfwDestroyWindow(window);
         glfwTerminate();

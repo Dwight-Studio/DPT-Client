@@ -1,13 +1,16 @@
 package fr.dwightstudio.dpt;
 
 import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
+import fr.dwightstudio.dpt.engine.logging.GameLogger;
 
 public class DPT {
 
     public GLFWWindow window = new GLFWWindow(640, 360);
 
     public void run(){
-        window.init();
+        if (GameLogger.init()) {
+            window.init();
+        }
     }
 
     public static void main(String[] args){
