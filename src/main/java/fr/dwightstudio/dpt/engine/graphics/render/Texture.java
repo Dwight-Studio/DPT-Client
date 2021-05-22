@@ -1,4 +1,4 @@
-package fr.dwightstudio.dpt.engine.graphics;
+package fr.dwightstudio.dpt.engine.graphics.render;
 
 import static org.lwjgl.opengl.GL11.*;
 

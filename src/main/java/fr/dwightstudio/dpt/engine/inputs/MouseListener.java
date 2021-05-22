@@ -10,68 +10,60 @@ public class MouseListener {
 
     private static MouseListener instance;
 
-    private float xPos;
-    private float yPos;
-    private final boolean[] mouseButtons = new boolean[3];
-    private float scrollX;
-    private float scrollY;
+    private static float xPos;
+    private static float yPos;
+    private static final boolean[] mouseButtons = new boolean[3];
+    private static float scrollX;
+    private static float scrollY;
 
     private MouseListener() {
-        this.xPos = 0.0F;
-        this.yPos = 0.0F;
-        this.scrollX = 0.0F;
-        this.scrollY = 0.0F;
-    }
-
-    public static MouseListener getInstance() {
-        if (MouseListener.instance == null) {
-            MouseListener.instance = new MouseListener();
-        }
-
-        return MouseListener.instance;
+        xPos = 0.0F;
+        yPos = 0.0F;
+        scrollX = 0.0F;
+        scrollY = 0.0F;
     }
 
     public static GLFWMouseButtonCallbackI mouseButtonCallback = (window, button, action, mods) -> {
-        if (button < getInstance().mouseButtons.length) {
-            getInstance().mouseButtons[button] = action == GLFW_PRESS;
+        if (button < mouseButtons.length) {
+            mouseButtons[button] = action == GLFW_PRESS;
         }
     };
 
     public static GLFWCursorPosCallbackI cursorPosCallback = (window, xpos, ypos) -> {
-        getInstance().xPos = (float) xpos;
-        getInstance().yPos = (float) ypos;
+        xPos = (float) xpos;
+        yPos = (float) ypos;
     };
 
     public static GLFWScrollCallbackI mouseScrollCallback = (window, xoffset, yoffset) -> {
-        getInstance().scrollX = (float) xoffset;
-        getInstance().scrollY = (float) yoffset;
+        scrollX = (float) xoffset;
+        scrollY = (float) yoffset;
     };
 
     public static void endFrame() {
-        getInstance().scrollX = 0.0F;
-        getInstance().scrollY = 0.0F;
+        scrollX = 0.0F;
+        scrollY = 0.0F;
     }
 
     public static float getX() {
-        return getInstance().xPos;
+        return xPos;
     }
 
     public static float getY() {
-        return getInstance().yPos;
+        return yPos;
     }
 
     public static boolean isButtonPressed(int button) {
-        if (button < getInstance().mouseButtons.length) {
-            return getInstance().mouseButtons[button];
+        if (button < mouseButtons.length) {
+            return mouseButtons[button];
         }
         return false;
     }
 
     public static float getScrollX() {
-        return getInstance().scrollX;
+        return scrollX;
     }
 
     public static float getScrollY() {
-        return getInstance().scrollY;
+        return scrollY;
     }
 }
