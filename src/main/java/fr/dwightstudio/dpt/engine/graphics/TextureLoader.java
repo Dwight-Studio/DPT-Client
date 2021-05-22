@@ -3,7 +3,9 @@ package fr.dwightstudio.dpt.engine.graphics;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -11,7 +13,11 @@ import static org.lwjgl.stb.STBImage.stbi_image_free;
 import static org.lwjgl.stb.STBImage.stbi_load;
 
 public class TextureLoader {
+
     private static TextureLoader instance;
+
+    public static List<Integer> texturesList = new ArrayList<>();
+
     private final int[] width;
     private final int[] height;
     private final int[] nbChannel;
@@ -43,6 +49,8 @@ public class TextureLoader {
             glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, getInstance().width[0], getInstance().height[0], 0, GL_RGBA, GL_UNSIGNED_BYTE, texture);
             stbi_image_free(texture);
+            glBindTexture(GL_TEXTURE_2D, 0); // Unbinding any texture at the end to make sure it is not modified after
+            texturesList.add(getInstance().id);
             GameLogger.logger.log(Level.FINE, "Finished loading texture : {0}", new Object[] {file});
             return new Texture(getInstance().width[0], getInstance().height[0], getInstance().id, getInstance().nbChannel[0]);
         }

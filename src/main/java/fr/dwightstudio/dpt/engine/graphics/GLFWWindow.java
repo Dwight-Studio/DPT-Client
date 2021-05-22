@@ -1,5 +1,6 @@
 package fr.dwightstudio.dpt.engine.graphics;
 
+import com.google.common.primitives.Ints;
 import fr.dwightstudio.dpt.engine.inputs.KeyboardListener;
 import fr.dwightstudio.dpt.engine.inputs.MouseListener;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
@@ -12,6 +13,7 @@ import java.util.logging.Level;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL15.glDeleteBuffers;
 import static org.lwjgl.system.MemoryUtil.NULL;
 import static org.lwjgl.opengl.GL11.*;
 
@@ -101,14 +103,19 @@ public class GLFWWindow {
 
             glClear(GL_COLOR_BUFFER_BIT); // clear the framebuffer
 
-            tile.blit();
+            tile.render();
 
             glfwSwapBuffers(window); // swap the color buffers
         }
-        GameLogger.logger.log(Level.INFO, "Terminated");
+        GameLogger.logger.log(Level.INFO, "Cleaning...");
         glfwFreeCallbacks(window);
         glfwDestroyWindow(window);
         glfwTerminate();
         Objects.requireNonNull(glfwSetErrorCallback(null)).free();
+        int[] textures = Ints.toArray(TextureLoader.texturesList);
+        int[] vbos = Ints.toArray(TexturedVBO.vboList);
+        glDeleteTextures(textures);
+        glDeleteBuffers(vbos);
+        GameLogger.logger.log(Level.INFO, "Terminated");
     }
 }
