@@ -1,8 +1,10 @@
 package fr.dwightstudio.dpt.engine.graphics;
 
 import com.google.common.primitives.Ints;
+import fr.dwightstudio.dpt.engine.graphics.render.Shader;
 import fr.dwightstudio.dpt.engine.graphics.render.Texture;
 import fr.dwightstudio.dpt.engine.graphics.render.TexturedVBO;
+import fr.dwightstudio.dpt.engine.graphics.utils.ShaderLoader;
 import fr.dwightstudio.dpt.engine.graphics.utils.TextureLoader;
 import fr.dwightstudio.dpt.engine.inputs.KeyboardListener;
 import fr.dwightstudio.dpt.engine.inputs.MouseListener;
@@ -19,6 +21,7 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL15.glDeleteBuffers;
 import static org.lwjgl.system.MemoryUtil.NULL;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL20.*;
 
 public class GLFWWindow {
 
@@ -81,15 +84,15 @@ public class GLFWWindow {
     }
 
     private void loop() {
-        Texture texture = TextureLoader.loadTexture("./src/ressources/test.png");
+        Texture texture = TextureLoader.loadTexture("./src/ressources/textures/test.png");
+        Shader shader = ShaderLoader.loadShaderFile("./src/ressources/shaders/default.glsl");
         Tile tile = new Tile(400, 300, 100, texture);
-        Tile tile2 = new Tile(200, 150, 100, texture);
+        Tile tile2 = new Tile(200, 150, 100, texture, shader);
 
         float beginTime = Time.getDeltaTime();
         float endTime;
 
         while (!glfwWindowShouldClose(window)) {
-
             glfwPollEvents(); // The key callback will be invoked only during this call
 
             glClear(GL_COLOR_BUFFER_BIT); // Clear the framebuffer
@@ -112,6 +115,9 @@ public class GLFWWindow {
         glfwTerminate(); // Terminate GLFW
         glDeleteTextures(Ints.toArray(TextureLoader.texturesList)); // Delete all the textures
         glDeleteBuffers(Ints.toArray(TexturedVBO.vboList)); // Delete all the buffers
+        for (int programID : ShaderLoader.programsList) {
+            glDeleteProgram(programID); // Delete all the shader programs
+        }
         GameLogger.logger.log(Level.INFO, "Terminated");
     }
 }
