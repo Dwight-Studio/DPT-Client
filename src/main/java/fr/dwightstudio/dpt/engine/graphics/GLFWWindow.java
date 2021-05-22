@@ -3,6 +3,7 @@ package fr.dwightstudio.dpt.engine.graphics;
 import fr.dwightstudio.dpt.engine.inputs.KeyboardListener;
 import fr.dwightstudio.dpt.engine.inputs.MouseListener;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
+import fr.dwightstudio.dpt.game.graphics.Tile;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 
@@ -76,15 +77,23 @@ public class GLFWWindow {
     private void loop() {
         // Called before any OpenGL function
         GL.createCapabilities();
+
+        // Enable the GL_TEXTURE_2D feature
         glEnable(GL_TEXTURE_2D);
+
         // Setting up a projection matrix
         glMatrixMode(GL_PROJECTION);
+
         // Resets any previous projection matriced
         glLoadIdentity();
+
         // Create the orthographic projection
         // (0, 0) is the upper-left corner and (WIDTH, HEIGHT) the bottom-right corner
         glOrtho(0, WIDTH, HEIGHT, 0, 1, -1);
         glMatrixMode(GL_MODELVIEW);
+
+        Texture texture = TextureLoader.loadTexture("./src/ressources/test.png");
+        Tile tile = new Tile(400, 300, 100, texture);
 
         while (!glfwWindowShouldClose(window)) {
             // The key callback will be invoked only during this call
@@ -92,16 +101,7 @@ public class GLFWWindow {
 
             glClear(GL_COLOR_BUFFER_BIT); // clear the framebuffer
 
-            glBegin(GL_QUADS);
-            glTexCoord2f(0, 0);
-            glVertex2f(0,  0);
-            glTexCoord2f(1, 0);
-            glVertex2f(100,  0);
-            glTexCoord2f(1, 1);
-            glVertex2f(100,  100);
-            glTexCoord2f(0, 1);
-            glVertex2f(0,  100);
-            glEnd();
+            tile.blit();
 
             glfwSwapBuffers(window); // swap the color buffers
         }

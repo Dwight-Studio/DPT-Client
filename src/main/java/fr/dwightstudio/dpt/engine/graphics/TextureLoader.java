@@ -11,50 +11,40 @@ import static org.lwjgl.stb.STBImage.stbi_image_free;
 import static org.lwjgl.stb.STBImage.stbi_load;
 
 public class TextureLoader {
+    private static TextureLoader instance;
     private final int[] width;
     private final int[] height;
     private final int[] nbChannel;
     private int id;
 
-    public TextureLoader(String file) {
+    private TextureLoader() {
         this.width = new int[1];
         this.height = new int[1];
         this.nbChannel = new int[1];
-        loadTexture(file);
     }
 
-    private void loadTexture(String file) {
-        ByteBuffer texture = stbi_load(file, width, height, nbChannel, 4);
+    public static TextureLoader getInstance() {
+        if (TextureLoader.instance == null) {
+            TextureLoader.instance = new TextureLoader();
+        }
+
+        return instance;
+    }
+
+    public static Texture loadTexture(String file) {
+        ByteBuffer texture = stbi_load(file, getInstance().width, getInstance().height, getInstance().nbChannel, 4);
         if (texture == null) {
             GameLogger.logger.log(Level.WARNING, "File not found : {0}", new Object[] {file});
+            return null;
         } else {
-            id = glGenTextures();
-            glBindTexture(GL_TEXTURE_2D, id);
+            getInstance().id = glGenTextures();
+            glBindTexture(GL_TEXTURE_2D, getInstance().id);
             glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
             glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width[0], height[0], 0, GL_RGBA, GL_UNSIGNED_BYTE, texture);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, getInstance().width[0], getInstance().height[0], 0, GL_RGBA, GL_UNSIGNED_BYTE, texture);
             stbi_image_free(texture);
             GameLogger.logger.log(Level.FINE, "Finished loading texture : {0}", new Object[] {file});
+            return new Texture(getInstance().width[0], getInstance().height[0], getInstance().id, getInstance().nbChannel[0]);
         }
-    }
-
-    public void bind() {
-        glBindTexture(GL_TEXTURE_2D, id);
-    }
-
-    public int getWidth() {
-        return this.width[0];
-    }
-
-    public int getHeight() {
-        return this.height[0];
-    }
-
-    public int getChannelsNumber() {
-        return this.nbChannel[0];
-    }
-
-    public int getTextureID() {
-        return this.id;
     }
 }
