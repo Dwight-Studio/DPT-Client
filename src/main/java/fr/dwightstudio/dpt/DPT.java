@@ -5,7 +5,7 @@ import fr.dwightstudio.dpt.engine.logging.GameLogger;
 
 public class DPT {
 
-    public GLFWWindow window = new GLFWWindow(640, 360);
+    public GLFWWindow window = new GLFWWindow(960, 540);
 
     public void run(){
         if (GameLogger.init()) {

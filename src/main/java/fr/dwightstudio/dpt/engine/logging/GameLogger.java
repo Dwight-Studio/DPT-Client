@@ -14,6 +14,7 @@ public class GameLogger {
     public static boolean init() {
         try {
             logManager.readConfiguration(new FileInputStream("logger.properties"));
+            logger.setLevel(Level.FINER);
             logger.log(Level.INFO, "Logger Initialized");
             return true;
         } catch (IOException exception) {

@@ -46,7 +46,7 @@ public class GLFWWindow {
         // Configure GLFW
         glfwDefaultWindowHints(); // optional, the current window hints are already the default
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // the window will stay hidden after creation
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // the window will be resizable
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE); // the window will be resizable
 
         // Create the window. Throw a RuntimeException if failed
         window = glfwCreateWindow(WIDTH, HEIGHT, "Don't Play Together 2.0", NULL, NULL);
@@ -76,12 +76,32 @@ public class GLFWWindow {
     private void loop() {
         // Called before any OpenGL function
         GL.createCapabilities();
+        glEnable(GL_TEXTURE_2D);
+        // Setting up a projection matrix
+        glMatrixMode(GL_PROJECTION);
+        // Resets any previous projection matriced
+        glLoadIdentity();
+        // Create the orthographic projection
+        // (0, 0) is the upper-left corner and (WIDTH, HEIGHT) the bottom-right corner
+        glOrtho(0, WIDTH, HEIGHT, 0, 1, -1);
+        glMatrixMode(GL_MODELVIEW);
 
         while (!glfwWindowShouldClose(window)) {
             // The key callback will be invoked only during this call
             glfwPollEvents();
 
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+            glClear(GL_COLOR_BUFFER_BIT); // clear the framebuffer
+
+            glBegin(GL_QUADS);
+            glTexCoord2f(0, 0);
+            glVertex2f(0,  0);
+            glTexCoord2f(1, 0);
+            glVertex2f(100,  0);
+            glTexCoord2f(1, 1);
+            glVertex2f(100,  100);
+            glTexCoord2f(0, 1);
+            glVertex2f(0,  100);
+            glEnd();
 
             glfwSwapBuffers(window); // swap the color buffers
         }
