@@ -96,6 +96,7 @@ public class GLFWWindow {
 
         Texture texture = TextureLoader.loadTexture("./src/ressources/test.png");
         Tile tile = new Tile(400, 300, 100, texture);
+        Tile tile2 = new Tile(200, 150, 100, texture);
 
         while (!glfwWindowShouldClose(window)) {
             // The key callback will be invoked only during this call
@@ -104,6 +105,7 @@ public class GLFWWindow {
             glClear(GL_COLOR_BUFFER_BIT); // clear the framebuffer
 
             tile.render();
+            tile2.render();
 
             glfwSwapBuffers(window); // swap the color buffers
         }
@@ -112,10 +114,8 @@ public class GLFWWindow {
         glfwDestroyWindow(window);
         glfwTerminate();
         Objects.requireNonNull(glfwSetErrorCallback(null)).free();
-        int[] textures = Ints.toArray(TextureLoader.texturesList);
-        int[] vbos = Ints.toArray(TexturedVBO.vboList);
-        glDeleteTextures(textures);
-        glDeleteBuffers(vbos);
+        glDeleteTextures(Ints.toArray(TextureLoader.texturesList));
+        glDeleteBuffers(Ints.toArray(TexturedVBO.vboList));
         GameLogger.logger.log(Level.INFO, "Terminated");
     }
 }
