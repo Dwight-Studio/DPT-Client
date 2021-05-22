@@ -20,10 +20,10 @@ public class TextureLoader {
         this.width = new int[1];
         this.height = new int[1];
         this.nbChannel = new int[1];
-        load_texture(file);
+        loadTexture(file);
     }
 
-    private void load_texture(String file) {
+    private void loadTexture(String file) {
         ByteBuffer texture = stbi_load(file, width, height, nbChannel, 4);
         if (texture == null) {
             GameLogger.logger.log(Level.WARNING, "File not found : {0}", new Object[] {file});
@@ -40,5 +40,21 @@ public class TextureLoader {
 
     public void bind() {
         glBindTexture(GL_TEXTURE_2D, id);
+    }
+
+    public int getWidth() {
+        return this.width[0];
+    }
+
+    public int getHeight() {
+        return this.height[0];
+    }
+
+    public int getChannelsNumber() {
+        return this.nbChannel[0];
+    }
+
+    public int getTextureID() {
+        return this.id;
     }
 }
