@@ -78,10 +78,21 @@ public class ShaderLoader {
         int shaderProgramID = glCreateProgram();
         glAttachShader(shaderProgramID, vertexID);
         glAttachShader(shaderProgramID, fragmentID);
+
+        glBindAttribLocation(shaderProgramID, 0, "vertices");
+
         glLinkProgram(shaderProgramID);
 
         if (glGetProgrami(shaderProgramID, GL_LINK_STATUS) == GL_FALSE) {
             GameLogger.logger.log(Level.SEVERE, "Error linking shader : {0}", new Object[] {file});
+            GameLogger.logger.log(Level.SEVERE, glGetProgramInfoLog(fragmentID, glGetProgrami(shaderProgramID, GL_INFO_LOG_LENGTH)));
+            return null;
+        }
+
+        glValidateProgram(shaderProgramID);
+
+        if (glGetProgrami(shaderProgramID, GL_VALIDATE_STATUS) != 1) {
+            GameLogger.logger.log(Level.SEVERE, "Error validating shader : {0}", new Object[] {file});
             GameLogger.logger.log(Level.SEVERE, glGetProgramInfoLog(fragmentID, glGetProgrami(shaderProgramID, GL_INFO_LOG_LENGTH)));
             return null;
         }

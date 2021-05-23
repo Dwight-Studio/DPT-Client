@@ -1,9 +1,8 @@
 package fr.dwightstudio.dpt.engine.graphics;
 
 import com.google.common.primitives.Ints;
-import fr.dwightstudio.dpt.engine.graphics.render.Shader;
 import fr.dwightstudio.dpt.engine.graphics.render.Texture;
-import fr.dwightstudio.dpt.engine.graphics.render.TexturedVBO;
+import fr.dwightstudio.dpt.engine.graphics.render.VBO;
 import fr.dwightstudio.dpt.engine.graphics.utils.ShaderLoader;
 import fr.dwightstudio.dpt.engine.graphics.utils.TextureLoader;
 import fr.dwightstudio.dpt.engine.inputs.KeyboardListener;
@@ -74,20 +73,14 @@ public class GLFWWindow {
         glfwShowWindow(window); // Make the window visible
         GL.createCapabilities(); // Called before any OpenGL function
         glEnable(GL_TEXTURE_2D); // Enable the GL_TEXTURE_2D feature
-        glMatrixMode(GL_PROJECTION); // Setting up a projection matrix
         glLoadIdentity(); // Resets any previous projection matriced
-        // NOTE: (0, 0) is the upper-left corner and (WIDTH, HEIGHT) the bottom-right corner
-        glOrtho(0, WIDTH, HEIGHT, 0, 1, -1); // Create the orthographic projection
-        glMatrixMode(GL_MODELVIEW);
         GameLogger.logger.log(Level.INFO, "Window initialized");
         loop(); // Start the loop
     }
 
     private void loop() {
         Texture texture = TextureLoader.loadTexture("./src/ressources/textures/test.png");
-        Shader shader = ShaderLoader.loadShaderFile("./src/ressources/shaders/default.glsl");
         Tile tile = new Tile(400, 300, 100, texture);
-        Tile tile2 = new Tile(200, 150, 100, texture, shader);
 
         float beginTime = Time.getDeltaTime();
         float endTime;
@@ -98,12 +91,12 @@ public class GLFWWindow {
             glClear(GL_COLOR_BUFFER_BIT); // Clear the framebuffer
 
             tile.render();
-            tile2.render();
 
             glfwSwapBuffers(window); // Swap the color buffers
 
             endTime = Time.getDeltaTime();
             float dt = endTime - beginTime;
+            Time.setDTime(dt);
             //System.out.println(Math.round(1.0f / dt) + " FPS");
             beginTime = endTime;
         }
@@ -114,7 +107,7 @@ public class GLFWWindow {
         glfwDestroyWindow(window); // Destroy the GLFWWindow
         glfwTerminate(); // Terminate GLFW
         glDeleteTextures(Ints.toArray(TextureLoader.texturesList)); // Delete all the textures
-        glDeleteBuffers(Ints.toArray(TexturedVBO.vboList)); // Delete all the buffers
+        glDeleteBuffers(Ints.toArray(VBO.vboList)); // Delete all the buffers
         for (int programID : ShaderLoader.programsList) {
             glDeleteProgram(programID); // Delete all the shader programs
         }

@@ -1,7 +1,11 @@
 package fr.dwightstudio.dpt.engine.graphics.render;
 
-import static org.lwjgl.opengl.GL20.glDeleteProgram;
-import static org.lwjgl.opengl.GL20.glUseProgram;
+import org.joml.Matrix4f;
+import org.lwjgl.BufferUtils;
+
+import java.nio.FloatBuffer;
+
+import static org.lwjgl.opengl.GL20.*;
 
 public class Shader {
 
@@ -21,5 +25,11 @@ public class Shader {
 
     public void delete() {
         glDeleteProgram(programID);
+    }
+
+    public void uploadMat4f(String varName, Matrix4f mat4) {
+        FloatBuffer matBuffer = BufferUtils.createFloatBuffer(16);
+        mat4.get(matBuffer);
+        glUniformMatrix4fv(glGetUniformLocation(programID, varName), false, matBuffer);
     }
 }
