@@ -66,7 +66,8 @@ public class VBO {
     }
 
     public void render() {
-        camera.position.x -= Time.getDTime() * 50.0f;
+        //camera.position.x -= Time.getDTime() * 50.0f;
+        //camera.position.y -= Time.getDTime() * 25.0f;
         Objects.requireNonNull(shader).bind();
         shader.uploadMat4f("uProjectionMatrix", camera.getProjectionMatrix());
         shader.uploadMat4f("uViewMatrix", camera.getViewMatrix());

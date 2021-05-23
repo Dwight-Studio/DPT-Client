@@ -1,6 +1,7 @@
 package fr.dwightstudio.dpt.engine.graphics;
 
 import com.google.common.primitives.Ints;
+import fr.dwightstudio.dpt.engine.graphics.render.Color;
 import fr.dwightstudio.dpt.engine.graphics.render.Texture;
 import fr.dwightstudio.dpt.engine.graphics.render.VBO;
 import fr.dwightstudio.dpt.engine.graphics.utils.ShaderLoader;
@@ -15,6 +16,8 @@ import org.lwjgl.opengl.GL;
 
 import java.util.logging.Level;
 
+import static fr.dwightstudio.dpt.engine.Engine.ENGINE_FULLSCREEN;
+import static fr.dwightstudio.dpt.engine.Engine.ENGINE_WINDOWED;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL15.glDeleteBuffers;
@@ -25,12 +28,14 @@ import static org.lwjgl.opengl.GL20.*;
 public class GLFWWindow {
 
     private long window;
-    final int WIDTH;
-    final int HEIGHT;
+    private final int WIDTH;
+    private final int HEIGHT;
+    private final long windowMode;
 
-    public GLFWWindow(int WIDTH, int HEIGHT) {
+    public GLFWWindow(int WIDTH, int HEIGHT, long windowMode) {
         this.WIDTH = WIDTH;
         this.HEIGHT = HEIGHT;
+        this.windowMode = windowMode;
     }
 
     public int getWidth(){
@@ -55,8 +60,14 @@ public class GLFWWindow {
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // the window will stay hidden after creation
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE); // the window will be resizable
 
-        // Create the window. Throw a RuntimeException if failed
-        window = glfwCreateWindow(WIDTH, HEIGHT, "Don't Play Together 2.0", NULL, NULL);
+        // Create the window. Throw a RuntimeException if
+        if (windowMode == ENGINE_FULLSCREEN) {
+            window = glfwCreateWindow(WIDTH, HEIGHT, "Don't Play Together 2.0", glfwGetPrimaryMonitor(), NULL);
+        } else if (windowMode == ENGINE_WINDOWED) {
+            window = glfwCreateWindow(WIDTH, HEIGHT, "Don't Play Together 2.0", NULL, NULL);
+        } else {
+            window = NULL;
+        }
         if ( window == NULL ) {
             throw new RuntimeException("Failed to create the GLFW window");
         }
@@ -80,7 +91,8 @@ public class GLFWWindow {
 
     private void loop() {
         Texture texture = TextureLoader.loadTexture("./src/ressources/textures/test.png");
-        Tile tile = new Tile(400, 300, 100, texture);
+        Color color = new Color(0, 1, 0);
+        Tile tile = new Tile(0, 0, 32, color);
 
         float beginTime = Time.getDeltaTime();
         float endTime;

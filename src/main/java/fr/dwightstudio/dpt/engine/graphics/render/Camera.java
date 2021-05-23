@@ -1,8 +1,11 @@
 package fr.dwightstudio.dpt.engine.graphics.render;
 
+import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+
+import java.util.logging.Level;
 
 public class Camera {
     private final Matrix4f projectionMatrix;
@@ -10,26 +13,24 @@ public class Camera {
     public final Vector2f position;
 
     public Camera(Vector2f position) {
-        this.position = position;
+        this.position = position; // Since we are in a 2D view we don't need a Vector3
         this.projectionMatrix = new Matrix4f();
         this.viewMatrix = new Matrix4f();
         adjustProjection();
     }
 
     public void adjustProjection() {
-        projectionMatrix.identity();
-        // TODO: Create a constant value for the TILE SIZE and the NUMBER OF TILE keeping in mind that the default
-        //       screen size is 1920x1080. For now it set for a 1280x762 screen size.
-        projectionMatrix.ortho(0.0f, 32.0f * 40.f, 0.0f, 32.0f * 21.0f, 0.0f, 100.0f);
+        projectionMatrix.identity(); // Reset the projection matrix (put 0 everywhere)
+        projectionMatrix.ortho(0.0f, 32.0f * 40.0f, 0.0f, 32.0f * 23.0f, 0.0f, 100.0f);
     }
 
     public Matrix4f getViewMatrix() {
-        Vector3f cameraFront = new Vector3f(0.0f, 0.0f, -1.0f);
-        Vector3f cameraUp = new Vector3f(0.0f, 1.0f, 0.0f);
-        this.viewMatrix.identity();
-        viewMatrix.lookAt(new Vector3f(position.x, position.y, 20.0f),
-                                       cameraFront.add(position.x, position.y, 0.0f),
-                                       cameraUp);
+        Vector3f cameraFront = new Vector3f(0.0f, 0.0f, -1.0f); // Set the front position of the camera
+        Vector3f cameraUp = new Vector3f(0.0f, 1.0f, 0.0f); // Set the up position of the camera (for the camera to go up we need to add +1 unit to the y axis)
+        this.viewMatrix.identity(); // Reset the wiew Matrix
+        viewMatrix.lookAt(new Vector3f(position.x, position.y, 0.0f), // We are forced to use Vector3 here even if the z is unused
+                          cameraFront.add(position.x, position.y, 0.0f), // The point were the camera look at. By default : 0, 0, -1
+                          cameraUp);
         return this.viewMatrix;
     }
 
