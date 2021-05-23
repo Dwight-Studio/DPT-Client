@@ -1,16 +1,10 @@
 package fr.dwightstudio.dpt.engine.graphics;
 
-import com.google.common.primitives.Ints;
-import fr.dwightstudio.dpt.engine.graphics.render.Color;
-import fr.dwightstudio.dpt.engine.graphics.render.Texture;
-import fr.dwightstudio.dpt.engine.graphics.render.VBO;
-import fr.dwightstudio.dpt.engine.graphics.utils.ShaderLoader;
-import fr.dwightstudio.dpt.engine.graphics.utils.TextureLoader;
+import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
 import fr.dwightstudio.dpt.engine.inputs.KeyboardListener;
 import fr.dwightstudio.dpt.engine.inputs.MouseListener;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.engine.utils.Time;
-import fr.dwightstudio.dpt.game.graphics.Tile;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 
@@ -23,7 +17,6 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL15.glDeleteBuffers;
 import static org.lwjgl.system.MemoryUtil.NULL;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL20.*;
 
 public class GLFWWindow {
 
@@ -90,26 +83,26 @@ public class GLFWWindow {
     }
 
     private void loop() {
-        Texture texture = TextureLoader.loadTexture("./src/ressources/textures/test.png");
-        Color color = new Color(0, 1, 0);
-        Tile tile = new Tile(0, 0, 32, color);
-        Tile tile2 = new Tile(100, 100, 32, texture);
+
+        SceneManager.changeScene(0); // By default the scene with index 0 is instanciated
 
         float beginTime = Time.getDeltaTime();
         float endTime;
+        float dt = -1.0f;
 
         while (!glfwWindowShouldClose(window)) {
             glfwPollEvents(); // The key callback will be invoked only during this call
 
             glClear(GL_COLOR_BUFFER_BIT); // Clear the framebuffer
 
-            tile.render();
-            tile2.render();
+            if (dt >= 0) {
+                SceneManager.getCurrentScene().update(dt);
+            }
 
             glfwSwapBuffers(window); // Swap the color buffers
 
             endTime = Time.getDeltaTime();
-            float dt = endTime - beginTime;
+            dt = endTime - beginTime;
             Time.setDTime(dt);
             //System.out.println(Math.round(1.0f / dt) + " FPS");
             beginTime = endTime;
@@ -120,11 +113,6 @@ public class GLFWWindow {
         glfwFreeCallbacks(window); // Freeing all the callbacks
         glfwDestroyWindow(window); // Destroy the GLFWWindow
         glfwTerminate(); // Terminate GLFW
-        glDeleteTextures(Ints.toArray(TextureLoader.texturesList)); // Delete all the textures
-        glDeleteBuffers(Ints.toArray(VBO.vboList)); // Delete all the buffers
-        for (int programID : ShaderLoader.programsList) {
-            glDeleteProgram(programID); // Delete all the shader programs
-        }
         GameLogger.logger.log(Level.INFO, "Terminated");
     }
 }

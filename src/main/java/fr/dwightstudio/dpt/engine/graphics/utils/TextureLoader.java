@@ -14,8 +14,6 @@ import static org.lwjgl.stb.STBImage.stbi_load;
 
 public class TextureLoader {
 
-    public static List<Integer> texturesList = new ArrayList<>();
-
     private static final int[] width = new int[1];
     private static final int[] height = new int[1];
     private static final int[] nbChannel = new int[1];
@@ -33,7 +31,6 @@ public class TextureLoader {
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width[0], height[0], 0, GL_RGBA, GL_UNSIGNED_BYTE, texture);
             stbi_image_free(texture);
             glBindTexture(GL_TEXTURE_2D, 0); // Unbinding any texture at the end to make sure it is not modified after
-            texturesList.add(id);
             GameLogger.logger.log(Level.FINE, "Finished loading texture : {0}", new Object[] {file});
             return new Texture(width[0], height[0], id, nbChannel[0]);
         }

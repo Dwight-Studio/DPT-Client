@@ -4,10 +4,11 @@ import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
 
 import static fr.dwightstudio.dpt.engine.Engine.ENGINE_FULLSCREEN;
+import static fr.dwightstudio.dpt.engine.Engine.ENGINE_WINDOWED;
 
 public class DPT {
 
-    public GLFWWindow window = new GLFWWindow(1920, 1080, ENGINE_FULLSCREEN);
+    public GLFWWindow window = new GLFWWindow(1280, 720, ENGINE_WINDOWED);
 
     public void run(){
         if (GameLogger.init()) {

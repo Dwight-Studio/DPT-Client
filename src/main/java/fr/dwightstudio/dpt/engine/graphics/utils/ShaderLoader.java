@@ -14,8 +14,6 @@ import static org.lwjgl.opengl.GL20.*;
 
 public class ShaderLoader {
 
-    public static List<Integer> programsList = new ArrayList<>();
-
     private static final StringBuilder vertexShader = new StringBuilder();
     private static final StringBuilder fragmentShader = new StringBuilder();
     private static String file;

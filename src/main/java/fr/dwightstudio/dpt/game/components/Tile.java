@@ -1,10 +1,11 @@
-package fr.dwightstudio.dpt.game.graphics;
+package fr.dwightstudio.dpt.game.components;
 
 import fr.dwightstudio.dpt.engine.graphics.render.Color;
 import fr.dwightstudio.dpt.engine.graphics.render.Texture;
 import fr.dwightstudio.dpt.engine.graphics.render.VBO;
+import fr.dwightstudio.dpt.engine.scripting.Component;
 
-public class Tile {
+public class Tile extends Component {
     private final Texture texture;
     private final Color color;
     private final VBO vbo;
@@ -45,7 +46,16 @@ public class Tile {
         this.vbo = new VBO(vertexArray, elementArray);
     }
 
-    public void render() {
+    public Color getColor() {
+        return color;
+    }
+
+    public Texture getTexture() {
+        return texture;
+    }
+
+    @Override
+    public void update(float dt) {
         if (texture != null) {
             texture.bind();
             vbo.render(true, false);
@@ -53,13 +63,5 @@ public class Tile {
             vbo.render(false, true);
         }
         if (texture != null) texture.unbind();
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public Texture getTexture() {
-        return texture;
     }
 }

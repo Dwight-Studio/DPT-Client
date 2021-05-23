@@ -21,9 +21,7 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 // VBO = Vertex Buffer Object
 public class VBO {
 
-    public static List<Integer> vboList = new ArrayList<>();
-
-    private final Shader shader = ShaderLoader.loadShaderFile("./src/ressources/shaders/default.glsl");
+    private final static Shader shader = ShaderLoader.loadShaderFile("./src/ressources/shaders/default.glsl");
     private final Camera camera = new Camera(new Vector2f());
 
     private final int vertexArrayObjectID;
@@ -49,9 +47,6 @@ public class VBO {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObjectID);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, elementBuffer, GL_STATIC_DRAW);
 
-        vboList.add(vertexBufferObjectID);
-        vboList.add(elementBufferObjectID);
-
         int positionSize = 3;
         int colorSize = 4;
         int textureCoordsSize = 2;
@@ -66,7 +61,7 @@ public class VBO {
         glVertexAttribPointer(2, textureCoordsSize, GL_FLOAT, false, vertexSizeBytes, (positionSize + colorSize) * Float.BYTES);
         glEnableVertexAttribArray(2);
 
-        GameLogger.logger.log(Level.FINE, "Created a Textured VBO with id : {0}, {1}", new Object[] {vertexBufferObjectID, elementBufferObjectID});
+        GameLogger.logger.log(Level.FINE, "Created a VBO with id : {0}, {1}, {2}", new Object[] {vertexArrayObjectID, vertexBufferObjectID, elementBufferObjectID});
     }
 
     public void render(boolean usingTexture, boolean moving) {
