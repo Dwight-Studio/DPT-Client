@@ -93,6 +93,7 @@ public class GLFWWindow {
         Texture texture = TextureLoader.loadTexture("./src/ressources/textures/test.png");
         Color color = new Color(0, 1, 0);
         Tile tile = new Tile(0, 0, 32, color);
+        Tile tile2 = new Tile(100, 100, 32, texture);
 
         float beginTime = Time.getDeltaTime();
         float endTime;
@@ -103,6 +104,7 @@ public class GLFWWindow {
             glClear(GL_COLOR_BUFFER_BIT); // Clear the framebuffer
 
             tile.render();
+            tile2.render();
 
             glfwSwapBuffers(window); // Swap the color buffers
 

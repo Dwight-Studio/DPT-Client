@@ -54,7 +54,8 @@ public class VBO {
 
         int positionSize = 3;
         int colorSize = 4;
-        int vertexSizeBytes = (positionSize + colorSize) * Float.BYTES;
+        int textureCoordsSize = 2;
+        int vertexSizeBytes = (positionSize + colorSize + textureCoordsSize) * Float.BYTES;
 
         glVertexAttribPointer(0, positionSize, GL_FLOAT, false, vertexSizeBytes, 0);
         glEnableVertexAttribArray(0);
@@ -62,15 +63,24 @@ public class VBO {
         glVertexAttribPointer(1, colorSize, GL_FLOAT, false, vertexSizeBytes, positionSize * Float.BYTES);
         glEnableVertexAttribArray(1);
 
+        glVertexAttribPointer(2, textureCoordsSize, GL_FLOAT, false, vertexSizeBytes, (positionSize + colorSize) * Float.BYTES);
+        glEnableVertexAttribArray(2);
+
         GameLogger.logger.log(Level.FINE, "Created a Textured VBO with id : {0}, {1}", new Object[] {vertexBufferObjectID, elementBufferObjectID});
     }
 
-    public void render() {
-        //camera.position.x -= Time.getDTime() * 50.0f;
-        //camera.position.y -= Time.getDTime() * 25.0f;
+    public void render(boolean usingTexture, boolean moving) {
+        if (moving) {
+            camera.position.x -= Time.getDTime() * 50.0f;
+            camera.position.y -= Time.getDTime() * 25.0f;
+        }
         Objects.requireNonNull(shader).bind();
+        shader.uploadBoolean("usingTexture", usingTexture);
+        shader.uploadInt("textureSampler", 0);
+        glActiveTexture(GL_TEXTURE0);
         shader.uploadMat4f("uProjectionMatrix", camera.getProjectionMatrix());
         shader.uploadMat4f("uViewMatrix", camera.getViewMatrix());
+        shader.uploadFloat("uTime", Time.getDeltaTime());
         glBindVertexArray(vertexArrayObjectID);
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);

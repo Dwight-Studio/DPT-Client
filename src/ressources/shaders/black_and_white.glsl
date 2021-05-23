@@ -31,8 +31,9 @@ out vec4 color;
 
 void main() {
     if (usingTexture) {
-        color = texture(textureSampler, fTextureCoords);
+        vec4 Color = texture2D(textureSampler, fTextureCoords);
+        color = vec4(vec3(Color.r + Color.g + Color.b) / 3, Color.a);
     } else {
-        color = fColor;
+        color = vec4(vec3(fColor.r + fColor.g + fColor.b) / 3, 1);
     }
 }
