@@ -8,8 +8,6 @@ import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 
@@ -61,7 +59,7 @@ public class VBO {
         glVertexAttribPointer(2, textureCoordsSize, GL_FLOAT, false, vertexSizeBytes, (positionSize + colorSize) * Float.BYTES);
         glEnableVertexAttribArray(2);
 
-        GameLogger.logger.log(Level.FINE, "Created a VBO with id : {0}, {1}, {2}", new Object[] {vertexArrayObjectID, vertexBufferObjectID, elementBufferObjectID});
+        GameLogger.log(Level.FINE, "Created a VBO with id : {0}, {1}, {2}", new Object[] {vertexArrayObjectID, vertexBufferObjectID, elementBufferObjectID});
     }
 
     public void render(boolean usingTexture, boolean moving) {

@@ -14,7 +14,7 @@ public class GameObject {
     public GameObject(String name) {
         this.name = name;
         this.components = new ArrayList<>();
-        GameLogger.logger.log(Level.FINE, "Created GameObject : \"{0}\"", new Object[] {name});
+        GameLogger.log(Level.FINE, "Created GameObject : \"{0}\"", new Object[] {name});
     }
 
     public <T extends Component> T getComponent(Class<T> componentClass) {
@@ -51,9 +51,9 @@ public class GameObject {
         }
     }
 
-    public void start() {
+    public void init() {
         for (Component component : components) {
-            component.start();
+            component.init();
         }
     }
 

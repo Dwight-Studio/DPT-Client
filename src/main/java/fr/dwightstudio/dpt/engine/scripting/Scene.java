@@ -18,7 +18,7 @@ public abstract class Scene {
 
     public void start() {
         for (GameObject gameObject : gameObjects) {
-            gameObject.start();
+            gameObject.init();
         }
     }
 
@@ -29,7 +29,7 @@ public abstract class Scene {
             gameObjects.add(gameObject);
         } else {
             gameObjects.add(gameObject);
-            gameObject.start();
+            gameObject.init();
         }
     }
 }

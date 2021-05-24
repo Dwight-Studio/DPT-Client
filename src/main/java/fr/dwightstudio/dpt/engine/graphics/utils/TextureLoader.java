@@ -21,7 +21,7 @@ public class TextureLoader {
     public static Texture loadTexture(String file) {
         ByteBuffer texture = stbi_load(file, width, height, nbChannel, 4);
         if (texture == null) {
-            GameLogger.logger.log(Level.WARNING, "File not found : {0}", new Object[] {file});
+            GameLogger.log(Level.WARNING, "File not found : {0}", new Object[] {file});
             return null;
         } else {
             int id = glGenTextures();
@@ -31,7 +31,7 @@ public class TextureLoader {
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width[0], height[0], 0, GL_RGBA, GL_UNSIGNED_BYTE, texture);
             stbi_image_free(texture);
             glBindTexture(GL_TEXTURE_2D, 0); // Unbinding any texture at the end to make sure it is not modified after
-            GameLogger.logger.log(Level.FINE, "Finished loading texture : {0}", new Object[] {file});
+            GameLogger.log(Level.FINE, "Finished loading texture : {0}", new Object[] {file});
             return new Texture(width[0], height[0], id, nbChannel[0]);
         }
     }

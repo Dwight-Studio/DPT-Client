@@ -1,11 +1,8 @@
 package fr.dwightstudio.dpt.engine.graphics.render;
 
-import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
-
-import java.util.logging.Level;
 
 public class Camera {
     private final Matrix4f projectionMatrix;

@@ -35,14 +35,14 @@ public class ShaderLoader {
                         readingVertexShader = false;
                         readingFragmentShader = true;
                     } else {
-                        GameLogger.logger.log(Level.SEVERE, "Unexpected token in line : {0}", new Object[] {line});
+                        GameLogger.log(Level.SEVERE, "Unexpected token in line : {0}", new Object[] {line});
                     }
                 } else if (readingVertexShader) {
                     vertexShader.append(line).append("\n");
                 } else if (readingFragmentShader) {
                     fragmentShader.append(line).append("\n");
                 } else {
-                    GameLogger.logger.log(Level.SEVERE, "Error while loading file : {0}", new Object[] {filepath});
+                    GameLogger.log(Level.SEVERE, "Error while loading file : {0}", new Object[] {filepath});
                 }
             }
             return compileShader();
@@ -58,8 +58,8 @@ public class ShaderLoader {
         glCompileShader(vertexID);
 
         if (glGetShaderi(vertexID, GL_COMPILE_STATUS) == GL_FALSE) {
-            GameLogger.logger.log(Level.SEVERE, "Error compiling vertex shader : {0}", new Object[] {file});
-            GameLogger.logger.log(Level.SEVERE, glGetShaderInfoLog(vertexID, glGetShaderi(vertexID, GL_INFO_LOG_LENGTH)));
+            GameLogger.log(Level.SEVERE, "Error compiling vertex shader : {0}", new Object[] {file});
+            GameLogger.log(Level.SEVERE, glGetShaderInfoLog(vertexID, glGetShaderi(vertexID, GL_INFO_LOG_LENGTH)));
             return null;
         }
 
@@ -68,8 +68,8 @@ public class ShaderLoader {
         glCompileShader(fragmentID);
 
         if (glGetShaderi(fragmentID, GL_COMPILE_STATUS) == GL_FALSE) {
-            GameLogger.logger.log(Level.SEVERE, "Error compiling fragment shader : {0}", new Object[] {file});
-            GameLogger.logger.log(Level.SEVERE, glGetShaderInfoLog(fragmentID, glGetShaderi(fragmentID, GL_INFO_LOG_LENGTH)));
+            GameLogger.log(Level.SEVERE, "Error compiling fragment shader : {0}", new Object[] {file});
+            GameLogger.log(Level.SEVERE, glGetShaderInfoLog(fragmentID, glGetShaderi(fragmentID, GL_INFO_LOG_LENGTH)));
             return null;
         }
 
@@ -82,22 +82,22 @@ public class ShaderLoader {
         glLinkProgram(shaderProgramID);
 
         if (glGetProgrami(shaderProgramID, GL_LINK_STATUS) == GL_FALSE) {
-            GameLogger.logger.log(Level.SEVERE, "Error linking shader : {0}", new Object[] {file});
-            GameLogger.logger.log(Level.SEVERE, glGetProgramInfoLog(fragmentID, glGetProgrami(shaderProgramID, GL_INFO_LOG_LENGTH)));
+            GameLogger.log(Level.SEVERE, "Error linking shader : {0}", new Object[] {file});
+            GameLogger.log(Level.SEVERE, glGetProgramInfoLog(fragmentID, glGetProgrami(shaderProgramID, GL_INFO_LOG_LENGTH)));
             return null;
         }
 
         glValidateProgram(shaderProgramID);
 
         if (glGetProgrami(shaderProgramID, GL_VALIDATE_STATUS) != 1) {
-            GameLogger.logger.log(Level.SEVERE, "Error validating shader : {0}", new Object[] {file});
-            GameLogger.logger.log(Level.SEVERE, glGetProgramInfoLog(fragmentID, glGetProgrami(shaderProgramID, GL_INFO_LOG_LENGTH)));
+            GameLogger.log(Level.SEVERE, "Error validating shader : {0}", new Object[] {file});
+            GameLogger.log(Level.SEVERE, glGetProgramInfoLog(fragmentID, glGetProgrami(shaderProgramID, GL_INFO_LOG_LENGTH)));
             return null;
         }
 
         glDeleteShader(vertexID);
         glDeleteShader(fragmentID);
-        GameLogger.logger.log(Level.FINE, "Successfully loaded and compiled shader : {0}", new Object[] {file});
+        GameLogger.log(Level.FINE, "Successfully loaded and compiled shader : {0}", new Object[] {file});
         return new Shader(shaderProgramID);
     }
 }

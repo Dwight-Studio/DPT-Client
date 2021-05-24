@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 public class GameLogger {
 
     private static final LogManager logManager = LogManager.getLogManager();
-    public static final Logger logger = Logger.getLogger("");
+    private static final Logger logger = Logger.getLogger("");
 
     public static boolean init() {
         try {
@@ -32,5 +32,21 @@ public class GameLogger {
                 logger.log(Level.SEVERE, string);
             }
         };
+    }
+
+    public static void log(Level level, String string) {
+        logger.log(level, string);
+    }
+
+    public static void log(Level level, String string, Object[] params) {
+        logger.log(level, string, params);
+    }
+
+    public static void log(Level level, String string, Object param) {
+        logger.log(level, string, param);
+    }
+
+    public static void log(Level level, String string, Throwable thrown) {
+        logger.log(level, string, thrown);
     }
 }

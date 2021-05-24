@@ -14,9 +14,8 @@ import static fr.dwightstudio.dpt.engine.Engine.ENGINE_FULLSCREEN;
 import static fr.dwightstudio.dpt.engine.Engine.ENGINE_WINDOWED;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL15.glDeleteBuffers;
-import static org.lwjgl.system.MemoryUtil.NULL;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class GLFWWindow {
 
@@ -78,7 +77,7 @@ public class GLFWWindow {
         GL.createCapabilities(); // Called before any OpenGL function
         glEnable(GL_TEXTURE_2D); // Enable the GL_TEXTURE_2D feature
         glLoadIdentity(); // Resets any previous projection matriced
-        GameLogger.logger.log(Level.INFO, "Window initialized");
+        GameLogger.log(Level.INFO, "Window initialized");
         loop(); // Start the loop
     }
 
@@ -109,10 +108,10 @@ public class GLFWWindow {
         }
 
         // End of loop
-        GameLogger.logger.log(Level.INFO, "Cleaning...");
+        GameLogger.log(Level.INFO, "Cleaning...");
         glfwFreeCallbacks(window); // Freeing all the callbacks
         glfwDestroyWindow(window); // Destroy the GLFWWindow
         glfwTerminate(); // Terminate GLFW
-        GameLogger.logger.log(Level.INFO, "Terminated");
+        GameLogger.log(Level.INFO, "Terminated");
     }
 }
