@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss} [%t] %-level %logger{36} - %msg%n"/>
+            <Filters>
+                <ThresholdFilter level="debug"/>
+            </Filters>
+        </Console>
+        <File name="File" fileName="dpt-latest.log" immediateFlush="false" append="false">
+            <PatternLayout>
+                <Pattern>%d{HH:mm:ss} [%t] %-level %logger{36} - %msg%n</Pattern>
+            </PatternLayout>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="Debug">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Root>
+    </Loggers>
+</Configuration>

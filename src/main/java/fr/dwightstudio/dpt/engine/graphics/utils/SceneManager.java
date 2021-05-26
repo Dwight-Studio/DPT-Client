@@ -5,13 +5,14 @@ import fr.dwightstudio.dpt.engine.scripting.Scene;
 import fr.dwightstudio.dpt.game.levels.MainScene;
 import fr.dwightstudio.dpt.game.levels.TestScene;
 
+import java.text.MessageFormat;
 import java.util.logging.Level;
 
 public class SceneManager {
     private static Scene currentScene;
 
     public static void changeScene(int sceneID) {
-        GameLogger.log(Level.INFO, "Changing to scene : {0}", new Object[] {sceneID});
+        GameLogger.getLogger().info(MessageFormat.format("Changing to scene : {0}", sceneID));
         switch (sceneID) {
             case 0 -> {
                 currentScene = new MainScene();
@@ -23,7 +24,7 @@ public class SceneManager {
                 currentScene.init();
                 currentScene.start();
             }
-            default -> GameLogger.log(Level.WARNING, "The scene with id : {0} cannot be found.", new Object[]{sceneID});
+            default -> GameLogger.getLogger().warn(MessageFormat.format("The scene with id : {0} cannot be found.", sceneID));
         }
     }
 

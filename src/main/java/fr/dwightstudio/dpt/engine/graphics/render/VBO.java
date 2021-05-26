@@ -8,6 +8,7 @@ import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+import java.text.MessageFormat;
 import java.util.Objects;
 import java.util.logging.Level;
 
@@ -19,7 +20,7 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 // VBO = Vertex Buffer Object
 public class VBO {
 
-    private final static Shader shader = ShaderLoader.loadShaderFile("./src/ressources/shaders/default.glsl");
+    private final static Shader shader = ShaderLoader.loadShaderFile("./src/main/resources/shaders/default.glsl");
     private final Camera camera = new Camera(new Vector2f());
 
     private final int vertexArrayObjectID;
@@ -59,7 +60,7 @@ public class VBO {
         glVertexAttribPointer(2, textureCoordsSize, GL_FLOAT, false, vertexSizeBytes, (positionSize + colorSize) * Float.BYTES);
         glEnableVertexAttribArray(2);
 
-        GameLogger.log(Level.FINE, "Created a VBO with id : {0}, {1}, {2}", new Object[] {vertexArrayObjectID, vertexBufferObjectID, elementBufferObjectID});
+        GameLogger.getLogger().debug(MessageFormat.format("Created a VBO with id : {0}, {1}, {2}", vertexArrayObjectID, vertexBufferObjectID, elementBufferObjectID));
     }
 
     public void render(boolean usingTexture, boolean moving) {

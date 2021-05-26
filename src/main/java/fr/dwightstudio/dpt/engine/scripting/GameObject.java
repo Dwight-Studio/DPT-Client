@@ -2,10 +2,9 @@ package fr.dwightstudio.dpt.engine.scripting;
 
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-
 public class GameObject {
 
     private final String name;
@@ -14,7 +13,7 @@ public class GameObject {
     public GameObject(String name) {
         this.name = name;
         this.components = new ArrayList<>();
-        GameLogger.log(Level.FINE, "Created GameObject : \"{0}\"", new Object[] {name});
+        GameLogger.getLogger().debug(MessageFormat.format("Created GameObject : \"{0}\"", name));
     }
 
     public <T extends Component> T getComponent(Class<T> componentClass) {

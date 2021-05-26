@@ -77,7 +77,7 @@ public class GLFWWindow {
         GL.createCapabilities(); // Called before any OpenGL function
         glEnable(GL_TEXTURE_2D); // Enable the GL_TEXTURE_2D feature
         glLoadIdentity(); // Resets any previous projection matriced
-        GameLogger.log(Level.INFO, "Window initialized");
+        GameLogger.getLogger().info("Window initialized");
         loop(); // Start the loop
     }
 
@@ -108,10 +108,10 @@ public class GLFWWindow {
         }
 
         // End of loop
-        GameLogger.log(Level.INFO, "Cleaning...");
+        GameLogger.getLogger().info("Cleaning...");
         glfwFreeCallbacks(window); // Freeing all the callbacks
         glfwDestroyWindow(window); // Destroy the GLFWWindow
         glfwTerminate(); // Terminate GLFW
-        GameLogger.log(Level.INFO, "Terminated");
+        GameLogger.getLogger().info("Terminated");
     }
 }

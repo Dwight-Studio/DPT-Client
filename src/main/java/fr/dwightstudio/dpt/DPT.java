@@ -11,9 +11,8 @@ public class DPT {
     public GLFWWindow window = new GLFWWindow(1280, 720, ENGINE_WINDOWED);
 
     public void run(){
-        if (GameLogger.init()) {
-            window.init();
-        }
+        GameLogger.init();
+        window.init();
     }
 
     public static void main(String[] args){

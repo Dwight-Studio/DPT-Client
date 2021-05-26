@@ -19,7 +19,7 @@ public class MainScene extends Scene {
     @Override
     public void init() {
         this.tiles = new GameObject("tiles");
-        this.tiles.addComponent(new Tile(0, 0, 32, RessourceManager.getTexture("./src/ressources/textures/test.png")));
+        this.tiles.addComponent(new Tile(0, 0, 32, RessourceManager.getTexture("./src/main/resources/textures/test.png")));
         this.addGameObject(this.tiles);
     }
 
