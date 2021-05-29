@@ -46,6 +46,7 @@ dependencies {
 	runtimeOnly "org.lwjgl:lwjgl-shaderc::$lwjglNatives"
 	runtimeOnly "org.lwjgl:lwjgl-stb::$lwjglNatives"
 	implementation "org.joml:joml:${jomlVersion}"
+	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 
 	compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.14.1'
 	compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.1'

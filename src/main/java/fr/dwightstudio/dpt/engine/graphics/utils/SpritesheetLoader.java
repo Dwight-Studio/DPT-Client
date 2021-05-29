@@ -4,18 +4,43 @@ import fr.dwightstudio.dpt.engine.graphics.render.SpriteTexture;
 import fr.dwightstudio.dpt.engine.graphics.render.Spritesheet;
 import fr.dwightstudio.dpt.engine.graphics.render.Texture;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
-import fr.dwightstudio.dpt.engine.utils.RessourceManager;
+import fr.dwightstudio.dpt.engine.utils.ResourceManager;
 import org.joml.Vector2f;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SpritesheetLoader {
 
-    public static Spritesheet loadSpritesheet(String filepath, int numberOfSprite, int spriteWidth, int spriteHeight, int widthSpacing, int heightSpacing) {
+    private static int numberOfSprite;
+    private static int spriteWidth;
+    private static int spriteHeight;
+    private static int widthSpacing;
+    private static int heightSpacing;
+
+    public static Spritesheet loadSpritesheet(String filepath) {
         List<SpriteTexture> spritesTextures = new ArrayList<>();
-        Texture texture = RessourceManager.getTexture(filepath);
+        Texture texture = ResourceManager.getTexture(filepath);
+
+        try {
+            JSONObject jsonObject = (JSONObject) new JSONParser().parse(new FileReader(filepath + ".meta"));
+            numberOfSprite = (int) jsonObject.get("numberOfSprite");
+            spriteWidth = (int) jsonObject.get("spriteWidth");
+            spriteHeight = (int) jsonObject.get("spriteHeight");
+            widthSpacing = (int) jsonObject.get("widthSpacing");
+            heightSpacing = (int) jsonObject.get("heightSpacing");
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
 
         int currentX = 0;
         int currentY = texture.getHeight() - spriteHeight;

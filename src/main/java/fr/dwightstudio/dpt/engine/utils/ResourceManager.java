@@ -10,7 +10,7 @@ import fr.dwightstudio.dpt.engine.graphics.utils.TextureLoader;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RessourceManager {
+public class ResourceManager {
 
     public static Map<String, Texture> textures = new HashMap<>();
     public static Map<String, Shader> shaders = new HashMap<>();
@@ -30,9 +30,9 @@ public class RessourceManager {
         return shaders.get(filepath);
     }
 
-    public static Spritesheet getSpritsheet(String filepath, int numberOfSprite, int spriteWidth, int spriteHeight, int widthSpacing, int heightSpacing) {
+    public static Spritesheet getSpritesheet(String filepath, int numberOfSprite, int spriteWidth, int spriteHeight, int widthSpacing, int heightSpacing) {
         if (!spritesheets.containsKey(filepath)) {
-            spritesheets.put(filepath, SpritesheetLoader.loadSpritesheet(filepath, numberOfSprite, spriteWidth, spriteHeight, widthSpacing, heightSpacing));
+            spritesheets.put(filepath, SpritesheetLoader.loadSpritesheet(filepath));
         }
         return spritesheets.get(filepath);
     }
