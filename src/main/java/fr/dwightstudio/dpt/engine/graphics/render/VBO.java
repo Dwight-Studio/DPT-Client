@@ -2,7 +2,7 @@ package fr.dwightstudio.dpt.engine.graphics.render;
 
 import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
-import fr.dwightstudio.dpt.engine.utils.ResourceManager;
+import fr.dwightstudio.dpt.engine.resources.ResourceManager;
 import fr.dwightstudio.dpt.engine.utils.Time;
 import org.lwjgl.BufferUtils;
 
@@ -19,7 +19,8 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 // VBO = Vertex Buffer Object
 public class VBO {
 
-    private final static Shader shader = ResourceManager.getShader("./src/main/resources/shaders/default.glsl");
+    static {ResourceManager.load("./src/main/resources/shaders/default.glsl", "shader");}
+    private final static Shader shader = ResourceManager.<Shader>get("./src/main/resources/shaders/default.glsl");
 
     private final int vertexArrayObjectID;
     private final int[] elementArray;

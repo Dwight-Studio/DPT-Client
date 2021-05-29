@@ -4,7 +4,7 @@ import fr.dwightstudio.dpt.engine.graphics.render.SpriteTexture;
 import fr.dwightstudio.dpt.engine.graphics.render.Spritesheet;
 import fr.dwightstudio.dpt.engine.graphics.render.Texture;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
-import fr.dwightstudio.dpt.engine.utils.ResourceManager;
+import fr.dwightstudio.dpt.engine.resources.ResourceManager;
 import org.joml.Vector2f;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -27,7 +27,7 @@ public class SpritesheetLoader {
 
     public static Spritesheet loadSpritesheet(String filepath) {
         List<SpriteTexture> spritesTextures = new ArrayList<>();
-        Texture texture = ResourceManager.getTexture(filepath);
+        Texture texture = ResourceManager.get(filepath);
 
         try {
             JSONObject jsonObject = (JSONObject) new JSONParser().parse(new FileReader(filepath + ".meta"));

@@ -3,7 +3,7 @@ package fr.dwightstudio.dpt.engine.graphics.renderers;
 import fr.dwightstudio.dpt.engine.graphics.render.Shader;
 import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
 import fr.dwightstudio.dpt.engine.scripting.Component;
-import fr.dwightstudio.dpt.engine.utils.ResourceManager;
+import fr.dwightstudio.dpt.engine.resources.ResourceManager;
 
 import java.util.Objects;
 
@@ -41,7 +41,7 @@ public class BatchRenderer {
     public BatchRenderer(int batchSize) {
         this.batchSize = batchSize;
         this.components = new Component[batchSize];
-        shader = ResourceManager.getShader("./src/main/resources/shaders/default.glsl");
+        shader = ResourceManager.<Shader>get("./src/main/resources/shaders/default.glsl");
 
         this.vertices = new float[batchSize * 4 * VERTEX_SIZE]; // The 4 is the number of vertices per quads
         this.numberOfGameObjects = 0;

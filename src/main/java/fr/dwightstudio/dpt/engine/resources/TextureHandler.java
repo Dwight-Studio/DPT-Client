@@ -2,6 +2,8 @@ package fr.dwightstudio.dpt.engine.resources;
 
 import fr.dwightstudio.dpt.engine.graphics.render.Texture;
 import fr.dwightstudio.dpt.engine.graphics.utils.TextureLoader;
+import fr.dwightstudio.dpt.engine.logging.GameLogger;
+import org.lwjgl.stb.STBImage;
 
 import java.util.HashMap;
 import java.util.Map;
