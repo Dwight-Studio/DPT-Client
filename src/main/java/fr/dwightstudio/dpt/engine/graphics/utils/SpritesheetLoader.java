@@ -1,18 +1,20 @@
 package fr.dwightstudio.dpt.engine.graphics.utils;
 
-import fr.dwightstudio.dpt.engine.graphics.render.Sprite;
+import fr.dwightstudio.dpt.engine.graphics.render.SpriteTexture;
 import fr.dwightstudio.dpt.engine.graphics.render.Spritesheet;
 import fr.dwightstudio.dpt.engine.graphics.render.Texture;
+import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.engine.utils.RessourceManager;
 import org.joml.Vector2f;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SpritesheetLoader {
 
     public static Spritesheet loadSpritesheet(String filepath, int numberOfSprite, int spriteWidth, int spriteHeight, int widthSpacing, int heightSpacing) {
-        List<Sprite> sprites = new ArrayList<>();
+        List<SpriteTexture> spritesTextures = new ArrayList<>();
         Texture texture = RessourceManager.getTexture(filepath);
 
         int currentX = 0;
@@ -35,8 +37,8 @@ public class SpritesheetLoader {
                     new Vector2f(left, bottom),
                     new Vector2f(left, top)
             };
-            Sprite sprite = new Sprite(texture, textureCoords);
-            sprites.add(sprite);
+            SpriteTexture spriteTexture = new SpriteTexture(texture, textureCoords);
+            spritesTextures.add(spriteTexture);
 
             currentX += spriteWidth + widthSpacing;
             if (currentX >= texture.getWidth()) {
@@ -44,6 +46,7 @@ public class SpritesheetLoader {
                 currentY -= spriteHeight + heightSpacing;
             }
         }
-        return new Spritesheet(texture, sprites);
+        GameLogger.getLogger("SpritesheetLoader").debug(MessageFormat.format("Created Spritessheet : {0}", filepath));
+        return new Spritesheet(texture, spritesTextures);
     }
 }

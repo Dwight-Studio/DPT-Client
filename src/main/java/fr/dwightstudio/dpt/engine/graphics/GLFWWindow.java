@@ -76,8 +76,10 @@ public class GLFWWindow {
         glfwShowWindow(window); // Make the window visible
         GL.createCapabilities(); // Called before any OpenGL function
         glEnable(GL_TEXTURE_2D); // Enable the GL_TEXTURE_2D feature
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
         glLoadIdentity(); // Resets any previous projection matriced
-        GameLogger.getLogger().info("Window initialized");
+        GameLogger.getLogger("GLFWWindow").info("Window initialized");
         loop(); // Start the loop
     }
 
@@ -108,10 +110,10 @@ public class GLFWWindow {
         }
 
         // End of loop
-        GameLogger.getLogger().info("Cleaning...");
+        GameLogger.getLogger("GLFWWindow").info("Cleaning...");
         glfwFreeCallbacks(window); // Freeing all the callbacks
         glfwDestroyWindow(window); // Destroy the GLFWWindow
         glfwTerminate(); // Terminate GLFW
-        GameLogger.getLogger().info("Terminated");
+        GameLogger.getLogger("GLFWWindow").info("Terminated");
     }
 }

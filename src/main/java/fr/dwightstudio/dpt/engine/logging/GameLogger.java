@@ -27,7 +27,7 @@ public class GameLogger {
         };
     }
 
-    public static Logger getLogger() {
-        return logger;
+    public static Logger getLogger(String name) {
+        return LogManager.getLogger(name);
     }
 }

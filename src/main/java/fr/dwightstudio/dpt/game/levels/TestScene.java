@@ -15,7 +15,7 @@ public class TestScene extends Scene {
 
     @Override
     public void init() {
-        this.tiles = new GameObject("tiles");
+        this.tiles = new GameObject("tiles", 0);
         this.tiles.addComponent(new Tile(100, 100, 32, new Color(0, 1, 1, 1)));
         this.addGameObject(tiles);
     }

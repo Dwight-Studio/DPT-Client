@@ -36,14 +36,14 @@ public class ShaderLoader {
                         readingVertexShader = false;
                         readingFragmentShader = true;
                     } else {
-                        GameLogger.getLogger().fatal(MessageFormat.format("Unexpected token in line : {0}", line));
+                        GameLogger.getLogger("ShaderLoader").fatal(MessageFormat.format("Unexpected token in line : {0}", line));
                     }
                 } else if (readingVertexShader) {
                     vertexShader.append(line).append("\n");
                 } else if (readingFragmentShader) {
                     fragmentShader.append(line).append("\n");
                 } else {
-                    GameLogger.getLogger().fatal(MessageFormat.format("Error while loading file : {0}", filepath));
+                    GameLogger.getLogger("ShaderLoader").fatal(MessageFormat.format("Error while loading file : {0}", filepath));
                 }
             }
             return compileShader();
@@ -59,8 +59,8 @@ public class ShaderLoader {
         glCompileShader(vertexID);
 
         if (glGetShaderi(vertexID, GL_COMPILE_STATUS) == GL_FALSE) {
-            GameLogger.getLogger().fatal(MessageFormat.format("Error compiling vertex shader : {0}", file));
-            GameLogger.getLogger().fatal(glGetShaderInfoLog(vertexID, glGetShaderi(vertexID, GL_INFO_LOG_LENGTH)));
+            GameLogger.getLogger("ShaderLoader").fatal(MessageFormat.format("Error compiling vertex shader : {0}", file));
+            GameLogger.getLogger("ShaderLoader").fatal(glGetShaderInfoLog(vertexID, glGetShaderi(vertexID, GL_INFO_LOG_LENGTH)));
             return null;
         }
 
@@ -69,8 +69,8 @@ public class ShaderLoader {
         glCompileShader(fragmentID);
 
         if (glGetShaderi(fragmentID, GL_COMPILE_STATUS) == GL_FALSE) {
-            GameLogger.getLogger().fatal(MessageFormat.format("Error compiling fragment shader : {0}", file));
-            GameLogger.getLogger().fatal(glGetShaderInfoLog(fragmentID, glGetShaderi(fragmentID, GL_INFO_LOG_LENGTH)));
+            GameLogger.getLogger("ShaderLoader").fatal(MessageFormat.format("Error compiling fragment shader : {0}", file));
+            GameLogger.getLogger("ShaderLoader").fatal(glGetShaderInfoLog(fragmentID, glGetShaderi(fragmentID, GL_INFO_LOG_LENGTH)));
             return null;
         }
 
@@ -83,22 +83,22 @@ public class ShaderLoader {
         glLinkProgram(shaderProgramID);
 
         if (glGetProgrami(shaderProgramID, GL_LINK_STATUS) == GL_FALSE) {
-            GameLogger.getLogger().fatal(MessageFormat.format("Error linking shader : {0}", file));
-            GameLogger.getLogger().fatal(glGetProgramInfoLog(fragmentID, glGetProgrami(shaderProgramID, GL_INFO_LOG_LENGTH)));
+            GameLogger.getLogger("ShaderLoader").fatal(MessageFormat.format("Error linking shader : {0}", file));
+            GameLogger.getLogger("ShaderLoader").fatal(glGetProgramInfoLog(fragmentID, glGetProgrami(shaderProgramID, GL_INFO_LOG_LENGTH)));
             return null;
         }
 
         glValidateProgram(shaderProgramID);
 
         if (glGetProgrami(shaderProgramID, GL_VALIDATE_STATUS) != 1) {
-            GameLogger.getLogger().fatal(MessageFormat.format("Error validating shader : {0}", file));
-            GameLogger.getLogger().fatal(glGetProgramInfoLog(fragmentID, glGetProgrami(shaderProgramID, GL_INFO_LOG_LENGTH)));
+            GameLogger.getLogger("ShaderLoader").fatal(MessageFormat.format("Error validating shader : {0}", file));
+            GameLogger.getLogger("ShaderLoader").fatal(glGetProgramInfoLog(fragmentID, glGetProgrami(shaderProgramID, GL_INFO_LOG_LENGTH)));
             return null;
         }
 
         glDeleteShader(vertexID);
         glDeleteShader(fragmentID);
-        GameLogger.getLogger().debug(MessageFormat.format("Successfully loaded and compiled shader : {0}", file));
+        GameLogger.getLogger("ShaderLoader").debug(MessageFormat.format("Successfully loaded and compiled shader : {0}", file));
         return new Shader(shaderProgramID);
     }
 }

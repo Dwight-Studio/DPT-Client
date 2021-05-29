@@ -1,5 +1,6 @@
 package fr.dwightstudio.dpt.engine.scripting;
 
+import fr.dwightstudio.dpt.engine.graphics.render.Transform;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
 
 import java.text.MessageFormat;
@@ -9,11 +10,39 @@ public class GameObject {
 
     private final String name;
     private final List<Component> components;
+    public Transform transform;
+    private int zIndex;
 
     public GameObject(String name) {
         this.name = name;
         this.components = new ArrayList<>();
-        GameLogger.getLogger().debug(MessageFormat.format("Created GameObject : \"{0}\"", name));
+        this.transform = new Transform();
+        this.zIndex = 0;
+        GameLogger.getLogger("GameObject").debug(MessageFormat.format("Created GameObject : \"{0}\"", name));
+    }
+
+    public GameObject(String name, Transform transform) {
+        this.name = name;
+        this.components = new ArrayList<>();
+        this.transform = transform;
+        this.zIndex = 0;
+        GameLogger.getLogger("GameObject").debug(MessageFormat.format("Create GameObject : \"{0}\"", name));
+    }
+
+    public GameObject(String name, int zIndex) {
+        this.name = name;
+        this.components = new ArrayList<>();
+        this.transform = new Transform();
+        this.zIndex = zIndex;
+        GameLogger.getLogger("GameObject").debug(MessageFormat.format("Create GameObject : \"{0}\" with zIndex : {1}", name, zIndex));
+    }
+
+    public GameObject(String name, Transform transform, int zIndex) {
+        this.name = name;
+        this.components = new ArrayList<>();
+        this.transform = transform;
+        this.zIndex = zIndex;
+        GameLogger.getLogger("GameObject").debug(MessageFormat.format("Create GameObject : \"{0}\" with zIndex : {1}", name, zIndex));
     }
 
     public <T extends Component> T getComponent(Class<T> componentClass) {
@@ -58,5 +87,9 @@ public class GameObject {
 
     public String getName() {
         return name;
+    }
+
+    public int getzIndex() {
+        return zIndex;
     }
 }

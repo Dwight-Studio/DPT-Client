@@ -7,7 +7,6 @@ import fr.dwightstudio.dpt.engine.graphics.utils.ShaderLoader;
 import fr.dwightstudio.dpt.engine.graphics.utils.SpritesheetLoader;
 import fr.dwightstudio.dpt.engine.graphics.utils.TextureLoader;
 
-import javax.swing.text.html.StyleSheet;
 import java.util.HashMap;
 import java.util.Map;
 

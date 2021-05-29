@@ -1,5 +1,6 @@
 package fr.dwightstudio.dpt.game.levels;
 
+import fr.dwightstudio.dpt.engine.graphics.render.Color;
 import fr.dwightstudio.dpt.engine.utils.RessourceManager;
 import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
 import fr.dwightstudio.dpt.engine.inputs.GameInputs;
@@ -18,8 +19,9 @@ public class MainScene extends Scene {
 
     @Override
     public void init() {
-        this.tiles = new GameObject("tiles");
+        this.tiles = new GameObject("tiles", 0);
         this.tiles.addComponent(new Tile(0, 0, 32, RessourceManager.getTexture("./src/main/resources/textures/test.png")));
+        setBackgroundColor(new Color(1.0f, 1.0f, 1.0f, 0.0f));
         this.addGameObject(this.tiles);
     }
 

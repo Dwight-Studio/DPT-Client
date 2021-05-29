@@ -1,16 +1,15 @@
 package fr.dwightstudio.dpt.engine.graphics.render;
 
-import fr.dwightstudio.dpt.engine.graphics.utils.ShaderLoader;
+import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
+import fr.dwightstudio.dpt.engine.utils.RessourceManager;
 import fr.dwightstudio.dpt.engine.utils.Time;
-import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.text.MessageFormat;
 import java.util.Objects;
-import java.util.logging.Level;
 
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
@@ -20,8 +19,7 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 // VBO = Vertex Buffer Object
 public class VBO {
 
-    private final static Shader shader = ShaderLoader.loadShaderFile("./src/main/resources/shaders/default.glsl");
-    private final Camera camera = new Camera(new Vector2f());
+    private final static Shader shader = RessourceManager.getShader("./src/main/resources/shaders/default.glsl");
 
     private final int vertexArrayObjectID;
     private final int[] elementArray;
@@ -60,20 +58,16 @@ public class VBO {
         glVertexAttribPointer(2, textureCoordsSize, GL_FLOAT, false, vertexSizeBytes, (positionSize + colorSize) * Float.BYTES);
         glEnableVertexAttribArray(2);
 
-        GameLogger.getLogger().debug(MessageFormat.format("Created a VBO with id : {0}, {1}, {2}", vertexArrayObjectID, vertexBufferObjectID, elementBufferObjectID));
+        GameLogger.getLogger("VBO").debug(MessageFormat.format("Created a VBO with id : {0}, {1}, {2}", vertexArrayObjectID, vertexBufferObjectID, elementBufferObjectID));
     }
 
     public void render(boolean usingTexture, boolean moving) {
-        if (moving) {
-            camera.position.x -= Time.getDTime() * 50.0f;
-            camera.position.y -= Time.getDTime() * 25.0f;
-        }
         Objects.requireNonNull(shader).bind();
         shader.uploadBoolean("usingTexture", usingTexture);
         shader.uploadInt("textureSampler", 0);
         glActiveTexture(GL_TEXTURE0);
-        shader.uploadMat4f("uProjectionMatrix", camera.getProjectionMatrix());
-        shader.uploadMat4f("uViewMatrix", camera.getViewMatrix());
+        shader.uploadMat4f("uProjectionMatrix", SceneManager.getCurrentScene().getCamera().getProjectionMatrix());
+        shader.uploadMat4f("uViewMatrix", SceneManager.getCurrentScene().getCamera().getViewMatrix());
         shader.uploadFloat("uTime", Time.getDeltaTime());
         glBindVertexArray(vertexArrayObjectID);
         glEnableVertexAttribArray(0);

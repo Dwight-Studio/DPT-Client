@@ -12,7 +12,7 @@ public class SceneManager {
     private static Scene currentScene;
 
     public static void changeScene(int sceneID) {
-        GameLogger.getLogger().info(MessageFormat.format("Changing to scene : {0}", sceneID));
+        GameLogger.getLogger("SceneManager").info(MessageFormat.format("Changing to scene : {0}", sceneID));
         switch (sceneID) {
             case 0 -> {
                 currentScene = new MainScene();
@@ -24,7 +24,7 @@ public class SceneManager {
                 currentScene.init();
                 currentScene.start();
             }
-            default -> GameLogger.getLogger().warn(MessageFormat.format("The scene with id : {0} cannot be found.", sceneID));
+            default -> GameLogger.getLogger("SceneManager").warn(MessageFormat.format("The scene with id : {0} cannot be found.", sceneID));
         }
     }
 
