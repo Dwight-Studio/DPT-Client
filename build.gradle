@@ -33,7 +33,8 @@ dependencies {
 	implementation "org.lwjgl:lwjgl-opengl"
 	implementation "org.lwjgl:lwjgl-shaderc"
 	implementation "org.lwjgl:lwjgl-stb"
-	runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
+    implementation 'org.jetbrains:annotations:20.1.0'
+    runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
 	runtimeOnly "org.lwjgl:lwjgl-bgfx::$lwjglNatives"
 	runtimeOnly "org.lwjgl:lwjgl-glfw::$lwjglNatives"
 	runtimeOnly "org.lwjgl:lwjgl-libdivide::$lwjglNatives"
