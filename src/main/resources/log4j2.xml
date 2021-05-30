@@ -2,14 +2,14 @@
 <Configuration status="info">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss} [%t] %-level %logger{36} - %msg%n"/>
+            <PatternLayout pattern="[%d{HH:mm:ss}] [%t/%-level] [%logger{36}]: %msg%n"/>
             <Filters>
                 <ThresholdFilter level="debug"/>
             </Filters>
         </Console>
         <File name="File" fileName="dpt-latest.log" immediateFlush="false" append="false">
             <PatternLayout>
-                <Pattern>%d{HH:mm:ss} [%t] %-level %logger{36} - %msg%n</Pattern>
+                <Pattern>[%d{HH:mm:ss}] [%t/%-level] [%logger{36}]: %msg%n</Pattern>
             </PatternLayout>
         </File>
     </Appenders>
