@@ -25,8 +25,9 @@ public class MainScene extends Scene {
         camera = new Camera(new Vector2f());
         tiles = new GameObject("tiles", 0);
         ResourceManager.load("./src/main/resources/textures/test.png", Texture.class);
-        tiles.addComponent(new Surface(0, 0, 32, 32, new Color(1, 0, 0, 1)));
-        tiles.addComponent(new Surface(100, 100, 32, 32, new Color(0, 1, 0, 1)));
+        tiles.addComponent(new Surface(0, 0, 64, 64, new Color(1, 0, 0, 1)));
+        tiles.addComponent(new Surface(100, 100, 64, 64, new Color(0, 1, 0, 1)));
+        tiles.addComponent(new Surface(200, 200, 64, 64, ResourceManager.<Texture>get("./src/main/resources/textures/test.png")));
         setBackgroundColor(new Color(1.0f, 1.0f, 1.0f, 0.0f));
         this.addGameObject(tiles);
     }

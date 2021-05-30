@@ -7,8 +7,7 @@ import java.nio.ByteBuffer;
 import java.text.MessageFormat;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.stb.STBImage.stbi_image_free;
-import static org.lwjgl.stb.STBImage.stbi_load;
+import static org.lwjgl.stb.STBImage.*;
 
 public class TextureLoader {
 
@@ -17,6 +16,7 @@ public class TextureLoader {
     private static final int[] nbChannel = new int[1];
 
     public static Texture loadTexture(String file) {
+        stbi_set_flip_vertically_on_load(true);
         ByteBuffer texture = stbi_load(file, width, height, nbChannel, 4);
         if (texture == null) {
             GameLogger.getLogger("TextureLoader").warn(MessageFormat.format("File not found : {0}", file));
