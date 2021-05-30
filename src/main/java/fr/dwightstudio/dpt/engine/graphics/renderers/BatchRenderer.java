@@ -5,7 +5,6 @@ import fr.dwightstudio.dpt.engine.graphics.render.Texture;
 import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
 import fr.dwightstudio.dpt.engine.primitives.Surface;
 import fr.dwightstudio.dpt.engine.resources.ResourceManager;
-import org.joml.Vector2f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,72 +86,29 @@ public class BatchRenderer {
 
     public void addSurface(Surface surface) {
         surfaces[numberOfSurfaces] = surface;
-        int offset = numberOfSurfaces * 4 * VERTEX_SIZE;
+
+        loadVertexProperties(numberOfSurfaces);
+
         numberOfSurfaces++;
-
-        if (surface.getTexture() != null) {
-            if (!textures.contains(surface.getTexture())) {
-                textures.add(surface.getTexture());
-            }
-        }
-
-        int textureID = 0; // The texture ID 0 will never be used
-        if (surface.getTexture() != null) {
-            for (int i = 0; i < textures.size(); i++) {
-                if (textures.get(i) == surface.getTexture()) {
-                    textureID = i + 1;
-                    break;
-                }
-            }
-        }
-
-        Vector2f[] textureCoords = {
-                new Vector2f(1, 1),
-                new Vector2f(1, 0),
-                new Vector2f(0, 0),
-                new Vector2f(0, 1)
-        };
-        float x = surface.getPosition().x + surface.getScale().x;
-        float y = surface.getPosition().y + surface.getScale().y;
-        for (int i = 0; i < 4; i++) {
-            if (i == 1) {
-                y = surface.getPosition().y;
-            } else if (i == 2) {
-                x = surface.getPosition().x;
-            } else if (i == 3) {
-                y = surface.getPosition().y + surface.getScale().y;
-            }
-
-            // Load the position
-            vertices[offset] = x;
-            vertices[offset + 1] = y;
-
-            // Load the color
-            vertices[offset + 2] = surface.getColor().getRed();
-            vertices[offset + 3] = surface.getColor().getGreen();
-            vertices[offset + 4] = surface.getColor().getBlue();
-            vertices[offset + 5] = surface.getColor().getAlpha();
-
-
-            // Load the texture coordinates
-            vertices[offset + 6] = textureCoords[i].x;
-            vertices[offset + 7] = textureCoords[i].y;
-
-            // Load texture ID
-            vertices[offset + 8] = textureID;
-
-
-            offset += VERTEX_SIZE;
-        }
-
         if (numberOfSurfaces >= batchSize) {
             hasRoom = false;
         }
     }
 
     public void render() {
-        glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObjectID);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+        boolean rebufferData = false;
+        for (int i = 0; i < numberOfSurfaces; i++) {
+            if (surfaces[i].isDirty()) {
+                loadVertexProperties(i);
+                surfaces[i].markClean();
+                rebufferData = true;
+            }
+        }
+
+        if (rebufferData) {
+            glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObjectID);
+            glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+        }
 
         shader.bind();
         shader.uploadMat4f("uProjectionMatrix", SceneManager.getCurrentScene().getCamera().getProjectionMatrix());
@@ -202,6 +158,60 @@ public class BatchRenderer {
             elements[offsetArrayIndex + 5] = 4 * i + 1;
         }
         return elements;
+    }
+
+    private void loadVertexProperties(int index) {
+        Surface surface = this.surfaces[index];
+        int offset = index * 4 * VERTEX_SIZE;
+
+        if (surface.getTexture() != null) {
+            if (!textures.contains(surface.getTexture())) {
+                textures.add(surface.getTexture());
+            }
+        }
+
+        int textureID = 0; // The texture ID 0 will never be used
+        if (surface.getTexture() != null) {
+            for (int i = 0; i < textures.size(); i++) {
+                if (textures.get(i) == surface.getTexture()) {
+                    textureID = i + 1;
+                    break;
+                }
+            }
+        }
+
+        float x = surface.getPosition().x + surface.getScale().x;
+        float y = surface.getPosition().y + surface.getScale().y;
+        for (int i = 0; i < 4; i++) {
+            if (i == 1) {
+                y = surface.getPosition().y;
+            } else if (i == 2) {
+                x = surface.getPosition().x;
+            } else if (i == 3) {
+                y = surface.getPosition().y + surface.getScale().y;
+            }
+
+            // Load the position
+            vertices[offset] = x;
+            vertices[offset + 1] = y;
+
+            // Load the color
+            vertices[offset + 2] = surface.getColor().getRed();
+            vertices[offset + 3] = surface.getColor().getGreen();
+            vertices[offset + 4] = surface.getColor().getBlue();
+            vertices[offset + 5] = surface.getColor().getAlpha();
+
+
+            // Load the texture coordinates
+            vertices[offset + 6] = surface.getTextureCoords()[i].x;
+            vertices[offset + 7] = surface.getTextureCoords()[i].y;
+
+            // Load texture ID
+            vertices[offset + 8] = textureID;
+
+
+            offset += VERTEX_SIZE;
+        }
     }
 
     public boolean hasRoom() {

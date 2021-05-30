@@ -36,4 +36,14 @@ public class Color {
     public float getAlpha() {
         return alpha;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null) return false;
+        if (!(object instanceof Color)) return false;
+
+        Color color = (Color) object;
+
+        return color.getRed() == this.red && color.getGreen() == this.green && color.getBlue() == this.blue && color.getAlpha() == this.alpha;
+    }
 }

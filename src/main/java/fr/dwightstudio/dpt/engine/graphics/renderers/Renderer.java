@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Renderer {
-    private int maxBatchSize = 1;
+    private int maxBatchSize = 1000;
     private List<BatchRenderer> batchRenderers;
 
     public Renderer() {
