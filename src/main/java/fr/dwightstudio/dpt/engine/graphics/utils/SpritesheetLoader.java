@@ -10,12 +10,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SpritesheetLoader {
 
@@ -43,7 +43,7 @@ public class SpritesheetLoader {
         }
 
         int currentX = 0;
-        int currentY = texture.getHeight() - spriteHeight;
+        int currentY = Objects.requireNonNull(texture).getHeight() - spriteHeight;
         for (int i = 0; i < numberOfSprite; i++) {
             // These variables are all normalized values
             // So we are selecting a sprite like this :

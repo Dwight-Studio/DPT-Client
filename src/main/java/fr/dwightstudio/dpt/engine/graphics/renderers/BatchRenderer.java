@@ -2,9 +2,14 @@ package fr.dwightstudio.dpt.engine.graphics.renderers;
 
 import fr.dwightstudio.dpt.engine.graphics.render.Shader;
 import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
-import fr.dwightstudio.dpt.engine.scripting.Component;
+import fr.dwightstudio.dpt.engine.logging.GameLogger;
+import fr.dwightstudio.dpt.engine.primitives.Surface;
 import fr.dwightstudio.dpt.engine.resources.ResourceManager;
+import fr.dwightstudio.dpt.engine.utils.Time;
+import org.lwjgl.BufferUtils;
 
+import java.nio.FloatBuffer;
+import java.util.Arrays;
 import java.util.Objects;
 
 import static org.lwjgl.opengl.GL15.*;
@@ -15,41 +20,41 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 public class BatchRenderer {
     // This is what the array should looks like:
     //
-    // Position         Color                           TextureCoords
+    // Position                Color                           TextureCoords
     // float, float,    float, float, float, float,     float, float
     //
     // NOTE: Here I put only x and y for position bacause we are working with 2d only in this BatchRender
     private final int POSITION_SIZE = 2;
     private final int COLOR_SIZE = 4;
-    private final int TEXTURE_COORDS_SIZE = 2;
-    private final int VERTEX_SIZE = POSITION_SIZE + COLOR_SIZE + TEXTURE_COORDS_SIZE;
+    //private final int TEXTURE_COORDS_SIZE = 2;
+    private final int VERTEX_SIZE = POSITION_SIZE + COLOR_SIZE/* + TEXTURE_COORDS_SIZE*/;
 
     // Here are the 'offsets' in the array for each differents data
     private final int POSITION_OFFSET = 0;
     private final int COLOR_OFFSET = POSITION_OFFSET + POSITION_SIZE * Float.BYTES;
-    private final int TEXTURE_COORDS_OFFSET = COLOR_OFFSET + COLOR_SIZE * Float.BYTES;
+    //private final int TEXTURE_COORDS_OFFSET = COLOR_OFFSET + COLOR_SIZE * Float.BYTES;
 
+    private Surface[] surfaces;
     private int batchSize;
-    private Component[] components;
     private Shader shader;
     private float[] vertices;
-    private int numberOfGameObjects;
+    private int numberOfSurfaces;
     private boolean hasRoom;
     private int vertexBufferObjectID;
     private int vertexArrayObjectID;
 
     public BatchRenderer(int batchSize) {
+        this.surfaces = new Surface[batchSize];
         this.batchSize = batchSize;
-        this.components = new Component[batchSize];
-        shader = ResourceManager.<Shader>get("./src/main/resources/shaders/default.glsl");
-
+        ResourceManager.load("./src/main/resources/shaders/default.glsl", Shader.class);
+        this.shader = ResourceManager.get("./src/main/resources/shaders/default.glsl");
         this.vertices = new float[batchSize * 4 * VERTEX_SIZE]; // The 4 is the number of vertices per quads
-        this.numberOfGameObjects = 0;
+        this.numberOfSurfaces = 0;
         this.hasRoom = true;
     }
 
     public void start() {
-        int vertexArrayObjectID = glGenVertexArrays();
+        vertexArrayObjectID = glGenVertexArrays();
         glBindVertexArray(vertexArrayObjectID);
 
         vertexBufferObjectID = glGenBuffers();
@@ -57,8 +62,9 @@ public class BatchRenderer {
         glBufferData(GL_ARRAY_BUFFER, (long) vertices.length * Float.BYTES, GL_DYNAMIC_DRAW);
 
         int elementBufferObjectID = glGenBuffers();
+        int[] indices = generateIndices();
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObjectID);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, generateIndices(), GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
 
         glVertexAttribPointer(0, POSITION_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, POSITION_OFFSET);
         glEnableVertexAttribArray(0);
@@ -66,15 +72,50 @@ public class BatchRenderer {
         glVertexAttribPointer(1, COLOR_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, COLOR_OFFSET);
         glEnableVertexAttribArray(1);
 
-        glVertexAttribPointer(2, TEXTURE_COORDS_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, TEXTURE_COORDS_OFFSET);
-        glEnableVertexAttribArray(2);
+        // glVertexAttribPointer(2, TEXTURE_COORDS_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, TEXTURE_COORDS_OFFSET);
+        // glEnableVertexAttribArray(2);
     }
 
-    public void addGameObject(Component component) {
-        components[this.numberOfGameObjects] = component;
-        numberOfGameObjects++;
+    public void addSurface(Surface surface) {
+        surfaces[numberOfSurfaces] = surface;
+        int offset = numberOfSurfaces * 4 * VERTEX_SIZE;
+        numberOfSurfaces++;
 
-        if (numberOfGameObjects >= batchSize) {
+        float x = surface.getPosition().x + surface.getScale().x;
+        float y = surface.getPosition().y + surface.getScale().y;
+        for (int i = 0; i < 4; i++) {
+            if (i == 1) {
+                y = surface.getPosition().y;
+            } else if (i == 2) {
+                x = surface.getPosition().x;
+            } else if (i == 3) {
+                y = surface.getPosition().y + surface.getScale().y;
+            }
+
+            // First iteration:
+            // 32, 32
+            //
+            // Second iteration:
+            // 32, 0
+            //
+            // Third iteration:
+            // 0, 0
+            //
+            // Fourth iteration:
+            // 0, 32
+
+            vertices[offset] = x;
+            vertices[offset + 1] = y;
+
+            vertices[offset + 2] = surface.getColor().getRed();
+            vertices[offset + 3] = surface.getColor().getGreen();
+            vertices[offset + 4] = surface.getColor().getBlue();
+            vertices[offset + 5] = surface.getColor().getAlpha();
+
+            offset += VERTEX_SIZE;
+        }
+
+        if (numberOfSurfaces >= batchSize) {
             hasRoom = false;
         }
     }
@@ -82,25 +123,29 @@ public class BatchRenderer {
     public void render() {
         glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObjectID);
         glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
-        Objects.requireNonNull(shader).bind();
+
+        shader.bind();
         shader.uploadMat4f("uProjectionMatrix", SceneManager.getCurrentScene().getCamera().getProjectionMatrix());
         shader.uploadMat4f("uViewMatrix", SceneManager.getCurrentScene().getCamera().getViewMatrix());
+
         glBindVertexArray(vertexArrayObjectID);
         glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);;
-        glDrawElements(GL_TRIANGLES, numberOfGameObjects * 6, GL_UNSIGNED_INT, 0);
+        glEnableVertexAttribArray(1);
+
+        glDrawElements(GL_TRIANGLES, numberOfSurfaces * 6, GL_UNSIGNED_INT, 0);
 
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
         glBindVertexArray(0);
+
         shader.unbind();
     }
 
     private int[] generateIndices() {
         // The indices array will look like this :
         //
-        // int, int, int, int, int, int,
-        // int, int, int, int, int, int
+        // int, int, int, int, int, int, <- 1 quad
+        // int, int, int, int, int, int  <- 1 quad
         //
         // NOTE: We have 2 triangles with 3 indices each to form a quad so 3*2=6
         int[] elements = new int[6 * batchSize];
@@ -117,8 +162,11 @@ public class BatchRenderer {
             elements[offsetArrayIndex + 4] = 4 * i + 2;
             elements[offsetArrayIndex + 5] = 4 * i + 1;
         }
-
         return elements;
+    }
+
+    public boolean hasRoom() {
+        return hasRoom;
     }
 
 }

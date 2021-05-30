@@ -59,6 +59,20 @@ public class GameObject {
         return null;
     }
 
+    public <T extends Component> List<T> getComponents(Class<T> componentClass) {
+        List<T> componentList = new ArrayList<>();
+        for (Component component : components) {
+            if (componentClass.isAssignableFrom(component.getClass())) {
+                try {
+                    componentList.add(componentClass.cast(component));
+                } catch (ClassCastException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return componentList;
+    }
+
     public <T extends  Component> void removeComponent(Class<T> componentClass) {
         for (int i = 0; i < components.size(); i++) {
             if (componentClass.isAssignableFrom(components.get(i).getClass())) {

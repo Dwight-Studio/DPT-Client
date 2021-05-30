@@ -5,9 +5,6 @@ import fr.dwightstudio.dpt.engine.logging.GameLogger;
 
 import java.nio.ByteBuffer;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.stb.STBImage.stbi_image_free;

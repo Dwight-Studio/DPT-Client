@@ -19,8 +19,8 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 // VBO = Vertex Buffer Object
 public class VBO {
 
-    static {ResourceManager.load("./src/main/resources/shaders/default.glsl", "shader");}
-    private final static Shader shader = ResourceManager.<Shader>get("./src/main/resources/shaders/default.glsl");
+    static {ResourceManager.load("./src/main/resources/shaders/default.glsl", Shader.class);}
+    private final static Shader shader = ResourceManager.get("./src/main/resources/shaders/default.glsl");
 
     private final int vertexArrayObjectID;
     private final int[] elementArray;

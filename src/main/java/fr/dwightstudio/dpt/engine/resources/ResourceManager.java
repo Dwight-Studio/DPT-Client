@@ -1,7 +1,8 @@
 package fr.dwightstudio.dpt.engine.resources;
 
+import fr.dwightstudio.dpt.engine.graphics.render.Shader;
 import fr.dwightstudio.dpt.engine.graphics.render.Spritesheet;
-import fr.dwightstudio.dpt.engine.graphics.utils.SpritesheetLoader;
+import fr.dwightstudio.dpt.engine.graphics.render.Texture;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
 
 import java.text.MessageFormat;
@@ -11,17 +12,19 @@ import java.util.function.Supplier;
 
 public class ResourceManager {
 
-    private static final Map<String, TypeHandler<?>> HANDLERS = new HashMap<>();
+    private static final Map<Class<?>, TypeHandler<?>> HANDLERS = new HashMap<>();
     private static final Map<String, Supplier<?>> RESOURCES = new HashMap<>();
 
     static {
-        addHandler("texture", new TextureHandler());
-        addHandler("shader", new ShaderHandler());
-        addHandler("spritesheet", new SpritesheetHandler());
+        addHandler(Texture.class, new TextureHandler());
+        addHandler(Shader.class, new ShaderHandler());
+        addHandler(Spritesheet.class, new SpritesheetHandler());
     }
 
     /**
      * Gets a resource
+     *
+     * You can get a resource after loading it
      *
      * @param filepath the filepath of the resource
      * @param <T> the type of the resource
@@ -39,14 +42,15 @@ public class ResourceManager {
         return null;
     }
 
-    public static boolean load(String filepath, String type) {
-        if (HANDLERS.containsKey(type.toLowerCase())) {
-            TypeHandler<?> handler = HANDLERS.get(type.toLowerCase());
+    // You have to load the resource bafore using it
+    public static boolean load(String filepath, Class<?> type) {
+        if (HANDLERS.containsKey(type)) {
+            TypeHandler<?> handler = HANDLERS.get(type);
             if (handler.get(filepath) != null) {
                 RESOURCES.put(filepath, () -> handler.get(filepath));
                 return true;
             } else {
-                GameLogger.getLogger("ResourceManager").warn(MessageFormat.format("Handler '{0}' has returned Null for '{1}'", type.toLowerCase(), filepath));
+                GameLogger.getLogger("ResourceManager").warn(MessageFormat.format("Handler '{0}' has returned Null for '{1}'", type, filepath));
                 return false;
             }
         } else {
@@ -61,7 +65,7 @@ public class ResourceManager {
      * @param type the identifier of the type
      * @param typeHandler the handler
      */
-    public static void addHandler(String type, TypeHandler<?> typeHandler) {
-        HANDLERS.put(type.toLowerCase(), typeHandler);
+    public static void addHandler(Class<?> type, TypeHandler<?> typeHandler) {
+        HANDLERS.put(type, typeHandler);
     }
 }

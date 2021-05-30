@@ -8,8 +8,6 @@ import fr.dwightstudio.dpt.engine.utils.Time;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 
-import java.util.logging.Level;
-
 import static fr.dwightstudio.dpt.engine.Engine.ENGINE_FULLSCREEN;
 import static fr.dwightstudio.dpt.engine.Engine.ENGINE_WINDOWED;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -105,7 +103,7 @@ public class GLFWWindow {
             endTime = Time.getDeltaTime();
             dt = endTime - beginTime;
             Time.setDTime(dt);
-            //System.out.println(Math.round(1.0f / dt) + " FPS");
+            // System.out.println(Math.round(1.0f / dt) + " FPS");
             beginTime = endTime;
         }
 
