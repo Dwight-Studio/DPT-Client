@@ -33,4 +33,20 @@ public class TextureLoader {
             return new Texture(width[0], height[0], id, nbChannel[0]);
         }
     }
+
+    public static Texture createTexture(int width, int height, ByteBuffer buffer) {
+        if (buffer == null) {
+            return null;
+        } else {
+            int id = glGenTextures();
+            glBindTexture(GL_TEXTURE_2D, id);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+            stbi_image_free(buffer);
+            glBindTexture(GL_TEXTURE_2D, 0); // Unbinding any texture at the end to make sure it is not modified after
+            GameLogger.getLogger("TextureLoader").debug("Texture created");
+            return new Texture(width, height, id, nbChannel[0]);
+        }
+    }
 }
