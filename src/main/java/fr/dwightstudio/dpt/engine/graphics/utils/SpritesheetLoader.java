@@ -27,6 +27,7 @@ public class SpritesheetLoader {
 
     public static Spritesheet loadSpritesheet(String filepath) {
         List<SpriteTexture> spritesTextures = new ArrayList<>();
+        ResourceManager.load(filepath, Texture.class);
         Texture texture = ResourceManager.get(filepath);
 
         try {

@@ -5,6 +5,7 @@ import fr.dwightstudio.dpt.engine.graphics.render.Spritesheet;
 import fr.dwightstudio.dpt.engine.graphics.render.Texture;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
 
+import java.awt.*;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +20,7 @@ public class ResourceManager {
         addHandler(Texture.class, new TextureHandler());
         addHandler(Shader.class, new ShaderHandler());
         addHandler(Spritesheet.class, new SpritesheetHandler());
+        addHandler(Font.class, new FontHandler());
     }
 
     /**
