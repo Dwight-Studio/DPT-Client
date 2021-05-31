@@ -42,4 +42,14 @@ public class Texture {
     public void delete() {
         glDeleteTextures(id);
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null) return false;
+        if (!(object instanceof Texture)) return false;
+
+        Texture texture = (Texture) object;
+
+        return texture.getTextureID() == this.getTextureID();
+    }
 }

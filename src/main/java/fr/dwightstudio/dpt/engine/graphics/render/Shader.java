@@ -93,4 +93,8 @@ public class Shader {
         bind();
         glUniform2f(glGetUniformLocation(programID, varName), vec2f.x, vec2f.y);
     }
+
+    public void uploadIntArray(String varname, int[] array) {
+        glUniform1iv(glGetUniformLocation(programID, varname), array);
+    }
 }

@@ -5,19 +5,22 @@ import java.util.List;
 public class Spritesheet {
 
     private final Texture texture;
-    private final List<SpriteTexture> sprites;
+    private final List<SpriteTexture> spriteTextures;
 
     public Spritesheet(Texture texture, List<SpriteTexture> sprites) {
         this.texture = texture;
-        this.sprites = sprites;
+        this.spriteTextures = sprites;
     }
 
     public SpriteTexture getSprite(int index) {
-        return sprites.get(index);
+        return spriteTextures.get(index);
     }
 
     public Texture getTexture() {
         return texture;
     }
 
+    public int getNumberOfSprite() {
+        return spriteTextures.size();
+    }
 }

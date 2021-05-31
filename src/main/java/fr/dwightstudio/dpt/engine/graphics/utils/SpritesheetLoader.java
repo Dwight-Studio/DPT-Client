@@ -19,11 +19,11 @@ import java.util.Objects;
 
 public class SpritesheetLoader {
 
-    private static int numberOfSprite;
-    private static int spriteWidth;
-    private static int spriteHeight;
-    private static int widthSpacing;
-    private static int heightSpacing;
+    private static long numberOfSprite;
+    private static long spriteWidth;
+    private static long spriteHeight;
+    private static long widthSpacing;
+    private static long heightSpacing;
 
     public static Spritesheet loadSpritesheet(String filepath) {
         List<SpriteTexture> spritesTextures = new ArrayList<>();
@@ -32,11 +32,11 @@ public class SpritesheetLoader {
 
         try {
             JSONObject jsonObject = (JSONObject) new JSONParser().parse(new FileReader(filepath + ".meta"));
-            numberOfSprite = (int) jsonObject.get("numberOfSprite");
-            spriteWidth = (int) jsonObject.get("spriteWidth");
-            spriteHeight = (int) jsonObject.get("spriteHeight");
-            widthSpacing = (int) jsonObject.get("widthSpacing");
-            heightSpacing = (int) jsonObject.get("heightSpacing");
+            numberOfSprite = (long) jsonObject.get("numberOfSprite");
+            spriteWidth = (long) jsonObject.get("spriteWidth");
+            spriteHeight = (long) jsonObject.get("spriteHeight");
+            widthSpacing = (long) jsonObject.get("widthSpacing");
+            heightSpacing = (long) jsonObject.get("heightSpacing");
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();
@@ -44,7 +44,7 @@ public class SpritesheetLoader {
         }
 
         int currentX = 0;
-        int currentY = Objects.requireNonNull(texture).getHeight() - spriteHeight;
+        int currentY = Objects.requireNonNull(texture).getHeight() - (int) spriteHeight;
         for (int i = 0; i < numberOfSprite; i++) {
             // These variables are all normalized values
             // So we are selecting a sprite like this :
