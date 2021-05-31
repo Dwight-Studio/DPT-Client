@@ -3,8 +3,10 @@ package fr.dwightstudio.dpt.engine.graphics.renderers;
 import fr.dwightstudio.dpt.engine.graphics.render.Shader;
 import fr.dwightstudio.dpt.engine.graphics.render.Texture;
 import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
+import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.engine.primitives.Surface;
 import fr.dwightstudio.dpt.engine.resources.ResourceManager;
+import org.joml.Vector2f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -180,20 +182,21 @@ public class BatchRenderer {
             }
         }
 
-        float x = surface.getPosition().x + surface.getScale().x;
-        float y = surface.getPosition().y + surface.getScale().y;
+        float x = (surface.getPosition().x - surface.getCenterPoint().x) + surface.getScale().x;
+        float y = (surface.getPosition().y - surface.getCenterPoint().y) + surface.getScale().y;
+        // This will loop 4 times for the 4 vertices.
         for (int i = 0; i < 4; i++) {
             if (i == 1) {
-                y = surface.getPosition().y;
+                y = surface.getPosition().y - surface.getCenterPoint().y;
             } else if (i == 2) {
-                x = surface.getPosition().x;
+                x = surface.getPosition().x - surface.getCenterPoint().x;
             } else if (i == 3) {
-                y = surface.getPosition().y + surface.getScale().y;
+                y = (surface.getPosition().y - surface.getCenterPoint().y) + surface.getScale().y;
             }
 
             // Load the position
-            vertices[offset] = x;
-            vertices[offset + 1] = y;
+            vertices[offset] = (x * (float) Math.cos(surface.getRotation()) - y * (float) Math.sin(surface.getRotation())) + surface.getCenterPoint().x;
+            vertices[offset + 1] = (x * (float) Math.sin(surface.getRotation()) + y * (float) Math.cos(surface.getRotation())) + surface.getCenterPoint().y;
 
             // Load the color
             vertices[offset + 2] = surface.getColor().getRed();

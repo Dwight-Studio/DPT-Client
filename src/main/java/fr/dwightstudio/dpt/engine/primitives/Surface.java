@@ -3,6 +3,7 @@ package fr.dwightstudio.dpt.engine.primitives;
 import fr.dwightstudio.dpt.engine.graphics.render.Color;
 import fr.dwightstudio.dpt.engine.graphics.render.Texture;
 import fr.dwightstudio.dpt.engine.graphics.render.Transform;
+import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.engine.scripting.Component;
 import org.joml.Vector2f;
 
@@ -110,6 +111,10 @@ public class Surface extends Component {
         return transform.scale;
     }
 
+    public float getRotation() {
+        return transform.rotation;
+    }
+
     public Texture getTexture() {
         return texture;
     }
@@ -127,16 +132,6 @@ public class Surface extends Component {
 
     public void setTransform(Transform transform) {
         this.transform = transform;
-        this.dirty = true;
-    }
-
-    public void setPosition(Vector2f position) {
-        this.transform.position.set(position);
-        this.dirty = true;
-    }
-
-    public void setScale(Vector2f scale) {
-        this.transform.scale.set(scale);
         this.dirty = true;
     }
 
@@ -161,5 +156,9 @@ public class Surface extends Component {
 
     public void markClean() {
         dirty = false;
+    }
+
+    public Vector2f getCenterPoint() {
+        return new Vector2f(transform.scale.x / 2, transform.scale.y / 2);
     }
 }
