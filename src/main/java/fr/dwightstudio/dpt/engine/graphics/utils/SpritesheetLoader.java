@@ -58,10 +58,10 @@ public class SpritesheetLoader {
             float bottom = currentY / (float) texture.getHeight();
 
             Vector2f[] textureCoords = {
-                    new Vector2f(right, top),
                     new Vector2f(right, bottom),
+                    new Vector2f(right, top),
+                    new Vector2f(left, top),
                     new Vector2f(left, bottom),
-                    new Vector2f(left, top)
             };
             SpriteTexture spriteTexture = new SpriteTexture(texture, textureCoords);
             spritesTextures.add(spriteTexture);

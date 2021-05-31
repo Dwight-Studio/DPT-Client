@@ -33,10 +33,10 @@ public class Surface extends Component {
         this.lastTransform = new Transform();
         this.texture = null;
         this.textureCoords = new Vector2f[]{
-                new Vector2f(1, 1),
                 new Vector2f(1, 0),
+                new Vector2f(1, 1),
+                new Vector2f(0, 1),
                 new Vector2f(0, 0),
-                new Vector2f(0, 1)
         };
     }
 
@@ -47,10 +47,10 @@ public class Surface extends Component {
         this.lastTransform = new Transform();
         this.texture = texture;
         this.textureCoords = new Vector2f[]{
-                new Vector2f(1, 1),
                 new Vector2f(1, 0),
+                new Vector2f(1, 1),
+                new Vector2f(0, 1),
                 new Vector2f(0, 0),
-                new Vector2f(0, 1)
         };
     }
 
@@ -61,10 +61,10 @@ public class Surface extends Component {
         this.lastTransform = new Transform();
         this.texture = null;
         this.textureCoords = new Vector2f[]{
-                new Vector2f(1, 1),
                 new Vector2f(1, 0),
+                new Vector2f(1, 1),
+                new Vector2f(0, 1),
                 new Vector2f(0, 0),
-                new Vector2f(0, 1)
         };
     }
 
@@ -75,10 +75,10 @@ public class Surface extends Component {
         this.lastTransform = new Transform();
         this.texture = texture;
         this.textureCoords = new Vector2f[]{
-                new Vector2f(1, 1),
                 new Vector2f(1, 0),
+                new Vector2f(1, 1),
+                new Vector2f(0, 1),
                 new Vector2f(0, 0),
-                new Vector2f(0, 1)
         };
     }
 
@@ -152,6 +152,10 @@ public class Surface extends Component {
 
     public boolean isDirty() {
         return dirty;
+    }
+
+    public void setDirty() {
+        dirty = true;
     }
 
     public void markClean() {
