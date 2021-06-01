@@ -1,38 +1,113 @@
 package fr.dwightstudio.dpt.engine.graphics.gui;
 
+import fr.dwightstudio.dpt.engine.graphics.render.Color;
 import fr.dwightstudio.dpt.engine.graphics.render.Texture;
+import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.engine.primitives.Surface;
+import fr.dwightstudio.dpt.engine.scripting.Component;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
+import java.text.MessageFormat;
 
 import static org.lwjgl.opengl.GL11.*;
 
-public class Text {
+public class Text extends Component {
 
-    private static Texture texture;
-    private static int width;
-    private static int height;
+    private int width;
+    private int height;
+    private boolean antiAliasing;
+    private String string;
+    private Font font;
+    private Color color;
+    private Texture texture;
 
-    public static Surface createSurface(float x, float y, String string, Font font, Color color) {
-        ByteBuffer image = createImageFromString(string, font, color);
-        Text.texture = createTexture(image);
-        return new Surface(x, y, width, height, texture);
+    public Text(String string, Font font, Color color, boolean antiAliasing) {
+        this.string = string;
+        this.font = font;
+        this.color = color;
+        this.antiAliasing = antiAliasing;
+        ByteBuffer image = createImageFromString(string, font, color, this.antiAliasing);
+        this.texture = createTexture(image);
+        GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
     }
 
-    public static Texture getTexture(String string, Font font, Color color) {
-        ByteBuffer image = createImageFromString(string, font, color);
-        return createTexture(image);
+    public Text(String string, Font font, Color color) {
+        this.string = string;
+        this.font = font;
+        this.color = color;
+        this.antiAliasing = false;
+        ByteBuffer image = createImageFromString(string, font, color, false);
+        this.texture = createTexture(image);
+        GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
     }
 
-    public static Vector2f getLastSize() {
+    public Text(String string, Font font, boolean antiAliasing) {
+        this.string = string;
+        this.font = font;
+        this.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+        this.antiAliasing = antiAliasing;
+        ByteBuffer image = createImageFromString(string, font, this.color, this.antiAliasing);
+        this.texture = createTexture(image);
+        GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
+    }
+
+    public Text(String string, Font font) {
+        this.string = string;
+        this.font = font;
+        this.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+        this.antiAliasing = false;
+        ByteBuffer image = createImageFromString(string, font, this.color, false);
+        this.texture = createTexture(image);
+        GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
+    }
+
+    public Vector2f getScale() {
         return new Vector2f(width, height);
     }
+
+    public String getText() {
+        return this.string;
+    }
+
+    public Font getFont() {
+        return this.font;
+    }
+
+    public Texture getTexture() {
+        return this.texture;
+    }
+
+    public boolean isUsingAntialiasing() {
+        return this.antiAliasing;
+    }
+
+    public Surface createSurface(float x, float y) {
+        return new Surface(x, y, this.width, this.height, this.texture);
+    }
+
+    public void setText(String string) {
+        this.string = string;
+        ByteBuffer image = createImageFromString(string, this.font, this.color, this.antiAliasing);
+        reloadTexture(image);
+    }
+
+    public void setFont(Font newFont) {
+        this.font = newFont;
+    }
+
+    public void setColor(Color newColor) {
+        this.color = newColor;
+    }
+
+    public void setAntiAliasing(boolean antiAliasing) {
+        this.antiAliasing = antiAliasing;
+    }
     
-    private static ByteBuffer createImageFromString(String string, Font font, Color color) {
+    private ByteBuffer createImageFromString(String string, Font font, Color color, boolean antiAliasing) {
         
         BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = img.createGraphics();
@@ -46,9 +121,12 @@ public class Text {
         img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
         g2d = img.createGraphics();
+        if (this.antiAliasing) {
+            g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        }
         g2d.setFont(font);
         fm = g2d.getFontMetrics();
-        g2d.setColor(color);
+        g2d.setColor(new java.awt.Color(color.getRed() * 255, color.getGreen() * 255, color.getBlue() * 255));
         g2d.drawString(string, 0, fm.getAscent());
         g2d.dispose();
 
@@ -76,7 +154,7 @@ public class Text {
         return buffer;
     }
     
-    private static Texture createTexture(ByteBuffer image) {
+    private Texture createTexture(ByteBuffer image) {
         if (image == null) {
             return null;
         } else {
@@ -88,5 +166,21 @@ public class Text {
             glBindTexture(GL_TEXTURE_2D, 0); // Unbinding any texture at the end to make sure it is not modified after
             return new Texture(width, height, id, 4); // Since we are creating a PNG image, there is four channels
         }
+    }
+
+    private void reloadTexture(ByteBuffer image) {
+        if (image != null) {
+            glBindTexture(GL_TEXTURE_2D, this.texture.getTextureID());
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+            glBindTexture(GL_TEXTURE_2D, 0); // Unbinding any texture at the end to make sure it is not modified after
+            this.texture = new Texture(width, height, this.texture.getTextureID(), 4);
+        }
+    }
+
+    @Override
+    public void update(float dt) {
+
     }
 }

@@ -18,22 +18,22 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 public class GLFWWindow {
 
     private long window;
-    private final int WIDTH;
-    private final int HEIGHT;
+    private static int WIDTH;
+    private static int HEIGHT;
     private final long windowMode;
 
     public GLFWWindow(int WIDTH, int HEIGHT, long windowMode) {
-        this.WIDTH = WIDTH;
-        this.HEIGHT = HEIGHT;
+        GLFWWindow.WIDTH = WIDTH;
+        GLFWWindow.HEIGHT = HEIGHT;
         this.windowMode = windowMode;
     }
 
-    public int getWidth(){
-        return WIDTH;
+    public static int getWidth(){
+        return GLFWWindow.WIDTH;
     }
 
-    public int getHeight(){
-        return HEIGHT;
+    public static int getHeight(){
+        return GLFWWindow.HEIGHT;
     }
 
     public void init(){
@@ -52,9 +52,9 @@ public class GLFWWindow {
 
         // Create the window. Throw a RuntimeException if
         if (windowMode == ENGINE_FULLSCREEN) {
-            window = glfwCreateWindow(WIDTH, HEIGHT, "Don't Play Together 2.0", glfwGetPrimaryMonitor(), NULL);
+            window = glfwCreateWindow(GLFWWindow.WIDTH, GLFWWindow.HEIGHT, "Don't Play Together 2.0", glfwGetPrimaryMonitor(), NULL);
         } else if (windowMode == ENGINE_WINDOWED) {
-            window = glfwCreateWindow(WIDTH, HEIGHT, "Don't Play Together 2.0", NULL, NULL);
+            window = glfwCreateWindow(GLFWWindow.WIDTH, GLFWWindow.HEIGHT, "Don't Play Together 2.0", NULL, NULL);
         } else {
             window = NULL;
         }
@@ -70,7 +70,7 @@ public class GLFWWindow {
 
         // Setting up the render
         glfwMakeContextCurrent(window); // Make the OpenGL context current
-        glfwSwapInterval(1); // Enable v-sync (no max fps)
+        glfwSwapInterval(1); // Enable v-sync
         glfwShowWindow(window); // Make the window visible
         GL.createCapabilities(); // Called before any OpenGL function
         glEnable(GL_TEXTURE_2D); // Enable the GL_TEXTURE_2D feature

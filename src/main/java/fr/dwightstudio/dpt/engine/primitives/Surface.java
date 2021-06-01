@@ -3,7 +3,6 @@ package fr.dwightstudio.dpt.engine.primitives;
 import fr.dwightstudio.dpt.engine.graphics.render.Color;
 import fr.dwightstudio.dpt.engine.graphics.render.Texture;
 import fr.dwightstudio.dpt.engine.graphics.render.Transform;
-import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.engine.scripting.Component;
 import org.joml.Vector2f;
 

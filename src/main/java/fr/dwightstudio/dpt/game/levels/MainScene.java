@@ -1,5 +1,6 @@
 package fr.dwightstudio.dpt.game.levels;
 
+import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
 import fr.dwightstudio.dpt.engine.graphics.gui.Text;
 import fr.dwightstudio.dpt.engine.graphics.render.*;
 import fr.dwightstudio.dpt.engine.graphics.render.Color;
@@ -21,7 +22,7 @@ public class MainScene extends Scene {
     private final Surface surface = new Surface(0, 0, 64, 64, new Color(1, 0, 0, 1));
     private final Surface surface2 = new Surface(100, 100, 64, 64, new Color(0, 1, 0, 1));
     private Spritesheet spritesheet;
-    private Font font;
+    private Text text;
     private Surface textSurface;
     private int count = 0;
 
@@ -36,14 +37,16 @@ public class MainScene extends Scene {
         ResourceManager.load("./src/main/resources/textures/test.png", Texture.class);
         ResourceManager.load("./src/main/resources/textures/sheet.png", Spritesheet.class);
 
+        Font font = null;
         try {
             GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
             graphicsEnvironment.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("./src/main/resources/fonts/Ubuntu-Medium.ttf")));
-            this.font = new Font("Ubuntu", Font.PLAIN, 50);
+            font = new Font("Ubuntu", Font.PLAIN, 28);
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
-        this.textSurface = Text.createSurface(0, 300, "Bonjour", font, java.awt.Color.BLACK);
+        this.text = new Text("Bonjour", font, true);
+        textSurface = text.createSurface(0, GLFWWindow.getHeight() - this.text.getScale().y);
         this.spritesheet = ResourceManager.get("./src/main/resources/textures/sheet.png");
         tiles.addComponent(surface);
         tiles.addComponent(surface2);
@@ -63,6 +66,15 @@ public class MainScene extends Scene {
         surface.setTextureCoords(spritesheet.getSprite(0).getTextureCoords());
 
         surface.getTransform().rotation += 0.1f;
+
+        if (count == 20) {
+            this.text.setText(Math.round(1.0f / dt) + " FPS");
+            textSurface.getTransform().scale = this.text.getScale();
+            textSurface.setTexture(this.text.getTexture());
+            count = 0;
+        } else {
+            count++;
+        }
 
         renderer.render();
     }
