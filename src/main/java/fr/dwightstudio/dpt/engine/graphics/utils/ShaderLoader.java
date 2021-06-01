@@ -15,12 +15,14 @@ import static org.lwjgl.opengl.GL20.*;
 
 public class ShaderLoader {
 
-    private static final StringBuilder vertexShader = new StringBuilder();
-    private static final StringBuilder fragmentShader = new StringBuilder();
+    private static StringBuilder vertexShader;
+    private static StringBuilder fragmentShader;
     private static String file;
 
     public static Shader loadShaderFile(String filepath) {
         file = filepath;
+        vertexShader = new StringBuilder();
+        fragmentShader = new StringBuilder();
 
         try {
             BufferedReader fileBuffer = new BufferedReader(new FileReader(filepath));

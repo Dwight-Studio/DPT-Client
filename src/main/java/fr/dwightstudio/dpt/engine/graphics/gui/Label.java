@@ -3,7 +3,7 @@ package fr.dwightstudio.dpt.engine.graphics.gui;
 import fr.dwightstudio.dpt.engine.graphics.render.Color;
 import fr.dwightstudio.dpt.engine.graphics.render.Texture;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
-import fr.dwightstudio.dpt.engine.primitives.Surface;
+import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
 import fr.dwightstudio.dpt.engine.scripting.Component;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
@@ -15,7 +15,7 @@ import java.text.MessageFormat;
 
 import static org.lwjgl.opengl.GL11.*;
 
-public class Text extends Component {
+public class Label extends Component {
 
     private int width;
     private int height;
@@ -25,7 +25,7 @@ public class Text extends Component {
     private Color color;
     private Texture texture;
 
-    public Text(String string, Font font, Color color, boolean antiAliasing) {
+    public Label(String string, Font font, Color color, boolean antiAliasing) {
         this.string = string;
         this.font = font;
         this.color = color;
@@ -35,7 +35,7 @@ public class Text extends Component {
         GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
     }
 
-    public Text(String string, Font font, Color color) {
+    public Label(String string, Font font, Color color) {
         this.string = string;
         this.font = font;
         this.color = color;
@@ -45,7 +45,7 @@ public class Text extends Component {
         GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
     }
 
-    public Text(String string, Font font, boolean antiAliasing) {
+    public Label(String string, Font font, boolean antiAliasing) {
         this.string = string;
         this.font = font;
         this.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
@@ -55,7 +55,7 @@ public class Text extends Component {
         GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
     }
 
-    public Text(String string, Font font) {
+    public Label(String string, Font font) {
         this.string = string;
         this.font = font;
         this.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
@@ -86,7 +86,7 @@ public class Text extends Component {
     }
 
     public Surface createSurface(float x, float y) {
-        return new Surface(x, y, this.width, this.height, this.texture);
+        return new Surface(new Vector2f(x, y), this.width, this.height, this.texture);
     }
 
     public void setText(String string) {

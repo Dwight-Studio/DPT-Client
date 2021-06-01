@@ -1,8 +1,11 @@
 package fr.dwightstudio.dpt.engine.graphics.render;
 
+import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+
+import java.text.MessageFormat;
 
 public class Camera {
     private final Matrix4f projectionMatrix;
@@ -14,6 +17,7 @@ public class Camera {
         this.projectionMatrix = new Matrix4f();
         this.viewMatrix = new Matrix4f();
         adjustProjection();
+        GameLogger.getLogger("Camera").debug(MessageFormat.format("Created a Camera object at : {0}, {1}", position.x, position.y));
     }
 
     public void adjustProjection() {

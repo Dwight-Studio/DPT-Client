@@ -1,12 +1,11 @@
 package fr.dwightstudio.dpt.game.levels;
 
 import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
-import fr.dwightstudio.dpt.engine.graphics.gui.Text;
+import fr.dwightstudio.dpt.engine.graphics.gui.Label;
+import fr.dwightstudio.dpt.engine.graphics.primitives.Line;
 import fr.dwightstudio.dpt.engine.graphics.render.*;
 import fr.dwightstudio.dpt.engine.graphics.render.Color;
-import fr.dwightstudio.dpt.engine.inputs.GameInputs;
-import fr.dwightstudio.dpt.engine.inputs.KeyboardListener;
-import fr.dwightstudio.dpt.engine.primitives.Surface;
+import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
 import fr.dwightstudio.dpt.engine.resources.ResourceManager;
 import fr.dwightstudio.dpt.engine.scripting.GameObject;
 import fr.dwightstudio.dpt.engine.scripting.Scene;
@@ -19,10 +18,10 @@ import java.io.IOException;
 public class MainScene extends Scene {
 
     private GameObject tiles;
-    private final Surface surface = new Surface(0, 0, 64, 64, new Color(1, 0, 0, 1));
-    private final Surface surface2 = new Surface(100, 100, 64, 64, new Color(0, 1, 0, 1));
+    private final Surface surface = new Surface(new Vector2f(0, 0), 64, 64, new Color(1, 0, 0, 1));
+    private final Surface surface2 = new Surface(new Vector2f(100, 100), 64, 64, new Color(0, 1, 0, 0.5f));
     private Spritesheet spritesheet;
-    private Text text;
+    private Label label;
     private Surface textSurface;
     private int count = 0;
 
@@ -45,13 +44,15 @@ public class MainScene extends Scene {
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
-        this.text = new Text("Bonjour", font, true);
-        textSurface = text.createSurface(0, GLFWWindow.getHeight() - this.text.getScale().y);
+
+        this.label = new Label("FPS", font, true);
+        textSurface = label.createSurface(0, GLFWWindow.getHeight() - this.label.getScale().y);
         this.spritesheet = ResourceManager.get("./src/main/resources/textures/sheet.png");
         tiles.addComponent(surface);
         tiles.addComponent(surface2);
         tiles.addComponent(textSurface);
-        tiles.addComponent(new Surface(200, 200, 64, 64, ResourceManager.<Texture>get("./src/main/resources/textures/test.png")));
+        tiles.addComponent(new Line(new Vector2f(0, 300), new Vector2f(300, 300), new Color(0.0f, 1.0f, 0.0f), 4.0f));
+        tiles.addComponent(new Surface(new Vector2f(200, 200), 64, 64, ResourceManager.<Texture>get("./src/main/resources/textures/test.png")));
         setBackgroundColor(new Color(1.0f, 1.0f, 1.0f, 0.0f));
         this.addGameObject(tiles);
     }
@@ -67,10 +68,10 @@ public class MainScene extends Scene {
 
         surface.getTransform().rotation += 0.1f;
 
-        if (count == 20) {
-            this.text.setText(Math.round(1.0f / dt) + " FPS");
-            textSurface.getTransform().scale = this.text.getScale();
-            textSurface.setTexture(this.text.getTexture());
+        if (count == 60) {
+            this.label.setText(Math.round(1.0f / dt) + " FPS");
+            textSurface.getTransform().scale = this.label.getScale();
+            textSurface.setTexture(this.label.getTexture());
             count = 0;
         } else {
             count++;

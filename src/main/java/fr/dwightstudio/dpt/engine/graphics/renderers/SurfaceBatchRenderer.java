@@ -3,10 +3,8 @@ package fr.dwightstudio.dpt.engine.graphics.renderers;
 import fr.dwightstudio.dpt.engine.graphics.render.Shader;
 import fr.dwightstudio.dpt.engine.graphics.render.Texture;
 import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
-import fr.dwightstudio.dpt.engine.logging.GameLogger;
-import fr.dwightstudio.dpt.engine.primitives.Surface;
+import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
 import fr.dwightstudio.dpt.engine.resources.ResourceManager;
-import org.joml.Vector2f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +14,7 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
-public class BatchRenderer {
+public class SurfaceBatchRenderer {
     // This is what the array should looks like:
     //
     // Position                Color                    TextureCoords   TextureID
@@ -48,7 +46,7 @@ public class BatchRenderer {
     private int vertexBufferObjectID;
     private int vertexArrayObjectID;
 
-    public BatchRenderer(int batchSize) {
+    public SurfaceBatchRenderer(int batchSize) {
         this.surfaces = new Surface[batchSize];
         this.textures = new ArrayList<>();
 
@@ -124,11 +122,15 @@ public class BatchRenderer {
         glBindVertexArray(vertexArrayObjectID);
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
+        glEnableVertexAttribArray(2);
+        glEnableVertexAttribArray(3);
 
         glDrawElements(GL_TRIANGLES, numberOfSurfaces * 6, GL_UNSIGNED_INT, 0);
 
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
+        glEnableVertexAttribArray(2);
+        glEnableVertexAttribArray(3);
         glBindVertexArray(0);
 
         for (Texture texture : textures) {
@@ -182,21 +184,21 @@ public class BatchRenderer {
             }
         }
 
-        float x = (surface.getPosition().x - surface.getCenterPoint().x) + surface.getScale().x;
-        float y = (surface.getPosition().y - surface.getCenterPoint().y) + surface.getScale().y;
+        float x = (surface.getTransform().position.x - surface.getCenterPoint().x) + surface.getTransform().scale.x;
+        float y = (surface.getTransform().position.y - surface.getCenterPoint().y) + surface.getTransform().scale.y;
         // This will loop 4 times for the 4 vertices.
         for (int i = 0; i < 4; i++) {
             if (i == 1) {
-                y = surface.getPosition().y - surface.getCenterPoint().y;
+                y = surface.getTransform().position.y - surface.getCenterPoint().y;
             } else if (i == 2) {
-                x = surface.getPosition().x - surface.getCenterPoint().x;
+                x = surface.getTransform().position.x - surface.getCenterPoint().x;
             } else if (i == 3) {
-                y = (surface.getPosition().y - surface.getCenterPoint().y) + surface.getScale().y;
+                y = (surface.getTransform().position.y - surface.getCenterPoint().y) + surface.getTransform().scale.y;
             }
 
             // Load the position
-            vertices[offset] = (x * (float) Math.cos(surface.getRotation()) - y * (float) Math.sin(surface.getRotation())) + surface.getCenterPoint().x;
-            vertices[offset + 1] = (x * (float) Math.sin(surface.getRotation()) + y * (float) Math.cos(surface.getRotation())) + surface.getCenterPoint().y;
+            vertices[offset] = (x * (float) Math.cos(surface.getTransform().rotation) - y * (float) Math.sin(surface.getTransform().rotation)) + surface.getCenterPoint().x;
+            vertices[offset + 1] = (x * (float) Math.sin(surface.getTransform().rotation) + y * (float) Math.cos(surface.getTransform().rotation)) + surface.getCenterPoint().y;
 
             // Load the color
             vertices[offset + 2] = surface.getColor().getRed();

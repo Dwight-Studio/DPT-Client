@@ -1,4 +1,4 @@
-package fr.dwightstudio.dpt.engine.primitives;
+package fr.dwightstudio.dpt.engine.graphics.primitives;
 
 import fr.dwightstudio.dpt.engine.graphics.render.Color;
 import fr.dwightstudio.dpt.engine.graphics.render.Texture;
@@ -14,20 +14,20 @@ public class Surface extends Component {
     private Texture texture;
     private Vector2f[] textureCoords;
 
-    private boolean dirty = false;
+    private boolean dirty = true;
 
-    public Surface(float x, float y, float xScale, float yScale, Texture texture, Vector2f[] textureCoords) {
+    public Surface(Vector2f position, float xScale, float yScale, Texture texture, Vector2f[] textureCoords) {
         this.color = new Color(1, 1, 1, 1);
-        this.transform.position = new Vector2f(x, y);
+        this.transform.position = new Vector2f(position.x, position.y);
         this.transform.scale = new Vector2f(xScale, yScale);
         this.lastTransform = new Transform();
         this.texture = texture;
         this.textureCoords = textureCoords;
     }
 
-    public Surface(float x, float y, float xScale, float yScale, Color color) {
+    public Surface(Vector2f position, float xScale, float yScale, Color color) {
         this.color = color;
-        this.transform.position = new Vector2f(x, y);
+        this.transform.position = new Vector2f(position.x, position.y);
         this.transform.scale = new Vector2f(xScale, yScale);
         this.lastTransform = new Transform();
         this.texture = null;
@@ -39,9 +39,9 @@ public class Surface extends Component {
         };
     }
 
-    public Surface(float x, float y, float xScale, float yScale, Texture texture) {
+    public Surface(Vector2f position, float xScale, float yScale, Texture texture) {
         this.color = new Color(1, 1, 1, 1);
-        this.transform.position = new Vector2f(x, y);
+        this.transform.position = new Vector2f(position.x, position.y);
         this.transform.scale = new Vector2f(xScale, yScale);
         this.lastTransform = new Transform();
         this.texture = texture;
@@ -53,9 +53,9 @@ public class Surface extends Component {
         };
     }
 
-    public Surface(float x, float y, float scale, Color color) {
+    public Surface(Vector2f position, float scale, Color color) {
         this.color = color;
-        this.transform.position = new Vector2f(x, y);
+        this.transform.position = new Vector2f(position.x, position.y);
         this.transform.scale = new Vector2f(scale, scale);
         this.lastTransform = new Transform();
         this.texture = null;
@@ -67,9 +67,9 @@ public class Surface extends Component {
         };
     }
 
-    public Surface(float x, float y, float scale, Texture texture) {
+    public Surface(Vector2f position, float scale, Texture texture) {
         this.color = new Color(1, 1, 1, 1);
-        this.transform.position = new Vector2f(x, y);
+        this.transform.position = new Vector2f(position.x, position.y);
         this.transform.scale = new Vector2f(scale, scale);
         this.lastTransform = new Transform();
         this.texture = texture;
@@ -102,18 +102,6 @@ public class Surface extends Component {
         return transform;
     }
 
-    public Vector2f getPosition() {
-        return transform.position;
-    }
-
-    public Vector2f getScale() {
-        return transform.scale;
-    }
-
-    public float getRotation() {
-        return transform.rotation;
-    }
-
     public Texture getTexture() {
         return texture;
     }
@@ -137,7 +125,6 @@ public class Surface extends Component {
     public void setTexture(Texture texture) {
         if (!texture.equals(this.texture)) {
             this.texture = texture;
-            this.color = new Color(1, 1, 1,1);
             this.dirty = true;
         }
     }
@@ -151,10 +138,6 @@ public class Surface extends Component {
 
     public boolean isDirty() {
         return dirty;
-    }
-
-    public void setDirty() {
-        dirty = true;
     }
 
     public void markClean() {
