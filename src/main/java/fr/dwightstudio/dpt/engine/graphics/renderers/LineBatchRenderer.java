@@ -50,6 +50,9 @@ public class LineBatchRenderer {
     }
 
     public void start() {
+        shader.uploadMat4f("uProjectionMatrix", SceneManager.getCurrentScene().getCamera().getProjectionMatrix());
+        shader.uploadMat4f("uViewMatrix", SceneManager.getCurrentScene().getCamera().getViewMatrix());
+
         vertexArrayObjectID = glGenVertexArrays();
         glBindVertexArray(vertexArrayObjectID);
 
@@ -92,8 +95,6 @@ public class LineBatchRenderer {
 
 
         shader.bind();
-        shader.uploadMat4f("uProjectionMatrix", SceneManager.getCurrentScene().getCamera().getProjectionMatrix());
-        shader.uploadMat4f("uViewMatrix", SceneManager.getCurrentScene().getCamera().getViewMatrix());
 
         glBindVertexArray(vertexArrayObjectID);
         glEnableVertexAttribArray(0);

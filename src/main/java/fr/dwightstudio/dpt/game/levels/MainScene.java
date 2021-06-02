@@ -17,9 +17,7 @@ import java.io.IOException;
 
 public class MainScene extends Scene {
 
-    private GameObject tiles;
-    private final Surface surface = new Surface(new Vector2f(0, 0), 64, 64, new Color(1, 0, 0, 1));
-    private final Surface surface2 = new Surface(new Vector2f(100, 100), 64, 64, new Color(0, 1, 0, 0.5f));
+    private final Surface surface = new Surface(new Vector2f(0, 0), 64, 64, new Color(1, 1, 1, 1));
     private Spritesheet spritesheet;
     private Label label;
     private Surface textSurface;
@@ -32,7 +30,7 @@ public class MainScene extends Scene {
     @Override
     public void init() {
         camera = new Camera(new Vector2f());
-        tiles = new GameObject("tiles", 0);
+        GameObject tiles = new GameObject("tiles", 0);
         ResourceManager.load("./src/main/resources/textures/test.png", Texture.class);
         ResourceManager.load("./src/main/resources/textures/sheet.png", Spritesheet.class);
 
@@ -49,7 +47,9 @@ public class MainScene extends Scene {
         textSurface = label.createSurface(0, GLFWWindow.getHeight() - this.label.getScale().y);
         this.spritesheet = ResourceManager.get("./src/main/resources/textures/sheet.png");
         tiles.addComponent(surface);
-        tiles.addComponent(surface2);
+        tiles.addComponent(new Surface(new Vector2f(100, 100), 64, 64, new Color(0, 1, 0, 0.5f)));
+        surface.setTexture(spritesheet.getSprite(0).getTexture());
+        surface.setTextureCoords(spritesheet.getSprite(0).getTextureCoords());
         tiles.addComponent(textSurface);
         tiles.addComponent(new Line(new Vector2f(0, 300), new Vector2f(300, 300), new Color(0.0f, 1.0f, 0.0f), 4.0f));
         tiles.addComponent(new Surface(new Vector2f(200, 200), 64, 64, ResourceManager.<Texture>get("./src/main/resources/textures/test.png")));
@@ -63,10 +63,7 @@ public class MainScene extends Scene {
             gameObject.update(dt);
         }
 
-        surface.setTexture(spritesheet.getSprite(0).getTexture());
-        surface.setTextureCoords(spritesheet.getSprite(0).getTextureCoords());
-
-        surface.getTransform().rotation += 0.1f;
+        //surface.getTransform().rotation += 0.1f;
 
         if (count == 60) {
             this.label.setText(Math.round(1.0f / dt) + " FPS");

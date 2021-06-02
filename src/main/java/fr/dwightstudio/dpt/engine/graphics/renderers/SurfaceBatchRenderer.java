@@ -4,6 +4,7 @@ import fr.dwightstudio.dpt.engine.graphics.render.Shader;
 import fr.dwightstudio.dpt.engine.graphics.render.Texture;
 import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
 import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
+import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.engine.resources.ResourceManager;
 
 import java.util.ArrayList;
@@ -59,12 +60,16 @@ public class SurfaceBatchRenderer {
     }
 
     public void start() {
+        shader.uploadIntArray("uTextures", textureSlots);
+        shader.uploadMat4f("uProjectionMatrix", SceneManager.getCurrentScene().getCamera().getProjectionMatrix());
+        shader.uploadMat4f("uViewMatrix", SceneManager.getCurrentScene().getCamera().getViewMatrix());
+
         vertexArrayObjectID = glGenVertexArrays();
         glBindVertexArray(vertexArrayObjectID);
 
         vertexBufferObjectID = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObjectID);
-        glBufferData(GL_ARRAY_BUFFER, (long) vertices.length * Float.BYTES, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, (long) vertices.length * Float.BYTES, GL_STREAM_DRAW);
 
         int elementBufferObjectID = glGenBuffers();
         int[] indices = generateIndices();
@@ -111,32 +116,24 @@ public class SurfaceBatchRenderer {
         }
 
         shader.bind();
-        shader.uploadMat4f("uProjectionMatrix", SceneManager.getCurrentScene().getCamera().getProjectionMatrix());
-        shader.uploadMat4f("uViewMatrix", SceneManager.getCurrentScene().getCamera().getViewMatrix());
         for (int i = 0; i < textures.size(); i++) {
             glActiveTexture(GL_TEXTURE0 + i + 1);
             textures.get(i).bind();
         }
-        shader.uploadIntArray("uTextures", textureSlots);
 
         glBindVertexArray(vertexArrayObjectID);
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
-        glEnableVertexAttribArray(2);
-        glEnableVertexAttribArray(3);
 
         glDrawElements(GL_TRIANGLES, numberOfSurfaces * 6, GL_UNSIGNED_INT, 0);
 
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
-        glEnableVertexAttribArray(2);
-        glEnableVertexAttribArray(3);
         glBindVertexArray(0);
 
         for (Texture texture : textures) {
             texture.unbind();
         }
-
         shader.unbind();
     }
 
