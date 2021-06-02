@@ -3,9 +3,13 @@ package fr.dwightstudio.dpt.engine.graphics.render;
 import org.joml.Vector2f;
 
 public class Transform {
+
+    public static int RADIAN = 0;
+    public static int DEGREE = 1;
+
     public Vector2f position;
     public Vector2f scale;
-    public float rotation;
+    private float rotation;
 
     public Transform() {
         this.position = new Vector2f();
@@ -43,10 +47,68 @@ public class Transform {
         this.rotation = rotation;
     }
 
+    /**
+     * Create a copy of an instance of the Transform object
+     *
+     * @return a new instance of the Transform object
+     */
     public Transform copy() {
         return new Transform(new Vector2f(this.position), new Vector2f(this.scale), this.rotation);
     }
 
+    /**
+     * Set the rotation value
+     *
+     * @param rotation the new value of the rotation
+     * @param rotationType can be Transform.DEGREE or Transform.RADIAN
+     */
+    public void setRotation(float rotation, int rotationType) {
+        if (rotationType == Transform.RADIAN) {
+            this.rotation = rotation;
+        } else if (rotationType == Transform.DEGREE) {
+            this.rotation = (float) (rotation * (Math.PI / 180));
+        }
+    }
+
+    /**
+     * Set the rotation value in radian
+     *
+     * @param rotation the new value of the rotation in radian
+     */
+    public void setRotation(float rotation) {
+        this.rotation = rotation;
+    }
+
+    /**
+     * Get the rotation value
+     *
+     * @param rotationType can be Transform.DEGREE or Transform.RADIAN
+     * @return a float value which correspond to the rotation value
+     */
+    public float getRotation(int rotationType) {
+        if (rotationType == Transform.RADIAN) {
+            return this.rotation;
+        } else if (rotationType == Transform.DEGREE) {
+            return (float) (this.rotation * (180 / Math.PI));
+        }
+        return this.rotation;
+    }
+
+    /**
+     * Get the rotation value in radian
+     *
+     * @return a float value which correspond to the rotation value in radian
+     */
+    public float getRotation() {
+        return this.rotation;
+    }
+
+    /**
+     * Check is two instance of the Transform object are equals
+     *
+     * @param object another Transform instance
+     * @return true if the two instance are equal, otherwise, false
+     */
     @Override
     public boolean equals(Object object) {
         if (object == null) return false;

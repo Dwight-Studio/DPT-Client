@@ -2,6 +2,7 @@ package fr.dwightstudio.dpt.engine.graphics.renderers;
 
 import fr.dwightstudio.dpt.engine.graphics.render.Shader;
 import fr.dwightstudio.dpt.engine.graphics.render.Texture;
+import fr.dwightstudio.dpt.engine.graphics.render.Transform;
 import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
 import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
@@ -194,8 +195,8 @@ public class SurfaceBatchRenderer {
             }
 
             // Load the position
-            vertices[offset] = (x * (float) Math.cos(surface.getTransform().rotation) - y * (float) Math.sin(surface.getTransform().rotation)) + surface.getCenterPoint().x + surface.getTransform().position.x;
-            vertices[offset + 1] = (x * (float) Math.sin(surface.getTransform().rotation) + y * (float) Math.cos(surface.getTransform().rotation)) + surface.getCenterPoint().y + surface.getTransform().position.y;
+            vertices[offset] = (x * (float) Math.cos(surface.getTransform().getRotation(Transform.RADIAN)) - y * (float) Math.sin(surface.getTransform().getRotation(Transform.RADIAN))) + surface.getCenterPoint().x + surface.getTransform().position.x;
+            vertices[offset + 1] = (x * (float) Math.sin(surface.getTransform().getRotation(Transform.RADIAN)) + y * (float) Math.cos(surface.getTransform().getRotation(Transform.RADIAN))) + surface.getCenterPoint().y + surface.getTransform().position.y;
 
             // Load the color
             vertices[offset + 2] = surface.getColor().getRed();

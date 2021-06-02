@@ -64,7 +64,9 @@ public class MainScene extends Scene {
             gameObject.update(dt);
         }
 
-        surface2.getTransform().rotation += 0.01f;
+        if (surface2.getTransform().getRotation(Transform.DEGREE) < 90) {
+            surface2.getTransform().setRotation(surface2.getTransform().getRotation(Transform.DEGREE) + 1, Transform.DEGREE);
+        }
 
         if (count == 60) {
             this.label.setText(Math.round(1.0f / dt) + " FPS");
