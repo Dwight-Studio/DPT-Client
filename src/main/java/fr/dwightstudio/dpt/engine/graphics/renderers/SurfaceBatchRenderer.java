@@ -175,7 +175,7 @@ public class SurfaceBatchRenderer {
         int textureID = 0; // The texture ID 0 will never be used
         if (surface.getTexture() != null) {
             for (int i = 0; i < textures.size(); i++) {
-                if (textures.get(i) == surface.getTexture()) {
+                if (textures.get(i).equals(surface.getTexture())) {
                     textureID = i + 1;
                     break;
                 }

@@ -2,6 +2,7 @@ package fr.dwightstudio.dpt.engine.graphics.gui;
 
 import fr.dwightstudio.dpt.engine.graphics.render.Color;
 import fr.dwightstudio.dpt.engine.graphics.render.Texture;
+import fr.dwightstudio.dpt.engine.graphics.utils.TextureLoader;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
 import fr.dwightstudio.dpt.engine.scripting.Component;
@@ -31,7 +32,7 @@ public class Label extends Component {
         this.color = color;
         this.antiAliasing = antiAliasing;
         ByteBuffer image = createImageFromString(string, font, color, this.antiAliasing);
-        this.texture = createTexture(image);
+        this.texture = TextureLoader.createTexture(image, width, height);
         GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
     }
 
@@ -41,7 +42,7 @@ public class Label extends Component {
         this.color = color;
         this.antiAliasing = false;
         ByteBuffer image = createImageFromString(string, font, color, false);
-        this.texture = createTexture(image);
+        this.texture = TextureLoader.createTexture(image, width, height);
         GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
     }
 
@@ -51,7 +52,7 @@ public class Label extends Component {
         this.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
         this.antiAliasing = antiAliasing;
         ByteBuffer image = createImageFromString(string, font, this.color, this.antiAliasing);
-        this.texture = createTexture(image);
+        this.texture = TextureLoader.createTexture(image, width, height);
         GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
     }
 
@@ -61,7 +62,7 @@ public class Label extends Component {
         this.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
         this.antiAliasing = false;
         ByteBuffer image = createImageFromString(string, font, this.color, false);
-        this.texture = createTexture(image);
+        this.texture = TextureLoader.createTexture(image, width, height);
         GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
     }
 
@@ -92,7 +93,7 @@ public class Label extends Component {
     public void setText(String string) {
         this.string = string;
         ByteBuffer image = createImageFromString(string, this.font, this.color, this.antiAliasing);
-        reloadTexture(image);
+        this.texture = TextureLoader.reloadTexture(image, this.texture, width, height);
     }
 
     public void setFont(Font newFont) {
@@ -152,31 +153,6 @@ public class Label extends Component {
         // beginning.
         buffer.flip();
         return buffer;
-    }
-    
-    private Texture createTexture(ByteBuffer image) {
-        if (image == null) {
-            return null;
-        } else {
-            int id = glGenTextures();
-            glBindTexture(GL_TEXTURE_2D, id);
-            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
-            glBindTexture(GL_TEXTURE_2D, 0); // Unbinding any texture at the end to make sure it is not modified after
-            return new Texture(width, height, id, 4); // Since we are creating a PNG image, there is four channels
-        }
-    }
-
-    private void reloadTexture(ByteBuffer image) {
-        if (image != null) {
-            glBindTexture(GL_TEXTURE_2D, this.texture.getTextureID());
-            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
-            glBindTexture(GL_TEXTURE_2D, 0); // Unbinding any texture at the end to make sure it is not modified after
-            this.texture = new Texture(width, height, this.texture.getTextureID(), 4);
-        }
     }
 
     @Override

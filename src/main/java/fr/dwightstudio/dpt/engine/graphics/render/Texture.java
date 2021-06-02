@@ -1,5 +1,7 @@
 package fr.dwightstudio.dpt.engine.graphics.render;
 
+import java.nio.ByteBuffer;
+
 import static org.lwjgl.opengl.GL11.*;
 
 public class Texture {
@@ -7,12 +9,16 @@ public class Texture {
     private final int height;
     private final int id;
     private final int nbChannel;
+    private final String filepath;
+    private final ByteBuffer imageByteBuffer;
 
-    public Texture(int width, int height, int id, int nbChannel) {
+    public Texture(int width, int height, int id, int nbChannel, String filepath, ByteBuffer imageByteBuffer) {
         this.width = width;
         this.height = height;
         this.id = id;
         this.nbChannel = nbChannel;
+        this.filepath = filepath;
+        this.imageByteBuffer = imageByteBuffer;
     }
 
     public void bind() {
@@ -37,6 +43,14 @@ public class Texture {
 
     public int getTextureID() {
         return this.id;
+    }
+
+    public String getFilepath() {
+        return this.filepath;
+    }
+
+    public ByteBuffer getImageByteBuffer() {
+        return this.imageByteBuffer;
     }
 
     public void delete() {

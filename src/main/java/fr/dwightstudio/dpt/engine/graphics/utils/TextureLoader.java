@@ -29,23 +29,32 @@ public class TextureLoader {
             stbi_image_free(texture);
             glBindTexture(GL_TEXTURE_2D, 0); // Unbinding any texture at the end to make sure it is not modified after
             GameLogger.getLogger("TextureLoader").debug(MessageFormat.format("Finished loading texture : {0}", file));
-            return new Texture(width[0], height[0], id, nbChannel[0]);
+            return new Texture(width[0], height[0], id, nbChannel[0], file, texture);
         }
     }
 
-    public static Texture createTexture(int width, int height, ByteBuffer buffer) {
-        if (buffer == null) {
-            return null;
-        } else {
+    public static Texture createTexture(ByteBuffer image, int width, int height) {
+        if (image != null) {
             int id = glGenTextures();
             glBindTexture(GL_TEXTURE_2D, id);
             glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
             glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
-            stbi_image_free(buffer);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
             glBindTexture(GL_TEXTURE_2D, 0); // Unbinding any texture at the end to make sure it is not modified after
-            GameLogger.getLogger("TextureLoader").debug("Texture created");
-            return new Texture(width, height, id, nbChannel[0]);
+            return new Texture(width, height, id, 4, null, image); // Since we are creating a PNG image, there is four channels
         }
+        return null;
+    }
+
+    public static Texture reloadTexture(ByteBuffer image, Texture texture, int width, int height) {
+        if (image != null) {
+            glBindTexture(GL_TEXTURE_2D, texture.getTextureID());
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+            glBindTexture(GL_TEXTURE_2D, 0); // Unbinding any texture at the end to make sure it is not modified after
+            return new Texture(width, height, texture.getTextureID(), 4, null, image);
+        }
+        return null;
     }
 }
