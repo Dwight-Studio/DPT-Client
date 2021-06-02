@@ -44,7 +44,7 @@ public class Transform {
     }
 
     public Transform copy() {
-        return new Transform(new Vector2f(this.position), new Vector2f(this.scale));
+        return new Transform(new Vector2f(this.position), new Vector2f(this.scale), this.rotation);
     }
 
     @Override

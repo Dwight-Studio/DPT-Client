@@ -18,6 +18,7 @@ import java.io.IOException;
 public class MainScene extends Scene {
 
     private final Surface surface = new Surface(new Vector2f(0, 0), 64, 64, new Color(1, 1, 1, 1));
+    private final Surface surface2 = new Surface(new Vector2f(100, 100), 64, 64, new Color(0, 1, 0, 0.5f));
     private Spritesheet spritesheet;
     private Label label;
     private Surface textSurface;
@@ -47,7 +48,7 @@ public class MainScene extends Scene {
         textSurface = label.createSurface(0, GLFWWindow.getHeight() - this.label.getScale().y);
         this.spritesheet = ResourceManager.get("./src/main/resources/textures/sheet.png");
         tiles.addComponent(surface);
-        tiles.addComponent(new Surface(new Vector2f(100, 100), 64, 64, new Color(0, 1, 0, 0.5f)));
+        tiles.addComponent(surface2);
         surface.setTexture(spritesheet.getSprite(0).getTexture());
         surface.setTextureCoords(spritesheet.getSprite(0).getTextureCoords());
         tiles.addComponent(textSurface);
@@ -63,7 +64,7 @@ public class MainScene extends Scene {
             gameObject.update(dt);
         }
 
-        //surface.getTransform().rotation += 0.1f;
+        surface2.getTransform().rotation += 0.01f;
 
         if (count == 60) {
             this.label.setText(Math.round(1.0f / dt) + " FPS");

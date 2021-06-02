@@ -181,21 +181,21 @@ public class SurfaceBatchRenderer {
             }
         }
 
-        float x = (surface.getTransform().position.x - surface.getCenterPoint().x) + surface.getTransform().scale.x;
-        float y = (surface.getTransform().position.y - surface.getCenterPoint().y) + surface.getTransform().scale.y;
+        float x = -surface.getCenterPoint().x + surface.getTransform().scale.x;
+        float y = -surface.getCenterPoint().y + surface.getTransform().scale.y;
         // This will loop 4 times for the 4 vertices.
         for (int i = 0; i < 4; i++) {
             if (i == 1) {
-                y = surface.getTransform().position.y - surface.getCenterPoint().y;
+                y = -surface.getCenterPoint().y;
             } else if (i == 2) {
-                x = surface.getTransform().position.x - surface.getCenterPoint().x;
+                x = -surface.getCenterPoint().x;
             } else if (i == 3) {
-                y = (surface.getTransform().position.y - surface.getCenterPoint().y) + surface.getTransform().scale.y;
+                y = -surface.getCenterPoint().y + surface.getTransform().scale.y;
             }
 
             // Load the position
-            vertices[offset] = (x * (float) Math.cos(surface.getTransform().rotation) - y * (float) Math.sin(surface.getTransform().rotation)) + surface.getCenterPoint().x;
-            vertices[offset + 1] = (x * (float) Math.sin(surface.getTransform().rotation) + y * (float) Math.cos(surface.getTransform().rotation)) + surface.getCenterPoint().y;
+            vertices[offset] = (x * (float) Math.cos(surface.getTransform().rotation) - y * (float) Math.sin(surface.getTransform().rotation)) + surface.getCenterPoint().x + surface.getTransform().position.x;
+            vertices[offset + 1] = (x * (float) Math.sin(surface.getTransform().rotation) + y * (float) Math.cos(surface.getTransform().rotation)) + surface.getCenterPoint().y + surface.getTransform().position.y;
 
             // Load the color
             vertices[offset + 2] = surface.getColor().getRed();
