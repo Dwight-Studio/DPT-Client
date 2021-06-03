@@ -66,24 +66,26 @@ public class GLFWWindow {
         glfwSetKeyCallback(window, KeyboardListener.keyCallback); // Setup a key callback
         glfwSetMouseButtonCallback(window, MouseListener.mouseButtonCallback); // Setup a mouse buttons callback
         glfwSetCursorPosCallback(window, MouseListener.cursorPosCallback); // Setup a mouse cursor callback
-        glfwSetScrollCallback(window, MouseListener.mouseScrollCallback); // Setup a mouse scroll whell callback
+        glfwSetScrollCallback(window, MouseListener.mouseScrollCallback); // Setup a mouse scroll wheel callback
 
         // Setting up the render
         glfwMakeContextCurrent(window); // Make the OpenGL context current
         glfwSwapInterval(1); // Enable v-sync
+        // NOTE: If you have an NVIDIA graphics card and you are using a linux system, make sure the
+        //      screen is in sync by enabling nvidia-drm with modprobe on linux
         glfwShowWindow(window); // Make the window visible
         GL.createCapabilities(); // Called before any OpenGL function
         glEnable(GL_TEXTURE_2D); // Enable the GL_TEXTURE_2D feature
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-        glLoadIdentity(); // Resets any previous projection matriced
+        glLoadIdentity(); // Resets any previous projection matrix
         GameLogger.getLogger("GLFWWindow").info("Window initialized");
         loop(); // Start the loop
     }
 
     private void loop() {
 
-        SceneManager.changeScene(0); // By default the scene with index 0 is instanciated
+        SceneManager.changeScene(0); // By default the scene with index 0 is instantiated
 
         float beginTime = Time.getDeltaTime();
         float endTime;

@@ -1,7 +1,9 @@
 package fr.dwightstudio.dpt.game.levels;
 
 import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
+import fr.dwightstudio.dpt.engine.graphics.gui.Button;
 import fr.dwightstudio.dpt.engine.graphics.gui.Label;
+import fr.dwightstudio.dpt.engine.graphics.gui.events.GUIButtonEvent;
 import fr.dwightstudio.dpt.engine.graphics.primitives.Line;
 import fr.dwightstudio.dpt.engine.graphics.render.*;
 import fr.dwightstudio.dpt.engine.graphics.render.Color;
@@ -15,7 +17,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class MainScene extends Scene {
+public class MainScene extends Scene implements GUIButtonEvent {
 
     private final Surface surface = new Surface(new Vector2f(0, 0), 64, 64, new Color(1, 1, 1, 1));
     private final Surface surface2 = new Surface(new Vector2f(100, 100), 64, 64, new Color(0, 1, 0, 0.5f));
@@ -23,6 +25,7 @@ public class MainScene extends Scene {
     private Label label;
     private Surface textSurface;
     private int count = 0;
+    private Button button = new Button(new Vector2f(400, 400), new Vector2f(50, 32), new Color(0.0f, 0.0f, 1.0f));
 
     public MainScene() {
 
@@ -44,6 +47,7 @@ public class MainScene extends Scene {
             e.printStackTrace();
         }
 
+        button.addEventListener(this);
         this.label = new Label("FPS", font, true);
         textSurface = label.createSurface(0, GLFWWindow.getHeight() - this.label.getScale().y);
         this.spritesheet = ResourceManager.get("./src/main/resources/textures/sheet.png");
@@ -54,6 +58,7 @@ public class MainScene extends Scene {
         tiles.addComponent(textSurface);
         tiles.addComponent(new Line(new Vector2f(0, 300), new Vector2f(300, 300), new Color(0.0f, 1.0f, 0.0f), 4.0f));
         tiles.addComponent(new Surface(new Vector2f(200, 200), 64, 64, ResourceManager.<Texture>get("./src/main/resources/textures/test.png")));
+        tiles.addComponent(button);
         setBackgroundColor(new Color(1.0f, 1.0f, 1.0f, 0.0f));
         this.addGameObject(tiles);
     }
@@ -78,5 +83,15 @@ public class MainScene extends Scene {
         }
 
         renderer.render();
+    }
+
+    @Override
+    public void onClick(int buttonID) {
+
+    }
+
+    @Override
+    public void onHover(int buttonID) {
+
     }
 }
