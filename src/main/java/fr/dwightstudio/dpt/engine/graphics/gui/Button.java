@@ -1,67 +1,65 @@
 package fr.dwightstudio.dpt.engine.graphics.gui;
 
-import fr.dwightstudio.dpt.engine.events.EventHandler;
-import fr.dwightstudio.dpt.engine.events.EventSystemI;
-import fr.dwightstudio.dpt.engine.events.GUIButtonEvent;
+import fr.dwightstudio.dpt.engine.events.EventSystem;
+import fr.dwightstudio.dpt.engine.events.types.ButtonClickEvent;
+import fr.dwightstudio.dpt.engine.events.types.ButtonReleaseEvent;
 import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
 import fr.dwightstudio.dpt.engine.graphics.render.Color;
 import fr.dwightstudio.dpt.engine.inputs.MouseListener;
+import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import org.joml.Vector2f;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
-public class Button extends Surface implements EventSystemI {
+import static org.lwjgl.glfw.GLFW.glfwGetTime;
 
-    private static int currentID = 0;
-    private long ID;
+public class Button extends Surface {
+
     private boolean clicked = false;
     private Vector2f position;
     private Vector2f scale;
     private Color color;
+    private double clickMillis;
 
-    private final EventHandler buttonEventHandler = new EventHandler(this);
-    private List<GUIButtonEvent> buttonEvents = new ArrayList<>();
+    private static final HashSet<Button> buttonsList = new HashSet<>();
 
     public Button(Vector2f position, Vector2f scale, Color color) {
         super(position, scale, color);
         this.position = position;
         this.scale = scale;
         this.color = color;
-    }
-
-    @Override
-    public void init() {
-        this.ID = currentID;
-        currentID++;
-    }
-
-    public long getID() {
-        return this.ID;
-    }
-
-    public void addEventListener(GUIButtonEvent guiButtonEvent) {
-        buttonEvents.add(guiButtonEvent);
+        buttonsList.add(this);
     }
 
     private void setClicked(boolean clicked) {
-        this.clicked = clicked;
-        if (this.clicked) {
-            for (GUIButtonEvent guiButtonEvent : buttonEvents) {
-                guiButtonEvent.onClick(this.ID);
-            }
+        if (!this.clicked && clicked) {
+            this.clickMillis = glfwGetTime();
+            EventSystem.fire(new ButtonClickEvent(this));
+        } else if (this.clicked && !clicked) {
+            EventSystem.fire(new ButtonReleaseEvent(this, this.clickMillis));
         }
+        this.clicked = clicked;
     }
 
-    @Override
-    public void eventUpdate() {
+    private void checkClick() {
         if (MouseListener.isButtonPressed(0)) {
             if (MouseListener.getCursorPos().x >= this.position.x && MouseListener.getCursorPos().x <= this.position.x + this.scale.x) {
                 if (MouseListener.getCursorPos().y >= this.position.y && MouseListener.getCursorPos().y <= this.position.y + this.scale.y) {
                     setClicked(true);
+                    return;
                 }
             }
         }
         setClicked(false);
+    }
+
+    public static void checkClickAll() {
+        for (Button button : buttonsList) {
+            button.checkClick();
+        }
+    }
+
+    public void remove() {
+        buttonsList.remove(this);
     }
 }

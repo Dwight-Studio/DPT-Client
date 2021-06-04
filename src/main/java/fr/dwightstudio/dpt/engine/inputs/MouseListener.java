@@ -1,6 +1,8 @@
 package fr.dwightstudio.dpt.engine.inputs;
 
 import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
+import fr.dwightstudio.dpt.engine.graphics.gui.Button;
+import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFWCursorPosCallbackI;
 import org.lwjgl.glfw.GLFWMouseButtonCallbackI;
@@ -29,6 +31,7 @@ public class MouseListener {
         if (button < mouseButtons.length) {
             mouseButtons[button] = action == GLFW_PRESS;
         }
+        Button.checkClickAll();
     };
 
     public static GLFWCursorPosCallbackI cursorPosCallback = (window, xpos, ypos) -> {

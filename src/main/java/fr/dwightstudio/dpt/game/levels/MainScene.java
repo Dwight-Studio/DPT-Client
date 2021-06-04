@@ -1,14 +1,19 @@
 package fr.dwightstudio.dpt.game.levels;
 
+import fr.dwightstudio.dpt.engine.events.EventHandler;
+import fr.dwightstudio.dpt.engine.events.EventListener;
+import fr.dwightstudio.dpt.engine.events.EventSystem;
+import fr.dwightstudio.dpt.engine.events.types.ButtonClickEvent;
+import fr.dwightstudio.dpt.engine.events.types.ButtonEvent;
 import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
 import fr.dwightstudio.dpt.engine.graphics.gui.Button;
 import fr.dwightstudio.dpt.engine.graphics.gui.Label;
-import fr.dwightstudio.dpt.engine.events.GUIButtonEvent;
 import fr.dwightstudio.dpt.engine.graphics.primitives.Line;
 import fr.dwightstudio.dpt.engine.graphics.render.*;
 import fr.dwightstudio.dpt.engine.graphics.render.Color;
 import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
 import fr.dwightstudio.dpt.engine.inputs.MouseListener;
+import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.engine.resources.ResourceManager;
 import fr.dwightstudio.dpt.engine.scripting.GameObject;
 import fr.dwightstudio.dpt.engine.scripting.Scene;
@@ -17,8 +22,9 @@ import org.joml.Vector2f;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.text.MessageFormat;
 
-public class MainScene extends Scene implements GUIButtonEvent {
+public class MainScene extends Scene implements EventListener {
 
     private final Surface surface = new Surface(new Vector2f(0, 0), new Vector2f(64, 64), new Color(1, 1, 1, 1));
     private final Surface surface2 = new Surface(new Vector2f(100, 100), new Vector2f(64, 64), new Color(0, 1, 0, 0.5f));
@@ -54,7 +60,7 @@ public class MainScene extends Scene implements GUIButtonEvent {
             e.printStackTrace();
         }
 
-        button.addEventListener(this);
+        EventSystem.registerListener(this);
 
         this.label = new Label("FPS", font, true);
         this.cursorPosX = new Label("X", font, true);
@@ -106,15 +112,8 @@ public class MainScene extends Scene implements GUIButtonEvent {
         renderer.render();
     }
 
-    @Override
-    public void onClick(long buttonID) {
-        if (this.button.getID() == buttonID) {
-            System.out.println("Bonjour");
-        }
-    }
-
-    @Override
-    public void onHover(long buttonID) {
-
+    @EventHandler
+    public void onClick(ButtonClickEvent event) {
+        GameLogger.getLogger("MainScene").debug(event.getButton().toString());
     }
 }

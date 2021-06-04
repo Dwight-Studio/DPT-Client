@@ -1,19 +1,22 @@
 package fr.dwightstudio.dpt.engine.events;
 
-import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
+import fr.dwightstudio.dpt.engine.events.types.Event;
 import fr.dwightstudio.dpt.engine.inputs.KeyboardListener;
 import fr.dwightstudio.dpt.engine.inputs.MouseListener;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.text.MessageFormat;
+import java.util.HashSet;
 
 import static org.lwjgl.glfw.GLFW.*;
 
 public class EventSystem implements Runnable {
     private final long window;
 
-    protected static List<EventHandler> eventHandlers = new ArrayList<>();
+    private static final HashSet<EventListener> eventListeners = new HashSet<>();
 
     public EventSystem(long window) {
         this.window = window;
@@ -26,11 +29,49 @@ public class EventSystem implements Runnable {
         glfwSetMouseButtonCallback(window, MouseListener.mouseButtonCallback); // Setup a mouse buttons callback
         glfwSetCursorPosCallback(window, MouseListener.cursorPosCallback); // Setup a mouse cursor callback
         glfwSetScrollCallback(window, MouseListener.mouseScrollCallback); // Setup a mouse scroll wheel callback
+    }
 
-        while (!glfwWindowShouldClose(GLFWWindow.getWindow())) {
-            for (EventHandler eventHandler : eventHandlers) {
-                eventHandler.update(); // This will update
+    public static void fire(Event event) {
+        //"Je REFLECHIT, ta compris la REFLECTION !!!"
+        Runnable runnable = () -> {
+            for (EventListener eventListener : eventListeners) {
+                for (Method method : eventListener.getClass().getDeclaredMethods()) {
+                    if (method.isAnnotationPresent(EventHandler.class)) {
+                        Class<?> type = event.getClass();
+                        while (type != Object.class) {
+                            if (method.getParameterTypes()[0] == type) {
+                                try {
+                                    method.invoke(eventListener, event);
+                                    break;
+                                } catch (IllegalAccessException | InvocationTargetException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            type = type.getSuperclass();
+                        }
+                    }
+                }
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.setName("Event Handler Thread");
+        thread.start();
+    }
+
+    public static void registerListener(EventListener eventListener) {
+        for (Method method : eventListener.getClass().getDeclaredMethods()) {
+            if (method.isAnnotationPresent(EventHandler.class)) {
+                if (method.getParameterCount() == 1 && method.getReturnType() == Void.TYPE && Modifier.isPublic(method.getModifiers()) && Event.class.isAssignableFrom(method.getParameterTypes()[0])) {
+                    eventListeners.add(eventListener);
+                } else {
+                    GameLogger.getLogger("EventSystem").error(MessageFormat.format("Invalid EventHandler detected ({0}@{1})", method.getName(), eventListener.getClass().getName()));
+                }
             }
         }
     }
+
+    public static void unregisterListener(EventListener eventListener){
+        eventListeners.remove(eventListener);
+    }
+
 }
