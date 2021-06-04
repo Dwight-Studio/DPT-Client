@@ -1,5 +1,6 @@
 package fr.dwightstudio.dpt.engine.graphics.render;
 
+import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -22,7 +23,7 @@ public class Camera {
 
     public void adjustProjection() {
         projectionMatrix.identity(); // Reset the projection matrix (put 0 everywhere)
-        projectionMatrix.ortho(0.0f, 32.0f * 40.0f, 0.0f, 32.0f * 23.0f, 0.0f, 100.0f);
+        projectionMatrix.ortho(0.0f, GLFWWindow.getWidth(), 0.0f, GLFWWindow.getHeight(), 0.0f, 100.0f);
     }
 
     public Matrix4f getViewMatrix() {

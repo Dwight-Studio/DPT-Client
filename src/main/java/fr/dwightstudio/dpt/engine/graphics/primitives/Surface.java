@@ -3,9 +3,10 @@ package fr.dwightstudio.dpt.engine.graphics.primitives;
 import fr.dwightstudio.dpt.engine.graphics.render.Color;
 import fr.dwightstudio.dpt.engine.graphics.render.Texture;
 import fr.dwightstudio.dpt.engine.graphics.render.Transform;
-import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.engine.scripting.Component;
 import org.joml.Vector2f;
+
+import java.util.Arrays;
 
 public class Surface extends Component {
 
@@ -17,19 +18,19 @@ public class Surface extends Component {
 
     private boolean dirty = true;
 
-    public Surface(Vector2f position, float xScale, float yScale, Texture texture, Vector2f[] textureCoords) {
+    public Surface(Vector2f position, Vector2f scale, Texture texture, Vector2f[] textureCoords) {
         this.color = new Color(1, 1, 1, 1);
-        this.transform.position = new Vector2f(position.x, position.y);
-        this.transform.scale = new Vector2f(xScale, yScale);
+        this.transform.position = position;
+        this.transform.scale = scale;
         this.lastTransform = new Transform();
         this.texture = texture;
         this.textureCoords = textureCoords;
     }
 
-    public Surface(Vector2f position, float xScale, float yScale, Color color) {
+    public Surface(Vector2f position, Vector2f scale, Color color) {
         this.color = color;
-        this.transform.position = new Vector2f(position.x, position.y);
-        this.transform.scale = new Vector2f(xScale, yScale);
+        this.transform.position = position;
+        this.transform.scale = scale;
         this.lastTransform = new Transform();
         this.texture = null;
         this.textureCoords = new Vector2f[]{
@@ -40,10 +41,10 @@ public class Surface extends Component {
         };
     }
 
-    public Surface(Vector2f position, float xScale, float yScale, Texture texture) {
+    public Surface(Vector2f position, Vector2f scale, Texture texture) {
         this.color = new Color(1, 1, 1, 1);
-        this.transform.position = new Vector2f(position.x, position.y);
-        this.transform.scale = new Vector2f(xScale, yScale);
+        this.transform.position = position;
+        this.transform.scale = scale;
         this.lastTransform = new Transform();
         this.texture = texture;
         this.textureCoords = new Vector2f[]{
@@ -52,39 +53,6 @@ public class Surface extends Component {
                 new Vector2f(0, 1),
                 new Vector2f(0, 0),
         };
-    }
-
-    public Surface(Vector2f position, float scale, Color color) {
-        this.color = color;
-        this.transform.position = new Vector2f(position.x, position.y);
-        this.transform.scale = new Vector2f(scale, scale);
-        this.lastTransform = new Transform();
-        this.texture = null;
-        this.textureCoords = new Vector2f[]{
-                new Vector2f(1, 0),
-                new Vector2f(1, 1),
-                new Vector2f(0, 1),
-                new Vector2f(0, 0),
-        };
-    }
-
-    public Surface(Vector2f position, float scale, Texture texture) {
-        this.color = new Color(1, 1, 1, 1);
-        this.transform.position = new Vector2f(position.x, position.y);
-        this.transform.scale = new Vector2f(scale, scale);
-        this.lastTransform = new Transform();
-        this.texture = texture;
-        this.textureCoords = new Vector2f[]{
-                new Vector2f(1, 0),
-                new Vector2f(1, 1),
-                new Vector2f(0, 1),
-                new Vector2f(0, 0),
-        };
-    }
-
-    @Override
-    public void init() {
-
     }
 
     @Override
@@ -131,7 +99,7 @@ public class Surface extends Component {
     }
 
     public void setTextureCoords(Vector2f[] textureCoords) {
-        if (!textureCoords.equals(this.textureCoords)) {
+        if (!Arrays.equals(textureCoords, this.textureCoords)) {
             this.textureCoords = textureCoords;
             this.dirty = true;
         }

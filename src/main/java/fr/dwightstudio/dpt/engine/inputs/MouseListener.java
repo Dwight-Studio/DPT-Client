@@ -1,5 +1,7 @@
 package fr.dwightstudio.dpt.engine.inputs;
 
+import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
+import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFWCursorPosCallbackI;
 import org.lwjgl.glfw.GLFWMouseButtonCallbackI;
 import org.lwjgl.glfw.GLFWScrollCallbackI;
@@ -31,7 +33,7 @@ public class MouseListener {
 
     public static GLFWCursorPosCallbackI cursorPosCallback = (window, xpos, ypos) -> {
         xPos = (float) xpos;
-        yPos = (float) ypos;
+        yPos = (float) Math.abs(ypos - GLFWWindow.getHeight());
     };
 
     public static GLFWScrollCallbackI mouseScrollCallback = (window, xoffset, yoffset) -> {
@@ -44,12 +46,8 @@ public class MouseListener {
         scrollY = 0.0F;
     }
 
-    public static float getX() {
-        return xPos;
-    }
-
-    public static float getY() {
-        return yPos;
+    public static Vector2f getCursorPos() {
+        return new Vector2f(xPos, yPos);
     }
 
     public static boolean isButtonPressed(int button) {

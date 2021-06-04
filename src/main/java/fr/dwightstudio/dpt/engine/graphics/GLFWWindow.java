@@ -1,8 +1,7 @@
 package fr.dwightstudio.dpt.engine.graphics;
 
+import fr.dwightstudio.dpt.engine.events.EventSystem;
 import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
-import fr.dwightstudio.dpt.engine.inputs.KeyboardListener;
-import fr.dwightstudio.dpt.engine.inputs.MouseListener;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.engine.utils.Time;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -17,15 +16,17 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class GLFWWindow {
 
-    private long window;
+    private static long window;
     private static int WIDTH;
     private static int HEIGHT;
     private final long windowMode;
+    private Thread eventThread;
 
     public GLFWWindow(int WIDTH, int HEIGHT, long windowMode) {
         GLFWWindow.WIDTH = WIDTH;
         GLFWWindow.HEIGHT = HEIGHT;
         this.windowMode = windowMode;
+        Thread.currentThread().setName("Main Render Thread");
     }
 
     public static int getWidth(){
@@ -34,6 +35,10 @@ public class GLFWWindow {
 
     public static int getHeight(){
         return GLFWWindow.HEIGHT;
+    }
+
+    public static long getWindow() {
+        return GLFWWindow.window;
     }
 
     public void init(){
@@ -63,10 +68,9 @@ public class GLFWWindow {
         }
 
         // Setting up callbacks
-        glfwSetKeyCallback(window, KeyboardListener.keyCallback); // Setup a key callback
-        glfwSetMouseButtonCallback(window, MouseListener.mouseButtonCallback); // Setup a mouse buttons callback
-        glfwSetCursorPosCallback(window, MouseListener.cursorPosCallback); // Setup a mouse cursor callback
-        glfwSetScrollCallback(window, MouseListener.mouseScrollCallback); // Setup a mouse scroll wheel callback
+        this.eventThread = new Thread(new EventSystem(window));
+        this.eventThread.setName("Event System Thread");
+        this.eventThread.start();
 
         // Setting up the render
         glfwMakeContextCurrent(window); // Make the OpenGL context current
@@ -111,6 +115,11 @@ public class GLFWWindow {
 
         // End of loop
         GameLogger.getLogger("GLFWWindow").info("Cleaning...");
+        try {
+            this.eventThread.join(); // Interrupt the eventThread
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         glfwFreeCallbacks(window); // Freeing all the callbacks
         glfwDestroyWindow(window); // Destroy the GLFWWindow
         glfwTerminate(); // Terminate GLFW

@@ -10,7 +10,6 @@ public class DPT {
     public GLFWWindow window = new GLFWWindow(1280, 720, ENGINE_WINDOWED);
 
     public void run(){
-        Thread.currentThread().setName("Main Render Thread");
         GameLogger.init();
         window.init();
     }

@@ -1,10 +1,10 @@
 package fr.dwightstudio.dpt.engine.graphics.gui;
 
+import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
 import fr.dwightstudio.dpt.engine.graphics.render.Color;
 import fr.dwightstudio.dpt.engine.graphics.render.Texture;
 import fr.dwightstudio.dpt.engine.graphics.utils.TextureLoader;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
-import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
 import fr.dwightstudio.dpt.engine.scripting.Component;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
@@ -13,8 +13,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
 import java.text.MessageFormat;
-
-import static org.lwjgl.opengl.GL11.*;
 
 public class Label extends Component {
 
@@ -87,7 +85,7 @@ public class Label extends Component {
     }
 
     public Surface createSurface(float x, float y) {
-        return new Surface(new Vector2f(x, y), this.width, this.height, this.texture);
+        return new Surface(new Vector2f(x, y), new Vector2f(this.width, this.height), this.texture);
     }
 
     public void setText(String string) {
