@@ -1,6 +1,6 @@
 package fr.dwightstudio.dpt.engine.scripting;
 
-import fr.dwightstudio.dpt.engine.graphics.render.Transform;
+import fr.dwightstudio.dpt.engine.graphics.objects.Transform;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
 
 import java.text.MessageFormat;
@@ -81,6 +81,13 @@ public class GameObject {
     public void addComponent(Component component) {
         this.components.add(component);
         component.gameObject = this;
+    }
+
+    public void addComponent(Component[] components) {
+        for (Component component : components) {
+            this.components.add(component);
+            component.gameObject = this;
+        }
     }
 
     public void update(float dt) {

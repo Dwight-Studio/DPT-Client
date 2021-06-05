@@ -1,15 +1,12 @@
 package fr.dwightstudio.dpt.engine.graphics.utils;
 
-import fr.dwightstudio.dpt.engine.graphics.render.Shader;
+import fr.dwightstudio.dpt.engine.graphics.objects.Shader;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
 
 import static org.lwjgl.opengl.GL20.*;
 

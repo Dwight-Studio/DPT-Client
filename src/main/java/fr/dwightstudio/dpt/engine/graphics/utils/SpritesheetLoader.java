@@ -1,8 +1,8 @@
 package fr.dwightstudio.dpt.engine.graphics.utils;
 
-import fr.dwightstudio.dpt.engine.graphics.render.SpriteTexture;
-import fr.dwightstudio.dpt.engine.graphics.render.Spritesheet;
-import fr.dwightstudio.dpt.engine.graphics.render.Texture;
+import fr.dwightstudio.dpt.engine.graphics.objects.SpriteTexture;
+import fr.dwightstudio.dpt.engine.graphics.objects.Spritesheet;
+import fr.dwightstudio.dpt.engine.graphics.objects.Texture;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.engine.resources.ResourceManager;
 import org.joml.Vector2f;

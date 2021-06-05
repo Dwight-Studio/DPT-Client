@@ -1,4 +1,4 @@
-package fr.dwightstudio.dpt.engine.graphics.render;
+package fr.dwightstudio.dpt.engine.graphics.objects;
 
 import org.joml.Vector2f;
 

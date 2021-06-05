@@ -1,8 +1,8 @@
 package fr.dwightstudio.dpt.engine.graphics.primitives;
 
-import fr.dwightstudio.dpt.engine.graphics.render.Color;
-import fr.dwightstudio.dpt.engine.graphics.render.Texture;
-import fr.dwightstudio.dpt.engine.graphics.render.Transform;
+import fr.dwightstudio.dpt.engine.graphics.objects.Color;
+import fr.dwightstudio.dpt.engine.graphics.objects.Texture;
+import fr.dwightstudio.dpt.engine.graphics.objects.Transform;
 import fr.dwightstudio.dpt.engine.scripting.Component;
 import org.joml.Vector2f;
 

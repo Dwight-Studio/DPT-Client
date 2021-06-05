@@ -1,11 +1,10 @@
 package fr.dwightstudio.dpt.engine.graphics.renderers;
 
-import fr.dwightstudio.dpt.engine.graphics.render.Shader;
-import fr.dwightstudio.dpt.engine.graphics.render.Texture;
-import fr.dwightstudio.dpt.engine.graphics.render.Transform;
+import fr.dwightstudio.dpt.engine.graphics.objects.Shader;
+import fr.dwightstudio.dpt.engine.graphics.objects.Texture;
+import fr.dwightstudio.dpt.engine.graphics.objects.Transform;
 import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
 import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
-import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.engine.resources.ResourceManager;
 import org.jetbrains.annotations.NotNull;
 

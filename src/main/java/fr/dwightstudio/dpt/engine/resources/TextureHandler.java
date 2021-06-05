@@ -1,9 +1,7 @@
 package fr.dwightstudio.dpt.engine.resources;
 
-import fr.dwightstudio.dpt.engine.graphics.render.Texture;
-import fr.dwightstudio.dpt.engine.graphics.utils.TextureLoader;
-import fr.dwightstudio.dpt.engine.logging.GameLogger;
-import org.lwjgl.stb.STBImage;
+import fr.dwightstudio.dpt.engine.graphics.objects.Texture;
+import fr.dwightstudio.dpt.engine.graphics.utils.TextureUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +13,7 @@ public class TextureHandler implements TypeHandler<Texture> {
     @Override
     public Texture get(String filepath) {
         if (!TEXTURES.containsKey(filepath)) {
-            Texture texture = TextureLoader.loadTexture(filepath);
+            Texture texture = TextureUtils.loadTexture(filepath);
             if (texture != null) {
                 TEXTURES.put(filepath, texture);
             } else {

@@ -1,9 +1,7 @@
 package fr.dwightstudio.dpt.engine.resources;
 
-import fr.dwightstudio.dpt.engine.graphics.render.Shader;
-import fr.dwightstudio.dpt.engine.graphics.render.Texture;
+import fr.dwightstudio.dpt.engine.graphics.objects.Shader;
 import fr.dwightstudio.dpt.engine.graphics.utils.ShaderLoader;
-import fr.dwightstudio.dpt.engine.graphics.utils.TextureLoader;
 
 import java.util.HashMap;
 import java.util.Map;

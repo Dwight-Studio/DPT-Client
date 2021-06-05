@@ -1,7 +1,7 @@
 package fr.dwightstudio.dpt.engine.graphics.renderers;
 
 import fr.dwightstudio.dpt.engine.graphics.primitives.Line;
-import fr.dwightstudio.dpt.engine.graphics.render.Shader;
+import fr.dwightstudio.dpt.engine.graphics.objects.Shader;
 import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
 import fr.dwightstudio.dpt.engine.resources.ResourceManager;
 

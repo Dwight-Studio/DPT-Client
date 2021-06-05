@@ -1,7 +1,4 @@
-package fr.dwightstudio.dpt.engine.graphics.render;
-
-import fr.dwightstudio.dpt.engine.scripting.Component;
-import org.joml.Vector2f;
+package fr.dwightstudio.dpt.engine.graphics.objects;
 
 public class Sprite {
 

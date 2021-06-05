@@ -1,4 +1,4 @@
-package fr.dwightstudio.dpt.engine.graphics.render;
+package fr.dwightstudio.dpt.engine.graphics.objects;
 
 import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;

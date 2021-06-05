@@ -1,9 +1,7 @@
 package fr.dwightstudio.dpt.engine.resources;
 
-import fr.dwightstudio.dpt.engine.graphics.render.Spritesheet;
-import fr.dwightstudio.dpt.engine.graphics.render.Texture;
+import fr.dwightstudio.dpt.engine.graphics.objects.Spritesheet;
 import fr.dwightstudio.dpt.engine.graphics.utils.SpritesheetLoader;
-import fr.dwightstudio.dpt.engine.graphics.utils.TextureLoader;
 
 import java.util.HashMap;
 import java.util.Map;

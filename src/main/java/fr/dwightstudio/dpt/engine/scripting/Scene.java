@@ -1,7 +1,7 @@
 package fr.dwightstudio.dpt.engine.scripting;
 
-import fr.dwightstudio.dpt.engine.graphics.render.Camera;
-import fr.dwightstudio.dpt.engine.graphics.render.Color;
+import fr.dwightstudio.dpt.engine.graphics.objects.Camera;
+import fr.dwightstudio.dpt.engine.graphics.objects.Color;
 import fr.dwightstudio.dpt.engine.graphics.renderers.Renderer;
 import org.joml.Vector2f;
 

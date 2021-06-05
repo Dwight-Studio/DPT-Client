@@ -4,9 +4,8 @@ import fr.dwightstudio.dpt.engine.events.EventSystem;
 import fr.dwightstudio.dpt.engine.events.types.ButtonClickEvent;
 import fr.dwightstudio.dpt.engine.events.types.ButtonReleaseEvent;
 import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
-import fr.dwightstudio.dpt.engine.graphics.render.Color;
+import fr.dwightstudio.dpt.engine.graphics.objects.Color;
 import fr.dwightstudio.dpt.engine.inputs.MouseListener;
-import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import org.joml.Vector2f;
 
 import java.util.HashSet;

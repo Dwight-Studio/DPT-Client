@@ -1,8 +1,8 @@
 package fr.dwightstudio.dpt.engine.resources;
 
-import fr.dwightstudio.dpt.engine.graphics.render.Shader;
-import fr.dwightstudio.dpt.engine.graphics.render.Spritesheet;
-import fr.dwightstudio.dpt.engine.graphics.render.Texture;
+import fr.dwightstudio.dpt.engine.graphics.objects.Shader;
+import fr.dwightstudio.dpt.engine.graphics.objects.Spritesheet;
+import fr.dwightstudio.dpt.engine.graphics.objects.Texture;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
 
 import java.text.MessageFormat;
