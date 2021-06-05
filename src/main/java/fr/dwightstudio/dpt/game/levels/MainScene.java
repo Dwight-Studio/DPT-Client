@@ -63,10 +63,10 @@ public class MainScene extends Scene implements EventListener {
 
         this.label = new Label("Les chaussettes de l'archiduchesse sont-elles sèches", font, true);
 
-        Surface[] surfaces = this.label.createSurface(0, 500);
+        this.label.draw(0, 500);
 
         this.spritesheet = ResourceManager.get("./src/main/resources/textures/sheet.png");
-        tiles.addComponent(surfaces);
+        tiles.addComponent(label);
         tiles.addComponent(surface);
         tiles.addComponent(surface2);
         surface.setTexture(spritesheet.getSprite(0).getTexture());
@@ -92,7 +92,6 @@ public class MainScene extends Scene implements EventListener {
         if (surface2.getTransform().getRotation(Transform.DEGREE) < 90) {
             surface2.getTransform().setRotation(surface2.getTransform().getRotation(Transform.DEGREE) + 1, Transform.DEGREE);
         }
-
         //this.cursorPosX.setText(String.valueOf(MouseListener.getCursorPos().x));
         //surfaceCursorPosX.getTransform().scale = this.cursorPosX.getScale();
         //this.cursorPosY.setText(String.valueOf(MouseListener.getCursorPos().y));

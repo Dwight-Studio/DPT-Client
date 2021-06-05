@@ -4,6 +4,7 @@ import fr.dwightstudio.dpt.engine.graphics.objects.FontAtlas;
 import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
 import fr.dwightstudio.dpt.engine.graphics.objects.Color;
 import fr.dwightstudio.dpt.engine.graphics.objects.Texture;
+import fr.dwightstudio.dpt.engine.graphics.renderers.TextRenderer;
 import fr.dwightstudio.dpt.engine.graphics.utils.FontUtils;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.engine.scripting.Component;
@@ -17,10 +18,11 @@ public class Label extends Component {
     private int width;
     private int height;
     private boolean antiAliasing;
-    private CharSequence string;
+    private String string;
     private Font font;
     private FontAtlas fontAtlas;
     private Color color;
+    private TextRenderer textRenderer = null;
 
     /*public Label(CharSequence string, Font font, Color color, boolean antiAliasing) {
         this.string = string;
@@ -42,7 +44,7 @@ public class Label extends Component {
         GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
     }*/
 
-    public Label(CharSequence string, Font font, boolean antiAliasing) {
+    public Label(String string, Font font, boolean antiAliasing) {
         this.string = string;
         this.font = font;
         this.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
@@ -85,7 +87,7 @@ public class Label extends Component {
         return this.antiAliasing;
     }
 
-    public void setText(CharSequence string) {
+    public void setText(String string) {
         this.string = string;
         //ByteBuffer image = createImageFromString(string, this.font, this.color, this.antiAliasing);
         //this.texture = TextureLoader.reloadTexture(image, this.texture, width, height);
@@ -103,16 +105,16 @@ public class Label extends Component {
         this.antiAliasing = antiAliasing;
     }
 
-    public Surface[] createSurface(float x, float y) {
-        float xPos = x;
-        Surface[] surfaces = new Surface[string.length()];
-        for (int i = 0; i < string.length(); i++) {
-            surfaces[i] = (
-                    new Surface(new Vector2f(xPos, y),
-                    new Vector2f(this.fontAtlas.getGlyph(string.charAt(i)).getWidth(),  this.fontAtlas.getGlyph(string.charAt(i)).getHeight()),
-                    this.fontAtlas.getTexture(), this.fontAtlas.getGlyph(string.charAt(i)).getTextureCoords(this.fontAtlas)));
-            xPos += this.fontAtlas.getGlyph(string.charAt(i)).getWidth();
+    public void draw(float x, float y) {
+        this.textRenderer = new TextRenderer(this.fontAtlas, this.string.toCharArray(), new Vector2f(x, y));
+    }
+
+    @Override
+    public void update(float dt) {
+        GameLogger.getLogger("Label").debug("LABEL_LOOP");
+        super.update(dt);
+        if (this.textRenderer != null) {
+            this.textRenderer.render();
         }
-        return surfaces;
     }
 }
