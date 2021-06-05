@@ -2,18 +2,13 @@ package fr.dwightstudio.dpt.engine.graphics.renderers;
 
 import fr.dwightstudio.dpt.engine.graphics.objects.FontAtlas;
 import fr.dwightstudio.dpt.engine.graphics.objects.Shader;
-import fr.dwightstudio.dpt.engine.graphics.objects.Texture;
-import fr.dwightstudio.dpt.engine.graphics.objects.Transform;
-import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
-import fr.dwightstudio.dpt.engine.logging.GameLogger;
+import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
 import fr.dwightstudio.dpt.engine.resources.ResourceManager;
 import org.joml.Vector2f;
 
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
 import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
@@ -37,19 +32,26 @@ public class TextRenderer {
     private final float[] vertices;
     private final Vector2f position;
 
+    private float cursorPosition;
     private int vertexArrayObjectID;
     private int vertexBufferObjectID;
 
     public TextRenderer(FontAtlas fontAtlas, char[] characters, Vector2f position) {
         this.fontAtlas = fontAtlas;
         this.characters = characters;
-        ResourceManager.load("./src/main/resources/shaders/default.glsl", Shader.class);
-        this.shader = ResourceManager.get("./src/main/resources/shaders/default.glsl");
+        ResourceManager.load("./src/main/resources/shaders/text.glsl", Shader.class);
+        this.shader = ResourceManager.get("./src/main/resources/shaders/text.glsl");
         this.vertices = new float[this.characters.length * 4 * VERTEX_SIZE];
         this.position = position;
+        this.cursorPosition = this.position.x;
     }
 
     public void init() {
+        shader.bind();
+        shader.uploadMat4f("uProjectionMatrix", SceneManager.getCurrentScene().getCamera().getProjectionMatrix());
+        shader.uploadMat4f("uViewMatrix", SceneManager.getCurrentScene().getCamera().getViewMatrix());
+        shader.uploadInt("textureSampler", 0);
+
         vertexArrayObjectID = glGenVertexArrays();
         glBindVertexArray(vertexArrayObjectID);
 
@@ -77,11 +79,12 @@ public class TextRenderer {
     }
 
     public void render() {
-        GameLogger.getLogger("TextRender").debug("LOOP");
         glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObjectID);
         glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
 
         shader.bind();
+        glActiveTexture(GL_TEXTURE0);
+        this.fontAtlas.getTexture().bind();
 
         glBindVertexArray(vertexArrayObjectID);
         glEnableVertexAttribArray(0);
@@ -93,6 +96,7 @@ public class TextRenderer {
         glDisableVertexAttribArray(1);
         glBindVertexArray(0);
 
+        this.fontAtlas.getTexture().unbind();
         shader.unbind();
     }
 
@@ -100,16 +104,16 @@ public class TextRenderer {
         char character = this.characters[index];
         int offset = index * 4 * VERTEX_SIZE;
 
-        float x = this.position.x + this.fontAtlas.getGlyph(character).getWidth();
+        float x = this.cursorPosition + this.fontAtlas.getGlyph(character).getWidth();
         float y = this.position.y +  this.fontAtlas.getGlyph(character).getHeight();
         // This will loop 4 times for the 4 vertices.
         for (int i = 0; i < 4; i++) {
             if (i == 1) {
                 y = this.position.y;
             } else if (i == 2) {
-                x = this.position.x;
+                x = this.cursorPosition;
             } else if (i == 3) {
-                y = this.position.y+ this.fontAtlas.getGlyph(character).getHeight();
+                y = this.position.y + this.fontAtlas.getGlyph(character).getHeight();
             }
 
             // Load the position
@@ -120,16 +124,15 @@ public class TextRenderer {
             vertices[offset + 2] = 1.0f;
             vertices[offset + 3] = 1.0f;
             vertices[offset + 4] = 1.0f;
-            vertices[offset + 5] = 1.0f;
-
 
             // Load the texture coordinates
-            vertices[offset + 6] = this.fontAtlas.getGlyph(character).getTextureCoords(this.fontAtlas)[i].x;
-            vertices[offset + 7] = this.fontAtlas.getGlyph(character).getTextureCoords(this.fontAtlas)[i].y;
+            vertices[offset + 5] = this.fontAtlas.getGlyph(character).getTextureCoords(this.fontAtlas)[i].x;
+            vertices[offset + 6] = this.fontAtlas.getGlyph(character).getTextureCoords(this.fontAtlas)[i].y;
 
 
             offset += VERTEX_SIZE;
         }
+        this.cursorPosition += this.fontAtlas.getGlyph(character).getWidth();
     }
 
     private int[] generateIndices() {

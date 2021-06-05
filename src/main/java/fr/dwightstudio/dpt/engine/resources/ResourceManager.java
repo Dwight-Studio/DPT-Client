@@ -1,5 +1,6 @@
 package fr.dwightstudio.dpt.engine.resources;
 
+import fr.dwightstudio.dpt.engine.graphics.objects.FontAtlas;
 import fr.dwightstudio.dpt.engine.graphics.objects.Shader;
 import fr.dwightstudio.dpt.engine.graphics.objects.Spritesheet;
 import fr.dwightstudio.dpt.engine.graphics.objects.Texture;
@@ -19,6 +20,7 @@ public class ResourceManager {
         addHandler(Texture.class, new TextureHandler());
         addHandler(Shader.class, new ShaderHandler());
         addHandler(Spritesheet.class, new SpritesheetHandler());
+        addHandler(FontAtlas.class, new FontAtlasHandler());
     }
 
     /**

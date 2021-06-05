@@ -84,12 +84,12 @@ public class TextureUtils {
 
     public static Texture reloadTexture(ByteBuffer image, Texture texture, int width, int height) {
         if (image != null) {
-            glBindTexture(GL_TEXTURE_2D, texture.getTextureID());
+            glBindTexture(GL_TEXTURE_2D, texture.getID());
             glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
             glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
             glBindTexture(GL_TEXTURE_2D, 0); // Unbinding any texture at the end to make sure it is not modified after
-            return new Texture(width, height, texture.getTextureID(), 4, null, image);
+            return new Texture(width, height, texture.getID(), 4, null, image);
         }
         return null;
     }

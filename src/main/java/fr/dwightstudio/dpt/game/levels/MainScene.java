@@ -11,6 +11,8 @@ import fr.dwightstudio.dpt.engine.graphics.primitives.Line;
 import fr.dwightstudio.dpt.engine.graphics.objects.*;
 import fr.dwightstudio.dpt.engine.graphics.objects.Color;
 import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
+import fr.dwightstudio.dpt.engine.graphics.utils.FontUtils;
+import fr.dwightstudio.dpt.engine.inputs.MouseListener;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.engine.resources.ResourceManager;
 import fr.dwightstudio.dpt.engine.scripting.GameObject;
@@ -27,14 +29,11 @@ public class MainScene extends Scene implements EventListener {
     private final Surface surface2 = new Surface(new Vector2f(100, 100), new Vector2f(64, 64), new Color(0, 1, 0, 0.5f));
     private final Surface surface3 = new Surface(new Vector2f(132, 100), new Vector2f(64, 64), new Color(1, 0, 0, 0.5f));
     private Spritesheet spritesheet;
-    private Label label;
 
     private Label cursorPosX;
+    private Label label;
     private Label cursorPosY;
-    private Surface surfaceCursorPosX;
-    private Surface surfaceCursorPosY;
 
-    private Surface textSurface;
     private int count = 0;
     private Button button = new Button(new Vector2f(400, 400), new Vector2f(50, 32), new Color(0.0f, 0.0f, 1.0f));
 
@@ -59,21 +58,25 @@ public class MainScene extends Scene implements EventListener {
             e.printStackTrace();
         }
 
+        FontAtlas fontAtlas = FontUtils.createFontAtlas(font, true);
+
         EventSystem.registerListener(this);
 
-        this.label = new Label("Les chaussettes de l'archiduchesse sont-elles sèches", font, true);
-
-        this.label.draw(0, 500);
+        this.label = new Label("FPS", fontAtlas, true);
+        this.label.draw(0, GLFWWindow.getHeight() - this.label.getFontAtlas().getTexture().getHeight());
+        this.cursorPosX = new Label("X", fontAtlas, true);
+        this.cursorPosX.draw(0, GLFWWindow.getHeight() - this.cursorPosX.getFontAtlas().getTexture().getHeight() * 2);
+        //this.cursorPosY = new Label("Y", fontAtlas, true);
+        //this.cursorPosY.draw(0, GLFWWindow.getHeight() - this.label.getFontAtlas().getTexture().getHeight() * 3);
 
         this.spritesheet = ResourceManager.get("./src/main/resources/textures/sheet.png");
         tiles.addComponent(label);
+        tiles.addComponent(cursorPosX);
+        //tiles.addComponent(cursorPosY);
         tiles.addComponent(surface);
         tiles.addComponent(surface2);
         surface.setTexture(spritesheet.getSprite(0).getTexture());
         surface.setTextureCoords(spritesheet.getSprite(0).getTextureCoords());
-       // tiles.addComponent(textSurface);
-       // tiles.addComponent(this.surfaceCursorPosX);
-       // tiles.addComponent(this.surfaceCursorPosY);
         tiles.addComponent(new Line(new Vector2f(0, 300), new Vector2f(300, 300), new Color(0.0f, 1.0f, 0.0f), 4.0f));
         tiles.addComponent(new Surface(new Vector2f(200, 200), new Vector2f(64, 64), ResourceManager.<Texture>get("./src/main/resources/textures/test.png")));
         tiles.addComponent(button);
@@ -92,19 +95,16 @@ public class MainScene extends Scene implements EventListener {
         if (surface2.getTransform().getRotation(Transform.DEGREE) < 90) {
             surface2.getTransform().setRotation(surface2.getTransform().getRotation(Transform.DEGREE) + 1, Transform.DEGREE);
         }
-        //this.cursorPosX.setText(String.valueOf(MouseListener.getCursorPos().x));
-        //surfaceCursorPosX.getTransform().scale = this.cursorPosX.getScale();
-        //this.cursorPosY.setText(String.valueOf(MouseListener.getCursorPos().y));
-        //surfaceCursorPosY.getTransform().scale = this.cursorPosY.getScale();
 
-        /*if (count == 60) {
-            //this.label.setText(Math.round(1.0f / dt) + " FPS");
-            textSurface.getTransform().scale = this.label.getScale();
-            textSurface.setTexture(this.label.getTexture());
+
+        if (count == 60) {
+            this.label.setText(Math.round(1.0f / dt) + " FPS");
             count = 0;
         } else {
             count++;
-        }*/
+        }
+        this.cursorPosX.setText(String.valueOf(MouseListener.getCursorPos().x));
+        //this.cursorPosY.setText(String.valueOf(MouseListener.getCursorPos().y));
 
         renderer.render();
     }

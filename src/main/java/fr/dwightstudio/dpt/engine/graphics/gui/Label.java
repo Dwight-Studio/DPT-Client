@@ -15,14 +15,14 @@ import java.text.MessageFormat;
 
 public class Label extends Component {
 
-    private int width;
-    private int height;
     private boolean antiAliasing;
     private String string;
     private Font font;
     private FontAtlas fontAtlas;
     private Color color;
     private TextRenderer textRenderer = null;
+    private float xPosition;
+    private float yPosition;
 
     /*public Label(CharSequence string, Font font, Color color, boolean antiAliasing) {
         this.string = string;
@@ -53,6 +53,15 @@ public class Label extends Component {
         GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
     }
 
+    public Label(String string, FontAtlas fontAtlas, boolean antiAliasing) {
+        this.string = string;
+        this.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+        this.antiAliasing = antiAliasing;
+        this.fontAtlas = fontAtlas;
+        this.font = fontAtlas.getFont();
+        GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
+    }
+
     /*public Label(CharSequence string, Font font) {
         this.string = string;
         this.font = font;
@@ -62,10 +71,6 @@ public class Label extends Component {
         this.texture = TextureLoader.createTexture(image, width, height);*//*
         GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
     }*/
-
-    public Vector2f getScale() {
-        return new Vector2f(width, height);
-    }
 
     public CharSequence getText() {
         return this.string;
@@ -89,8 +94,7 @@ public class Label extends Component {
 
     public void setText(String string) {
         this.string = string;
-        //ByteBuffer image = createImageFromString(string, this.font, this.color, this.antiAliasing);
-        //this.texture = TextureLoader.reloadTexture(image, this.texture, width, height);
+        draw(this.xPosition, this.yPosition);
     }
 
     public void setFont(Font newFont) {
@@ -106,12 +110,14 @@ public class Label extends Component {
     }
 
     public void draw(float x, float y) {
+        this.xPosition = x;
+        this.yPosition = y;
         this.textRenderer = new TextRenderer(this.fontAtlas, this.string.toCharArray(), new Vector2f(x, y));
+        this.textRenderer.init();
     }
 
     @Override
     public void update(float dt) {
-        GameLogger.getLogger("Label").debug("LABEL_LOOP");
         super.update(dt);
         if (this.textRenderer != null) {
             this.textRenderer.render();

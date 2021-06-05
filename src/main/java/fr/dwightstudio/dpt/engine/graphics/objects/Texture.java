@@ -41,7 +41,7 @@ public class Texture {
         return this.nbChannel;
     }
 
-    public int getTextureID() {
+    public int getID() {
         return this.id;
     }
 
@@ -64,6 +64,6 @@ public class Texture {
 
         Texture texture = (Texture) object;
 
-        return texture.getTextureID() == this.getTextureID();
+        return texture.getID() == this.getID();
     }
 }
