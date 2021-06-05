@@ -11,7 +11,7 @@ public class GameObject {
     private final String name;
     private final List<Component> components;
     public Transform transform;
-    private int zIndex;
+    private final int zIndex;
 
     public GameObject(String name) {
         this.name = name;

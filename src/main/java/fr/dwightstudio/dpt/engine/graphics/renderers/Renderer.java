@@ -6,6 +6,8 @@ import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.engine.scripting.GameObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Renderer {
@@ -22,7 +24,7 @@ public class Renderer {
         List<Surface> surfaces = gameObject.getComponents(Surface.class);
         for (Surface surface : surfaces) {
             if (surface != null) {
-                add(surface);
+                add(surface, gameObject);
             }
         }
         List<Line> lines = gameObject.getComponents(Line.class);
@@ -33,20 +35,21 @@ public class Renderer {
         }
     }
 
-    private void add(Surface surface) {
+    private void add(Surface surface, GameObject gameObject) {
         boolean added = false;
         for (SurfaceBatchRenderer batch : surfaceBatchRenderers) {
-            if (batch.hasRoom()) {
+            if (batch.hasRoom() && batch.getzIndex() == gameObject.getzIndex()) {
                 batch.addSurface(surface);
                 added = true;
             }
         }
 
         if (!added) {
-            SurfaceBatchRenderer surfaceBatchRenderer = new SurfaceBatchRenderer(maxBatchSize);
+            SurfaceBatchRenderer surfaceBatchRenderer = new SurfaceBatchRenderer(maxBatchSize, gameObject.getzIndex());
             surfaceBatchRenderer.start();
             surfaceBatchRenderers.add(surfaceBatchRenderer);
             surfaceBatchRenderer.addSurface(surface);
+            Collections.sort(surfaceBatchRenderers);
         }
     }
 

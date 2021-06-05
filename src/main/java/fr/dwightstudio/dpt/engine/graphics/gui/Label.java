@@ -107,7 +107,6 @@ public class Label extends Component {
     }
     
     private ByteBuffer createImageFromString(String string, Font font, Color color, boolean antiAliasing) {
-        
         BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = img.createGraphics();
 
@@ -117,6 +116,7 @@ public class Label extends Component {
         height = fm.getHeight();
         g2d.dispose();
 
+        img.flush();
         img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
         g2d = img.createGraphics();
@@ -151,10 +151,5 @@ public class Label extends Component {
         // beginning.
         buffer.flip();
         return buffer;
-    }
-
-    @Override
-    public void update(float dt) {
-
     }
 }

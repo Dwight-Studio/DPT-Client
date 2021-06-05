@@ -7,6 +7,7 @@ import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
 import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.engine.resources.ResourceManager;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
-public class SurfaceBatchRenderer {
+public class SurfaceBatchRenderer implements Comparable<SurfaceBatchRenderer> {
     // This is what the array should looks like:
     //
     // Position                Color                    TextureCoords   TextureID
@@ -35,24 +36,26 @@ public class SurfaceBatchRenderer {
     private final int TEXTURE_COORDS_OFFSET = COLOR_OFFSET + COLOR_SIZE * Float.BYTES;
     private final int TEXTURE_ID_OFFSET = TEXTURE_COORDS_OFFSET + TEXTURE_COORDS_SIZE * Float.BYTES;
 
-    private Surface[] surfaces;
-    private List<Texture> textures;
+    private final Surface[] surfaces;
+    private final List<Texture> textures;
 
-    private int batchSize;
-    private Shader shader;
-    private float[] vertices;
-    private int[] textureSlots = {0, 1, 2, 3, 4, 5, 6, 7};
+    private final int batchSize;
+    private final Shader shader;
+    private final float[] vertices;
+    private final int[] textureSlots = {0, 1, 2, 3, 4, 5, 6, 7};
     private int numberOfSurfaces;
     private boolean hasRoom;
+    private final int zIndex;
 
     private int vertexBufferObjectID;
     private int vertexArrayObjectID;
 
-    public SurfaceBatchRenderer(int batchSize) {
+    public SurfaceBatchRenderer(int batchSize, int zIndex) {
         this.surfaces = new Surface[batchSize];
         this.textures = new ArrayList<>();
 
         this.batchSize = batchSize;
+        this.zIndex = zIndex;
         ResourceManager.load("./src/main/resources/shaders/default.glsl", Shader.class);
         this.shader = ResourceManager.get("./src/main/resources/shaders/default.glsl");
         this.vertices = new float[batchSize * 4 * VERTEX_SIZE]; // The 4 is the number of vertices per quads
@@ -221,4 +224,12 @@ public class SurfaceBatchRenderer {
         return hasRoom;
     }
 
+    public int getzIndex() {
+        return zIndex;
+    }
+
+    @Override
+    public int compareTo(@NotNull SurfaceBatchRenderer surfaceBatchRenderer) {
+        return Integer.compare(this.zIndex, surfaceBatchRenderer.zIndex);
+    }
 }

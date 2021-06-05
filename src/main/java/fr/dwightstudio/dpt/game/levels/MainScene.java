@@ -28,6 +28,7 @@ public class MainScene extends Scene implements EventListener {
 
     private final Surface surface = new Surface(new Vector2f(0, 0), new Vector2f(64, 64), new Color(1, 1, 1, 1));
     private final Surface surface2 = new Surface(new Vector2f(100, 100), new Vector2f(64, 64), new Color(0, 1, 0, 0.5f));
+    private final Surface surface3 = new Surface(new Vector2f(132, 100), new Vector2f(64, 64), new Color(1, 0, 0, 0.5f));
     private Spritesheet spritesheet;
     private Label label;
 
@@ -47,7 +48,8 @@ public class MainScene extends Scene implements EventListener {
     @Override
     public void init() {
         camera = new Camera(new Vector2f());
-        GameObject tiles = new GameObject("tiles", 0);
+        GameObject tiles = new GameObject("tiles", 2);
+        GameObject otherOne = new GameObject("otherOne", 1);
         ResourceManager.load("./src/main/resources/textures/test.png", Texture.class);
         ResourceManager.load("./src/main/resources/textures/sheet.png", Spritesheet.class);
 
@@ -81,8 +83,10 @@ public class MainScene extends Scene implements EventListener {
         tiles.addComponent(new Line(new Vector2f(0, 300), new Vector2f(300, 300), new Color(0.0f, 1.0f, 0.0f), 4.0f));
         tiles.addComponent(new Surface(new Vector2f(200, 200), new Vector2f(64, 64), ResourceManager.<Texture>get("./src/main/resources/textures/test.png")));
         tiles.addComponent(button);
+        otherOne.addComponent(surface3);
         setBackgroundColor(new Color(1.0f, 1.0f, 1.0f, 0.0f));
         this.addGameObject(tiles);
+        this.addGameObject(otherOne);
     }
 
     @Override
