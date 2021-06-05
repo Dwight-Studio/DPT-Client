@@ -72,7 +72,7 @@ public class Label extends Component {
         GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
     }*/
 
-    public CharSequence getText() {
+    public String getText() {
         return this.string;
     }
 
@@ -118,7 +118,6 @@ public class Label extends Component {
 
     @Override
     public void update(float dt) {
-        super.update(dt);
         if (this.textRenderer != null) {
             this.textRenderer.render();
         }

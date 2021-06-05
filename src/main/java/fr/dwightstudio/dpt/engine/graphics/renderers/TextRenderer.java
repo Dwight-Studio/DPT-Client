@@ -27,7 +27,7 @@ public class TextRenderer {
     private final int TEXTURE_COORDS_OFFSET = COLOR_OFFSET + COLOR_SIZE * Float.BYTES;
 
     private final FontAtlas fontAtlas;
-    private final char[] characters;
+    private char[] characters;
     private final Shader shader;
     private final float[] vertices;
     private final Vector2f position;

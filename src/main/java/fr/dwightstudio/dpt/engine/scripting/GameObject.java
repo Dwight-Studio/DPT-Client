@@ -83,7 +83,7 @@ public class GameObject {
         component.gameObject = this;
     }
 
-    public void addComponent(Component[] components) {
+    public void addComponents(Component[] components) {
         for (Component component : components) {
             this.components.add(component);
             component.gameObject = this;
