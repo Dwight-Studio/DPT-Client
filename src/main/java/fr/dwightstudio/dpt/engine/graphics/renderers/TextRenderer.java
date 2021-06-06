@@ -3,8 +3,13 @@ package fr.dwightstudio.dpt.engine.graphics.renderers;
 import fr.dwightstudio.dpt.engine.graphics.objects.FontAtlas;
 import fr.dwightstudio.dpt.engine.graphics.objects.Shader;
 import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
+import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.engine.resources.ResourceManager;
 import org.joml.Vector2f;
+
+import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL15.*;
@@ -29,12 +34,13 @@ public class TextRenderer {
     private final FontAtlas fontAtlas;
     private char[] characters;
     private final Shader shader;
-    private final float[] vertices;
+    private float[] vertices;
     private final Vector2f position;
 
     private float cursorPosition;
     private int vertexArrayObjectID;
     private int vertexBufferObjectID;
+    private int elementBufferObjectID;
 
     public TextRenderer(FontAtlas fontAtlas, char[] characters, Vector2f position) {
         this.fontAtlas = fontAtlas;
@@ -59,7 +65,7 @@ public class TextRenderer {
         glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObjectID);
         glBufferData(GL_ARRAY_BUFFER, (long) vertices.length * Float.BYTES, GL_STREAM_DRAW);
 
-        int elementBufferObjectID = glGenBuffers();
+        elementBufferObjectID = glGenBuffers();
         int[] indices = generateIndices();
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObjectID);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
@@ -80,7 +86,7 @@ public class TextRenderer {
 
     public void render() {
         glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObjectID);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, this.vertices);
 
         shader.bind();
         glActiveTexture(GL_TEXTURE0);
@@ -128,7 +134,6 @@ public class TextRenderer {
             // Load the texture coordinates
             vertices[offset + 5] = this.fontAtlas.getGlyph(character).getTextureCoords(this.fontAtlas)[i].x;
             vertices[offset + 6] = this.fontAtlas.getGlyph(character).getTextureCoords(this.fontAtlas)[i].y;
-
 
             offset += VERTEX_SIZE;
         }

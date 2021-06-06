@@ -30,10 +30,12 @@ public class MainScene extends Scene implements EventListener {
     private final Surface surface3 = new Surface(new Vector2f(132, 100), new Vector2f(64, 64), new Color(1, 0, 0, 0.5f));
     private Spritesheet spritesheet;
 
-    private Label label;
     private Label cursorPosX;
     private Label cursorPosY;
+    private Label cursorPosX2;
+    private Label cursorPosY2;
     private Label fpsCounter;
+    FontAtlas fontAtlas;
 
     private int count = 0;
     private Button button = new Button(new Vector2f(400, 400), new Vector2f(50, 32), new Color(0.0f, 0.0f, 1.0f));
@@ -59,24 +61,22 @@ public class MainScene extends Scene implements EventListener {
             e.printStackTrace();
         }
 
-        FontAtlas fontAtlas = FontUtils.createFontAtlas(font, true);
+        this.fontAtlas = FontUtils.createFontAtlas(font, true);
 
         EventSystem.registerListener(this);
 
-        this.label = new Label("FPS", fontAtlas, true);
-        this.label.draw(0, GLFWWindow.getHeight() - this.label.getFontAtlas().getTexture().getHeight());
         this.fpsCounter = new Label("FPS", fontAtlas, true);
-        this.fpsCounter.draw(0, GLFWWindow.getHeight() - this.fpsCounter.getFontAtlas().getTexture().getHeight());
         this.cursorPosX = new Label("X", fontAtlas, true);
-        this.cursorPosX.draw(0, GLFWWindow.getHeight() - this.cursorPosX.getFontAtlas().getTexture().getHeight() * 2);
         this.cursorPosY = new Label("Y", fontAtlas, true);
-        this.cursorPosY.draw(0, GLFWWindow.getHeight() - this.cursorPosY.getFontAtlas().getTexture().getHeight() * 3);
+        this.cursorPosX2 = new Label("X", fontAtlas, true);
+        this.cursorPosY2 = new Label("Y", fontAtlas, true);
 
         this.spritesheet = ResourceManager.get("./src/main/resources/textures/sheet.png");
-        tiles.addComponent(label);
-        tiles.addComponent(fpsCounter);
         tiles.addComponent(cursorPosX);
+        tiles.addComponent(fpsCounter);
         tiles.addComponent(cursorPosY);
+        tiles.addComponent(cursorPosX2);
+        tiles.addComponent(cursorPosY2);
         tiles.addComponent(surface);
         tiles.addComponent(surface2);
         surface.setTexture(spritesheet.getSprite(0).getTexture());
@@ -102,13 +102,20 @@ public class MainScene extends Scene implements EventListener {
 
 
         if (count == 60) {
-            //this.fpsCounter.setText(Math.round(1.0f / dt) + " FPS");
+            this.fpsCounter.setText(Math.round(1.0f / dt) + " FPS");
+            this.fpsCounter.draw(0, GLFWWindow.getHeight() - this.fpsCounter.getFontAtlas().getTexture().getHeight());
             count = 0;
         } else {
             count++;
         }
-        //this.cursorPosX.setText(String.valueOf(MouseListener.getCursorPos().x));
-        //this.cursorPosY.setText(String.valueOf(MouseListener.getCursorPos().y));
+        this.cursorPosX.setText(String.valueOf(MouseListener.getCursorPos().x));
+        this.cursorPosX.draw(0, GLFWWindow.getHeight() - this.cursorPosX.getFontAtlas().getTexture().getHeight() * 2);
+        this.cursorPosY.setText(String.valueOf(MouseListener.getCursorPos().y));
+        this.cursorPosY.draw(0, GLFWWindow.getHeight() - this.cursorPosY.getFontAtlas().getTexture().getHeight() * 3);
+        this.cursorPosX2.setText(String.valueOf(MouseListener.getCursorPos().x));
+        this.cursorPosX2.draw(0, GLFWWindow.getHeight() - this.cursorPosX.getFontAtlas().getTexture().getHeight() * 4);
+        this.cursorPosY2.setText(String.valueOf(MouseListener.getCursorPos().y));
+        this.cursorPosY2.draw(0, GLFWWindow.getHeight() - this.cursorPosY.getFontAtlas().getTexture().getHeight() * 5);
 
         renderer.render();
     }

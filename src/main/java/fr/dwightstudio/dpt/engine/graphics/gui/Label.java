@@ -16,7 +16,9 @@ import java.text.MessageFormat;
 public class Label extends Component {
 
     private boolean antiAliasing;
+
     private String string;
+
     private Font font;
     private FontAtlas fontAtlas;
     private Color color;
@@ -43,7 +45,6 @@ public class Label extends Component {
         this.texture = TextureLoader.createTexture(image, width, height);*//*
         GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
     }*/
-
     public Label(String string, Font font, boolean antiAliasing) {
         this.string = string;
         this.font = font;
@@ -62,6 +63,7 @@ public class Label extends Component {
         GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
     }
 
+
     /*public Label(CharSequence string, Font font) {
         this.string = string;
         this.font = font;
@@ -71,7 +73,6 @@ public class Label extends Component {
         this.texture = TextureLoader.createTexture(image, width, height);*//*
         GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
     }*/
-
     public String getText() {
         return this.string;
     }
@@ -92,13 +93,17 @@ public class Label extends Component {
         return this.antiAliasing;
     }
 
-    public void setText(String string) {
-        this.string = string;
-        draw(this.xPosition, this.yPosition);
-    }
-
     public void setFont(Font newFont) {
         this.font = newFont;
+    }
+
+    public void setText(String string) {
+        this.string = string;
+    }
+
+    public void setPosition(Vector2f position) {
+        this.xPosition = position.x;
+        this.yPosition = position.y;
     }
 
     public void setColor(Color newColor) {
