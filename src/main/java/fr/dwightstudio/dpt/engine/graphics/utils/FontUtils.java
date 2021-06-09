@@ -108,7 +108,7 @@ public class FontUtils {
             graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         }
         graphics2D.setFont(font);
-        graphics2D.setPaint(java.awt.Color.BLACK);
+        graphics2D.setPaint(java.awt.Color.WHITE);
         graphics2D.drawString(String.valueOf(c), 0, fontMetrics.getAscent());
         graphics2D.dispose();
         return image;

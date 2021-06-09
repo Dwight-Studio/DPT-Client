@@ -73,6 +73,7 @@ public class MainScene extends Scene implements EventListener {
         this.fpsCounter.draw(0, GLFWWindow.getHeight() - this.fpsCounter.getFontAtlas().getTexture().getHeight());
         this.cursorPosX.draw(0, GLFWWindow.getHeight() - this.cursorPosX.getFontAtlas().getTexture().getHeight() * 2);
         this.cursorPosY.draw(0, GLFWWindow.getHeight() - this.cursorPosY.getFontAtlas().getTexture().getHeight() * 3);
+        this.fpsCounter.setColor(Engine.COLORS.PURPLE);
 
         this.spritesheet = ResourceManager.get("./src/main/resources/textures/sheet.png");
         tiles.addComponent(cursorPosX);
