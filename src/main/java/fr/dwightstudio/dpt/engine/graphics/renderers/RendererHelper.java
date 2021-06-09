@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Renderer {
+public class RendererHelper {
     private int maxBatchSize = 1000;
     private List<SurfaceRenderer> surfaceRenderers;
     private List<LineRenderer> lineRenderers;
 
-    public Renderer() {
+    public RendererHelper() {
         this.surfaceRenderers = new ArrayList<>();
         this.lineRenderers = new ArrayList<>();
     }

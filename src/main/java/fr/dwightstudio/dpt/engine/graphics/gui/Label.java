@@ -18,20 +18,63 @@ public class Label extends Component {
     private boolean antiAliasing;
     private String string;
     private Font font;
-    private FontAtlas fontAtlas;
+    private final FontAtlas fontAtlas;
     private Color color;
     private TextRenderer textRenderer = null;
     private float xPosition;
     private float yPosition;
 
+    private final int maxNumberOfChars;
+
     private boolean dirty = true;
+
+    public Label(String string, Font font, Color color, boolean antiAliasing, int maxNumberOfChars) {
+        this.string = string;
+        this.font = font;
+        this.color = color;
+        this.antiAliasing = antiAliasing;
+        this.maxNumberOfChars = maxNumberOfChars;
+        this.fontAtlas = FontUtils.createFontAtlas(font, this.antiAliasing);
+        GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
+    }
 
     public Label(String string, Font font, Color color, boolean antiAliasing) {
         this.string = string;
         this.font = font;
         this.color = color;
         this.antiAliasing = antiAliasing;
+        this.maxNumberOfChars = 1000;
         this.fontAtlas = FontUtils.createFontAtlas(font, this.antiAliasing);
+        GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
+    }
+
+    public Label(String string, Font font, Color color, int maxNumberOfChars) {
+        this.string = string;
+        this.font = font;
+        this.color = color;
+        this.antiAliasing = false;
+        this.fontAtlas = FontUtils.createFontAtlas(font, false);
+        this.maxNumberOfChars = maxNumberOfChars;
+        GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
+    }
+
+    public Label(String string, Font font, boolean antiAliasing, int maxNumberOfChars) {
+        this.string = string;
+        this.font = font;
+        this.color = Engine.COLORS.BLACK;
+        this.antiAliasing = antiAliasing;
+        this.maxNumberOfChars = maxNumberOfChars;
+        this.fontAtlas = FontUtils.createFontAtlas(font, antiAliasing);
+        GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
+    }
+
+    public Label(String string, FontAtlas fontAtlas, Color color, int maxNumberOfChars) {
+        this.string = string;
+        this.color = color;
+        this.fontAtlas = fontAtlas;
+        this.antiAliasing = fontAtlas.isAntiAliasing();
+        this.font = fontAtlas.getFont();
+        this.maxNumberOfChars = maxNumberOfChars;
         GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
     }
 
@@ -40,6 +83,7 @@ public class Label extends Component {
         this.font = font;
         this.color = color;
         this.antiAliasing = false;
+        this.maxNumberOfChars = 1000;
         this.fontAtlas = FontUtils.createFontAtlas(font, false);
         GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
     }
@@ -49,16 +93,48 @@ public class Label extends Component {
         this.font = font;
         this.color = Engine.COLORS.BLACK;
         this.antiAliasing = antiAliasing;
+        this.maxNumberOfChars = 1000;
         this.fontAtlas = FontUtils.createFontAtlas(font, antiAliasing);
         GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
     }
 
-    public Label(String string, FontAtlas fontAtlas, boolean antiAliasing) {
+    public Label(String string, FontAtlas fontAtlas, Color color) {
+        this.string = string;
+        this.color = color;
+        this.fontAtlas = fontAtlas;
+        this.antiAliasing = fontAtlas.isAntiAliasing();
+        this.font = fontAtlas.getFont();
+        this.maxNumberOfChars = 1000;
+        GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
+    }
+
+    public Label(String string, FontAtlas fontAtlas, int maxNumberOfChars) {
         this.string = string;
         this.color = Engine.COLORS.BLACK;
-        this.antiAliasing = antiAliasing;
         this.fontAtlas = fontAtlas;
+        this.antiAliasing = fontAtlas.isAntiAliasing();
         this.font = fontAtlas.getFont();
+        this.maxNumberOfChars = maxNumberOfChars;
+        GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
+    }
+
+    public Label(String string, Font font, int maxNumberOfChars) {
+        this.string = string;
+        this.font = font;
+        this.color = Engine.COLORS.BLACK;
+        this.antiAliasing = false;
+        this.maxNumberOfChars = maxNumberOfChars;
+        this.fontAtlas = FontUtils.createFontAtlas(this.font, false);
+        GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
+    }
+
+    public Label(String string, FontAtlas fontAtlas) {
+        this.string = string;
+        this.color = Engine.COLORS.BLACK;
+        this.fontAtlas = fontAtlas;
+        this.antiAliasing = fontAtlas.isAntiAliasing();
+        this.font = fontAtlas.getFont();
+        this.maxNumberOfChars = 1000;
         GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
     }
 
@@ -67,6 +143,7 @@ public class Label extends Component {
         this.font = font;
         this.color = Engine.COLORS.BLACK;
         this.antiAliasing = false;
+        this.maxNumberOfChars = 1000;
         this.fontAtlas = FontUtils.createFontAtlas(this.font, false);
         GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
     }
@@ -93,6 +170,10 @@ public class Label extends Component {
 
     public Vector2f getPosition() {
         return new Vector2f(xPosition, yPosition);
+    }
+
+    public int getMaxNumberOfChars() {
+        return maxNumberOfChars;
     }
 
     public boolean isUsingAntialiasing() {
@@ -134,7 +215,7 @@ public class Label extends Component {
     public void draw(float x, float y) {
         this.xPosition = x;
         this.yPosition = y;
-        this.textRenderer = new TextRenderer(this, new Vector2f(x, y));
+        this.textRenderer = new TextRenderer(this);
         this.textRenderer.init();
     }
 

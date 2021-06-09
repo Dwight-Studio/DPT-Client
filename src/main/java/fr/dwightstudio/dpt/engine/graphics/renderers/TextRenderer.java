@@ -5,7 +5,6 @@ import fr.dwightstudio.dpt.engine.graphics.objects.FontAtlas;
 import fr.dwightstudio.dpt.engine.graphics.objects.Shader;
 import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
 import fr.dwightstudio.dpt.engine.resources.ResourceManager;
-import org.joml.Vector2f;
 
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL15.*;
@@ -28,25 +27,23 @@ public class TextRenderer {
     private final int TEXTURE_COORDS_OFFSET = COLOR_OFFSET + COLOR_SIZE * Float.BYTES;
 
     private final FontAtlas fontAtlas;
-    private char[] characters;
     private final Shader shader;
-    private float[] vertices;
     private final Label label;
+    private final float[] vertices;
 
+    private char[] characters;
     private float cursorPosition;
     private int vertexArrayObjectID;
     private int vertexBufferObjectID;
-    private int elementBufferObjectID;
 
-    // TODO: Let the user choose the max number of characters, now it is fixed to 1000
-    public TextRenderer(Label label, Vector2f position) {
+    public TextRenderer(Label label) {
         this.label = label;
         this.fontAtlas = label.getFontAtlas();
         this.characters = label.getText().toCharArray();
         ResourceManager.load("./src/main/resources/shaders/text.glsl", Shader.class);
         this.shader = ResourceManager.get("./src/main/resources/shaders/text.glsl");
 
-        this.vertices = new float[1000 * 4 * VERTEX_SIZE]; // FIXME: HARDCODED VALUE
+        this.vertices = new float[this.label.getMaxNumberOfChars() * 4 * VERTEX_SIZE];
         this.cursorPosition = this.label.getPosition().x;
     }
 
@@ -63,7 +60,7 @@ public class TextRenderer {
         glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObjectID);
         glBufferData(GL_ARRAY_BUFFER, (long) vertices.length * Float.BYTES, GL_STREAM_DRAW);
 
-        elementBufferObjectID = glGenBuffers();
+        int elementBufferObjectID = glGenBuffers();
         int[] indices = generateIndices();
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObjectID);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
@@ -154,8 +151,8 @@ public class TextRenderer {
         // int, int, int, int, int, int  <- 1 quad
         //
         // NOTE: We have 2 triangles with 3 indices each to form a quad so 3*2=6
-        int[] elements = new int[6 * 1000]; // FIXME: HARDCODED VALUE
-        for (int i = 0; i < 1000; i++) { // FIXME: HARDCODED VALUE
+        int[] elements = new int[6 * this.label.getMaxNumberOfChars()];
+        for (int i = 0; i < this.label.getMaxNumberOfChars(); i++) {
             int offsetArrayIndex = 6 * i;
 
             // First Triangle

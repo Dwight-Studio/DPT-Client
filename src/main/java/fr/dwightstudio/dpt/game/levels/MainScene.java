@@ -17,7 +17,6 @@ import fr.dwightstudio.dpt.engine.graphics.objects.Color;
 import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
 import fr.dwightstudio.dpt.engine.graphics.utils.FontUtils;
 import fr.dwightstudio.dpt.engine.inputs.MouseListener;
-import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.engine.resources.ResourceManager;
 import fr.dwightstudio.dpt.engine.scripting.GameObject;
 import fr.dwightstudio.dpt.engine.scripting.Scene;
@@ -67,13 +66,12 @@ public class MainScene extends Scene implements EventListener {
 
         EventSystem.registerListener(this);
 
-        this.fpsCounter = new Label("FPS", fontAtlas, true);
-        this.cursorPosX = new Label("X", fontAtlas, true);
-        this.cursorPosY = new Label("Y", fontAtlas, true);
+        this.fpsCounter = new Label("FPS", fontAtlas, Engine.COLORS.PURPLE);
+        this.cursorPosX = new Label("X", fontAtlas);
+        this.cursorPosY = new Label("Y", fontAtlas);
         this.fpsCounter.draw(0, GLFWWindow.getHeight() - this.fpsCounter.getFontAtlas().getTexture().getHeight());
         this.cursorPosX.draw(0, GLFWWindow.getHeight() - this.cursorPosX.getFontAtlas().getTexture().getHeight() * 2);
         this.cursorPosY.draw(0, GLFWWindow.getHeight() - this.cursorPosY.getFontAtlas().getTexture().getHeight() * 3);
-        this.fpsCounter.setColor(Engine.COLORS.PURPLE);
 
         this.spritesheet = ResourceManager.get("./src/main/resources/textures/sheet.png");
         tiles.addComponent(cursorPosX);
@@ -113,7 +111,7 @@ public class MainScene extends Scene implements EventListener {
         cursorPosX.setText(String.valueOf(MouseListener.getCursorPos().x));
         cursorPosY.setText(String.valueOf(MouseListener.getCursorPos().y));
 
-        renderer.render();
+        rendererHelper.render();
     }
 
     @EventHandler

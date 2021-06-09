@@ -2,7 +2,7 @@ package fr.dwightstudio.dpt.engine.scripting;
 
 import fr.dwightstudio.dpt.engine.graphics.objects.Camera;
 import fr.dwightstudio.dpt.engine.graphics.objects.Color;
-import fr.dwightstudio.dpt.engine.graphics.renderers.Renderer;
+import fr.dwightstudio.dpt.engine.graphics.renderers.RendererHelper;
 import org.joml.Vector2f;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ public abstract class Scene {
     protected Camera camera;
     private boolean isRunning = false;
     protected List<GameObject> gameObjects = new ArrayList<>();
-    protected Renderer renderer = new Renderer();
+    protected RendererHelper rendererHelper = new RendererHelper();
 
     public Scene() {
         this.camera = new Camera(new Vector2f());
@@ -29,7 +29,7 @@ public abstract class Scene {
     public void start() {
         for (GameObject gameObject : gameObjects) {
             gameObject.init();
-            renderer.addGameObject(gameObject);
+            rendererHelper.addGameObject(gameObject);
         }
     }
 
@@ -41,7 +41,7 @@ public abstract class Scene {
         } else {
             gameObjects.add(gameObject);
             gameObject.init();
-            renderer.addGameObject(gameObject);
+            rendererHelper.addGameObject(gameObject);
         }
     }
 
