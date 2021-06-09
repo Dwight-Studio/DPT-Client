@@ -1,5 +1,6 @@
 package fr.dwightstudio.dpt.engine.graphics.primitives;
 
+import fr.dwightstudio.dpt.engine.Engine;
 import fr.dwightstudio.dpt.engine.graphics.objects.Color;
 import fr.dwightstudio.dpt.engine.graphics.objects.Texture;
 import fr.dwightstudio.dpt.engine.graphics.objects.Transform;
@@ -19,7 +20,7 @@ public class Surface extends Component {
     private boolean dirty = true;
 
     public Surface(Vector2f position, Vector2f scale, Texture texture, Vector2f[] textureCoords) {
-        this.color = new Color(1, 1, 1, 1);
+        this.color = Engine.COLORS.WHITE;
         this.transform.position = position;
         this.transform.scale = scale;
         this.lastTransform = new Transform();
@@ -42,7 +43,7 @@ public class Surface extends Component {
     }
 
     public Surface(Vector2f position, Vector2f scale, Texture texture) {
-        this.color = new Color(1, 1, 1, 1);
+        this.color = Engine.COLORS.WHITE;
         this.transform.position = position;
         this.transform.scale = scale;
         this.lastTransform = new Transform();

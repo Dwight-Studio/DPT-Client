@@ -3,6 +3,7 @@ package fr.dwightstudio.dpt.engine.graphics.gui;
 import fr.dwightstudio.dpt.engine.events.EventSystem;
 import fr.dwightstudio.dpt.engine.events.types.ButtonClickEvent;
 import fr.dwightstudio.dpt.engine.events.types.ButtonHoverEvent;
+import fr.dwightstudio.dpt.engine.events.types.ButtonUnhoverEvent;
 import fr.dwightstudio.dpt.engine.events.types.ButtonReleaseEvent;
 import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
 import fr.dwightstudio.dpt.engine.graphics.objects.Color;
@@ -45,6 +46,8 @@ public class Button extends Surface {
     private void setHover(boolean hover) {
         if (!this.hover && hover) {
             EventSystem.fire(new ButtonHoverEvent(this));
+        } else if (this.hover && !hover) {
+            EventSystem.fire(new ButtonUnhoverEvent(this));
         }
         this.hover = hover;
     }

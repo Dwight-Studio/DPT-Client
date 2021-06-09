@@ -1,5 +1,6 @@
 package fr.dwightstudio.dpt.engine.graphics.primitives;
 
+import fr.dwightstudio.dpt.engine.Engine;
 import fr.dwightstudio.dpt.engine.graphics.objects.Color;
 import fr.dwightstudio.dpt.engine.scripting.Component;
 import org.joml.Vector2f;
@@ -29,14 +30,14 @@ public class Line extends Component {
     public Line(Vector2f startPosition, Vector2f endPosition, float thickness) {
         this.startPosition = startPosition;
         this.endPosition = endPosition;
-        this.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+        this.color = Engine.COLORS.BLACK;
         this.thickness = thickness;
     }
 
     public Line(Vector2f startPosition, Vector2f endPosition) {
         this.startPosition = startPosition;
         this.endPosition = endPosition;
-        this.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+        this.color = Engine.COLORS.BLACK;
         this.thickness = 1.0f;
     }
 

@@ -16,7 +16,7 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
-public class SurfaceBatchRenderer implements Comparable<SurfaceBatchRenderer> {
+public class SurfaceRenderer implements Comparable<SurfaceRenderer> {
     // This is what the array should looks like:
     //
     // Position                Color                    TextureCoords   TextureID
@@ -49,7 +49,7 @@ public class SurfaceBatchRenderer implements Comparable<SurfaceBatchRenderer> {
     private int vertexBufferObjectID;
     private int vertexArrayObjectID;
 
-    public SurfaceBatchRenderer(int batchSize, int zIndex) {
+    public SurfaceRenderer(int batchSize, int zIndex) {
         this.surfaces = new Surface[batchSize];
         this.textures = new ArrayList<>();
 
@@ -229,7 +229,7 @@ public class SurfaceBatchRenderer implements Comparable<SurfaceBatchRenderer> {
     }
 
     @Override
-    public int compareTo(@NotNull SurfaceBatchRenderer surfaceBatchRenderer) {
-        return Integer.compare(this.zIndex, surfaceBatchRenderer.zIndex);
+    public int compareTo(@NotNull SurfaceRenderer surfaceRenderer) {
+        return Integer.compare(this.zIndex, surfaceRenderer.zIndex);
     }
 }

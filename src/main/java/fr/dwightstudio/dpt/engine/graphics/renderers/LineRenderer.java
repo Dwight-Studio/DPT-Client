@@ -11,7 +11,7 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
-public class LineBatchRenderer {
+public class LineRenderer {
     // This is what the array should looks like:
     //
     // Position         Color
@@ -38,7 +38,7 @@ public class LineBatchRenderer {
     private int vertexBufferObjectID;
     private int vertexArrayObjectID;
 
-    public LineBatchRenderer(int batchSize) {
+    public LineRenderer(int batchSize) {
         this.lines = new Line[batchSize];
 
         this.batchSize = batchSize;

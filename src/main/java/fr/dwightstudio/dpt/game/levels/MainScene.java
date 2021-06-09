@@ -1,10 +1,13 @@
 package fr.dwightstudio.dpt.game.levels;
 
+import fr.dwightstudio.dpt.engine.Engine;
 import fr.dwightstudio.dpt.engine.events.EventHandler;
 import fr.dwightstudio.dpt.engine.events.EventListener;
 import fr.dwightstudio.dpt.engine.events.EventSystem;
 import fr.dwightstudio.dpt.engine.events.types.ButtonClickEvent;
 import fr.dwightstudio.dpt.engine.events.types.ButtonHoverEvent;
+import fr.dwightstudio.dpt.engine.events.types.ButtonReleaseEvent;
+import fr.dwightstudio.dpt.engine.events.types.ButtonUnhoverEvent;
 import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
 import fr.dwightstudio.dpt.engine.graphics.gui.Button;
 import fr.dwightstudio.dpt.engine.graphics.gui.Label;
@@ -24,24 +27,20 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-import static org.lwjgl.system.MemoryUtil.NULL;
-
 public class MainScene extends Scene implements EventListener {
 
-    private final Surface surface = new Surface(new Vector2f(0, 0), new Vector2f(64, 64), new Color(1, 1, 1, 1));
+    private final Surface surface = new Surface(new Vector2f(0, 0), new Vector2f(64, 64), Engine.COLORS.WHITE);
     private final Surface surface2 = new Surface(new Vector2f(100, 100), new Vector2f(64, 64), new Color(0, 1, 0, 0.5f));
     private final Surface surface3 = new Surface(new Vector2f(132, 100), new Vector2f(64, 64), new Color(1, 0, 0, 0.5f));
     private Spritesheet spritesheet;
 
     private Label cursorPosX;
     private Label cursorPosY;
-    private Label cursorPosX2;
-    private Label cursorPosY2;
     private Label fpsCounter;
     FontAtlas fontAtlas;
 
     private int count = 0;
-    private Button button = new Button(new Vector2f(400, 400), new Vector2f(50, 32), new Color(0.0f, 0.0f, 1.0f));
+    private Button button = new Button(new Vector2f(400, 400), new Vector2f(50, 32), Engine.COLORS.BLUE);
 
     public MainScene() {
 
@@ -64,41 +63,30 @@ public class MainScene extends Scene implements EventListener {
             e.printStackTrace();
         }
 
-        fontAtlas = FontUtils.createFontAtlas(font, true);
+        this.fontAtlas = FontUtils.createFontAtlas(font, true);
 
         EventSystem.registerListener(this);
 
         this.fpsCounter = new Label("FPS", fontAtlas, true);
         this.cursorPosX = new Label("X", fontAtlas, true);
         this.cursorPosY = new Label("Y", fontAtlas, true);
-        this.cursorPosX2 = new Label("X", fontAtlas, true);
-        this.cursorPosY2 = new Label("Y", fontAtlas, true);
-        this.fpsCounter.setText("FPS");
         this.fpsCounter.draw(0, GLFWWindow.getHeight() - this.fpsCounter.getFontAtlas().getTexture().getHeight());
-        this.cursorPosX.setText(String.valueOf(MouseListener.getCursorPos().x));
         this.cursorPosX.draw(0, GLFWWindow.getHeight() - this.cursorPosX.getFontAtlas().getTexture().getHeight() * 2);
-        this.cursorPosY.setText(String.valueOf(MouseListener.getCursorPos().y));
         this.cursorPosY.draw(0, GLFWWindow.getHeight() - this.cursorPosY.getFontAtlas().getTexture().getHeight() * 3);
-        this.cursorPosX2.setText(String.valueOf(MouseListener.getCursorPos().x));
-        this.cursorPosX2.draw(0, GLFWWindow.getHeight() - this.cursorPosX2.getFontAtlas().getTexture().getHeight() * 4);
-        this.cursorPosY2.setText(String.valueOf(MouseListener.getCursorPos().y));
-        this.cursorPosY2.draw(0, GLFWWindow.getHeight() - this.cursorPosY2.getFontAtlas().getTexture().getHeight() * 5);
 
         this.spritesheet = ResourceManager.get("./src/main/resources/textures/sheet.png");
         tiles.addComponent(cursorPosX);
         tiles.addComponent(fpsCounter);
         tiles.addComponent(cursorPosY);
-        tiles.addComponent(cursorPosX2);
-        tiles.addComponent(cursorPosY2);
         tiles.addComponent(surface);
         tiles.addComponent(surface2);
         surface.setTexture(spritesheet.getSprite(0).getTexture());
         surface.setTextureCoords(spritesheet.getSprite(0).getTextureCoords());
-        tiles.addComponent(new Line(new Vector2f(0, 300), new Vector2f(300, 300), new Color(0.0f, 1.0f, 0.0f), 4.0f));
+        tiles.addComponent(new Line(new Vector2f(0, 300), new Vector2f(300, 300), Engine.COLORS.GREEN, 4.0f));
         tiles.addComponent(new Surface(new Vector2f(200, 200), new Vector2f(64, 64), ResourceManager.<Texture>get("./src/main/resources/textures/test.png")));
         tiles.addComponent(button);
         otherOne.addComponent(surface3);
-        setBackgroundColor(new Color(1.0f, 1.0f, 1.0f, 0.0f));
+        setBackgroundColor(Engine.COLORS.WHITE);
         this.addGameObject(tiles);
         this.addGameObject(otherOne);
     }
@@ -114,23 +102,36 @@ public class MainScene extends Scene implements EventListener {
         }
 
 
-        /*if (count == 60) {
-
+        if (count == 60) {
+            fpsCounter.setText(Math.round(1.0f / dt) + " FPS");
             count = 0;
         } else {
             count++;
-        }*/
+        }
+
+        cursorPosX.setText(String.valueOf(MouseListener.getCursorPos().x));
+        cursorPosY.setText(String.valueOf(MouseListener.getCursorPos().y));
 
         renderer.render();
     }
 
     @EventHandler
     public void onClick(ButtonClickEvent event) {
-        GameLogger.getLogger("MainScene").debug(event.getButton().toString());
+        button.setColor(Engine.COLORS.YELLOW);
+    }
+
+    @EventHandler
+    public void onReleaseEvent(ButtonReleaseEvent event) {
+        button.setColor(Engine.COLORS.RED);
     }
 
     @EventHandler
     public void onHover(ButtonHoverEvent event) {
-        GameLogger.getLogger("MainScene").debug("Button hovered");
+        button.setColor(Engine.COLORS.RED);
+    }
+
+    @EventHandler
+    public void onUnhover(ButtonUnhoverEvent event) {
+        button.setColor(Engine.COLORS.BLUE);
     }
 }

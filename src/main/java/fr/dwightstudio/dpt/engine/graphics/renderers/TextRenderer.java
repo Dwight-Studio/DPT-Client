@@ -1,15 +1,11 @@
 package fr.dwightstudio.dpt.engine.graphics.renderers;
 
+import fr.dwightstudio.dpt.engine.graphics.gui.Label;
 import fr.dwightstudio.dpt.engine.graphics.objects.FontAtlas;
 import fr.dwightstudio.dpt.engine.graphics.objects.Shader;
 import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
-import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.engine.resources.ResourceManager;
 import org.joml.Vector2f;
-
-import java.nio.FloatBuffer;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL15.*;
@@ -35,21 +31,23 @@ public class TextRenderer {
     private char[] characters;
     private final Shader shader;
     private float[] vertices;
-    private final Vector2f position;
+    private final Label label;
 
     private float cursorPosition;
     private int vertexArrayObjectID;
     private int vertexBufferObjectID;
     private int elementBufferObjectID;
 
-    public TextRenderer(FontAtlas fontAtlas, char[] characters, Vector2f position) {
-        this.fontAtlas = fontAtlas;
-        this.characters = characters;
+    // TODO: Let the user choose the max number of characters, now it is fixed to 1000
+    public TextRenderer(Label label, Vector2f position) {
+        this.label = label;
+        this.fontAtlas = label.getFontAtlas();
+        this.characters = label.getText().toCharArray();
         ResourceManager.load("./src/main/resources/shaders/text.glsl", Shader.class);
         this.shader = ResourceManager.get("./src/main/resources/shaders/text.glsl");
-        this.vertices = new float[this.characters.length * 4 * VERTEX_SIZE];
-        this.position = position;
-        this.cursorPosition = this.position.x;
+
+        this.vertices = new float[1000 * 4 * VERTEX_SIZE]; // FIXME: HARDCODED VALUE
+        this.cursorPosition = this.label.getPosition().x;
     }
 
     public void init() {
@@ -78,15 +76,24 @@ public class TextRenderer {
 
         glVertexAttribPointer(2, TEXTURE_COORDS_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, TEXTURE_COORDS_OFFSET);
         glEnableVertexAttribArray(2);
-
-        for (int i = 0; i < this.characters.length; i++) {
-            loadVertexProperties(i);
-        }
     }
 
     public void render() {
-        glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObjectID);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, this.vertices);
+        this.cursorPosition = this.label.getPosition().x;
+        boolean rebufferData = false;
+        if (this.label.isDirty()) {
+            this.characters = this.label.getText().toCharArray();
+            for (int i = 0; i < this.characters.length; i++) {
+                loadVertexProperties(i);
+            }
+            this.label.markClean();
+            rebufferData = true;
+        }
+
+        if (rebufferData) {
+            glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObjectID);
+            glBufferSubData(GL_ARRAY_BUFFER, 0, this.vertices);
+        }
 
         shader.bind();
         glActiveTexture(GL_TEXTURE0);
@@ -111,15 +118,15 @@ public class TextRenderer {
         int offset = index * 4 * VERTEX_SIZE;
 
         float x = this.cursorPosition + this.fontAtlas.getGlyph(character).getWidth();
-        float y = this.position.y +  this.fontAtlas.getGlyph(character).getHeight();
+        float y = this.label.getPosition().y +  this.fontAtlas.getGlyph(character).getHeight();
         // This will loop 4 times for the 4 vertices.
         for (int i = 0; i < 4; i++) {
             if (i == 1) {
-                y = this.position.y;
+                y = this.label.getPosition().y;
             } else if (i == 2) {
                 x = this.cursorPosition;
             } else if (i == 3) {
-                y = this.position.y + this.fontAtlas.getGlyph(character).getHeight();
+                y = this.label.getPosition().y + this.fontAtlas.getGlyph(character).getHeight();
             }
 
             // Load the position
@@ -127,9 +134,9 @@ public class TextRenderer {
             vertices[offset + 1] = y;
 
             // Load the color
-            vertices[offset + 2] = 1.0f;
-            vertices[offset + 3] = 1.0f;
-            vertices[offset + 4] = 1.0f;
+            vertices[offset + 2] = this.label.getColor().getRed();
+            vertices[offset + 3] = this.label.getColor().getGreen();
+            vertices[offset + 4] = this.label.getColor().getBlue();
 
             // Load the texture coordinates
             vertices[offset + 5] = this.fontAtlas.getGlyph(character).getTextureCoords(this.fontAtlas)[i].x;
@@ -147,8 +154,8 @@ public class TextRenderer {
         // int, int, int, int, int, int  <- 1 quad
         //
         // NOTE: We have 2 triangles with 3 indices each to form a quad so 3*2=6
-        int[] elements = new int[6 * this.characters.length];
-        for (int i = 0; i < this.characters.length; i++) {
+        int[] elements = new int[6 * 1000]; // FIXME: HARDCODED VALUE
+        for (int i = 0; i < 1000; i++) { // FIXME: HARDCODED VALUE
             int offsetArrayIndex = 6 * i;
 
             // First Triangle
