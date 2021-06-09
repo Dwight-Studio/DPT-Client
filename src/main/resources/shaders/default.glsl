@@ -1,10 +1,10 @@
 #type vertex
-#version 330 core
+#version 130
 
-layout (location=0) in vec3 vPos;
-layout (location=1) in vec4 vColor;
-layout (location=2) in vec2 vTextureCoords;
-layout (location=3) in float vTextureID;
+attribute vec3 vPos;
+attribute vec4 vColor;
+attribute vec2 vTextureCoords;
+attribute float vTextureID;
 
 uniform mat4 uProjectionMatrix;
 uniform mat4 uViewMatrix;
@@ -21,7 +21,7 @@ void main() {
 }
 
 #type fragment
-#version 330 core
+#version 130
 
 uniform sampler2D uTextures[8];
 

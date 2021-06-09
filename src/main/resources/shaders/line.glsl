@@ -1,8 +1,8 @@
 #type vertex
-#version 330 core
+#version 130
 
-layout (location=0) in vec3 vPos;
-layout (location=1) in vec4 vColor;
+attribute vec3 vPos;
+attribute vec4 vColor;
 
 uniform mat4 uProjectionMatrix;
 uniform mat4 uViewMatrix;
@@ -15,7 +15,7 @@ void main() {
 }
 
 #type fragment
-#version 330 core
+#version 130
 
 in vec4 fColor;
 

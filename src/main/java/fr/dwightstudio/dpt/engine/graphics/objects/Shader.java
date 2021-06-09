@@ -98,4 +98,8 @@ public class Shader {
         bind();
         glUniform1iv(glGetUniformLocation(programID, varname), array);
     }
+
+    public int getProgramID() {
+        return programID;
+    }
 }

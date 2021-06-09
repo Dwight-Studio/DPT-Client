@@ -1,10 +1,10 @@
 package fr.dwightstudio.dpt.engine.graphics.gui;
 
 import fr.dwightstudio.dpt.engine.events.EventSystem;
-import fr.dwightstudio.dpt.engine.events.types.ButtonClickEvent;
-import fr.dwightstudio.dpt.engine.events.types.ButtonHoverEvent;
-import fr.dwightstudio.dpt.engine.events.types.ButtonUnhoverEvent;
-import fr.dwightstudio.dpt.engine.events.types.ButtonReleaseEvent;
+import fr.dwightstudio.dpt.engine.events.types.gui.button.ButtonClickEvent;
+import fr.dwightstudio.dpt.engine.events.types.gui.button.ButtonHoverEvent;
+import fr.dwightstudio.dpt.engine.events.types.gui.button.ButtonUnhoverEvent;
+import fr.dwightstudio.dpt.engine.events.types.gui.button.ButtonReleaseEvent;
 import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
 import fr.dwightstudio.dpt.engine.graphics.objects.Color;
 import fr.dwightstudio.dpt.engine.inputs.MouseListener;

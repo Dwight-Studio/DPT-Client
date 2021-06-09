@@ -65,14 +65,14 @@ public class TextRenderer {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObjectID);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
 
-        glVertexAttribPointer(0, POSITION_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, POSITION_OFFSET);
-        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(glGetAttribLocation(shader.getProgramID(), "vPos"), POSITION_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, POSITION_OFFSET);
+        glEnableVertexAttribArray(glGetAttribLocation(shader.getProgramID(), "vPos"));
 
-        glVertexAttribPointer(1, COLOR_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, COLOR_OFFSET);
-        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(glGetAttribLocation(shader.getProgramID(), "vColor"), COLOR_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, COLOR_OFFSET);
+        glEnableVertexAttribArray(glGetAttribLocation(shader.getProgramID(), "vColor"));
 
-        glVertexAttribPointer(2, TEXTURE_COORDS_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, TEXTURE_COORDS_OFFSET);
-        glEnableVertexAttribArray(2);
+        glVertexAttribPointer(glGetAttribLocation(shader.getProgramID(), "vTextureCoords"), TEXTURE_COORDS_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, TEXTURE_COORDS_OFFSET);
+        glEnableVertexAttribArray(glGetAttribLocation(shader.getProgramID(), "vTextureCoords"));
     }
 
     public void render() {
@@ -97,13 +97,13 @@ public class TextRenderer {
         this.fontAtlas.getTexture().bind();
 
         glBindVertexArray(vertexArrayObjectID);
-        glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
+        glEnableVertexAttribArray(glGetAttribLocation(shader.getProgramID(), "vPos"));
+        glEnableVertexAttribArray(glGetAttribLocation(shader.getProgramID(), "vColor"));
 
         glDrawElements(GL_TRIANGLES, this.characters.length * 6, GL_UNSIGNED_INT, 0);
 
-        glDisableVertexAttribArray(0);
-        glDisableVertexAttribArray(1);
+        glDisableVertexAttribArray(glGetAttribLocation(shader.getProgramID(), "vPos"));
+        glDisableVertexAttribArray(glGetAttribLocation(shader.getProgramID(), "vColor"));
         glBindVertexArray(0);
 
         this.fontAtlas.getTexture().unbind();

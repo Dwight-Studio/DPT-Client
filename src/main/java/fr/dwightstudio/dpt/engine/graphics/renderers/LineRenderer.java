@@ -60,11 +60,11 @@ public class LineRenderer {
         glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObjectID);
         glBufferData(GL_ARRAY_BUFFER, (long) vertices.length * Float.BYTES, GL_DYNAMIC_DRAW);
 
-        glVertexAttribPointer(0, POSITION_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, POSITION_OFFSET);
-        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(glGetAttribLocation(shader.getProgramID(), "vPos"), POSITION_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, POSITION_OFFSET);
+        glEnableVertexAttribArray(glGetAttribLocation(shader.getProgramID(), "vPos"));
 
-        glVertexAttribPointer(1, COLOR_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, COLOR_OFFSET);
-        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(glGetAttribLocation(shader.getProgramID(), "vColor"), COLOR_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, COLOR_OFFSET);
+        glEnableVertexAttribArray(glGetAttribLocation(shader.getProgramID(), "vColor"));
     }
 
     public void addLine(Line line) {
@@ -97,13 +97,13 @@ public class LineRenderer {
         shader.bind();
 
         glBindVertexArray(vertexArrayObjectID);
-        glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
+        glEnableVertexAttribArray(glGetAttribLocation(shader.getProgramID(), "vPos"));
+        glEnableVertexAttribArray(glGetAttribLocation(shader.getProgramID(), "vColor"));
 
         glDrawArrays(GL_LINES, 0, lines.length * 6 * 2);
 
-        glDisableVertexAttribArray(0);
-        glDisableVertexAttribArray(1);
+        glDisableVertexAttribArray(glGetAttribLocation(shader.getProgramID(), "vPos"));
+        glDisableVertexAttribArray(glGetAttribLocation(shader.getProgramID(), "vColor"));
         glBindVertexArray(0);
 
         shader.unbind();
