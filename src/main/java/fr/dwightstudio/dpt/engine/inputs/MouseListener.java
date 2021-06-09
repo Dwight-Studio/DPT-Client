@@ -2,7 +2,6 @@ package fr.dwightstudio.dpt.engine.inputs;
 
 import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
 import fr.dwightstudio.dpt.engine.graphics.gui.Button;
-import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFWCursorPosCallbackI;
 import org.lwjgl.glfw.GLFWMouseButtonCallbackI;
@@ -37,6 +36,7 @@ public class MouseListener {
     public static GLFWCursorPosCallbackI cursorPosCallback = (window, xpos, ypos) -> {
         xPos = (float) xpos;
         yPos = (float) Math.abs(ypos - GLFWWindow.getHeight());
+        Button.checkHoverAll();
     };
 
     public static GLFWScrollCallbackI mouseScrollCallback = (window, xoffset, yoffset) -> {

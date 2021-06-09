@@ -4,6 +4,7 @@ import fr.dwightstudio.dpt.engine.events.EventHandler;
 import fr.dwightstudio.dpt.engine.events.EventListener;
 import fr.dwightstudio.dpt.engine.events.EventSystem;
 import fr.dwightstudio.dpt.engine.events.types.ButtonClickEvent;
+import fr.dwightstudio.dpt.engine.events.types.ButtonHoverEvent;
 import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
 import fr.dwightstudio.dpt.engine.graphics.gui.Button;
 import fr.dwightstudio.dpt.engine.graphics.gui.Label;
@@ -61,7 +62,7 @@ public class MainScene extends Scene implements EventListener {
             e.printStackTrace();
         }
 
-        this.fontAtlas = FontUtils.createFontAtlas(font, true);
+        FontAtlas fontAtlas = FontUtils.createFontAtlas(font, true);
 
         EventSystem.registerListener(this);
 
@@ -70,6 +71,16 @@ public class MainScene extends Scene implements EventListener {
         this.cursorPosY = new Label("Y", fontAtlas, true);
         this.cursorPosX2 = new Label("X", fontAtlas, true);
         this.cursorPosY2 = new Label("Y", fontAtlas, true);
+        this.fpsCounter.setText("FPS");
+        this.fpsCounter.draw(0, GLFWWindow.getHeight() - this.fpsCounter.getFontAtlas().getTexture().getHeight());
+        this.cursorPosX.setText(String.valueOf(MouseListener.getCursorPos().x));
+        this.cursorPosX.draw(0, GLFWWindow.getHeight() - this.cursorPosX.getFontAtlas().getTexture().getHeight() * 2);
+        this.cursorPosY.setText(String.valueOf(MouseListener.getCursorPos().y));
+        this.cursorPosY.draw(0, GLFWWindow.getHeight() - this.cursorPosY.getFontAtlas().getTexture().getHeight() * 3);
+        this.cursorPosX2.setText(String.valueOf(MouseListener.getCursorPos().x));
+        this.cursorPosX2.draw(0, GLFWWindow.getHeight() - this.cursorPosX.getFontAtlas().getTexture().getHeight() * 4);
+        this.cursorPosY2.setText(String.valueOf(MouseListener.getCursorPos().y));
+        this.cursorPosY2.draw(0, GLFWWindow.getHeight() - this.cursorPosY.getFontAtlas().getTexture().getHeight() * 5);
 
         this.spritesheet = ResourceManager.get("./src/main/resources/textures/sheet.png");
         tiles.addComponent(cursorPosX);
@@ -101,21 +112,12 @@ public class MainScene extends Scene implements EventListener {
         }
 
 
-        if (count == 60) {
-            this.fpsCounter.setText(Math.round(1.0f / dt) + " FPS");
-            this.fpsCounter.draw(0, GLFWWindow.getHeight() - this.fpsCounter.getFontAtlas().getTexture().getHeight());
+        /*if (count == 60) {
+
             count = 0;
         } else {
             count++;
-        }
-        this.cursorPosX.setText(String.valueOf(MouseListener.getCursorPos().x));
-        this.cursorPosX.draw(0, GLFWWindow.getHeight() - this.cursorPosX.getFontAtlas().getTexture().getHeight() * 2);
-        this.cursorPosY.setText(String.valueOf(MouseListener.getCursorPos().y));
-        this.cursorPosY.draw(0, GLFWWindow.getHeight() - this.cursorPosY.getFontAtlas().getTexture().getHeight() * 3);
-        this.cursorPosX2.setText(String.valueOf(MouseListener.getCursorPos().x));
-        this.cursorPosX2.draw(0, GLFWWindow.getHeight() - this.cursorPosX.getFontAtlas().getTexture().getHeight() * 4);
-        this.cursorPosY2.setText(String.valueOf(MouseListener.getCursorPos().y));
-        this.cursorPosY2.draw(0, GLFWWindow.getHeight() - this.cursorPosY.getFontAtlas().getTexture().getHeight() * 5);
+        }*/
 
         renderer.render();
     }
@@ -123,5 +125,10 @@ public class MainScene extends Scene implements EventListener {
     @EventHandler
     public void onClick(ButtonClickEvent event) {
         GameLogger.getLogger("MainScene").debug(event.getButton().toString());
+    }
+
+    @EventHandler
+    public void onHover(ButtonHoverEvent event) {
+        GameLogger.getLogger("MainScene").debug("Button hovered");
     }
 }

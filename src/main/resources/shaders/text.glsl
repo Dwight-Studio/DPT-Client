@@ -28,5 +28,5 @@ in vec2 fTextureCoords;
 out vec4 color;
 
 void main() {
-    color = texture2D(textureSampler, fTextureCoords);
+    color = fColor * texture2D(textureSampler, fTextureCoords);
 }
