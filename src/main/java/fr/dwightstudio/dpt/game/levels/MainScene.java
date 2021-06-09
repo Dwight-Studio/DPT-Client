@@ -24,6 +24,8 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+import static org.lwjgl.system.MemoryUtil.NULL;
+
 public class MainScene extends Scene implements EventListener {
 
     private final Surface surface = new Surface(new Vector2f(0, 0), new Vector2f(64, 64), new Color(1, 1, 1, 1));
@@ -62,7 +64,7 @@ public class MainScene extends Scene implements EventListener {
             e.printStackTrace();
         }
 
-        FontAtlas fontAtlas = FontUtils.createFontAtlas(font, true);
+        fontAtlas = FontUtils.createFontAtlas(font, true);
 
         EventSystem.registerListener(this);
 
@@ -78,9 +80,9 @@ public class MainScene extends Scene implements EventListener {
         this.cursorPosY.setText(String.valueOf(MouseListener.getCursorPos().y));
         this.cursorPosY.draw(0, GLFWWindow.getHeight() - this.cursorPosY.getFontAtlas().getTexture().getHeight() * 3);
         this.cursorPosX2.setText(String.valueOf(MouseListener.getCursorPos().x));
-        this.cursorPosX2.draw(0, GLFWWindow.getHeight() - this.cursorPosX.getFontAtlas().getTexture().getHeight() * 4);
+        this.cursorPosX2.draw(0, GLFWWindow.getHeight() - this.cursorPosX2.getFontAtlas().getTexture().getHeight() * 4);
         this.cursorPosY2.setText(String.valueOf(MouseListener.getCursorPos().y));
-        this.cursorPosY2.draw(0, GLFWWindow.getHeight() - this.cursorPosY.getFontAtlas().getTexture().getHeight() * 5);
+        this.cursorPosY2.draw(0, GLFWWindow.getHeight() - this.cursorPosY2.getFontAtlas().getTexture().getHeight() * 5);
 
         this.spritesheet = ResourceManager.get("./src/main/resources/textures/sheet.png");
         tiles.addComponent(cursorPosX);

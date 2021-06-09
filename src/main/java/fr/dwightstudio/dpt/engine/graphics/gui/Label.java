@@ -1,8 +1,7 @@
 package fr.dwightstudio.dpt.engine.graphics.gui;
 
-import fr.dwightstudio.dpt.engine.graphics.objects.FontAtlas;
-import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
 import fr.dwightstudio.dpt.engine.graphics.objects.Color;
+import fr.dwightstudio.dpt.engine.graphics.objects.FontAtlas;
 import fr.dwightstudio.dpt.engine.graphics.objects.Texture;
 import fr.dwightstudio.dpt.engine.graphics.renderers.TextRenderer;
 import fr.dwightstudio.dpt.engine.graphics.utils.FontUtils;
@@ -16,9 +15,7 @@ import java.text.MessageFormat;
 public class Label extends Component {
 
     private boolean antiAliasing;
-
     private String string;
-
     private Font font;
     private FontAtlas fontAtlas;
     private Color color;
@@ -26,25 +23,24 @@ public class Label extends Component {
     private float xPosition;
     private float yPosition;
 
-    /*public Label(CharSequence string, Font font, Color color, boolean antiAliasing) {
+    public Label(String string, Font font, Color color, boolean antiAliasing) {
         this.string = string;
         this.font = font;
         this.color = color;
         this.antiAliasing = antiAliasing;
-        *//*ByteBuffer image = createImageFromString(string, font, color, this.antiAliasing);
-        this.texture = TextureLoader.createTexture(image, width, height);*//*
+        this.fontAtlas = FontUtils.createFontAtlas(font, this.antiAliasing);
         GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
     }
 
-    public Label(CharSequence string, Font font, Color color) {
+    public Label(String string, Font font, Color color) {
         this.string = string;
         this.font = font;
         this.color = color;
         this.antiAliasing = false;
-        *//*ByteBuffer image = createImageFromString(string, font, color, false);
-        this.texture = TextureLoader.createTexture(image, width, height);*//*
+        this.fontAtlas = FontUtils.createFontAtlas(font, false);
         GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
-    }*/
+    }
+
     public Label(String string, Font font, boolean antiAliasing) {
         this.string = string;
         this.font = font;
@@ -63,16 +59,15 @@ public class Label extends Component {
         GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
     }
 
-
-    /*public Label(CharSequence string, Font font) {
+    public Label(String string, Font font) {
         this.string = string;
         this.font = font;
         this.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
         this.antiAliasing = false;
-        *//*ByteBuffer image = createImageFromString(string, font, this.color, false);
-        this.texture = TextureLoader.createTexture(image, width, height);*//*
+        this.fontAtlas = FontUtils.createFontAtlas(this.font, false);
         GameLogger.getLogger("Text").debug(MessageFormat.format("Created a text: \"{0}\" with anti-aliasing : {1}", string, antiAliasing));
-    }*/
+    }
+
     public String getText() {
         return this.string;
     }
