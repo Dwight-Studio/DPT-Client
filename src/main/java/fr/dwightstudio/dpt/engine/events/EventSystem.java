@@ -31,6 +31,11 @@ public class EventSystem implements Runnable {
         glfwSetScrollCallback(window, MouseListener.mouseScrollCallback); // Setup a mouse scroll wheel callback
     }
 
+    /**
+     * Fire an event
+     *
+     * @param event the event to fire
+     */
     public static void fire(Event event) {
         //"Je REFLECHIT, ta compris la REFLECTION !!!"
         Runnable runnable = () -> {
@@ -58,6 +63,11 @@ public class EventSystem implements Runnable {
         thread.start();
     }
 
+    /**
+     * Register a new listener
+     *
+     * @param eventListener the event listener to register
+     */
     public static void registerListener(EventListener eventListener) {
         for (Method method : eventListener.getClass().getDeclaredMethods()) {
             if (method.isAnnotationPresent(EventHandler.class)) {
@@ -70,6 +80,11 @@ public class EventSystem implements Runnable {
         }
     }
 
+    /**
+     * Unregister an event listener
+     *
+     * @param eventListener the event listener to unregister
+     */
     public static void unregisterListener(EventListener eventListener){
         eventListeners.remove(eventListener);
     }

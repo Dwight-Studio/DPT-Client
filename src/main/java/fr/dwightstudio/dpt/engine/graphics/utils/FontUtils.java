@@ -13,6 +13,7 @@ import java.util.*;
 
 public class FontUtils {
 
+    // TODO: Add a list or something to avoid creating the same FontAtlas again and again
     public static FontAtlas createFontAtlas(Font font, boolean antiAliasing) {
         int imageWidth = 0;
         int imageHeight = 0;
@@ -50,7 +51,7 @@ public class FontUtils {
 
             int charWidth = characterImage.getWidth();
             int charHeight = characterImage.getHeight();
-            Glyph glyph = new Glyph(charWidth, charHeight, x, characterImage.getHeight() - charHeight, 0f);
+            Glyph glyph = new Glyph(charWidth, charHeight, x, characterImage.getHeight() - charHeight);
             glyphMap.put(character, glyph);
 
             graphics2D.drawImage(characterImage, x, 0, null);

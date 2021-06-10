@@ -1,5 +1,8 @@
 package fr.dwightstudio.dpt.engine.events.types;
 
+/**
+ * Base Event class
+ */
 public class Event {
 
     private final Thread thread;

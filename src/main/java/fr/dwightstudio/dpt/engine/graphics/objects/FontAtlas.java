@@ -12,6 +12,14 @@ public class FontAtlas {
     private final boolean antiAliasing;
     private final Map<Character, Glyph> glyphMap;
 
+    /**
+     * Create a new FontAtlas
+     *
+     * @param texture the FontAtlas Texture
+     * @param font the FontAtlas font
+     * @param antiAliasing the FontAtlas is using antialiasing
+     * @param glyphMap a map containing all the FontAtlas glyphs
+     */
     public FontAtlas(Texture texture, Font font, boolean antiAliasing, Map<Character, Glyph> glyphMap) {
         this.texture = texture;
         this.font = font;
@@ -19,22 +27,40 @@ public class FontAtlas {
         this.glyphMap = glyphMap;
     }
 
+    /**
+     * @return the FontAtlas texture
+     */
     public Texture getTexture() {
         return texture;
     }
 
+    /**
+     * @return the FontAtlas font
+     */
     public Font getFont() {
         return font;
     }
 
+    /**
+     * @return if the FontAtlas is using antialiasing
+     */
     public boolean isAntiAliasing() {
         return antiAliasing;
     }
 
+    /**
+     * @return the FontAtlas glyphs map
+     */
     public Map<Character, Glyph> getGlyphMap() {
         return glyphMap;
     }
 
+    /**
+     * Gets a specific character in the FontAtlas
+     *
+     * @param character the glyph to get
+     * @return the specified glyph, if it does not exist it return null
+     */
     public Glyph getGlyph(char character) {
         if (this.glyphMap.containsKey(character)) {
             return this.glyphMap.get(character);

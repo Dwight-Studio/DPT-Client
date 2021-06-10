@@ -12,30 +12,50 @@ public class Camera {
     private final Matrix4f projectionMatrix;
     private final Matrix4f viewMatrix;
     public final Vector2f position;
+    private Vector3f cameraFront;
+    private Vector3f cameraUp;
 
+    /**
+     * Create a new Camera
+     *
+     * @param position the position of the camera
+     */
     public Camera(Vector2f position) {
         this.position = position; // Since we are in a 2D view we don't need a Vector3
         this.projectionMatrix = new Matrix4f();
         this.viewMatrix = new Matrix4f();
-        adjustProjection();
+        init();
         GameLogger.getLogger("Camera").debug(MessageFormat.format("Created a Camera object at : {0}, {1}", position.x, position.y));
     }
 
+    private void init() {
+        adjustProjection();
+        this.cameraFront = new Vector3f(0.0f, 0.0f, -1.0f); // Set the front position of the camera
+        this.cameraUp = new Vector3f(0.0f, 1.0f, 0.0f); // Set the up position of the camera (for the camera to go up we need to add +1 unit to the y axis)
+    }
+
+    /**
+     * Reset the projection matrix
+     */
     public void adjustProjection() {
         projectionMatrix.identity(); // Reset the projection matrix (put 0 everywhere)
         projectionMatrix.ortho(0.0f, GLFWWindow.getWidth(), 0.0f, GLFWWindow.getHeight(), 0.0f, 100.0f);
     }
 
+    /**
+     * @return the view matrix
+     */
     public Matrix4f getViewMatrix() {
-        Vector3f cameraFront = new Vector3f(0.0f, 0.0f, -1.0f); // Set the front position of the camera
-        Vector3f cameraUp = new Vector3f(0.0f, 1.0f, 0.0f); // Set the up position of the camera (for the camera to go up we need to add +1 unit to the y axis)
         this.viewMatrix.identity(); // Reset the wiew Matrix
         viewMatrix.lookAt(new Vector3f(position.x, position.y, 0.0f), // We are forced to use Vector3 here even if the z is unused
-                          cameraFront.add(position.x, position.y, 0.0f), // The point were the camera look at. By default : 0, 0, -1
-                          cameraUp);
+                          this.cameraFront.add(position.x, position.y, 0.0f), // The point were the camera look at. By default : 0, 0, -1
+                          this.cameraUp);
         return this.viewMatrix;
     }
 
+    /**
+     * @return the projection matrix
+     */
     public Matrix4f getProjectionMatrix() {
         return this.projectionMatrix;
     }

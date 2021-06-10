@@ -16,7 +16,7 @@ public class TextureUtils {
     private static final int[] width = new int[1];
     private static final int[] height = new int[1];
     private static final int[] nbChannel = new int[1];
-
+    // TODO: Add something to support more formats
     public static Texture loadTexture(String file) {
         ByteBuffer texture = stbi_load(file, width, height, nbChannel, 4);
         if (texture == null) {
@@ -31,7 +31,7 @@ public class TextureUtils {
             stbi_image_free(texture);
             glBindTexture(GL_TEXTURE_2D, 0); // Unbinding any texture at the end to make sure it is not modified after
             GameLogger.getLogger("TextureLoader").debug(MessageFormat.format("Finished loading texture : {0}", file));
-            return new Texture(width[0], height[0], id, nbChannel[0], file, texture);
+            return new Texture(width[0], height[0], id, nbChannel[0], file);
         }
     }
 
@@ -43,7 +43,7 @@ public class TextureUtils {
             glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
             glBindTexture(GL_TEXTURE_2D, 0); // Unbinding any texture at the end to make sure it is not modified after
-            return new Texture(width, height, id, 4, null, image); // Since we are creating a PNG image, there is four channels
+            return new Texture(width, height, id, 4, null); // Since we are creating a PNG image, there is four channels
         }
         return null;
     }
@@ -77,7 +77,7 @@ public class TextureUtils {
             glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
             glBindTexture(GL_TEXTURE_2D, 0); // Unbinding any texture at the end to make sure it is not modified after
-            return new Texture(width, height, id, 4, null, buffer); // Since we are creating a PNG image, there is four channels
+            return new Texture(width, height, id, 4, null); // Since we are creating a PNG image, there is four channels
         }
         return null;
     }
@@ -89,7 +89,7 @@ public class TextureUtils {
             glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
             glBindTexture(GL_TEXTURE_2D, 0); // Unbinding any texture at the end to make sure it is not modified after
-            return new Texture(width, height, texture.getID(), 4, null, image);
+            return new Texture(width, height, texture.getID(), 4, null);
         }
         return null;
     }

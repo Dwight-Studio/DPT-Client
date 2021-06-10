@@ -11,36 +11,68 @@ public class Transform {
     public Vector2f scale;
     private float rotation;
 
+    /**
+     * Create a new Transform with default values (all zero)
+     */
     public Transform() {
         this.position = new Vector2f();
         this.scale = new Vector2f();
         this.rotation = 0.0f;
     }
 
+    /**
+     * Create a new Transform
+     *
+     * @param position the position
+     */
     public Transform(Vector2f position) {
         this.position = position;
         this.scale = new Vector2f();
         this.rotation = 0.0f;
     }
 
+    /**
+     * Create a new Transform
+     *
+     * @param rotation the rotation
+     */
     public Transform(float rotation) {
         this.position = new Vector2f();
         this.scale = new Vector2f();
         this.rotation = rotation;
     }
 
+    /**
+     * Create a new Tranform
+     *
+     * @param position the position
+     * @param scale the scale
+     */
     public Transform(Vector2f position, Vector2f scale) {
         this.position = position;
         this.scale = scale;
         this.rotation = 0.0f;
     }
 
+    /**
+     * Create a new Transform
+     *
+     * @param position the position
+     * @param rotation the rotation
+     */
     public Transform(Vector2f position, float rotation) {
         this.position = position;
         this.scale = new Vector2f();
         this.rotation = rotation;
     }
 
+    /**
+     * Create a new Transform
+     *
+     * @param position the position
+     * @param scale the scale
+     * @param rotation the rotation
+     */
     public Transform(Vector2f position, Vector2f scale, float rotation) {
         this.position = position;
         this.scale = scale;
@@ -104,7 +136,7 @@ public class Transform {
     }
 
     /**
-     * Check is two instance of the Transform object are equals
+     * Check if two instance of the Transform object are equals
      *
      * @param object another Transform instance
      * @return true if the two instance are equal, otherwise, false

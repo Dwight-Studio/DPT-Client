@@ -7,6 +7,17 @@ public class Color {
     private final float blue;
     private final float alpha;
 
+    /**
+     * Create a new Color
+     *
+     * All the values should be between 0 and 1
+     *
+     * The alpha value will be 1.0f
+     *
+     * @param r the red value
+     * @param g the green value
+     * @param b the blue value
+     */
     public Color(float r, float g, float b) {
         this.red = r;
         this.green = g;
@@ -14,6 +25,16 @@ public class Color {
         this.alpha = 1;
     }
 
+    /**
+     * Create a new Color
+     *
+     * All the values should be between 0 and 1
+     *
+     * @param r the red value
+     * @param g the green value
+     * @param b the blue value
+     * @param a the alpha value
+     */
     public Color(float r, float g, float b, float a) {
         this.red = r;
         this.green = g;
@@ -21,22 +42,40 @@ public class Color {
         this.alpha = a;
     }
 
+    /**
+     * @return the red value
+     */
     public float getRed() {
         return red;
     }
 
+    /**
+     * @return the green value
+     */
     public float getGreen() {
         return green;
     }
 
+    /**
+     * @return the blue value
+     */
     public float getBlue() {
         return blue;
     }
 
+    /**
+     * @return the alpha value
+     */
     public float getAlpha() {
         return alpha;
     }
 
+    /**
+     * Check equality between two Color objects
+     *
+     * @param object another Color
+     * @return true or false
+     */
     @Override
     public boolean equals(Object object) {
         if (object == null) return false;

@@ -10,12 +10,14 @@ import fr.dwightstudio.dpt.engine.events.types.gui.button.ButtonReleaseEvent;
 import fr.dwightstudio.dpt.engine.events.types.gui.button.ButtonUnhoverEvent;
 import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
 import fr.dwightstudio.dpt.engine.graphics.gui.Button;
+import fr.dwightstudio.dpt.engine.graphics.gui.Checkbox;
 import fr.dwightstudio.dpt.engine.graphics.gui.Label;
 import fr.dwightstudio.dpt.engine.graphics.primitives.Line;
 import fr.dwightstudio.dpt.engine.graphics.objects.*;
 import fr.dwightstudio.dpt.engine.graphics.objects.Color;
 import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
 import fr.dwightstudio.dpt.engine.graphics.utils.FontUtils;
+import fr.dwightstudio.dpt.engine.graphics.utils.SpritesheetLoader;
 import fr.dwightstudio.dpt.engine.inputs.MouseListener;
 import fr.dwightstudio.dpt.engine.resources.ResourceManager;
 import fr.dwightstudio.dpt.engine.scripting.GameObject;
@@ -25,6 +27,7 @@ import org.joml.Vector2f;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class MainScene extends Scene implements EventListener {
 
@@ -39,7 +42,6 @@ public class MainScene extends Scene implements EventListener {
     FontAtlas fontAtlas;
 
     private int count = 0;
-    private Button button = new Button(new Vector2f(400, 400), new Vector2f(50, 32), Engine.COLORS.BLUE);
 
     public MainScene() {
 
@@ -52,6 +54,8 @@ public class MainScene extends Scene implements EventListener {
         GameObject otherOne = new GameObject("otherOne", 1);
         ResourceManager.load("./src/main/resources/textures/test.png", Texture.class);
         ResourceManager.load("./src/main/resources/textures/sheet.png", Spritesheet.class);
+        ResourceManager.load("./src/main/resources/textures/buttonSheet.png", Spritesheet.class);
+        ResourceManager.load("./src/main/resources/textures/checkboxSheet.png", Spritesheet.class);
 
         Font font = null;
         try {
@@ -64,7 +68,10 @@ public class MainScene extends Scene implements EventListener {
 
         this.fontAtlas = FontUtils.createFontAtlas(font, true);
 
-        EventSystem.registerListener(this);
+        Button button = new Button(new Vector2f(450, 300), new Vector2f(64, 64), Objects.requireNonNull(ResourceManager.<Spritesheet>get("./src/main/resources/textures/buttonSheet.png")));
+        Checkbox checkbox = new Checkbox(new Vector2f(600, 300), new Vector2f(64, 64), ResourceManager.<Spritesheet>get("./src/main/resources/textures/checkboxSheet.png"));
+        Checkbox checkbox2 = new Checkbox(new Vector2f(800, 300), new Vector2f(64, 64), ResourceManager.<Spritesheet>get("./src/main/resources/textures/checkboxSheet.png"));
+
 
         this.fpsCounter = new Label("FPS", fontAtlas, Engine.COLORS.PURPLE);
         this.cursorPosX = new Label("X", fontAtlas);
@@ -84,6 +91,8 @@ public class MainScene extends Scene implements EventListener {
         tiles.addComponent(new Line(new Vector2f(0, 300), new Vector2f(300, 300), Engine.COLORS.GREEN, 4.0f));
         tiles.addComponent(new Surface(new Vector2f(200, 200), new Vector2f(64, 64), ResourceManager.<Texture>get("./src/main/resources/textures/test.png")));
         tiles.addComponent(button);
+        tiles.addComponent(checkbox);
+        tiles.addComponent(checkbox2);
         otherOne.addComponent(surface3);
         setBackgroundColor(Engine.COLORS.WHITE);
         this.addGameObject(tiles);
@@ -112,25 +121,5 @@ public class MainScene extends Scene implements EventListener {
         cursorPosY.setText(String.valueOf(MouseListener.getCursorPos().y));
 
         rendererHelper.render();
-    }
-
-    @EventHandler
-    public void onClick(ButtonClickEvent event) {
-        button.setColor(Engine.COLORS.YELLOW);
-    }
-
-    @EventHandler
-    public void onReleaseEvent(ButtonReleaseEvent event) {
-        button.setColor(Engine.COLORS.RED);
-    }
-
-    @EventHandler
-    public void onHover(ButtonHoverEvent event) {
-        button.setColor(Engine.COLORS.RED);
-    }
-
-    @EventHandler
-    public void onUnhover(ButtonUnhoverEvent event) {
-        button.setColor(Engine.COLORS.BLUE);
     }
 }
