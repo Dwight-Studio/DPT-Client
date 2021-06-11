@@ -18,8 +18,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
 import java.util.*;
+import java.util.List;
 
 public class FontUtils {
+
+    private static List<FontAtlas> fontAtlasList = new ArrayList<>();
 
     /**
      * Create a FontAtlas with a Font
@@ -28,8 +31,12 @@ public class FontUtils {
      * @param antiAliasing enable or disable anti aliasing
      * @return a FontAtlas
      */
-    // TODO: Add a list or something to avoid creating the same FontAtlas again and again
     public static FontAtlas createFontAtlas(Font font, boolean antiAliasing) {
+        for (FontAtlas fontAtlas : fontAtlasList) {
+            if (fontAtlas.getFont().equals(font) && fontAtlas.isAntiAliasing() == antiAliasing) {
+                return fontAtlas;
+            }
+        }
         int imageWidth = 0;
         int imageHeight = 0;
         Map<Character, Glyph> glyphMap = new HashMap<>();
@@ -97,8 +104,9 @@ public class FontUtils {
         // beginning.
         buffer.flip();
         Texture texture = TextureUtils.createTexture(buffer, fontImage.getWidth(), fontImage.getHeight());
-        MemoryUtil.memFree(buffer);
-        return new FontAtlas(texture, font, antiAliasing, glyphMap);
+        FontAtlas fontAtlas = new FontAtlas(texture, font, antiAliasing, glyphMap);
+        fontAtlasList.add(fontAtlas);
+        return fontAtlas;
     }
 
     /**

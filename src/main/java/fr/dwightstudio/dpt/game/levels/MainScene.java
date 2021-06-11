@@ -44,7 +44,6 @@ public class MainScene extends Scene implements EventListener {
     private final Surface surface = new Surface(new Vector2f(0, 0), new Vector2f(64, 64), Engine.COLORS.WHITE);
     private final Surface surface2 = new Surface(new Vector2f(100, 100), new Vector2f(64, 64), new Color(0, 1, 0, 0.5f));
     private final Surface surface3 = new Surface(new Vector2f(132, 100), new Vector2f(64, 64), new Color(1, 0, 0, 0.5f));
-    private Spritesheet spritesheet;
 
     private Label cursorPosX;
     private Label cursorPosY;
@@ -53,9 +52,7 @@ public class MainScene extends Scene implements EventListener {
 
     private int count = 0;
 
-    public MainScene() {
-
-    }
+    public MainScene() { }
 
     @Override
     public void init() {
@@ -89,7 +86,7 @@ public class MainScene extends Scene implements EventListener {
         this.cursorPosX.draw(0, GLFWWindow.getHeight() - this.cursorPosX.getFontAtlas().getTexture().getHeight() * 2);
         this.cursorPosY.draw(0, GLFWWindow.getHeight() - this.cursorPosY.getFontAtlas().getTexture().getHeight() * 3);
 
-        this.spritesheet = ResourceManager.get("./src/main/resources/textures/sheet.png");
+        Spritesheet spritesheet = ResourceManager.get("./src/main/resources/textures/sheet.png");
         tiles.addComponent(cursorPosX);
         tiles.addComponent(fpsCounter);
         tiles.addComponent(cursorPosY);
