@@ -13,11 +13,22 @@ public class RendererHelper {
     private List<SurfaceRenderer> surfaceRenderers;
     private List<LineRenderer> lineRenderers;
 
+    /**
+     * Create a new RendererHelper
+     *
+     * This is main renderer, you should use it in every Scenes you make or at least on every scene where you need to
+     * renderer Surfaces, Lines etc...
+     */
     public RendererHelper() {
         this.surfaceRenderers = new ArrayList<>();
         this.lineRenderers = new ArrayList<>();
     }
 
+    /**
+     * Add a GameObject to be rendered in the Renderer
+     *
+     * @param gameObject a GameObject
+     */
     public void addGameObject(GameObject gameObject) {
         List<Surface> surfaces = gameObject.getComponents(Surface.class);
         for (Surface surface : surfaces) {
@@ -33,6 +44,12 @@ public class RendererHelper {
         }
     }
 
+    /**
+     * Add a surface to the Renderer
+     *
+     * @param surface a Surface
+     * @param gameObject a GameObject
+     */
     private void add(Surface surface, GameObject gameObject) {
         boolean added = false;
         for (SurfaceRenderer batch : surfaceRenderers) {
@@ -51,6 +68,11 @@ public class RendererHelper {
         }
     }
 
+    /**
+     * Add a Line to the renderer
+     *
+     * @param line a Line
+     */
     private void add(Line line) {
         boolean added = false;
         for (LineRenderer batch : lineRenderers) {
@@ -68,6 +90,9 @@ public class RendererHelper {
         }
     }
 
+    /**
+     * This is called every frame to render all objects contained into every Renderers
+     */
     public void render() {
         for (SurfaceRenderer surfaceRenderer : surfaceRenderers) {
             surfaceRenderer.render();
@@ -77,6 +102,11 @@ public class RendererHelper {
         }
     }
 
+    /**
+     * Change the number of objects that one renderer can have
+     *
+     * @param batchSize the new batch size
+     */
     public void setMaxBatchSize(int batchSize) {
         maxBatchSize = batchSize;
     }

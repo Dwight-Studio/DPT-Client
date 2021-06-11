@@ -16,11 +16,18 @@ public class TextureUtils {
     private static final int[] width = new int[1];
     private static final int[] height = new int[1];
     private static final int[] nbChannel = new int[1];
+
+    /**
+     * Load an image filepath and create a Texture object with it
+     *
+     * @param filepath the image filepath
+     * @return a Texture
+     */
     // TODO: Add something to support more formats
-    public static Texture loadTexture(String file) {
-        ByteBuffer texture = stbi_load(file, width, height, nbChannel, 4);
+    public static Texture loadTexture(String filepath) {
+        ByteBuffer texture = stbi_load(filepath, width, height, nbChannel, 4);
         if (texture == null) {
-            GameLogger.getLogger("TextureLoader").warn(MessageFormat.format("File not found : {0}", file));
+            GameLogger.getLogger("TextureLoader").warn(MessageFormat.format("File not found : {0}", filepath));
             return null;
         } else {
             int id = glGenTextures();
@@ -30,11 +37,19 @@ public class TextureUtils {
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width[0], height[0], 0, GL_RGBA, GL_UNSIGNED_BYTE, texture);
             stbi_image_free(texture);
             glBindTexture(GL_TEXTURE_2D, 0); // Unbinding any texture at the end to make sure it is not modified after
-            GameLogger.getLogger("TextureLoader").debug(MessageFormat.format("Finished loading texture : {0}", file));
-            return new Texture(width[0], height[0], id, nbChannel[0], file);
+            GameLogger.getLogger("TextureLoader").debug(MessageFormat.format("Finished loading texture : {0}", filepath));
+            return new Texture(width[0], height[0], id, nbChannel[0], filepath);
         }
     }
 
+    /**
+     * Create a Texture object with a ByteBuffer
+     *
+     * @param image the ByteBuffer containing the image
+     * @param width the image width
+     * @param height the image height
+     * @return a Texture
+     */
     public static Texture createTexture(ByteBuffer image, int width, int height) {
         if (image != null) {
             int id = glGenTextures();
@@ -48,6 +63,14 @@ public class TextureUtils {
         return null;
     }
 
+    /**
+     * Create a Texture object with a BufferedImage
+     *
+     * @param image the BufferedImage containing the image
+     * @param width the image width
+     * @param height the image height
+     * @return a Texture
+     */
     public static Texture createTexture(BufferedImage image, int width, int height) {
         if (image != null) {
             int[] pixels = new int[image.getWidth() * image.getHeight()];
@@ -82,6 +105,15 @@ public class TextureUtils {
         return null;
     }
 
+    /**
+     * Reload a Texture object to update the image in it
+     *
+     * @param image the new image ByteBuffer
+     * @param texture the Texture you want to update
+     * @param width the new image width
+     * @param height the new image height
+     * @return a Texture object
+     */
     public static Texture reloadTexture(ByteBuffer image, Texture texture, int width, int height) {
         if (image != null) {
             glBindTexture(GL_TEXTURE_2D, texture.getID());

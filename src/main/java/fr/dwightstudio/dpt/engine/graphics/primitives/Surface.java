@@ -19,6 +19,14 @@ public class Surface extends Component {
 
     private boolean dirty = true;
 
+    /**
+     * Create a new Surface
+     *
+     * @param position the Surface position
+     * @param scale the Surface scale
+     * @param texture the Surface Texture
+     * @param textureCoords the Texture coordinates to get on the given Texture
+     */
     public Surface(Vector2f position, Vector2f scale, Texture texture, Vector2f[] textureCoords) {
         this.color = Engine.COLORS.WHITE;
         this.transform.position = position;
@@ -28,6 +36,13 @@ public class Surface extends Component {
         this.textureCoords = textureCoords;
     }
 
+    /**
+     * Create a new Surface
+     *
+     * @param position the Surface position
+     * @param scale the Surface scale
+     * @param color the Surface color
+     */
     public Surface(Vector2f position, Vector2f scale, Color color) {
         this.color = color;
         this.transform.position = position;
@@ -42,6 +57,13 @@ public class Surface extends Component {
         };
     }
 
+    /**
+     * Create a new Surface
+     *
+     * @param position the Surface position
+     * @param scale the Surface scale
+     * @param texture the Surface Texture
+     */
     public Surface(Vector2f position, Vector2f scale, Texture texture) {
         this.color = Engine.COLORS.WHITE;
         this.transform.position = position;
@@ -64,22 +86,39 @@ public class Surface extends Component {
         }
     }
 
+    /**
+     * @return the Surface color
+     */
     public Color getColor() {
         return color;
     }
 
+    /**
+     * @return the Surface Transform object
+     */
     public Transform getTransform() {
         return transform;
     }
 
+    /**
+     * @return the Surface Texture
+     */
     public Texture getTexture() {
         return texture;
     }
 
+    /**
+     * @return the Surface Texture coordinates
+     */
     public Vector2f[] getTextureCoords() {
         return textureCoords;
     }
 
+    /**
+     * Set a new color to the Surface
+     *
+     * @param newColor a color
+     */
     public void setColor(Color newColor) {
         if (!newColor.equals(this.color)) {
             this.color = newColor;
@@ -87,11 +126,21 @@ public class Surface extends Component {
         }
     }
 
+    /**
+     * Set a new Transform objec to the Surface
+     *
+     * @param transform a Transform object
+     */
     public void setTransform(Transform transform) {
         this.transform = transform;
         this.dirty = true;
     }
 
+    /**
+     * Set another Texture for the Surface
+     *
+     * @param texture a Texture
+     */
     public void setTexture(Texture texture) {
         if (!texture.equals(this.texture)) {
             this.texture = texture;
@@ -99,6 +148,11 @@ public class Surface extends Component {
         }
     }
 
+    /**
+     * Set specific Texture coordinates to use with the Texture
+     *
+     * @param textureCoords a new Texture coordinates Vector
+     */
     public void setTextureCoords(Vector2f[] textureCoords) {
         if (!Arrays.equals(textureCoords, this.textureCoords)) {
             this.textureCoords = textureCoords;
@@ -106,14 +160,24 @@ public class Surface extends Component {
         }
     }
 
+    /**
+     *
+     * @return the dirty flag value
+     */
     public boolean isDirty() {
         return dirty;
     }
 
+    /**
+     * Mark this object as clean (it will not be rebuffered)
+     */
     public void markClean() {
         dirty = false;
     }
 
+    /**
+     * @return the center X and Y point of the Surface
+     */
     public Vector2f getCenterPoint() {
         return new Vector2f(transform.scale.x / 2, transform.scale.y / 2);
     }

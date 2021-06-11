@@ -13,6 +13,14 @@ public class Line extends Component {
     private Color color;
     private boolean dirty = true;
 
+    /**
+     * Create a new Line
+     *
+     * @param startPosition the Line start position
+     * @param endPosition the Line end position
+     * @param color the Line color
+     * @param thickness the Line thickness
+     */
     public Line(Vector2f startPosition, Vector2f endPosition, Color color, float thickness) {
         this.startPosition = startPosition;
         this.endPosition = endPosition;
@@ -20,6 +28,13 @@ public class Line extends Component {
         this.thickness = thickness;
     }
 
+    /**
+     * Create a new Line
+     *
+     * @param startPosition the Line start position
+     * @param endPosition the Line end position
+     * @param color the Line color
+     */
     public Line(Vector2f startPosition, Vector2f endPosition, Color color) {
         this.startPosition = startPosition;
         this.endPosition = endPosition;
@@ -27,6 +42,13 @@ public class Line extends Component {
         this.thickness = 1.0f;
     }
 
+    /**
+     * Create a new Line
+     *
+     * @param startPosition the Line start position
+     * @param endPosition the Line end position
+     * @param thickness the Line thickness
+     */
     public Line(Vector2f startPosition, Vector2f endPosition, float thickness) {
         this.startPosition = startPosition;
         this.endPosition = endPosition;
@@ -34,6 +56,12 @@ public class Line extends Component {
         this.thickness = thickness;
     }
 
+    /**
+     * Create a new Line
+     *
+     * @param startPosition the Line start position
+     * @param endPosition the Line end position
+     */
     public Line(Vector2f startPosition, Vector2f endPosition) {
         this.startPosition = startPosition;
         this.endPosition = endPosition;
@@ -41,22 +69,39 @@ public class Line extends Component {
         this.thickness = 1.0f;
     }
 
+    /**
+     * @return the Line start position
+     */
     public Vector2f getStartPosition() {
         return startPosition;
     }
 
+    /**
+     * @return the Line end position
+     */
     public Vector2f getEndPosition() {
         return endPosition;
     }
 
+    /**
+     * @return the Line position
+     */
     public Color getColor() {
         return color;
     }
 
+    /**
+     * @return the Line thickness
+     */
     public float getThickness() {
         return thickness;
     }
 
+    /**
+     * Set the Line color
+     *
+     * @param newColor the new color
+     */
     public void setColor(Color newColor) {
         if (!this.color.equals(newColor)) {
             this.color = newColor;
@@ -64,6 +109,11 @@ public class Line extends Component {
         }
     }
 
+    /**
+     * Set the Line start position
+     *
+     * @param newPosition the new start position
+     */
     public void setStartPosition(Vector2f newPosition) {
         if (!this.startPosition.equals(newPosition)) {
             this.startPosition = newPosition;
@@ -71,6 +121,11 @@ public class Line extends Component {
         }
     }
 
+    /**
+     * Set the Line end position
+     *
+     * @param newPosition the new end position
+     */
     public void setEndPosition(Vector2f newPosition) {
         if (!this.endPosition.equals(newPosition)) {
             this.endPosition = newPosition;
@@ -78,6 +133,11 @@ public class Line extends Component {
         }
     }
 
+    /**
+     * Set the Line thickness
+     *
+     * @param newThickness the new thickness value
+     */
     public void setThickness(float newThickness) {
         if (this.thickness != newThickness) {
             this.thickness = newThickness;
@@ -85,16 +145,17 @@ public class Line extends Component {
         }
     }
 
+    /**
+     * @return the dirty flag value
+     */
     public boolean isDirty() {
         return dirty;
     }
 
+    /**
+     * Mark this object as clean (it will not be rebuffered)
+     */
     public void markClean() {
         dirty = false;
-    }
-
-    @Override
-    public void update(float dt) {
-
     }
 }

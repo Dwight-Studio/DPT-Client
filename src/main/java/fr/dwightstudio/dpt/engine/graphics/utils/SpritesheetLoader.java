@@ -19,17 +19,22 @@ import java.util.Objects;
 
 public class SpritesheetLoader {
 
-    private static long numberOfSprite;
-    private static long spriteWidth;
-    private static long spriteHeight;
-    private static long widthSpacing;
-    private static long heightSpacing;
-
+    /**
+     * Load a Spritesheet image file and create a Spritesheet object with it
+     *
+     * @param filepath the spritesheet filepath
+     * @return a Spritesheet
+     */
     public static Spritesheet loadSpritesheet(String filepath) {
         List<SpriteTexture> spritesTextures = new ArrayList<>();
         ResourceManager.load(filepath, Texture.class);
         Texture texture = ResourceManager.get(filepath);
 
+        long numberOfSprite;
+        long spriteWidth;
+        long spriteHeight;
+        long widthSpacing;
+        long heightSpacing;
         try {
             JSONObject jsonObject = (JSONObject) new JSONParser().parse(new FileReader(filepath + ".meta"));
             numberOfSprite = (long) jsonObject.get("numberOfSprite");

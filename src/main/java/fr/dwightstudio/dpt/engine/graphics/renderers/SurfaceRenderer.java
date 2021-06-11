@@ -49,6 +49,13 @@ public class SurfaceRenderer implements Comparable<SurfaceRenderer> {
     private int vertexBufferObjectID;
     private int vertexArrayObjectID;
 
+    /**
+     * Create a new SurfaceRenderer
+     * This renderer is going to be automatically created when adding Surface to your GameObjects
+     *
+     * @param batchSize the max number of Line the renderer can buffer
+     * @param zIndex the Z level of the SurfaceRenderer
+     */
     public SurfaceRenderer(int batchSize, int zIndex) {
         this.surfaces = new Surface[batchSize];
         this.textures = new ArrayList<>();
@@ -62,6 +69,9 @@ public class SurfaceRenderer implements Comparable<SurfaceRenderer> {
         this.hasRoom = true;
     }
 
+    /**
+     * This method will allocate the new buffers for this renderer and upload the necessary values into the shader
+     */
     public void start() {
         shader.bind();
         shader.uploadIntArray("uTextures", textureSlots);
@@ -93,6 +103,11 @@ public class SurfaceRenderer implements Comparable<SurfaceRenderer> {
         glEnableVertexAttribArray(glGetAttribLocation(shader.getProgramID(), "vTextureID"));
     }
 
+    /**
+     * Add a Surface to the SurfaceRenderer
+     *
+     * @param surface a Surface
+     */
     public void addSurface(Surface surface) {
         surfaces[numberOfSurfaces] = surface;
 
@@ -104,6 +119,10 @@ public class SurfaceRenderer implements Comparable<SurfaceRenderer> {
         }
     }
 
+    /**
+     * This method is called every frame to update the Surfaces however the data new data will be buffered only if
+     * a Surface is set to dirty
+     */
     public void render() {
         boolean rebufferData = false;
         for (int i = 0; i < numberOfSurfaces; i++) {
@@ -141,6 +160,11 @@ public class SurfaceRenderer implements Comparable<SurfaceRenderer> {
         shader.unbind();
     }
 
+    /**
+     * Generate and fill the elements buffer to draw Quads correctly with two triangles
+     *
+     * @return the elements array
+     */
     private int[] generateIndices() {
         // The indices array will look like this :
         //
@@ -165,6 +189,11 @@ public class SurfaceRenderer implements Comparable<SurfaceRenderer> {
         return elements;
     }
 
+    /**
+     * This method will automatically generate the necessary vertices for the Surface at index
+     *
+     * @param index the index of the Surface
+     */
     private void loadVertexProperties(int index) {
         Surface surface = this.surfaces[index];
         int offset = index * 4 * VERTEX_SIZE;
@@ -220,10 +249,20 @@ public class SurfaceRenderer implements Comparable<SurfaceRenderer> {
         }
     }
 
+    /**
+     * This method check if the renderer have room to put more Line
+     *
+     * @return if there is space remaining in this renderer
+     */
     public boolean hasRoom() {
         return hasRoom;
     }
 
+    /**
+     * Get the current Z level of the SurfaceRenderer
+     *
+     * @return the current Z level of the SurfaceRenderer
+     */
     public int getzIndex() {
         return zIndex;
     }

@@ -13,6 +13,13 @@ import java.util.*;
 
 public class FontUtils {
 
+    /**
+     * Create a FontAtlas with a Font
+     *
+     * @param font the Font used in the FontAtlas
+     * @param antiAliasing enable or disable anti aliasing
+     * @return a FontAtlas
+     */
     // TODO: Add a list or something to avoid creating the same FontAtlas again and again
     public static FontAtlas createFontAtlas(Font font, boolean antiAliasing) {
         int imageWidth = 0;
@@ -86,6 +93,14 @@ public class FontUtils {
         return new FontAtlas(texture, font, antiAliasing, glyphMap);
     }
 
+    /**
+     * Create an image containing the specified character with the specified Font
+     *
+     * @param font a character Font
+     * @param c a character
+     * @param antiAliasing enable or disable anti aliasing
+     * @return a BufferedImage containing the character image
+     */
     public static BufferedImage createCharImage(Font font, char c, boolean antiAliasing) {
         BufferedImage image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
         Graphics2D graphics2D = image.createGraphics();

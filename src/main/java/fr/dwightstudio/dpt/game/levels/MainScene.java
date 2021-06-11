@@ -31,6 +31,8 @@ import java.util.Objects;
 
 public class MainScene extends Scene implements EventListener {
 
+    GameObject tiles = new GameObject("tiles", 2);
+
     private final Surface surface = new Surface(new Vector2f(0, 0), new Vector2f(64, 64), Engine.COLORS.WHITE);
     private final Surface surface2 = new Surface(new Vector2f(100, 100), new Vector2f(64, 64), new Color(0, 1, 0, 0.5f));
     private final Surface surface3 = new Surface(new Vector2f(132, 100), new Vector2f(64, 64), new Color(1, 0, 0, 0.5f));
@@ -50,7 +52,6 @@ public class MainScene extends Scene implements EventListener {
     @Override
     public void init() {
         camera = new Camera(new Vector2f());
-        GameObject tiles = new GameObject("tiles", 2);
         GameObject otherOne = new GameObject("otherOne", 1);
         ResourceManager.load("./src/main/resources/textures/test.png", Texture.class);
         ResourceManager.load("./src/main/resources/textures/sheet.png", Spritesheet.class);
@@ -112,6 +113,7 @@ public class MainScene extends Scene implements EventListener {
 
         if (count == 60) {
             fpsCounter.setText(Math.round(1.0f / dt) + " FPS");
+            tiles.getTransform().position.x += 1;
             count = 0;
         } else {
             count++;

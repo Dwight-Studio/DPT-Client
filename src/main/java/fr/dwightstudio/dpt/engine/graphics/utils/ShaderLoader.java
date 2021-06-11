@@ -16,6 +16,12 @@ public class ShaderLoader {
     private static StringBuilder fragmentShader;
     private static String file;
 
+    /**
+     * Load a GLSL shader file and create a Shader object with it
+     *
+     * @param filepath the shader filepath
+     * @return the loaded Shader
+     */
     public static Shader loadShaderFile(String filepath) {
         file = filepath;
         vertexShader = new StringBuilder();
@@ -52,6 +58,11 @@ public class ShaderLoader {
         }
     }
 
+    /**
+     * Compile a GLSL shader
+     *
+     * @return a Shader
+     */
     private static Shader compileShader() {
         int vertexID = glCreateShader(GL_VERTEX_SHADER);
         glShaderSource(vertexID, vertexShader.toString());

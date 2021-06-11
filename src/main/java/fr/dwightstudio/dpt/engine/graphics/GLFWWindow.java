@@ -7,8 +7,8 @@ import fr.dwightstudio.dpt.engine.utils.Time;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 
-import static fr.dwightstudio.dpt.engine.Engine.ENGINE_FULLSCREEN;
-import static fr.dwightstudio.dpt.engine.Engine.ENGINE_WINDOWED;
+import static fr.dwightstudio.dpt.engine.Engine.FULLSCREEN;
+import static fr.dwightstudio.dpt.engine.Engine.WINDOWED;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -22,6 +22,13 @@ public class GLFWWindow {
     private final long windowMode;
     private Thread eventThread;
 
+    /**
+     * Create a new GLFWWIndow
+     *
+     * @param WIDTH the width of the Window
+     * @param HEIGHT the height of the Window
+     * @param windowMode the window mode of the Window either Engine.FULLSCREEN or Engine.WINDOWED
+     */
     public GLFWWindow(int WIDTH, int HEIGHT, long windowMode) {
         GLFWWindow.WIDTH = WIDTH;
         GLFWWindow.HEIGHT = HEIGHT;
@@ -29,18 +36,31 @@ public class GLFWWindow {
         Thread.currentThread().setName("Main Render Thread");
     }
 
+    /**
+     * @return the window width
+     */
     public static int getWidth(){
         return GLFWWindow.WIDTH;
     }
 
+    /**
+     * @return the window height
+     */
     public static int getHeight(){
         return GLFWWindow.HEIGHT;
     }
 
+    /**
+     * @return the Window object
+     */
     public static long getWindow() {
         return GLFWWindow.window;
     }
 
+    /**
+     * Init the window.
+     * This is called automatically, it create the default OpenGL context
+     */
     public void init(){
 
         GLFWErrorCallback.createPrint(System.err).set(); // Create an Error Callback which print the errors in System.err
@@ -56,9 +76,9 @@ public class GLFWWindow {
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE); // the window will be resizable
 
         // Create the window. Throw a RuntimeException if
-        if (windowMode == ENGINE_FULLSCREEN) {
+        if (windowMode == FULLSCREEN) {
             window = glfwCreateWindow(GLFWWindow.WIDTH, GLFWWindow.HEIGHT, "Don't Play Together 2.0", glfwGetPrimaryMonitor(), NULL);
-        } else if (windowMode == ENGINE_WINDOWED) {
+        } else if (windowMode == WINDOWED) {
             window = glfwCreateWindow(GLFWWindow.WIDTH, GLFWWindow.HEIGHT, "Don't Play Together 2.0", NULL, NULL);
         } else {
             window = NULL;
@@ -87,6 +107,9 @@ public class GLFWWindow {
         loop(); // Start the loop
     }
 
+    /**
+     * Start the window loop
+     */
     private void loop() {
 
         SceneManager.changeScene(0); // By default the scene with index 0 is instantiated

@@ -36,6 +36,12 @@ public class TextRenderer {
     private int vertexArrayObjectID;
     private int vertexBufferObjectID;
 
+    /**
+     * Create a new TextRender
+     * One TextRenderer is made for one Label
+     *
+     * @param label a Label
+     */
     public TextRenderer(Label label) {
         this.label = label;
         this.fontAtlas = label.getFontAtlas();
@@ -47,6 +53,9 @@ public class TextRenderer {
         this.cursorPosition = this.label.getPosition().x;
     }
 
+    /**
+     * This method will allocate the new buffers for this renderer and upload the necessary values into the shader
+     */
     public void init() {
         shader.bind();
         shader.uploadMat4f("uProjectionMatrix", SceneManager.getCurrentScene().getCamera().getProjectionMatrix());
@@ -75,6 +84,10 @@ public class TextRenderer {
         glEnableVertexAttribArray(glGetAttribLocation(shader.getProgramID(), "vTextureCoords"));
     }
 
+    /**
+     * This method is called every frame to update the Label however the data new data will be buffered only if
+     * the Label is set to dirty
+     */
     public void render() {
         this.cursorPosition = this.label.getPosition().x;
         boolean rebufferData = false;
@@ -110,6 +123,11 @@ public class TextRenderer {
         shader.unbind();
     }
 
+    /**
+     * This method will automatically generate the necessary vertices for the character at index
+     *
+     * @param index the index of the character
+     */
     private void loadVertexProperties(int index) {
         char character = this.characters[index];
         int offset = index * 4 * VERTEX_SIZE;
@@ -144,6 +162,11 @@ public class TextRenderer {
         this.cursorPosition += this.fontAtlas.getGlyph(character).getWidth();
     }
 
+    /**
+     * Generate and fill the elements buffer to draw Quads correctly with two triangles
+     *
+     * @return the elements array
+     */
     private int[] generateIndices() {
         // The indices array will look like this :
         //

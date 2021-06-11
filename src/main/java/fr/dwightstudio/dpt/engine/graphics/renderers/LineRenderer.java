@@ -26,18 +26,22 @@ public class LineRenderer {
     private final int POSITION_OFFSET = 0;
     private final int COLOR_OFFSET = (POSITION_OFFSET + POSITION_SIZE) * Float.BYTES;
 
-    private Line[] lines;
+    private final Line[] lines;
+    private final int batchSize;
+    private final Shader shader;
+    private final float[] vertices;
 
-    private int batchSize;
-    private Shader shader;
-    private float[] vertices;
     private int numberOfLines;
     private boolean hasRoom;
-    private int[] textureSlots = {0, 1, 2, 3, 4, 5, 6, 7};
-
     private int vertexBufferObjectID;
     private int vertexArrayObjectID;
 
+    /**
+     * Create a new LineRenderer
+     * This renderer is going to be automatically created when adding Line to your GameObjects
+     *
+     * @param batchSize the max number of Line the renderer can buffer
+     */
     public LineRenderer(int batchSize) {
         this.lines = new Line[batchSize];
 
@@ -49,6 +53,9 @@ public class LineRenderer {
         this.hasRoom = true;
     }
 
+    /**
+     * This method will allocate the new buffers for this renderer and upload the necessary values into the shader
+     */
     public void start() {
         shader.uploadMat4f("uProjectionMatrix", SceneManager.getCurrentScene().getCamera().getProjectionMatrix());
         shader.uploadMat4f("uViewMatrix", SceneManager.getCurrentScene().getCamera().getViewMatrix());
@@ -67,6 +74,11 @@ public class LineRenderer {
         glEnableVertexAttribArray(glGetAttribLocation(shader.getProgramID(), "vColor"));
     }
 
+    /**
+     * Add a line to the renderer
+     *
+     * @param line a Line
+     */
     public void addLine(Line line) {
         lines[numberOfLines] = line;
 
@@ -78,6 +90,10 @@ public class LineRenderer {
         }
     }
 
+    /**
+     * This method is called every frame to update the Lines however the data new data will be buffered only if
+     * a Line is set to dirty
+     */
     public void render() {
         boolean rebufferData = false;
         for (int i = 0; i < numberOfLines; i++) {
@@ -109,6 +125,11 @@ public class LineRenderer {
         shader.unbind();
     }
 
+    /**
+     * This method will automatically generate the necessary vertices for the Line at index
+     *
+     * @param index the index of the Line
+     */
     private void loadVertexProperties(int index) {
         Line line = this.lines[index];
         int offset = index * VERTEX_SIZE * 2;
@@ -139,6 +160,11 @@ public class LineRenderer {
         }
     }
 
+    /**
+     * This method check if the renderer have room to put more Line
+     *
+     * @return if there is space remaining in this renderer
+     */
     public boolean hasRoom() {
         return hasRoom;
     }

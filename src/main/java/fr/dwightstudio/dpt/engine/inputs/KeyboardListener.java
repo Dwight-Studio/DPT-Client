@@ -16,6 +16,10 @@ public class KeyboardListener {
         }
     };
 
+    /**
+     * @param key the key code
+     * @return wheither the specified key is pressed or not
+     */
     public static boolean isKeyPressed(int key) {
         if (key < keys.length) {
             return keys[key];
