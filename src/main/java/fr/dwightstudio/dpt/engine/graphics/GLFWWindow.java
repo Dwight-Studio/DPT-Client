@@ -12,6 +12,7 @@ import fr.dwightstudio.dpt.engine.events.EventSystem;
 import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.engine.utils.Time;
+import fr.dwightstudio.dpt.game.levels.MainScene;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 
@@ -120,7 +121,7 @@ public class GLFWWindow {
      */
     private void loop() {
 
-        SceneManager.changeScene(0); // By default the scene with index 0 is instantiated
+        SceneManager.changeScene(new MainScene()); // By default the MainScene is instanciated
 
         float beginTime = Time.getDeltaTime();
         float endTime;
