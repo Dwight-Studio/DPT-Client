@@ -50,7 +50,7 @@ public class ResourceManager {
         return null;
     }
 
-    // You have to load the resource bafore using it
+    // You have to load the resource before using it
     public static boolean load(String filepath, Class<?> type) {
         if (HANDLERS.containsKey(type)) {
             TypeHandler<?> handler = HANDLERS.get(type);
