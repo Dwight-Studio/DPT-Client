@@ -9,23 +9,15 @@
 package fr.dwightstudio.dpt.game.levels;
 
 import fr.dwightstudio.dpt.engine.Engine;
-import fr.dwightstudio.dpt.engine.events.EventHandler;
 import fr.dwightstudio.dpt.engine.events.EventListener;
-import fr.dwightstudio.dpt.engine.events.EventSystem;
-import fr.dwightstudio.dpt.engine.events.types.gui.button.ButtonClickEvent;
-import fr.dwightstudio.dpt.engine.events.types.gui.button.ButtonHoverEvent;
-import fr.dwightstudio.dpt.engine.events.types.gui.button.ButtonReleaseEvent;
-import fr.dwightstudio.dpt.engine.events.types.gui.button.ButtonUnhoverEvent;
 import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
 import fr.dwightstudio.dpt.engine.graphics.gui.Button;
 import fr.dwightstudio.dpt.engine.graphics.gui.Checkbox;
 import fr.dwightstudio.dpt.engine.graphics.gui.Label;
-import fr.dwightstudio.dpt.engine.graphics.primitives.Line;
 import fr.dwightstudio.dpt.engine.graphics.objects.*;
 import fr.dwightstudio.dpt.engine.graphics.objects.Color;
 import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
 import fr.dwightstudio.dpt.engine.graphics.utils.FontUtils;
-import fr.dwightstudio.dpt.engine.graphics.utils.SpritesheetLoader;
 import fr.dwightstudio.dpt.engine.inputs.MouseListener;
 import fr.dwightstudio.dpt.engine.resources.ResourceManager;
 import fr.dwightstudio.dpt.engine.scripting.GameObject;
@@ -49,8 +41,6 @@ public class MainScene extends Scene implements EventListener {
     private Label cursorPosY;
     private Label fpsCounter;
     FontAtlas fontAtlas;
-
-    private Line line = new Line(new Vector2f(0, 300), new Vector2f(300, 300), Engine.COLORS.GREEN, 4.0f);
 
     private int count = 0;
 
@@ -96,7 +86,6 @@ public class MainScene extends Scene implements EventListener {
         tiles.addComponent(surface2);
         surface.setTexture(spritesheet.getSprite(0).getTexture());
         surface.setTextureCoords(spritesheet.getSprite(0).getTextureCoords());
-        tiles.addComponent(line);
         tiles.addComponent(new Surface(new Vector2f(200, 200), new Vector2f(64, 64), ResourceManager.<Texture>get("./src/main/resources/textures/test.png")));
         tiles.addComponent(button);
         tiles.addComponent(checkbox);
@@ -112,11 +101,9 @@ public class MainScene extends Scene implements EventListener {
         for (GameObject gameObject : this.gameObjects) {
             gameObject.update(dt);
         }
-
-        if (surface2.getTransform().getRotation(Transform.DEGREE) < 90) {
-            surface2.getTransform().setRotation(surface2.getTransform().getRotation(Transform.DEGREE) + 1, Transform.DEGREE);
-        }
-
+        surface.getTransform().scale.y += 0.1;
+        surface.getTransform().scale.x += 0.1;
+        surface2.getTransform().setRotation(surface2.getTransform().getRotation(Transform.DEGREE) + 1, Transform.DEGREE);
 
         if (count == 60) {
             fpsCounter.setText(Math.round(1.0f / dt) + " FPS");
