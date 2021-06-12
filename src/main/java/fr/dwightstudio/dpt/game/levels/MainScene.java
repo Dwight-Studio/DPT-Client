@@ -34,7 +34,7 @@ public class MainScene extends Scene implements EventListener {
     GameObject tiles = new GameObject("tiles", 2);
 
     private final Surface surface = new Surface(new Vector2f(0, 0), new Vector2f(64, 64), Engine.COLORS.WHITE);
-    private final Surface surface2 = new Surface(new Vector2f(100, 100), new Vector2f(64, 64), new Color(0, 1, 0, 0.5f));
+    private final Surface surface2 = new Surface(new Vector2f(100, 100), new Vector2f(64, 10), new Color(0, 1, 0, 0.5f));
     private final Surface surface3 = new Surface(new Vector2f(132, 100), new Vector2f(64, 64), new Color(1, 0, 0, 0.5f));
 
     private Label cursorPosX;
@@ -74,9 +74,9 @@ public class MainScene extends Scene implements EventListener {
         this.fpsCounter = new Label("FPS", fontAtlas, Engine.COLORS.PURPLE);
         this.cursorPosX = new Label("X", fontAtlas);
         this.cursorPosY = new Label("Y", fontAtlas);
-        this.fpsCounter.draw(0, GLFWWindow.getHeight() - this.fpsCounter.getFontAtlas().getTexture().getHeight());
-        this.cursorPosX.draw(0, GLFWWindow.getHeight() - this.cursorPosX.getFontAtlas().getTexture().getHeight() * 2);
-        this.cursorPosY.draw(0, GLFWWindow.getHeight() - this.cursorPosY.getFontAtlas().getTexture().getHeight() * 3);
+        this.fpsCounter.draw(new Vector2f(0, GLFWWindow.getHeight() - this.fpsCounter.getFontAtlas().getTexture().getHeight()), new Vector2f(0, 0));
+        this.cursorPosX.draw(new Vector2f(0, GLFWWindow.getHeight() - this.fpsCounter.getFontAtlas().getTexture().getHeight() * 2), new Vector2f(0, 0));
+        this.cursorPosY.draw(new Vector2f(0, GLFWWindow.getHeight() - this.fpsCounter.getFontAtlas().getTexture().getHeight() * 3), new Vector2f(0, 0));
 
         Spritesheet spritesheet = ResourceManager.get("./src/main/resources/textures/sheet.png");
         tiles.addComponent(cursorPosX);
@@ -84,7 +84,7 @@ public class MainScene extends Scene implements EventListener {
         tiles.addComponent(cursorPosY);
         tiles.addComponent(surface);
         tiles.addComponent(surface2);
-        surface.setTexture(spritesheet.getSprite(0).getTexture());
+        surface.setTexture(Objects.requireNonNull(spritesheet).getSprite(0).getTexture());
         surface.setTextureCoords(spritesheet.getSprite(0).getTextureCoords());
         tiles.addComponent(new Surface(new Vector2f(200, 200), new Vector2f(64, 64), ResourceManager.<Texture>get("./src/main/resources/textures/test.png")));
         tiles.addComponent(button);
@@ -104,6 +104,9 @@ public class MainScene extends Scene implements EventListener {
         surface.getTransform().scale.y += 0.1;
         surface.getTransform().scale.x += 0.1;
         surface2.getTransform().setRotation(surface2.getTransform().getRotation(Transform.DEGREE) + 1, Transform.DEGREE);
+
+        fpsCounter.getTransform().scale.x += 0.01;
+        fpsCounter.getTransform().scale.y += 0.01;
 
         if (count == 60) {
             fpsCounter.setText(Math.round(1.0f / dt) + " FPS");

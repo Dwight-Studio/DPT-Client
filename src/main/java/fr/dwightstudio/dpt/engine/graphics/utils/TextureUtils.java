@@ -29,9 +29,10 @@ public class TextureUtils {
      * Load an image filepath and create a Texture object with it
      *
      * @param filepath the image filepath
+     * @param param can be GL_NEAREST or GL_LINEAR
      * @return a Texture
      */
-    public static Texture loadTexture(String filepath) {
+    public static Texture loadTexture(String filepath, float param) {
         ByteBuffer texture = stbi_load(filepath, width, height, nbChannel, 4);
         if (texture == null) {
             GameLogger.getLogger("TextureLoader").warn(MessageFormat.format("File not found : {0}", filepath));
@@ -39,8 +40,8 @@ public class TextureUtils {
         } else {
             int id = glGenTextures();
             glBindTexture(GL_TEXTURE_2D, id);
-            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, param);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, param);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width[0], height[0], 0, GL_RGBA, GL_UNSIGNED_BYTE, texture);
             stbi_image_free(texture);
             glBindTexture(GL_TEXTURE_2D, 0); // Unbinding any texture at the end to make sure it is not modified after
@@ -55,14 +56,15 @@ public class TextureUtils {
      * @param image the ByteBuffer containing the image
      * @param width the image width
      * @param height the image height
+     * @param param can be GL_NEAREST or GL_LINEAR
      * @return a Texture
      */
-    public static Texture createTexture(ByteBuffer image, int width, int height) {
+    public static Texture createTexture(ByteBuffer image, int width, int height, float param) {
         if (image != null) {
             int id = glGenTextures();
             glBindTexture(GL_TEXTURE_2D, id);
-            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, param);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, param);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
             glBindTexture(GL_TEXTURE_2D, 0); // Unbinding any texture at the end to make sure it is not modified after
             return new Texture(width, height, id, 4, null); // Since we are creating a PNG image, there is four channels
@@ -76,9 +78,10 @@ public class TextureUtils {
      * @param image the BufferedImage containing the image
      * @param width the image width
      * @param height the image height
+     * @param param can be GL_NEAREST or GL_LINEAR
      * @return a Texture
      */
-    public static Texture createTexture(BufferedImage image, int width, int height) {
+    public static Texture createTexture(BufferedImage image, int width, int height, float param) {
         if (image != null) {
             int[] pixels = new int[image.getWidth() * image.getHeight()];
             image.getRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0, image.getWidth());
@@ -103,8 +106,8 @@ public class TextureUtils {
             buffer.flip();
             int id = glGenTextures();
             glBindTexture(GL_TEXTURE_2D, id);
-            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, param);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, param);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
             glBindTexture(GL_TEXTURE_2D, 0); // Unbinding any texture at the end to make sure it is not modified after
             return new Texture(width, height, id, 4, null); // Since we are creating a PNG image, there is four channels
@@ -119,13 +122,14 @@ public class TextureUtils {
      * @param texture the Texture you want to update
      * @param width the new image width
      * @param height the new image height
+     * @param param can be GL_NEAREST or GL_LINEAR
      * @return a Texture object
      */
-    public static Texture reloadTexture(ByteBuffer image, Texture texture, int width, int height) {
+    public static Texture reloadTexture(ByteBuffer image, Texture texture, int width, int height, float param) {
         if (image != null) {
             glBindTexture(GL_TEXTURE_2D, texture.getID());
-            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, param);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, param);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
             glBindTexture(GL_TEXTURE_2D, 0); // Unbinding any texture at the end to make sure it is not modified after
             return new Texture(width, height, texture.getID(), 4, null);

@@ -58,7 +58,7 @@ public class TextRenderer {
         this.shader = ResourceManager.get("./src/main/resources/shaders/text.glsl");
 
         this.vertices = new float[this.label.getMaxNumberOfChars() * 4 * VERTEX_SIZE];
-        this.cursorPosition = this.label.getPosition().x;
+        this.cursorPosition = this.label.getTransform().position.x;
     }
 
     /**
@@ -97,7 +97,7 @@ public class TextRenderer {
      * the Label is set to dirty
      */
     public void render() {
-        this.cursorPosition = this.label.getPosition().x;
+        this.cursorPosition = this.label.getTransform().position.x;
         boolean rebufferData = false;
         if (this.label.isDirty() || this.label.isGameObjectDirty()) {
             this.characters = this.label.getText().toCharArray();
@@ -141,16 +141,16 @@ public class TextRenderer {
         char character = this.characters[index];
         int offset = index * 4 * VERTEX_SIZE;
 
-        float x = this.cursorPosition + this.fontAtlas.getGlyph(character).getWidth();
-        float y = this.label.getPosition().y +  this.fontAtlas.getGlyph(character).getHeight();
+        float x = this.cursorPosition + this.fontAtlas.getGlyph(character).getWidth() + this.label.getTransform().scale.x;
+        float y = this.label.getTransform().position.y +  this.fontAtlas.getGlyph(character).getHeight() + this.label.getTransform().scale.y;
         // This will loop 4 times for the 4 vertices.
         for (int i = 0; i < 4; i++) {
             if (i == 1) {
-                y = this.label.getPosition().y;
+                y = this.label.getTransform().position.y;
             } else if (i == 2) {
                 x = this.cursorPosition;
             } else if (i == 3) {
-                y = this.label.getPosition().y + this.fontAtlas.getGlyph(character).getHeight();
+                y = this.label.getTransform().position.y + this.fontAtlas.getGlyph(character).getHeight() +  + this.label.getTransform().scale.y;
             }
 
             // Load the position
@@ -168,7 +168,7 @@ public class TextRenderer {
 
             offset += VERTEX_SIZE;
         }
-        this.cursorPosition += this.fontAtlas.getGlyph(character).getWidth();
+        this.cursorPosition += this.fontAtlas.getGlyph(character).getWidth() + this.label.getTransform().scale.x;
     }
 
     /**

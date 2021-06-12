@@ -20,6 +20,8 @@ import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.List;
 
+import static org.lwjgl.opengl.GL11.GL_LINEAR;
+
 public class FontUtils {
 
     private static List<FontAtlas> fontAtlasList = new ArrayList<>();
@@ -103,7 +105,7 @@ public class FontUtils {
         // Reset the read location in the buffer so that GL can read from
         // beginning.
         buffer.flip();
-        Texture texture = TextureUtils.createTexture(buffer, fontImage.getWidth(), fontImage.getHeight());
+        Texture texture = TextureUtils.createTexture(buffer, fontImage.getWidth(), fontImage.getHeight(), GL_LINEAR);
         FontAtlas fontAtlas = new FontAtlas(texture, font, antiAliasing, glyphMap);
         fontAtlasList.add(fontAtlas);
         return fontAtlas;

@@ -12,6 +12,7 @@ import fr.dwightstudio.dpt.engine.Engine;
 import fr.dwightstudio.dpt.engine.graphics.objects.Color;
 import fr.dwightstudio.dpt.engine.graphics.objects.FontAtlas;
 import fr.dwightstudio.dpt.engine.graphics.objects.Texture;
+import fr.dwightstudio.dpt.engine.graphics.objects.Transform;
 import fr.dwightstudio.dpt.engine.graphics.renderers.TextRenderer;
 import fr.dwightstudio.dpt.engine.graphics.utils.FontUtils;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
@@ -29,8 +30,8 @@ public class Label extends Component {
     private final FontAtlas fontAtlas;
     private Color color;
     private TextRenderer textRenderer = null;
-    private float xPosition;
-    private float yPosition;
+    private Transform transform;
+    private Transform lastTransform;
 
     private final int maxNumberOfChars;
 
@@ -273,10 +274,10 @@ public class Label extends Component {
     }
 
     /**
-     * @return the current position
+     * @return the Transform object
      */
-    public Vector2f getPosition() {
-        return new Vector2f(xPosition, yPosition);
+    public Transform getTransform() {
+        return this.transform;
     }
 
     /**
@@ -326,19 +327,6 @@ public class Label extends Component {
     }
 
     /**
-     * Set the new position of this label
-     *
-     * @param position a new position
-     */
-    public void setPosition(Vector2f position) {
-        if (position.x != this.xPosition || position.y != this.yPosition) {
-            this.xPosition = position.x;
-            this.yPosition = position.y;
-            this.dirty = true;
-        }
-    }
-
-    /**
      * Set the new color of this Label
      *
      * @param newColor the new color
@@ -371,12 +359,14 @@ public class Label extends Component {
      *
      * NOTE: You must call this only one time.
      *
-     * @param x the x position
-     * @param y the y position
+     * @param position the position of the Label
+     * @param scale the scale of the Label
      */
-    public void draw(float x, float y) {
-        this.xPosition = x;
-        this.yPosition = y;
+    public void draw(Vector2f position, Vector2f scale) {
+        this.transform = new Transform();
+        this.lastTransform = new Transform();
+        this.transform.position = position;
+        this.transform.scale = scale;
         this.textRenderer = new TextRenderer(this);
         this.textRenderer.init();
     }
@@ -385,6 +375,10 @@ public class Label extends Component {
     public void update(float dt) {
         if (this.textRenderer != null) {
             this.textRenderer.render();
+        }
+        if (!this.lastTransform.equals(this.transform)) {
+            this.lastTransform = this.transform.copy();
+            dirty = true;
         }
     }
 }

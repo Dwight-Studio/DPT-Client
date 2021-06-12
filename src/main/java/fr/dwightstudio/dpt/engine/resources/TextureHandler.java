@@ -14,6 +14,8 @@ import fr.dwightstudio.dpt.engine.graphics.utils.TextureUtils;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.lwjgl.opengl.GL11.GL_NEAREST;
+
 public class TextureHandler implements TypeHandler<Texture> {
 
     private static final Map<String, Texture> TEXTURES = new HashMap<>();
@@ -21,7 +23,7 @@ public class TextureHandler implements TypeHandler<Texture> {
     @Override
     public Texture get(String filepath) {
         if (!TEXTURES.containsKey(filepath)) {
-            Texture texture = TextureUtils.loadTexture(filepath);
+            Texture texture = TextureUtils.loadTexture(filepath, GL_NEAREST);
             if (texture != null) {
                 TEXTURES.put(filepath, texture);
             } else {
