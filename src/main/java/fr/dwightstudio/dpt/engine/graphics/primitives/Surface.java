@@ -187,6 +187,6 @@ public class Surface extends Component {
      * @return the center X and Y point of the Surface
      */
     public Vector2f getCenterPoint() {
-        return new Vector2f(transform.scale.x / 2, transform.scale.y / 2);
+        return new Vector2f((transform.scale.x + gameObject.getTransform().scale.x) / 2, (transform.scale.y + gameObject.getTransform().scale.y) / 2);
     }
 }

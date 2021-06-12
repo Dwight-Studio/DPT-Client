@@ -223,8 +223,8 @@ public class SurfaceRenderer implements Comparable<SurfaceRenderer> {
             }
         }
 
-        float x = -surface.getCenterPoint().x + surface.getTransform().scale.x;
-        float y = -surface.getCenterPoint().y + surface.getTransform().scale.y;
+        float x = -surface.getCenterPoint().x + surface.getTransform().scale.x + surface.gameObject.getTransform().scale.x;
+        float y = -surface.getCenterPoint().y + surface.getTransform().scale.y + surface.gameObject.getTransform().scale.y;
         // This will loop 4 times for the 4 vertices.
         for (int i = 0; i < 4; i++) {
             if (i == 1) {
@@ -232,7 +232,7 @@ public class SurfaceRenderer implements Comparable<SurfaceRenderer> {
             } else if (i == 2) {
                 x = -surface.getCenterPoint().x;
             } else if (i == 3) {
-                y = -surface.getCenterPoint().y + surface.getTransform().scale.y;
+                y = -surface.getCenterPoint().y + surface.getTransform().scale.y + surface.gameObject.getTransform().scale.y;
             }
 
             // Load the position

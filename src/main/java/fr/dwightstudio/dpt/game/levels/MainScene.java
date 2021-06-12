@@ -101,12 +101,8 @@ public class MainScene extends Scene implements EventListener {
         for (GameObject gameObject : this.gameObjects) {
             gameObject.update(dt);
         }
-        surface.getTransform().scale.y += 0.1;
-        surface.getTransform().scale.x += 0.1;
-        surface2.getTransform().setRotation(surface2.getTransform().getRotation(Transform.DEGREE) + 1, Transform.DEGREE);
 
-        fpsCounter.getTransform().scale.x += 0.01;
-        fpsCounter.getTransform().scale.y += 0.01;
+        surface2.getTransform().setRotation(surface2.getTransform().getRotation(Transform.DEGREE) + 1, Transform.DEGREE);
 
         if (count == 60) {
             fpsCounter.setText(Math.round(1.0f / dt) + " FPS");
@@ -116,6 +112,8 @@ public class MainScene extends Scene implements EventListener {
         }
 
         tiles.getTransform().position.x += 1;
+        tiles.getTransform().scale.x += 0.1;
+        tiles.getTransform().scale.y += 0.1;
         cursorPosX.setText(String.valueOf(MouseListener.getCursorPos().x));
         cursorPosY.setText(String.valueOf(MouseListener.getCursorPos().y));
 

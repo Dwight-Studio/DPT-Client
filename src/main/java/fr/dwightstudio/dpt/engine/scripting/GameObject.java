@@ -17,10 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 public class GameObject {
 
-    // TODO: Transform scale and Transform rotatino support
+    // TODO: Transform rotatino support
     private final String name;
     private final List<Component> components;
-    private Transform transform;
+    private final Transform transform;
     private Transform lastTransform;
     private final int zIndex;
 

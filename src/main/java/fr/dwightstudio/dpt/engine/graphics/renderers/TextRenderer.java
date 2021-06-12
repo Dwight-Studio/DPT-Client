@@ -141,8 +141,8 @@ public class TextRenderer {
         char character = this.characters[index];
         int offset = index * 4 * VERTEX_SIZE;
 
-        float x = this.cursorPosition + this.fontAtlas.getGlyph(character).getWidth() + this.label.getTransform().scale.x;
-        float y = this.label.getTransform().position.y +  this.fontAtlas.getGlyph(character).getHeight() + this.label.getTransform().scale.y;
+        float x = this.cursorPosition + this.fontAtlas.getGlyph(character).getWidth() + this.label.getTransform().scale.x + this.label.gameObject.getTransform().scale.x;
+        float y = this.label.getTransform().position.y +  this.fontAtlas.getGlyph(character).getHeight() + this.label.getTransform().scale.y + this.label.gameObject.getTransform().scale.y;
         // This will loop 4 times for the 4 vertices.
         for (int i = 0; i < 4; i++) {
             if (i == 1) {
@@ -150,7 +150,7 @@ public class TextRenderer {
             } else if (i == 2) {
                 x = this.cursorPosition;
             } else if (i == 3) {
-                y = this.label.getTransform().position.y + this.fontAtlas.getGlyph(character).getHeight() +  + this.label.getTransform().scale.y;
+                y = this.label.getTransform().position.y + this.fontAtlas.getGlyph(character).getHeight() +  + this.label.getTransform().scale.y + this.label.gameObject.getTransform().scale.y;
             }
 
             // Load the position
@@ -168,7 +168,7 @@ public class TextRenderer {
 
             offset += VERTEX_SIZE;
         }
-        this.cursorPosition += this.fontAtlas.getGlyph(character).getWidth() + this.label.getTransform().scale.x;
+        this.cursorPosition += this.fontAtlas.getGlyph(character).getWidth() + this.label.getTransform().scale.x + this.label.gameObject.getTransform().scale.x;
     }
 
     /**
