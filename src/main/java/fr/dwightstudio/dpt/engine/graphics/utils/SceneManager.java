@@ -23,7 +23,6 @@ public class SceneManager {
      *
      * @param scene a Scene
      */
-    // TODO: The Scene system should be modified to input a Scene instead of an ID
     public static void changeScene(Scene scene) {
         currentScene = scene;
         currentScene.init();

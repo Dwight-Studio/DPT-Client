@@ -134,9 +134,10 @@ public class SurfaceRenderer implements Comparable<SurfaceRenderer> {
     public void render() {
         boolean rebufferData = false;
         for (int i = 0; i < numberOfSurfaces; i++) {
-            if (surfaces[i].isDirty()) {
+            if (surfaces[i].isDirty() || surfaces[i].isGameObjectDirty()) {
                 loadVertexProperties(i);
                 surfaces[i].markClean();
+                surfaces[i].markGameObjectClean();
                 rebufferData = true;
             }
         }
@@ -235,8 +236,8 @@ public class SurfaceRenderer implements Comparable<SurfaceRenderer> {
             }
 
             // Load the position
-            vertices[offset] = (x * (float) Math.cos(surface.getTransform().getRotation(Transform.RADIAN)) - y * (float) Math.sin(surface.getTransform().getRotation(Transform.RADIAN))) + surface.getCenterPoint().x + surface.getTransform().position.x;
-            vertices[offset + 1] = (x * (float) Math.sin(surface.getTransform().getRotation(Transform.RADIAN)) + y * (float) Math.cos(surface.getTransform().getRotation(Transform.RADIAN))) + surface.getCenterPoint().y + surface.getTransform().position.y;
+            vertices[offset] = (x * (float) Math.cos(surface.getTransform().getRotation(Transform.RADIAN)) - y * (float) Math.sin(surface.getTransform().getRotation(Transform.RADIAN))) + surface.getCenterPoint().x + surface.getTransform().position.x + surface.gameObject.getTransform().position.x;
+            vertices[offset + 1] = (x * (float) Math.sin(surface.getTransform().getRotation(Transform.RADIAN)) + y * (float) Math.cos(surface.getTransform().getRotation(Transform.RADIAN))) + surface.getCenterPoint().y + surface.getTransform().position.y + surface.gameObject.getTransform().position.y;
 
             // Load the color
             vertices[offset + 2] = surface.getColor().getRed();

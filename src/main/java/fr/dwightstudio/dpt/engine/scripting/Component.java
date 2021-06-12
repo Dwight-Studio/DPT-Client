@@ -11,8 +11,18 @@ package fr.dwightstudio.dpt.engine.scripting;
 public abstract class Component {
 
     public GameObject gameObject = null;
+    private boolean gameObjectDirty = false;
 
     public void update(float dt) {}
+    protected void setGameobjectDirty() {
+        gameObjectDirty = true;
+    }
+    public void markGameObjectClean() {
+        gameObjectDirty = false;
+    }
+    public boolean isGameObjectDirty() {
+        return gameObjectDirty;
+    }
     public void remove() {}
 
     public void init() {}

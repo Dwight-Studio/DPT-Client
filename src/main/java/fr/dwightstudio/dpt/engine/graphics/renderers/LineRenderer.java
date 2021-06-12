@@ -11,6 +11,7 @@ package fr.dwightstudio.dpt.engine.graphics.renderers;
 import fr.dwightstudio.dpt.engine.graphics.primitives.Line;
 import fr.dwightstudio.dpt.engine.graphics.objects.Shader;
 import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
+import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.engine.resources.ResourceManager;
 
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
@@ -105,9 +106,10 @@ public class LineRenderer {
     public void render() {
         boolean rebufferData = false;
         for (int i = 0; i < numberOfLines; i++) {
-            if (lines[i].isDirty()) {
+            if (lines[i].isDirty() || lines[i].isGameObjectDirty()) {
                 loadVertexProperties(i);
                 lines[i].markClean();
+                lines[i].markGameObjectClean();
                 rebufferData = true;
             }
         }
@@ -152,8 +154,8 @@ public class LineRenderer {
             }
 
             // Load the position
-            vertices[offset] = x;
-            vertices[offset + 1] = y;
+            vertices[offset] = x + line.getTransform().position.x + line.gameObject.getTransform().position.x;
+            vertices[offset + 1] = y + line.getTransform().position.y + line.gameObject.getTransform().position.y;
 
             // Load the color
             vertices[offset + 2] = line.getColor().getRed();

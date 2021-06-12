@@ -31,7 +31,6 @@ public class TextureUtils {
      * @param filepath the image filepath
      * @return a Texture
      */
-    // TODO: Add something to support more formats
     public static Texture loadTexture(String filepath) {
         ByteBuffer texture = stbi_load(filepath, width, height, nbChannel, 4);
         if (texture == null) {

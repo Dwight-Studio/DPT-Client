@@ -10,6 +10,7 @@ package fr.dwightstudio.dpt.engine.graphics.primitives;
 
 import fr.dwightstudio.dpt.engine.Engine;
 import fr.dwightstudio.dpt.engine.graphics.objects.Color;
+import fr.dwightstudio.dpt.engine.graphics.objects.Transform;
 import fr.dwightstudio.dpt.engine.scripting.Component;
 import org.joml.Vector2f;
 
@@ -19,6 +20,8 @@ public class Line extends Component {
     private Vector2f endPosition;
     private float thickness;
     private Color color;
+    private final Transform transform;
+    private Transform lastTransform;
     private boolean dirty = true;
 
     /**
@@ -34,6 +37,8 @@ public class Line extends Component {
         this.endPosition = endPosition;
         this.color = color;
         this.thickness = thickness;
+        this.transform = new Transform();
+        this.lastTransform = new Transform();
     }
 
     /**
@@ -48,6 +53,8 @@ public class Line extends Component {
         this.endPosition = endPosition;
         this.color = color;
         this.thickness = 1.0f;
+        this.transform = new Transform();
+        this.lastTransform = new Transform();
     }
 
     /**
@@ -62,6 +69,8 @@ public class Line extends Component {
         this.endPosition = endPosition;
         this.color = Engine.COLORS.BLACK;
         this.thickness = thickness;
+        this.transform = new Transform();
+        this.lastTransform = new Transform();
     }
 
     /**
@@ -75,6 +84,16 @@ public class Line extends Component {
         this.endPosition = endPosition;
         this.color = Engine.COLORS.BLACK;
         this.thickness = 1.0f;
+        this.transform = new Transform();
+        this.lastTransform = new Transform();
+    }
+
+    @Override
+    public void update(float dt) {
+        if (!this.lastTransform.equals(this.transform)) {
+            this.lastTransform = this.transform.copy();
+            dirty = true;
+        }
     }
 
     /**
@@ -103,6 +122,20 @@ public class Line extends Component {
      */
     public float getThickness() {
         return thickness;
+    }
+
+    /**
+     * @return the Line Transform
+     */
+    public Transform getTransform() {
+        return this.transform;
+    }
+
+    /**
+     * @return the X and Y center point of the Line
+     */
+    public Vector2f getCenterPoints() {
+        return new Vector2f((this.endPosition.x - this.startPosition.x) / 2, this.thickness / 2);
     }
 
     /**

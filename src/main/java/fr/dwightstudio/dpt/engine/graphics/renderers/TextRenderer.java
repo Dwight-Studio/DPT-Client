@@ -99,12 +99,13 @@ public class TextRenderer {
     public void render() {
         this.cursorPosition = this.label.getPosition().x;
         boolean rebufferData = false;
-        if (this.label.isDirty()) {
+        if (this.label.isDirty() || this.label.isGameObjectDirty()) {
             this.characters = this.label.getText().toCharArray();
             for (int i = 0; i < this.characters.length; i++) {
                 loadVertexProperties(i);
             }
             this.label.markClean();
+            this.label.markGameObjectClean();
             rebufferData = true;
         }
 
@@ -153,8 +154,8 @@ public class TextRenderer {
             }
 
             // Load the position
-            vertices[offset] = x;
-            vertices[offset + 1] = y;
+            vertices[offset] = x + this.label.gameObject.getTransform().position.x;
+            vertices[offset + 1] = y + this.label.gameObject.getTransform().position.y;
 
             // Load the color
             vertices[offset + 2] = this.label.getColor().getRed();

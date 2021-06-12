@@ -50,6 +50,8 @@ public class MainScene extends Scene implements EventListener {
     private Label fpsCounter;
     FontAtlas fontAtlas;
 
+    private Line line = new Line(new Vector2f(0, 300), new Vector2f(300, 300), Engine.COLORS.GREEN, 4.0f);
+
     private int count = 0;
 
     public MainScene() { }
@@ -94,7 +96,7 @@ public class MainScene extends Scene implements EventListener {
         tiles.addComponent(surface2);
         surface.setTexture(spritesheet.getSprite(0).getTexture());
         surface.setTextureCoords(spritesheet.getSprite(0).getTextureCoords());
-        tiles.addComponent(new Line(new Vector2f(0, 300), new Vector2f(300, 300), Engine.COLORS.GREEN, 4.0f));
+        tiles.addComponent(line);
         tiles.addComponent(new Surface(new Vector2f(200, 200), new Vector2f(64, 64), ResourceManager.<Texture>get("./src/main/resources/textures/test.png")));
         tiles.addComponent(button);
         tiles.addComponent(checkbox);
@@ -118,12 +120,12 @@ public class MainScene extends Scene implements EventListener {
 
         if (count == 60) {
             fpsCounter.setText(Math.round(1.0f / dt) + " FPS");
-            tiles.getTransform().position.x += 1;
             count = 0;
         } else {
             count++;
         }
 
+        tiles.getTransform().position.x += 1;
         cursorPosX.setText(String.valueOf(MouseListener.getCursorPos().x));
         cursorPosY.setText(String.valueOf(MouseListener.getCursorPos().y));
 

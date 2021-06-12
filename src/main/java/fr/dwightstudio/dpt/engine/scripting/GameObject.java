@@ -17,11 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 public class GameObject {
 
-    // TODO: The Transform object has no effect because it has never been implemented
+    // TODO: Transform scale and Transform rotatino support
     private final String name;
     private final List<Component> components;
-    public Transform transform;
+    private Transform transform;
+    private Transform lastTransform;
     private final int zIndex;
+
+    private boolean dirty = true;
 
     /**
      * Create a GameObject
@@ -33,6 +36,7 @@ public class GameObject {
         this.name = name;
         this.components = new ArrayList<>();
         this.transform = new Transform();
+        this.lastTransform = new Transform();
         this.zIndex = 0;
         GameLogger.getLogger("GameObject").debug(MessageFormat.format("Created GameObject : \"{0}\"", name));
     }
@@ -48,6 +52,7 @@ public class GameObject {
         this.name = name;
         this.components = new ArrayList<>();
         this.transform = transform;
+        this.lastTransform = new Transform();
         this.zIndex = 0;
         GameLogger.getLogger("GameObject").debug(MessageFormat.format("Create GameObject : \"{0}\"", name));
     }
@@ -63,6 +68,7 @@ public class GameObject {
         this.name = name;
         this.components = new ArrayList<>();
         this.transform = new Transform();
+        this.lastTransform = new Transform();
         this.zIndex = zIndex;
         GameLogger.getLogger("GameObject").debug(MessageFormat.format("Create GameObject : \"{0}\" with zIndex : {1}", name, zIndex));
     }
@@ -79,6 +85,7 @@ public class GameObject {
         this.name = name;
         this.components = new ArrayList<>();
         this.transform = transform;
+        this.lastTransform = new Transform();
         this.zIndex = zIndex;
         GameLogger.getLogger("GameObject").debug(MessageFormat.format("Create GameObject : \"{0}\" with zIndex : {1}", name, zIndex));
     }
@@ -160,9 +167,17 @@ public class GameObject {
      * @param dt the delta time
      */
     public void update(float dt) {
+        if (!this.lastTransform.equals(this.transform)) {
+            this.lastTransform = this.transform.copy();
+            dirty = true;
+        }
         for (Component component : components) {
             component.update(dt);
+            if (dirty) {
+                component.setGameobjectDirty();
+            }
         }
+        dirty = false;
     }
 
     /**
@@ -194,5 +209,19 @@ public class GameObject {
      */
     public int getzIndex() {
         return zIndex;
+    }
+
+    /**
+     * @return the value of the dirty flag
+     */
+    public boolean isDirty() {
+        return this.dirty;
+    }
+
+    /**
+     * Mark the dirty flag as clean
+     */
+    public void markClean() {
+        this.dirty = false;
     }
 }
