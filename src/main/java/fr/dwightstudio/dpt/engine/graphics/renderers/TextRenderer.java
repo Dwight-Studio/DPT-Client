@@ -13,6 +13,7 @@ import fr.dwightstudio.dpt.engine.graphics.objects.FontAtlas;
 import fr.dwightstudio.dpt.engine.graphics.objects.Shader;
 import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
 import fr.dwightstudio.dpt.engine.resources.ResourceManager;
+import org.jetbrains.annotations.NotNull;
 
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL15.*;
@@ -20,7 +21,7 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
-public class TextRenderer {
+public class TextRenderer extends Renderers {
     // This TextRenderer will take an Array of char and create vertices to render it
     // The vertices array will look like this :
     // Position         Color                   TextureCoords
@@ -38,6 +39,7 @@ public class TextRenderer {
     private final Shader shader;
     private final Label label;
     private final float[] vertices;
+    private final int zindex;
 
     private char[] characters;
     private float cursorPosition;
@@ -50,12 +52,14 @@ public class TextRenderer {
      *
      * @param label a Label
      */
-    public TextRenderer(Label label) {
+    public TextRenderer(Label label, int zindex) {
         this.label = label;
         this.fontAtlas = label.getFontAtlas();
         this.characters = label.getText().toCharArray();
         ResourceManager.load("./src/main/resources/shaders/text.glsl", Shader.class);
         this.shader = ResourceManager.get("./src/main/resources/shaders/text.glsl");
+        this.zindex = zindex;
+        m_zIndex = zindex;
 
         this.vertices = new float[this.label.getMaxNumberOfChars() * 4 * VERTEX_SIZE];
         this.cursorPosition = this.label.getTransform().position.x;
@@ -82,14 +86,14 @@ public class TextRenderer {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObjectID);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
 
-        glVertexAttribPointer(glGetAttribLocation(shader.getProgramID(), "vPos"), POSITION_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, POSITION_OFFSET);
-        glEnableVertexAttribArray(glGetAttribLocation(shader.getProgramID(), "vPos"));
+        glVertexAttribPointer(0, POSITION_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, POSITION_OFFSET);
+        glEnableVertexAttribArray(0);
 
-        glVertexAttribPointer(glGetAttribLocation(shader.getProgramID(), "vColor"), COLOR_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, COLOR_OFFSET);
-        glEnableVertexAttribArray(glGetAttribLocation(shader.getProgramID(), "vColor"));
+        glVertexAttribPointer(1, COLOR_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, COLOR_OFFSET);
+        glEnableVertexAttribArray(1);
 
-        glVertexAttribPointer(glGetAttribLocation(shader.getProgramID(), "vTextureCoords"), TEXTURE_COORDS_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, TEXTURE_COORDS_OFFSET);
-        glEnableVertexAttribArray(glGetAttribLocation(shader.getProgramID(), "vTextureCoords"));
+        glVertexAttribPointer(2, TEXTURE_COORDS_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, TEXTURE_COORDS_OFFSET);
+        glEnableVertexAttribArray(2);
     }
 
     /**
@@ -141,6 +145,7 @@ public class TextRenderer {
         char character = this.characters[index];
         int offset = index * 4 * VERTEX_SIZE;
 
+        // TODO: The text is not scaling uniformly
         float x = this.cursorPosition + this.fontAtlas.getGlyph(character).getWidth() + this.label.getTransform().scale.x + this.label.gameObject.getTransform().scale.x;
         float y = this.label.getTransform().position.y +  this.fontAtlas.getGlyph(character).getHeight() + this.label.getTransform().scale.y + this.label.gameObject.getTransform().scale.y;
         // This will loop 4 times for the 4 vertices.
@@ -200,4 +205,8 @@ public class TextRenderer {
         return elements;
     }
 
+    @Override
+    public int compareTo(@NotNull Renderers renderer) {
+        return Integer.compare(this.zindex, renderer.m_zIndex);
+    }
 }

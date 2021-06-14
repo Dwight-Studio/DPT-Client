@@ -43,7 +43,7 @@ public class ResourceManager {
             try {
                 return (T) RESOURCES.get(filepath).get();
             } catch (ClassCastException ignored) {
-                GameLogger.getLogger("ResourceManager").error(MessageFormat.format("Trying to get unloaded resource '{0}'", filepath));
+                GameLogger.getLogger("ResourceManager").error(MessageFormat.format("Trying to get unloaded resource \"{0}\"", filepath));
                 return null;
             }
         }

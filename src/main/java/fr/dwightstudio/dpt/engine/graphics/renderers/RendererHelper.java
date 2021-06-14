@@ -8,6 +8,7 @@
 
 package fr.dwightstudio.dpt.engine.graphics.renderers;
 
+import fr.dwightstudio.dpt.engine.graphics.gui.Label;
 import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
 import fr.dwightstudio.dpt.engine.scripting.GameObject;
 
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class RendererHelper {
     private int maxBatchSize = 1000;
-    private List<SurfaceRenderer> surfaceRenderers;
+    private final List<Renderers> renderers;
 
     /**
      * Create a new RendererHelper
@@ -26,7 +27,7 @@ public class RendererHelper {
      * renderer Surfaces, Lines etc...
      */
     public RendererHelper() {
-        this.surfaceRenderers = new ArrayList<>();
+        this.renderers = new ArrayList<>();
     }
 
     /**
@@ -41,6 +42,12 @@ public class RendererHelper {
                 add(surface, gameObject);
             }
         }
+        List<Label> labels = gameObject.getComponents(Label.class);
+        for (Label label : labels) {
+            if (label.getTextRenderer() != null) {
+                this.renderers.add(label.getTextRenderer());
+            }
+        }
     }
 
     /**
@@ -51,19 +58,21 @@ public class RendererHelper {
      */
     private void add(Surface surface, GameObject gameObject) {
         boolean added = false;
-        for (SurfaceRenderer batch : surfaceRenderers) {
-            if (batch.hasRoom() && batch.getzIndex() == gameObject.getzIndex()) {
-                batch.addSurface(surface);
-                added = true;
+        for (Renderers renderer : renderers) {
+            if (renderer instanceof SurfaceRenderer) {
+                SurfaceRenderer surfaceRenderer = (SurfaceRenderer) renderer;
+                if (surfaceRenderer.hasRoom() && surfaceRenderer.getzIndex() == gameObject.getzIndex()) {
+                    surfaceRenderer.addSurface(surface);
+                    added = true;
+                }
             }
         }
 
         if (!added) {
             SurfaceRenderer surfaceRenderer = new SurfaceRenderer(maxBatchSize, gameObject.getzIndex());
             surfaceRenderer.start();
-            surfaceRenderers.add(surfaceRenderer);
+            renderers.add(surfaceRenderer);
             surfaceRenderer.addSurface(surface);
-            Collections.sort(surfaceRenderers);
         }
     }
 
@@ -71,8 +80,9 @@ public class RendererHelper {
      * This is called every frame to render all objects contained into every Renderers
      */
     public void render() {
-        for (SurfaceRenderer surfaceRenderer : surfaceRenderers) {
-            surfaceRenderer.render();
+        Collections.sort(renderers);
+        for (Renderers renderer : renderers) {
+            renderer.render();
         }
     }
 

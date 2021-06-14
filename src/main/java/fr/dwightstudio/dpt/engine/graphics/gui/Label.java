@@ -32,6 +32,7 @@ public class Label extends Component {
     private TextRenderer textRenderer = null;
     private Transform transform;
     private Transform lastTransform;
+    private int zindex;
 
     private final int maxNumberOfChars;
 
@@ -304,6 +305,17 @@ public class Label extends Component {
     }
 
     /**
+     * @return the TextRenderer assiocated with the Label, null if not drawn on screen.
+     */
+    public TextRenderer getTextRenderer() {
+        if (this.textRenderer != null) {
+            return this.textRenderer;
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Set the new font of this label
      *
      * @param newFont a font
@@ -367,7 +379,25 @@ public class Label extends Component {
         this.lastTransform = new Transform();
         this.transform.position = position;
         this.transform.scale = scale;
-        this.textRenderer = new TextRenderer(this);
+        this.textRenderer = new TextRenderer(this, 0);
+        this.textRenderer.init();
+    }
+
+    /**
+     * Draw this Label on the screen
+     *
+     * NOTE: You must call this only one time.
+     *
+     * @param position the position of the Label
+     * @param scale the scale of the Label
+     * @param zindex the z level of the TextRenderer
+     */
+    public void draw(Vector2f position, Vector2f scale, int zindex) {
+        this.transform = new Transform();
+        this.lastTransform = new Transform();
+        this.transform.position = position;
+        this.transform.scale = scale;
+        this.textRenderer = new TextRenderer(this, zindex);
         this.textRenderer.init();
     }
 

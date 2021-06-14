@@ -12,19 +12,20 @@ import fr.dwightstudio.dpt.engine.graphics.objects.FontAtlas;
 import fr.dwightstudio.dpt.engine.graphics.objects.Glyph;
 import fr.dwightstudio.dpt.engine.graphics.objects.Texture;
 import org.lwjgl.BufferUtils;
-import org.lwjgl.system.MemoryUtil;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.lwjgl.opengl.GL11.GL_LINEAR;
 
 public class FontUtils {
 
-    private static List<FontAtlas> fontAtlasList = new ArrayList<>();
+    private static final List<FontAtlas> fontAtlasList = new ArrayList<>();
 
     /**
      * Create a FontAtlas with a Font
@@ -35,7 +36,7 @@ public class FontUtils {
      */
     public static FontAtlas createFontAtlas(Font font, boolean antiAliasing) {
         for (FontAtlas fontAtlas : fontAtlasList) {
-            if (fontAtlas.getFont().equals(font) && fontAtlas.isAntiAliasing() == antiAliasing) {
+            if (fontAtlas.getFont().equals(font) && fontAtlas.isAntiAliasing() == antiAliasing && font.getSize() == fontAtlas.getFont().getSize()) {
                 return fontAtlas;
             }
         }

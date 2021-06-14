@@ -11,8 +11,8 @@ package fr.dwightstudio.dpt.engine.graphics.renderers;
 import fr.dwightstudio.dpt.engine.graphics.objects.Shader;
 import fr.dwightstudio.dpt.engine.graphics.objects.Texture;
 import fr.dwightstudio.dpt.engine.graphics.objects.Transform;
-import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
 import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
+import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
 import fr.dwightstudio.dpt.engine.resources.ResourceManager;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,7 +24,7 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
-public class SurfaceRenderer implements Comparable<SurfaceRenderer> {
+public class SurfaceRenderer extends Renderers {
     // This is what the array should looks like:
     //
     // Position                Color                    TextureCoords   TextureID
@@ -70,6 +70,7 @@ public class SurfaceRenderer implements Comparable<SurfaceRenderer> {
 
         this.batchSize = batchSize;
         this.zIndex = zIndex;
+        m_zIndex = zIndex;
         ResourceManager.load("./src/main/resources/shaders/default.glsl", Shader.class);
         this.shader = ResourceManager.get("./src/main/resources/shaders/default.glsl");
         this.vertices = new float[batchSize * 4 * VERTEX_SIZE]; // The 4 is the number of vertices per quads
@@ -98,17 +99,17 @@ public class SurfaceRenderer implements Comparable<SurfaceRenderer> {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObjectID);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
 
-        glVertexAttribPointer(glGetAttribLocation(shader.getProgramID(), "vPos"), POSITION_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, POSITION_OFFSET);
-        glEnableVertexAttribArray(glGetAttribLocation(shader.getProgramID(), "vPos"));
+        glVertexAttribPointer(0, POSITION_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, POSITION_OFFSET);
+        glEnableVertexAttribArray(0);
 
-        glVertexAttribPointer(glGetAttribLocation(shader.getProgramID(), "vColor"), COLOR_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, COLOR_OFFSET);
-        glEnableVertexAttribArray(glGetAttribLocation(shader.getProgramID(), "vColor"));
+        glVertexAttribPointer(1, COLOR_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, COLOR_OFFSET);
+        glEnableVertexAttribArray(1);
 
-        glVertexAttribPointer(glGetAttribLocation(shader.getProgramID(), "vTextureCoords"), TEXTURE_COORDS_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, TEXTURE_COORDS_OFFSET);
-        glEnableVertexAttribArray(glGetAttribLocation(shader.getProgramID(), "vTextureCoords"));
+        glVertexAttribPointer(2, TEXTURE_COORDS_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, TEXTURE_COORDS_OFFSET);
+        glEnableVertexAttribArray(2);
 
-        glVertexAttribPointer(glGetAttribLocation(shader.getProgramID(), "vTextureID"), TEXTURE_ID_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, TEXTURE_ID_OFFSET);
-        glEnableVertexAttribArray(glGetAttribLocation(shader.getProgramID(), "vTextureID"));
+        glVertexAttribPointer(3, TEXTURE_ID_SIZE, GL_FLOAT, false, VERTEX_SIZE * Float.BYTES, TEXTURE_ID_OFFSET);
+        glEnableVertexAttribArray(3);
     }
 
     /**
@@ -277,7 +278,7 @@ public class SurfaceRenderer implements Comparable<SurfaceRenderer> {
     }
 
     @Override
-    public int compareTo(@NotNull SurfaceRenderer surfaceRenderer) {
-        return Integer.compare(this.zIndex, surfaceRenderer.zIndex);
+    public int compareTo(@NotNull Renderers renderer) {
+        return Integer.compare(this.zIndex, renderer.m_zIndex);
     }
 }

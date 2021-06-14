@@ -10,11 +10,11 @@ package fr.dwightstudio.dpt.engine.scripting;
 
 import fr.dwightstudio.dpt.engine.graphics.objects.Transform;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
-import org.joml.Vector2f;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 public class GameObject {
 
     // TODO: Transform rotatino support
@@ -209,19 +209,5 @@ public class GameObject {
      */
     public int getzIndex() {
         return zIndex;
-    }
-
-    /**
-     * @return the value of the dirty flag
-     */
-    public boolean isDirty() {
-        return this.dirty;
-    }
-
-    /**
-     * Mark the dirty flag as clean
-     */
-    public void markClean() {
-        this.dirty = false;
     }
 }

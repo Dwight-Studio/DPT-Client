@@ -121,6 +121,30 @@ public class GLFWWindow {
      */
     private void loop() {
 
+        /*int frameBufferObject;
+        frameBufferObject = glGenFramebuffers();
+        glBindFramebuffer(GL_FRAMEBUFFER, frameBufferObject);
+
+        int textureBuffer;
+        textureBuffer = glGenTextures();
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, GLFWWindow.getWidth(), GLFWWindow.getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+        glBindTexture(GL_TEXTURE_2D, 0); // Unbinding any texture at the end to make sure it is not modified after
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureBuffer, 0);
+
+        int renderBufferObject;
+        renderBufferObject = glGenRenderbuffers();
+        glBindRenderbuffer(GL_RENDERBUFFER, renderBufferObject);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT32, GLFWWindow.getWidth(), GLFWWindow.getHeight());
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, renderBufferObject);
+        glBindRenderbuffer(GL_RENDERBUFFER, 0);
+
+        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+            GameLogger.getLogger("GLFWWindow").error("The Framebuffer is not complete");
+        }
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);*/
+
         SceneManager.changeScene(new MainScene()); // By default the MainScene is instanciated
 
         float beginTime = Time.getDeltaTime();
@@ -130,11 +154,13 @@ public class GLFWWindow {
         while (!glfwWindowShouldClose(window)) {
             glfwPollEvents(); // The key callback will be invoked only during this call
 
+            //glBindFramebuffer(GL_FRAMEBUFFER, frameBufferObject);
             glClear(GL_COLOR_BUFFER_BIT); // Clear the framebuffer
 
             if (dt >= 0) {
                 SceneManager.getCurrentScene().update(dt);
             }
+            //glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
             glfwSwapBuffers(window); // Swap the color buffers
 
