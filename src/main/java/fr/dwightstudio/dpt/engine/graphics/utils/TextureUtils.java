@@ -19,6 +19,7 @@ import java.text.MessageFormat;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.stb.STBImage.stbi_image_free;
 import static org.lwjgl.stb.STBImage.stbi_load;
+import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class TextureUtils {
 
@@ -114,6 +115,16 @@ public class TextureUtils {
             return new Texture(width, height, id, 4, null); // Since we are creating a PNG image, there is four channels
         }
         return null;
+    }
+
+    public static Texture createTexture(int width, int height, float param) {
+        int id = glGenTextures();
+        glBindTexture(GL_TEXTURE_2D, id);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, param);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, param);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+        glBindTexture(GL_TEXTURE_2D, 0);
+        return new Texture(width, height, id, 3, null);
     }
 
     /**

@@ -50,6 +50,7 @@ public class MainScene extends Scene implements EventListener {
     @Override
     public void init() {
         camera = new Camera(new Vector2f());
+        //framebuffer = new Framebuffer(0, 0, GLFWWindow.getWidth(), GLFWWindow.getHeight(), GLFWWindow.getWidth() / 2, GLFWWindow.getHeight() / 2);
         GameObject otherOne = new GameObject("otherOne", 1);
         ResourceManager.load("./src/main/resources/textures/test.png", Texture.class);
         ResourceManager.load("./src/main/resources/textures/sheet.png", Spritesheet.class);
@@ -94,7 +95,7 @@ public class MainScene extends Scene implements EventListener {
         tiles.addComponent(checkbox);
         tiles.addComponent(checkbox2);
         otherOne.addComponent(surface3);
-        setBackgroundColor(Engine.COLORS.WHITE);
+        setBackgroundColor(Engine.COLORS.BLACK);
         this.addGameObject(tiles);
         this.addGameObject(otherOne);
         this.addGameObject(background);
@@ -102,6 +103,7 @@ public class MainScene extends Scene implements EventListener {
 
     @Override
     public void update(float dt) {
+        //framebuffer.bind();
         for (GameObject gameObject : this.gameObjects) {
             gameObject.update(dt);
         }
@@ -119,5 +121,7 @@ public class MainScene extends Scene implements EventListener {
         cursorPosY.setText(String.valueOf(MouseListener.getCursorPos().y));
 
         rendererHelper.render();
+        /*framebuffer.unbind();
+        framebuffer.render();*/
     }
 }

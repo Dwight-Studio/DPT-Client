@@ -8,8 +8,10 @@
 
 package fr.dwightstudio.dpt.engine.scripting;
 
+import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
 import fr.dwightstudio.dpt.engine.graphics.objects.Camera;
 import fr.dwightstudio.dpt.engine.graphics.objects.Color;
+import fr.dwightstudio.dpt.engine.graphics.objects.Framebuffer;
 import fr.dwightstudio.dpt.engine.graphics.renderers.RendererHelper;
 import org.joml.Vector2f;
 
@@ -24,6 +26,7 @@ public abstract class Scene {
     private boolean isRunning = false;
     protected List<GameObject> gameObjects = new ArrayList<>();
     protected RendererHelper rendererHelper = new RendererHelper();
+    protected Framebuffer framebuffer;
 
     /**
      * Create a new Scene
