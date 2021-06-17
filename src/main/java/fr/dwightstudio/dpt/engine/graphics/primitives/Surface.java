@@ -8,7 +8,7 @@
 
 package fr.dwightstudio.dpt.engine.graphics.primitives;
 
-import fr.dwightstudio.dpt.engine.Engine;
+import fr.dwightstudio.dpt.engine.DSEngine;
 import fr.dwightstudio.dpt.engine.graphics.objects.Color;
 import fr.dwightstudio.dpt.engine.graphics.objects.Texture;
 import fr.dwightstudio.dpt.engine.graphics.objects.Transform;
@@ -36,7 +36,7 @@ public class Surface extends Component {
      * @param textureCoords the Texture coordinates to get on the given Texture
      */
     public Surface(Vector2f position, Vector2f scale, Texture texture, Vector2f[] textureCoords) {
-        this.color = Engine.COLORS.WHITE;
+        this.color = DSEngine.COLORS.WHITE;
         this.transform.position = position;
         this.transform.scale = scale;
         this.lastTransform = new Transform();
@@ -73,7 +73,7 @@ public class Surface extends Component {
      * @param texture the Surface Texture
      */
     public Surface(Vector2f position, Vector2f scale, Texture texture) {
-        this.color = Engine.COLORS.WHITE;
+        this.color = DSEngine.COLORS.WHITE;
         this.transform.position = position;
         this.transform.scale = scale;
         this.lastTransform = new Transform();
@@ -87,7 +87,7 @@ public class Surface extends Component {
     }
 
     @Override
-    public void update(float dt) {
+    public void update(double dt) {
         if (!this.lastTransform.equals(this.transform)) {
             this.lastTransform = this.transform.copy();
             dirty = true;

@@ -8,7 +8,7 @@
 
 package fr.dwightstudio.dpt.game.levels;
 
-import fr.dwightstudio.dpt.engine.Engine;
+import fr.dwightstudio.dpt.engine.DSEngine;
 import fr.dwightstudio.dpt.engine.events.EventListener;
 import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
 import fr.dwightstudio.dpt.engine.graphics.gui.Button;
@@ -34,7 +34,7 @@ public class MainScene extends Scene implements EventListener {
     GameObject tiles = new GameObject("tiles", 2);
     GameObject background = new GameObject("background", -1);
 
-    private final Surface surface = new Surface(new Vector2f(0, 0), new Vector2f(64, 64), Engine.COLORS.WHITE);
+    private final Surface surface = new Surface(new Vector2f(0, 0), new Vector2f(64, 64), DSEngine.COLORS.WHITE);
     private final Surface surface2 = new Surface(new Vector2f(100, 100), new Vector2f(64, 10), new Color(0, 1, 0, 0.5f));
     private final Surface surface3 = new Surface(new Vector2f(132, 100), new Vector2f(64, 64), new Color(1, 0, 0, 0.5f));
 
@@ -50,7 +50,7 @@ public class MainScene extends Scene implements EventListener {
     @Override
     public void init() {
         camera = new Camera(new Vector2f());
-        //framebuffer = new Framebuffer(0, 0, GLFWWindow.getWidth(), GLFWWindow.getHeight(), GLFWWindow.getWidth() / 2, GLFWWindow.getHeight() / 2);
+        framebuffer = new Framebuffer(0, 0, GLFWWindow.getWidth(), GLFWWindow.getHeight(), GLFWWindow.getWidth() / 2, GLFWWindow.getHeight() / 2);
         GameObject otherOne = new GameObject("otherOne", 1);
         ResourceManager.load("./src/main/resources/textures/test.png", Texture.class);
         ResourceManager.load("./src/main/resources/textures/sheet.png", Spritesheet.class);
@@ -73,7 +73,7 @@ public class MainScene extends Scene implements EventListener {
         Checkbox checkbox2 = new Checkbox(new Vector2f(800, 300), new Vector2f(64, 64), ResourceManager.<Spritesheet>get("./src/main/resources/textures/checkboxSheet.png"));
 
 
-        this.fpsCounter = new Label("FPS", fontAtlas, Engine.COLORS.PURPLE);
+        this.fpsCounter = new Label("FPS", fontAtlas, DSEngine.COLORS.PURPLE);
         this.cursorPosX = new Label("X", fontAtlas);
         this.cursorPosY = new Label("Y", fontAtlas);
         this.fpsCounter.draw(new Vector2f(0, GLFWWindow.getHeight() - this.fpsCounter.getFontAtlas().getTexture().getHeight()), new Vector2f(0, 0));
@@ -95,15 +95,15 @@ public class MainScene extends Scene implements EventListener {
         tiles.addComponent(checkbox);
         tiles.addComponent(checkbox2);
         otherOne.addComponent(surface3);
-        setBackgroundColor(Engine.COLORS.BLACK);
+        setBackgroundColor(DSEngine.COLORS.BLACK);
         this.addGameObject(tiles);
         this.addGameObject(otherOne);
         this.addGameObject(background);
     }
 
     @Override
-    public void update(float dt) {
-        //framebuffer.bind();
+    public void update(double dt) {
+        framebuffer.bind();
         for (GameObject gameObject : this.gameObjects) {
             gameObject.update(dt);
         }
@@ -121,7 +121,6 @@ public class MainScene extends Scene implements EventListener {
         cursorPosY.setText(String.valueOf(MouseListener.getCursorPos().y));
 
         rendererHelper.render();
-        /*framebuffer.unbind();
-        framebuffer.render();*/
+        framebuffer.unbind();
     }
 }

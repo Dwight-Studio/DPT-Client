@@ -51,7 +51,7 @@ public abstract class Scene {
 
     }
 
-    public abstract void update(float dt);
+    public abstract void update(double dt);
 
     /**
      * Add a GameObject to the Scene

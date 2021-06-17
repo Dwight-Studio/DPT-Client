@@ -13,7 +13,7 @@ public abstract class Component {
     public GameObject gameObject = null;
     private boolean gameObjectDirty = false;
 
-    public void update(float dt) {}
+    public void update(double dt) {}
     protected void setGameobjectDirty() {
         gameObjectDirty = true;
     }

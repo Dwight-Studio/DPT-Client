@@ -10,10 +10,9 @@ package fr.dwightstudio.dpt;
 
 import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
 import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
-import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.game.levels.MainScene;
 
-import static fr.dwightstudio.dpt.engine.Engine.WINDOWED;
+import static fr.dwightstudio.dpt.engine.DSEngine.WINDOWED;
 
 public class DPT {
 
@@ -21,6 +20,8 @@ public class DPT {
 
     public void run(){
         window.init();
+        SceneManager.changeScene(new MainScene());
+        window.startLoop();
     }
 
     public static void main(String[] args){

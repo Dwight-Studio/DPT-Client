@@ -1,0 +1,3 @@
+[submodule "src/main/java/fr/dwightstudio/dpt/DSEngine"]
+	path = src/main/java/fr/dwightstudio/dpt/DSEngine
+	url = https://github.com/Dwight-Studio/DSEngine.git

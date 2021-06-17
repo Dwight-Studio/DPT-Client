@@ -27,7 +27,7 @@ public class TestScene extends Scene {
     }
 
     @Override
-    public void update(float dt) {
+    public void update(double dt) {
         for (GameObject gameObject : this.gameObjects) {
             gameObject.update(dt);
         }

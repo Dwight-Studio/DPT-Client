@@ -166,7 +166,7 @@ public class GameObject {
      *
      * @param dt the delta time
      */
-    public void update(float dt) {
+    public void update(double dt) {
         if (!this.lastTransform.equals(this.transform)) {
             this.lastTransform = this.transform.copy();
             dirty = true;

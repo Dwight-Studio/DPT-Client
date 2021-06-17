@@ -9,6 +9,7 @@
 package fr.dwightstudio.dpt.engine.graphics.objects;
 
 import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
+import fr.dwightstudio.dpt.engine.graphics.utils.FramebufferManager;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
 import fr.dwightstudio.dpt.engine.resources.ResourceManager;
 
@@ -119,6 +120,7 @@ public class Framebuffer {
 
         shader.bind();
         shader.uploadInt("screenTexture", 9); // We are using the GL_TEXTURE9 because it is unused
+        FramebufferManager.add(this);
     }
 
     public void render() {

@@ -8,10 +8,9 @@
 
 package fr.dwightstudio.dpt.engine.graphics.gui;
 
-import fr.dwightstudio.dpt.engine.Engine;
+import fr.dwightstudio.dpt.engine.DSEngine;
 import fr.dwightstudio.dpt.engine.graphics.objects.Color;
 import fr.dwightstudio.dpt.engine.graphics.objects.FontAtlas;
-import fr.dwightstudio.dpt.engine.graphics.objects.Texture;
 import fr.dwightstudio.dpt.engine.graphics.objects.Transform;
 import fr.dwightstudio.dpt.engine.graphics.renderers.TextRenderer;
 import fr.dwightstudio.dpt.engine.graphics.utils.FontUtils;
@@ -104,7 +103,7 @@ public class Label extends Component {
     public Label(String string, Font font, boolean antiAliasing, int maxNumberOfChars) {
         this.string = string;
         this.font = font;
-        this.color = Engine.COLORS.BLACK;
+        this.color = DSEngine.COLORS.BLACK;
         this.antiAliasing = antiAliasing;
         this.maxNumberOfChars = maxNumberOfChars;
         this.fontAtlas = FontUtils.createFontAtlas(font, antiAliasing);
@@ -156,7 +155,7 @@ public class Label extends Component {
     public Label(String string, Font font, boolean antiAliasing) {
         this.string = string;
         this.font = font;
-        this.color = Engine.COLORS.BLACK;
+        this.color = DSEngine.COLORS.BLACK;
         this.antiAliasing = antiAliasing;
         this.maxNumberOfChars = 1000;
         this.fontAtlas = FontUtils.createFontAtlas(font, antiAliasing);
@@ -189,7 +188,7 @@ public class Label extends Component {
      */
     public Label(String string, FontAtlas fontAtlas, int maxNumberOfChars) {
         this.string = string;
-        this.color = Engine.COLORS.BLACK;
+        this.color = DSEngine.COLORS.BLACK;
         this.fontAtlas = fontAtlas;
         this.antiAliasing = fontAtlas.isAntiAliasing();
         this.font = fontAtlas.getFont();
@@ -207,7 +206,7 @@ public class Label extends Component {
     public Label(String string, Font font, int maxNumberOfChars) {
         this.string = string;
         this.font = font;
-        this.color = Engine.COLORS.BLACK;
+        this.color = DSEngine.COLORS.BLACK;
         this.antiAliasing = false;
         this.maxNumberOfChars = maxNumberOfChars;
         this.fontAtlas = FontUtils.createFontAtlas(this.font, false);
@@ -222,7 +221,7 @@ public class Label extends Component {
      */
     public Label(String string, FontAtlas fontAtlas) {
         this.string = string;
-        this.color = Engine.COLORS.BLACK;
+        this.color = DSEngine.COLORS.BLACK;
         this.fontAtlas = fontAtlas;
         this.antiAliasing = fontAtlas.isAntiAliasing();
         this.font = fontAtlas.getFont();
@@ -239,7 +238,7 @@ public class Label extends Component {
     public Label(String string, Font font) {
         this.string = string;
         this.font = font;
-        this.color = Engine.COLORS.BLACK;
+        this.color = DSEngine.COLORS.BLACK;
         this.antiAliasing = false;
         this.maxNumberOfChars = 1000;
         this.fontAtlas = FontUtils.createFontAtlas(this.font, false);
@@ -402,7 +401,7 @@ public class Label extends Component {
     }
 
     @Override
-    public void update(float dt) {
+    public void update(double dt) {
         if (this.textRenderer != null) {
             this.textRenderer.render();
         }

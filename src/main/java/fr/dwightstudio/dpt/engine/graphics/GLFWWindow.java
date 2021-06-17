@@ -9,16 +9,14 @@
 package fr.dwightstudio.dpt.engine.graphics;
 
 import fr.dwightstudio.dpt.engine.events.EventSystem;
+import fr.dwightstudio.dpt.engine.graphics.utils.FramebufferManager;
 import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
 import fr.dwightstudio.dpt.engine.logging.GameLogger;
-import fr.dwightstudio.dpt.engine.scripting.Scene;
-import fr.dwightstudio.dpt.engine.utils.Time;
-import fr.dwightstudio.dpt.game.levels.MainScene;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 
-import static fr.dwightstudio.dpt.engine.Engine.FULLSCREEN;
-import static fr.dwightstudio.dpt.engine.Engine.WINDOWED;
+import static fr.dwightstudio.dpt.engine.DSEngine.FULLSCREEN;
+import static fr.dwightstudio.dpt.engine.DSEngine.WINDOWED;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -116,35 +114,24 @@ public class GLFWWindow {
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
         glLoadIdentity(); // Resets any previous projection matrix
         GameLogger.getLogger("GLFWWindow").info("Window initialized");
-        loop(); // Start the loop
     }
 
     /**
      * Start the window loop
      */
-    private void loop() {
-
-        SceneManager.changeScene(new MainScene());
-
-        float beginTime = Time.getDeltaTime();
-        float endTime;
-        float dt = -1.0f;
-
+    public void startLoop() {
+        double beginTime = glfwGetTime();
+        double endTime;
+        double dt = 0.0f;
+        GameLogger.getLogger("GLFWWindow").info("Started the game loop");
         while (!glfwWindowShouldClose(window)) {
             glfwPollEvents(); // The key callback will be invoked only during this call
 
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear the framebuffer
+            render(dt);
 
-            if (SceneManager.getCurrentScene() != null && dt >= 0) {
-                SceneManager.getCurrentScene().update(dt);
-            }
-
-            glfwSwapBuffers(window); // Swap the color buffers
-
-            endTime = Time.getDeltaTime();
+            // Calculate the deltaTime
+            endTime = glfwGetTime();
             dt = endTime - beginTime;
-            Time.setDTime(dt);
-            // System.out.println(Math.round(1.0f / dt) + " FPS");
             beginTime = endTime;
         }
 
@@ -159,5 +146,17 @@ public class GLFWWindow {
         glfwDestroyWindow(window); // Destroy the GLFWWindow
         glfwTerminate(); // Terminate GLFW
         GameLogger.getLogger("GLFWWindow").info("Terminated");
+    }
+
+    private void render(double dt) {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear the current framebuffer
+
+        // Render the current scene
+        if (SceneManager.getCurrentScene() != null) {
+            SceneManager.getCurrentScene().update(dt);
+        }
+
+        FramebufferManager.renderAll();
+        glfwSwapBuffers(window); // Swap the buffers
     }
 }

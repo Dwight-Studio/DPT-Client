@@ -10,7 +10,7 @@ package fr.dwightstudio.dpt.engine;
 
 import fr.dwightstudio.dpt.engine.graphics.objects.Color;
 
-public class Engine {
+public class DSEngine {
     public static final long FULLSCREEN = 0;
     public static final long WINDOWED = 1;
 
