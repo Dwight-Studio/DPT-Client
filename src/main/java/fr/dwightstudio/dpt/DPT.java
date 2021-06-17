@@ -8,11 +8,11 @@
 
 package fr.dwightstudio.dpt;
 
-import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
-import fr.dwightstudio.dpt.engine.graphics.utils.SceneManager;
+import fr.dwightstudio.dpt.DSEngine.graphics.GLFWWindow;
+import fr.dwightstudio.dpt.DSEngine.graphics.utils.SceneManager;
 import fr.dwightstudio.dpt.game.levels.MainScene;
 
-import static fr.dwightstudio.dpt.engine.DSEngine.WINDOWED;
+import static fr.dwightstudio.dpt.DSEngine.Engine.WINDOWED;
 
 public class DPT {
 

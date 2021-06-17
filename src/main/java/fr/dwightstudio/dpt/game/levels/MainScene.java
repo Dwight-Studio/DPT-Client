@@ -8,20 +8,20 @@
 
 package fr.dwightstudio.dpt.game.levels;
 
-import fr.dwightstudio.dpt.engine.DSEngine;
-import fr.dwightstudio.dpt.engine.events.EventListener;
-import fr.dwightstudio.dpt.engine.graphics.GLFWWindow;
-import fr.dwightstudio.dpt.engine.graphics.gui.Button;
-import fr.dwightstudio.dpt.engine.graphics.gui.Checkbox;
-import fr.dwightstudio.dpt.engine.graphics.gui.Label;
-import fr.dwightstudio.dpt.engine.graphics.objects.*;
-import fr.dwightstudio.dpt.engine.graphics.objects.Color;
-import fr.dwightstudio.dpt.engine.graphics.primitives.Surface;
-import fr.dwightstudio.dpt.engine.graphics.utils.FontUtils;
-import fr.dwightstudio.dpt.engine.inputs.MouseListener;
-import fr.dwightstudio.dpt.engine.resources.ResourceManager;
-import fr.dwightstudio.dpt.engine.scripting.GameObject;
-import fr.dwightstudio.dpt.engine.scripting.Scene;
+import fr.dwightstudio.dpt.DSEngine.Engine;
+import fr.dwightstudio.dpt.DSEngine.events.EventListener;
+import fr.dwightstudio.dpt.DSEngine.graphics.GLFWWindow;
+import fr.dwightstudio.dpt.DSEngine.graphics.gui.Button;
+import fr.dwightstudio.dpt.DSEngine.graphics.gui.Checkbox;
+import fr.dwightstudio.dpt.DSEngine.graphics.gui.Label;
+import fr.dwightstudio.dpt.DSEngine.graphics.objects.*;
+import fr.dwightstudio.dpt.DSEngine.graphics.objects.Color;
+import fr.dwightstudio.dpt.DSEngine.graphics.primitives.Surface;
+import fr.dwightstudio.dpt.DSEngine.graphics.utils.FontUtils;
+import fr.dwightstudio.dpt.DSEngine.inputs.MouseListener;
+import fr.dwightstudio.dpt.DSEngine.resources.ResourceManager;
+import fr.dwightstudio.dpt.DSEngine.scripting.GameObject;
+import fr.dwightstudio.dpt.DSEngine.scripting.Scene;
 import org.joml.Vector2f;
 
 import java.awt.*;
@@ -34,7 +34,7 @@ public class MainScene extends Scene implements EventListener {
     GameObject tiles = new GameObject("tiles", 2);
     GameObject background = new GameObject("background", -1);
 
-    private final Surface surface = new Surface(new Vector2f(0, 0), new Vector2f(64, 64), DSEngine.COLORS.WHITE);
+    private final Surface surface = new Surface(new Vector2f(0, 0), new Vector2f(64, 64), Engine.COLORS.WHITE);
     private final Surface surface2 = new Surface(new Vector2f(100, 100), new Vector2f(64, 10), new Color(0, 1, 0, 0.5f));
     private final Surface surface3 = new Surface(new Vector2f(132, 100), new Vector2f(64, 64), new Color(1, 0, 0, 0.5f));
 
@@ -73,7 +73,7 @@ public class MainScene extends Scene implements EventListener {
         Checkbox checkbox2 = new Checkbox(new Vector2f(800, 300), new Vector2f(64, 64), ResourceManager.<Spritesheet>get("./src/main/resources/textures/checkboxSheet.png"));
 
 
-        this.fpsCounter = new Label("FPS", fontAtlas, DSEngine.COLORS.PURPLE);
+        this.fpsCounter = new Label("FPS", fontAtlas, Engine.COLORS.PURPLE);
         this.cursorPosX = new Label("X", fontAtlas);
         this.cursorPosY = new Label("Y", fontAtlas);
         this.fpsCounter.draw(new Vector2f(0, GLFWWindow.getHeight() - this.fpsCounter.getFontAtlas().getTexture().getHeight()), new Vector2f(0, 0));
@@ -95,7 +95,7 @@ public class MainScene extends Scene implements EventListener {
         tiles.addComponent(checkbox);
         tiles.addComponent(checkbox2);
         otherOne.addComponent(surface3);
-        setBackgroundColor(DSEngine.COLORS.BLACK);
+        setBackgroundColor(Engine.COLORS.BLACK);
         this.addGameObject(tiles);
         this.addGameObject(otherOne);
         this.addGameObject(background);
