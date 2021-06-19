@@ -14,8 +14,8 @@ import fr.dwightstudio.dpt.DSEngine.graphics.GLFWWindow;
 import fr.dwightstudio.dpt.DSEngine.graphics.gui.Button;
 import fr.dwightstudio.dpt.DSEngine.graphics.gui.Checkbox;
 import fr.dwightstudio.dpt.DSEngine.graphics.gui.Label;
-import fr.dwightstudio.dpt.DSEngine.graphics.objects.*;
 import fr.dwightstudio.dpt.DSEngine.graphics.objects.Color;
+import fr.dwightstudio.dpt.DSEngine.graphics.objects.*;
 import fr.dwightstudio.dpt.DSEngine.graphics.primitives.Surface;
 import fr.dwightstudio.dpt.DSEngine.graphics.utils.FontUtils;
 import fr.dwightstudio.dpt.DSEngine.inputs.MouseListener;
@@ -25,8 +25,6 @@ import fr.dwightstudio.dpt.DSEngine.scripting.Scene;
 import org.joml.Vector2f;
 
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.Objects;
 
 public class MainScene extends Scene implements EventListener {
@@ -49,22 +47,17 @@ public class MainScene extends Scene implements EventListener {
 
     @Override
     public void init() {
-        camera = new Camera(new Vector2f());
-        framebuffer = new Framebuffer(0, 0, GLFWWindow.getWidth(), GLFWWindow.getHeight(), GLFWWindow.getWidth() / 2, GLFWWindow.getHeight() / 2);
+        // TODO: The Camera is... shared ??
+        camera = new Camera(new Vector2f(-200, 0));
+        Viewport viewport = new Viewport(0, 0, GLFWWindow.getWidth() / 2, GLFWWindow.getHeight() / 2);
+        viewport.attachScene(new TestScene());
         GameObject otherOne = new GameObject("otherOne", 1);
         ResourceManager.load("./src/main/resources/textures/test.png", Texture.class);
         ResourceManager.load("./src/main/resources/textures/sheet.png", Spritesheet.class);
         ResourceManager.load("./src/main/resources/textures/buttonSheet.png", Spritesheet.class);
         ResourceManager.load("./src/main/resources/textures/checkboxSheet.png", Spritesheet.class);
 
-        Font font = null;
-        try {
-            GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            graphicsEnvironment.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("./src/main/resources/fonts/Ubuntu-Medium.ttf")));
-            font = new Font("Ubuntu", Font.PLAIN, 28);
-        } catch (FontFormatException | IOException e) {
-            e.printStackTrace();
-        }
+        Font font = new Font("Ubuntu", Font.PLAIN, 28);
 
         this.fontAtlas = FontUtils.createFontAtlas(font, true);
 
@@ -95,6 +88,7 @@ public class MainScene extends Scene implements EventListener {
         tiles.addComponent(checkbox);
         tiles.addComponent(checkbox2);
         otherOne.addComponent(surface3);
+        tiles.addComponent(viewport);
         setBackgroundColor(Engine.COLORS.BLACK);
         this.addGameObject(tiles);
         this.addGameObject(otherOne);
@@ -103,11 +97,6 @@ public class MainScene extends Scene implements EventListener {
 
     @Override
     public void update(double dt) {
-        framebuffer.bind();
-        for (GameObject gameObject : this.gameObjects) {
-            gameObject.update(dt);
-        }
-
         surface2.getTransform().setRotation(surface2.getTransform().getRotation(Transform.DEGREE) + 1, Transform.DEGREE);
 
         if (count == 60) {
@@ -117,10 +106,9 @@ public class MainScene extends Scene implements EventListener {
             count++;
         }
 
-        cursorPosX.setText(String.valueOf(MouseListener.getCursorPos().x));
-        cursorPosY.setText(String.valueOf(MouseListener.getCursorPos().y));
+        cursorPosX.setText(String.valueOf(MouseListener.getOrthoCursorPos().x));
+        cursorPosY.setText(String.valueOf(MouseListener.getOrthoCursorPos().y));
 
-        rendererHelper.render();
-        framebuffer.unbind();
+        super.update(dt);
     }
 }

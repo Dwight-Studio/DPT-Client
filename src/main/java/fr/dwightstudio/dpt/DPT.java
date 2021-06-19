@@ -8,6 +8,7 @@
 
 package fr.dwightstudio.dpt;
 
+import fr.dwightstudio.dpt.DSEngine.audio.AudioEngine;
 import fr.dwightstudio.dpt.DSEngine.graphics.GLFWWindow;
 import fr.dwightstudio.dpt.DSEngine.graphics.utils.SceneManager;
 import fr.dwightstudio.dpt.game.levels.MainScene;
@@ -17,11 +18,14 @@ import static fr.dwightstudio.dpt.DSEngine.Engine.WINDOWED;
 public class DPT {
 
     public GLFWWindow window = new GLFWWindow(1280, 720, WINDOWED);
+    public AudioEngine audioEngine = new AudioEngine();
 
     public void run(){
+        audioEngine.init();
         window.init();
         SceneManager.changeScene(new MainScene());
         window.startLoop();
+        audioEngine.destroy();
     }
 
     public static void main(String[] args){
