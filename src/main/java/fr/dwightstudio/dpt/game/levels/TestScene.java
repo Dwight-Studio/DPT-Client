@@ -9,7 +9,6 @@
 package fr.dwightstudio.dpt.game.levels;
 
 import fr.dwightstudio.dpt.DSEngine.Engine;
-import fr.dwightstudio.dpt.DSEngine.graphics.GLFWWindow;
 import fr.dwightstudio.dpt.DSEngine.graphics.objects.Camera;
 import fr.dwightstudio.dpt.DSEngine.graphics.objects.Transform;
 import fr.dwightstudio.dpt.DSEngine.graphics.primitives.Surface;
@@ -23,11 +22,11 @@ public class TestScene extends Scene {
 
     @Override
     public void init() {
-        camera = new Camera(new Vector2f());
+        camera = new Camera(new Vector2f(0, 0));
         GameObject gameObject = new GameObject("test");
 
-        gameObject.addComponent(new Surface(new Vector2f(0, 0), new Vector2f(GLFWWindow.getWidth(), GLFWWindow.getHeight()), Engine.COLORS.CYAN));
         gameObject.addComponent(surface);
+        gameObject.addComponent(new Surface(new Vector2f(0, 0), new Vector2f(64, 64), Engine.COLORS.CYAN));
         addGameObject(gameObject);
     }
 

@@ -47,8 +47,7 @@ public class MainScene extends Scene implements EventListener {
 
     @Override
     public void init() {
-        // TODO: The Camera is... shared ??
-        camera = new Camera(new Vector2f(-200, 0));
+        camera = new Camera(new Vector2f(0, 0));
         Viewport viewport = new Viewport(0, 0, GLFWWindow.getWidth() / 2, GLFWWindow.getHeight() / 2);
         viewport.attachScene(new TestScene());
         GameObject otherOne = new GameObject("otherOne", 1);
@@ -97,6 +96,8 @@ public class MainScene extends Scene implements EventListener {
 
     @Override
     public void update(double dt) {
+        tiles.getTransform().position.x += dt * 10.0f;
+        background.getTransform().position.x += dt * 10.0f;
         surface2.getTransform().setRotation(surface2.getTransform().getRotation(Transform.DEGREE) + 1, Transform.DEGREE);
 
         if (count == 60) {
