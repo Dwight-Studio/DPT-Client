@@ -8,20 +8,20 @@
 
 package fr.dwightstudio.dpt.game.levels;
 
-import fr.dwightstudio.dpt.DSEngine.Engine;
-import fr.dwightstudio.dpt.DSEngine.events.EventListener;
-import fr.dwightstudio.dpt.DSEngine.graphics.GLFWWindow;
-import fr.dwightstudio.dpt.DSEngine.graphics.gui.Button;
-import fr.dwightstudio.dpt.DSEngine.graphics.gui.Checkbox;
-import fr.dwightstudio.dpt.DSEngine.graphics.gui.Label;
-import fr.dwightstudio.dpt.DSEngine.graphics.objects.Color;
-import fr.dwightstudio.dpt.DSEngine.graphics.objects.*;
-import fr.dwightstudio.dpt.DSEngine.graphics.primitives.Surface;
-import fr.dwightstudio.dpt.DSEngine.graphics.utils.FontUtils;
-import fr.dwightstudio.dpt.DSEngine.inputs.MouseListener;
-import fr.dwightstudio.dpt.DSEngine.resources.ResourceManager;
-import fr.dwightstudio.dpt.DSEngine.scripting.GameObject;
-import fr.dwightstudio.dpt.DSEngine.scripting.Scene;
+import fr.dwightstudio.dsengine.Engine;
+import fr.dwightstudio.dsengine.events.EventListener;
+import fr.dwightstudio.dsengine.graphics.GLFWWindow;
+import fr.dwightstudio.dsengine.graphics.gui.Button;
+import fr.dwightstudio.dsengine.graphics.gui.Checkbox;
+import fr.dwightstudio.dsengine.graphics.gui.Label;
+import fr.dwightstudio.dsengine.graphics.objects.*;
+import fr.dwightstudio.dsengine.graphics.objects.Color;
+import fr.dwightstudio.dsengine.graphics.primitives.Surface;
+import fr.dwightstudio.dsengine.graphics.utils.FontUtils;
+import fr.dwightstudio.dsengine.inputs.MouseListener;
+import fr.dwightstudio.dsengine.resources.ResourceManager;
+import fr.dwightstudio.dsengine.scripting.GameObject;
+import fr.dwightstudio.dsengine.scripting.Scene;
 import org.joml.Vector2f;
 
 import java.awt.*;

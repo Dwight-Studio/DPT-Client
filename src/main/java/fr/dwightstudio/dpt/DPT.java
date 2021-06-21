@@ -8,12 +8,12 @@
 
 package fr.dwightstudio.dpt;
 
-import fr.dwightstudio.dpt.DSEngine.audio.AudioEngine;
-import fr.dwightstudio.dpt.DSEngine.graphics.GLFWWindow;
-import fr.dwightstudio.dpt.DSEngine.graphics.utils.SceneManager;
+import fr.dwightstudio.dsengine.audio.AudioEngine;
+import fr.dwightstudio.dsengine.graphics.GLFWWindow;
+import fr.dwightstudio.dsengine.graphics.utils.SceneManager;
 import fr.dwightstudio.dpt.game.levels.MainScene;
 
-import static fr.dwightstudio.dpt.DSEngine.Engine.WINDOWED;
+import static fr.dwightstudio.dsengine.Engine.WINDOWED;
 
 public class DPT {
 

@@ -8,12 +8,12 @@
 
 package fr.dwightstudio.dpt.game.levels;
 
-import fr.dwightstudio.dpt.DSEngine.Engine;
-import fr.dwightstudio.dpt.DSEngine.graphics.objects.Camera;
-import fr.dwightstudio.dpt.DSEngine.graphics.objects.Transform;
-import fr.dwightstudio.dpt.DSEngine.graphics.primitives.Surface;
-import fr.dwightstudio.dpt.DSEngine.scripting.GameObject;
-import fr.dwightstudio.dpt.DSEngine.scripting.Scene;
+import fr.dwightstudio.dsengine.Engine;
+import fr.dwightstudio.dsengine.graphics.objects.Camera;
+import fr.dwightstudio.dsengine.graphics.objects.Transform;
+import fr.dwightstudio.dsengine.graphics.primitives.Surface;
+import fr.dwightstudio.dsengine.scripting.GameObject;
+import fr.dwightstudio.dsengine.scripting.Scene;
 import org.joml.Vector2f;
 
 public class TestScene extends Scene {
