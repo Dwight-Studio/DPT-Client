@@ -9,7 +9,12 @@
 package fr.dwightstudio.dpt.game.levels;
 
 import fr.dwightstudio.dsengine.Engine;
+import fr.dwightstudio.dsengine.audio.objects.Sound;
+import fr.dwightstudio.dsengine.audio.utils.SoundUtil;
+import fr.dwightstudio.dsengine.events.EventHandler;
 import fr.dwightstudio.dsengine.events.EventListener;
+import fr.dwightstudio.dsengine.events.EventSystem;
+import fr.dwightstudio.dsengine.events.types.gui.button.ButtonClickEvent;
 import fr.dwightstudio.dsengine.graphics.GLFWWindow;
 import fr.dwightstudio.dsengine.graphics.gui.Button;
 import fr.dwightstudio.dsengine.graphics.gui.Checkbox;
@@ -19,6 +24,7 @@ import fr.dwightstudio.dsengine.graphics.objects.Color;
 import fr.dwightstudio.dsengine.graphics.primitives.Surface;
 import fr.dwightstudio.dsengine.graphics.utils.FontUtils;
 import fr.dwightstudio.dsengine.inputs.MouseListener;
+import fr.dwightstudio.dsengine.logging.GameLogger;
 import fr.dwightstudio.dsengine.resources.ResourceManager;
 import fr.dwightstudio.dsengine.scripting.GameObject;
 import fr.dwightstudio.dsengine.scripting.Scene;
@@ -43,6 +49,12 @@ public class MainScene extends Scene implements EventListener {
 
     private int count = 0;
 
+    private Checkbox checkbox;
+    private Checkbox checkbox2;
+    private Checkbox checkbox3;
+    private Button button;
+    private Sound sound;
+
     public MainScene() { }
 
     @Override
@@ -55,15 +67,19 @@ public class MainScene extends Scene implements EventListener {
         ResourceManager.load("./src/main/resources/textures/sheet.png", Spritesheet.class);
         ResourceManager.load("./src/main/resources/textures/buttonSheet.png", Spritesheet.class);
         ResourceManager.load("./src/main/resources/textures/checkboxSheet.png", Spritesheet.class);
+        ResourceManager.load("./src/main/resources/sounds/music.ogg", Sound.class);
+
+        sound = ResourceManager.get("./src/main/resources/sounds/music.ogg");
 
         Font font = new Font("Ubuntu", Font.PLAIN, 28);
 
         this.fontAtlas = FontUtils.createFontAtlas(font, true);
 
-        Button button = new Button(new Vector2f(450, 300), new Vector2f(64, 64), Objects.requireNonNull(ResourceManager.<Spritesheet>get("./src/main/resources/textures/buttonSheet.png")));
-        Checkbox checkbox = new Checkbox(new Vector2f(600, 300), new Vector2f(64, 64), ResourceManager.<Spritesheet>get("./src/main/resources/textures/checkboxSheet.png"));
-        Checkbox checkbox2 = new Checkbox(new Vector2f(800, 300), new Vector2f(64, 64), ResourceManager.<Spritesheet>get("./src/main/resources/textures/checkboxSheet.png"));
-
+        button = new Button(new Vector2f(450, 300), new Vector2f(64, 64), Objects.requireNonNull(ResourceManager.<Spritesheet>get("./src/main/resources/textures/buttonSheet.png")));
+        EventSystem.registerListener(this);
+        checkbox = new Checkbox(new Vector2f(600, 300), new Vector2f(64, 64), ResourceManager.<Spritesheet>get("./src/main/resources/textures/checkboxSheet.png"));
+        checkbox2 = new Checkbox(new Vector2f(750, 300), new Vector2f(64, 64), ResourceManager.<Spritesheet>get("./src/main/resources/textures/checkboxSheet.png"));
+        checkbox3 = new Checkbox(new Vector2f(900, 300), new Vector2f(64, 64), ResourceManager.<Spritesheet>get("./src/main/resources/textures/checkboxSheet.png"));
 
         this.fpsCounter = new Label("FPS", fontAtlas, Engine.COLORS.PURPLE);
         this.cursorPosX = new Label("X", fontAtlas);
@@ -86,6 +102,7 @@ public class MainScene extends Scene implements EventListener {
         tiles.addComponent(button);
         tiles.addComponent(checkbox);
         tiles.addComponent(checkbox2);
+        tiles.addComponent(checkbox3);
         otherOne.addComponent(surface3);
         tiles.addComponent(viewport);
         setBackgroundColor(Engine.COLORS.BLACK);
@@ -96,8 +113,6 @@ public class MainScene extends Scene implements EventListener {
 
     @Override
     public void update(double dt) {
-        tiles.getTransform().position.x += dt * 10.0f;
-        background.getTransform().position.x += dt * 10.0f;
         surface2.getTransform().setRotation(surface2.getTransform().getRotation(Transform.DEGREE) + 1, Transform.DEGREE);
 
         if (count == 60) {
@@ -111,5 +126,26 @@ public class MainScene extends Scene implements EventListener {
         cursorPosY.setText(String.valueOf(MouseListener.getOrthoCursorPos().y));
 
         super.update(dt);
+    }
+
+    @EventHandler
+    public void buttonPush(ButtonClickEvent event) {
+        if (event.getObject().hashCode() == button.hashCode()) {
+            SoundUtil.play(sound, true);
+        }
+        if (event.getObject().hashCode() == checkbox.hashCode()) {
+            if (!checkbox.getState()) {
+                SoundUtil.gain(sound, 0.7f);
+            } else if (checkbox.getState()) {
+                SoundUtil.gain(sound, 0.3f);
+            }
+        }
+        if (event.getObject().hashCode() == checkbox2.hashCode()) {
+            if (checkbox2.getState()) {
+                SoundUtil.pitch(sound, 1.0f);
+            } else if (!checkbox2.getState()) {
+                SoundUtil.pitch(sound, 0.8f);
+            }
+        }
     }
 }
