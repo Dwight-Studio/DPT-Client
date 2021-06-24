@@ -26,37 +26,64 @@ repositories {
 	mavenCentral()
 }
 
-dependencies {
-	implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
+sourceSets {
+	dsengine
+	main {
+		compileClasspath += sourceSets.dsengine.output
+		runtimeClasspath += sourceSets.dsengine.output
+	}
+}
 
-	implementation "org.lwjgl:lwjgl"
-	implementation "org.lwjgl:lwjgl-bgfx"
-	implementation "org.lwjgl:lwjgl-glfw"
-	implementation "org.lwjgl:lwjgl-libdivide"
-	implementation "org.lwjgl:lwjgl-meow"
-	implementation "org.lwjgl:lwjgl-nanovg"
-	implementation "org.lwjgl:lwjgl-nfd"
-	implementation "org.lwjgl:lwjgl-nuklear"
-	implementation "org.lwjgl:lwjgl-openal"
-	implementation "org.lwjgl:lwjgl-opengl"
-	implementation "org.lwjgl:lwjgl-shaderc"
-	implementation "org.lwjgl:lwjgl-stb"
-    implementation 'org.jetbrains:annotations:20.1.0'
-    runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
-	runtimeOnly "org.lwjgl:lwjgl-bgfx::$lwjglNatives"
-	runtimeOnly "org.lwjgl:lwjgl-glfw::$lwjglNatives"
-	runtimeOnly "org.lwjgl:lwjgl-libdivide::$lwjglNatives"
-	runtimeOnly "org.lwjgl:lwjgl-meow::$lwjglNatives"
-	runtimeOnly "org.lwjgl:lwjgl-nanovg::$lwjglNatives"
-	runtimeOnly "org.lwjgl:lwjgl-nfd::$lwjglNatives"
-	runtimeOnly "org.lwjgl:lwjgl-nuklear::$lwjglNatives"
-	runtimeOnly "org.lwjgl:lwjgl-openal::$lwjglNatives"
-	runtimeOnly "org.lwjgl:lwjgl-opengl::$lwjglNatives"
-	runtimeOnly "org.lwjgl:lwjgl-shaderc::$lwjglNatives"
-	runtimeOnly "org.lwjgl:lwjgl-stb::$lwjglNatives"
-	implementation "org.joml:joml:${jomlVersion}"
-	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
-	implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.14.1'
-	implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.1'
-	implementation group: 'uk.co.caprica', name: 'vlcj', version: '4.7.1'
+dependencies {
+	// Engine
+	dsengineImplementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
+
+	dsengineImplementation "org.lwjgl:lwjgl"
+	dsengineImplementation "org.lwjgl:lwjgl-bgfx"
+	dsengineImplementation "org.lwjgl:lwjgl-glfw"
+	dsengineImplementation "org.lwjgl:lwjgl-libdivide"
+	dsengineImplementation "org.lwjgl:lwjgl-meow"
+	dsengineImplementation "org.lwjgl:lwjgl-nanovg"
+	dsengineImplementation "org.lwjgl:lwjgl-nfd"
+	dsengineImplementation "org.lwjgl:lwjgl-nuklear"
+	dsengineImplementation "org.lwjgl:lwjgl-openal"
+	dsengineImplementation "org.lwjgl:lwjgl-opengl"
+	dsengineImplementation "org.lwjgl:lwjgl-shaderc"
+	dsengineImplementation "org.lwjgl:lwjgl-stb"
+	dsengineImplementation 'org.jetbrains:annotations:20.1.0'
+	dsengineImplementation "org.joml:joml:${jomlVersion}"
+
+	dsengineImplementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+	dsengineImplementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.14.1'
+	dsengineImplementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.1'
+	dsengineImplementation group: 'uk.co.caprica', name: 'vlcj', version: '4.7.1'
+
+	dsengineRuntimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
+	dsengineRuntimeOnly "org.lwjgl:lwjgl-bgfx::$lwjglNatives"
+	dsengineRuntimeOnly "org.lwjgl:lwjgl-glfw::$lwjglNatives"
+	dsengineRuntimeOnly "org.lwjgl:lwjgl-libdivide::$lwjglNatives"
+	dsengineRuntimeOnly "org.lwjgl:lwjgl-meow::$lwjglNatives"
+	dsengineRuntimeOnly "org.lwjgl:lwjgl-nanovg::$lwjglNatives"
+	dsengineRuntimeOnly "org.lwjgl:lwjgl-nfd::$lwjglNatives"
+	dsengineRuntimeOnly "org.lwjgl:lwjgl-nuklear::$lwjglNatives"
+	dsengineRuntimeOnly "org.lwjgl:lwjgl-openal::$lwjglNatives"
+	dsengineRuntimeOnly "org.lwjgl:lwjgl-opengl::$lwjglNatives"
+	dsengineRuntimeOnly "org.lwjgl:lwjgl-shaderc::$lwjglNatives"
+	dsengineRuntimeOnly "org.lwjgl:lwjgl-stb::$lwjglNatives"
+
+	// DPT
+}
+
+configurations {
+	implementation.extendsFrom dsengineImplementation
+	runtimeOnly.extendsFrom dsengineRuntimeOnly
+}
+
+jar {
+	from sourceSets.main.output
+	from sourceSets.dsengine.output
+
+	manifest {
+		attributes 'Main-Class': 'fr.dwightstudio.dpt.DPT'
+	}
 }
