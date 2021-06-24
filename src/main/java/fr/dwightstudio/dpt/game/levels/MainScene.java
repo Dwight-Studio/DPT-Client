@@ -10,7 +10,6 @@ package fr.dwightstudio.dpt.game.levels;
 
 import fr.dwightstudio.dsengine.Engine;
 import fr.dwightstudio.dsengine.audio.objects.Sound;
-import fr.dwightstudio.dsengine.audio.utils.SoundUtil;
 import fr.dwightstudio.dsengine.events.EventHandler;
 import fr.dwightstudio.dsengine.events.EventListener;
 import fr.dwightstudio.dsengine.events.EventSystem;
@@ -19,12 +18,11 @@ import fr.dwightstudio.dsengine.graphics.GLFWWindow;
 import fr.dwightstudio.dsengine.graphics.gui.Button;
 import fr.dwightstudio.dsengine.graphics.gui.Checkbox;
 import fr.dwightstudio.dsengine.graphics.gui.Label;
-import fr.dwightstudio.dsengine.graphics.objects.*;
 import fr.dwightstudio.dsengine.graphics.objects.Color;
+import fr.dwightstudio.dsengine.graphics.objects.*;
 import fr.dwightstudio.dsengine.graphics.primitives.Surface;
 import fr.dwightstudio.dsengine.graphics.utils.FontUtils;
 import fr.dwightstudio.dsengine.inputs.MouseListener;
-import fr.dwightstudio.dsengine.logging.GameLogger;
 import fr.dwightstudio.dsengine.resources.ResourceManager;
 import fr.dwightstudio.dsengine.scripting.GameObject;
 import fr.dwightstudio.dsengine.scripting.Scene;
@@ -38,7 +36,7 @@ public class MainScene extends Scene implements EventListener {
     GameObject tiles = new GameObject("tiles", 2);
     GameObject background = new GameObject("background", -1);
 
-    private final Surface surface = new Surface(new Vector2f(0, 0), new Vector2f(64, 64), Engine.COLORS.WHITE);
+    private final Surface surface = new Surface(new Vector2f(0, 0), new Vector2f(64, 64), Engine.COLOR.WHITE);
     private final Surface surface2 = new Surface(new Vector2f(100, 100), new Vector2f(64, 10), new Color(0, 1, 0, 0.5f));
     private final Surface surface3 = new Surface(new Vector2f(132, 100), new Vector2f(64, 64), new Color(1, 0, 0, 0.5f));
 
@@ -60,7 +58,7 @@ public class MainScene extends Scene implements EventListener {
     @Override
     public void init() {
         camera = new Camera(new Vector2f(0, 0));
-        Viewport viewport = new Viewport(0, 0, GLFWWindow.getWidth() / 2, GLFWWindow.getHeight() / 2);
+        Viewport viewport = new Viewport(0, 0, GLFWWindow.getWidth() / 4, GLFWWindow.getHeight() / 4);
         viewport.attachScene(new TestScene());
         GameObject otherOne = new GameObject("otherOne", 1);
         ResourceManager.load("./src/main/resources/textures/test.png", Texture.class);
@@ -81,7 +79,7 @@ public class MainScene extends Scene implements EventListener {
         checkbox2 = new Checkbox(new Vector2f(750, 300), new Vector2f(64, 64), ResourceManager.<Spritesheet>get("./src/main/resources/textures/checkboxSheet.png"));
         checkbox3 = new Checkbox(new Vector2f(900, 300), new Vector2f(64, 64), ResourceManager.<Spritesheet>get("./src/main/resources/textures/checkboxSheet.png"));
 
-        this.fpsCounter = new Label("FPS", fontAtlas, Engine.COLORS.PURPLE);
+        this.fpsCounter = new Label("FPS", fontAtlas, Engine.COLOR.PURPLE);
         this.cursorPosX = new Label("X", fontAtlas);
         this.cursorPosY = new Label("Y", fontAtlas);
         this.fpsCounter.draw(new Vector2f(0, GLFWWindow.getHeight() - this.fpsCounter.getFontAtlas().getTexture().getHeight()), new Vector2f(0, 0));
@@ -105,7 +103,7 @@ public class MainScene extends Scene implements EventListener {
         tiles.addComponent(checkbox3);
         otherOne.addComponent(surface3);
         tiles.addComponent(viewport);
-        setBackgroundColor(Engine.COLORS.BLACK);
+        setBackgroundColor(Engine.COLOR.BLACK);
         this.addGameObject(tiles);
         this.addGameObject(otherOne);
         this.addGameObject(background);
@@ -131,20 +129,20 @@ public class MainScene extends Scene implements EventListener {
     @EventHandler
     public void buttonPush(ButtonClickEvent event) {
         if (event.getObject().hashCode() == button.hashCode()) {
-            SoundUtil.play(sound, true);
+            sound.play(true);
         }
         if (event.getObject().hashCode() == checkbox.hashCode()) {
             if (!checkbox.getState()) {
-                SoundUtil.gain(sound, 0.7f);
+                sound.gain(0.7f);
             } else if (checkbox.getState()) {
-                SoundUtil.gain(sound, 0.3f);
+                sound.gain(0.3f);
             }
         }
         if (event.getObject().hashCode() == checkbox2.hashCode()) {
             if (checkbox2.getState()) {
-                SoundUtil.pitch(sound, 1.0f);
+                sound.pitch(1.0f);
             } else if (!checkbox2.getState()) {
-                SoundUtil.pitch(sound, 0.8f);
+                sound.pitch(0.8f);
             }
         }
     }

@@ -18,7 +18,7 @@ import org.joml.Vector2f;
 
 public class TestScene extends Scene {
 
-    Surface surface = new Surface(new Vector2f(100, 0), new Vector2f(64, 64), Engine.COLORS.MAGENTA);
+    Surface surface = new Surface(new Vector2f(100, 0), new Vector2f(64, 64), Engine.COLOR.MAGENTA);
 
     @Override
     public void init() {
@@ -26,7 +26,7 @@ public class TestScene extends Scene {
         GameObject gameObject = new GameObject("test");
 
         gameObject.addComponent(surface);
-        gameObject.addComponent(new Surface(new Vector2f(0, 0), new Vector2f(64, 64), Engine.COLORS.CYAN));
+        gameObject.addComponent(new Surface(new Vector2f(0, 0), new Vector2f(64, 64), Engine.COLOR.CYAN));
         addGameObject(gameObject);
     }
 
