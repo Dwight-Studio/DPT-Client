@@ -56,7 +56,6 @@ dependencies {
 	dsengineImplementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 	dsengineImplementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.14.1'
 	dsengineImplementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.1'
-	dsengineImplementation group: 'uk.co.caprica', name: 'vlcj', version: '4.7.1'
 
 	dsengineRuntimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
 	dsengineRuntimeOnly "org.lwjgl:lwjgl-bgfx::$lwjglNatives"

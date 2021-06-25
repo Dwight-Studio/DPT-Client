@@ -61,23 +61,23 @@ public class MainScene extends Scene implements EventListener {
         Viewport viewport = new Viewport(0, 0, GLFWWindow.getWidth() / 4, GLFWWindow.getHeight() / 4);
         viewport.attachScene(new TestScene());
         GameObject otherOne = new GameObject("otherOne", 1);
-        ResourceManager.load("./src/main/resources/textures/test.png", Texture.class);
-        ResourceManager.load("./src/main/resources/textures/sheet.png", Spritesheet.class);
-        ResourceManager.load("./src/main/resources/textures/buttonSheet.png", Spritesheet.class);
-        ResourceManager.load("./src/main/resources/textures/checkboxSheet.png", Spritesheet.class);
-        ResourceManager.load("./src/main/resources/sounds/music.ogg", Sound.class);
+        ResourceManager.load("./src/dsengine/resources/textures/test.png", Texture.class);
+        ResourceManager.load("./src/dsengine/resources/textures/sheet.png", Spritesheet.class);
+        ResourceManager.load("./src/dsengine/resources/textures/buttonSheet.png", Spritesheet.class);
+        ResourceManager.load("./src/dsengine/resources/textures/checkboxSheet.png", Spritesheet.class);
+        ResourceManager.load("./src/dsengine/resources/sounds/music.ogg", Sound.class);
 
-        sound = ResourceManager.get("./src/main/resources/sounds/music.ogg");
+        sound = ResourceManager.get("./src/dsengine/resources/sounds/music.ogg");
 
         Font font = new Font("Ubuntu", Font.PLAIN, 28);
 
         this.fontAtlas = FontUtils.createFontAtlas(font, true);
 
-        button = new Button(new Vector2f(450, 300), new Vector2f(64, 64), Objects.requireNonNull(ResourceManager.<Spritesheet>get("./src/main/resources/textures/buttonSheet.png")));
+        button = new Button(new Vector2f(450, 300), new Vector2f(64, 64), Objects.requireNonNull(ResourceManager.<Spritesheet>get("./src/dsengine/resources/textures/buttonSheet.png")));
         EventSystem.registerListener(this);
-        checkbox = new Checkbox(new Vector2f(600, 300), new Vector2f(64, 64), ResourceManager.<Spritesheet>get("./src/main/resources/textures/checkboxSheet.png"));
-        checkbox2 = new Checkbox(new Vector2f(750, 300), new Vector2f(64, 64), ResourceManager.<Spritesheet>get("./src/main/resources/textures/checkboxSheet.png"));
-        checkbox3 = new Checkbox(new Vector2f(900, 300), new Vector2f(64, 64), ResourceManager.<Spritesheet>get("./src/main/resources/textures/checkboxSheet.png"));
+        checkbox = new Checkbox(new Vector2f(600, 300), new Vector2f(64, 64), ResourceManager.<Spritesheet>get("./src/dsengine/resources/textures/checkboxSheet.png"));
+        checkbox2 = new Checkbox(new Vector2f(750, 300), new Vector2f(64, 64), ResourceManager.<Spritesheet>get("./src/dsengine/resources/textures/checkboxSheet.png"));
+        checkbox3 = new Checkbox(new Vector2f(900, 300), new Vector2f(64, 64), ResourceManager.<Spritesheet>get("./src/dsengine/resources/textures/checkboxSheet.png"));
 
         this.fpsCounter = new Label("FPS", fontAtlas, Engine.COLOR.PURPLE);
         this.cursorPosX = new Label("X", fontAtlas);
@@ -86,9 +86,9 @@ public class MainScene extends Scene implements EventListener {
         this.cursorPosX.draw(new Vector2f(0, GLFWWindow.getHeight() - this.fpsCounter.getFontAtlas().getTexture().getHeight() * 2), new Vector2f(0, 0));
         this.cursorPosY.draw(new Vector2f(0, GLFWWindow.getHeight() - this.fpsCounter.getFontAtlas().getTexture().getHeight() * 3), new Vector2f(0, 0));
 
-        Spritesheet spritesheet = ResourceManager.get("./src/main/resources/textures/sheet.png");
-        ResourceManager.load("./src/main/resources/textures/background.png", Texture.class);
-        background.addComponent(new Surface(new Vector2f(0, 0), new Vector2f(GLFWWindow.getWidth(), GLFWWindow.getHeight()), ResourceManager.<Texture>get("./src/main/resources/textures/background.png")));
+        Spritesheet spritesheet = ResourceManager.get("./src/dsengine/resources/textures/sheet.png");
+        ResourceManager.load("./src/dsengine/resources/textures/background.png", Texture.class);
+        background.addComponent(new Surface(new Vector2f(0, 0), new Vector2f(GLFWWindow.getWidth(), GLFWWindow.getHeight()), ResourceManager.<Texture>get("./src/dsengine/resources/textures/background.png")));
         tiles.addComponent(cursorPosX);
         tiles.addComponent(fpsCounter);
         tiles.addComponent(cursorPosY);
@@ -96,7 +96,7 @@ public class MainScene extends Scene implements EventListener {
         tiles.addComponent(surface2);
         surface.setTexture(Objects.requireNonNull(spritesheet).getSprite(0).getTexture());
         surface.setTextureCoords(spritesheet.getSprite(0).getTextureCoords());
-        tiles.addComponent(new Surface(new Vector2f(200, 200), new Vector2f(64, 64), ResourceManager.<Texture>get("./src/main/resources/textures/test.png")));
+        tiles.addComponent(new Surface(new Vector2f(200, 200), new Vector2f(64, 64), ResourceManager.<Texture>get("./src/dsengine/resources/textures/test.png")));
         tiles.addComponent(button);
         tiles.addComponent(checkbox);
         tiles.addComponent(checkbox2);
