@@ -129,7 +129,7 @@ public class MainScene extends Scene implements EventListener {
     @EventHandler
     public void buttonPush(ButtonClickEvent event) {
         if (event.getObject().hashCode() == button.hashCode()) {
-            sound.play(true);
+            sound.play();
         }
         if (event.getObject().hashCode() == checkbox.hashCode()) {
             if (!checkbox.getState()) {
