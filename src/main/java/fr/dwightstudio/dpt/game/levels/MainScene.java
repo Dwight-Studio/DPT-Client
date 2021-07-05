@@ -18,13 +18,14 @@ import fr.dwightstudio.dsengine.graphics.GLFWWindow;
 import fr.dwightstudio.dsengine.graphics.gui.Button;
 import fr.dwightstudio.dsengine.graphics.gui.Checkbox;
 import fr.dwightstudio.dsengine.graphics.gui.Label;
+import fr.dwightstudio.dsengine.graphics.gui.Slider;
 import fr.dwightstudio.dsengine.graphics.objects.Color;
 import fr.dwightstudio.dsengine.graphics.objects.*;
 import fr.dwightstudio.dsengine.graphics.primitives.Surface;
 import fr.dwightstudio.dsengine.graphics.utils.FontUtils;
 import fr.dwightstudio.dsengine.inputs.MouseListener;
 import fr.dwightstudio.dsengine.resources.ResourceManager;
-import fr.dwightstudio.dsengine.scripting.GameObject;
+import fr.dwightstudio.dsengine.scripting.RenderGroup;
 import fr.dwightstudio.dsengine.scripting.Scene;
 import org.joml.Vector2f;
 
@@ -33,8 +34,8 @@ import java.util.Objects;
 
 public class MainScene extends Scene implements EventListener {
 
-    GameObject tiles = new GameObject("tiles", 2);
-    GameObject background = new GameObject("background", -1);
+    RenderGroup tiles = new RenderGroup("tiles", 2);
+    RenderGroup background = new RenderGroup("background", -1);
 
     private final Surface surface = new Surface(new Vector2f(0, 0), new Vector2f(64, 64), Engine.COLOR.WHITE);
     private final Surface surface2 = new Surface(new Vector2f(100, 100), new Vector2f(64, 10), new Color(0, 1, 0, 0.5f));
@@ -60,7 +61,7 @@ public class MainScene extends Scene implements EventListener {
         camera = new Camera(new Vector2f(0, 0));
         Viewport viewport = new Viewport(0, 0, GLFWWindow.getWidth() / 4, GLFWWindow.getHeight() / 4);
         viewport.attachScene(new TestScene());
-        GameObject otherOne = new GameObject("otherOne", 1);
+        RenderGroup otherOne = new RenderGroup("otherOne", 1);
         ResourceManager.load("./src/dsengine/resources/textures/test.png", Texture.class);
         ResourceManager.load("./src/dsengine/resources/textures/sheet.png", Spritesheet.class);
         ResourceManager.load("./src/dsengine/resources/textures/buttonSheet.png", Spritesheet.class);
@@ -101,6 +102,8 @@ public class MainScene extends Scene implements EventListener {
         tiles.addComponent(checkbox);
         tiles.addComponent(checkbox2);
         tiles.addComponent(checkbox3);
+        tiles.addComponent(new Slider(new Vector2f(300, 400), new Vector2f(64, 256), Engine.COLOR.RED, 0.0f, 10.0f, Engine.GUI.VERTICAL));
+        tiles.addComponent(new Slider(new Vector2f(400, 400), new Vector2f(256, 64), Engine.COLOR.RED, 0.0f, 10.0f, Engine.GUI.HORIZONTAL));
         otherOne.addComponent(surface3);
         tiles.addComponent(viewport);
         setBackgroundColor(Engine.COLOR.BLACK);

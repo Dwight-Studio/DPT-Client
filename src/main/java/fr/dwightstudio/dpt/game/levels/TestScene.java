@@ -12,7 +12,7 @@ import fr.dwightstudio.dsengine.Engine;
 import fr.dwightstudio.dsengine.graphics.objects.Camera;
 import fr.dwightstudio.dsengine.graphics.objects.Transform;
 import fr.dwightstudio.dsengine.graphics.primitives.Surface;
-import fr.dwightstudio.dsengine.scripting.GameObject;
+import fr.dwightstudio.dsengine.scripting.RenderGroup;
 import fr.dwightstudio.dsengine.scripting.Scene;
 import org.joml.Vector2f;
 
@@ -23,11 +23,11 @@ public class TestScene extends Scene {
     @Override
     public void init() {
         camera = new Camera(new Vector2f(0, 0));
-        GameObject gameObject = new GameObject("test");
+        RenderGroup renderGroup = new RenderGroup("test");
 
-        gameObject.addComponent(surface);
-        gameObject.addComponent(new Surface(new Vector2f(0, 0), new Vector2f(64, 64), Engine.COLOR.CYAN));
-        addGameObject(gameObject);
+        renderGroup.addComponent(surface);
+        renderGroup.addComponent(new Surface(new Vector2f(0, 0), new Vector2f(64, 64), Engine.COLOR.CYAN));
+        addGameObject(renderGroup);
     }
 
     @Override
