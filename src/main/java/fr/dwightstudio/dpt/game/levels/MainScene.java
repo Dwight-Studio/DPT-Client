@@ -23,13 +23,18 @@ import fr.dwightstudio.dsengine.graphics.objects.*;
 import fr.dwightstudio.dsengine.graphics.primitives.Surface;
 import fr.dwightstudio.dsengine.graphics.utils.FontUtils;
 import fr.dwightstudio.dsengine.inputs.MouseListener;
+import fr.dwightstudio.dsengine.logging.GameLogger;
 import fr.dwightstudio.dsengine.resources.ResourceManager;
+import fr.dwightstudio.dsengine.scheduling.ScheduledRunnable;
+import fr.dwightstudio.dsengine.scheduling.Scheduler;
+import fr.dwightstudio.dsengine.scheduling.Task;
 import fr.dwightstudio.dsengine.scripting.GameObject;
 import fr.dwightstudio.dsengine.scripting.Scene;
 import org.joml.Vector2f;
 
 import java.awt.*;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 public class MainScene extends Scene implements EventListener {
 
