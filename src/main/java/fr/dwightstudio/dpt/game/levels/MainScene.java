@@ -24,6 +24,7 @@ import fr.dwightstudio.dsengine.graphics.objects.*;
 import fr.dwightstudio.dsengine.graphics.primitives.Surface;
 import fr.dwightstudio.dsengine.graphics.utils.FontUtils;
 import fr.dwightstudio.dsengine.inputs.MouseListener;
+import fr.dwightstudio.dsengine.logging.GameLogger;
 import fr.dwightstudio.dsengine.resources.ResourceManager;
 import fr.dwightstudio.dsengine.scripting.RenderGroup;
 import fr.dwightstudio.dsengine.scripting.Scene;
@@ -52,6 +53,7 @@ public class MainScene extends Scene implements EventListener {
     private Checkbox checkbox2;
     private Checkbox checkbox3;
     private Button button;
+    private Slider slider = new Slider(new Vector2f(400, 400), new Vector2f(256, 64), Engine.COLOR.RED, 0.0f, 1.0f, Engine.GUI.HORIZONTAL);
     private Sound sound;
 
     public MainScene() { }
@@ -103,7 +105,7 @@ public class MainScene extends Scene implements EventListener {
         tiles.addComponent(checkbox2);
         tiles.addComponent(checkbox3);
         tiles.addComponent(new Slider(new Vector2f(300, 400), new Vector2f(64, 256), Engine.COLOR.RED, 0.0f, 10.0f, Engine.GUI.VERTICAL));
-        tiles.addComponent(new Slider(new Vector2f(400, 400), new Vector2f(256, 64), Engine.COLOR.RED, 0.0f, 10.0f, Engine.GUI.HORIZONTAL));
+        tiles.addComponent(slider);
         otherOne.addComponent(surface3);
         tiles.addComponent(viewport);
         setBackgroundColor(Engine.COLOR.BLACK);
@@ -125,6 +127,11 @@ public class MainScene extends Scene implements EventListener {
 
         cursorPosX.setText(String.valueOf(MouseListener.getOrthoCursorPos().x));
         cursorPosY.setText(String.valueOf(MouseListener.getOrthoCursorPos().y));
+
+        if (sound.isPlaying()) {
+            sound.gain((float) slider.getCurrentValue());
+            GameLogger.getLogger("Slider").debug(slider.getCurrentValue());
+        }
 
         super.update(dt);
     }
