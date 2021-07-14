@@ -17,7 +17,7 @@ import static fr.dwightstudio.dsengine.Engine.WINDOWED;
 
 public class DPT {
 
-    public GLFWWindow window = new GLFWWindow(1280, 720, WINDOWED);
+    public GLFWWindow window = new GLFWWindow(1280, 720, "DSEngine", WINDOWED);
     public AudioEngine audioEngine = new AudioEngine();
 
     public void run(){

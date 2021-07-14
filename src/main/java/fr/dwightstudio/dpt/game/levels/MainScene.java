@@ -36,7 +36,6 @@ import java.util.Objects;
 public class MainScene extends Scene implements EventListener {
 
     RenderGroup tiles = new RenderGroup("tiles", 2);
-    RenderGroup background = new RenderGroup("background", -1);
 
     private final Surface surface = new Surface(new Vector2f(0, 0), new Vector2f(64, 64), Engine.COLOR.WHITE);
     private final Surface surface2 = new Surface(new Vector2f(100, 100), new Vector2f(64, 10), new Color(0, 1, 0, 0.5f));
@@ -90,8 +89,6 @@ public class MainScene extends Scene implements EventListener {
         this.cursorPosY.draw(new Vector2f(0, GLFWWindow.getHeight() - this.fpsCounter.getFontAtlas().getTexture().getHeight() * 3), new Vector2f(0, 0));
 
         Spritesheet spritesheet = ResourceManager.get("./src/dsengine/resources/textures/sheet.png");
-        ResourceManager.load("./src/dsengine/resources/textures/background.png", Texture.class);
-        background.addComponent(new Surface(new Vector2f(0, 0), new Vector2f(GLFWWindow.getWidth(), GLFWWindow.getHeight()), ResourceManager.<Texture>get("./src/dsengine/resources/textures/background.png")));
         tiles.addComponent(cursorPosX);
         tiles.addComponent(fpsCounter);
         tiles.addComponent(cursorPosY);
@@ -108,10 +105,9 @@ public class MainScene extends Scene implements EventListener {
         tiles.addComponent(slider);
         otherOne.addComponent(surface3);
         tiles.addComponent(viewport);
-        setBackgroundColor(Engine.COLOR.BLACK);
+        setBackgroundColor(Engine.COLOR.WHITE);
         this.addGameObject(tiles);
         this.addGameObject(otherOne);
-        this.addGameObject(background);
     }
 
     @Override
